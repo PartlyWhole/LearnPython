@@ -1,0 +1,2783 @@
+{
+  "course": {
+    "id": "bootdev",
+    "title": "Boot.dev Back-end Developer Path (Python + Go)",
+    "provider": "Boot.dev",
+    "url": "https://www.boot.dev/tracks/backend",
+    "format": "self-paced interactive online track: 16 courses + 8 projects (6 guided, 2 portfolio), in-browser exercises plus local projects",
+    "audience": "beginners aiming for back-end developer roles",
+    "sources": [
+      "https://www.boot.dev/tracks/backend",
+      "https://www.boot.dev/courses/learn-python-beginners",
+      "https://www.boot.dev/courses/learn-linux",
+      "https://www.boot.dev/courses/build-bookbot-python",
+      "https://www.boot.dev/courses/learn-git",
+      "https://www.boot.dev/courses/learn-object-oriented-programming-python",
+      "https://www.boot.dev/courses/build-asteroids-python",
+      "https://www.boot.dev/courses/learn-functional-programming-python",
+      "https://www.boot.dev/courses/build-ai-agent-python",
+      "https://www.boot.dev/courses/learn-data-structures-and-algorithms-python",
+      "https://www.boot.dev/courses/build-static-site-generator-python",
+      "https://www.boot.dev/courses/learn-memory-management-c",
+      "https://www.boot.dev/courses/build-personal-project-1",
+      "https://www.boot.dev/courses/learn-golang",
+      "https://www.boot.dev/courses/learn-http-clients-golang",
+      "https://www.boot.dev/courses/build-pokedex-cli-golang",
+      "https://www.boot.dev/courses/learn-sql",
+      "https://www.boot.dev/courses/build-blog-aggregator-golang",
+      "https://www.boot.dev/courses/learn-http-servers-golang",
+      "https://www.boot.dev/courses/learn-file-servers-s3-cloudfront-golang",
+      "https://www.boot.dev/courses/learn-docker",
+      "https://www.boot.dev/courses/learn-web-security-golang",
+      "https://www.boot.dev/courses/learn-pub-sub-rabbitmq-golang",
+      "https://www.boot.dev/courses/build-capstone-project",
+      "https://www.boot.dev/courses/learn-job-search"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Course list and order taken from boot.dev/tracks/backend as fetched 2026-10-12 (24 items). Order differs from older versions of the path: Build an AI Agent now comes right after Functional Programming and before DSA; Static Site Generator follows DSA. Courses present in older path versions (e.g. Learn CI/CD, Kubernetes, earlier JavaScript/TypeScript courses) are NOT in the current listing, so no cicd/kubernetes/javascript concepts are included. Topics are the published chapter titles; individual lesson titles are not shown on public course pages, so concept mappings below chapter level are inferred from chapter descriptions and general knowledge of the courses (e.g. regex/unittest/enums in the SSG, match statement in Sum Types, sys.argv in BookBot, binary/bitwise in 'Computing'), and should be treated as moderately confident. The 'Learn Python for Beginners' slug is learn-python-beginners (marketed as Learn to Code in Python). The AI Agent project currently uses free models on OpenRouter via the OpenAI Python SDK (earlier versions used Google Gemini). The SQL course page does not name its engine (believed SQLite in-browser; uncertain). Portfolio projects (Personal Project 1, Capstone) list no public chapters. Python-language concept IDs are reused for analogous Go constructs only where noted via course_label (e.g. enums, modules_imports, pointers). Python-based modules are 1,3,5,6,7,8,9,10; Linux and Git are language-agnostic; Memory Management is C; most later courses are Go."
+  },
+  "modules": [
+    {
+      "id": "bootdev:learn_python",
+      "title": "Learn Python for Beginners (Learn to Code in Python)",
+      "order": 1,
+      "url": "https://www.boot.dev/courses/learn-python-beginners",
+      "topics": [
+        "Introduction",
+        "Variables",
+        "Functions",
+        "Scope",
+        "Testing and Debugging",
+        "Computing",
+        "Comparisons",
+        "Loops",
+        "Lists",
+        "Dictionaries",
+        "Sets",
+        "Errors",
+        "Type Hints",
+        "Practice",
+        "Quiz"
+      ],
+      "projects": [],
+      "concepts": [
+        "print_output",
+        "variables",
+        "data_types",
+        "integers_floats",
+        "strings",
+        "string_formatting",
+        "string_concatenation",
+        "booleans",
+        "none_type",
+        "comments",
+        "functions",
+        "parameters_arguments",
+        "return_values",
+        "scope",
+        "unit_testing",
+        "debugging",
+        "arithmetic_operators",
+        "binary_bitwise",
+        "floating_point_precision",
+        "comparison_operators",
+        "logical_operators",
+        "conditionals",
+        "for_loops",
+        "while_loops",
+        "range_function",
+        "break_continue",
+        "loop_patterns",
+        "lists",
+        "list_methods",
+        "list_slicing",
+        "dictionaries",
+        "sets",
+        "exceptions",
+        "raising_exceptions",
+        "type_hints",
+        "builtin_functions",
+        "collections"
+      ]
+    },
+    {
+      "id": "bootdev:learn_linux",
+      "title": "Learn Linux",
+      "order": 2,
+      "url": "https://www.boot.dev/courses/learn-linux",
+      "topics": [
+        "The Command Line",
+        "Filesystems",
+        "Programs",
+        "Input/Output",
+        "Local CLI",
+        "Permissions",
+        "Editors and Packages"
+      ],
+      "projects": [],
+      "concepts": [
+        "command_line",
+        "linux_filesystem",
+        "running_scripts",
+        "environment_variables",
+        "shell_io_redirection",
+        "linux_processes",
+        "linux_permissions",
+        "system_package_managers",
+        "ide_editor",
+        "automation"
+      ]
+    },
+    {
+      "id": "bootdev:build_bookbot",
+      "title": "Build a BookBot (guided project)",
+      "order": 3,
+      "url": "https://www.boot.dev/courses/build-bookbot-python",
+      "topics": [
+        "Setup",
+        "Data Analysis",
+        "Report"
+      ],
+      "projects": [
+        "BookBot: CLI app that analyzes a novel's text (word & character counts, sorted report)"
+      ],
+      "concepts": [
+        "python_setup",
+        "running_scripts",
+        "ide_editor",
+        "file_io",
+        "context_managers",
+        "string_methods",
+        "dictionaries",
+        "sorting",
+        "modules_imports",
+        "command_line_args",
+        "os_sys_module",
+        "cli_applications",
+        "data_analysis"
+      ]
+    },
+    {
+      "id": "bootdev:learn_git",
+      "title": "Learn Git",
+      "order": 4,
+      "url": "https://www.boot.dev/courses/learn-git",
+      "topics": [
+        "Setup",
+        "Repositories",
+        "Internals",
+        "Config",
+        "Branching",
+        "Merge",
+        "Rebase",
+        "Reset",
+        "Remote",
+        "GitHub",
+        "Gitignore"
+      ],
+      "projects": [],
+      "concepts": [
+        "tool_git",
+        "git_internals",
+        "git_branching",
+        "git_merge_rebase",
+        "git_remotes",
+        "tool_github",
+        "command_line"
+      ]
+    },
+    {
+      "id": "bootdev:learn_oop",
+      "title": "Learn Object Oriented Programming (Python)",
+      "order": 5,
+      "url": "https://www.boot.dev/courses/learn-object-oriented-programming-python",
+      "topics": [
+        "Clean Code",
+        "Classes",
+        "Encapsulation",
+        "Abstraction",
+        "Inheritance",
+        "Polymorphism"
+      ],
+      "projects": [],
+      "concepts": [
+        "clean_code",
+        "object_oriented_design",
+        "classes",
+        "objects_methods",
+        "instance_attributes",
+        "constructors",
+        "class_attributes",
+        "encapsulation",
+        "abstraction",
+        "inheritance",
+        "polymorphism",
+        "dunder_methods",
+        "raising_exceptions"
+      ]
+    },
+    {
+      "id": "bootdev:build_asteroids",
+      "title": "Build Asteroids (guided project)",
+      "order": 6,
+      "url": "https://www.boot.dev/courses/build-asteroids-python",
+      "topics": [
+        "Pygame",
+        "Gameloop",
+        "Player",
+        "Asteroids"
+      ],
+      "projects": [
+        "Asteroids arcade-game clone in Pygame"
+      ],
+      "concepts": [
+        "lib_pygame",
+        "game_development",
+        "game_loop",
+        "collision_detection",
+        "classes",
+        "inheritance",
+        "polymorphism",
+        "tool_pip",
+        "third_party_packages",
+        "modules_imports",
+        "tool_git"
+      ]
+    },
+    {
+      "id": "bootdev:learn_fp",
+      "title": "Learn Functional Programming (Python)",
+      "order": 7,
+      "url": "https://www.boot.dev/courses/learn-functional-programming-python",
+      "topics": [
+        "Functional Programming",
+        "First-Class Functions",
+        "Pure Functions",
+        "Recursion",
+        "Function Transformations",
+        "Closures",
+        "Currying",
+        "Decorators",
+        "Sum Types"
+      ],
+      "projects": [],
+      "concepts": [
+        "functional_programming",
+        "higher_order_functions",
+        "lambda_functions",
+        "pure_functions",
+        "mutability_aliasing",
+        "recursion",
+        "closures",
+        "currying",
+        "decorators",
+        "args_kwargs",
+        "sum_types",
+        "enums",
+        "match_statement"
+      ]
+    },
+    {
+      "id": "bootdev:build_ai_agent",
+      "title": "Build an AI Agent (guided project)",
+      "order": 8,
+      "url": "https://www.boot.dev/courses/build-ai-agent-python",
+      "topics": [
+        "LLMs",
+        "Functions",
+        "Function Calling",
+        "Agents"
+      ],
+      "projects": [
+        "Toy agentic code editor (Claude Code / Cursor-style) that finds and fixes a bug via LLM function calling"
+      ],
+      "concepts": [
+        "llm_apis",
+        "lib_openai",
+        "function_calling",
+        "ai_agents",
+        "apis_http",
+        "file_io",
+        "file_paths",
+        "subprocess_module",
+        "environment_variables",
+        "command_line_args",
+        "tool_pip",
+        "third_party_packages",
+        "json_data"
+      ]
+    },
+    {
+      "id": "bootdev:learn_dsa",
+      "title": "Learn Data Structures and Algorithms (Python)",
+      "order": 9,
+      "url": "https://www.boot.dev/courses/learn-data-structures-and-algorithms-python",
+      "topics": [
+        "Algorithms Intro",
+        "Math",
+        "Big-O Analysis",
+        "Sorting Algorithms",
+        "Exponential Time",
+        "Data Structures Intro",
+        "Stacks",
+        "Queues",
+        "Linked Lists",
+        "Binary Trees",
+        "Red Black Trees",
+        "Hashmaps",
+        "Tries",
+        "Graphs",
+        "BFS and DFS",
+        "P vs NP"
+      ],
+      "projects": [],
+      "concepts": [
+        "algorithms",
+        "complexity_big_o",
+        "sorting_algorithms",
+        "stacks_queues",
+        "linked_lists",
+        "trees",
+        "balanced_trees",
+        "hash_maps_internals",
+        "tries",
+        "graphs",
+        "graph_algorithms",
+        "p_vs_np",
+        "recursion",
+        "classes"
+      ]
+    },
+    {
+      "id": "bootdev:build_ssg",
+      "title": "Build a Static Site Generator (guided project)",
+      "order": 10,
+      "url": "https://www.boot.dev/courses/build-static-site-generator-python",
+      "topics": [
+        "Static Sites",
+        "Nodes",
+        "Inline",
+        "Blocks",
+        "Website"
+      ],
+      "projects": [
+        "Static site generator converting Markdown to an HTML website, then published"
+      ],
+      "concepts": [
+        "static_site_generation",
+        "markdown",
+        "html_css_basics",
+        "classes",
+        "inheritance",
+        "dunder_methods",
+        "recursion",
+        "enums",
+        "regular_expressions",
+        "string_methods",
+        "unit_testing",
+        "file_io",
+        "file_paths",
+        "web_development",
+        "tool_github"
+      ]
+    },
+    {
+      "id": "bootdev:learn_memory_c",
+      "title": "Learn Memory Management (C)",
+      "order": 11,
+      "url": "https://www.boot.dev/courses/learn-memory-management-c",
+      "topics": [
+        "C Basics",
+        "Structs",
+        "Pointers",
+        "Enums",
+        "Unions",
+        "Stack and Heap",
+        "Advanced Pointers",
+        "Stack Data Structure",
+        "Objects",
+        "Refcounting GC",
+        "Mark and Sweep GC"
+      ],
+      "projects": [],
+      "concepts": [
+        "lang_c",
+        "pointers_memory",
+        "stack_heap_memory",
+        "enums",
+        "stacks_queues",
+        "garbage_collection"
+      ]
+    },
+    {
+      "id": "bootdev:personal_project_1",
+      "title": "Personal Project 1 (portfolio project)",
+      "order": 12,
+      "url": "https://www.boot.dev/courses/build-personal-project-1",
+      "topics": [],
+      "projects": [
+        "Personal Project 1: self-chosen, scoped, community-reviewed portfolio project"
+      ],
+      "concepts": [
+        "portfolio_project"
+      ]
+    },
+    {
+      "id": "bootdev:learn_go",
+      "title": "Learn Go",
+      "order": 13,
+      "url": "https://www.boot.dev/courses/learn-golang",
+      "topics": [
+        "Variables",
+        "Constants and Formatting",
+        "Conditionals",
+        "Functions",
+        "Structs",
+        "Interfaces",
+        "Errors",
+        "Loops",
+        "Slices",
+        "Maps",
+        "Pointers",
+        "Packages and Modules",
+        "Channels",
+        "Mutexes",
+        "Generics",
+        "Enums",
+        "Quiz"
+      ],
+      "projects": [],
+      "concepts": [
+        "lang_go",
+        "interfaces",
+        "pointers_memory",
+        "concurrency",
+        "generics",
+        "modules_imports",
+        "constants",
+        "string_formatting",
+        "enums"
+      ]
+    },
+    {
+      "id": "bootdev:learn_http_clients",
+      "title": "Learn HTTP Clients (Go)",
+      "order": 14,
+      "url": "https://www.boot.dev/courses/learn-http-clients-golang",
+      "topics": [
+        "Why HTTP?",
+        "JSON",
+        "DNS",
+        "URIs",
+        "Headers",
+        "Methods",
+        "Paths",
+        "HTTPS",
+        "Errors",
+        "cURL"
+      ],
+      "projects": [],
+      "concepts": [
+        "http_clients",
+        "apis_http",
+        "json_data",
+        "dns",
+        "https_tls",
+        "tool_curl",
+        "lang_go"
+      ]
+    },
+    {
+      "id": "bootdev:build_pokedex",
+      "title": "Build a Pokedex (guided project, Go)",
+      "order": 15,
+      "url": "https://www.boot.dev/courses/build-pokedex-cli-golang",
+      "topics": [
+        "REPL",
+        "Cache",
+        "Pokedex"
+      ],
+      "projects": [
+        "Pokedex CLI with a REPL, PokeAPI calls, JSON parsing and caching"
+      ],
+      "concepts": [
+        "cli_applications",
+        "caching",
+        "http_clients",
+        "json_data",
+        "lang_go",
+        "concurrency"
+      ]
+    },
+    {
+      "id": "bootdev:learn_sql",
+      "title": "Learn SQL",
+      "order": 16,
+      "url": "https://www.boot.dev/courses/learn-sql",
+      "topics": [
+        "Introduction",
+        "Tables",
+        "Constraints",
+        "CRUD",
+        "Basic Queries",
+        "Structuring",
+        "Aggregations",
+        "Subqueries",
+        "Normalization",
+        "Joins",
+        "Performance"
+      ],
+      "projects": [],
+      "concepts": [
+        "databases_sql",
+        "sql_joins",
+        "database_normalization",
+        "database_indexes"
+      ]
+    },
+    {
+      "id": "bootdev:build_blog_aggregator",
+      "title": "Build a Blog Aggregator (guided project, Go)",
+      "order": 17,
+      "url": "https://www.boot.dev/courses/build-blog-aggregator-golang",
+      "topics": [
+        "Config",
+        "Database",
+        "RSS",
+        "Following",
+        "Aggregate"
+      ],
+      "projects": [
+        "Gator: CLI RSS aggregator with PostgreSQL and a long-running background worker"
+      ],
+      "concepts": [
+        "tool_postgresql",
+        "db_migrations",
+        "tool_sqlc",
+        "databases_sql",
+        "xml_parsing",
+        "cli_applications",
+        "http_clients",
+        "lang_go",
+        "concurrency"
+      ]
+    },
+    {
+      "id": "bootdev:learn_http_servers",
+      "title": "Learn HTTP Servers (Go)",
+      "order": 18,
+      "url": "https://www.boot.dev/courses/learn-http-servers-golang",
+      "topics": [
+        "Servers",
+        "Routing",
+        "Architecture",
+        "JSON",
+        "Storage",
+        "Authentication",
+        "Authorization",
+        "Webhooks",
+        "Documentation"
+      ],
+      "projects": [],
+      "concepts": [
+        "http_servers",
+        "web_development",
+        "json_data",
+        "databases_sql",
+        "tool_postgresql",
+        "authentication",
+        "authorization",
+        "webhooks",
+        "lang_go"
+      ]
+    },
+    {
+      "id": "bootdev:learn_file_servers",
+      "title": "Learn File Servers and CDNs (Go, S3/CloudFront)",
+      "order": 19,
+      "url": "https://www.boot.dev/courses/learn-file-servers-s3-cloudfront-golang",
+      "topics": [
+        "File Storage",
+        "Caching",
+        "AWS S3",
+        "Object Storage",
+        "Video Streaming",
+        "Security",
+        "CDNs",
+        "Resiliency"
+      ],
+      "projects": [],
+      "concepts": [
+        "object_storage",
+        "tool_aws",
+        "cdn",
+        "caching",
+        "http_servers",
+        "web_security",
+        "lang_go"
+      ]
+    },
+    {
+      "id": "bootdev:learn_docker",
+      "title": "Learn Docker",
+      "order": 20,
+      "url": "https://www.boot.dev/courses/learn-docker",
+      "topics": [
+        "Install",
+        "Containers",
+        "Storage",
+        "Execute",
+        "Networks",
+        "Dockerfiles",
+        "Debug",
+        "Publish"
+      ],
+      "projects": [],
+      "concepts": [
+        "tool_docker",
+        "containers",
+        "command_line"
+      ]
+    },
+    {
+      "id": "bootdev:learn_web_security",
+      "title": "Learn Web Security (Go)",
+      "order": 21,
+      "url": "https://www.boot.dev/courses/learn-web-security-golang",
+      "topics": [
+        "OWASP",
+        "Authentication",
+        "Multi-Factor Authentication",
+        "Authorization",
+        "Injection",
+        "Client-Side Security",
+        "Data Leaks",
+        "Infrastructure Security",
+        "Secure Transport",
+        "Secure Storage",
+        "DDoS",
+        "Incident Response"
+      ],
+      "projects": [],
+      "concepts": [
+        "web_security",
+        "authentication",
+        "authorization",
+        "injection_attacks",
+        "https_tls",
+        "lang_go"
+      ]
+    },
+    {
+      "id": "bootdev:learn_pubsub",
+      "title": "Learn Pub/Sub Architecture (Go, RabbitMQ)",
+      "order": 22,
+      "url": "https://www.boot.dev/courses/learn-pub-sub-rabbitmq-golang",
+      "topics": [
+        "Pub/Sub Architecture",
+        "Message Brokers",
+        "Publishers & Queues",
+        "Subscribers & Routing",
+        "Delivery",
+        "Serialization",
+        "Scalability"
+      ],
+      "projects": [],
+      "concepts": [
+        "pub_sub_messaging",
+        "tool_rabbitmq",
+        "serialization",
+        "concurrency",
+        "lang_go"
+      ]
+    },
+    {
+      "id": "bootdev:capstone",
+      "title": "Capstone Project (portfolio project)",
+      "order": 23,
+      "url": "https://www.boot.dev/courses/build-capstone-project",
+      "topics": [],
+      "projects": [
+        "Capstone: strongest portfolio project, turned into resume/interview material"
+      ],
+      "concepts": [
+        "portfolio_project"
+      ]
+    },
+    {
+      "id": "bootdev:job_search",
+      "title": "Learn How to Find a Programming Job",
+      "order": 24,
+      "url": "https://www.boot.dev/courses/learn-job-search",
+      "topics": [
+        "Strategy",
+        "Projects",
+        "GitHub Profile",
+        "Resume",
+        "LinkedIn Profile",
+        "Applying",
+        "Networking",
+        "Interviewing",
+        "Relocation"
+      ],
+      "projects": [],
+      "concepts": [
+        "job_search",
+        "tool_github",
+        "portfolio_project"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "print_output",
+      "label": "Print / output",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "deep"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Numeric types",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "category": "strings",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_formatting",
+      "label": "String formatting",
+      "category": "strings",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "f-strings"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation",
+      "category": "strings",
+      "first_module": "bootdev:learn_python",
+      "depth": "introduced"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "none_type",
+      "label": "None",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "introduced"
+    },
+    {
+      "id": "comments",
+      "label": "Comments",
+      "category": "environment",
+      "first_module": "bootdev:learn_python",
+      "depth": "introduced"
+    },
+    {
+      "id": "functions",
+      "label": "Functions",
+      "category": "functions",
+      "first_module": "bootdev:learn_python",
+      "depth": "deep"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters & arguments",
+      "category": "functions",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "scope",
+      "label": "Scope",
+      "category": "functions",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "unit_testing",
+      "label": "Unit testing",
+      "category": "errors_testing",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Testing and Debugging"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging",
+      "category": "errors_testing",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Testing and Debugging"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Computing"
+    },
+    {
+      "id": "binary_bitwise",
+      "label": "Binary numbers & bitwise operations",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "introduced",
+      "course_label": "Computing",
+      "new": true
+    },
+    {
+      "id": "floating_point_precision",
+      "label": "Floating point precision",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_python",
+      "depth": "introduced",
+      "course_label": "Computing"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Comparisons"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Comparisons"
+    },
+    {
+      "id": "conditionals",
+      "label": "Conditionals",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_python",
+      "depth": "deep",
+      "course_label": "Comparisons"
+    },
+    {
+      "id": "for_loops",
+      "label": "For loops",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_python",
+      "depth": "deep"
+    },
+    {
+      "id": "while_loops",
+      "label": "While loops",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "range_function",
+      "label": "range()",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "break_continue",
+      "label": "break / continue",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "bootdev:learn_python",
+      "depth": "deep"
+    },
+    {
+      "id": "list_methods",
+      "label": "List methods",
+      "category": "collections",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_slicing",
+      "label": "List slicing",
+      "category": "collections",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "bootdev:learn_python",
+      "depth": "deep"
+    },
+    {
+      "id": "sets",
+      "label": "Sets",
+      "category": "collections",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "exceptions",
+      "label": "Exceptions",
+      "category": "errors_testing",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Errors"
+    },
+    {
+      "id": "raising_exceptions",
+      "label": "Raising exceptions",
+      "category": "errors_testing",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced",
+      "course_label": "Errors"
+    },
+    {
+      "id": "type_hints",
+      "label": "Type hints",
+      "category": "functions",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Built-in functions",
+      "category": "functions",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "collections",
+      "label": "Collections",
+      "category": "collections",
+      "first_module": "bootdev:learn_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "command_line",
+      "label": "Command line / shell",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "deep"
+    },
+    {
+      "id": "linux_filesystem",
+      "label": "Linux filesystem navigation",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "deep",
+      "course_label": "Filesystems",
+      "new": true
+    },
+    {
+      "id": "running_scripts",
+      "label": "Running scripts",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "practiced",
+      "course_label": "Programs"
+    },
+    {
+      "id": "environment_variables",
+      "label": "Environment variables & PATH",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "practiced",
+      "course_label": "PATH / env",
+      "new": true
+    },
+    {
+      "id": "shell_io_redirection",
+      "label": "Shell I/O: stdin/stdout, redirection, pipes",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "practiced",
+      "course_label": "Input/Output (flags, args, stdin/stdout, pipes)",
+      "new": true
+    },
+    {
+      "id": "linux_processes",
+      "label": "Processes",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "introduced",
+      "course_label": "Local CLI",
+      "new": true
+    },
+    {
+      "id": "linux_permissions",
+      "label": "File permissions & users (root/sudo)",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "practiced",
+      "course_label": "Permissions (incl. root/sudo)",
+      "new": true
+    },
+    {
+      "id": "system_package_managers",
+      "label": "System package managers (apt, brew)",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "practiced",
+      "course_label": "Homebrew, APT, Webi",
+      "new": true
+    },
+    {
+      "id": "ide_editor",
+      "label": "Editors / IDEs",
+      "category": "environment",
+      "first_module": "bootdev:learn_linux",
+      "depth": "practiced",
+      "course_label": "Editors"
+    },
+    {
+      "id": "automation",
+      "label": "Automation",
+      "category": "data_web",
+      "first_module": "bootdev:learn_linux",
+      "depth": "introduced"
+    },
+    {
+      "id": "python_setup",
+      "label": "Python setup",
+      "category": "environment",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced",
+      "course_label": "local Python dev environment"
+    },
+    {
+      "id": "file_io",
+      "label": "File I/O",
+      "category": "files_io",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced"
+    },
+    {
+      "id": "context_managers",
+      "label": "Context managers",
+      "category": "files_io",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "introduced"
+    },
+    {
+      "id": "string_methods",
+      "label": "String methods",
+      "category": "strings",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced"
+    },
+    {
+      "id": "sorting",
+      "label": "Sorting (sort/sorted)",
+      "category": "collections",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Modules & imports",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced"
+    },
+    {
+      "id": "command_line_args",
+      "label": "Command-line arguments",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced",
+      "course_label": "command-line tooling"
+    },
+    {
+      "id": "os_sys_module",
+      "label": "os / sys",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "introduced",
+      "course_label": "sys.argv"
+    },
+    {
+      "id": "cli_applications",
+      "label": "Building CLI applications",
+      "category": "environment",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "data_analysis",
+      "label": "Data analysis",
+      "category": "data_web",
+      "first_module": "bootdev:build_bookbot",
+      "depth": "introduced",
+      "course_label": "text analysis"
+    },
+    {
+      "id": "tool_git",
+      "label": "Git",
+      "category": "environment",
+      "first_module": "bootdev:learn_git",
+      "depth": "deep"
+    },
+    {
+      "id": "git_internals",
+      "label": "Git internals (objects, plumbing)",
+      "category": "environment",
+      "first_module": "bootdev:learn_git",
+      "depth": "practiced",
+      "course_label": "Internals / plumbing",
+      "new": true
+    },
+    {
+      "id": "git_branching",
+      "label": "Git branching",
+      "category": "environment",
+      "first_module": "bootdev:learn_git",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "git_merge_rebase",
+      "label": "Git merge, rebase & reset",
+      "category": "environment",
+      "first_module": "bootdev:learn_git",
+      "depth": "practiced",
+      "course_label": "Merge, Rebase, Reset",
+      "new": true
+    },
+    {
+      "id": "git_remotes",
+      "label": "Git remotes",
+      "category": "environment",
+      "first_module": "bootdev:learn_git",
+      "depth": "practiced",
+      "course_label": "Remote",
+      "new": true
+    },
+    {
+      "id": "tool_github",
+      "label": "GitHub",
+      "category": "environment",
+      "first_module": "bootdev:learn_git",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "clean_code",
+      "label": "Clean code / maintainability",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "practiced",
+      "course_label": "Clean Code",
+      "new": true
+    },
+    {
+      "id": "object_oriented_design",
+      "label": "Object-oriented design",
+      "category": "data_web",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Objects & methods",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "practiced"
+    },
+    {
+      "id": "constructors",
+      "label": "Constructors",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "practiced"
+    },
+    {
+      "id": "class_attributes",
+      "label": "Class attributes",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "introduced"
+    },
+    {
+      "id": "encapsulation",
+      "label": "Encapsulation",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "abstraction",
+      "label": "Abstraction",
+      "category": "functions",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "polymorphism",
+      "label": "Polymorphism",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "deep"
+    },
+    {
+      "id": "dunder_methods",
+      "label": "Dunder methods",
+      "category": "oop",
+      "first_module": "bootdev:learn_oop",
+      "depth": "practiced",
+      "course_label": "operator overloading"
+    },
+    {
+      "id": "lib_pygame",
+      "label": "pygame",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_asteroids",
+      "depth": "deep"
+    },
+    {
+      "id": "game_development",
+      "label": "Game development",
+      "category": "data_web",
+      "first_module": "bootdev:build_asteroids",
+      "depth": "deep"
+    },
+    {
+      "id": "game_loop",
+      "label": "Game loop",
+      "category": "data_web",
+      "first_module": "bootdev:build_asteroids",
+      "depth": "practiced",
+      "course_label": "Gameloop",
+      "new": true
+    },
+    {
+      "id": "collision_detection",
+      "label": "Vectors & collision detection",
+      "category": "data_web",
+      "first_module": "bootdev:build_asteroids",
+      "depth": "practiced",
+      "course_label": "vectors & collision detection",
+      "new": true
+    },
+    {
+      "id": "tool_pip",
+      "label": "pip / virtual environments",
+      "category": "environment",
+      "first_module": "bootdev:build_asteroids",
+      "depth": "practiced",
+      "course_label": "virtual environment / dependencies"
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third-party packages",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_asteroids",
+      "depth": "practiced"
+    },
+    {
+      "id": "functional_programming",
+      "label": "Functional programming",
+      "category": "data_web",
+      "first_module": "bootdev:learn_fp",
+      "depth": "deep",
+      "course_label": "imperative vs. declarative"
+    },
+    {
+      "id": "higher_order_functions",
+      "label": "Higher-order functions",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "deep",
+      "course_label": "First-Class Functions"
+    },
+    {
+      "id": "lambda_functions",
+      "label": "Lambda functions",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "practiced"
+    },
+    {
+      "id": "pure_functions",
+      "label": "Pure functions",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "mutability_aliasing",
+      "label": "Mutability & aliasing",
+      "category": "collections",
+      "first_module": "bootdev:learn_fp",
+      "depth": "practiced",
+      "course_label": "immutability"
+    },
+    {
+      "id": "recursion",
+      "label": "Recursion",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "deep"
+    },
+    {
+      "id": "closures",
+      "label": "Closures",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "deep"
+    },
+    {
+      "id": "currying",
+      "label": "Currying",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "decorators",
+      "label": "Decorators",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "deep"
+    },
+    {
+      "id": "args_kwargs",
+      "label": "*args / **kwargs",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "practiced"
+    },
+    {
+      "id": "sum_types",
+      "label": "Sum types",
+      "category": "functions",
+      "first_module": "bootdev:learn_fp",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "enums",
+      "label": "Enums",
+      "category": "oop",
+      "first_module": "bootdev:learn_fp",
+      "depth": "practiced"
+    },
+    {
+      "id": "match_statement",
+      "label": "match statement",
+      "category": "control_flow",
+      "first_module": "bootdev:learn_fp",
+      "depth": "introduced"
+    },
+    {
+      "id": "llm_apis",
+      "label": "LLM APIs & prompting",
+      "category": "data_web",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "practiced",
+      "course_label": "LLMs on OpenRouter",
+      "new": true
+    },
+    {
+      "id": "lib_openai",
+      "label": "OpenAI Python SDK",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "practiced",
+      "course_label": "OpenAI Python SDK",
+      "new": true
+    },
+    {
+      "id": "function_calling",
+      "label": "LLM function/tool calling",
+      "category": "data_web",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "deep",
+      "course_label": "Function Calling",
+      "new": true
+    },
+    {
+      "id": "ai_agents",
+      "label": "AI agents (agentic loop)",
+      "category": "data_web",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "deep",
+      "course_label": "Agents / feedback loop",
+      "new": true
+    },
+    {
+      "id": "apis_http",
+      "label": "HTTP / REST APIs",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "deep"
+    },
+    {
+      "id": "file_paths",
+      "label": "File paths",
+      "category": "files_io",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "practiced"
+    },
+    {
+      "id": "subprocess_module",
+      "label": "subprocess / running external programs",
+      "category": "modules_libs",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "practiced",
+      "course_label": "run Python code",
+      "new": true
+    },
+    {
+      "id": "json_data",
+      "label": "JSON",
+      "category": "files_io",
+      "first_module": "bootdev:build_ai_agent",
+      "depth": "practiced"
+    },
+    {
+      "id": "algorithms",
+      "label": "Algorithms",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep"
+    },
+    {
+      "id": "complexity_big_o",
+      "label": "Big-O complexity",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep",
+      "course_label": "Big-O Analysis / Exponential Time"
+    },
+    {
+      "id": "sorting_algorithms",
+      "label": "Sorting algorithms",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep"
+    },
+    {
+      "id": "stacks_queues",
+      "label": "Stacks & queues",
+      "category": "collections",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep",
+      "course_label": "Stacks, Queues"
+    },
+    {
+      "id": "linked_lists",
+      "label": "Linked lists",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep"
+    },
+    {
+      "id": "trees",
+      "label": "Trees",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep",
+      "course_label": "Binary Trees"
+    },
+    {
+      "id": "balanced_trees",
+      "label": "Balanced trees (red-black)",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "practiced",
+      "course_label": "Red Black Trees",
+      "new": true
+    },
+    {
+      "id": "hash_maps_internals",
+      "label": "Hash map internals",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep",
+      "course_label": "Hashmaps"
+    },
+    {
+      "id": "tries",
+      "label": "Tries",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "graphs",
+      "label": "Graphs (data structure)",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "graph_algorithms",
+      "label": "Graph algorithms (BFS/DFS)",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "deep",
+      "course_label": "BFS and DFS"
+    },
+    {
+      "id": "p_vs_np",
+      "label": "P vs NP",
+      "category": "algorithms",
+      "first_module": "bootdev:learn_dsa",
+      "depth": "introduced",
+      "course_label": "P vs NP",
+      "new": true
+    },
+    {
+      "id": "static_site_generation",
+      "label": "Static site generation",
+      "category": "data_web",
+      "first_module": "bootdev:build_ssg",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "markdown",
+      "label": "Markdown parsing",
+      "category": "data_web",
+      "first_module": "bootdev:build_ssg",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "html_css_basics",
+      "label": "HTML/CSS basics",
+      "category": "data_web",
+      "first_module": "bootdev:build_ssg",
+      "depth": "practiced"
+    },
+    {
+      "id": "regular_expressions",
+      "label": "Regular expressions",
+      "category": "strings",
+      "first_module": "bootdev:build_ssg",
+      "depth": "practiced"
+    },
+    {
+      "id": "web_development",
+      "label": "Web development (backend)",
+      "category": "data_web",
+      "first_module": "bootdev:build_ssg",
+      "depth": "deep"
+    },
+    {
+      "id": "lang_c",
+      "label": "C language",
+      "category": "languages",
+      "first_module": "bootdev:learn_memory_c",
+      "depth": "practiced",
+      "course_label": "C Basics, Structs, Unions",
+      "new": true
+    },
+    {
+      "id": "pointers_memory",
+      "label": "Pointers & memory addresses",
+      "category": "languages",
+      "first_module": "bootdev:learn_memory_c",
+      "depth": "deep",
+      "course_label": "Pointers / Advanced Pointers",
+      "new": true
+    },
+    {
+      "id": "stack_heap_memory",
+      "label": "Stack vs heap, manual allocation",
+      "category": "languages",
+      "first_module": "bootdev:learn_memory_c",
+      "depth": "deep",
+      "course_label": "Stack and Heap",
+      "new": true
+    },
+    {
+      "id": "garbage_collection",
+      "label": "Garbage collection (refcount, mark & sweep)",
+      "category": "languages",
+      "first_module": "bootdev:learn_memory_c",
+      "depth": "deep",
+      "course_label": "Refcounting GC, Mark and Sweep GC",
+      "new": true
+    },
+    {
+      "id": "portfolio_project",
+      "label": "Portfolio / personal project",
+      "category": "career",
+      "first_module": "bootdev:personal_project_1",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "lang_go",
+      "label": "Go language",
+      "category": "languages",
+      "first_module": "bootdev:learn_go",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "interfaces",
+      "label": "Interfaces",
+      "category": "oop",
+      "first_module": "bootdev:learn_go",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "concurrency",
+      "label": "Concurrency (channels, mutexes)",
+      "category": "languages",
+      "first_module": "bootdev:learn_go",
+      "depth": "practiced",
+      "course_label": "Channels, Mutexes",
+      "new": true
+    },
+    {
+      "id": "generics",
+      "label": "Generics",
+      "category": "languages",
+      "first_module": "bootdev:learn_go",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "constants",
+      "label": "Constants",
+      "category": "fundamentals",
+      "first_module": "bootdev:learn_go",
+      "depth": "introduced"
+    },
+    {
+      "id": "http_clients",
+      "label": "HTTP clients",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_clients",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "dns",
+      "label": "DNS",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_clients",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "https_tls",
+      "label": "HTTPS / TLS",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_clients",
+      "depth": "practiced",
+      "new": true,
+      "course_label": "Secure Transport"
+    },
+    {
+      "id": "tool_curl",
+      "label": "cURL",
+      "category": "environment",
+      "first_module": "bootdev:learn_http_clients",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "caching",
+      "label": "Caching",
+      "category": "data_web",
+      "first_module": "bootdev:build_pokedex",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "databases_sql",
+      "label": "Databases & SQL",
+      "category": "data_web",
+      "first_module": "bootdev:learn_sql",
+      "depth": "deep"
+    },
+    {
+      "id": "sql_joins",
+      "label": "SQL joins",
+      "category": "data_web",
+      "first_module": "bootdev:learn_sql",
+      "depth": "practiced",
+      "course_label": "Joins",
+      "new": true
+    },
+    {
+      "id": "database_normalization",
+      "label": "Database normalization",
+      "category": "data_web",
+      "first_module": "bootdev:learn_sql",
+      "depth": "practiced",
+      "course_label": "Normalization",
+      "new": true
+    },
+    {
+      "id": "database_indexes",
+      "label": "Database indexes & performance",
+      "category": "data_web",
+      "first_module": "bootdev:learn_sql",
+      "depth": "introduced",
+      "course_label": "Performance",
+      "new": true
+    },
+    {
+      "id": "tool_postgresql",
+      "label": "PostgreSQL",
+      "category": "data_web",
+      "first_module": "bootdev:build_blog_aggregator",
+      "depth": "practiced",
+      "course_label": "PostgreSQL / psql",
+      "new": true
+    },
+    {
+      "id": "db_migrations",
+      "label": "Database migrations",
+      "category": "data_web",
+      "first_module": "bootdev:build_blog_aggregator",
+      "depth": "practiced",
+      "course_label": "Goose",
+      "new": true
+    },
+    {
+      "id": "tool_sqlc",
+      "label": "sqlc",
+      "category": "data_web",
+      "first_module": "bootdev:build_blog_aggregator",
+      "depth": "practiced",
+      "course_label": "SQLc",
+      "new": true
+    },
+    {
+      "id": "xml_parsing",
+      "label": "XML parsing",
+      "category": "data_web",
+      "first_module": "bootdev:build_blog_aggregator",
+      "depth": "practiced",
+      "course_label": "RSS"
+    },
+    {
+      "id": "http_servers",
+      "label": "HTTP servers",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_servers",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "authentication",
+      "label": "Authentication",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_servers",
+      "depth": "deep",
+      "new": true,
+      "course_label": "incl. Multi-Factor Authentication"
+    },
+    {
+      "id": "authorization",
+      "label": "Authorization",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_servers",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "webhooks",
+      "label": "Webhooks",
+      "category": "data_web",
+      "first_module": "bootdev:learn_http_servers",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "object_storage",
+      "label": "Object storage",
+      "category": "data_web",
+      "first_module": "bootdev:learn_file_servers",
+      "depth": "deep",
+      "course_label": "AWS S3 / Object Storage",
+      "new": true
+    },
+    {
+      "id": "tool_aws",
+      "label": "AWS (S3, CloudFront)",
+      "category": "data_web",
+      "first_module": "bootdev:learn_file_servers",
+      "depth": "practiced",
+      "course_label": "S3, CloudFront",
+      "new": true
+    },
+    {
+      "id": "cdn",
+      "label": "CDNs",
+      "category": "data_web",
+      "first_module": "bootdev:learn_file_servers",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "web_security",
+      "label": "Web security",
+      "category": "data_web",
+      "first_module": "bootdev:learn_file_servers",
+      "depth": "deep",
+      "course_label": "Security",
+      "new": true
+    },
+    {
+      "id": "tool_docker",
+      "label": "Docker",
+      "category": "environment",
+      "first_module": "bootdev:learn_docker",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "containers",
+      "label": "Containers",
+      "category": "environment",
+      "first_module": "bootdev:learn_docker",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "injection_attacks",
+      "label": "Injection attacks",
+      "category": "data_web",
+      "first_module": "bootdev:learn_web_security",
+      "depth": "practiced",
+      "course_label": "Injection",
+      "new": true
+    },
+    {
+      "id": "pub_sub_messaging",
+      "label": "Pub/sub messaging",
+      "category": "data_web",
+      "first_module": "bootdev:learn_pubsub",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "tool_rabbitmq",
+      "label": "RabbitMQ",
+      "category": "data_web",
+      "first_module": "bootdev:learn_pubsub",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "serialization",
+      "label": "Serialization",
+      "category": "files_io",
+      "first_module": "bootdev:learn_pubsub",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "job_search",
+      "label": "Job search",
+      "category": "career",
+      "first_module": "bootdev:job_search",
+      "depth": "deep",
+      "new": true
+    }
+  ],
+  "edges": [
+    {
+      "source": "bootdev:learn_python",
+      "target": "bootdev:learn_linux",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_linux",
+      "target": "bootdev:build_bookbot",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:build_bookbot",
+      "target": "bootdev:learn_git",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_git",
+      "target": "bootdev:learn_oop",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_oop",
+      "target": "bootdev:build_asteroids",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:build_asteroids",
+      "target": "bootdev:learn_fp",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_fp",
+      "target": "bootdev:build_ai_agent",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:build_ai_agent",
+      "target": "bootdev:learn_dsa",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_dsa",
+      "target": "bootdev:build_ssg",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:build_ssg",
+      "target": "bootdev:learn_memory_c",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_memory_c",
+      "target": "bootdev:personal_project_1",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:personal_project_1",
+      "target": "bootdev:learn_go",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_go",
+      "target": "bootdev:learn_http_clients",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_http_clients",
+      "target": "bootdev:build_pokedex",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:build_pokedex",
+      "target": "bootdev:learn_sql",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_sql",
+      "target": "bootdev:build_blog_aggregator",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:build_blog_aggregator",
+      "target": "bootdev:learn_http_servers",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_http_servers",
+      "target": "bootdev:learn_file_servers",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_file_servers",
+      "target": "bootdev:learn_docker",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_docker",
+      "target": "bootdev:learn_web_security",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_web_security",
+      "target": "bootdev:learn_pubsub",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:learn_pubsub",
+      "target": "bootdev:capstone",
+      "type": "precedes"
+    },
+    {
+      "source": "bootdev:capstone",
+      "target": "bootdev:job_search",
+      "type": "precedes"
+    },
+    {
+      "source": "variables",
+      "target": "functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "logical_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "sets",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "type_hints",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "command_line",
+      "target": "linux_filesystem",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "linux_filesystem",
+      "target": "running_scripts",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "running_scripts",
+      "target": "shell_io_redirection",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "linux_filesystem",
+      "target": "linux_permissions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "command_line",
+      "target": "python_setup",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "cli_applications",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "sorting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "command_line",
+      "target": "tool_git",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tool_git",
+      "target": "git_branching",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "git_branching",
+      "target": "git_merge_rebase",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "git_merge_rebase",
+      "target": "git_remotes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "git_remotes",
+      "target": "tool_github",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "clean_code",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "encapsulation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "encapsulation",
+      "target": "abstraction",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "abstraction",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "polymorphism",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "game_loop",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "collision_detection",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "game_loop",
+      "target": "collision_detection",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "pure_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "pure_functions",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "closures",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "closures",
+      "target": "currying",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "closures",
+      "target": "decorators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "enums",
+      "target": "sum_types",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "llm_apis",
+      "target": "function_calling",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "function_calling",
+      "target": "ai_agents",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "function_calling",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "complexity_big_o",
+      "target": "sorting_algorithms",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "stacks_queues",
+      "target": "linked_lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "linked_lists",
+      "target": "trees",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "trees",
+      "target": "balanced_trees",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "trees",
+      "target": "tries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "graphs",
+      "target": "graph_algorithms",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "static_site_generation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "recursion",
+      "target": "static_site_generation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "regular_expressions",
+      "target": "markdown",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "unit_testing",
+      "target": "static_site_generation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lang_c",
+      "target": "pointers_memory",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "pointers_memory",
+      "target": "stack_heap_memory",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "stack_heap_memory",
+      "target": "garbage_collection",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lang_go",
+      "target": "concurrency",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "interfaces",
+      "target": "generics",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "http_clients",
+      "target": "caching",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "json_data",
+      "target": "http_clients",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "databases_sql",
+      "target": "sql_joins",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "databases_sql",
+      "target": "database_normalization",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "databases_sql",
+      "target": "tool_postgresql",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tool_postgresql",
+      "target": "db_migrations",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "http_clients",
+      "target": "http_servers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "http_servers",
+      "target": "authentication",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "authentication",
+      "target": "authorization",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "http_servers",
+      "target": "webhooks",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "http_servers",
+      "target": "object_storage",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "object_storage",
+      "target": "cdn",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "authentication",
+      "target": "web_security",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "http_servers",
+      "target": "pub_sub_messaging",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "serialization",
+      "target": "pub_sub_messaging",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "containers",
+      "target": "tool_docker",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "sets",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "pure_functions",
+      "target": "functional_programming",
+      "type": "is_a"
+    },
+    {
+      "source": "currying",
+      "target": "higher_order_functions",
+      "type": "is_a"
+    },
+    {
+      "source": "decorators",
+      "target": "higher_order_functions",
+      "type": "is_a"
+    },
+    {
+      "source": "balanced_trees",
+      "target": "trees",
+      "type": "is_a"
+    },
+    {
+      "source": "tries",
+      "target": "trees",
+      "type": "is_a"
+    },
+    {
+      "source": "trees",
+      "target": "graphs",
+      "type": "is_a"
+    },
+    {
+      "source": "sorting_algorithms",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "graph_algorithms",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "injection_attacks",
+      "target": "web_security",
+      "type": "is_a"
+    },
+    {
+      "source": "ai_agents",
+      "target": "llm_apis",
+      "type": "is_a"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "git_internals",
+      "target": "tool_git",
+      "type": "part_of"
+    },
+    {
+      "source": "git_branching",
+      "target": "tool_git",
+      "type": "part_of"
+    },
+    {
+      "source": "git_merge_rebase",
+      "target": "tool_git",
+      "type": "part_of"
+    },
+    {
+      "source": "git_remotes",
+      "target": "tool_git",
+      "type": "part_of"
+    },
+    {
+      "source": "encapsulation",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "abstraction",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "polymorphism",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "game_loop",
+      "target": "game_development",
+      "type": "part_of"
+    },
+    {
+      "source": "collision_detection",
+      "target": "game_development",
+      "type": "part_of"
+    },
+    {
+      "source": "closures",
+      "target": "functional_programming",
+      "type": "part_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "functional_programming",
+      "type": "part_of"
+    },
+    {
+      "source": "function_calling",
+      "target": "ai_agents",
+      "type": "part_of"
+    },
+    {
+      "source": "stack_heap_memory",
+      "target": "pointers_memory",
+      "type": "part_of"
+    },
+    {
+      "source": "sql_joins",
+      "target": "databases_sql",
+      "type": "part_of"
+    },
+    {
+      "source": "database_normalization",
+      "target": "databases_sql",
+      "type": "part_of"
+    },
+    {
+      "source": "database_indexes",
+      "target": "databases_sql",
+      "type": "part_of"
+    },
+    {
+      "source": "authentication",
+      "target": "web_security",
+      "type": "part_of"
+    },
+    {
+      "source": "authorization",
+      "target": "web_security",
+      "type": "part_of"
+    },
+    {
+      "source": "https_tls",
+      "target": "http_clients",
+      "type": "part_of"
+    },
+    {
+      "source": "dns",
+      "target": "http_clients",
+      "type": "part_of"
+    },
+    {
+      "source": "linux_permissions",
+      "target": "linux_filesystem",
+      "type": "part_of"
+    },
+    {
+      "source": "raising_exceptions",
+      "target": "exceptions",
+      "type": "part_of"
+    },
+    {
+      "source": "markdown",
+      "target": "static_site_generation",
+      "type": "part_of"
+    },
+    {
+      "source": "game_development",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "llm_apis",
+      "target": "lib_openai",
+      "type": "uses_tool"
+    },
+    {
+      "source": "http_clients",
+      "target": "tool_curl",
+      "type": "uses_tool"
+    },
+    {
+      "source": "databases_sql",
+      "target": "tool_postgresql",
+      "type": "uses_tool"
+    },
+    {
+      "source": "db_migrations",
+      "target": "tool_sqlc",
+      "type": "uses_tool"
+    },
+    {
+      "source": "containers",
+      "target": "tool_docker",
+      "type": "uses_tool"
+    },
+    {
+      "source": "object_storage",
+      "target": "tool_aws",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cdn",
+      "target": "tool_aws",
+      "type": "uses_tool"
+    },
+    {
+      "source": "pub_sub_messaging",
+      "target": "tool_rabbitmq",
+      "type": "uses_tool"
+    },
+    {
+      "source": "git_remotes",
+      "target": "tool_github",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:build_asteroids",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:build_ai_agent",
+      "target": "lib_openai",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:learn_git",
+      "target": "tool_git",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:learn_docker",
+      "target": "tool_docker",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:build_blog_aggregator",
+      "target": "tool_postgresql",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:build_blog_aggregator",
+      "target": "tool_sqlc",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:learn_file_servers",
+      "target": "tool_aws",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:learn_pubsub",
+      "target": "tool_rabbitmq",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:learn_http_clients",
+      "target": "tool_curl",
+      "type": "uses_tool"
+    },
+    {
+      "source": "bootdev:build_ssg",
+      "target": "tool_github",
+      "type": "uses_tool"
+    },
+    {
+      "source": "pointers_memory",
+      "target": "mutability_aliasing",
+      "type": "related_to"
+    },
+    {
+      "source": "garbage_collection",
+      "target": "mutability_aliasing",
+      "type": "related_to"
+    },
+    {
+      "source": "hash_maps_internals",
+      "target": "dictionaries",
+      "type": "related_to"
+    },
+    {
+      "source": "stacks_queues",
+      "target": "lists",
+      "type": "related_to"
+    },
+    {
+      "source": "interfaces",
+      "target": "polymorphism",
+      "type": "related_to"
+    },
+    {
+      "source": "caching",
+      "target": "dictionaries",
+      "type": "related_to"
+    },
+    {
+      "source": "serialization",
+      "target": "json_data",
+      "type": "related_to"
+    },
+    {
+      "source": "cli_applications",
+      "target": "command_line_args",
+      "type": "related_to"
+    },
+    {
+      "source": "environment_variables",
+      "target": "os_sys_module",
+      "type": "related_to"
+    }
+  ]
+}

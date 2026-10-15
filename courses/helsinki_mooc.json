@@ -1,0 +1,1987 @@
+{
+  "course": {
+    "id": "helsinki_mooc",
+    "title": "Python Programming MOOC 2026",
+    "provider": "University of Helsinki (Department of Computer Science, MOOC Center)",
+    "url": "https://programming-26.mooc.fi/",
+    "format": "self-paced, 14 parts; Introduction to Programming (BSCS1001, parts 1-7, 5 ECTS) + Advanced Course in Programming (BSCS1002, parts 8-14, 5 ECTS); auto-graded TMC exercises, Zoom lectures, exams",
+    "audience": "absolute beginners",
+    "sources": [
+      "https://programming-26.mooc.fi/",
+      "https://programming-26.mooc.fi/part-1",
+      "https://programming-26.mooc.fi/part-7/4-data-processing",
+      "https://programming-26.mooc.fi/part-10/3-oo-programming-techniques",
+      "https://programming-26.mooc.fi/part-10/4-application-development",
+      "https://programming-26.mooc.fi/part-12/3-functional-programming",
+      "https://programming-25.mooc.fi/",
+      "https://github.com/rage/programming-26 (course source markdown, data/part-N/*.md)",
+      "https://programming-26.mooc.fi/part-2",
+      "https://programming-26.mooc.fi/part-3",
+      "https://programming-26.mooc.fi/part-4",
+      "https://programming-26.mooc.fi/part-5",
+      "https://programming-26.mooc.fi/part-6",
+      "https://programming-26.mooc.fi/part-7",
+      "https://programming-26.mooc.fi/part-8",
+      "https://programming-26.mooc.fi/part-9",
+      "https://programming-26.mooc.fi/part-10",
+      "https://programming-26.mooc.fi/part-11",
+      "https://programming-26.mooc.fi/part-12",
+      "https://programming-26.mooc.fi/part-13",
+      "https://programming-26.mooc.fi/part-14"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Edition: 2026 (programming-26.mooc.fi, open until end of 2026); the 2025 edition (programming-25.mooc.fi) has an identical part/section structure. The site labels parts only by number ('Part 1'...'Part 14'); module titles here are composed from the official section titles, which are listed verbatim in `topics`. Section titles and exercise names were taken from the course's public source repo (rage/programming-26). `projects` lists a selection of notable/multi-part exercises, not every exercise (each part has ~15-40 exercises). Part 14 is a pygame game project (a Sokoban-style 'robot and boxes' worked example, then a peer-reviewed game of the student's own). Part 1-3 exercises run in an in-browser editor; VS Code + TMC plugin are introduced in part 4. Concept depth is a judgement from section content/exercise counts. 'polymorphism' is only implicit (method overriding in part 10), not named as such; 'math_module' is used in part 1 (sqrt for quadratic equation) but modules are formally taught in part 7. Not covered: sets as a topic, enumerate/zip, unit testing (tests are run by TMC but not taught), dataclasses, decorators beyond @property/@classmethod. New concept IDs: conditional_expressions, event_driven_programming."
+  },
+  "modules": [
+    {
+      "id": "helsinki_mooc:part01",
+      "title": "Part 1: Getting started, input, variables, arithmetic and conditionals",
+      "order": 1,
+      "url": "https://programming-26.mooc.fi/part-1",
+      "topics": [
+        "Getting started",
+        "Information from the user",
+        "More about variables",
+        "Arithmetic operations",
+        "Conditional statements"
+      ],
+      "projects": [
+        "Emoticon",
+        "Fix the code: Seven Brothers",
+        "Students in groups",
+        "Calculator",
+        "Solving a quadratic equation"
+      ],
+      "concepts": [
+        "print_output",
+        "comments",
+        "user_input",
+        "variables",
+        "strings",
+        "string_concatenation",
+        "string_formatting",
+        "integers_floats",
+        "data_types",
+        "arithmetic_operators",
+        "type_conversion",
+        "expressions",
+        "conditionals",
+        "comparison_operators",
+        "booleans",
+        "math_module"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part02",
+      "title": "Part 2: Programming terminology, more conditionals, combining conditions and simple loops",
+      "order": 2,
+      "url": "https://programming-26.mooc.fi/part-2",
+      "topics": [
+        "Programming terminology",
+        "More conditionals",
+        "Combining conditions",
+        "Simple loops"
+      ],
+      "projects": [
+        "FizzBuzz",
+        "Leap year",
+        "Gift tax calculator",
+        "PIN and number of attempts",
+        "Working with numbers"
+      ],
+      "concepts": [
+        "expressions",
+        "data_types",
+        "type_conversion",
+        "debugging",
+        "conditionals",
+        "nested_conditionals",
+        "logical_operators",
+        "while_loops",
+        "loop_patterns",
+        "string_concatenation",
+        "defensive_programming",
+        "break_continue"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part03",
+      "title": "Part 3: Loops with conditions, working with strings, more loops and defining functions",
+      "order": 3,
+      "url": "https://programming-26.mooc.fi/part-3",
+      "topics": [
+        "Loops with conditions",
+        "Working with strings",
+        "More loops",
+        "Defining functions"
+      ],
+      "projects": [
+        "Substrings, part 1",
+        "Find all the substrings",
+        "Factorial",
+        "Chessboard",
+        "A word squared"
+      ],
+      "concepts": [
+        "while_loops",
+        "loop_patterns",
+        "strings",
+        "string_indexing_slicing",
+        "string_methods",
+        "break_continue",
+        "nested_loops",
+        "functions",
+        "parameters_arguments",
+        "scope",
+        "debugging",
+        "builtin_functions"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part04",
+      "title": "Part 4: VS Code and debugger, more functions, lists, definite iteration, formatting, strings and lists",
+      "order": 4,
+      "url": "https://programming-26.mooc.fi/part-4",
+      "topics": [
+        "The Visual Studio Code editor, Python interpreter and built-in debugging tool",
+        "More functions",
+        "Lists",
+        "Definite iteration",
+        "Print statement formatting",
+        "More strings and lists"
+      ],
+      "projects": [
+        "Hello Visual Studio Code",
+        "A spruce",
+        "Palindromes",
+        "Anagrams",
+        "Grade statistics"
+      ],
+      "concepts": [
+        "ide_editor",
+        "repl",
+        "debugging",
+        "running_scripts",
+        "functions",
+        "parameters_arguments",
+        "return_values",
+        "lists",
+        "list_methods",
+        "builtin_functions",
+        "sorting",
+        "for_loops",
+        "range_function",
+        "loop_patterns",
+        "string_formatting",
+        "list_slicing",
+        "string_indexing_slicing",
+        "string_immutability",
+        "string_methods",
+        "decomposition",
+        "objects_methods",
+        "unicode_encoding"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part05",
+      "title": "Part 5: More lists, references, dictionaries and tuples",
+      "order": 5,
+      "url": "https://programming-26.mooc.fi/part-5",
+      "topics": [
+        "More lists",
+        "References",
+        "Dictionary",
+        "Tuple"
+      ],
+      "projects": [
+        "Sudoku (check row/column/block/grid, print grid, add number)",
+        "Tic-Tac-Toe",
+        "Transpose a matrix",
+        "Phone book, version 1 & 2",
+        "Movie database",
+        "Student database"
+      ],
+      "concepts": [
+        "lists",
+        "nested_data_structures",
+        "mutability_aliasing",
+        "copying",
+        "dictionaries",
+        "tuples",
+        "unpacking",
+        "collections",
+        "game_development"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part06",
+      "title": "Part 6: Reading and writing files, handling errors, local and global variables",
+      "order": 6,
+      "url": "https://programming-26.mooc.fi/part-6",
+      "topics": [
+        "Reading files",
+        "Writing files",
+        "Handling errors",
+        "Local and global variables"
+      ],
+      "projects": [
+        "Course grading, parts 1-4",
+        "Spell checker",
+        "Recipe search",
+        "City bikes",
+        "Word search",
+        "Incorrect lottery numbers"
+      ],
+      "concepts": [
+        "file_io",
+        "context_managers",
+        "csv_files",
+        "string_methods",
+        "exceptions",
+        "raising_exceptions",
+        "defensive_programming",
+        "scope",
+        "os_sys_module",
+        "nested_data_structures"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part07",
+      "title": "Part 7: Modules, randomness, times and dates, data processing, own modules, more Python features",
+      "order": 7,
+      "url": "https://programming-26.mooc.fi/part-7",
+      "topics": [
+        "Modules",
+        "Randomness",
+        "Times and dates",
+        "Data processing",
+        "Creating your own modules",
+        "More Python features"
+      ],
+      "projects": [
+        "Fractions",
+        "Password generator, parts 1-2",
+        "Dice roller",
+        "Valid PIC?",
+        "Course statistics",
+        "Who cheated (v1, v2)",
+        "Spell checker, version 2",
+        "String helper",
+        "Your own programming language"
+      ],
+      "concepts": [
+        "modules_imports",
+        "standard_library",
+        "math_module",
+        "random_module",
+        "datetime_module",
+        "csv_files",
+        "json_data",
+        "apis_http",
+        "type_hints",
+        "conditional_expressions",
+        "parameters_arguments",
+        "args_kwargs",
+        "break_continue",
+        "debugging",
+        "third_party_packages"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part08",
+      "title": "Part 8: Objects and methods, classes and objects, defining classes and methods",
+      "order": 8,
+      "url": "https://programming-26.mooc.fi/part-8",
+      "topics": [
+        "Objects and methods",
+        "Classes and objects",
+        "Defining classes",
+        "Defining methods",
+        "More examples of classes"
+      ],
+      "projects": [
+        "Book",
+        "Define class: Pet",
+        "Decreasing counter",
+        "Stopwatch",
+        "Clock",
+        "LunchCard",
+        "Series"
+      ],
+      "concepts": [
+        "objects_methods",
+        "classes",
+        "instance_attributes",
+        "constructors",
+        "encapsulation",
+        "dunder_methods",
+        "object_oriented_design"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part09",
+      "title": "Part 9: Objects and references, objects as attributes, encapsulation, method scope, class attributes",
+      "order": 9,
+      "url": "https://programming-26.mooc.fi/part-9",
+      "topics": [
+        "Objects and references",
+        "Objects as attributes",
+        "Encapsulation",
+        "Scope of methods",
+        "Class attributes",
+        "More examples with classes"
+      ],
+      "projects": [
+        "Baby Centre",
+        "LunchCard and PaymentTerminal",
+        "A box of presents",
+        "Weather station",
+        "Postcodes",
+        "Item, Suitcase and Cargo hold"
+      ],
+      "concepts": [
+        "mutability_aliasing",
+        "composition",
+        "none_type",
+        "encapsulation",
+        "class_attributes",
+        "parameters_arguments",
+        "classes",
+        "object_oriented_design"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part10",
+      "title": "Part 10: Class hierarchies, access modifiers, OOP techniques, developing a larger application",
+      "order": 10,
+      "url": "https://programming-26.mooc.fi/part-10",
+      "topics": [
+        "Class hierarchies",
+        "Access modifiers",
+        "Object oriented programming techniques",
+        "Developing a larger application"
+      ],
+      "projects": [
+        "Game Museum",
+        "Word game",
+        "Supergroup",
+        "Money",
+        "Simple date",
+        "An iterable shopping list",
+        "Phone book expansion, versions 1-2",
+        "CourseRecords"
+      ],
+      "concepts": [
+        "inheritance",
+        "polymorphism",
+        "encapsulation",
+        "dunder_methods",
+        "iteration",
+        "object_oriented_design",
+        "decomposition",
+        "composition",
+        "file_io"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part11",
+      "title": "Part 11: List comprehensions, more comprehensions, recursion, more recursion examples",
+      "order": 11,
+      "url": "https://programming-26.mooc.fi/part-11",
+      "topics": [
+        "List comprehensions",
+        "More comprehensions",
+        "Recursion",
+        "More recursion examples"
+      ],
+      "projects": [
+        "Lottery numbers",
+        "Most common words",
+        "Balance all the brackets",
+        "Greatest node",
+        "Bosses and subordinates",
+        "OrderBook",
+        "Order book application"
+      ],
+      "concepts": [
+        "list_comprehensions",
+        "dict_comprehensions",
+        "conditional_expressions",
+        "recursion",
+        "binary_search",
+        "trees",
+        "algorithms"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part12",
+      "title": "Part 12: Functions as arguments, generators, functional programming, regular expressions",
+      "order": 12,
+      "url": "https://programming-26.mooc.fi/part-12",
+      "topics": [
+        "Functions as arguments",
+        "Generators",
+        "Functional programming",
+        "Regular expressions"
+      ],
+      "projects": [
+        "Sort by remaining stock",
+        "ClimbingRoute / Climbing areas",
+        "BallPlayers",
+        "Prime numbers (generator)",
+        "Attempted courses / Study credits",
+        "Hockey statistics"
+      ],
+      "concepts": [
+        "higher_order_functions",
+        "lambda_functions",
+        "sorting",
+        "generators",
+        "iteration",
+        "functional_programming",
+        "regular_expressions",
+        "json_data"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part13",
+      "title": "Part 13: Pygame, animation, events, more pygame techniques",
+      "order": 13,
+      "url": "https://programming-26.mooc.fi/part-13",
+      "topics": [
+        "Pygame",
+        "Animation",
+        "Events",
+        "More pygame techniques"
+      ],
+      "projects": [
+        "A hundred robots",
+        "Bouncing ball",
+        "Robot invasion",
+        "Two players",
+        "Robot and mouse",
+        "Clock",
+        "Asteroids"
+      ],
+      "concepts": [
+        "lib_pygame",
+        "tool_pip",
+        "third_party_packages",
+        "graphics_canvas",
+        "event_driven_programming",
+        "game_development",
+        "math_module",
+        "random_module"
+      ]
+    },
+    {
+      "id": "helsinki_mooc:part14",
+      "title": "Part 14: Game project",
+      "order": 14,
+      "url": "https://programming-26.mooc.fi/part-14",
+      "topics": [
+        "Game project",
+        "Robot and boxes",
+        "Finishing the game",
+        "Your own game"
+      ],
+      "projects": [
+        "Sokoban-style 'Robot and boxes' worked game",
+        "Your own game (final peer-reviewed project)"
+      ],
+      "concepts": [
+        "game_development",
+        "lib_pygame",
+        "event_driven_programming",
+        "nested_data_structures",
+        "object_oriented_design",
+        "decomposition",
+        "tool_git"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "print_output",
+      "label": "print() & output",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced"
+    },
+    {
+      "id": "comments",
+      "label": "Comments",
+      "category": "environment",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "introduced",
+      "course_label": "Commenting"
+    },
+    {
+      "id": "user_input",
+      "label": "User input with input()",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Information from the user"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Data type"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Integers & floats",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Integers / Floating point numbers"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Arithmetic operations"
+    },
+    {
+      "id": "type_conversion",
+      "label": "Type conversion",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Typecasting"
+    },
+    {
+      "id": "expressions",
+      "label": "Expressions & statements",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "introduced",
+      "course_label": "Programming terminology"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Boolean values and Boolean expressions"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "practiced",
+      "course_label": "Combining conditions"
+    },
+    {
+      "id": "none_type",
+      "label": "None",
+      "category": "fundamentals",
+      "first_module": "helsinki_mooc:part09",
+      "depth": "introduced",
+      "course_label": "None: a reference to nothing"
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "deep",
+      "course_label": "Working with strings"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation & repetition",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Concatenating strings with the + operator"
+    },
+    {
+      "id": "string_formatting",
+      "label": "String formatting (f-strings)",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "practiced",
+      "course_label": "Printing with f-strings / Print statement formatting"
+    },
+    {
+      "id": "string_indexing_slicing",
+      "label": "String indexing & slicing",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "deep",
+      "course_label": "Substrings and slices"
+    },
+    {
+      "id": "string_methods",
+      "label": "String methods",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "practiced",
+      "course_label": "Searching for substrings / More methods for lists and strings"
+    },
+    {
+      "id": "string_immutability",
+      "label": "String immutability",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "introduced",
+      "course_label": "Strings are immutable"
+    },
+    {
+      "id": "unicode_encoding",
+      "label": "Characters & ord/chr",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "introduced"
+    },
+    {
+      "id": "regular_expressions",
+      "label": "Regular expressions",
+      "category": "strings",
+      "first_module": "helsinki_mooc:part12",
+      "depth": "practiced"
+    },
+    {
+      "id": "conditionals",
+      "label": "Conditionals (if/elif/else)",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "deep",
+      "course_label": "Conditional statements"
+    },
+    {
+      "id": "nested_conditionals",
+      "label": "Nested conditionals",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "practiced"
+    },
+    {
+      "id": "conditional_expressions",
+      "label": "Conditional (ternary) expressions",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "introduced",
+      "course_label": "Single line conditionals",
+      "new": true
+    },
+    {
+      "id": "while_loops",
+      "label": "while loops",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "deep",
+      "course_label": "Simple loops / Loops with conditions"
+    },
+    {
+      "id": "for_loops",
+      "label": "for loops",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "deep",
+      "course_label": "Definite iteration"
+    },
+    {
+      "id": "range_function",
+      "label": "range()",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced"
+    },
+    {
+      "id": "break_continue",
+      "label": "break / continue (and loop else)",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "practiced"
+    },
+    {
+      "id": "nested_loops",
+      "label": "Nested loops",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "practiced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns (helper variables, counters, accumulators)",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "practiced",
+      "course_label": "Loops and helper variables"
+    },
+    {
+      "id": "iteration",
+      "label": "Iteration & iterators",
+      "category": "control_flow",
+      "first_module": "helsinki_mooc:part10",
+      "depth": "introduced",
+      "course_label": "Iterators"
+    },
+    {
+      "id": "functions",
+      "label": "Functions",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "deep",
+      "course_label": "Defining functions"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters & arguments",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "practiced"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced",
+      "course_label": "The return value of a function"
+    },
+    {
+      "id": "scope",
+      "label": "Scope (local/global)",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "practiced",
+      "course_label": "Local and global variables"
+    },
+    {
+      "id": "args_kwargs",
+      "label": "Variable number of parameters (*args)",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "introduced",
+      "course_label": "A variable number of parameters"
+    },
+    {
+      "id": "type_hints",
+      "label": "Type hints",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "introduced",
+      "course_label": "Putting type hints to use"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Built-in functions",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part03",
+      "depth": "practiced",
+      "course_label": "Maximum, minimum and sum"
+    },
+    {
+      "id": "decomposition",
+      "label": "Problem decomposition",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced",
+      "course_label": "Developing a larger programming project / Managing complexity"
+    },
+    {
+      "id": "recursion",
+      "label": "Recursion",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part11",
+      "depth": "deep"
+    },
+    {
+      "id": "higher_order_functions",
+      "label": "Higher-order functions (functions as arguments, map/filter/reduce)",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part12",
+      "depth": "practiced",
+      "course_label": "Functions as arguments"
+    },
+    {
+      "id": "lambda_functions",
+      "label": "Lambda expressions",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part12",
+      "depth": "practiced"
+    },
+    {
+      "id": "generators",
+      "label": "Generators",
+      "category": "functions",
+      "first_module": "helsinki_mooc:part12",
+      "depth": "practiced"
+    },
+    {
+      "id": "collections",
+      "label": "Collections",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "practiced"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "deep"
+    },
+    {
+      "id": "list_methods",
+      "label": "List methods",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_slicing",
+      "label": "List slicing",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced",
+      "course_label": "More slices"
+    },
+    {
+      "id": "list_comprehensions",
+      "label": "List comprehensions",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part11",
+      "depth": "deep"
+    },
+    {
+      "id": "dict_comprehensions",
+      "label": "Dictionary comprehensions",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part11",
+      "depth": "practiced",
+      "course_label": "Comprehensions and dictionaries"
+    },
+    {
+      "id": "tuples",
+      "label": "Tuples",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "practiced",
+      "course_label": "Tuple"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "deep",
+      "course_label": "Dictionary"
+    },
+    {
+      "id": "mutability_aliasing",
+      "label": "References & aliasing",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "practiced",
+      "course_label": "References / Objects and references"
+    },
+    {
+      "id": "copying",
+      "label": "Copying lists",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "introduced",
+      "course_label": "Copying a list"
+    },
+    {
+      "id": "nested_data_structures",
+      "label": "Nested data structures (matrices)",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "practiced",
+      "course_label": "Lists within lists / Matrices"
+    },
+    {
+      "id": "sorting",
+      "label": "Sorting (sort/sorted, key functions)",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced",
+      "course_label": "Sorting lists / Sorting collections of your own objects"
+    },
+    {
+      "id": "unpacking",
+      "label": "Unpacking",
+      "category": "collections",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "introduced",
+      "course_label": "Tuples without parentheses"
+    },
+    {
+      "id": "file_io",
+      "label": "File reading & writing",
+      "category": "files_io",
+      "first_module": "helsinki_mooc:part06",
+      "depth": "deep",
+      "course_label": "Reading files / Writing files"
+    },
+    {
+      "id": "context_managers",
+      "label": "with statement",
+      "category": "files_io",
+      "first_module": "helsinki_mooc:part06",
+      "depth": "introduced"
+    },
+    {
+      "id": "csv_files",
+      "label": "CSV files",
+      "category": "files_io",
+      "first_module": "helsinki_mooc:part06",
+      "depth": "practiced",
+      "course_label": "Reading CSV files"
+    },
+    {
+      "id": "json_data",
+      "label": "JSON data",
+      "category": "files_io",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "practiced",
+      "course_label": "Reading JSON files"
+    },
+    {
+      "id": "exceptions",
+      "label": "Exceptions",
+      "category": "errors_testing",
+      "first_module": "helsinki_mooc:part06",
+      "depth": "practiced",
+      "course_label": "Handling errors"
+    },
+    {
+      "id": "raising_exceptions",
+      "label": "Raising exceptions",
+      "category": "errors_testing",
+      "first_module": "helsinki_mooc:part06",
+      "depth": "introduced"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging",
+      "category": "errors_testing",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "practiced",
+      "course_label": "Debugging / The built-in debugger"
+    },
+    {
+      "id": "defensive_programming",
+      "label": "Input validation",
+      "category": "errors_testing",
+      "first_module": "helsinki_mooc:part02",
+      "depth": "practiced",
+      "course_label": "Input validation"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Objects & methods",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced",
+      "course_label": "Objects and methods"
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part08",
+      "depth": "deep",
+      "course_label": "Classes and objects / Defining classes"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part08",
+      "depth": "practiced"
+    },
+    {
+      "id": "constructors",
+      "label": "Constructors (__init__)",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part08",
+      "depth": "practiced",
+      "course_label": "Adding a constructor"
+    },
+    {
+      "id": "encapsulation",
+      "label": "Encapsulation (private attributes, getters/setters, properties)",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part08",
+      "depth": "practiced",
+      "course_label": "Encapsulation / Access modifiers"
+    },
+    {
+      "id": "class_attributes",
+      "label": "Class attributes & class methods",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part09",
+      "depth": "practiced",
+      "course_label": "Class variables / Class methods"
+    },
+    {
+      "id": "dunder_methods",
+      "label": "Dunder methods & operator overloading",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part08",
+      "depth": "practiced",
+      "course_label": "Overloading operators / A string representation of an object"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part10",
+      "depth": "practiced",
+      "course_label": "Class hierarchies"
+    },
+    {
+      "id": "polymorphism",
+      "label": "Polymorphism (method overriding)",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part10",
+      "depth": "introduced",
+      "course_label": "Overriding"
+    },
+    {
+      "id": "composition",
+      "label": "Composition (objects as attributes)",
+      "category": "oop",
+      "first_module": "helsinki_mooc:part09",
+      "depth": "practiced",
+      "course_label": "Objects as attributes"
+    },
+    {
+      "id": "object_oriented_design",
+      "label": "Object-oriented design",
+      "category": "data_web",
+      "first_module": "helsinki_mooc:part08",
+      "depth": "practiced",
+      "course_label": "Developing a larger application"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Modules & imports",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "practiced",
+      "course_label": "Modules / Creating your own modules"
+    },
+    {
+      "id": "standard_library",
+      "label": "Standard library",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "practiced",
+      "course_label": "Looking for modules"
+    },
+    {
+      "id": "math_module",
+      "label": "math module",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part01",
+      "depth": "introduced"
+    },
+    {
+      "id": "random_module",
+      "label": "random module",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "practiced",
+      "course_label": "Randomness"
+    },
+    {
+      "id": "datetime_module",
+      "label": "datetime module",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "practiced",
+      "course_label": "Times and dates"
+    },
+    {
+      "id": "os_sys_module",
+      "label": "os module",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part06",
+      "depth": "introduced",
+      "course_label": "Clearing file contents and deleting files"
+    },
+    {
+      "id": "apis_http",
+      "label": "Retrieving data over HTTP (urllib)",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "introduced",
+      "course_label": "Retrieving a file from the internet"
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third-party packages",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part07",
+      "depth": "introduced"
+    },
+    {
+      "id": "lib_pygame",
+      "label": "pygame",
+      "category": "modules_libs",
+      "first_module": "helsinki_mooc:part13",
+      "depth": "deep",
+      "course_label": "Pygame"
+    },
+    {
+      "id": "tool_pip",
+      "label": "pip",
+      "category": "environment",
+      "first_module": "helsinki_mooc:part13",
+      "depth": "introduced",
+      "course_label": "Installing pygame"
+    },
+    {
+      "id": "tool_git",
+      "label": "git / GitHub",
+      "category": "environment",
+      "first_module": "helsinki_mooc:part14",
+      "depth": "introduced",
+      "course_label": "Your game on GitHub?"
+    },
+    {
+      "id": "ide_editor",
+      "label": "Editor / IDE (Visual Studio Code)",
+      "category": "environment",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "practiced",
+      "course_label": "The Visual Studio Code editor"
+    },
+    {
+      "id": "repl",
+      "label": "Interactive interpreter",
+      "category": "environment",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "introduced",
+      "course_label": "The interactive Python interpreter"
+    },
+    {
+      "id": "running_scripts",
+      "label": "Running Python programs",
+      "category": "environment",
+      "first_module": "helsinki_mooc:part04",
+      "depth": "introduced",
+      "course_label": "Executing code"
+    },
+    {
+      "id": "algorithms",
+      "label": "Algorithms",
+      "category": "algorithms",
+      "first_module": "helsinki_mooc:part11",
+      "depth": "practiced"
+    },
+    {
+      "id": "binary_search",
+      "label": "Binary search",
+      "category": "algorithms",
+      "first_module": "helsinki_mooc:part11",
+      "depth": "introduced"
+    },
+    {
+      "id": "trees",
+      "label": "Binary trees",
+      "category": "algorithms",
+      "first_module": "helsinki_mooc:part11",
+      "depth": "practiced",
+      "course_label": "Recursive binary tree algorithms"
+    },
+    {
+      "id": "functional_programming",
+      "label": "Functional programming",
+      "category": "data_web",
+      "first_module": "helsinki_mooc:part12",
+      "depth": "practiced"
+    },
+    {
+      "id": "game_development",
+      "label": "Game development",
+      "category": "data_web",
+      "first_module": "helsinki_mooc:part05",
+      "depth": "deep",
+      "course_label": "Game project"
+    },
+    {
+      "id": "graphics_canvas",
+      "label": "Graphics & drawing",
+      "category": "data_web",
+      "first_module": "helsinki_mooc:part13",
+      "depth": "practiced",
+      "course_label": "Drawing shapes / Animation"
+    },
+    {
+      "id": "event_driven_programming",
+      "label": "Event-driven programming (event loop, keyboard/mouse events)",
+      "category": "data_web",
+      "first_module": "helsinki_mooc:part13",
+      "depth": "practiced",
+      "course_label": "Events",
+      "new": true
+    }
+  ],
+  "edges": [
+    {
+      "source": "helsinki_mooc:part01",
+      "target": "helsinki_mooc:part02",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part02",
+      "target": "helsinki_mooc:part03",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part03",
+      "target": "helsinki_mooc:part04",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part04",
+      "target": "helsinki_mooc:part05",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part05",
+      "target": "helsinki_mooc:part06",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part06",
+      "target": "helsinki_mooc:part07",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part07",
+      "target": "helsinki_mooc:part08",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part08",
+      "target": "helsinki_mooc:part09",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part09",
+      "target": "helsinki_mooc:part10",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part10",
+      "target": "helsinki_mooc:part11",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part11",
+      "target": "helsinki_mooc:part12",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part12",
+      "target": "helsinki_mooc:part13",
+      "type": "precedes"
+    },
+    {
+      "source": "helsinki_mooc:part13",
+      "target": "helsinki_mooc:part14",
+      "type": "precedes"
+    },
+    {
+      "source": "print_output",
+      "target": "user_input",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "user_input",
+      "target": "variables",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "arithmetic_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "integers_floats",
+      "target": "arithmetic_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "user_input",
+      "target": "type_conversion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "string_formatting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "nested_conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "logical_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "break_continue",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_indexing_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "nested_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "string_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "parameters_arguments",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "return_values",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "debugging",
+      "target": "ide_editor",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "list_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "nested_data_structures",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "nested_data_structures",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "mutability_aliasing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "copying",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "tuples",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tuples",
+      "target": "unpacking",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "file_io",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "context_managers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "defensive_programming",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "raising_exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "modules_imports",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "random_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "datetime_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "math_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "csv_files",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "json_data",
+      "target": "apis_http",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "conditional_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "args_kwargs",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "objects_methods",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "constructors",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "constructors",
+      "target": "instance_attributes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "encapsulation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "composition",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "composition",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "class_attributes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "polymorphism",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "encapsulation",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "dunder_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dunder_methods",
+      "target": "iteration",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditional_expressions",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "list_comprehensions",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "recursion",
+      "target": "binary_search",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "recursion",
+      "target": "trees",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "trees",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "sorting",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "lambda_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "iteration",
+      "target": "generators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "list_comprehensions",
+      "target": "generators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "functional_programming",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "functional_programming",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "regular_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "third_party_packages",
+      "target": "lib_pygame",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tool_pip",
+      "target": "lib_pygame",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "event_driven_programming",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_pygame",
+      "target": "graphics_canvas",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "graphics_canvas",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "event_driven_programming",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "nested_data_structures",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "object_oriented_design",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decomposition",
+      "target": "object_oriented_design",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "tuples",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "nested_data_structures",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "for_loops",
+      "target": "iteration",
+      "type": "is_a"
+    },
+    {
+      "source": "math_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "random_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "datetime_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "os_sys_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_pygame",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "binary_search",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "dict_comprehensions",
+      "target": "list_comprehensions",
+      "type": "is_a"
+    },
+    {
+      "source": "generators",
+      "target": "iteration",
+      "type": "is_a"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "functions",
+      "type": "is_a"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_formatting",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_concatenation",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_immutability",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "constructors",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "instance_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "class_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "nested_conditionals",
+      "target": "conditionals",
+      "type": "part_of"
+    },
+    {
+      "source": "break_continue",
+      "target": "while_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "raising_exceptions",
+      "target": "exceptions",
+      "type": "part_of"
+    },
+    {
+      "source": "return_values",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "functional_programming",
+      "type": "part_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "functional_programming",
+      "type": "part_of"
+    },
+    {
+      "source": "game_development",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "graphics_canvas",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "event_driven_programming",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "helsinki_mooc:part13",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "helsinki_mooc:part14",
+      "target": "lib_pygame",
+      "type": "uses_tool"
+    },
+    {
+      "source": "helsinki_mooc:part14",
+      "target": "tool_git",
+      "type": "uses_tool"
+    },
+    {
+      "source": "helsinki_mooc:part04",
+      "target": "ide_editor",
+      "type": "uses_tool"
+    },
+    {
+      "source": "lib_pygame",
+      "target": "tool_pip",
+      "type": "uses_tool"
+    },
+    {
+      "source": "apis_http",
+      "target": "standard_library",
+      "type": "uses_tool"
+    },
+    {
+      "source": "dunder_methods",
+      "target": "polymorphism",
+      "type": "related_to"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "composition",
+      "type": "related_to"
+    },
+    {
+      "source": "trees",
+      "target": "recursion",
+      "type": "related_to"
+    },
+    {
+      "source": "dict_comprehensions",
+      "target": "dictionaries",
+      "type": "related_to"
+    },
+    {
+      "source": "json_data",
+      "target": "dictionaries",
+      "type": "related_to"
+    },
+    {
+      "source": "type_hints",
+      "target": "functions",
+      "type": "related_to"
+    }
+  ]
+}

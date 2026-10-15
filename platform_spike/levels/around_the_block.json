@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "id": "around_the_block",
+  "title": "Around the block",
+  "brief": "Walk all the way around the block, clockwise, picking the gem on each corner. Finish where you started, facing east. Fit it in 16 lines.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\nmove()\nmove()\npick()\n",
+  "world": {
+    "width": 4,
+    "height": 4,
+    "start": [
+      1,
+      0,
+      "E"
+    ],
+    "blocked": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "gems": {
+      "3,0": 1,
+      "3,3": 1,
+      "0,3": 1,
+      "0,0": 1
+    }
+  },
+  "goal": {
+    "all_gems_collected": true,
+    "end_at": [
+      1,
+      0
+    ],
+    "facing": "E"
+  },
+  "constraints": {
+    "required": [
+      "def"
+    ],
+    "max_lines": 16,
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "decomposition.extract_repeated_code",
+    "functions.define_and_call"
+  ]
+}

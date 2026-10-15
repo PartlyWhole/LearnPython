@@ -1,0 +1,126 @@
+{
+  "_note": "Illustrative excerpt only: 3 of the ~7 topics a real decomposition of `dictionaries` would have. Shows the expected depth, linking and tone. Prerequisite IDs are examples of earlier-wave topics.",
+  "batch": "B07",
+  "concept_map": {
+    "dictionaries": {
+      "topics": ["dictionaries.create_and_look_up", "dictionaries.add_update_delete", "dictionaries.counting_pattern"],
+      "entry_topic": "dictionaries.create_and_look_up",
+      "notes": "Remaining topics in a full decomposition: iterate keys/values/items, get() and default values, membership and KeyError, grouping values into lists."
+    }
+  },
+  "topics": [
+    {
+      "id": "dictionaries.create_and_look_up",
+      "title": "Creating a dictionary and looking up values",
+      "concept": "dictionaries",
+      "summary": "Write a dict literal mapping keys to values and read a value by key, including what happens with a missing key.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": ["lists.create_and_index", "strings.literals_and_quotes"],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Dict literal and lookup by key",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nprint(ages['bo'])  # 27\nKeys go left of the colon; d[key] returns the value.",
+          "practice": "Predict the printed value for a 3-entry dict; write the lookup expression for a named key.",
+          "formats": ["predict_output", "fill_in_blank"],
+          "key_prerequisites": ["lists.create_and_index"]
+        },
+        {
+          "title": "Why a dict beats a list of pairs",
+          "worked_example": "Finding 'bo' in [('ana', 31), ('bo', 27)] needs a loop; ages['bo'] does not. Same data, one-step lookup.",
+          "practice": "Choose the structure that answers a lookup question in one expression; convert a short list of pairs to a dict literal.",
+          "formats": ["multiple_choice", "write_code"],
+          "key_prerequisites": ["lists.create_and_index"]
+        },
+        {
+          "title": "Missing keys raise KeyError",
+          "worked_example": "ages['cy'] raises KeyError: 'cy'. Keys are case-sensitive: ages['Ana'] also fails.",
+          "practice": "Predict whether each lookup prints a value or raises KeyError.",
+          "formats": ["predict_output"],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {"topic": "lists.create_and_index", "weight": 0.1}
+      ],
+      "taught_in": ["helsinki_mooc", "cs50p", "py4e", "mit_6100l", "100_days_of_code", "bootdev", "code_in_place", "codecademy"]
+    },
+    {
+      "id": "dictionaries.add_update_delete",
+      "title": "Adding, updating and deleting entries",
+      "concept": "dictionaries",
+      "summary": "Mutate a dict: assign to a new key, overwrite an existing key, delete with del and pop.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": ["dictionaries.create_and_look_up"],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assigning to a new key adds it",
+          "worked_example": "stock = {'apple': 3}\nstock['pear'] = 5\n# {'apple': 3, 'pear': 5}",
+          "practice": "Predict the dict after a sequence of assignments.",
+          "formats": ["predict_output"],
+          "key_prerequisites": ["dictionaries.create_and_look_up"]
+        },
+        {
+          "title": "Assigning to an existing key overwrites it",
+          "worked_example": "stock['apple'] = stock['apple'] + 1  # 4\nThe old value is read, then replaced; keys stay unique.",
+          "practice": "Predict values after mixed add/overwrite steps; fill in the line that increments a count.",
+          "formats": ["predict_output", "fill_in_blank"],
+          "key_prerequisites": ["dictionaries.create_and_look_up"]
+        },
+        {
+          "title": "Removing entries with del and pop",
+          "worked_example": "del stock['pear']\nn = stock.pop('apple')  # n == 4, key removed\npop returns the value; both raise KeyError if absent.",
+          "practice": "Predict the dict and returned value; spot the line that raises KeyError.",
+          "formats": ["predict_output", "fix_the_bug"],
+          "key_prerequisites": ["dictionaries.create_and_look_up"]
+        }
+      ],
+      "encompasses": [
+        {"topic": "dictionaries.create_and_look_up", "weight": 0.8}
+      ],
+      "taught_in": ["helsinki_mooc", "cs50p", "py4e", "codecademy", "bootdev"]
+    },
+    {
+      "id": "dictionaries.counting_pattern",
+      "title": "Counting occurrences with a dictionary",
+      "concept": "dictionaries",
+      "summary": "The histogram idiom: loop over items and increment a per-key count, first with an if/else, then with get(key, 0).",
+      "minutes": 20,
+      "core": true,
+      "prerequisites": ["dictionaries.add_update_delete", "for_loops.loop_over_list", "conditionals.if_else"],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Count with if/else",
+          "worked_example": "counts = {}\nfor w in words:\n    if w in counts:\n        counts[w] += 1\n    else:\n        counts[w] = 1",
+          "practice": "Reorder the lines of the counting loop; predict counts for a 5-word list.",
+          "formats": ["parsons", "predict_output"],
+          "key_prerequisites": ["for_loops.loop_over_list", "conditionals.if_else"]
+        },
+        {
+          "title": "Count with get(key, 0)",
+          "worked_example": "for w in words:\n    counts[w] = counts.get(w, 0) + 1\nget returns 0 for a missing key, so no if is needed.",
+          "practice": "Rewrite an if/else counter using get; predict get() results for present and missing keys.",
+          "formats": ["write_code", "predict_output"],
+          "key_prerequisites": ["dictionaries.add_update_delete"]
+        },
+        {
+          "title": "Count characters, then find the most common",
+          "worked_example": "counts = {}\nfor ch in 'banana':\n    counts[ch] = counts.get(ch, 0) + 1\nbest = None\nfor ch in counts:\n    if best is None or counts[ch] > counts[best]:\n        best = ch   # 'a'",
+          "practice": "Write a function returning the most frequent character; fix a version that resets the count inside the loop.",
+          "formats": ["write_code", "fix_the_bug"],
+          "key_prerequisites": ["for_loops.loop_over_list"]
+        }
+      ],
+      "encompasses": [
+        {"topic": "dictionaries.add_update_delete", "weight": 0.7},
+        {"topic": "for_loops.loop_over_list", "weight": 0.5},
+        {"topic": "conditionals.if_else", "weight": 0.3}
+      ],
+      "taught_in": ["py4e", "cs50p", "helsinki_mooc", "mit_6100l", "codecademy"]
+    }
+  ]
+}

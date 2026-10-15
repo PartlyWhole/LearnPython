@@ -1,0 +1,2316 @@
+{
+  "batch": "B11",
+  "title": "Classes and objects",
+  "concept_map": {
+    "objects_methods": {
+      "topics": [
+        "objects_methods.types_and_methods",
+        "objects_methods.isinstance_checks",
+        "objects_methods.object_references"
+      ],
+      "entry_topic": "objects_methods.types_and_methods",
+      "notes": "types_and_methods is the bridge from built-in methods to self (obj.method(x) == Class.method(obj, x)). isinstance (B02/B05 handoff) is isinstance_checks; isinstance with subclasses is B12 inheritance, which should encompass it. B08 recursion.nested_lists used type(x) == list and can now switch to isinstance in a stitch. object_references owns aliasing of user-defined objects (B06 handoff); objects as attributes of other objects ('has-a', Helsinki Part 9) is B12 composition. Canvas object methods (Code in Place) belong to the graphics batch."
+    },
+    "classes": {
+      "topics": [
+        "classes.define_and_instantiate",
+        "classes.define_methods",
+        "classes.methods_change_state",
+        "classes.methods_using_methods",
+        "classes.objects_in_collections",
+        "classes.records_as_classes",
+        "classes.dataclasses"
+      ],
+      "entry_topic": "classes.define_and_instantiate",
+      "notes": "Seven topics: define_and_instantiate, then (after instance_attributes.set_and_read and constructors.init_sets_attributes) the method topics, collections of objects, records_as_classes (data abstraction, B05 handoff, plus to_dict for B10's serialisation handoff) and dataclasses (B07 handoff). CapWords naming (B01 handoff) is define_and_instantiate KP3. dataclasses is non-core with no taught_in (none of the 8 courses teaches it) but is the modern record type; B12 sum_types may want it as a prerequisite, which would justify promoting it to core. Class patterns in match (B04 handoff, case Point(x=0)) were NOT written here: they fit B12 sum_types, which runs in parallel; if B12 did not write them, a stitch should add a KP to classes.dataclasses or enums.enums_in_logic. Project-shaped class work (Quiz Game, Coffee Machine, Asteroids) is multistep material. unittest_module (B09, pending concept:classes) can now depend on classes.define_methods."
+    },
+    "instance_attributes": {
+      "topics": [
+        "instance_attributes.set_and_read",
+        "instance_attributes.dynamic_attribute_access"
+      ],
+      "entry_topic": "instance_attributes.set_and_read",
+      "notes": "set_and_read comes before __init__ (Helsinki/py4e order) and motivates it with the silent-typo bug. getattr/setattr/hasattr/vars (codecademy 'Attribute Functions') are a non-core topic. __slots__ was left out."
+    },
+    "constructors": {
+      "topics": [
+        "constructors.init_sets_attributes",
+        "constructors.defaults_and_derived",
+        "constructors.validate_in_init"
+      ],
+      "entry_topic": "constructors.init_sets_attributes",
+      "notes": "init_sets_attributes, defaults_and_derived (includes the mutable default in __init__, encompassing B05 parameters_arguments.mutable_default_trap as non_ancestor because that topic is non-core) and validate_in_init (B09 handoff: raising in constructors). __del__/object lifecycle (py4e) was left out. Custom exception classes with their own __init__ and super().__init__ need inheritance and belong to B12, which should encompass raising_exceptions.custom_exceptions (B09 asked for this). Reconciliation: defaults_and_derived now depends on parameters_arguments.mutable_default_trap (promoted to core) instead of a non_ancestor encompassing."
+    },
+    "class_attributes": {
+      "topics": [
+        "class_attributes.shared_class_variables",
+        "class_attributes.classmethods",
+        "class_attributes.staticmethods"
+      ],
+      "entry_topic": "class_attributes.shared_class_variables",
+      "notes": "Owns @classmethod and @staticmethod (B08 handoff). classmethods also owns from_dict, the partner of classes.records_as_classes' to_dict (B10 serialisation handoff). @classmethod is taught as a marker line; decorators.at_syntax is not a prerequisite here (it is for encapsulation.read_only_properties). Why cls instead of the class name (subclasses) is for B12 inheritance. staticmethods is non-core (cs50p only)."
+    },
+    "encapsulation": {
+      "topics": [
+        "encapsulation.private_by_convention",
+        "encapsulation.read_only_properties",
+        "encapsulation.property_setters"
+      ],
+      "entry_topic": "encapsulation.private_by_convention",
+      "notes": "private_by_convention (_x, __x name mangling, getter/setter methods), read_only_properties and property_setters (@property, B08 handoff, built on decorators.at_syntax). The OOP 'abstraction' pillar as interface vs implementation is classes.records_as_classes KP3; abstract base classes are B12 abstract_classes."
+    },
+    "dunder_methods": {
+      "topics": [
+        "dunder_methods.str_and_repr",
+        "dunder_methods.equality_and_ordering",
+        "dunder_methods.operator_overloading",
+        "dunder_methods.container_methods",
+        "dunder_methods.custom_iterators",
+        "dunder_methods.context_manager_protocol"
+      ],
+      "entry_topic": "dunder_methods.str_and_repr",
+      "notes": "Six topics: str_and_repr, equality_and_ordering and operator_overloading are core; container_methods, custom_iterators (B04 iteration handoff) and context_manager_protocol (B10 handoff: __enter__/__exit__) are non-core. __hash__ (an object with __eq__ becomes unhashable) was not given a KP because sets/dicts are not ancestors of equality_and_ordering; classes.dataclasses KP4 mentions that frozen dataclasses are hashable. functools.total_ordering, __call__, __bool__ (only the __len__ fallback is taught), __iadd__ and __radd__/sum() were left out. Overriding dunder methods as polymorphism is B12."
+    },
+    "enums": {
+      "topics": [
+        "enums.define_and_use",
+        "enums.enums_in_logic"
+      ],
+      "entry_topic": "enums.define_and_use",
+      "notes": "Two non-core topics (bootdev only). define_and_use and enums_in_logic (match on members, the B04 match handoff for value patterns; auto() and StrEnum). Named constants for magic numbers stay with B02 constants; enums_in_logic encompasses nothing from it. Sum types built from enums or dataclasses are B12 sum_types, which should list enums.define_and_use as a prerequisite. Flag and IntEnum were left out. 'from enum import Enum' is a memorised line before B13 modules_imports."
+    }
+  },
+  "topics": [
+    {
+      "id": "objects_methods.types_and_methods",
+      "title": "Every value is an object: types and methods",
+      "concept": "objects_methods",
+      "summary": "Use type() to see the class of any value, explain that methods come from that class, and read obj.method(x) as Class.method(obj, x).",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "data_types.values_have_types",
+        "string_methods.calling_methods_case",
+        "list_methods.insert_extend",
+        "builtin_functions.help_and_dir"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "type() names the class of a value",
+          "worked_example": "print(type(\"hi\"))\nprint(type([1, 2]))\nprint(type(3.5))\nEvery value is an object, and its type is a class: str, list, float.",
+          "practice": "Predict what type() prints for literals and variables of six built-in types.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Methods belong to the type",
+          "worked_example": "print(\"hi\".upper())   # HI\nn = 5\nn.upper()\nA method is a function stored on the class; int has no upper, so Python raises AttributeError: 'int' object has no attribute 'upper'.",
+          "practice": "Predict whether each call works or raises AttributeError; use dir() to check whether a type has a method.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case",
+            "builtin_functions.help_and_dir"
+          ]
+        },
+        {
+          "title": "obj.method(x) means Class.method(obj, x)",
+          "worked_example": "print(str.upper(\"hi\"))   # HI\nnums = [3]\nlist.append(nums, 4)\nprint(nums)              # [3, 4]\nThe object before the dot is passed in as the method's first argument. This is where self will come from.",
+          "practice": "Rewrite dotted calls in Class.method(obj, ...) form and back; predict the result.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "Calling a class makes a new object",
+          "worked_example": "print(type(int))      # <class 'type'>\nprint(int(\"7\") + 1)   # 8\nletters = list(\"ab\")\nprint(letters)        # ['a', 'b']\nint, str and list are classes; calling one builds a new object of that class.",
+          "practice": "Classify names as classes or functions; predict the object a class call produces.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.calling_methods_case",
+          "weight": 0.2
+        },
+        {
+          "topic": "list_methods.insert_extend",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "py4e",
+        "codecademy",
+        "cs50p",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "objects_methods.isinstance_checks",
+      "title": "Checking a value's type with isinstance()",
+      "concept": "objects_methods",
+      "summary": "Use isinstance() with one class or a tuple of classes to branch on a value's type, and know why it beats type(x) == ... (including the bool-is-an-int surprise).",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "objects_methods.types_and_methods",
+        "return_values.boolean_functions",
+        "conditionals.elif_chains"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "isinstance(value, Class)",
+          "worked_example": "print(isinstance(5, int))     # True\nprint(isinstance(\"5\", int))   # False\nisinstance answers 'is this value an object of that class?' with True or False.",
+          "practice": "Predict True/False for a table of values and classes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "Several allowed types: a tuple of classes",
+          "worked_example": "x = 2.5\nprint(isinstance(x, (int, float)))   # True\nprint(isinstance(\"2.5\", (int, float)))  # False\nA tuple of classes means 'any of these'.",
+          "practice": "Fill in the class tuple that accepts the described values; predict results.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "isinstance vs type(x) ==, and bool is an int",
+          "worked_example": "print(isinstance(True, int))   # True\nprint(type(True) == int)       # False\nprint(True + True)             # 2\nbool is a kind of int, so isinstance says yes while an exact type check says no; to reject booleans, check bool first.",
+          "practice": "Predict both checks for several values; fix a number check that wrongly accepts True.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "Branching on the type in a function",
+          "worked_example": "def describe(x):\n    if isinstance(x, bool):\n        return \"yes/no\"\n    elif isinstance(x, (int, float)):\n        return \"number\"\n    elif isinstance(x, str):\n        return \"text\"\n    return \"other\"\n\nprint(describe(True), describe(3), describe(\"a\"), describe([1]))\nOrder matters: test the narrower class (bool) before the wider one (int).",
+          "practice": "Write a function that handles numbers and strings differently; reorder a wrong elif chain.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains",
+            "return_values.boolean_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.3
+        },
+        {
+          "topic": "return_values.boolean_functions",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "classes.define_and_instantiate",
+      "title": "Defining a class and creating objects from it",
+      "concept": "classes",
+      "summary": "Write a class statement, create instances by calling the class, and tell a class from an instance.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "objects_methods.types_and_methods",
+        "functions.define_and_call",
+        "variables.naming_rules"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A class statement and one instance",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog()\nprint(type(rex))\nclass Dog: makes a new type; calling Dog() creates an object (an instance) of it.",
+          "practice": "Fill in a class statement and the line that creates an instance; predict what type() prints.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods",
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "Every call makes a new, separate object",
+          "worked_example": "class Dog:\n    pass\n\na = Dog()\nb = Dog()\nprint(a == b)   # False\nprint(a)        # <__main__.Dog object at 0x...> (address varies)\nTwo calls give two distinct objects; the default printout shows the class and a memory address.",
+          "practice": "Predict how many objects a snippet creates and whether two names refer to equal objects.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "Vocabulary and naming: class, instance, CapWords",
+          "worked_example": "class BankAccount:      # class names use CapWords\n    pass\n\nmy_account = BankAccount()   # instance names use snake_case\nThe class is the blueprint (BankAccount); each object made from it is an instance.",
+          "practice": "Label names in a snippet as class or instance; pick the PEP 8 name for a described class.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "variables.naming_rules"
+          ]
+        },
+        {
+          "title": "Forgetting the parentheses",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog\nprint(rex)   # <class '__main__.Dog'>\nWithout (), rex names the class itself, not a new dog.",
+          "practice": "Spot the line that refers to the class instead of creating an instance.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "instance_attributes.set_and_read",
+      "title": "Attributes: data stored on an object",
+      "concept": "instance_attributes",
+      "summary": "Store values on an object with dot assignment, read and update them, and recognise AttributeError and the silent typo bug.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "classes.define_and_instantiate",
+        "variables.update_with_own_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assign and read with a dot",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog()\nrex.name = \"Rex\"\nrex.age = 3\nprint(rex.name, rex.age)   # Rex 3\nobj.attr = value stores a value on that one object; obj.attr reads it back.",
+          "practice": "Predict printed attributes; write the lines that store two given attributes.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "classes.define_and_instantiate"
+          ]
+        },
+        {
+          "title": "Each object has its own attributes",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog()\nmia = Dog()\nrex.age = 3\nmia.age = 5\nrex.age += 1\nprint(rex.age, mia.age)   # 4 5\nChanging rex's attribute leaves mia's untouched.",
+          "practice": "Trace attribute values of two objects through a sequence of updates.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "Reading a missing attribute raises AttributeError",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog()\nrex.name = \"Rex\"\nprint(rex.nme)\nPython raises AttributeError: 'Dog' object has no attribute 'nme'. Did you mean: 'name'?",
+          "practice": "Predict whether each read prints a value or raises AttributeError.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_and_instantiate"
+          ]
+        },
+        {
+          "title": "A typo when assigning silently creates a new attribute",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog()\nrex.age = 3\nrex.agee = 4\nprint(rex.age)   # 3\nAssignment never fails, so a misspelt name adds a second attribute; __init__ (next) gives every object the same attributes from the start.",
+          "practice": "Find the typo that makes an update have no effect.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.define_and_instantiate"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "py4e",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "constructors.init_sets_attributes",
+      "title": "Setting up new objects with __init__",
+      "concept": "constructors",
+      "summary": "Write an __init__ method that takes parameters and stores them on self, create objects with arguments, and fix the classic constructor mistakes.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "instance_attributes.set_and_read",
+        "parameters_arguments.several_parameters"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "__init__ runs automatically when an object is created",
+          "worked_example": "class Dog:\n    def __init__(self):\n        print(\"a dog is born\")\n        self.tricks = 0\n\nrex = Dog()        # a dog is born\nprint(rex.tricks)  # 0\nself is the new object; Python calls __init__ for you right after creating it.",
+          "practice": "Predict what creating two objects prints; fill in the self.attribute line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "instance_attributes.set_and_read"
+          ]
+        },
+        {
+          "title": "Constructor parameters become attributes",
+          "worked_example": "class Dog:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\nrex = Dog(\"Rex\", 3)\nprint(rex.name, rex.age)   # Rex 3\nThe arguments in Dog(...) go to the parameters after self; self is filled in for you.",
+          "practice": "Write a class whose constructor stores three given values; match arguments to parameters.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters",
+            "instance_attributes.set_and_read"
+          ]
+        },
+        {
+          "title": "Passing the wrong number of arguments",
+          "worked_example": "class Dog:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\nrex = Dog(\"Rex\")\nTypeError: Dog.__init__() missing 1 required positional argument: 'age'. self is never counted by the caller.",
+          "practice": "Predict which creation calls succeed; read the TypeError to say which argument is missing.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "Bugs: forgetting self. and misspelling __init__",
+          "worked_example": "class Dog:\n    def __int__(self, name):\n        self.name = name\n\nrex = Dog(\"Rex\")\nTypeError: Dog() takes no arguments: __int__ is not __init__. Writing name = name without self. stores nothing on the object.",
+          "practice": "Fix constructors with a missing self., a misspelt __init__, or a missing self parameter.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "instance_attributes.set_and_read"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "instance_attributes.set_and_read",
+          "weight": 0.6
+        },
+        {
+          "topic": "parameters_arguments.several_parameters",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "constructors.defaults_and_derived",
+      "title": "Default values and starting state in __init__",
+      "concept": "constructors",
+      "summary": "Give constructor parameters defaults, start attributes that are not parameters, compute attributes from others, and avoid the shared mutable default.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "constructors.init_sets_attributes",
+        "parameters_arguments.default_values",
+        "parameters_arguments.mutable_default_trap"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Default parameter values",
+          "worked_example": "class Account:\n    def __init__(self, owner, balance=0):\n        self.owner = owner\n        self.balance = balance\n\nprint(Account(\"Ann\").balance, Account(\"Bo\", 50).balance)   # 0 50\nDefaults work in __init__ exactly as in any function.",
+          "practice": "Predict attribute values for calls with and without the optional argument.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        },
+        {
+          "title": "Attributes that always start the same",
+          "worked_example": "class Account:\n    def __init__(self, owner):\n        self.owner = owner\n        self.balance = 0\n        self.history = []\n\nacct = Account(\"Ann\")\nprint(acct.balance, acct.history)   # 0 []\nNot every attribute needs a parameter: starting state can be set directly.",
+          "practice": "Decide which attributes should be parameters and which start fixed; write the constructor.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "constructors.init_sets_attributes"
+          ]
+        },
+        {
+          "title": "Computed attributes do not update themselves",
+          "worked_example": "class Rect:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n        self.area = w * h\n\nr = Rect(2, 3)\nr.w = 10\nprint(r.area)   # 6\narea was calculated once, in __init__; it goes stale when w changes. A method (or later a property) fixes this.",
+          "practice": "Predict derived attributes after later changes; choose between storing and computing.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "constructors.init_sets_attributes"
+          ]
+        },
+        {
+          "title": "The shared mutable default",
+          "worked_example": "class Team:\n    def __init__(self, members=[]):\n        self.members = members\n\na = Team()\nb = Team()\na.members.append(\"Ann\")\nprint(b.members)   # ['Ann']\nThe one default list is shared by every Team; use members=None and create a new list inside __init__.",
+          "practice": "Spot the shared default and rewrite it with None.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.mutable_default_trap"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "constructors.init_sets_attributes",
+          "weight": 0.8
+        },
+        {
+          "topic": "parameters_arguments.default_values",
+          "weight": 0.4
+        },
+        {
+          "topic": "parameters_arguments.mutable_default_trap",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "bootdev",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "classes.define_methods",
+      "title": "Writing methods that use self",
+      "concept": "classes",
+      "summary": "Define methods that read an object's attributes through self, take extra parameters and return results, and fix a method missing self.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "constructors.init_sets_attributes",
+        "return_values.return_a_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A method reads attributes through self",
+          "worked_example": "class Rect:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n\n    def area(self):\n        return self.w * self.h\n\nprint(Rect(2, 3).area())   # 6\nA method is a function inside the class; self is the object it was called on.",
+          "practice": "Write a method that computes a value from two attributes; predict results for two objects.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value",
+            "constructors.init_sets_attributes"
+          ]
+        },
+        {
+          "title": "Methods with extra parameters",
+          "worked_example": "class Dog:\n    def __init__(self, name):\n        self.name = name\n\n    def greet(self, other):\n        return f\"{self.name} sniffs {other}\"\n\nprint(Dog(\"Rex\").greet(\"Mia\"))   # Rex sniffs Mia\nThe call passes everything except self; self comes from the object before the dot.",
+          "practice": "Match call arguments to method parameters; write a method with one extra parameter.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "self is the object before the dot",
+          "worked_example": "class Rect:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n\n    def area(self):\n        return self.w * self.h\n\nr = Rect(4, 5)\nprint(r.area(), Rect.area(r))   # 20 20\nr.area() is shorthand for Rect.area(r), just as with built-in methods.",
+          "practice": "Rewrite calls between the two forms; predict which object's data a call uses.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "Forgetting self in the def line",
+          "worked_example": "class Rect:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n\n    def area():\n        return 0\n\nRect(1, 2).area()\nTypeError: Rect.area() takes 0 positional arguments but 1 was given: the object is always passed in.",
+          "practice": "Read the TypeError and fix the method; spot r.area (no parentheses) printing a bound method.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constructors.init_sets_attributes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "constructors.init_sets_attributes",
+          "weight": 0.5
+        },
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "classes.methods_change_state",
+      "title": "Methods that change an object's state",
+      "concept": "classes",
+      "summary": "Write methods that update attributes, trace an object's state through a series of calls, and guard changes that would make the state invalid.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "classes.define_methods",
+        "conditionals.if_else",
+        "variables.update_with_own_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A method that updates an attribute",
+          "worked_example": "class Counter:\n    def __init__(self):\n        self.count = 0\n\n    def increment(self):\n        self.count += 1\n\nc = Counter()\nc.increment()\nc.increment()\nprint(c.count)   # 2\nThe method changes the object it was called on; nothing needs to be returned.",
+          "practice": "Write increment/reset style methods; predict the attribute after a sequence of calls.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value",
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Tracing state through several calls",
+          "worked_example": "class LunchCard:\n    def __init__(self, balance):\n        self.balance = balance\n\n    def deposit(self, amount):\n        self.balance += amount\n\n    def eat(self):\n        self.balance -= 3\n\ncard = LunchCard(5)\ncard.eat(); card.deposit(10); card.eat()\nprint(card.balance)   # 9\nEach call starts from the state the previous call left behind.",
+          "practice": "Fill in a trace table of the attribute after each call.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Each object keeps its own state",
+          "worked_example": "class Counter:\n    def __init__(self):\n        self.count = 0\n\n    def increment(self):\n        self.count += 1\n\na = Counter()\nb = Counter()\na.increment(); a.increment(); b.increment()\nprint(a.count, b.count)   # 2 1\nThe same method changes only the object before the dot.",
+          "practice": "Trace two or three objects through interleaved calls.",
+          "formats": [
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Refusing a change that would break the object",
+          "worked_example": "class LunchCard:\n    def __init__(self, balance):\n        self.balance = balance\n\n    def eat(self):\n        if self.balance >= 3:\n            self.balance -= 3\n            return True\n        return False\n\ncard = LunchCard(4)\nprint(card.eat(), card.eat(), card.balance)   # True False 1\nThe method checks before it changes, so the balance can never go negative.",
+          "practice": "Add a guard to a method; predict results when the guard blocks a change.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "classes.define_methods",
+          "weight": 0.8
+        },
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.2
+        },
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "classes.methods_using_methods",
+      "title": "Methods that call other methods and take other objects",
+      "concept": "classes",
+      "summary": "Call one method from another through self, write methods that take a second object of the same class, and choose between changing self and returning a new object.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "classes.methods_change_state",
+        "return_values.boolean_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Calling another method through self",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self.balance = balance\n\n    def can_pay(self, amount):\n        return amount <= self.balance\n\n    def pay(self, amount):\n        if self.can_pay(amount):\n            self.balance -= amount\n\na = Account(10)\na.pay(4); a.pay(9)\nprint(a.balance)   # 6\nInside a class, methods call each other as self.method(...).",
+          "practice": "Refactor a long method to use a helper method; predict the result.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions",
+            "classes.methods_change_state"
+          ]
+        },
+        {
+          "title": "Forgetting self. before a method call",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self.balance = balance\n\n    def can_pay(self, amount):\n        return amount <= self.balance\n\n    def pay(self, amount):\n        if can_pay(amount):\n            self.balance -= amount\n\nAccount(10).pay(4)\nNameError: name 'can_pay' is not defined. Did you mean: 'self.can_pay'? Methods live on the object, not as plain names.",
+          "practice": "Fix missing self. in method calls and attribute reads.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "A method that takes another object of the same class",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def distance_to(self, other):\n        return abs(self.x - other.x) + abs(self.y - other.y)\n\nprint(Point(1, 2).distance_to(Point(4, 6)))   # 7\nself is one point and other is the second; read each one's attributes.",
+          "practice": "Write a comparison method such as is_older_than(other); predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Change self, or return a new object?",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def moved(self, dx, dy):\n        return Point(self.x + dx, self.y + dy)\n\np = Point(1, 1)\nq = p.moved(2, 0)\nprint(p.x, q.x)   # 1 3\nmoved returns a new Point and leaves p alone; a move method would change p and return None.",
+          "practice": "Predict whether the original changes for mutating vs returning methods; fix code that uses the None a mutating method returns.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.methods_change_state"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "classes.methods_change_state",
+          "weight": 0.6
+        },
+        {
+          "topic": "classes.define_methods",
+          "weight": 0.5
+        },
+        {
+          "topic": "return_values.boolean_functions",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "objects_methods.object_references",
+      "title": "Objects are shared, not copied",
+      "concept": "objects_methods",
+      "summary": "Predict the effects of aliasing your own objects: two names for one object, objects passed to functions, and the same object repeated in a list.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "classes.methods_change_state",
+        "mutability_aliasing.lists_in_functions",
+        "mutability_aliasing.is_vs_equals",
+        "copying.shallow_vs_deep"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two names, one object",
+          "worked_example": "class Counter:\n    def __init__(self):\n        self.count = 0\n\na = Counter()\nb = a\nb.count += 5\nprint(a.count, a is b)   # 5 True\nAssignment copies the reference, not the object, exactly as with lists.",
+          "practice": "Predict attribute values after changes made through an alias.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.is_vs_equals"
+          ]
+        },
+        {
+          "title": "Functions receive the object itself",
+          "worked_example": "class Counter:\n    def __init__(self):\n        self.count = 0\n\ndef bump(c):\n    c.count += 1\n\ndef replace(c):\n    c = Counter()\n\nx = Counter()\nbump(x); replace(x)\nprint(x.count)   # 1\nChanging the parameter's attributes changes the caller's object; reassigning the parameter does not.",
+          "practice": "Predict which function calls affect the caller's object.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.lists_in_functions"
+          ]
+        },
+        {
+          "title": "The same object repeated in a list",
+          "worked_example": "class Counter:\n    def __init__(self):\n        self.count = 0\n\ncounters = [Counter()] * 3\ncounters[0].count = 9\nprint(counters[2].count)   # 9\n[obj] * 3 repeats one object three times; build separate objects with a loop instead.",
+          "practice": "Fix a list that should hold separate objects; predict the shared result.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.is_vs_equals",
+            "copying.shallow_vs_deep"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.names_refer_to_objects",
+          "weight": 0.4
+        },
+        {
+          "topic": "mutability_aliasing.lists_in_functions",
+          "weight": 0.4
+        },
+        {
+          "topic": "classes.methods_change_state",
+          "weight": 0.2
+        },
+        {
+          "topic": "copying.shallow_vs_deep",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "classes.objects_in_collections",
+      "title": "Lists and dictionaries of objects",
+      "concept": "classes",
+      "summary": "Keep many objects in a list or dict, loop over them calling methods, total and pick by attribute, and sort by attribute with key=.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "classes.define_methods",
+        "dictionaries.loop_keys_values_items",
+        "lambda_functions.lambda_as_argument"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A list of objects and a loop over it",
+          "worked_example": "class Pet:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\npets = [Pet(\"Rex\", 3), Pet(\"Mia\", 5), Pet(\"Bo\", 1)]\nfor p in pets:\n    print(p.name, p.age)\nThe loop variable is each object in turn; use dots on it as usual.",
+          "practice": "Predict loop output; write a loop that prints a description of each object.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Totals and searches over attributes",
+          "worked_example": "class Pet:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\npets = [Pet(\"Rex\", 3), Pet(\"Mia\", 5), Pet(\"Bo\", 1)]\ntotal = 0\nfor p in pets:\n    total += p.age\nprint(total)   # 9\nThe accumulator and search patterns work unchanged; the value is now p.age.",
+          "practice": "Write loops that total, count or find the object matching a condition.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Sorting and choosing by an attribute with key=",
+          "worked_example": "class Pet:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\npets = [Pet(\"Rex\", 3), Pet(\"Mia\", 5), Pet(\"Bo\", 1)]\noldest = max(pets, key=lambda p: p.age)\nprint(oldest.name)       # Mia\nfor p in sorted(pets, key=lambda p: p.age):\n    print(p.name)        # Bo, Rex, Mia\nObjects cannot be compared with < by default, so tell sorted/max which attribute to use.",
+          "practice": "Fill in the key function; predict sorted order by different attributes.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lambda_functions.lambda_as_argument"
+          ]
+        },
+        {
+          "title": "A dictionary of objects looked up by name",
+          "worked_example": "class Pet:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\nby_name = {}\nfor p in [Pet(\"Rex\", 3), Pet(\"Mia\", 5)]:\n    by_name[p.name] = p\nby_name[\"Mia\"].age += 1\nprint(by_name[\"Mia\"].age)   # 6\nValues in a dict can be objects; the lookup gives the object itself, ready for dots and methods.",
+          "practice": "Build a dict of objects keyed by an attribute; update an object found by key.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.6
+        },
+        {
+          "topic": "lambda_functions.lambda_as_argument",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "100_days_of_code",
+        "mit_6100l",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "classes.records_as_classes",
+      "title": "From dictionaries to classes: data abstraction",
+      "concept": "classes",
+      "summary": "Turn a dict-based record and the functions around it into a class, keep callers working when the internal representation changes, and convert an object to a dict for saving.",
+      "minutes": 20,
+      "core": true,
+      "prerequisites": [
+        "classes.methods_using_methods",
+        "nested_data_structures.list_of_dicts",
+        "json_data.json_strings"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The same record as a dict and as a class",
+          "worked_example": "book = {\"title\": \"Dune\", \"pages\": 412}\nprint(book[\"title\"])\n\nclass Book:\n    def __init__(self, title, pages):\n        self.title = title\n        self.pages = pages\n\nprint(Book(\"Dune\", 412).title)\nBoth hold the same data; a class also fixes which fields exist and can carry the functions that use them.",
+          "practice": "Translate dict lookups into attribute reads and back; choose which suits a described record.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Moving a function into the class as a method",
+          "worked_example": "def is_long(book):              # before: a function taking a dict\n    return book[\"pages\"] > 300\n\nclass Book:\n    def __init__(self, title, pages):\n        self.title = title\n        self.pages = pages\n\n    def is_long(self):          # after: a method using self\n        return self.pages > 300\n\nprint(Book(\"Dune\", 412).is_long())   # True\nThe dict parameter becomes self, and book[\"pages\"] becomes self.pages.",
+          "practice": "Refactor two dict-taking functions into methods.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "classes.methods_using_methods"
+          ]
+        },
+        {
+          "title": "Changing the inside without changing the callers",
+          "worked_example": "class Price:\n    def __init__(self, euros):\n        self.cents = round(euros * 100)   # stored differently\n\n    def euros(self):\n        return self.cents / 100\n\nprint(Price(2.5).euros())   # 2.5\nCallers only use Price(...) and .euros(), so the class may change how it stores the value. This is data abstraction.",
+          "practice": "Decide which internal changes would break callers; rewrite a class's storage while keeping its methods.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "classes.methods_using_methods"
+          ]
+        },
+        {
+          "title": "to_dict() for saving an object as JSON",
+          "worked_example": "import json\n\nclass Book:\n    def __init__(self, title, pages):\n        self.title = title\n        self.pages = pages\n\n    def to_dict(self):\n        return {\"title\": self.title, \"pages\": self.pages}\n\nprint(json.dumps(Book(\"Dune\", 412).to_dict()))\njson cannot save your objects directly, so convert them to plain dicts first.",
+          "practice": "Write to_dict for a class; predict the JSON text.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.3
+        },
+        {
+          "topic": "classes.methods_using_methods",
+          "weight": 0.4
+        },
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "instance_attributes.dynamic_attribute_access",
+      "title": "Attributes by name: getattr, setattr, hasattr and vars",
+      "concept": "instance_attributes",
+      "summary": "Read, set and test attributes whose names are strings, and list an object's attributes with vars().",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "constructors.init_sets_attributes",
+        "dictionaries.loop_keys_values_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "getattr with a name in a string",
+          "worked_example": "class Dog:\n    def __init__(self, name):\n        self.name = name\n\nrex = Dog(\"Rex\")\nfield = \"name\"\nprint(getattr(rex, field))          # Rex\nprint(getattr(rex, \"age\", \"unknown\"))  # unknown\ngetattr(obj, 'x') is obj.x when the name is only known at run time; the third argument is a default.",
+          "practice": "Predict getattr results with and without a default.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "instance_attributes.set_and_read"
+          ]
+        },
+        {
+          "title": "hasattr before reading",
+          "worked_example": "class Dog:\n    def __init__(self, name):\n        self.name = name\n\nrex = Dog(\"Rex\")\nprint(hasattr(rex, \"name\"), hasattr(rex, \"age\"))   # True False\nhasattr answers whether reading the attribute would work.",
+          "practice": "Fill in hasattr checks that guard optional attributes.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "instance_attributes.set_and_read"
+          ]
+        },
+        {
+          "title": "setattr from a dictionary",
+          "worked_example": "class Dog:\n    pass\n\nrex = Dog()\nfor key, value in {\"name\": \"Rex\", \"age\": 3}.items():\n    setattr(rex, key, value)\nprint(rex.age)   # 3\nsetattr(obj, 'x', v) is obj.x = v with the name in a string.",
+          "practice": "Write a loop that copies a dict onto an object's attributes.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        },
+        {
+          "title": "vars() shows the attributes as a dict",
+          "worked_example": "class Dog:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\nprint(vars(Dog(\"Rex\", 3)))   # {'name': 'Rex', 'age': 3}\nAn object's attributes live in a dict; vars() returns it.",
+          "practice": "Predict vars() output after attributes are added and changed.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constructors.init_sets_attributes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "instance_attributes.set_and_read",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "constructors.validate_in_init",
+      "title": "Refusing bad values in __init__",
+      "concept": "constructors",
+      "summary": "Check constructor arguments, raise ValueError or TypeError so a broken object is never created, normalise values on the way in, and handle the error at the call site.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "constructors.defaults_and_derived",
+        "raising_exceptions.raise_builtin",
+        "objects_methods.isinstance_checks"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Raise when a value is impossible",
+          "worked_example": "class Account:\n    def __init__(self, owner, balance):\n        if balance < 0:\n            raise ValueError(\"balance cannot be negative\")\n        self.owner = owner\n        self.balance = balance\n\nAccount(\"Ann\", -5)\nValueError: balance cannot be negative. Checking in __init__ means every Account starts valid.",
+          "practice": "Write the guard for a stated rule; predict which creations raise.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "No object is created, so handle it where you create",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        if balance < 0:\n            raise ValueError(\"balance cannot be negative\")\n        self.balance = balance\n\ntry:\n    acct = Account(-5)\nexcept ValueError as e:\n    print(\"Not created:\", e)   # Not created: balance cannot be negative\nWhen __init__ raises, the assignment never happens: acct does not exist.",
+          "practice": "Predict output of try/except around construction; fix code that uses the name after a failed creation.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "Rejecting the wrong type",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        if not isinstance(balance, (int, float)):\n            raise TypeError(\"balance must be a number\")\n        self.balance = balance\n\nAccount(\"10\")\nTypeError: balance must be a number. Wrong type gets TypeError, a bad value of the right type gets ValueError.",
+          "practice": "Choose TypeError or ValueError for each bad argument; write both checks.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "objects_methods.isinstance_checks"
+          ]
+        },
+        {
+          "title": "Normalising values on the way in",
+          "worked_example": "class Course:\n    def __init__(self, code):\n        self.code = code.upper()\n\nprint(Course(\"cs50\").code)   # CS50\nThe constructor can also tidy input so every object stores values the same way.",
+          "practice": "Predict stored values after normalisation; add normalising to a constructor.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "raising_exceptions.raise_builtin",
+          "weight": 0.5
+        },
+        {
+          "topic": "constructors.defaults_and_derived",
+          "weight": 0.4
+        },
+        {
+          "topic": "objects_methods.isinstance_checks",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "class_attributes.shared_class_variables",
+      "title": "Class attributes: values shared by every instance",
+      "concept": "class_attributes",
+      "summary": "Define attributes in the class body, read them through the class or an instance, count instances, and avoid the shadowing and shared-list bugs.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "classes.methods_change_state",
+        "mutability_aliasing.names_refer_to_objects"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A variable in the class body is shared",
+          "worked_example": "class Dog:\n    species = \"Canis familiaris\"\n\n    def __init__(self, name):\n        self.name = name\n\nrex = Dog(\"Rex\")\nprint(Dog.species, rex.species == Dog.species)   # Canis familiaris True\nInstances see class attributes when they have no attribute of their own with that name.",
+          "practice": "Predict reads through the class and through instances; choose class vs instance attribute for described data.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "constructors.init_sets_attributes"
+          ]
+        },
+        {
+          "title": "Counting instances with a class attribute",
+          "worked_example": "class Dog:\n    count = 0\n\n    def __init__(self, name):\n        self.name = name\n        Dog.count += 1\n\nDog(\"Rex\"); Dog(\"Mia\")\nprint(Dog.count)   # 2\nUpdate shared data through the class name, so every instance sees the change.",
+          "practice": "Write a counter or next-id class attribute; trace its value as objects are created.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "classes.methods_change_state"
+          ]
+        },
+        {
+          "title": "Assigning through self creates a shadowing instance attribute",
+          "worked_example": "class Dog:\n    count = 0\n\n    def __init__(self):\n        self.count += 1\n\na = Dog(); b = Dog()\nprint(Dog.count, a.count, b.count)   # 0 1 1\nself.count += 1 reads the class value but writes a new attribute on the instance; the class attribute never changes.",
+          "practice": "Predict class and instance values after shadowing; fix a counter that never counts.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.methods_change_state"
+          ]
+        },
+        {
+          "title": "A shared list is shared by everyone",
+          "worked_example": "class Dog:\n    tricks = []\n\n    def add_trick(self, trick):\n        self.tricks.append(trick)\n\na = Dog(); b = Dog()\na.add_trick(\"sit\")\nprint(b.tricks)   # ['sit']\nappend changes the one class-level list; per-object lists belong in __init__.",
+          "practice": "Spot data that leaks between instances and move it into __init__.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "classes.methods_change_state",
+          "weight": 0.3
+        },
+        {
+          "topic": "mutability_aliasing.names_refer_to_objects",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy",
+        "cs50p",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "class_attributes.classmethods",
+      "title": "Class methods and alternative constructors",
+      "concept": "class_attributes",
+      "summary": "Write @classmethod methods that receive cls, use them as alternative constructors such as from_string and from_dict, and recognise the error when the decorator is missing.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "class_attributes.shared_class_variables",
+        "classes.records_as_classes",
+        "decorators.at_syntax"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "@classmethod receives the class as cls",
+          "worked_example": "class Dog:\n    count = 0\n\n    def __init__(self):\n        Dog.count += 1\n\n    @classmethod\n    def how_many(cls):\n        return cls.count\n\nDog(); Dog()\nprint(Dog.how_many())   # 2\nWrite @classmethod on the line above; the first parameter is then the class, not an instance.",
+          "practice": "Predict results of class methods called on the class and on an instance.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "class_attributes.shared_class_variables"
+          ]
+        },
+        {
+          "title": "An alternative constructor: from_string",
+          "worked_example": "class Date:\n    def __init__(self, year, month, day):\n        self.year, self.month, self.day = year, month, day\n\n    @classmethod\n    def from_string(cls, text):\n        y, m, d = text.split(\"-\")\n        return cls(int(y), int(m), int(d))\n\nprint(Date.from_string(\"2024-05-17\").month)   # 5\ncls(...) calls the constructor, so the class method builds and returns a new object.",
+          "practice": "Write from_string for a described text format.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "from_dict: the partner of to_dict",
+          "worked_example": "class Book:\n    def __init__(self, title, pages):\n        self.title = title\n        self.pages = pages\n\n    def to_dict(self):\n        return {\"title\": self.title, \"pages\": self.pages}\n\n    @classmethod\n    def from_dict(cls, d):\n        return cls(d[\"title\"], d[\"pages\"])\n\ncopy = Book.from_dict(Book(\"Dune\", 412).to_dict())\nprint(copy.title, copy.pages)   # Dune 412\nto_dict and from_dict make a round trip, which is how objects are saved to and loaded from JSON.",
+          "practice": "Write from_dict for a class with a given to_dict; predict the round trip result.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.records_as_classes"
+          ]
+        },
+        {
+          "title": "Forgetting @classmethod",
+          "worked_example": "class Date:\n    def __init__(self, year):\n        self.year = year\n\n    def from_string(cls, text):\n        return cls(int(text))\n\nDate.from_string(\"2024\")\nTypeError: Date.from_string() missing 1 required positional argument: 'text'. Without the decorator nothing fills in cls.",
+          "practice": "Read the TypeError and add the missing decorator.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "class_attributes.shared_class_variables",
+            "decorators.at_syntax"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "class_attributes.shared_class_variables",
+          "weight": 0.3
+        },
+        {
+          "topic": "classes.records_as_classes",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "class_attributes.staticmethods",
+      "title": "Static methods, and choosing the kind of method",
+      "concept": "class_attributes",
+      "summary": "Write @staticmethod helpers that need neither self nor cls, call them from other methods, and choose between instance, class and static methods.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "class_attributes.classmethods"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A helper that needs no self or cls",
+          "worked_example": "class Temperature:\n    @staticmethod\n    def c_to_f(c):\n        return c * 9 / 5 + 32\n\nprint(Temperature.c_to_f(100))   # 212.0\nA static method is a plain function kept inside the class because it belongs with it.",
+          "practice": "Write a static helper; predict its result called on the class.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "class_attributes.classmethods"
+          ]
+        },
+        {
+          "title": "Using a static helper inside the class",
+          "worked_example": "class Account:\n    def __init__(self, code):\n        self.code = code\n\n    @staticmethod\n    def valid_code(code):\n        return len(code) == 4\n\n    def change_code(self, new):\n        if Account.valid_code(new):\n            self.code = new\n\na = Account(\"1234\")\na.change_code(\"99\")\nprint(a.code)   # 1234\nOther methods call it through the class (or self) like any method.",
+          "practice": "Fill in the call to a static helper from another method.",
+          "formats": [
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "class_attributes.classmethods"
+          ]
+        },
+        {
+          "title": "Instance, class or static method?",
+          "worked_example": "# uses self's data      -> instance method   def area(self)\n# builds/uses the class -> @classmethod      def from_string(cls, text)\n# uses neither          -> @staticmethod     def c_to_f(c)\nPick the kind by what the method needs to read.",
+          "practice": "Classify described methods; fix a method declared with the wrong kind.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "class_attributes.classmethods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "class_attributes.classmethods",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "encapsulation.private_by_convention",
+      "title": "Hiding internals: _private names and getter methods",
+      "concept": "encapsulation",
+      "summary": "Mark attributes and helpers as internal with _ and __, explain why outside code should go through methods, and write getter and checked setter methods.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "classes.methods_using_methods",
+        "constructors.validate_in_init"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A leading underscore means 'internal'",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self._balance = balance\n\n    def balance(self):\n        return self._balance\n\nacct = Account(10)\nprint(acct.balance())   # 10\nprint(acct._balance)    # 10: allowed, but a sign you are reaching inside\nPython does not stop you; _name is a promise between programmers.",
+          "practice": "Classify accesses as public interface or internal; rewrite outside code to use methods.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.methods_using_methods"
+          ]
+        },
+        {
+          "title": "Why: methods protect the object's rules",
+          "worked_example": "class Account:\n    def __init__(self):\n        self._balance = 0\n\n    def deposit(self, amount):\n        if amount <= 0:\n            raise ValueError(\"deposit must be positive\")\n        self._balance += amount\n\na = Account()\na.deposit(5)\na._balance = -100   # skips the check: the object is now broken\nOnly methods can enforce rules like 'never negative'; direct assignment bypasses them.",
+          "practice": "Identify which line breaks a stated rule; choose which operations should be methods.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constructors.validate_in_init"
+          ]
+        },
+        {
+          "title": "Double underscore: name mangling",
+          "worked_example": "class Account:\n    def __init__(self):\n        self.__pin = 1234\n\na = Account()\nprint(a._Account__pin)   # 1234\nprint(a.__pin)\nAttributeError: 'Account' object has no attribute '__pin'. Python renames __pin to _Account__pin; it hides, but does not lock.",
+          "practice": "Predict which reads work for _x and __x attributes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "instance_attributes.set_and_read"
+          ]
+        },
+        {
+          "title": "Getter and checked setter methods",
+          "worked_example": "class Thermostat:\n    def __init__(self):\n        self._target = 20\n\n    def get_target(self):\n        return self._target\n\n    def set_target(self, value):\n        if not 5 <= value <= 30:\n            raise ValueError(\"out of range\")\n        self._target = value\nAll reads and writes go through two methods, so the range rule lives in one place.",
+          "practice": "Write a getter/setter pair for a described rule.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "constructors.validate_in_init"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "constructors.validate_in_init",
+          "weight": 0.3
+        },
+        {
+          "topic": "classes.methods_using_methods",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "encapsulation.read_only_properties",
+      "title": "Read-only and computed attributes with @property",
+      "concept": "encapsulation",
+      "summary": "Expose an internal value or a computed result as an attribute with @property, and recognise the errors when assigning to it or calling it.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "encapsulation.private_by_convention",
+        "decorators.at_syntax"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "@property: a method read like an attribute",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self._balance = balance\n\n    @property\n    def balance(self):\n        return self._balance\n\nprint(Account(10).balance)   # 10\nNo parentheses: acct.balance runs the method and gives its result.",
+          "practice": "Convert a getter method into a property; predict reads.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax",
+            "encapsulation.private_by_convention"
+          ]
+        },
+        {
+          "title": "Assigning to a property without a setter fails",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self._balance = balance\n\n    @property\n    def balance(self):\n        return self._balance\n\nAccount(10).balance = 99\nAttributeError: property 'balance' of 'Account' object has no setter. This makes the value read-only from outside.",
+          "practice": "Predict which assignments raise for a class with read-only properties.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "encapsulation.private_by_convention"
+          ]
+        },
+        {
+          "title": "Computed properties never go stale",
+          "worked_example": "class Rect:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n\n    @property\n    def area(self):\n        return self.w * self.h\n\nr = Rect(2, 3)\nr.w = 10\nprint(r.area)   # 30\nUnlike an attribute set in __init__, the property is recomputed on every read.",
+          "practice": "Replace a stale stored attribute with a property; predict values after changes.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constructors.defaults_and_derived"
+          ]
+        },
+        {
+          "title": "Calling a property by mistake",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self._balance = balance\n\n    @property\n    def balance(self):\n        return self._balance\n\nAccount(10).balance()\nTypeError: 'int' object is not callable: .balance already gave 10, then () tried to call 10.",
+          "practice": "Read the TypeError and fix the call.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "encapsulation.private_by_convention",
+          "weight": 0.4
+        },
+        {
+          "topic": "decorators.at_syntax",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "encapsulation.property_setters",
+      "title": "Validating assignments with a property setter",
+      "concept": "encapsulation",
+      "summary": "Add a @name.setter that checks values, route __init__ through it so the rule holds from creation, and avoid the setter that calls itself.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "encapsulation.read_only_properties"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "@name.setter runs on assignment",
+          "worked_example": "class Thermostat:\n    def __init__(self):\n        self._target = 20\n\n    @property\n    def target(self):\n        return self._target\n\n    @target.setter\n    def target(self, value):\n        if not 5 <= value <= 30:\n            raise ValueError(\"out of range\")\n        self._target = value\n\nt = Thermostat()\nt.target = 25\nprint(t.target)   # 25\nt.target = 99\nt.target = 99 calls the setter, which raises ValueError: out of range.",
+          "practice": "Write a setter for a stated rule; predict which assignments succeed.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "encapsulation.read_only_properties",
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "Let __init__ use the setter too",
+          "worked_example": "class Student:\n    def __init__(self, name):\n        self.name = name          # goes through the setter\n\n    @property\n    def name(self):\n        return self._name\n\n    @name.setter\n    def name(self, value):\n        if not value:\n            raise ValueError(\"missing name\")\n        self._name = value\n\nStudent(\"\")\nValueError: missing name. Assigning self.name in __init__ reuses the check, so creation and later changes obey one rule.",
+          "practice": "Fill in __init__ so it uses the property; predict whether a bad constructor argument is caught.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constructors.validate_in_init"
+          ]
+        },
+        {
+          "title": "The setter that calls itself",
+          "worked_example": "class Student:\n    @property\n    def name(self):\n        return self._name\n\n    @name.setter\n    def name(self, value):\n        self.name = value      # should be self._name\n\ns = Student()\ns.name = \"Ann\"\nRecursionError: maximum recursion depth exceeded: assigning self.name inside the setter calls the setter again.",
+          "practice": "Find the self-calling line in getters and setters and fix it.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "encapsulation.read_only_properties"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "encapsulation.read_only_properties",
+          "weight": 0.7
+        },
+        {
+          "topic": "raising_exceptions.raise_builtin",
+          "weight": 0.3
+        },
+        {
+          "topic": "constructors.validate_in_init",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "dunder_methods.str_and_repr",
+      "title": "Readable objects: __str__ and __repr__",
+      "concept": "dunder_methods",
+      "summary": "Give a class __str__ for print and f-strings and __repr__ for lists and debugging, and fix a __str__ that prints instead of returning.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "classes.define_methods",
+        "string_formatting.fstring_basics",
+        "return_values.none_from_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "__str__ controls print() and f-strings",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __str__(self):\n        return f\"({self.x}, {self.y})\"\n\np = Point(1, 2)\nprint(p)              # (1, 2)\nprint(f\"at {p}\")      # at (1, 2)\nWithout __str__ you get <__main__.Point object at 0x...>; with it, print calls str(p), which calls p.__str__().",
+          "practice": "Write __str__ for a described format; predict printed output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics",
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "__str__ must return a string, not print it",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __str__(self):\n        print(f\"({self.x}, {self.y})\")\n\nprint(Point(1, 2))\nIt prints (1, 2), then TypeError: __str__ returned non-string (type NoneType).",
+          "practice": "Fix __str__ methods that print or return a number.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        },
+        {
+          "title": "Lists show __repr__, not __str__",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __str__(self):\n        return f\"({self.x}, {self.y})\"\n\n    def __repr__(self):\n        return f\"Point({self.x}, {self.y})\"\n\nprint([Point(1, 2), Point(3, 4)])   # [Point(1, 2), Point(3, 4)]\nprint(repr(Point(5, 6)))            # Point(5, 6)\nrepr is the developer's view, used inside containers and by repr(); by convention it looks like the code that builds the object.",
+          "practice": "Predict output when printing objects alone, in lists and with repr().",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "With only __repr__, print uses it too",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __repr__(self):\n        return f\"Point({self.x}, {self.y})\"\n\nprint(Point(1, 2))   # Point(1, 2)\nstr falls back to __repr__, so one __repr__ is often enough.",
+          "practice": "Decide which method each display uses for classes that define one, both or neither.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.4
+        },
+        {
+          "topic": "classes.define_methods",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "dunder_methods.equality_and_ordering",
+      "title": "Comparing objects: __eq__ and __lt__",
+      "concept": "dunder_methods",
+      "summary": "Define __eq__ so objects with equal data compare equal, return NotImplemented for other types, and define __lt__ so sorted(), min() and max() work.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "classes.methods_using_methods",
+        "mutability_aliasing.is_vs_equals",
+        "objects_methods.isinstance_checks",
+        "sorting.sort_and_sorted"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "By default == means 'same object'",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __eq__(self, other):\n        return self.x == other.x and self.y == other.y\n\nprint(Point(1, 2) == Point(1, 2))   # True (False without __eq__)\nWithout __eq__, == behaves like is; with it, == compares the data you choose.",
+          "practice": "Predict == and is with and without __eq__; write __eq__ on given fields.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.is_vs_equals",
+            "classes.methods_using_methods"
+          ]
+        },
+        {
+          "title": "Comparing with a different type: NotImplemented",
+          "worked_example": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __eq__(self, other):\n        if not isinstance(other, Point):\n            return NotImplemented\n        return self.x == other.x and self.y == other.y\n\nprint(Point(1, 2) == 5)   # False\nWithout the check, other.x would raise AttributeError; NotImplemented lets Python answer False.",
+          "practice": "Fix an __eq__ that crashes on other types.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.isinstance_checks"
+          ]
+        },
+        {
+          "title": "__lt__ makes sorting work",
+          "worked_example": "class Card:\n    def __init__(self, rank):\n        self.rank = rank\n\n    def __lt__(self, other):\n        return self.rank < other.rank\n\n    def __repr__(self):\n        return f\"Card({self.rank})\"\n\nprint(sorted([Card(9), Card(2), Card(5)]))   # [Card(2), Card(5), Card(9)]\nWithout __lt__: TypeError: '<' not supported between instances of 'Card' and 'Card'.",
+          "practice": "Write __lt__ for a described order; predict sorted(), min() and max() results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.is_vs_equals",
+          "weight": 0.3
+        },
+        {
+          "topic": "sorting.sort_and_sorted",
+          "weight": 0.3
+        },
+        {
+          "topic": "objects_methods.isinstance_checks",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "dunder_methods.operator_overloading",
+      "title": "Making + and * work on your objects",
+      "concept": "dunder_methods",
+      "summary": "Define __add__ and __mul__ so operators return new objects, read the TypeError when an operator is missing, and add __rmul__ for number * object.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "dunder_methods.str_and_repr",
+        "classes.methods_using_methods"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "__add__ returns a new object",
+          "worked_example": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __add__(self, other):\n        return Vector(self.x + other.x, self.y + other.y)\n\n    def __repr__(self):\n        return f\"Vector({self.x}, {self.y})\"\n\nprint(Vector(1, 2) + Vector(3, 4))   # Vector(4, 6)\na + b calls a.__add__(b); return a new object and leave both operands unchanged.",
+          "practice": "Write __add__ for a described class; predict the result of a chain a + b + c.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.methods_using_methods"
+          ]
+        },
+        {
+          "title": "Missing operators raise TypeError",
+          "worked_example": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\nVector(1, 2) - Vector(3, 4)\nTypeError: unsupported operand type(s) for -: 'Vector' and 'Vector'. Each operator needs its own method (__sub__ for -).",
+          "practice": "Match operators to method names; predict which expressions work for a given class.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dunder_methods.str_and_repr"
+          ]
+        },
+        {
+          "title": "Number times object: __mul__ and __rmul__",
+          "worked_example": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __mul__(self, k):\n        return Vector(self.x * k, self.y * k)\n\n    __rmul__ = __mul__\n\n    def __repr__(self):\n        return f\"Vector({self.x}, {self.y})\"\n\nprint(Vector(1, 2) * 3, 3 * Vector(1, 2))   # Vector(3, 6) Vector(3, 6)\n3 * v first asks int, which gives up; Python then tries v.__rmul__(3).",
+          "practice": "Predict which of v * 3 and 3 * v work with and without __rmul__.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.methods_using_methods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dunder_methods.str_and_repr",
+          "weight": 0.3
+        },
+        {
+          "topic": "classes.methods_using_methods",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "dunder_methods.container_methods",
+      "title": "Acting like a container: __len__, __getitem__ and __contains__",
+      "concept": "dunder_methods",
+      "summary": "Make a class that wraps a list support len(), indexing, in and truthiness.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "classes.methods_using_methods",
+        "lists.membership_and_operators",
+        "conditionals.truthiness_in_if"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "__len__ makes len() work",
+          "worked_example": "class Playlist:\n    def __init__(self, songs):\n        self.songs = list(songs)\n\n    def __len__(self):\n        return len(self.songs)\n\nprint(len(Playlist([\"a\", \"b\", \"c\"])))   # 3\nlen(obj) calls obj.__len__(); delegate to the list inside.",
+          "practice": "Write __len__ for a wrapper class; predict len() before and after changes.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.methods_using_methods"
+          ]
+        },
+        {
+          "title": "__getitem__ makes indexing work",
+          "worked_example": "class Playlist:\n    def __init__(self, songs):\n        self.songs = list(songs)\n\n    def __getitem__(self, i):\n        return self.songs[i]\n\np = Playlist([\"a\", \"b\", \"c\"])\nprint(p[0], p[-1])   # a c\nobj[i] calls obj.__getitem__(i); negative indexes and IndexError come free from the inner list.",
+          "practice": "Predict indexing results, including an index that is out of range.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "__contains__ makes in work",
+          "worked_example": "class Playlist:\n    def __init__(self, songs):\n        self.songs = list(songs)\n\n    def __contains__(self, song):\n        return song.lower() in self.songs\n\nprint(\"ABBA\" in Playlist([\"abba\", \"queen\"]))   # True\nx in obj calls obj.__contains__(x), so you choose what counts as a match.",
+          "practice": "Write __contains__ with a custom rule; predict in results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "An empty container is falsy",
+          "worked_example": "class Playlist:\n    def __init__(self, songs):\n        self.songs = list(songs)\n\n    def __len__(self):\n        return len(self.songs)\n\nif not Playlist([]):\n    print(\"nothing to play\")   # nothing to play\nWith no __bool__, Python uses __len__: length 0 means False.",
+          "practice": "Predict if-branches for empty and non-empty objects with and without __len__.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.truthiness_in_if"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.membership_and_operators",
+          "weight": 0.3
+        },
+        {
+          "topic": "conditionals.truthiness_in_if",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "dunder_methods.custom_iterators",
+      "title": "Making objects work in for loops: __iter__ and __next__",
+      "concept": "dunder_methods",
+      "summary": "Write a class with __iter__ and __next__ that raises StopIteration, see why such an iterator runs only once, and make a re-usable iterable with a generator __iter__.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "iteration.iter_and_next",
+        "classes.methods_change_state",
+        "generators.yield_values",
+        "builtin_functions.sum_max_min"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "__iter__ and __next__",
+          "worked_example": "class Countdown:\n    def __init__(self, start):\n        self.current = start\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current <= 0:\n            raise StopIteration\n        self.current -= 1\n        return self.current + 1\n\nfor n in Countdown(3):\n    print(n)   # 3, 2, 1 on separate lines\nfor calls iter() once, then next() until StopIteration.",
+          "practice": "Trace next() calls by hand; fill in the missing StopIteration check.",
+          "formats": [
+            "trace_table",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "iteration.iter_and_next"
+          ]
+        },
+        {
+          "title": "Iterators work everywhere for does",
+          "worked_example": "class Countdown:\n    def __init__(self, start):\n        self.current = start\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current <= 0:\n            raise StopIteration\n        self.current -= 1\n        return self.current + 1\n\nprint(list(Countdown(3)), sum(Countdown(4)))   # [3, 2, 1] 10\nlist(), sum(), max() and unpacking all use the same iter/next protocol.",
+          "practice": "Predict list(), sum() and in on a custom iterator.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "iteration.iter_and_next"
+          ]
+        },
+        {
+          "title": "An iterator runs out after one pass",
+          "worked_example": "class Countdown:\n    def __init__(self, start):\n        self.current = start\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current <= 0:\n            raise StopIteration\n        self.current -= 1\n        return self.current + 1\n\nc = Countdown(2)\nprint(list(c), list(c))   # [2, 1] []\nThe state lives in the object, so the second loop finds it already exhausted.",
+          "practice": "Predict output of looping over the same iterator twice.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.methods_change_state"
+          ]
+        },
+        {
+          "title": "A re-usable iterable: __iter__ as a generator",
+          "worked_example": "class Countdown:\n    def __init__(self, start):\n        self.start = start\n\n    def __iter__(self):\n        n = self.start\n        while n > 0:\n            yield n\n            n -= 1\n\nc = Countdown(2)\nprint(list(c), list(c))   # [2, 1] [2, 1]\nEach call of __iter__ starts a fresh generator, so every loop starts from the beginning.",
+          "practice": "Rewrite a one-shot iterator class as a generator __iter__.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "generators.yield_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "iteration.iter_and_next",
+          "weight": 0.6
+        },
+        {
+          "topic": "generators.yield_values",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "dunder_methods.context_manager_protocol",
+      "title": "Writing a class for with: __enter__ and __exit__",
+      "concept": "dunder_methods",
+      "summary": "Write a class with __enter__ and __exit__, predict the order things run, use the value bound by as, and see that __exit__ runs even when the body fails.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "context_managers.with_open",
+        "exceptions.else_and_finally",
+        "classes.define_methods"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The order: enter, body, exit",
+          "worked_example": "class Timer:\n    def __enter__(self):\n        print(\"start\")\n\n    def __exit__(self, exc_type, exc, tb):\n        print(\"stop\")\n\nwith Timer():\n    print(\"working\")\nPrints start, working, stop: __exit__ takes three arguments describing any error (all None here).",
+          "practice": "Predict output order for with blocks using a custom class.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "as receives what __enter__ returns",
+          "worked_example": "class Box:\n    def __enter__(self):\n        return [\"tool\"]\n\n    def __exit__(self, exc_type, exc, tb):\n        print(\"closed\")\n\nwith Box() as items:\n    print(items)   # ['tool'], then closed\nOften __enter__ returns self; here it returns a list to show that as takes the return value.",
+          "practice": "Predict the value bound by as; fix an __enter__ that forgets to return self.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "__exit__ runs even when the body raises",
+          "worked_example": "class Timer:\n    def __enter__(self):\n        print(\"start\")\n\n    def __exit__(self, exc_type, exc, tb):\n        print(\"stop, error was\", exc_type)\n\ntry:\n    with Timer():\n        1 / 0\nexcept ZeroDivisionError:\n    print(\"handled\")\nPrints start, then stop, error was <class 'ZeroDivisionError'>, then handled: like finally, cleanup always happens and the error still propagates.",
+          "practice": "Predict output when the body raises; compare with an equivalent try/finally.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "exceptions.else_and_finally"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "context_managers.with_open",
+          "weight": 0.3
+        },
+        {
+          "topic": "exceptions.else_and_finally",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "classes.dataclasses",
+      "title": "Less boilerplate with @dataclass",
+      "concept": "classes",
+      "summary": "Write a @dataclass with typed fields, use its generated __init__, __repr__ and __eq__, give fields safe defaults, and freeze it.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "constructors.defaults_and_derived",
+        "dunder_methods.equality_and_ordering",
+        "dunder_methods.str_and_repr",
+        "type_hints.annotate_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Fields in, __init__ and __repr__ out",
+          "worked_example": "from dataclasses import dataclass\n\n@dataclass\nclass Point:\n    x: int\n    y: int\n\nprint(Point(1, 2))   # Point(x=1, y=2)\nEach annotated line becomes a constructor parameter and an attribute; repr is written for you.",
+          "practice": "Convert a hand-written class with __init__ and __repr__ into a dataclass; predict the repr.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions",
+            "dunder_methods.str_and_repr"
+          ]
+        },
+        {
+          "title": "== compares the fields",
+          "worked_example": "from dataclasses import dataclass\n\n@dataclass\nclass Point:\n    x: int\n    y: int\n\nprint(Point(1, 2) == Point(1, 2))   # True\nThe generated __eq__ compares fields in order, so you do not write it yourself.",
+          "practice": "Predict == between dataclass instances and between plain-class instances.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dunder_methods.equality_and_ordering"
+          ]
+        },
+        {
+          "title": "Defaults, and default_factory for lists",
+          "worked_example": "from dataclasses import dataclass, field\n\n@dataclass\nclass Team:\n    name: str\n    size: int = 0\n    members: list = field(default_factory=list)\n\nprint(Team(\"A\"))   # Team(name='A', size=0, members=[])\nWriting members: list = [] raises ValueError: mutable default <class 'list'> for field members is not allowed: use default_factory.",
+          "practice": "Add defaults to fields; fix a dataclass that uses a list default.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "constructors.defaults_and_derived"
+          ]
+        },
+        {
+          "title": "frozen=True: read-only objects",
+          "worked_example": "from dataclasses import dataclass\n\n@dataclass(frozen=True)\nclass Point:\n    x: int\n    y: int\n\np = Point(1, 2)\np.x = 5\ndataclasses.FrozenInstanceError: cannot assign to field 'x'. Frozen objects can also be set members and dict keys.",
+          "practice": "Predict which operations fail on a frozen dataclass; choose frozen or not for described data.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "constructors.defaults_and_derived"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dunder_methods.str_and_repr",
+          "weight": 0.2
+        },
+        {
+          "topic": "dunder_methods.equality_and_ordering",
+          "weight": 0.2
+        },
+        {
+          "topic": "type_hints.annotate_functions",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "enums.define_and_use",
+      "title": "Enums: a fixed set of named values",
+      "concept": "enums",
+      "summary": "Define an Enum, read a member's name and value, compare members, look members up by value or name, and loop over all of them.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "class_attributes.shared_class_variables",
+        "mutability_aliasing.is_vs_equals",
+        "dictionaries.create_and_look_up"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Defining an Enum and reading name and value",
+          "worked_example": "from enum import Enum\n\nclass Color(Enum):\n    RED = 1\n    GREEN = 2\n\nprint(Color.RED)                          # Color.RED\nprint(Color.RED.name, Color.RED.value)    # RED 1\nEach class attribute becomes a member: a named, unchangeable value of type Color.",
+          "practice": "Predict printed members, names and values; write an Enum for a described set.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "class_attributes.shared_class_variables"
+          ]
+        },
+        {
+          "title": "Comparing members",
+          "worked_example": "from enum import Enum\n\nclass Color(Enum):\n    RED = 1\n    GREEN = 2\n\nc = Color.RED\nprint(c is Color.RED, c == Color.GREEN, c == 1)   # True False False\nThere is exactly one of each member, so is and == both work; a member never equals its plain value.",
+          "practice": "Predict comparisons between members and plain values; fix a comparison against the raw value.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.is_vs_equals"
+          ]
+        },
+        {
+          "title": "Looking members up by value or name",
+          "worked_example": "from enum import Enum\n\nclass Color(Enum):\n    RED = 1\n    GREEN = 2\n\nprint(Color(2), Color[\"RED\"])   # Color.GREEN Color.RED\nColor(5)\nColor(value) and Color[name] find a member; a bad value raises ValueError: 5 is not a valid Color.",
+          "practice": "Predict lookups, including ones that raise ValueError or KeyError.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Looping over every member",
+          "worked_example": "from enum import Enum\n\nclass Color(Enum):\n    RED = 1\n    GREEN = 2\n\nfor c in Color:\n    print(c.name)    # RED, then GREEN\nprint(len(Color))    # 2\nAn Enum is iterable in definition order, which is handy for menus and validation.",
+          "practice": "Write a loop that lists all member names; predict len().",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "class_attributes.shared_class_variables"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "class_attributes.shared_class_variables",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "enums.enums_in_logic",
+      "title": "Using enums instead of magic strings",
+      "concept": "enums",
+      "summary": "Replace string constants with enum members so typos fail loudly, branch on members with match, and use auto() and StrEnum.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "enums.define_and_use",
+        "match_statement.match_literals",
+        "constants.named_constants"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Typos fail loudly with enums",
+          "worked_example": "from enum import Enum\n\nclass Status(Enum):\n    TODO = 1\n    DONE = 2\n\nstatus = \"done\"\nprint(status == \"Done\")    # False: silent typo\nprint(Status.DOEN)\nA misspelt string just compares False; a misspelt member raises AttributeError: type object 'Status' has no attribute 'DOEN'.",
+          "practice": "Rewrite string-constant comparisons with an Enum; predict which typo is caught.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constants.named_constants"
+          ]
+        },
+        {
+          "title": "match on enum members",
+          "worked_example": "from enum import Enum\n\nclass Status(Enum):\n    TODO = 1\n    DONE = 2\n\ndef label(s):\n    match s:\n        case Status.TODO:\n            return \"to do\"\n        case Status.DONE:\n            return \"finished\"\n\nprint(label(Status.DONE))   # finished\nDotted names in a case compare by value, so Status.DONE matches that member.",
+          "practice": "Fill in the case lines; convert an elif chain on members into match.",
+          "formats": [
+            "fill_in_blank",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "match_statement.match_literals"
+          ]
+        },
+        {
+          "title": "auto() and StrEnum",
+          "worked_example": "from enum import StrEnum, auto\n\nclass Status(StrEnum):\n    TODO = auto()\n    DONE = auto()\n\nprint(Status.DONE.value, Status.DONE == \"done\")   # done True\nauto() picks the values; in a StrEnum that is the lower-case name, and members compare equal to those strings (useful for JSON and input).",
+          "practice": "Predict auto() values for Enum and StrEnum; choose which suits reading user input.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "enums.define_and_use"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "enums.define_and_use",
+          "weight": 0.6
+        },
+        {
+          "topic": "match_statement.match_literals",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    }
+  ]
+}

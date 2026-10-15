@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "id": "corner_drive",
+  "title": "Only left turns",
+  "brief": "Reach the gem. The robot only turns left.",
+  "starter_code": "",
+  "world": {
+    "width": 4,
+    "height": 4,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "blocked": [
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "gems": {
+      "0,2": 1
+    }
+  },
+  "goal": {
+    "all_gems_collected": true
+  },
+  "drive": {
+    "buttons": [
+      "move",
+      "turn_left",
+      "pick"
+    ]
+  },
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ]
+}

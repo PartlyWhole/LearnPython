@@ -1,0 +1,124 @@
+{
+  "format": 1,
+  "id": "hurdles",
+  "title": "Hurdles",
+  "brief": "Run along the track to the gem at the end, climbing over every hurdle. Hurdles can be one or two cells tall. Tip: write a helper that checks whether the cell to your right is clear.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    # turn right, look, turn back, and return what you saw\n    pass\n\n\ndef jump():\n    pass\n\n\nwhile gems_here() == 0:\n    if front_is_clear():\n        move()\n    else:\n        jump()\npick()\n",
+  "world": {
+    "width": 9,
+    "height": 4,
+    "start": [
+      0,
+      3,
+      "E"
+    ],
+    "blocked": [
+      [
+        2,
+        3
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        5,
+        2
+      ]
+    ],
+    "gems": {
+      "8,3": 1
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 6,
+      "height": 4,
+      "start": [
+        0,
+        3,
+        "E"
+      ],
+      "blocked": [],
+      "gems": {
+        "5,3": 1
+      },
+      "name": "flat track"
+    },
+    {
+      "width": 8,
+      "height": 4,
+      "start": [
+        0,
+        3,
+        "E"
+      ],
+      "blocked": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "gems": {
+        "7,3": 1
+      },
+      "name": "many hurdles"
+    },
+    {
+      "width": 5,
+      "height": 4,
+      "start": [
+        0,
+        3,
+        "E"
+      ],
+      "blocked": [
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "gems": {
+        "4,3": 1
+      },
+      "name": "a tall hurdle near the end"
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "return_values.boolean_functions",
+    "conditionals.if_else",
+    "decomposition.top_down_design"
+  ]
+}

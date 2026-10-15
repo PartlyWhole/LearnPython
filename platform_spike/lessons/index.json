@@ -1,0 +1,110 @@
+{
+  "format": 2,
+  "units": [
+    {
+      "id": "meet_the_robot",
+      "title": "Meet the robot",
+      "items": [
+        {
+          "level": "drive_to_star"
+        },
+        {
+          "level": "drive_pick"
+        },
+        {
+          "level": "drive_put"
+        },
+        {
+          "level": "corner_drive"
+        }
+      ]
+    },
+    {
+      "id": "functions",
+      "title": "Programs and functions",
+      "items": [
+        {
+          "lesson": "from_clicks_to_code"
+        },
+        {
+          "lesson": "name_a_move"
+        }
+      ]
+    },
+    {
+      "id": "repeat",
+      "title": "Repeat",
+      "items": [
+        {
+          "lesson": "for_loops"
+        }
+      ]
+    },
+    {
+      "id": "decomposition",
+      "title": "Decomposition",
+      "items": [
+        {
+          "lesson": "decomposition"
+        }
+      ]
+    },
+    {
+      "id": "nested_loops",
+      "title": "Loops in loops",
+      "items": [
+        {
+          "lesson": "nested_loops"
+        }
+      ]
+    },
+    {
+      "id": "decisions",
+      "title": "Decisions",
+      "items": [
+        {
+          "lesson": "conditionals"
+        }
+      ]
+    },
+    {
+      "id": "repeat_until",
+      "title": "Repeat until",
+      "items": [
+        {
+          "lesson": "while_loops"
+        },
+        {
+          "lesson": "fencepost"
+        },
+        {
+          "lesson": "compare"
+        },
+        {
+          "lesson": "own_conditions"
+        }
+      ]
+    },
+    {
+      "id": "refinement",
+      "title": "Stepwise refinement",
+      "items": [
+        {
+          "lesson": "refinement"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "title": "Using data",
+      "items": [
+        {
+          "level": "midpoint"
+        },
+        {
+          "level": "richest_cell"
+        }
+      ]
+    }
+  ]
+}

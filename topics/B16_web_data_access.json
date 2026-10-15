@@ -1,0 +1,2881 @@
+{
+  "batch": "B16",
+  "title": "Web data, networking and automation",
+  "concept_map": {
+    "apis_http": {
+      "topics": [
+        "apis_http.request_response_cycle",
+        "apis_http.read_api_docs",
+        "apis_http.extract_from_responses"
+      ],
+      "notes": "HTTP/API concepts only; the requests library is lib_requests and urllib is lib_urllib. Worked examples with live endpoints use canned JSON (as Python data) and say what the live call returns. Rate limits (429) are lib_requests.handle_errors and automation.reliable_bots. Building your own API (REST design, Flask routes) is B17 rest_api_design, which should list apis_http.request_response_cycle (methods, status codes) as a prerequisite. OAuth flows (Spotipy) and SMS (Twilio) were not given topics: library-specific and project-shaped. LLM APIs (B20) can depend on lib_requests.send_data_and_headers. Every B16 topic is non-core: none run in a browser sandbox without network access.",
+      "entry_topic": "apis_http.request_response_cycle"
+    },
+    "lib_requests": {
+      "topics": [
+        "lib_requests.get_and_json",
+        "lib_requests.send_data_and_headers",
+        "lib_requests.handle_errors"
+      ],
+      "notes": "Snippets were checked offline with requests 2.31 under the system Python 3.9 (requests.Request(...).prepare() for URLs and bodies, hand-built Response objects for .json() and raise_for_status); no live calls. Sessions, file uploads and streaming downloads were left out.",
+      "entry_topic": "lib_requests.get_and_json"
+    },
+    "lib_urllib": {
+      "topics": [
+        "lib_urllib.urlopen_read",
+        "lib_urllib.download_binary",
+        "lib_urllib.build_and_join_urls"
+      ],
+      "notes": "urllib.request (py4e's urlopen) plus urllib.parse; urllib.robotparser is used in web_scraping.scrape_responsibly. urlopen behaviour was checked offline with data: URLs.",
+      "entry_topic": "lib_urllib.urlopen_read"
+    },
+    "web_scraping": {
+      "topics": [
+        "web_scraping.html_and_regex",
+        "web_scraping.scrape_responsibly",
+        "web_scraping.scrape_to_records",
+        "web_scraping.follow_links"
+      ],
+      "entry_topic": "web_scraping.html_and_regex",
+      "notes": "html_css_basics is out of scope (plan.json), so html_and_regex KP1 teaches just enough HTML (tags, attributes, nesting, class/id) to scrape. follow_links stands in a dict of link lists for fetch+parse so the crawl logic is testable; it encompasses graph_algorithms.breadth_first_search as non_ancestor. Ethics of scraping (100 Days Day 45) is scrape_responsibly. Teaching order: html_and_regex, scrape_responsibly, then lib_beautifulsoup topics, then scrape_to_records and follow_links."
+    },
+    "lib_beautifulsoup": {
+      "topics": [
+        "lib_beautifulsoup.parse_and_find",
+        "lib_beautifulsoup.css_selectors",
+        "lib_beautifulsoup.messy_real_pages"
+      ],
+      "notes": "bs4 is not installed here, so these snippets were NOT run; outputs follow documented Beautiful Soup 4 behaviour (find returns None, get vs [] on attributes, get_text(strip=True), select/select_one). Navigating siblings/parents and lxml as a parser were left out.",
+      "entry_topic": "lib_beautifulsoup.parse_and_find"
+    },
+    "lib_selenium": {
+      "topics": [
+        "lib_selenium.open_page_and_find",
+        "lib_selenium.click_and_type",
+        "lib_selenium.waits_and_exceptions"
+      ],
+      "notes": "Not installed and needs a browser, so snippets were not run; written against the Selenium 4 API (By locators, find_element/find_elements; the old find_element_by_* methods are gone). Login automation for real social sites (100 Days Days 49-52) is project-shaped and was not given topics; the form-filling KP uses a generic form.",
+      "entry_topic": "lib_selenium.open_page_and_find"
+    },
+    "xml_parsing": {
+      "topics": [
+        "xml_parsing.xml_documents",
+        "xml_parsing.read_rss_feed"
+      ],
+      "notes": "xml_documents (format) comes before the lib_elementtree topics; read_rss_feed (Boot.dev's RSS aggregator, py4e XML) comes after them. Using defusedxml for untrusted XML and XML Schema (py4e lecture) were not given KPs. Writing XML was left out.",
+      "entry_topic": "xml_parsing.xml_documents"
+    },
+    "lib_elementtree": {
+      "topics": [
+        "lib_elementtree.find_text_and_attributes",
+        "lib_elementtree.findall_and_paths"
+      ],
+      "notes": "Uses 'import xml.etree.ElementTree as ET' (B13 from_import_and_alias covers the alias form). Creating and writing XML (SubElement, ET.tostring) was left out: no course teaches it.",
+      "entry_topic": "lib_elementtree.find_text_and_attributes"
+    },
+    "web_services": {
+      "topics": [
+        "web_services.service_oriented_design"
+      ],
+      "notes": "One non-core topic (py4e lecture, introduced). Includes the fetch/parse split so parsers can be tested with canned text. SOAP/WSDL were not taught.",
+      "entry_topic": "web_services.service_oriented_design"
+    },
+    "networking_sockets": {
+      "topics": [
+        "networking_sockets.hosts_ports_protocols"
+      ],
+      "notes": "One conceptual topic placed before apis_http, as the concept graph says. DNS, TLS and HTTP servers are out of scope per plan.json; TLS appears only as starttls in lib_smtplib.",
+      "entry_topic": "networking_sockets.hosts_ports_protocols"
+    },
+    "lib_socket": {
+      "topics": [
+        "lib_socket.simplest_web_browser",
+        "lib_socket.parse_raw_response"
+      ],
+      "notes": "py4e's socket browser. send/recv behaviour was checked locally with socket.socketpair() (no network). Writing a socket server was left out (http_servers is out of scope).",
+      "entry_topic": "lib_socket.simplest_web_browser"
+    },
+    "tool_geocoding_api": {
+      "topics": [
+        "tool_geocoding_api.geocode_an_address",
+        "tool_geocoding_api.cache_many_lookups"
+      ],
+      "notes": "Uses py4e's current OpenGeo endpoint and its GeoJSON reply shape (features[0].properties.lat/lon/formatted); replies are canned. py4e's geoload.py caches in SQLite; here the cache is a dict/JSON file because sqlite3 is B17 (sibling). B17 lib_sqlite3 could add a practice item that swaps the cache for a table. Drawing the map itself is B18 data_visualization.",
+      "entry_topic": "tool_geocoding_api.geocode_an_address"
+    },
+    "lib_smtplib": {
+      "topics": [
+        "lib_smtplib.send_plain_email",
+        "lib_smtplib.email_messages_and_templates"
+      ],
+      "notes": "smtplib calls need a real server and credentials, so only message building (string format, EmailMessage, encode errors) was run. Contact-form email from Flask (100 Days Day 60) belongs to B17 lib_flask and can depend on email_messages_and_templates. Attachments and HTML email were left out.",
+      "entry_topic": "lib_smtplib.send_plain_email"
+    },
+    "automation": {
+      "topics": [
+        "automation.automate_a_daily_task",
+        "automation.monitor_and_alert",
+        "automation.reliable_bots"
+      ],
+      "notes": "Problem-based topics built on the 100 Days birthday wisher, price tracker and rain alert. Concrete tools are owned by lib_smtplib, lib_selenium, lib_pyautogui and scheduling_cron. Logging uses plain file appends; the logging module has no concept in the plan. time.sleep is used as a memorised 'import time' line (B13 has no time-module concept). Bots that log in to real social sites were not given topics.",
+      "entry_topic": "automation.automate_a_daily_task"
+    },
+    "lib_pyautogui": {
+      "topics": [
+        "lib_pyautogui.control_mouse_keyboard"
+      ],
+      "notes": "One non-core topic (100 Days Day 94, introduced). Not installed and needs a desktop, so snippets were not run. Screenshot-based image location (locateOnScreen) was left out.",
+      "entry_topic": "lib_pyautogui.control_mouse_keyboard"
+    },
+    "scheduling_cron": {
+      "topics": [
+        "scheduling_cron.timing_inside_python",
+        "scheduling_cron.cron_and_cloud_schedulers"
+      ],
+      "notes": "100 Days Day 32 (PythonAnywhere). The third-party 'schedule' package and GitHub Actions cron were not given topics. B17 deployment can build on cron_and_cloud_schedulers.",
+      "entry_topic": "scheduling_cron.timing_inside_python"
+    }
+  },
+  "topics": [
+    {
+      "id": "networking_sockets.hosts_ports_protocols",
+      "title": "How programs talk over a network: hosts, ports and protocols",
+      "concept": "networking_sockets",
+      "summary": "Describe a network conversation as a client connecting to a server's host and port and following a protocol, and look up a host's address with socket.gethostbyname.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.import_module"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Clients ask, servers answer",
+          "worked_example": "browser (client)  --request-->  web server\nbrowser (client)  <--response--  web server\nThe client always speaks first; the server waits for connections.",
+          "practice": "For described situations (checking weather in an app, a website sending a page), name the client and the server and order the messages.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Host names, IP addresses and DNS",
+          "worked_example": "import socket\nprint(socket.gethostbyname(\"localhost\"))  # 127.0.0.1\nDNS turns a name into an address; for a real name such as \"data.pr4e.org\" the call asks a DNS server and returns its public IP.",
+          "practice": "Predict the result for localhost; choose which step (DNS lookup, connect, send) happens first.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Ports pick the program on the host",
+          "worked_example": "A host runs many servers; the port number picks one.\n80 = HTTP, 443 = HTTPS, 587 = sending email (SMTP)\nAn address plus a port, e.g. (\"data.pr4e.org\", 80), names one endpoint.",
+          "practice": "Match services to their usual ports; write the (host, port) pair for a described server.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Protocols are agreed rules, stacked in layers",
+          "worked_example": "HTTP: what to say (GET /page, 200 OK)\nTCP: deliver bytes reliably and in order, split into packets\nIP: route each packet to the right address\nYour program only speaks the top layer; the lower ones are handled for it.",
+          "practice": "Assign jobs to layers; predict what a program sees when packets arrive out of order (TCP reorders them).",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "apis_http.request_response_cycle",
+      "title": "The HTTP request-response cycle",
+      "concept": "apis_http",
+      "summary": "Read a URL's parts, the text of an HTTP request and response, status codes and the four main methods.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "networking_sockets.hosts_ports_protocols",
+        "string_methods.split_into_parts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The parts of a URL",
+          "worked_example": "url = \"https://api.example.com/v1/weather?city=Oslo&units=metric\"\naddress, query = url.split(\"?\")\nprint(query)  # city=Oslo&units=metric\nscheme https, host api.example.com, path /v1/weather, query after the ?",
+          "practice": "Label the scheme, host, path and query of given URLs; predict what a split on ? or & gives.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "What a request and a response look like",
+          "worked_example": "GET /romeo.txt HTTP/1.0\nHost: data.pr4e.org\n(blank line)\n---\nHTTP/1.1 200 OK\nContent-Type: text/plain\n(blank line)\nBut soft what light ...\nFirst line, headers, a blank line, then the body.",
+          "practice": "Label the request line, status line, headers and body of raw HTTP text; order scrambled request lines.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "networking_sockets.hosts_ports_protocols"
+          ]
+        },
+        {
+          "title": "Status codes tell you what happened",
+          "worked_example": "200 OK, 201 Created: success (2xx)\n301 Moved Permanently: go elsewhere (3xx)\n401 Unauthorized, 404 Not Found, 429 Too Many Requests: your request's fault (4xx)\n500 Internal Server Error: the server's fault (5xx)",
+          "practice": "Classify codes by family; for each scenario (wrong API key, typo in path, server crash) pick the likely code.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Methods: GET, POST, PUT/PATCH, DELETE",
+          "worked_example": "GET /habits          read the list\nPOST /habits         create a habit (data in the body)\nPUT /habits/7        replace habit 7; PATCH changes part of it\nDELETE /habits/7     remove it",
+          "practice": "Pick the method for described actions; spot a request that uses GET to change data.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "networking_sockets.hosts_ports_protocols",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "apis_http.read_api_docs",
+      "title": "Reading API documentation: endpoints, parameters and keys",
+      "concept": "apis_http",
+      "summary": "Turn an API's documentation into a working request: endpoint, required and optional parameters, the API key, and the shape of the JSON it returns.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "apis_http.request_response_cycle",
+        "json_data.navigate_nested_json",
+        "environment_variables.secrets_out_of_code"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Endpoint plus parameters",
+          "worked_example": "Docs: GET https://api.sunrise-sunset.org/json  params: lat (required), lng (required), formatted (optional, 0 or 1)\nRequest: https://api.sunrise-sunset.org/json?lat=51.5&lng=-0.12&formatted=0",
+          "practice": "Write the full URL for a documented request; find the missing required parameter in a broken one.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Use the documented response shape",
+          "worked_example": "Docs example: {\"results\": {\"sunrise\": \"2024-10-12T06:15:02+00:00\", ...}, \"status\": \"OK\"}\nsunrise = data[\"results\"][\"sunrise\"]\nWrite the path to the field before writing any code.",
+          "practice": "Given a documented JSON example, write the expression that reaches a named field.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "json_data.navigate_nested_json"
+          ]
+        },
+        {
+          "title": "API keys: who you are, kept out of the code",
+          "worked_example": "Docs: pass appid=<your key> as a parameter (some APIs use a header instead)\nimport os\nkey = os.environ.get(\"OWM_API_KEY\")\nA 401 response usually means the key is missing or wrong.",
+          "practice": "Find where the docs put the key; fix code that hard-codes it; diagnose a 401.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "environment_variables.secrets_out_of_code"
+          ]
+        },
+        {
+          "title": "Text that arrives HTML-escaped",
+          "worked_example": "import html\nq = \"Which planet is the &quot;Red Planet&quot;?\"\nprint(html.unescape(q))  # Which planet is the \"Red Planet\"?\nSome APIs (Open Trivia DB) escape quotes and & in their text.",
+          "practice": "Predict unescaped strings; add the missing unescape step to a quiz program.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.navigate_nested_json",
+          "weight": 0.4
+        },
+        {
+          "topic": "apis_http.request_response_cycle",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "apis_http.extract_from_responses",
+      "title": "Turning API responses into answers",
+      "concept": "apis_http",
+      "summary": "Process parsed JSON responses (given here as Python data, as the live calls would return) into the values a program needs, including feeding one API's result into the next.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "apis_http.read_api_docs",
+        "nested_data_structures.list_of_dicts",
+        "loop_patterns.search_flag"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Pull out values and convert them",
+          "worked_example": "data = {\"message\": \"success\", \"iss_position\": {\"latitude\": \"-12.3456\", \"longitude\": \"101.2345\"}}\nlat = float(data[\"iss_position\"][\"latitude\"])\nprint(lat)  # -12.3456\nThis is what api.open-notify.org/iss-now.json returns; numbers often arrive as strings.",
+          "practice": "Predict extracted values; fix code that compares a string coordinate with a number.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "json_data.navigate_nested_json"
+          ]
+        },
+        {
+          "title": "Loop over a list in the response",
+          "worked_example": "will_rain = False\nfor slot in forecast[\"list\"]:\n    if slot[\"weather\"][0][\"id\"] < 700:\n        will_rain = True\nprint(will_rain)  # True for a forecast with a 500 (rain) slot\nWeather codes below 700 mean rain or snow.",
+          "practice": "Predict the flag for given forecasts; write the loop that counts or finds matching items.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.search_flag",
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Reshape results for your program",
+          "worked_example": "questions = []\nfor r in response[\"results\"]:\n    questions.append((html.unescape(r[\"question\"]), r[\"correct_answer\"] == \"True\"))\nprint(questions[0])  # ('The \"Red Planet\" is Mars.', True)",
+          "practice": "Build a list of tuples or dicts from a response; predict its first item.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Chain two APIs",
+          "worked_example": "days = list(daily[\"Time Series (Daily)\"].values())\nlatest = float(days[0][\"4. close\"])\nbefore = float(days[1][\"4. close\"])\nchange = (latest - before) / before * 100\nprint(round(change, 1))  # 5.0\nif abs(change) >= 5: fetch news for the stock from a second API",
+          "practice": "Order the steps of a two-API program; predict whether the second call happens for given prices.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "apis_http.read_api_docs"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.navigate_nested_json",
+          "weight": 0.6
+        },
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.search_flag",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_requests.get_and_json",
+      "title": "Fetching data with requests",
+      "concept": "lib_requests",
+      "summary": "Install requests, make a GET request, check the status code, read .text or .json(), pass parameters with params= and always set a timeout.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "apis_http.request_response_cycle",
+        "third_party_packages.find_and_install",
+        "json_data.json_strings"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A first GET request",
+          "worked_example": "import requests   # python3 -m pip install requests\nresponse = requests.get(\"https://api.kanye.rest\", timeout=10)\nprint(response.status_code)  # 200\nprint(response.json()[\"quote\"])  # e.g. a random quote",
+          "practice": "Order the lines of a GET program; predict which line prints the status code.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": ".text is a string, .json() is Python data",
+          "worked_example": "print(type(response.text))    # <class 'str'>\nprint(type(response.json()))  # <class 'dict'>\n.json() does json.loads(response.text) for you.",
+          "practice": "Predict types and values from .text and .json() for a given response body; fix code that indexes .text like a dict.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings"
+          ]
+        },
+        {
+          "title": "Parameters with params=",
+          "worked_example": "params = {\"lat\": 51.5, \"lng\": -0.12, \"formatted\": 0}\nr = requests.get(\"https://api.sunrise-sunset.org/json\", params=params, timeout=10)\nprint(r.url)  # https://api.sunrise-sunset.org/json?lat=51.5&lng=-0.12&formatted=0\nrequests builds and encodes the query string.",
+          "practice": "Write the params dict for a documented request; predict the final URL.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Always pass a timeout",
+          "worked_example": "requests.get(url)               # may wait forever on a dead server\nrequests.get(url, timeout=10)   # gives up after 10 s with requests.exceptions.Timeout",
+          "practice": "Spot the calls without a timeout; choose sensible timeouts for described programs.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.3
+        },
+        {
+          "topic": "third_party_packages.find_and_install",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_requests.send_data_and_headers",
+      "title": "Sending data with requests: POST, PUT, DELETE and headers",
+      "concept": "lib_requests",
+      "summary": "Create, update and delete resources on an API by sending a JSON body and authentication headers.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_requests.get_and_json",
+        "apis_http.read_api_docs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "POST a JSON body",
+          "worked_example": "user = {\"token\": TOKEN, \"username\": \"ana\", \"agreeTermsOfService\": \"yes\", \"notMinor\": \"yes\"}\nr = requests.post(\"https://pixe.la/v1/users\", json=user, timeout=10)\nprint(r.text)  # e.g. {\"message\":\"Success.\",\"isSuccess\":true}",
+          "practice": "Write a POST that sends a given dict; predict which method the docs require for creating an item.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        },
+        {
+          "title": "Authenticate with headers",
+          "worked_example": "headers = {\"X-USER-TOKEN\": TOKEN}\nrequests.post(graph_url, json=graph, headers=headers, timeout=10)\nOther APIs want {\"Authorization\": \"Bearer <key>\"}; the docs say which.",
+          "practice": "Write the headers dict for documented auth schemes; fix a request that puts the token in the wrong place.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "apis_http.read_api_docs"
+          ]
+        },
+        {
+          "title": "PUT and DELETE address one item",
+          "worked_example": "pixel_url = graph_url + \"/20241012\"\nrequests.put(pixel_url, json={\"quantity\": \"7.5\"}, headers=headers, timeout=10)\nrequests.delete(pixel_url, headers=headers, timeout=10)\nThe item's id goes in the URL path.",
+          "practice": "Build the URL for a given item; choose put, post or delete for described changes.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "json= versus data=",
+          "worked_example": "requests.post(url, json={\"unit\": \"km\"})  # body {\"unit\": \"km\"}, Content-Type application/json\nrequests.post(url, data={\"unit\": \"km\"})  # body unit=km, a web form\nUse the one the API documents.",
+          "practice": "Predict the body sent for json= and data=; fix a request rejected because it sent a form instead of JSON.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_requests.get_and_json",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_requests.handle_errors",
+      "title": "When requests fail: status checks and exceptions",
+      "concept": "lib_requests",
+      "summary": "Detect failed requests with status codes and raise_for_status, catch network errors with RequestException, and cope with a body that is not JSON.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_requests.get_and_json",
+        "exceptions.several_handlers_and_as"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A 404 is not an exception",
+          "worked_example": "r = requests.get(\"https://api.example.com/x\", timeout=10)\nprint(r.status_code, r.ok)  # 404 False\nrequests returns normally for 4xx and 5xx; your code must check.",
+          "practice": "Predict status_code and ok for described responses; add the missing check before .json().",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        },
+        {
+          "title": "raise_for_status turns bad codes into errors",
+          "worked_example": "r.raise_for_status()\n# requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.example.com/x\nDoes nothing for 2xx codes.",
+          "practice": "Predict which responses raise; place raise_for_status in a program.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "Catch the whole family with RequestException",
+          "worked_example": "try:\n    r = requests.get(url, timeout=5)\n    r.raise_for_status()\nexcept requests.exceptions.RequestException as e:\n    print(\"Request failed:\", e)\nHTTPError, ConnectionError and Timeout are all RequestExceptions.",
+          "practice": "Choose which except clause catches each failure; write a fetch function that returns None on failure.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "exceptions.several_handlers_and_as"
+          ]
+        },
+        {
+          "title": "A body that is not JSON",
+          "worked_example": "r.text  # '<html>oops</html>'\nr.json()\n# requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\nError pages are often HTML; check the status before decoding.",
+          "practice": "Predict which responses can be decoded; fix code that calls .json() on an error page.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.several_handlers_and_as",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_requests.get_and_json",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_urllib.urlopen_read",
+      "title": "Reading a web page with urllib",
+      "concept": "lib_urllib",
+      "summary": "Open a URL with the standard library's urllib.request, read it line by line or all at once, decode the bytes, and process the text.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "apis_http.request_response_cycle",
+        "unicode_encoding.text_vs_bytes",
+        "file_io.loop_over_lines",
+        "dictionaries.counting_pattern"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Open a URL and loop over its lines",
+          "worked_example": "import urllib.request\nfhand = urllib.request.urlopen(\"http://data.pr4e.org/romeo.txt\")\nfor line in fhand:\n    print(line.decode().strip())\nPrints the 4 lines of romeo.txt, starting \"But soft what light through yonder window breaks\".",
+          "practice": "Predict output for a page with given text; fix a loop that prints b'...' lines.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "file_io.loop_over_lines",
+            "unicode_encoding.text_vs_bytes"
+          ]
+        },
+        {
+          "title": "read() gets everything as bytes",
+          "worked_example": "data = urllib.request.urlopen(url).read()\nprint(type(data))  # <class 'bytes'>\ntext = data.decode()\nOnly the body arrives: urllib has already removed the headers.",
+          "practice": "Predict types and lengths; choose decode() or not for each step.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes"
+          ]
+        },
+        {
+          "title": "Count words on a web page",
+          "worked_example": "counts = {}\nfor line in urllib.request.urlopen(url):\n    for word in line.decode().split():\n        counts[word] = counts.get(word, 0) + 1\nThe file-processing patterns work unchanged on a URL.",
+          "practice": "Write the counting loop; predict counts for a page with given text.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.counting_pattern"
+          ]
+        },
+        {
+          "title": "Bad URLs raise errors",
+          "worked_example": "urllib.request.urlopen(\"http://data.pr4e.org/nothere.txt\")\n# urllib.error.HTTPError: HTTP Error 404: Not Found\nUnlike requests, urllib raises for 4xx and 5xx codes.",
+          "practice": "Predict which calls raise and which return; compare with what requests does.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.loop_over_lines",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.counting_pattern",
+          "weight": 0.3
+        },
+        {
+          "topic": "unicode_encoding.text_vs_bytes",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_urllib.download_binary",
+      "title": "Downloading images and other binary files",
+      "concept": "lib_urllib",
+      "summary": "Download a non-text file with urllib, check its type, save it with mode 'wb', and read large files in chunks.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_urllib.urlopen_read",
+        "file_io.encodings_and_binary",
+        "break_continue.while_true_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Save the bytes with mode 'wb'",
+          "worked_example": "img = urllib.request.urlopen(\"http://data.pr4e.org/cover3.jpg\").read()\nwith open(\"cover3.jpg\", \"wb\") as fhand:\n    fhand.write(img)\nprint(len(img))  # the size in bytes",
+          "practice": "Order the lines of a download; fix code that opens the output file in 'w' mode.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "file_io.encodings_and_binary"
+          ]
+        },
+        {
+          "title": "Never decode binary data",
+          "worked_example": "raw = b\"\\x89PNG\\r\\n\\x1a\\n\"\nraw.decode()\n# UnicodeDecodeError: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte",
+          "practice": "Predict which downloads can be decoded as text; remove the wrong decode() from a program.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes"
+          ]
+        },
+        {
+          "title": "Check what you got: Content-Type",
+          "worked_example": "page = urllib.request.urlopen(url)\nprint(page.headers[\"Content-Type\"])  # e.g. image/jpeg\nAn error page would say text/html instead.",
+          "practice": "Choose text or binary handling from a Content-Type; predict the file extension to use.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_urllib.urlopen_read"
+          ]
+        },
+        {
+          "title": "Read big files in chunks",
+          "worked_example": "with open(\"cover3.jpg\", \"wb\") as fhand:\n    while True:\n        chunk = img_page.read(100000)\n        if len(chunk) < 1:\n            break\n        fhand.write(chunk)\nread(n) returns b'' when the download is finished.",
+          "practice": "Trace chunk sizes for a file of given size; fill in the stop condition.",
+          "formats": [
+            "trace_table",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_urllib.urlopen_read",
+          "weight": 0.5
+        },
+        {
+          "topic": "file_io.encodings_and_binary",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_urllib.build_and_join_urls",
+      "title": "Building URLs safely with urllib.parse",
+      "concept": "lib_urllib",
+      "summary": "Split URLs into parts, build query strings with urlencode and quote, and turn relative links into absolute ones with urljoin.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "apis_http.request_response_cycle",
+        "dictionaries.create_and_look_up",
+        "modules_imports.from_import_and_alias"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Split a URL with urlsplit",
+          "worked_example": "from urllib.parse import urlsplit\nparts = urlsplit(\"https://api.example.com/v1/weather?city=Oslo\")\nprint(parts.netloc, parts.path)  # api.example.com /v1/weather",
+          "practice": "Predict the scheme, netloc, path and query of given URLs.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Build a query string with urlencode",
+          "worked_example": "from urllib.parse import urlencode\nprint(urlencode({\"q\": \"fish & chips\", \"page\": 2}))\n# q=fish+%26+chips&page=2\nPasting \"fish & chips\" into a URL by hand would split it at the &.",
+          "practice": "Predict encoded query strings; fix a hand-built URL that breaks on spaces or &.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Encode one piece with quote",
+          "worked_example": "from urllib.parse import quote\nprint(quote(\"Ann Arbor, MI\"))  # Ann%20Arbor%2C%20MI\nUse it for a value that goes in the path rather than the query.",
+          "practice": "Choose quote or urlencode for described URLs; predict quoted text.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "Resolve relative links with urljoin",
+          "worked_example": "base = \"https://books.example.com/catalog/page1.html\"\nprint(urljoin(base, \"page2.html\"))     # https://books.example.com/catalog/page2.html\nprint(urljoin(base, \"/about.html\"))    # https://books.example.com/about.html\nprint(urljoin(base, \"../index.html\"))  # https://books.example.com/index.html",
+          "practice": "Predict absolute URLs for relative links; fix a scraper that glues strings together with +.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.from_import_and_alias",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_socket.simplest_web_browser",
+      "title": "The world's simplest web browser with socket",
+      "concept": "lib_socket",
+      "summary": "Open a TCP connection with socket, send an HTTP GET request as bytes, receive the response in a loop until the server closes, and decode it.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "apis_http.request_response_cycle",
+        "unicode_encoding.text_vs_bytes",
+        "break_continue.while_true_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Connect to a host and port",
+          "worked_example": "import socket\nmysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nmysock.connect((\"data.pr4e.org\", 80))\nAF_INET + SOCK_STREAM means an internet TCP connection; connect takes one (host, port) tuple.",
+          "practice": "Fill in the connect call for a described server; fix a call that passes host and port as two arguments.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "networking_sockets.hosts_ports_protocols"
+          ]
+        },
+        {
+          "title": "Send the request as bytes",
+          "worked_example": "cmd = \"GET http://data.pr4e.org/romeo.txt HTTP/1.0\\r\\n\\r\\n\".encode()\nmysock.send(cmd)\nmysock.send(\"GET / HTTP/1.0\\r\\n\\r\\n\")\n# TypeError: a bytes-like object is required, not 'str'",
+          "practice": "Write the request line for a given URL; fix sends that use str or forget the blank line.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes",
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Receive until the server closes",
+          "worked_example": "while True:\n    data = mysock.recv(512)\n    if len(data) < 1:\n        break\n    print(data.decode(), end=\"\")\nmysock.close()\nrecv returns at most 512 bytes; b'' means the server is done.",
+          "practice": "Trace how many recv calls a response of given length needs; fill in the stop condition.",
+          "formats": [
+            "trace_table",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        },
+        {
+          "title": "Collect the pieces before decoding",
+          "worked_example": "chunks = []\nwhile True:\n    data = mysock.recv(512)\n    if len(data) < 1:\n        break\n    chunks.append(data)\nresponse = b\"\".join(chunks).decode()\nA multi-byte character can be split across two chunks, so join first, decode once.",
+          "practice": "Choose the safe order (join then decode); predict the joined response from given chunks.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unicode_encoding.text_vs_bytes",
+          "weight": 0.4
+        },
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_socket.parse_raw_response",
+      "title": "Taking apart a raw HTTP response",
+      "concept": "lib_socket",
+      "summary": "Split raw response bytes into status line, headers and body, read the status code and a header, and save a binary body to a file.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_socket.simplest_web_browser",
+        "dictionaries.add_update_delete",
+        "file_io.encodings_and_binary"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Headers and body are split by a blank line",
+          "worked_example": "raw = b\"HTTP/1.1 200 OK\\r\\nContent-Type: text/plain\\r\\n\\r\\nBut soft what light\"\nhead, body = raw.split(b\"\\r\\n\\r\\n\", 1)\nprint(body.decode())  # But soft what light",
+          "practice": "Predict head and body for given raw responses; fix a split that uses \"\\n\\n\".",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_socket.simplest_web_browser"
+          ]
+        },
+        {
+          "title": "Read the status code",
+          "worked_example": "lines = head.decode().split(\"\\r\\n\")\nprint(lines[0])             # HTTP/1.1 200 OK\nprint(lines[0].split()[1])  # 200",
+          "practice": "Extract the status code from status lines; decide whether to continue processing.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "Headers into a dictionary",
+          "worked_example": "headers = {}\nfor line in lines[1:]:\n    name, value = line.split(\": \", 1)\n    headers[name] = value\nprint(headers[\"Content-Type\"])  # text/plain",
+          "practice": "Write the header loop; predict a header lookup.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "Save a binary body",
+          "worked_example": "head, body = picture.split(b\"\\r\\n\\r\\n\", 1)\nwith open(\"stuff.jpg\", \"wb\") as f:\n    f.write(body)\nWriting the headers into the file too would give a broken image.",
+          "practice": "Fix programs that save headers with the image or decode the body.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_io.encodings_and_binary"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_socket.simplest_web_browser",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.add_update_delete",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "web_scraping.html_and_regex",
+      "title": "Reading HTML and pulling out links with regular expressions",
+      "concept": "web_scraping",
+      "summary": "Read the structure of an HTML page (tags, attributes, nesting, class and id) and extract simple data with re.findall, seeing why regex breaks on real HTML.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "apis_http.request_response_cycle",
+        "regular_expressions.findall_sub_split",
+        "regular_expressions.greedy_and_pitfalls"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Tags, attributes and nesting",
+          "worked_example": "<div class=\"movie\" id=\"m1\">\n  <h3>1) The Godfather</h3>\n  <a href=\"/films/godfather\">More</a>\n</div>\nAn element has a tag (div), attributes (class, id, href) and content; h3 and a are inside the div.",
+          "practice": "Name the tag, attributes and parent of marked elements in a snippet of HTML.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Extract links with findall",
+          "worked_example": "import re\nhtml = '<p>See <a href=\"https://python.org\">Python</a> and <a href=\"/docs\">docs</a>.</p>'\nprint(re.findall(r'href=\"(.+?)\"', html))\n# ['https://python.org', '/docs']",
+          "practice": "Predict findall results on small pages; write a pattern for another attribute.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.findall_sub_split"
+          ]
+        },
+        {
+          "title": "The greedy-match bug",
+          "worked_example": "html = '<a href=\"/a\">A</a> <a href=\"/b\">B</a>'\nprint(re.findall(r'href=\"(.+)\"', html))\n# ['/a\">A</a> <a href=\"/b']\nWithout ? the .+ runs to the last quote on the line.",
+          "practice": "Fix greedy patterns; predict output with and without ?.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.greedy_and_pitfalls"
+          ]
+        },
+        {
+          "title": "Why real pages need a parser",
+          "worked_example": "html = \"<a class='nav' href='/home'>Home</a> <a href=\\\"/faq\\\">FAQ</a>\"\nprint(re.findall(r'href=\"(.+?)\"', html))  # ['/faq']\nSingle quotes, extra attributes and line breaks are all legal HTML; an HTML parser handles them.",
+          "practice": "Predict which legal HTML variants a pattern misses; choose regex or a parser for described jobs.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.findall_sub_split"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "regular_expressions.findall_sub_split",
+          "weight": 0.5
+        },
+        {
+          "topic": "regular_expressions.greedy_and_pitfalls",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "web_scraping.scrape_responsibly",
+      "title": "Scraping responsibly: APIs first, robots.txt and polite requests",
+      "concept": "web_scraping",
+      "summary": "Decide whether to scrape at all, check robots.txt with urllib.robotparser, identify your scraper and pause between requests.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "web_scraping.html_and_regex",
+        "lib_requests.get_and_json",
+        "modules_imports.from_import_and_alias"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An API beats scraping",
+          "worked_example": "Need: today's weather -> use the weather API (stable JSON, allowed)\nNeed: prices on a shop with no API -> scraping may be the only way\nScrapers break whenever the page layout changes.",
+          "practice": "For described tasks choose API, scraping or neither; predict what breaks a scraper.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Check robots.txt",
+          "worked_example": "from urllib.robotparser import RobotFileParser\nrp = RobotFileParser()\nrp.parse([\"User-agent: *\", \"Disallow: /checkout/\"])\nprint(rp.can_fetch(\"MyBot\", \"https://shop.example.com/products/42\"))  # True\nprint(rp.can_fetch(\"MyBot\", \"https://shop.example.com/checkout/cart\"))  # False\nLive code calls rp.set_url(\".../robots.txt\") and rp.read() instead of parse.",
+          "practice": "Predict can_fetch for given rules and URLs.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "Say who you are with a User-Agent header",
+          "worked_example": "headers = {\"User-Agent\": \"PriceWatcher/1.0 (ana@example.com)\"}\nr = requests.get(url, headers=headers, timeout=10)\nSome sites refuse requests that do not send one.",
+          "practice": "Add the header to a request; choose an honest User-Agent.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        },
+        {
+          "title": "Pause between requests",
+          "worked_example": "import time\nfor page in range(1, 4):\n    r = requests.get(f\"{base}?page={page}\", timeout=10)\n    time.sleep(2)\nWithout the pause a scraper can hammer a small site; robots.txt may give a Crawl-delay.",
+          "practice": "Fix a scraper loop with no delay; compute the total wait for n pages.",
+          "formats": [
+            "fix_the_bug",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e"
+      ]
+    },
+    {
+      "id": "web_scraping.scrape_to_records",
+      "title": "Scraping a page into records and a CSV file",
+      "concept": "web_scraping",
+      "summary": "Scrape repeated blocks on a page (cards, rows) into a list of dicts, walk through numbered pages, and save the result as CSV.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_beautifulsoup.css_selectors",
+        "nested_data_structures.list_of_dicts",
+        "csv_files.dict_reader_writer"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One dict per repeated block",
+          "worked_example": "movies = []\nfor card in soup.select(\"div.movie\"):\n    movies.append({\"title\": card.select_one(\"h3\").get_text(),\n                   \"year\": card.select_one(\".year\").get_text()})\nprint(movies[0])  # {'title': 'The Godfather', 'year': '1972'}",
+          "practice": "Write the loop for a given page; predict the records it builds.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_beautifulsoup.css_selectors",
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Why not zip two separate lists",
+          "worked_example": "titles = soup.select(\"h3\")\nyears = soup.select(\".year\")\nIf one card has no year, zip(titles, years) pairs every later title with the wrong year.\nLooping over cards keeps each title with its own year.",
+          "practice": "Predict the mismatched pairs for a page with a missing field; choose the safe loop.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_beautifulsoup.css_selectors"
+          ]
+        },
+        {
+          "title": "Walk through numbered pages",
+          "worked_example": "for page in range(1, 4):\n    url = f\"https://books.toscrape.com/catalogue/page-{page}.html\"\n    soup = BeautifulSoup(requests.get(url, timeout=10).text, \"html.parser\")\n    ... add this page's records to the same list",
+          "practice": "Write the URLs a loop visits; fix an off-by-one that misses the last page.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Save the records as CSV",
+          "worked_example": "with open(\"movies.csv\", \"w\", newline=\"\") as f:\n    writer = csv.DictWriter(f, fieldnames=[\"title\", \"year\"])\n    writer.writeheader()\n    writer.writerows(movies)",
+          "practice": "Fill in the fieldnames; predict the file's first two lines.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "csv_files.dict_reader_writer"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_beautifulsoup.css_selectors",
+          "weight": 0.6
+        },
+        {
+          "topic": "csv_files.dict_reader_writer",
+          "weight": 0.4
+        },
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e"
+      ]
+    },
+    {
+      "id": "web_scraping.follow_links",
+      "title": "Following links from page to page",
+      "concept": "web_scraping",
+      "summary": "Follow a link at a given position several times, make links absolute, and crawl a site with a to-visit list and a visited set without looping or leaving the site.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_urllib.build_and_join_urls",
+        "sets.create_and_membership",
+        "while_loops.loop_until_condition"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Follow the link at position n, k times",
+          "worked_example": "PAGES = {\"start.html\": [\"a.html\", \"b.html\", \"c.html\"], \"c.html\": [\"d.html\", \"e.html\", \"f.html\"]}\nurl = \"start.html\"\nfor step in range(2):\n    url = PAGES[url][2]\n    print(\"Retrieving\", url)\n# Retrieving c.html\n# Retrieving f.html\nPAGES stands in for fetching each page and listing its links.",
+          "practice": "Trace which pages are visited for given positions and counts.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Make each link absolute",
+          "worked_example": "page = \"https://blog.example.com/posts/1.html\"\nprint(urljoin(page, \"2.html\"))  # https://blog.example.com/posts/2.html\nA crawler must join every href to the page it came from.",
+          "practice": "Predict absolute links found on a given page.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_urllib.build_and_join_urls"
+          ]
+        },
+        {
+          "title": "A visited set stops endless loops",
+          "worked_example": "to_visit, visited = [\"/\"], set()\nwhile to_visit and len(visited) < 10:\n    url = to_visit.pop(0)\n    if url in visited:\n        continue\n    visited.add(url)\n    for link in LINKS[url]:\n        if link not in visited:\n            to_visit.append(link)\nOn a 4-page site that links back to /, this visits 4 pages and stops.",
+          "practice": "Trace to_visit and visited for a small link map; fix a crawler that revisits pages forever.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership",
+            "while_loops.loop_until_condition"
+          ]
+        },
+        {
+          "title": "Stay on the same site",
+          "worked_example": "full = urljoin(page, href)\nif urlsplit(full).netloc == \"blog.example.com\":\n    keep.append(full)\n# keeps /about and 2.html, drops https://twitter.com/x",
+          "practice": "Predict which links a crawler keeps; add the domain check to a crawler.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_urllib.build_and_join_urls"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_urllib.build_and_join_urls",
+          "weight": 0.4
+        },
+        {
+          "topic": "sets.create_and_membership",
+          "weight": 0.3
+        },
+        {
+          "topic": "graph_algorithms.breadth_first_search",
+          "weight": 0.3,
+          "non_ancestor": true
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_beautifulsoup.parse_and_find",
+      "title": "Parsing HTML with Beautiful Soup: find and find_all",
+      "concept": "lib_beautifulsoup",
+      "summary": "Parse HTML with BeautifulSoup, get the first or every matching tag, read attributes and the text inside.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "web_scraping.html_and_regex",
+        "third_party_packages.find_and_install"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Make the soup",
+          "worked_example": "from bs4 import BeautifulSoup   # python3 -m pip install beautifulsoup4\nhtml = \"<html><head><title>Top Films</title></head><body>...</body></html>\"\nsoup = BeautifulSoup(html, \"html.parser\")\nprint(soup.title.string)  # Top Films",
+          "practice": "Order the lines that parse a page; predict soup.title.string for given pages.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": "find gives one tag, find_all gives a list",
+          "worked_example": "first = soup.find(\"a\")\nlinks = soup.find_all(\"a\")\nprint(len(links))  # 3 on a page with three links\nfind returns the first match, or None.",
+          "practice": "Predict find and find_all results; choose which to use for a task.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "web_scraping.html_and_regex"
+          ]
+        },
+        {
+          "title": "Read attributes",
+          "worked_example": "for tag in soup.find_all(\"a\"):\n    print(tag.get(\"href\"))\n# /films/godfather\n# /films/casablanca\ntag[\"href\"] also works but raises KeyError if the attribute is missing; get returns None.",
+          "practice": "Predict printed attributes; fix code that indexes a missing attribute.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Get the text inside",
+          "worked_example": "h3 = soup.find(\"h3\")\nprint(h3.get_text())  # 1) The Godfather\nget_text() joins all the text inside the tag, including nested tags.",
+          "practice": "Predict get_text() for nested tags; write the loop that prints every heading.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "web_scraping.html_and_regex"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "web_scraping.html_and_regex",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_beautifulsoup.css_selectors",
+      "title": "Finding elements by class, id and CSS selector",
+      "concept": "lib_beautifulsoup",
+      "summary": "Narrow searches with class_ and id, and use select and select_one with CSS selectors for nested elements.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_beautifulsoup.parse_and_find"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Search by class and id",
+          "worked_example": "soup.find_all(\"span\", class_=\"price\")\nsoup.find(id=\"total\")\nclass is a Python keyword, so Beautiful Soup uses class_.",
+          "practice": "Write find calls for described elements; fix one that uses class=.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_beautifulsoup.parse_and_find"
+          ]
+        },
+        {
+          "title": "select with CSS selectors",
+          "worked_example": "soup.select(\"li a\")          # a tags anywhere inside li\nsoup.select(\"div.movie > h3\") # h3 directly inside a div with class movie\nsoup.select(\"#total\")         # the element with id total\nselect always returns a list.",
+          "practice": "Match selectors to the elements they pick in a given page; predict list lengths.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_beautifulsoup.parse_and_find"
+          ]
+        },
+        {
+          "title": "select_one for a single element",
+          "worked_example": "price = soup.select_one(\"div.product span.price\").get_text()\nprint(price)  # $19.99\nselect_one returns the first match or None, like find.",
+          "practice": "Rewrite find chains as select_one; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_beautifulsoup.parse_and_find"
+          ]
+        },
+        {
+          "title": "Selectors on attributes",
+          "worked_example": "soup.select('a[href^=\"/films/\"]')  # links whose href starts with /films/\nsoup.select('input[name=\"email\"]')\nUseful when the element has no class or id.",
+          "practice": "Choose the selector for described elements; predict which links match.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_beautifulsoup.parse_and_find",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_beautifulsoup.messy_real_pages",
+      "title": "Scraping real pages: fetching, missing elements and cleaning text",
+      "concept": "lib_beautifulsoup",
+      "summary": "Fetch a live page with requests, guard against elements that are missing, and clean scraped text into numbers.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_beautifulsoup.css_selectors",
+        "lib_requests.get_and_json",
+        "none_type.check_for_none",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Fetch, then parse",
+          "worked_example": "r = requests.get(url, headers={\"User-Agent\": \"Mozilla/5.0\"}, timeout=10)\nsoup = BeautifulSoup(r.text, \"html.parser\")\nThe live call returns the page's HTML as r.text; pass the text, not r.",
+          "practice": "Order the fetch-and-parse lines; fix code that passes the response object to BeautifulSoup.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_requests.get_and_json"
+          ]
+        },
+        {
+          "title": "Missing elements give None",
+          "worked_example": "price = soup.select_one(\".price\")\nprint(price.get_text())\n# AttributeError: 'NoneType' object has no attribute 'get_text'\nfix: if price is not None: ... else: record that it was missing.",
+          "practice": "Predict which lookups fail on a page; add the None guard.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "Strip whitespace from scraped text",
+          "worked_example": "print(tag.get_text(strip=True))  # 'The Godfather' instead of '\\n   The Godfather\\n'\nHTML layout leaves newlines and spaces around text.",
+          "practice": "Predict get_text() with and without strip=True.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.strip_whitespace"
+          ]
+        },
+        {
+          "title": "Turn price text into a number",
+          "worked_example": "text = \"$1,299.00\"\nprice = float(text.replace(\"$\", \"\").replace(\",\", \"\"))\nprint(price)  # 1299.0",
+          "practice": "Write the cleaning code for given price formats; fix a ValueError from float('$5').",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_beautifulsoup.css_selectors",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_requests.get_and_json",
+          "weight": 0.3
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_selenium.open_page_and_find",
+      "title": "Driving a browser with Selenium: opening pages and finding elements",
+      "concept": "lib_selenium",
+      "summary": "Start a browser with Selenium, load a page, find elements with By locators (CSS, id, name, XPath), read their text and attributes, and quit.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_beautifulsoup.css_selectors",
+        "third_party_packages.find_and_install"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "When you need a real browser",
+          "worked_example": "requests + Beautiful Soup: the HTML the server sends.\nSelenium: the page after its JavaScript has run, and you can click and type.\nUse Selenium only when the data or the action needs the browser.",
+          "practice": "For described sites and tasks, choose requests or Selenium.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Start, load, quit",
+          "worked_example": "from selenium import webdriver\ndriver = webdriver.Chrome()\ndriver.get(\"https://www.python.org\")\nprint(driver.title)  # e.g. Welcome to Python.org\ndriver.quit()",
+          "practice": "Order the lines of a Selenium script; spot the missing quit().",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": "find_element with By",
+          "worked_example": "from selenium.webdriver.common.by import By\nsearch = driver.find_element(By.NAME, \"q\")\ntimes = driver.find_elements(By.CSS_SELECTOR, \".event-widget time\")\nprint(times[0].text, search.get_attribute(\"placeholder\"))\nfind_elements returns a list; find_element returns one or raises.",
+          "practice": "Write locators for described elements; predict whether a call returns a list or one element.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_beautifulsoup.css_selectors"
+          ]
+        },
+        {
+          "title": "XPath when CSS is awkward",
+          "worked_example": "driver.find_element(By.XPATH, '//*[@id=\"submit\"]')\ndriver.find_element(By.XPATH, '//button[text()=\"Sign in\"]')\nCopy XPath in the browser's inspector gives the first form.",
+          "practice": "Match XPath expressions to elements; choose CSS or XPath for described targets.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_beautifulsoup.css_selectors",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_selenium.click_and_type",
+      "title": "Clicking, typing and filling forms with Selenium",
+      "concept": "lib_selenium",
+      "summary": "Interact with a page from Python: click elements, type into inputs, press keys, and fill and submit a form.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_selenium.open_page_and_find"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Click an element",
+          "worked_example": "cookie = driver.find_element(By.ID, \"cookie\")\ncookie.click()\nFind first, then act; a stale or hidden element raises an exception.",
+          "practice": "Write the find-and-click lines for described buttons.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lib_selenium.open_page_and_find"
+          ]
+        },
+        {
+          "title": "Type text and press keys",
+          "worked_example": "from selenium.webdriver.common.keys import Keys\nsearch = driver.find_element(By.NAME, \"q\")\nsearch.send_keys(\"pandas\", Keys.ENTER)",
+          "practice": "Fill in the send_keys call for a described search; choose the key constant for Tab, Enter or Escape.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_selenium.open_page_and_find"
+          ]
+        },
+        {
+          "title": "Fill a whole form",
+          "worked_example": "for name, value in [(\"fName\", \"Ana\"), (\"lName\", \"Lee\"), (\"email\", \"ana@example.com\")]:\n    field = driver.find_element(By.NAME, name)\n    field.clear()\n    field.send_keys(value)\ndriver.find_element(By.CSS_SELECTOR, \"form button\").click()",
+          "practice": "Order the lines of a form-filling script; fix one that types into a field without clearing it.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Repeat actions in a loop",
+          "worked_example": "for _ in range(100):\n    cookie.click()\nA bot is a loop of find-and-act steps; check the page's state each time if it can change.",
+          "practice": "Write a loop that clicks until a counter on the page reaches a target; predict the number of clicks.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "for_loops.repeat_n_times"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_selenium.open_page_and_find",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_selenium.waits_and_exceptions",
+      "title": "Selenium on real sites: waits, missing elements and windows",
+      "concept": "lib_selenium",
+      "summary": "Make Selenium bots robust: wait for elements, catch NoSuchElementException, switch between windows, and scroll.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_selenium.click_and_type",
+        "exceptions.several_handlers_and_as"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Missing elements raise NoSuchElementException",
+          "worked_example": "from selenium.common.exceptions import NoSuchElementException\ntry:\n    driver.find_element(By.ID, \"popup-close\").click()\nexcept NoSuchElementException:\n    pass  # no popup this time",
+          "practice": "Add a try/except around an optional element; predict which lines run when it is missing.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "exceptions.several_handlers_and_as"
+          ]
+        },
+        {
+          "title": "Wait for the page instead of guessing",
+          "worked_example": "from selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\nbutton = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, \"apply\")))\ntime.sleep(5) also works but always waits the full time.",
+          "practice": "Choose sleep, an implicit wait or an explicit wait for described situations; fill in the wait.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_selenium.click_and_type"
+          ]
+        },
+        {
+          "title": "Switch to a new window",
+          "worked_example": "base = driver.window_handles[0]\ndriver.find_element(By.ID, \"login\").click()   # opens a popup window\npopup = driver.window_handles[1]\ndriver.switch_to.window(popup)\n... work in the popup, then driver.switch_to.window(base)",
+          "practice": "Order the switching steps; fix a script that searches for popup elements in the main window.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Scroll with JavaScript",
+          "worked_example": "for _ in range(5):\n    driver.execute_script(\"window.scrollTo(0, document.body.scrollHeight);\")\n    time.sleep(2)\nPages that load more items on scroll need this before you read them.",
+          "practice": "Predict how many scrolls happen; choose where to put the pause.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_selenium.click_and_type",
+          "weight": 0.5
+        },
+        {
+          "topic": "exceptions.several_handlers_and_as",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "xml_parsing.xml_documents",
+      "title": "XML documents: elements, attributes and text",
+      "concept": "xml_parsing",
+      "summary": "Read an XML document as a tree of elements with tags, attributes and text, recognise malformed XML, and compare XML with JSON.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "json_data.json_strings",
+        "modules_imports.from_import_and_alias"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Elements, attributes and text",
+          "worked_example": "<person>\n  <name>Chuck</name>\n  <phone type=\"intl\">+1 734 303 4456</phone>\n  <email hide=\"yes\" />\n</person>\nphone has the attribute type=\"intl\" and the text +1 734 303 4456; email is self-closing and has no text.",
+          "practice": "Name the tags, attributes and text of marked parts; pick the parent and children of an element.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "An XML document is a tree",
+          "worked_example": "person\n ├── name: Chuck\n ├── phone (type=intl): +1 734 303 4456\n └── email (hide=yes)\nExactly one root element contains everything else.",
+          "practice": "Draw or complete the tree for a short document; count the children of the root.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Well-formed or not",
+          "worked_example": "import xml.etree.ElementTree as ET\nET.fromstring(\"<name>Chuck</Name>\")\n# xml.etree.ElementTree.ParseError: mismatched tag: line 1, column 13\nTags are case-sensitive, must close in order, and there must be one root.",
+          "practice": "Predict which documents parse; fix malformed ones.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "XML or JSON?",
+          "worked_example": "XML: <person><name>Chuck</name><age>42</age></person>  -> age is the text '42'\nJSON: {\"name\": \"Chuck\", \"age\": 42}                  -> age is the number 42\nJSON maps straight to dicts and lists; XML has attributes and is common in feeds and older services.",
+          "practice": "Convert small records between XML and JSON; predict the type of a value read from each.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings"
+          ]
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "py4e",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "lib_elementtree.find_text_and_attributes",
+      "title": "Reading XML with ElementTree: find, text and get",
+      "concept": "lib_elementtree",
+      "summary": "Parse XML text with ElementTree.fromstring, find child elements, read their text and attributes, and handle elements that are missing.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "xml_parsing.xml_documents",
+        "none_type.check_for_none"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Parse and find a child",
+          "worked_example": "import xml.etree.ElementTree as ET\ntree = ET.fromstring(data)   # data is the person document\nprint(tree.tag)                    # person\nprint(tree.find(\"name\").text)      # Chuck",
+          "practice": "Predict tag and text for given documents; write the find for a named child.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "xml_parsing.xml_documents"
+          ]
+        },
+        {
+          "title": "Read attributes with get",
+          "worked_example": "print(tree.find(\"phone\").get(\"type\"))  # intl\nprint(tree.find(\"email\").get(\"hide\"))  # yes\nprint(tree.find(\"email\").text)         # None",
+          "practice": "Predict attribute and text values, including None for empty elements.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "xml_parsing.xml_documents"
+          ]
+        },
+        {
+          "title": "A missing child is None",
+          "worked_example": "print(tree.find(\"age\"))       # None\nprint(tree.find(\"age\").text)\n# AttributeError: 'NoneType' object has no attribute 'text'",
+          "practice": "Predict which lines fail; add a None check.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "findtext with a default",
+          "worked_example": "print(tree.findtext(\"name\"))             # Chuck\nprint(tree.findtext(\"age\", \"unknown\"))   # unknown\nOne call instead of find + check + .text.",
+          "practice": "Rewrite find/None/.text code with findtext; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "xml_parsing.xml_documents",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_elementtree.findall_and_paths",
+      "title": "Looping through XML nodes with findall",
+      "concept": "lib_elementtree",
+      "summary": "Use findall with paths to loop over repeated elements, search at any depth with .//, convert text to numbers, and load XML from a file.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_elementtree.find_text_and_attributes",
+        "lists.loop_over_items",
+        "loop_patterns.accumulate_sum"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "findall and a loop",
+          "worked_example": "users = stuff.findall(\"users/user\")\nprint(len(users))  # 2\nfor user in users:\n    print(user.find(\"name\").text, user.get(\"x\"))\n# Chuck 2\n# Brent 7",
+          "practice": "Predict the loop's output for a given document; write the findall path to repeated elements.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Paths start from the current element",
+          "worked_example": "print(len(stuff.findall(\"user\")))     # 0, user is not a direct child of stuff\nprint(len(stuff.findall(\".//user\")))  # 2, .// searches every depth",
+          "practice": "Predict counts for different paths; fix a path that finds nothing.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_elementtree.find_text_and_attributes"
+          ]
+        },
+        {
+          "title": "Text is always a string",
+          "worked_example": "total = 0\nfor c in root.findall(\".//count\"):\n    total += int(c.text)\nprint(total)  # 284 for counts 97, 97 and 90\nWithout int() the + would join strings or fail.",
+          "practice": "Write the sum for a given document; fix code that adds .text values directly.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Load XML from a file",
+          "worked_example": "tree = ET.parse(\"books.xml\")\nroot = tree.getroot()\nprint(root.tag, root.find(\"book/title\").text)  # books Dune\nparse reads a file; fromstring reads a string.",
+          "practice": "Choose parse or fromstring; fix code that calls find on the tree instead of its root when needed.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_elementtree.find_text_and_attributes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_elementtree.find_text_and_attributes",
+          "weight": 0.6
+        },
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "xml_parsing.read_rss_feed",
+      "title": "Reading an RSS feed into records",
+      "concept": "xml_parsing",
+      "summary": "Turn an RSS or Atom feed into a list of post dicts, cope with optional fields, parse feed dates, and handle XML namespaces.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_elementtree.findall_and_paths",
+        "nested_data_structures.list_of_dicts",
+        "datetime_module.dates_and_datetimes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Items into a list of dicts",
+          "worked_example": "channel = ET.fromstring(feed).find(\"channel\")\nposts = []\nfor item in channel.findall(\"item\"):\n    posts.append({\"title\": item.findtext(\"title\"), \"link\": item.findtext(\"link\")})\nprint(posts[0][\"title\"])  # Python 3.13 released",
+          "practice": "Write the loop for a given feed; predict the records.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_elementtree.findall_and_paths",
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Optional fields",
+          "worked_example": "for item in channel.findall(\"item\"):\n    print(item.findtext(\"title\"), \"|\", item.findtext(\"pubDate\", \"unknown\"))\n# Python 3.13 released | Mon, 07 Oct 2024 10:00:00 +0000\n# PEP 8 turns 23 | unknown",
+          "practice": "Predict output for items missing fields; fix a loop that crashes on one item.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_elementtree.find_text_and_attributes"
+          ]
+        },
+        {
+          "title": "Parse the feed's dates",
+          "worked_example": "from email.utils import parsedate_to_datetime\nd = parsedate_to_datetime(\"Mon, 07 Oct 2024 10:00:00 +0000\")\nprint(d.date())  # 2024-10-07\nRSS uses the email date format, not ISO.",
+          "practice": "Predict parsed dates; sort posts newest first by their parsed date.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "Namespaced feeds (Atom)",
+          "worked_example": "root = ET.fromstring('<feed xmlns=\"http://www.w3.org/2005/Atom\"><entry><title>Hello</title></entry></feed>')\nprint(root.find(\"entry\"))  # None\nns = {\"a\": \"http://www.w3.org/2005/Atom\"}\nprint(root.find(\"a:entry/a:title\", ns).text)  # Hello",
+          "practice": "Explain why a plain find returns None; write the namespace dict and path.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_elementtree.findall_and_paths"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_elementtree.findall_and_paths",
+          "weight": 0.6
+        },
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "web_services.service_oriented_design",
+      "title": "Web services: programs built from other programs",
+      "concept": "web_services",
+      "summary": "Explain service-oriented architecture, choose a wire format, and wrap a web service behind a function whose parsing can be tested without the network.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "apis_http.extract_from_responses",
+        "xml_parsing.xml_documents",
+        "decomposition.one_job_per_function"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An application made of services",
+          "worked_example": "Travel site -> flight service (prices), hotel service (rooms), payment service (cards), email service (receipts)\nEach service owns its data and answers requests; the site only combines answers.",
+          "practice": "For a described app, list the services it calls and which owns which data.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Serialize, send, deserialize",
+          "worked_example": "Python dict -> json.dumps -> text over HTTP -> json.loads (in any language) -> its own data\nThe wire format (JSON or XML) is the shared language.",
+          "practice": "Order the steps of a round trip; choose JSON or XML for described services.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "xml_parsing.xml_documents"
+          ]
+        },
+        {
+          "title": "Separate fetching from parsing",
+          "worked_example": "def parse_position(text):\n    data = json.loads(text)\n    return float(data[\"iss_position\"][\"latitude\"]), float(data[\"iss_position\"][\"longitude\"])\n\nprint(parse_position('{\"iss_position\": {\"latitude\": \"-12.5\", \"longitude\": \"101.2\"}}'))\n# (-12.5, 101.2)\nfetch_position() would call the API and pass r.text to parse_position.",
+          "practice": "Split a mixed fetch-and-parse function in two; test the parser on canned text.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "The API is a contract",
+          "worked_example": "/v1/weather returns {\"temp\": 12}\n/v2/weather returns {\"main\": {\"temp\": 12}}\nCode written for v1 breaks on v2; versioned URLs let old clients keep working.",
+          "practice": "Predict which client code breaks after a described API change; pick the safest fix.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "apis_http.extract_from_responses"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "apis_http.extract_from_responses",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "tool_geocoding_api.geocode_an_address",
+      "title": "Looking up coordinates with a geocoding API",
+      "concept": "tool_geocoding_api",
+      "summary": "Build a geocoding request for an address, read latitude, longitude and the formatted address from the GeoJSON reply, and handle addresses that are not found.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_urllib.build_and_join_urls",
+        "apis_http.read_api_docs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Build the request URL",
+          "worked_example": "serviceurl = \"https://py4e-data.dr-chuck.net/opengeo?\"\nurl = serviceurl + urlencode({\"q\": \"Ann Arbor, MI\"})\nprint(url)  # https://py4e-data.dr-chuck.net/opengeo?q=Ann+Arbor%2C+MI",
+          "practice": "Predict request URLs for given addresses; fix one built with string concatenation.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_urllib.build_and_join_urls"
+          ]
+        },
+        {
+          "title": "Read the GeoJSON reply",
+          "worked_example": "js = json.loads(data)   # data is the reply text from urlopen(url).read().decode()\nprops = js[\"features\"][0][\"properties\"]\nprint(props[\"lat\"], props[\"lon\"])  # 42.2808256 -83.7430378\nprint(props[\"formatted\"])           # Ann Arbor, MI, United States of America",
+          "practice": "Write the path to a named property in a given reply; predict printed values.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "json_data.navigate_nested_json"
+          ]
+        },
+        {
+          "title": "Nothing found",
+          "worked_example": "if not js or \"features\" not in js:\n    print(\"Download error\")\nelif len(js[\"features\"]) == 0:\n    print(\"Object not found\")\nWithout the check, js[\"features\"][0] raises IndexError: list index out of range.",
+          "practice": "Predict output for empty and normal replies; add the missing check.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "apis_http.read_api_docs"
+          ]
+        },
+        {
+          "title": "GeoJSON coordinates are [longitude, latitude]",
+          "worked_example": "lon, lat = js[\"features\"][0][\"geometry\"][\"coordinates\"]\nprint(lat)  # 42.2808256\nUnpacking as lat, lon would put Ann Arbor in Antarctica.",
+          "practice": "Fix swapped coordinates; predict which unpacking is right.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.navigate_nested_json",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_urllib.build_and_join_urls",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "tool_geocoding_api.cache_many_lookups",
+      "title": "Geocoding many addresses with a cache",
+      "concept": "tool_geocoding_api",
+      "summary": "Geocode a list of addresses while calling the API at most once per address, keep the cache in a JSON file between runs, and export points for a map.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "tool_geocoding_api.geocode_an_address",
+        "json_data.json_files",
+        "file_io.handle_missing_file",
+        "dictionaries.loop_keys_values_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Why cache",
+          "worked_example": "1000 addresses x 1 s per call = about 17 minutes, and free APIs limit calls per day.\nThe same address always gives the same answer, so ask once and remember it.",
+          "practice": "Compute calls and time with and without a cache for given lists.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A dict as a cache",
+          "worked_example": "cache = {}\nfor address in [\"Ann Arbor, MI\", \"Oslo\", \"Ann Arbor, MI\"]:\n    if address not in cache:\n        cache[address] = geocode(address)\nprint(calls, len(cache))  # 2 2\ngeocode is the lookup function from the previous topic; here it counts its calls.",
+          "practice": "Predict how many API calls a list needs; fill in the cache check.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Keep the cache between runs",
+          "worked_example": "try:\n    with open(\"geocache.json\") as f:\n        cache = json.load(f)\nexcept FileNotFoundError:\n    cache = {}\n... lookups ...\nwith open(\"geocache.json\", \"w\") as f:\n    json.dump(cache, f)",
+          "practice": "Order the load-lookup-save steps; predict calls on the second run.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "json_data.json_files",
+            "file_io.handle_missing_file"
+          ]
+        },
+        {
+          "title": "Export points for a map",
+          "worked_example": "points = []\nfor address, (lat, lon) in cache.items():\n    points.append([lat, lon, address])\nwith open(\"where.json\", \"w\") as f:\n    json.dump(points, f)\nA map page (Leaflet, OpenStreetMap) can read this file to drop pins.",
+          "practice": "Write the export loop; predict the first item of points.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tool_geocoding_api.geocode_an_address",
+          "weight": 0.4
+        },
+        {
+          "topic": "json_data.json_files",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_smtplib.send_plain_email",
+      "title": "Sending email with smtplib",
+      "concept": "lib_smtplib",
+      "summary": "Connect to an SMTP server over TLS, log in with credentials read from the environment, and send a plain message with a subject line.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "networking_sockets.hosts_ports_protocols",
+        "environment_variables.secrets_out_of_code",
+        "context_managers.with_open"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "What SMTP needs",
+          "worked_example": "server: smtp.gmail.com (or your provider's), port 587\nstarttls() encrypts the connection before you log in\nlogin with an app password from the provider, never your main password",
+          "practice": "Match providers to SMTP hosts; order connect, starttls, login and send.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "networking_sockets.hosts_ports_protocols"
+          ]
+        },
+        {
+          "title": "The send code",
+          "worked_example": "import os, smtplib\nwith smtplib.SMTP(\"smtp.gmail.com\", 587) as connection:\n    connection.starttls()\n    connection.login(user=MY_EMAIL, password=os.environ[\"EMAIL_APP_PASSWORD\"])\n    connection.sendmail(from_addr=MY_EMAIL, to_addrs=\"ana@example.com\", msg=\"Subject:Hello\\n\\nThis is the body.\")\nwith closes the connection; a wrong password raises smtplib.SMTPAuthenticationError.",
+          "practice": "Fill in the missing calls; fix a script that hard-codes the password.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "environment_variables.secrets_out_of_code",
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "Subject, blank line, body",
+          "worked_example": "msg = \"Subject:Hello\\n\\nThis is the body.\"\nhead, body = msg.split(\"\\n\\n\")\nprint(head)  # Subject:Hello\nWithout the blank line the text after Subject: becomes part of the subject.",
+          "practice": "Write message strings for given subjects and bodies; fix one with a missing blank line.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Non-ASCII text",
+          "worked_example": "msg = \"Subject:Café\\n\\nOlé\"\nprint(msg.encode(\"ascii\"))\n# UnicodeEncodeError: 'ascii' codec can't encode character '\\xe9' in position 11: ordinal not in range(128)\nsendmail with a str needs ASCII; pass msg.encode(\"utf-8\") or use EmailMessage (next topic).",
+          "practice": "Predict which messages fail; fix a quote email with curly quotes in it.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "environment_variables.secrets_out_of_code",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_smtplib.email_messages_and_templates",
+      "title": "Building emails with templates and EmailMessage",
+      "concept": "lib_smtplib",
+      "summary": "Fill letter templates with personal details and build properly formed messages with email.message.EmailMessage and send_message.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_smtplib.send_plain_email",
+        "string_methods.replace_text"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Fill a letter template",
+          "worked_example": "template = \"Dear [NAME],\\nHappy birthday!\\nAngela\"\nletter = template.replace(\"[NAME]\", \"Ana\")\nprint(letter.splitlines()[0])  # Dear Ana,",
+          "practice": "Predict filled letters; write the code that fills two placeholders.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.replace_text"
+          ]
+        },
+        {
+          "title": "EmailMessage builds the headers for you",
+          "worked_example": "from email.message import EmailMessage\nmsg = EmailMessage()\nmsg[\"Subject\"] = \"Happy birthday!\"\nmsg[\"From\"] = \"me@example.com\"\nmsg[\"To\"] = \"ana@example.com\"\nmsg.set_content(letter)\nprint(msg[\"Subject\"])  # Happy birthday!",
+          "practice": "Fill in header assignments; predict header values.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_smtplib.send_plain_email"
+          ]
+        },
+        {
+          "title": "Send it with send_message",
+          "worked_example": "with smtplib.SMTP(\"smtp.gmail.com\", 587) as connection:\n    connection.starttls()\n    connection.login(MY_EMAIL, PASSWORD)\n    connection.send_message(msg)\nFrom and To are read from the message; non-ASCII text is encoded for you.",
+          "practice": "Rewrite a sendmail call as send_message.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_smtplib.send_plain_email"
+          ]
+        },
+        {
+          "title": "One To header, several addresses",
+          "worked_example": "msg[\"To\"] = \"ana@example.com\"\nmsg[\"To\"] = \"bo@example.com\"\n# ValueError: There may be at most 1 To headers in a message\nfix: msg[\"To\"] = \"ana@example.com, bo@example.com\"",
+          "practice": "Predict the error; fix code that sends to a list of recipients.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_smtplib.send_plain_email",
+          "weight": 0.5
+        },
+        {
+          "topic": "string_methods.replace_text",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "automation.automate_a_daily_task",
+      "title": "Automating a daily task: check, compose, act",
+      "concept": "automation",
+      "summary": "Structure an automation script as check (is there anything to do today?), compose and act, with the date passed in and a dry-run mode so it can be tested safely.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_smtplib.email_messages_and_templates",
+        "csv_files.dict_reader_writer",
+        "datetime_module.dates_and_datetimes",
+        "decomposition.one_job_per_function"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Check: is there anything to do today?",
+          "worked_example": "today = date(2024, 10, 12)\nfor row in csv.DictReader(f):\n    if int(row[\"month\"]) == today.month and int(row[\"day\"]) == today.day:\n        print(\"Send to\", row[\"email\"])\n# Send to ana@example.com\nf is birthdays.csv with columns name,email,year,month,day.",
+          "practice": "Predict who is selected for given dates; fix a comparison of a str with an int.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "csv_files.dict_reader_writer",
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "Pass today in, don't look it up inside",
+          "worked_example": "def due_today(rows, today):\n    due = []\n    for r in rows:\n        if int(r[\"month\"]) == today.month and int(r[\"day\"]) == today.day:\n            due.append(r)\n    return due\nmain() calls due_today(rows, date.today()); tests call it with any date they like.",
+          "practice": "Rewrite a function that calls date.today() inside; write test calls for a birthday and a non-birthday.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "A dry-run switch",
+          "worked_example": "def send(to, text, dry_run=True):\n    if dry_run:\n        print(f\"[dry run] would email {to}: {text}\")\n        return\n    ... real smtplib code ...\nsend(\"ana@example.com\", \"Happy birthday!\")\n# [dry run] would email ana@example.com: Happy birthday!",
+          "practice": "Predict output with dry_run on and off; add a dry-run switch to an action function.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Put the pipeline together",
+          "worked_example": "def main(today, dry_run=True):\n    rows = load_rows(\"birthdays.csv\")\n    for person in due_today(rows, today):\n        letter = fill_template(person[\"name\"])\n        send(person[\"email\"], letter, dry_run)",
+          "practice": "Order the steps of a described automation; name the check, compose and act parts.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "csv_files.dict_reader_writer",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_smtplib.email_messages_and_templates",
+          "weight": 0.3
+        },
+        {
+          "topic": "decomposition.one_job_per_function",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "automation.monitor_and_alert",
+      "title": "Watching a value and sending alerts",
+      "concept": "automation",
+      "summary": "Write a monitor that fetches a value (price, forecast), compares it with a threshold, alerts only when the situation changes, and remembers state between runs.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "automation.automate_a_daily_task",
+        "apis_http.extract_from_responses",
+        "json_data.json_files",
+        "file_io.handle_missing_file"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Fetch, compare, alert",
+          "worked_example": "price = get_price(url)       # scraped or from an API\nif price <= TARGET:\n    send(ME, f\"Price dropped to {price}\")\nget_price hides where the number comes from; the rule stays the same.",
+          "practice": "Predict whether an alert is sent for given prices and targets.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "automation.automate_a_daily_task"
+          ]
+        },
+        {
+          "title": "Alert once, not every run",
+          "worked_example": "if price <= target and not state[\"alerted\"]:\n    state[\"alerted\"] = True\n    alert(price)\nif price > target:\n    state[\"alerted\"] = False\n# prices 105, 98.5, 97, 110, 95 -> alerts at 98.5 and 95 only",
+          "practice": "Trace the state for a sequence of prices; fix a monitor that spams alerts.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Remember state between runs",
+          "worked_example": "try:\n    with open(\"state.json\") as f:\n        state = json.load(f)\nexcept FileNotFoundError:\n    state = {\"alerted\": False}\n... check ...\nwith open(\"state.json\", \"w\") as f:\n    json.dump(state, f)\nA scheduled script starts fresh each run; the file is its memory.",
+          "practice": "Order load-check-save; predict alerts across two runs.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "json_data.json_files",
+            "file_io.handle_missing_file"
+          ]
+        },
+        {
+          "title": "Alert on an API condition",
+          "worked_example": "def will_rain(forecast):\n    for slot in forecast[\"list\"]:\n        if slot[\"weather\"][0][\"id\"] < 700:\n            return True\n    return False\n\nif will_rain(forecast):\n    send(ME, \"Bring an umbrella\")",
+          "practice": "Write the condition for described alerts (rain, a price move over 5%); predict alerts for canned responses.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "apis_http.extract_from_responses"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "apis_http.extract_from_responses",
+          "weight": 0.4
+        },
+        {
+          "topic": "json_data.json_files",
+          "weight": 0.3
+        },
+        {
+          "topic": "automation.automate_a_daily_task",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "automation.reliable_bots",
+      "title": "Making automations reliable: retries, skipping failures and logs",
+      "concept": "automation",
+      "summary": "Keep unattended scripts running: retry flaky calls with growing waits, skip one bad item without stopping, log what happened, and limit how much a run does.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "automation.monitor_and_alert",
+        "exceptions.skip_bad_items",
+        "lib_requests.handle_errors"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Retry with growing waits",
+          "worked_example": "for attempt in range(1, tries + 1):\n    try:\n        return fetch()\n    except ConnectionError as e:\n        print(f\"attempt {attempt} failed: {e}\")\n        time.sleep(wait * 2 ** (attempt - 1))\nraise ConnectionError(\"gave up\")\n# with fetch failing twice: two 'failed' lines, then 'ok' is returned",
+          "practice": "Trace attempts and waits for given failures; compute total wait time.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lib_requests.handle_errors"
+          ]
+        },
+        {
+          "title": "One bad item should not stop the run",
+          "worked_example": "for city in [\"Oslo\", \"Atlantis\", \"Lima\"]:\n    try:\n        results.append(check(city))\n    except ValueError as e:\n        print(\"skipped:\", e)\n# skipped: no data for Atlantis\n# results for Oslo and Lima",
+          "practice": "Move the try so one failure skips one item; predict results.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "exceptions.skip_bad_items"
+          ]
+        },
+        {
+          "title": "Log what happened",
+          "worked_example": "def log(message, now):\n    with open(\"bot.log\", \"a\") as f:\n        f.write(f\"{now:%Y-%m-%d %H:%M} {message}\\n\")\n# bot.log gets: 2024-10-12 09:00 price checked: 98.5\nNobody watches a scheduled script, so the log is how you find out what it did.",
+          "practice": "Write log lines for events; predict the log after a run.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Limit and pace each run",
+          "worked_example": "MAX_ACTIONS = 20\ndone = 0\nfor job in jobs:\n    if done == MAX_ACTIONS:\n        break\n    apply(job)\n    done += 1\n    time.sleep(3)\nCaps and pauses keep a bug from sending 1000 emails or getting your account blocked.",
+          "practice": "Predict how many actions run for given lists; add a cap to a loop.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.skip_bad_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_requests.handle_errors",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "lib_pyautogui.control_mouse_keyboard",
+      "title": "Controlling the mouse and keyboard with PyAutoGUI",
+      "concept": "lib_pyautogui",
+      "summary": "Move and click the mouse, type and press keys from Python, read a pixel's colour to react to the screen, and keep a stop switch.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.find_and_install",
+        "while_loops.loop_until_condition",
+        "tuples.create_and_index"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Screen coordinates",
+          "worked_example": "import pyautogui   # python3 -m pip install pyautogui\nprint(pyautogui.size())      # e.g. Size(width=1920, height=1080)\nprint(pyautogui.position())  # e.g. Point(x=640, y=410)\n(0, 0) is the top-left corner; y grows downwards.",
+          "practice": "Predict coordinates of screen corners and the centre for given sizes.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Move, click, type, press",
+          "worked_example": "pyautogui.moveTo(500, 300, duration=0.5)\npyautogui.click()\npyautogui.write(\"hello\", interval=0.1)\npyautogui.press(\"enter\")",
+          "practice": "Order the actions for a described task; fill in the call for a key press.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": "Stop switches: FAILSAFE and PAUSE",
+          "worked_example": "pyautogui.FAILSAFE = True   # default: slam the mouse into a corner to stop\npyautogui.PAUSE = 0.2       # wait after every call\nMoving to a corner raises pyautogui.FailSafeException and ends the script.",
+          "practice": "Choose settings for a safe bot; predict what happens when the mouse hits a corner.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "React to the screen",
+          "worked_example": "while True:\n    r, g, b = pyautogui.pixel(300, 400)\n    if (r, g, b) == (83, 83, 83):   # dark grey cactus pixel\n        pyautogui.press(\"space\")\nThe dinosaur-game bot jumps when an obstacle's colour appears at a fixed point.",
+          "practice": "Trace the loop for a sequence of pixel colours; fill in the condition.",
+          "formats": [
+            "trace_table",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "scheduling_cron.timing_inside_python",
+      "title": "Running code at set times from Python",
+      "concept": "scheduling_cron",
+      "summary": "Repeat a job with a sleep loop, work out how long to wait until the next run with datetime, and run a job only on certain days.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "datetime_module.timedelta_arithmetic",
+        "while_loops.repeat_while_true"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Every N seconds with sleep",
+          "worked_example": "import time\nwhile True:\n    check_price()\n    time.sleep(60 * 60)   # one hour\nThe script must keep running; if the computer sleeps or the program crashes, nothing runs.",
+          "practice": "Compute sleep values for described intervals; predict how many runs happen in a day.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Seconds until the next run",
+          "worked_example": "now = datetime(2024, 10, 12, 14, 30)\nrun_at = now.replace(hour=9, minute=0, second=0, microsecond=0)\nif run_at <= now:\n    run_at += timedelta(days=1)\nprint(run_at)                         # 2024-10-13 09:00:00\nprint((run_at - now).total_seconds())  # 66600.0",
+          "practice": "Predict the next run time for given 'now' values; fix the missing next-day step.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "datetime_module.timedelta_arithmetic"
+          ]
+        },
+        {
+          "title": "Only on certain days",
+          "worked_example": "today = date(2024, 10, 14)\nif today.weekday() == 0:\n    print(\"Send Monday quote\")\n# Send Monday quote  (weekday() is 0 for Monday)",
+          "practice": "Write day checks (weekdays, first of the month); predict output for given dates.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "Run-forever or run-once?",
+          "worked_example": "Run-forever: while True + sleep; needs a machine that stays on.\nRun-once: do the job and exit; a scheduler (cron, a cloud task) starts it each time.\nRun-once scripts are simpler to restart, log and test.",
+          "practice": "Choose the style for described jobs; convert a run-forever script to run-once.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "datetime_module.timedelta_arithmetic",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "scheduling_cron.cron_and_cloud_schedulers",
+      "title": "Scheduling scripts with cron and cloud schedulers",
+      "concept": "scheduling_cron",
+      "summary": "Read and write cron schedules, set up a scheduled task in the cloud, and make a script safe to run unattended (absolute paths, environment variables, logs).",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "scheduling_cron.timing_inside_python",
+        "running_scripts.run_from_terminal",
+        "environment_variables.read_environment",
+        "file_paths.pathlib_paths"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Reading a cron schedule",
+          "worked_example": "minute hour day-of-month month day-of-week\n0 9 * * 1      -> 09:00 every Monday\n*/15 * * * *   -> every 15 minutes\n30 7 1 * *     -> 07:30 on the 1st of each month",
+          "practice": "Translate cron lines to words and words to cron lines.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A crontab line uses full paths",
+          "worked_example": "0 9 * * * /home/ana/venv/bin/python /home/ana/bots/birthday.py >> /home/ana/bots/cron.log 2>&1\ncron does not start in your folder or your venv, so name both in full and keep the output.",
+          "practice": "Fix crontab lines that use relative paths or the wrong Python.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "Cloud schedulers",
+          "worked_example": "PythonAnywhere: upload the files, Tasks tab, command python3 birthday.py, time in UTC.\nThe computer that runs it is always on; yours can be off.",
+          "practice": "Convert local times to UTC for a schedule; order the setup steps.",
+          "formats": [
+            "numeric",
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Files next to the script, secrets in the environment",
+          "worked_example": "from pathlib import Path\nHERE = Path(__file__).parent\nrows = (HERE / \"birthdays.csv\").read_text()\npassword = os.environ[\"EMAIL_APP_PASSWORD\"]\nA scheduler may start the script from another folder; paths built from __file__ still work.",
+          "practice": "Fix a scheduled script that cannot find its data file; choose what goes in environment variables.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_paths.pathlib_paths",
+            "environment_variables.read_environment"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "scheduling_cron.timing_inside_python",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    }
+  ]
+}

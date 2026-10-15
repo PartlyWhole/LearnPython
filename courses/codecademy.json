@@ -1,0 +1,1773 @@
+{
+  "course": {
+    "id": "codecademy",
+    "title": "Codecademy Python: Learn Python 3 + Learn Intermediate Python 3",
+    "provider": "Codecademy",
+    "url": "https://www.codecademy.com/learn/learn-python-3",
+    "format": "self-paced interactive browser course; Learn Python 3 (13 modules, ~24 h, 14 lessons, 14 projects, 13 quizzes, 21 articles, 1 video) followed by Learn Intermediate Python 3 (9 modules, ~20 h, 11 lessons, 7 projects, 11 quizzes, 5 articles, 2 videos)",
+    "audience": "Learn Python 3: beginners with no prerequisites; Learn Intermediate Python 3: learners who finished Learn Python 3",
+    "sources": [
+      "https://www.codecademy.com/learn/learn-python-3",
+      "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/python-hello-world",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/python-control-flow",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/python-errors",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/create-python-list",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/use-python-list",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/learn-python-loops",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/intro-to-functions",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/introduction-to-strings",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/string-methods",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/modules-python",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/dictionaries-introduction",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/using-dictionaries",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/learn-python-files",
+      "https://www.codecademy.com/courses/learn-python-3/lessons/data-types",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/function-arguments-args-kwargs",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/python-namespaces",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/python-scope",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/int-python-oop",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/int-python-exceptions",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/int-python-unit-testing",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/iterables-and-iterators",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/int-python-generators",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/sets-python",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/collections-python",
+      "https://www.codecademy.com/courses/learn-intermediate-python-3/lessons/int-python-context-managers"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Retrieved 2026-10-12 from the course pages' embedded syllabus data (module titles, content-item types and titles) and from each lesson page's exercise list. Learn Python 3 is described as teaching Python 3.13; both courses are marked Pro-only (paid plan) with certificates. Module titles are prefixed with the course name. topics list each content item with its type (Lesson/Quiz/Article/Video/Informational); parenthesised text summarises the lesson's exercise titles. Quizzes are named after their lesson and are not separately scored here. Projects named in older versions of the course or the CS path (e.g. 'Hurricane Analysis', 'Scrabble') are NOT in the current Learn Python 3 syllabus and were omitted; current named projects are listed per module. The Intermediate 'Unit Testing' module also contains the Exceptions lesson (exceptions/raising/custom exceptions are first taught there, not in Learn Python 3, except for the 'Errors in Python' debugging lesson). Specialized Collections covers sets plus the collections module; Resource Management covers context managers incl. contextlib. 'Namespaces' is mapped to the 'scope' concept. Concept mappings for articles, videos and projects are inferred from titles (not opened); depth ratings are judgement calls. Codecademy also offers split-out mini-courses (e.g. 'Learn Intermediate Python 3: Functions, Namespaces, and Scope') that repackage this content; they were not captured separately. New concept IDs: itertools_module, collections_module."
+  },
+  "modules": [
+    {
+      "id": "codecademy:py3-01-hello-world",
+      "title": "Learn Python 3 – Hello World",
+      "order": 1,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Hello World (Welcome, Comments, Print, Strings, Variables, Errors, Numbers, Calculations, Changing Numbers, Exponents, Modulo, Concatenation, Plus Equals, Multi-line Strings)",
+        "Quiz: Hello World",
+        "Article: Make the Most of Your Codecademy Membership",
+        "Article: User Input"
+      ],
+      "projects": [
+        "Block Letters",
+        "Receipts for Lovely Loveseats"
+      ],
+      "concepts": [
+        "comments",
+        "print_output",
+        "strings",
+        "variables",
+        "debugging",
+        "integers_floats",
+        "arithmetic_operators",
+        "string_concatenation",
+        "user_input"
+      ]
+    },
+    {
+      "id": "codecademy:py3-02-control-flow",
+      "title": "Learn Python 3 – Control Flow",
+      "order": 2,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Control Flow (Boolean Expressions, Relational Operators, Boolean Variables, If Statement, Boolean Operators: and/or/not, Else Statements, Else If Statements)",
+        "Article: Match Statements in Python",
+        "Quiz: Control Flow",
+        "Lesson: Errors in Python (Syntax Errors, Name Errors, Type Errors)"
+      ],
+      "projects": [
+        "Magic 8-Ball",
+        "Sal's Shipping"
+      ],
+      "concepts": [
+        "booleans",
+        "comparison_operators",
+        "logical_operators",
+        "conditionals",
+        "match_statement",
+        "debugging"
+      ]
+    },
+    {
+      "id": "codecademy:py3-03-lists",
+      "title": "Learn Python 3 – Lists",
+      "order": 3,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Introduction to Lists (append, +, indexing, negative index, remove, 2D lists)",
+        "Quiz: Introduction to Lists",
+        "Lesson: Working with Lists in Python (insert, pop, range, len, slicing, count, sorting)",
+        "Quiz: Working with Lists in Python",
+        "Article: Tuples",
+        "Article: Combining Lists: The Zip Function"
+      ],
+      "projects": [
+        "Gradebook",
+        "Len's Slice"
+      ],
+      "concepts": [
+        "lists",
+        "collections",
+        "list_methods",
+        "nested_data_structures",
+        "range_function",
+        "builtin_functions",
+        "list_slicing",
+        "sorting",
+        "tuples",
+        "enumerate_zip"
+      ]
+    },
+    {
+      "id": "codecademy:py3-04-loops",
+      "title": "Learn Python 3 – Loops",
+      "order": 4,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Loops (For Loops, Using Range, While Loops, Infinite Loops, Break, Continue, Nested Loops, List Comprehensions, List Comprehensions: Conditionals)",
+        "Quiz: Loops"
+      ],
+      "projects": [
+        "Carly's Clippers"
+      ],
+      "concepts": [
+        "iteration",
+        "for_loops",
+        "range_function",
+        "while_loops",
+        "break_continue",
+        "nested_loops",
+        "list_comprehensions",
+        "loop_patterns"
+      ]
+    },
+    {
+      "id": "codecademy:py3-05-functions",
+      "title": "Learn Python 3 – Functions",
+      "order": 5,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Introduction to Functions (Why Functions?, Defining/Calling, Whitespace & Execution Flow, Parameters & Arguments, Types of Arguments, Built-in vs User-defined Functions, Variable Access, Returns, Multiple Returns)",
+        "Quiz: Introduction to Functions",
+        "Article: Lambda Functions",
+        "Article: map() Functions"
+      ],
+      "projects": [
+        "Getting Ready for Physics Class"
+      ],
+      "concepts": [
+        "functions",
+        "decomposition",
+        "parameters_arguments",
+        "builtin_functions",
+        "scope",
+        "return_values",
+        "unpacking",
+        "lambda_functions",
+        "higher_order_functions"
+      ]
+    },
+    {
+      "id": "codecademy:py3-06-code-challenges",
+      "title": "Learn Python 3 – Python: Code Challenges (Optional)",
+      "order": 6,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Article: Python Code Challenges: Control Flow",
+        "Article: Python Code Challenges: Control Flow (Advanced)",
+        "Article: Python Code Challenges: Lists",
+        "Article: Python Code Challenges: Loops",
+        "Article: Python Code Challenges: Loops (Advanced)",
+        "Article: Python Code Challenges: Functions",
+        "Article: Python Code Challenges: Functions (Advanced)"
+      ],
+      "projects": [],
+      "concepts": [
+        "conditionals",
+        "list_methods",
+        "for_loops",
+        "loop_patterns",
+        "functions",
+        "return_values"
+      ]
+    },
+    {
+      "id": "codecademy:py3-07-strings",
+      "title": "Learn Python 3 – Strings",
+      "order": 7,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Introduction to Strings (slicing, concatenation, len, negative indices, immutability, escape characters, iterating, strings and conditionals)",
+        "Quiz: Introduction to Strings",
+        "Lesson: String Methods (formatting methods, split, join, strip, replace, find, format)",
+        "Quiz: String Methods"
+      ],
+      "projects": [
+        "Thread Shed",
+        "Off-Platform Project: Coded Correspondence"
+      ],
+      "concepts": [
+        "strings",
+        "string_indexing_slicing",
+        "string_concatenation",
+        "string_immutability",
+        "for_loops",
+        "string_methods",
+        "string_formatting"
+      ]
+    },
+    {
+      "id": "codecademy:py3-08-modules",
+      "title": "Learn Python 3 – Modules",
+      "order": 8,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Modules in Python (Introduction to Python Modules, Python Random Module, Modules Python Aliasing, Python Decimal Module, Python Files and Scope)",
+        "Video: Learn Python: Datetimes",
+        "Article: Learn Python: pipenv",
+        "Quiz: Python Modules"
+      ],
+      "projects": [
+        "Time Traveler's Toolkit"
+      ],
+      "concepts": [
+        "modules_imports",
+        "standard_library",
+        "random_module",
+        "floating_point_precision",
+        "scope",
+        "datetime_module",
+        "tool_pip",
+        "third_party_packages"
+      ]
+    },
+    {
+      "id": "codecademy:py3-09-dictionaries",
+      "title": "Learn Python 3 – Dictionaries",
+      "order": 9,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Creating Dictionaries (Make a Dictionary, Invalid Keys, Empty Dictionary, Add a Key, Add Multiple Keys, Overwrite Values, Dictionary Comprehensions)",
+        "Quiz: Creating Dictionaries",
+        "Lesson: Using Dictionaries (Get a Key, Get an Invalid Key, Safely Get a Key, Delete a Key, Get All Keys/Values/Items)",
+        "Quiz: Using Dictionaries"
+      ],
+      "projects": [
+        "Pythonagrams"
+      ],
+      "concepts": [
+        "dictionaries",
+        "dict_comprehensions"
+      ]
+    },
+    {
+      "id": "codecademy:py3-10-files",
+      "title": "Learn Python 3 – Files",
+      "order": 10,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Learn Python: Files (Reading a File, Iterating Through Lines, Reading a Line, Writing a File, Appending to a File, What's With \"with\"?, CSV files, Reading/Writing a JSON File)",
+        "Quiz: Python Files"
+      ],
+      "projects": [
+        "Hacking the Fender"
+      ],
+      "concepts": [
+        "file_io",
+        "context_managers",
+        "csv_files",
+        "json_data"
+      ]
+    },
+    {
+      "id": "codecademy:py3-11-classes",
+      "title": "Learn Python 3 – Classes",
+      "order": 11,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Lesson: Introduction to Classes (Types, Class, Instantiation, Object-Oriented Programming, Class Variables, Methods, Methods With Arguments, Constructors, Instance Variables, Attribute Functions, Self, Everything Is an Object, String Representation)",
+        "Quiz: Introduction to Classes"
+      ],
+      "projects": [
+        "Basta Fazoolin'"
+      ],
+      "concepts": [
+        "data_types",
+        "classes",
+        "object_oriented_design",
+        "objects_methods",
+        "class_attributes",
+        "constructors",
+        "instance_attributes",
+        "dunder_methods"
+      ]
+    },
+    {
+      "id": "codecademy:py3-12-code-challenges-ii",
+      "title": "Learn Python 3 – Python: Code Challenges II (Optional)",
+      "order": 12,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Article: Python Code Challenges: Strings",
+        "Article: Python Code Challenges: Strings (Advanced)",
+        "Article: Python Code Challenges: Dictionaries",
+        "Article: Python Code Challenges: Dictionaries (Advanced)",
+        "Article: Python Code Challenges: Classes"
+      ],
+      "projects": [],
+      "concepts": [
+        "strings",
+        "string_methods",
+        "dictionaries",
+        "classes"
+      ]
+    },
+    {
+      "id": "codecademy:py3-13-next-steps",
+      "title": "Learn Python 3 – Next Steps",
+      "order": 13,
+      "url": "https://www.codecademy.com/learn/learn-python-3",
+      "topics": [
+        "Article: Next Steps"
+      ],
+      "projects": [],
+      "concepts": []
+    },
+    {
+      "id": "codecademy:ipy3-01-welcome",
+      "title": "Learn Intermediate Python 3 – Welcome to Intermediate Python!",
+      "order": 14,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Informational: Introduction to Intermediate Python"
+      ],
+      "projects": [],
+      "concepts": []
+    },
+    {
+      "id": "codecademy:ipy3-02-function-arguments",
+      "title": "Learn Intermediate Python 3 – Function Arguments",
+      "order": 15,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Article: Python Gotcha: Mutable Default Arguments",
+        "Lesson: Function Arguments (Recap, *args, **kwargs, All together now!, Function Call Unpacking & Beyond)",
+        "Quiz: Function Arguments"
+      ],
+      "projects": [
+        "The Nile"
+      ],
+      "concepts": [
+        "mutability_aliasing",
+        "parameters_arguments",
+        "args_kwargs",
+        "unpacking"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-03-namespaces-scope",
+      "title": "Learn Intermediate Python 3 – Namespaces and Scope",
+      "order": 16,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Lesson: Namespaces (Built-in, Global, Local, Enclosing Namespace)",
+        "Quiz: Namespaces",
+        "Lesson: Scope (Local, Enclosing/Nonlocal, nonlocal Statement, Global, global Statement, LEGB Rule)",
+        "Quiz: Scope"
+      ],
+      "projects": [],
+      "concepts": [
+        "scope"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-04-functions-deep-dive",
+      "title": "Learn Intermediate Python 3 – Functions Deep Dive",
+      "order": 17,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Article: Lambda Functions",
+        "Article: Introduction to Higher-Order Functions",
+        "Article: Built-In Higher-Order Functions",
+        "Video: Decorators"
+      ],
+      "projects": [],
+      "concepts": [
+        "lambda_functions",
+        "higher_order_functions",
+        "builtin_functions",
+        "functional_programming",
+        "decorators"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-05-oop",
+      "title": "Learn Intermediate Python 3 – Object-Oriented Programming",
+      "order": 18,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Video: Why Object-Oriented Programming?",
+        "Lesson: Object-Oriented Programming (Inheritance, Overriding Methods, super(), Multiple Inheritance, Polymorphism, Dunder Methods, Abstraction, Encapsulation, Getters/Setters/Deleters)",
+        "Quiz: Object-Oriented Programming",
+        "Article: The @property Decorator"
+      ],
+      "projects": [
+        "School Catalogue"
+      ],
+      "concepts": [
+        "object_oriented_design",
+        "inheritance",
+        "polymorphism",
+        "dunder_methods",
+        "abstraction",
+        "abstract_classes",
+        "encapsulation",
+        "decorators"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-06-unit-testing",
+      "title": "Learn Intermediate Python 3 – Unit Testing",
+      "order": 19,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Lesson: Exceptions (Built-in Exceptions, Raising Exceptions, Try/Except, Catching Specific/Multiple Exceptions, else, finally, User-defined Exceptions)",
+        "Quiz: Exceptions",
+        "Lesson: Unit Testing (assert, unittest framework, assert methods, parameterizing tests, test fixtures, skipping tests, expected failures)",
+        "Quiz: Unit Testing"
+      ],
+      "projects": [
+        "Sam's Surf Shop"
+      ],
+      "concepts": [
+        "exceptions",
+        "raising_exceptions",
+        "assertions",
+        "unit_testing"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-07-iterators-generators",
+      "title": "Learn Intermediate Python 3 – Iterators & Generators",
+      "order": 20,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Lesson: Iterables & Iterators (__iter__/iter(), __next__/next(), Iterators and For Loops, Custom Iterators, Itertools: count, chain, combinations)",
+        "Quiz: Iterables & Iterators",
+        "Lesson: Generators (yield vs return, next() and StopIteration, Generator Expressions, send(), throw(), close(), Connecting Generators, Generator Pipelines)",
+        "Quiz: Generators"
+      ],
+      "projects": [
+        "New Teacher in Town",
+        "Event Coordinator"
+      ],
+      "concepts": [
+        "iteration",
+        "dunder_methods",
+        "itertools_module",
+        "generators"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-08-specialized-collections",
+      "title": "Learn Intermediate Python 3 – Specialized Collections",
+      "order": 21,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Lesson: Sets (Creating a Set, Frozenset, Adding/Removing, Finding Elements, Union, Intersection, Difference, Symmetric Difference)",
+        "Quiz: Sets",
+        "Lesson: Collections (deque, namedtuple, defaultdict, OrderedDict, ChainMap, Counter, UserDict, UserList, UserString)",
+        "Quiz: Collections"
+      ],
+      "projects": [
+        "The Great Robot Race"
+      ],
+      "concepts": [
+        "sets",
+        "collections",
+        "collections_module",
+        "stacks_queues"
+      ]
+    },
+    {
+      "id": "codecademy:ipy3-09-resource-management",
+      "title": "Learn Intermediate Python 3 – Resource Management",
+      "order": 22,
+      "url": "https://www.codecademy.com/learn/learn-intermediate-python-3",
+      "topics": [
+        "Lesson: Context Managers (with Statement, Class Based Context Managers, Handling Exceptions, contextlib, contextlib Error Handling, Nested Context Managers)",
+        "Quiz: Context Managers"
+      ],
+      "projects": [
+        "Aisha's Greetings"
+      ],
+      "concepts": [
+        "context_managers",
+        "dunder_methods",
+        "exceptions",
+        "decorators",
+        "generators"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "comments",
+      "label": "Comments",
+      "category": "environment",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "introduced"
+    },
+    {
+      "id": "print_output",
+      "label": "print(), output",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "practiced",
+      "course_label": "Print"
+    },
+    {
+      "id": "strings",
+      "label": "String type basics",
+      "category": "strings",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "deep"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "practiced"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging / reading errors",
+      "category": "errors_testing",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "introduced",
+      "course_label": "Errors in Python"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Numeric types",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "practiced",
+      "course_label": "Numbers"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "practiced",
+      "course_label": "Calculations, Exponents, Modulo, Plus Equals"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation",
+      "category": "strings",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "practiced",
+      "course_label": "Concatenation"
+    },
+    {
+      "id": "user_input",
+      "label": "input()",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-01-hello-world",
+      "depth": "introduced",
+      "course_label": "User Input (article)"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-02-control-flow",
+      "depth": "practiced",
+      "course_label": "Boolean Expressions / Boolean Variables"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-02-control-flow",
+      "depth": "practiced",
+      "course_label": "Relational Operators"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-02-control-flow",
+      "depth": "practiced",
+      "course_label": "Boolean Operators: and/or/not"
+    },
+    {
+      "id": "conditionals",
+      "label": "if/elif/else",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-02-control-flow",
+      "depth": "deep",
+      "course_label": "If / Else / Else If Statements"
+    },
+    {
+      "id": "match_statement",
+      "label": "match statement",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-02-control-flow",
+      "depth": "introduced",
+      "course_label": "Match Statements in Python (article)"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "deep"
+    },
+    {
+      "id": "collections",
+      "label": "Collections (umbrella)",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "deep",
+      "course_label": "Specialized Collections"
+    },
+    {
+      "id": "list_methods",
+      "label": "List methods",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "practiced"
+    },
+    {
+      "id": "nested_data_structures",
+      "label": "Nested data structures",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "practiced",
+      "course_label": "Two-Dimensional (2D) Lists"
+    },
+    {
+      "id": "range_function",
+      "label": "range()",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "practiced",
+      "course_label": "Consecutive Lists: Range"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Built-in functions",
+      "category": "functions",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_slicing",
+      "label": "List slicing",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "practiced",
+      "course_label": "Slicing Lists"
+    },
+    {
+      "id": "sorting",
+      "label": "Sorting",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "practiced",
+      "course_label": "Sorting Lists"
+    },
+    {
+      "id": "tuples",
+      "label": "Tuples",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "introduced",
+      "course_label": "Tuples (article)"
+    },
+    {
+      "id": "enumerate_zip",
+      "label": "enumerate / zip",
+      "category": "collections",
+      "first_module": "codecademy:py3-03-lists",
+      "depth": "introduced",
+      "course_label": "Combining Lists: The Zip Function (article)"
+    },
+    {
+      "id": "iteration",
+      "label": "Iteration / iterables",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "deep",
+      "course_label": "Iterables & Iterators"
+    },
+    {
+      "id": "for_loops",
+      "label": "for loops",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "deep"
+    },
+    {
+      "id": "while_loops",
+      "label": "while loops",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "practiced"
+    },
+    {
+      "id": "break_continue",
+      "label": "break / continue",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "practiced",
+      "course_label": "Loop Control"
+    },
+    {
+      "id": "nested_loops",
+      "label": "Nested loops",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_comprehensions",
+      "label": "List comprehensions",
+      "category": "collections",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "practiced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns",
+      "category": "control_flow",
+      "first_module": "codecademy:py3-04-loops",
+      "depth": "practiced"
+    },
+    {
+      "id": "functions",
+      "label": "Functions",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "deep"
+    },
+    {
+      "id": "decomposition",
+      "label": "Decomposition",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "introduced",
+      "course_label": "Why Functions?"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters & arguments",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "deep",
+      "course_label": "Function Arguments"
+    },
+    {
+      "id": "scope",
+      "label": "Scope (LEGB)",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "deep",
+      "course_label": "Namespaces and Scope"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "practiced",
+      "course_label": "Returns"
+    },
+    {
+      "id": "unpacking",
+      "label": "Unpacking",
+      "category": "collections",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "practiced",
+      "course_label": "Multiple Returns; Function Call Unpacking"
+    },
+    {
+      "id": "lambda_functions",
+      "label": "Lambda functions",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "practiced"
+    },
+    {
+      "id": "higher_order_functions",
+      "label": "Higher-order functions",
+      "category": "functions",
+      "first_module": "codecademy:py3-05-functions",
+      "depth": "practiced",
+      "course_label": "map() Functions; Higher-Order Functions"
+    },
+    {
+      "id": "string_indexing_slicing",
+      "label": "String indexing & slicing",
+      "category": "strings",
+      "first_module": "codecademy:py3-07-strings",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_immutability",
+      "label": "String immutability",
+      "category": "strings",
+      "first_module": "codecademy:py3-07-strings",
+      "depth": "introduced",
+      "course_label": "Strings are Immutable"
+    },
+    {
+      "id": "string_methods",
+      "label": "String methods",
+      "category": "strings",
+      "first_module": "codecademy:py3-07-strings",
+      "depth": "deep"
+    },
+    {
+      "id": "string_formatting",
+      "label": "String formatting",
+      "category": "strings",
+      "first_module": "codecademy:py3-07-strings",
+      "depth": "practiced",
+      "course_label": ".format()"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Modules & imports",
+      "category": "modules_libs",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "practiced",
+      "course_label": "Modules in Python"
+    },
+    {
+      "id": "standard_library",
+      "label": "Standard library",
+      "category": "modules_libs",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "practiced"
+    },
+    {
+      "id": "random_module",
+      "label": "random module",
+      "category": "modules_libs",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "practiced",
+      "course_label": "Python Random Module"
+    },
+    {
+      "id": "floating_point_precision",
+      "label": "Floating-point precision",
+      "category": "algorithms",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "introduced",
+      "course_label": "Python Decimal Module"
+    },
+    {
+      "id": "datetime_module",
+      "label": "datetime module",
+      "category": "modules_libs",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "introduced",
+      "course_label": "Learn Python: Datetimes (video)"
+    },
+    {
+      "id": "tool_pip",
+      "label": "pip / virtual environments",
+      "category": "environment",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "introduced",
+      "course_label": "Learn Python: pipenv (article)"
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third-party packages",
+      "category": "modules_libs",
+      "first_module": "codecademy:py3-08-modules",
+      "depth": "introduced"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "codecademy:py3-09-dictionaries",
+      "depth": "deep"
+    },
+    {
+      "id": "dict_comprehensions",
+      "label": "Dict comprehensions",
+      "category": "collections",
+      "first_module": "codecademy:py3-09-dictionaries",
+      "depth": "introduced",
+      "course_label": "Dictionary Comprehensions"
+    },
+    {
+      "id": "file_io",
+      "label": "File I/O",
+      "category": "files_io",
+      "first_module": "codecademy:py3-10-files",
+      "depth": "deep"
+    },
+    {
+      "id": "context_managers",
+      "label": "Context managers (with)",
+      "category": "files_io",
+      "first_module": "codecademy:py3-10-files",
+      "depth": "deep",
+      "course_label": "Context Managers / Resource Management"
+    },
+    {
+      "id": "csv_files",
+      "label": "CSV files",
+      "category": "files_io",
+      "first_module": "codecademy:py3-10-files",
+      "depth": "practiced"
+    },
+    {
+      "id": "json_data",
+      "label": "JSON",
+      "category": "files_io",
+      "first_module": "codecademy:py3-10-files",
+      "depth": "practiced"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types / type()",
+      "category": "fundamentals",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "introduced",
+      "course_label": "Types"
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "category": "oop",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "deep"
+    },
+    {
+      "id": "object_oriented_design",
+      "label": "Object-oriented design",
+      "category": "data_web",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "practiced",
+      "course_label": "Object-Oriented Programming"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Objects & methods",
+      "category": "oop",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "practiced",
+      "course_label": "Methods; Everything Is an Object"
+    },
+    {
+      "id": "class_attributes",
+      "label": "Class attributes",
+      "category": "oop",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "practiced",
+      "course_label": "Class Variables"
+    },
+    {
+      "id": "constructors",
+      "label": "Constructors (__init__)",
+      "category": "oop",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "practiced"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "practiced",
+      "course_label": "Instance Variables; Attribute Functions"
+    },
+    {
+      "id": "dunder_methods",
+      "label": "Dunder methods",
+      "category": "oop",
+      "first_module": "codecademy:py3-11-classes",
+      "depth": "practiced",
+      "course_label": "String Representation; Dunder Methods"
+    },
+    {
+      "id": "mutability_aliasing",
+      "label": "Mutability & aliasing",
+      "category": "collections",
+      "first_module": "codecademy:ipy3-02-function-arguments",
+      "depth": "introduced",
+      "course_label": "Python Gotcha: Mutable Default Arguments"
+    },
+    {
+      "id": "args_kwargs",
+      "label": "*args / **kwargs",
+      "category": "functions",
+      "first_module": "codecademy:ipy3-02-function-arguments",
+      "depth": "deep"
+    },
+    {
+      "id": "functional_programming",
+      "label": "Functional programming",
+      "category": "data_web",
+      "first_module": "codecademy:ipy3-04-functions-deep-dive",
+      "depth": "introduced"
+    },
+    {
+      "id": "decorators",
+      "label": "Decorators",
+      "category": "functions",
+      "first_module": "codecademy:ipy3-04-functions-deep-dive",
+      "depth": "introduced",
+      "course_label": "Decorators (video); @property"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "codecademy:ipy3-05-oop",
+      "depth": "practiced",
+      "course_label": "OOP Pillar: Inheritance; super(); Multiple Inheritance"
+    },
+    {
+      "id": "polymorphism",
+      "label": "Polymorphism",
+      "category": "oop",
+      "first_module": "codecademy:ipy3-05-oop",
+      "depth": "practiced",
+      "course_label": "OOP Pillar: Polymorphism"
+    },
+    {
+      "id": "abstraction",
+      "label": "Abstraction",
+      "category": "functions",
+      "first_module": "codecademy:ipy3-05-oop",
+      "depth": "introduced",
+      "course_label": "OOP Pillar: Abstraction"
+    },
+    {
+      "id": "abstract_classes",
+      "label": "Abstract classes",
+      "category": "oop",
+      "first_module": "codecademy:ipy3-05-oop",
+      "depth": "introduced",
+      "course_label": "OOP Pillar: Abstraction"
+    },
+    {
+      "id": "encapsulation",
+      "label": "Encapsulation / properties",
+      "category": "oop",
+      "first_module": "codecademy:ipy3-05-oop",
+      "depth": "practiced",
+      "course_label": "OOP Pillar: Encapsulation; Getters, Setters and Deleters"
+    },
+    {
+      "id": "exceptions",
+      "label": "Exceptions (try/except)",
+      "category": "errors_testing",
+      "first_module": "codecademy:ipy3-06-unit-testing",
+      "depth": "practiced"
+    },
+    {
+      "id": "raising_exceptions",
+      "label": "Raising & custom exceptions",
+      "category": "errors_testing",
+      "first_module": "codecademy:ipy3-06-unit-testing",
+      "depth": "practiced",
+      "course_label": "Raising Exceptions; User-defined Exceptions"
+    },
+    {
+      "id": "assertions",
+      "label": "Assertions",
+      "category": "errors_testing",
+      "first_module": "codecademy:ipy3-06-unit-testing",
+      "depth": "practiced",
+      "course_label": "The assert Statement"
+    },
+    {
+      "id": "unit_testing",
+      "label": "Unit testing (unittest)",
+      "category": "errors_testing",
+      "first_module": "codecademy:ipy3-06-unit-testing",
+      "depth": "deep"
+    },
+    {
+      "id": "itertools_module",
+      "label": "itertools module",
+      "category": "modules_libs",
+      "first_module": "codecademy:ipy3-07-iterators-generators",
+      "depth": "introduced",
+      "course_label": "Python's Itertools: Built-in Iterators",
+      "new": true
+    },
+    {
+      "id": "generators",
+      "label": "Generators",
+      "category": "functions",
+      "first_module": "codecademy:ipy3-07-iterators-generators",
+      "depth": "deep"
+    },
+    {
+      "id": "sets",
+      "label": "Sets",
+      "category": "collections",
+      "first_module": "codecademy:ipy3-08-specialized-collections",
+      "depth": "practiced"
+    },
+    {
+      "id": "collections_module",
+      "label": "collections module (namedtuple, deque, defaultdict, Counter, ...)",
+      "category": "modules_libs",
+      "first_module": "codecademy:ipy3-08-specialized-collections",
+      "depth": "deep",
+      "course_label": "Collections",
+      "new": true
+    },
+    {
+      "id": "stacks_queues",
+      "label": "Stacks & queues (deque)",
+      "category": "collections",
+      "first_module": "codecademy:ipy3-08-specialized-collections",
+      "depth": "introduced",
+      "course_label": "Deque"
+    }
+  ],
+  "edges": [
+    {
+      "source": "print_output",
+      "target": "variables",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "arithmetic_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_concatenation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "logical_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "nested_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "nested_data_structures",
+      "target": "nested_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "parameters_arguments",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "return_values",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "lambda_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "list_slicing",
+      "target": "string_indexing_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "string_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "modules_imports",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "random_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "datetime_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "third_party_packages",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "list_comprehensions",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "context_managers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "constructors",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "dunder_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "polymorphism",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "abstract_classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "args_kwargs",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "decorators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decorators",
+      "target": "encapsulation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "raising_exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "assertions",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "iteration",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dunder_methods",
+      "target": "iteration",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "iteration",
+      "target": "generators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "iteration",
+      "target": "itertools_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tuples",
+      "target": "collections_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "collections_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "generators",
+      "target": "context_managers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "context_managers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "debugging",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "tuples",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "sets",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "stacks_queues",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "functions",
+      "type": "is_a"
+    },
+    {
+      "source": "generators",
+      "target": "iteration",
+      "type": "is_a"
+    },
+    {
+      "source": "random_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "datetime_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "itertools_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "collections_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "match_statement",
+      "target": "conditionals",
+      "type": "is_a"
+    },
+    {
+      "source": "decorators",
+      "target": "higher_order_functions",
+      "type": "is_a"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_immutability",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_concatenation",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_formatting",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "constructors",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "instance_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "class_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "args_kwargs",
+      "target": "parameters_arguments",
+      "type": "part_of"
+    },
+    {
+      "source": "csv_files",
+      "target": "file_io",
+      "type": "part_of"
+    },
+    {
+      "source": "break_continue",
+      "target": "for_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "polymorphism",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "encapsulation",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "abstract_classes",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "assertions",
+      "target": "unit_testing",
+      "type": "part_of"
+    },
+    {
+      "source": "raising_exceptions",
+      "target": "exceptions",
+      "type": "part_of"
+    },
+    {
+      "source": "stacks_queues",
+      "target": "collections_module",
+      "type": "part_of"
+    },
+    {
+      "source": "dict_comprehensions",
+      "target": "list_comprehensions",
+      "type": "related_to"
+    },
+    {
+      "source": "json_data",
+      "target": "file_io",
+      "type": "related_to"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "parameters_arguments",
+      "type": "related_to"
+    },
+    {
+      "source": "string_immutability",
+      "target": "mutability_aliasing",
+      "type": "related_to"
+    },
+    {
+      "source": "floating_point_precision",
+      "target": "integers_floats",
+      "type": "related_to"
+    },
+    {
+      "source": "abstraction",
+      "target": "abstract_classes",
+      "type": "related_to"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "functional_programming",
+      "type": "related_to"
+    },
+    {
+      "source": "scope",
+      "target": "functions",
+      "type": "related_to"
+    },
+    {
+      "source": "enumerate_zip",
+      "target": "lists",
+      "type": "related_to"
+    },
+    {
+      "source": "dunder_methods",
+      "target": "context_managers",
+      "type": "related_to"
+    },
+    {
+      "source": "codecademy:py3-08-modules",
+      "target": "tool_pip",
+      "type": "uses_tool"
+    },
+    {
+      "source": "codecademy:py3-08-modules",
+      "target": "random_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "codecademy:py3-08-modules",
+      "target": "datetime_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "codecademy:ipy3-07-iterators-generators",
+      "target": "itertools_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "codecademy:ipy3-08-specialized-collections",
+      "target": "collections_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "third_party_packages",
+      "target": "tool_pip",
+      "type": "uses_tool"
+    },
+    {
+      "source": "codecademy:py3-01-hello-world",
+      "target": "codecademy:py3-02-control-flow",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-02-control-flow",
+      "target": "codecademy:py3-03-lists",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-03-lists",
+      "target": "codecademy:py3-04-loops",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-04-loops",
+      "target": "codecademy:py3-05-functions",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-05-functions",
+      "target": "codecademy:py3-06-code-challenges",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-06-code-challenges",
+      "target": "codecademy:py3-07-strings",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-07-strings",
+      "target": "codecademy:py3-08-modules",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-08-modules",
+      "target": "codecademy:py3-09-dictionaries",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-09-dictionaries",
+      "target": "codecademy:py3-10-files",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-10-files",
+      "target": "codecademy:py3-11-classes",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-11-classes",
+      "target": "codecademy:py3-12-code-challenges-ii",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-12-code-challenges-ii",
+      "target": "codecademy:py3-13-next-steps",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:py3-13-next-steps",
+      "target": "codecademy:ipy3-01-welcome",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-01-welcome",
+      "target": "codecademy:ipy3-02-function-arguments",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-02-function-arguments",
+      "target": "codecademy:ipy3-03-namespaces-scope",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-03-namespaces-scope",
+      "target": "codecademy:ipy3-04-functions-deep-dive",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-04-functions-deep-dive",
+      "target": "codecademy:ipy3-05-oop",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-05-oop",
+      "target": "codecademy:ipy3-06-unit-testing",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-06-unit-testing",
+      "target": "codecademy:ipy3-07-iterators-generators",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-07-iterators-generators",
+      "target": "codecademy:ipy3-08-specialized-collections",
+      "type": "precedes"
+    },
+    {
+      "source": "codecademy:ipy3-08-specialized-collections",
+      "target": "codecademy:ipy3-09-resource-management",
+      "type": "precedes"
+    }
+  ]
+}

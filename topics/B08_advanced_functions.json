@@ -1,0 +1,2648 @@
+{
+  "batch": "B08",
+  "title": "Advanced functions",
+  "concept_map": {
+    "higher_order_functions": {
+      "topics": [
+        "higher_order_functions.functions_are_values",
+        "higher_order_functions.dispatch_tables",
+        "higher_order_functions.pass_function_as_argument",
+        "higher_order_functions.custom_key_functions",
+        "higher_order_functions.map_and_filter"
+      ],
+      "entry_topic": "higher_order_functions.functions_are_values",
+      "notes": "Functions as values, as arguments, as key functions (B06 left key=<own function> here) and map/filter. Returning functions is owned by closures.function_factories. Storing functions as dict values (100 Days calculator) was not written because dicts are B07 (parallel); a stitching pass may add a KP to functions_are_values or a B07 practice item. map/filter use lists and range only; map/filter vs comprehensions is B07's to compare. Reconciliation: functions stored in a dict (dispatch tables, 100 Days calculator) is now dispatch_tables."
+    },
+    "lambda_functions": {
+      "topics": [
+        "lambda_functions.write_lambda",
+        "lambda_functions.lambda_as_argument"
+      ],
+      "entry_topic": "lambda_functions.write_lambda",
+      "notes": "key=lambda (deferred by B06 sorting) is lambda_as_argument KP1-2, which encompasses sorting.sort_tuples_and_keys. Sorting dict items with key=lambda kv: kv[1] belongs to B07 dictionaries and can encompass lambda_as_argument."
+    },
+    "closures": {
+      "topics": [
+        "closures.nested_functions",
+        "closures.function_factories",
+        "closures.nonlocal_state"
+      ],
+      "entry_topic": "closures.nested_functions",
+      "notes": "Owns enclosing scope, LEGB and nonlocal (deferred by B05 scope). The late-binding trap (lambdas made in a loop) is function_factories KP4. nonlocal_state is non-core: decorators do not depend on it."
+    },
+    "currying": {
+      "topics": [
+        "currying.curry_and_partial"
+      ],
+      "entry_topic": "currying.curry_and_partial",
+      "notes": "One non-core topic (bootdev only). Includes functools.partial, imported with a single memorised from-import line, as B06 did with import copy, ahead of B13 modules_imports."
+    },
+    "decorators": {
+      "topics": [
+        "decorators.wrap_a_function",
+        "decorators.at_syntax",
+        "decorators.general_wrappers",
+        "decorators.decorator_factories"
+      ],
+      "entry_topic": "decorators.wrap_a_function",
+      "notes": "General function decorators only. @property, @classmethod and @staticmethod belong to the OOP batch (B11), Flask @app.route to the web batch, @pytest.fixture to B09 lib_pytest, @contextmanager to B10 context_managers; all can build on decorators.at_syntax. Timing decorators need the time module (B13) and retry decorators need try/except (B09), so neither is used here. general_wrappers needs args_kwargs.unpack_in_calls."
+    },
+    "generators": {
+      "topics": [
+        "generators.yield_values",
+        "generators.lazy_and_infinite",
+        "generators.generator_expressions",
+        "generators.pipelines"
+      ],
+      "entry_topic": "generators.yield_values",
+      "notes": "All non-core, because they build on iteration.iter_and_next (non-core in B04). If iteration becomes core, yield_values and generator_expressions are good core candidates. generator_expressions has pending concept:list_comprehensions (B07, parallel); B05 asked B07 to cover any()/all() with generator expressions, so the stitching pass should check B07 did not also write a generator-expression topic (keep this one, have B07 encompass it or vice versa). send(), throw() and close() (codecademy only) were left out. Generators as context managers (@contextmanager) are B10. itertools is B07. Reconciliation: iteration.iter_and_next, yield_values and generator_expressions are core; lazy_and_infinite and pipelines stay non-core."
+    },
+    "args_kwargs": {
+      "topics": [
+        "args_kwargs.star_args",
+        "args_kwargs.star_kwargs",
+        "args_kwargs.unpack_in_calls",
+        "args_kwargs.keyword_only_and_positional_only"
+      ],
+      "entry_topic": "args_kwargs.star_args",
+      "notes": "star_kwargs has pending concept:dictionaries (B07): kwargs is a dict, and only dict literal printing, d[key] and looping over keys are used. unpack_in_calls teaches f(*seq) from scratch so it can stay core, and encompasses B06 unpacking.star_unpacking (non-core) as non_ancestor. The keyword-only / positional-only markers (* and /) that B05 deferred are a non-core topic. Reconciliation: unpack_in_calls now depends on unpacking.star_unpacking (promoted to core) instead of re-teaching * in calls from scratch."
+    },
+    "recursion": {
+      "topics": [
+        "recursion.base_and_recursive_case",
+        "recursion.trace_recursive_calls",
+        "recursion.recursion_bugs",
+        "recursion.recursion_on_sequences",
+        "recursion.multiple_recursive_calls",
+        "recursion.nested_lists",
+        "recursion.memoize_with_cache"
+      ],
+      "entry_topic": "recursion.base_and_recursive_case",
+      "notes": "Seven topics despite 4 courses because those teach it deep and it is a classic failure point. nested_lists is non-core with pending concept:nested_data_structures (B07) and uses type(x) == list, since isinstance is B11. Memoising with a hand-written dict is left to the stitching pass or a later algorithms batch (dicts are B07); memoize_with_cache uses functools.cache instead. Recursion on trees, binary search, merge sort and the static site generator belong to later data structures/algorithms batches and should depend on recursion_on_sequences and multiple_recursive_calls. Mathematical induction was not given a topic here. Reconciliation: nested_lists now uses isinstance(item, list) (objects_methods.isinstance_checks) and depends on nested_data_structures.grid_index_and_loop."
+    },
+    "pure_functions": {
+      "topics": [
+        "pure_functions.pure_vs_impure"
+      ],
+      "entry_topic": "pure_functions.pure_vs_impure",
+      "notes": "One non-core topic (bootdev only); builds on B05 decomposition.one_job_per_function as B05 asked. B09 unit_testing could list it as a motivating prerequisite."
+    },
+    "functional_programming": {
+      "topics": [
+        "functional_programming.loops_to_pipelines",
+        "functional_programming.reduce"
+      ],
+      "entry_topic": "functional_programming.loops_to_pipelines",
+      "notes": "Problem-based, non-core. Its parts (higher_order_functions, lambda_functions, closures, pure_functions) own their own topics. Comprehensions as the idiomatic alternative to map/filter are B07. Sum types (bootdev) need classes/enums and are left to B11."
+    }
+  },
+  "topics": [
+    {
+      "id": "higher_order_functions.functions_are_values",
+      "title": "Functions are values: naming, storing and printing them",
+      "concept": "higher_order_functions",
+      "summary": "Treat a function as a value: give it a second name, keep functions in a list and loop over them, and tell f (the function) from f() (its result).",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A second name for the same function",
+          "worked_example": "def shout(text):\n    return text.upper() + \"!\"\n\nyell = shout\nprint(yell(\"hi\"))  # HI!\nyell = shout copies no code: both names now refer to the same function object.",
+          "practice": "Predict what calls through a second name return; fill in the assignment that makes a new name work.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "f is the function, f() is its result",
+          "worked_example": "print(len(\"abc\"))  # 3\nprint(len)  # <built-in function len>\nresult = len\nprint(result)  # <built-in function len>\nWithout parentheses nothing is called: you get the function itself.",
+          "practice": "For each line, decide whether it prints a result or a function object.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "Forgetting the parentheses is a silent bug",
+          "worked_example": "def is_even(n):\n    return n % 2 == 0\n\nif is_even:  # bug: should be is_even(7)\n    print(\"even\")  # prints even\nA function object is always truthy, so the if always runs; Python raises no error.",
+          "practice": "Find and fix the missing call in short snippets that print the wrong answer.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        },
+        {
+          "title": "Keeping functions in a list",
+          "worked_example": "def double(x):\n    return x * 2\n\ndef square(x):\n    return x * x\n\nfor f in [double, square, abs]:\n    print(f(-3))  # -6, then 9, then 3\nThe loop variable holds one function per pass; f(-3) calls it.",
+          "practice": "Predict the output of looping over a list of functions; write a loop that applies each function in a list to one value.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev",
+        "codecademy",
+        "100_days_of_code",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "higher_order_functions.dispatch_tables",
+      "title": "Functions in a dictionary: dispatch tables",
+      "concept": "higher_order_functions",
+      "summary": "Store functions as dictionary values, pick and call one by key (for example from user input), replace an if/elif chain on a string with a lookup and a default, and keep every function in the table callable the same way.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "higher_order_functions.functions_are_values",
+        "dictionaries.membership_and_get"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Functions as dictionary values",
+          "worked_example": "def add(a, b):\n    return a + b\n\ndef subtract(a, b):\n    return a - b\n\noperations = {\"+\": add, \"-\": subtract}\nprint(operations[\"-\"](10, 4))  # 6\noperations[\"-\"] is the function subtract; the (10, 4) after it calls it.",
+          "practice": "Predict the result of calls through a dict of functions; add an entry for a new operation.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        },
+        {
+          "title": "Choose the function from what the user types",
+          "worked_example": "def multiply(a, b):\n    return a * b\noperations = {\"+\": add, \"*\": multiply}\n\na = int(input(\"First number: \"))     # 7\nsymbol = input(\"Operation: \")         # *\nb = int(input(\"Second number: \"))    # 2\nif symbol in operations:\n    print(operations[symbol](a, b))  # 14\nelse:\n    print(\"Unknown operation\", symbol)\nThe 100 Days calculator: the key comes from input, and in guards against symbols the table does not have (add from KP1).",
+          "practice": "Trace the calculator for several inputs, including an unknown symbol; write the lookup-and-call lines.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Replace an if/elif chain with a lookup and a default",
+          "worked_example": "def greet():\n    return \"Hello!\"\ndef leave():\n    return \"Bye!\"\ndef unknown():\n    return \"Sorry?\"\n\nreplies = {\"hi\": greet, \"bye\": leave}\nfor word in [\"hi\", \"bye\", \"lol\"]:\n    print(replies.get(word, unknown)())\n# Hello! / Bye! / Sorry?\nget returns the default function when the key is missing, so one line replaces a whole elif chain; adding a command means adding one entry.",
+          "practice": "Rewrite an elif chain that compares one string as a dispatch table; predict get() with and without a default.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get",
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "Same arguments for every entry; store the function, not its result",
+          "worked_example": "def square(n):\n    return n * n\noperations = {\"square\": square, \"add\": add}\nprint(operations[\"add\"](2, 3))  # 5\noperations[\"square\"](2, 3)  # TypeError: square() takes 1 positional argument but 2 were given\n{\"square\": square()}  # TypeError: square() missing 1 required positional argument: 'n'\nThe caller treats every entry alike, so every function must accept the same arguments; square() would call it while building the dict.",
+          "practice": "Find the entry that breaks the table and fix its parameters; fix a table that stores call results.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "higher_order_functions.functions_are_values",
+          "weight": 0.5
+        },
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ],
+      "notes": "Added in reconciliation (gap: B08 and B07 each left 'functions in a dict' to the other). Snippets run with Python 3.13 (input answers 7, *, 2). Used by cli_applications.command_loop, web_development.how_web_apps_work (routing), event_driven_programming and function_calling.dispatch_tool_calls."
+    },
+    {
+      "id": "higher_order_functions.pass_function_as_argument",
+      "title": "Passing a function to another function",
+      "concept": "higher_order_functions",
+      "summary": "Write functions that take another function as a parameter and call it, and pass functions (not their results) as arguments.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "higher_order_functions.functions_are_values",
+        "parameters_arguments.several_parameters",
+        "return_values.boolean_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A parameter can receive a function",
+          "worked_example": "def apply(f, x):\n    return f(x)\n\ndef square(x):\n    return x * x\n\nprint(apply(square, 4))  # 16\nprint(apply(abs, -5))  # 5\nInside apply, f is whatever function was passed in; f(x) calls it.",
+          "practice": "Predict the result of apply-style calls with built-in and own functions.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        },
+        {
+          "title": "Calling the passed function more than once",
+          "worked_example": "def apply_twice(f, x):\n    return f(f(x))\n\ndef double(x):\n    return x * 2\n\nprint(apply_twice(double, 3))  # 12\nThe inner call runs first: double(3) is 6, then double(6) is 12.",
+          "practice": "Trace apply_twice and apply_n_times with different functions; write apply_three_times.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Pass the function, not its result",
+          "worked_example": "def apply(f, x):\n    return f(x)\n\ndef square(x):\n    return x * x\n\nprint(apply(square(4), 2))  # TypeError: 'int' object is not callable\nsquare(4) runs first and passes 16; apply then tries to call 16.",
+          "practice": "Spot and fix calls that pass a result instead of a function; predict the error message.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        },
+        {
+          "title": "A general helper that takes a test function",
+          "worked_example": "def count_if(test, items):\n    count = 0\n    for item in items:\n        if test(item):\n            count += 1\n    return count\n\ndef is_even(n):\n    return n % 2 == 0\n\nprint(count_if(is_even, [1, 2, 3, 4]))  # 2\nOne loop now counts anything: the caller decides the test.",
+          "practice": "Write count_if or keep_if style helpers and call them with two different test functions.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items",
+            "return_values.boolean_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "higher_order_functions.functions_are_values",
+          "weight": 0.7
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.3
+        },
+        {
+          "topic": "return_values.boolean_functions",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev",
+        "codecademy",
+        "100_days_of_code",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "higher_order_functions.custom_key_functions",
+      "title": "Sorting and choosing with your own key function",
+      "concept": "higher_order_functions",
+      "summary": "Pass your own function as key= to sorted(), max() and min(), including tie-breaking keys that return a tuple.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "higher_order_functions.pass_function_as_argument",
+        "sorting.sort_tuples_and_keys",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "key= with a function you wrote",
+          "worked_example": "def last_letter(word):\n    return word[-1]\n\nprint(sorted([\"plum\", \"kiwi\", \"fig\"], key=last_letter))\n# ['fig', 'kiwi', 'plum']\nsorted calls last_letter on every item and orders by the results g, i, m.",
+          "practice": "Predict the order produced by a given key function; write a key function for a stated order.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_tuples_and_keys"
+          ]
+        },
+        {
+          "title": "Key functions for records",
+          "worked_example": "def price(item):\n    return item[1]\n\nitems = [(\"tea\", 3), (\"cake\", 5), (\"jam\", 2)]\nprint(sorted(items, key=price))\n# [('jam', 2), ('tea', 3), ('cake', 5)]\nThe key picks the field to sort by; the records themselves are returned whole.",
+          "practice": "Write the key function that sorts records by a named field, then sort in reverse with reverse=True.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "max() and min() with key= return the item, not the key",
+          "worked_example": "def price(item):\n    return item[1]\n\nitems = [(\"tea\", 3), (\"cake\", 5), (\"jam\", 2)]\nprint(max(items, key=price))  # ('cake', 5)\nprint(min(items, key=price)[0])  # jam\nThe key is only used to compare; you get back the whole record.",
+          "practice": "Predict max/min results with a key; fix code that expects max to return the key value.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "Breaking ties with a tuple key",
+          "worked_example": "def length_then_alpha(word):\n    return (len(word), word)\n\nprint(sorted([\"pear\", \"fig\", \"kiwi\", \"ash\"], key=length_then_alpha))\n# ['ash', 'fig', 'kiwi', 'pear']\nTuples compare by the first item, then the second: equal lengths fall back to alphabetical order.",
+          "practice": "Write a key that sorts by one field and breaks ties by another; predict sorts where ties occur.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.convert_and_compare"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sorting.sort_tuples_and_keys",
+          "weight": 0.6
+        },
+        {
+          "topic": "higher_order_functions.pass_function_as_argument",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "mit_6100l",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "higher_order_functions.map_and_filter",
+      "title": "Transforming and selecting with map() and filter()",
+      "concept": "higher_order_functions",
+      "summary": "Use map() to apply a function to every item and filter() to keep the items that pass a test, converting the lazy result with list().",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "higher_order_functions.pass_function_as_argument",
+        "list_methods.append_build",
+        "string_methods.split_into_parts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "map() applies a function to every item",
+          "worked_example": "def double(x):\n    return x * 2\n\nprint(list(map(double, [1, 2, 3])))  # [2, 4, 6]\nprint(list(map(int, [\"4\", \"5\"])))  # [4, 5]\nmap(f, items) does the job of a loop that appends f(item) for every item.",
+          "practice": "Predict map results; rewrite an append loop as list(map(...)).",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "map() gives a map object that is used up once",
+          "worked_example": "def double(x):\n    return x * 2\n\nm = map(double, [1, 2])\nprint(list(m))  # [2, 4]\nprint(list(m))  # []\nprint(m) would show <map object at 0x...>; the values are produced on demand and only once.",
+          "practice": "Predict what a second list() or loop over the same map object gives; fix code that prints a map object.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        },
+        {
+          "title": "filter() keeps the items that pass a test",
+          "worked_example": "def is_even(n):\n    return n % 2 == 0\n\nprint(list(filter(is_even, range(10))))  # [0, 2, 4, 6, 8]\nfilter calls the test on each item and keeps those where it returns True.",
+          "practice": "Predict filter results; write a test function and a filter call for a stated condition.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions"
+          ]
+        },
+        {
+          "title": "Parsing a line with map(), then filtering",
+          "worked_example": "line = \"3 8 1 6\"\nnumbers = list(map(int, line.split()))\nprint(numbers)  # [3, 8, 1, 6]\nprint(list(filter(is_even, numbers)))  # [8, 6]\nmap(int, text.split()) is the standard way to parse numbers from one line of input; filter then keeps the ones you want (is_even from KP3).",
+          "practice": "Parse lines of numbers with map(int, ...split()); chain a filter on the result; fill in the missing function names.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.3
+        },
+        {
+          "topic": "higher_order_functions.pass_function_as_argument",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "codecademy",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lambda_functions.write_lambda",
+      "title": "Writing small functions with lambda",
+      "concept": "lambda_functions",
+      "summary": "Write lambda expressions with one or more parameters, know the body is a single expression that is returned, and pass a lambda straight into a call.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "higher_order_functions.pass_function_as_argument",
+        "conditional_expressions.value_if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "lambda parameters: expression",
+          "worked_example": "def double(x):\n    return x * 2\n\ndouble_too = lambda x: x * 2\nprint(double(5), double_too(5))  # 10 10\nA lambda is an unnamed function; the expression after the colon is returned.",
+          "practice": "Convert one-line defs to lambdas and back; predict calls to a lambda.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call",
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Several parameters, or none",
+          "worked_example": "add = lambda a, b: a + b\nprint(add(2, 3))  # 5\nget_answer = lambda: 42\nprint(get_answer())  # 42\nParameters are separated by commas, exactly as in def; a lambda with no parameters is still called with ().",
+          "practice": "Predict results of multi-parameter lambdas; write a lambda for a given two-input formula.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "One expression only: use a conditional expression for choices",
+          "worked_example": "sign = lambda n: \"negative\" if n < 0 else \"not negative\"\nprint(sign(-4))  # negative\nbad = lambda x: return x  # SyntaxError: invalid syntax\nNo statements (return, if blocks, assignments) are allowed in a lambda body; x if c else y is an expression, so it is.",
+          "practice": "Decide which lambdas are valid; rewrite an if/else def as a lambda with a conditional expression.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditional_expressions.value_if_else"
+          ]
+        },
+        {
+          "title": "Passing a lambda straight into a call",
+          "worked_example": "def apply(f, x):\n    return f(x)\n\nprint(apply(lambda x: x + 1, 5))  # 6\nThe usual place for a lambda is as an argument, so the tiny function needs no name.",
+          "practice": "Fill in a lambda argument so a call produces a target value; predict calls of apply-style helpers with lambdas.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.pass_function_as_argument"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "higher_order_functions.pass_function_as_argument",
+          "weight": 0.3
+        },
+        {
+          "topic": "conditional_expressions.value_if_else",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lambda_functions.lambda_as_argument",
+      "title": "Lambdas as sort keys and with map() and filter()",
+      "concept": "lambda_functions",
+      "summary": "Use lambdas inline as key= for sorted/max/min and as the function for map() and filter(), and know when a named def is clearer.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lambda_functions.write_lambda",
+        "higher_order_functions.custom_key_functions",
+        "higher_order_functions.map_and_filter"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "key=lambda to sort records",
+          "worked_example": "items = [(\"tea\", 3), (\"cake\", 5), (\"jam\", 2)]\nprint(sorted(items, key=lambda item: item[1]))\n# [('jam', 2), ('tea', 3), ('cake', 5)]\nThe lambda replaces a one-line key function defined elsewhere.",
+          "practice": "Write the key=lambda that sorts by a named field or computed value; predict the resulting order.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.custom_key_functions"
+          ]
+        },
+        {
+          "title": "max() and min() with a lambda key",
+          "worked_example": "scores = [(\"ana\", 81), (\"bo\", 92), (\"cy\", 77)]\nbest = max(scores, key=lambda s: s[1])\nprint(best[0])  # bo\nRemember max returns the whole record; index it afterwards for the part you want.",
+          "practice": "Find the best/worst record by a field; fix code that indexes the wrong part of the result.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.custom_key_functions"
+          ]
+        },
+        {
+          "title": "Lambdas with map() and filter()",
+          "worked_example": "words = [\"hi\", \"hello\", \"hey\", \"howdy\"]\nprint(list(filter(lambda w: len(w) > 3, words)))  # ['hello', 'howdy']\nprint(list(map(lambda w: w[0].upper(), words)))  # ['H', 'H', 'H', 'H']\nfilter's lambda must return True/False; map's lambda returns the new value.",
+          "practice": "Predict map/filter calls with lambdas; write one that keeps or transforms items by a rule.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.map_and_filter"
+          ]
+        },
+        {
+          "title": "When a def is clearer than a lambda",
+          "worked_example": "nums = [3, -1, 4]\nprint(list(filter(lambda n: n if n > 0, nums)))  # SyntaxError: expected 'else' after 'if' expression\nA lambda cannot hold an if statement; once logic needs several steps or a name worth reading, write a def.",
+          "practice": "Fix broken lambdas; choose between lambda and def for described tasks.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lambda_functions.write_lambda"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lambda_functions.write_lambda",
+          "weight": 0.8
+        },
+        {
+          "topic": "higher_order_functions.custom_key_functions",
+          "weight": 0.5
+        },
+        {
+          "topic": "higher_order_functions.map_and_filter",
+          "weight": 0.4
+        },
+        {
+          "topic": "sorting.sort_tuples_and_keys",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "closures.nested_functions",
+      "title": "Functions inside functions and the enclosing scope",
+      "concept": "closures",
+      "summary": "Define a helper inside another function, read the outer function's variables from it, and predict name lookup with the LEGB rule.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "scope.global_variables",
+        "functions.flow_of_execution"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A def inside a def",
+          "worked_example": "def greet_all():\n    def greet(name):\n        print(\"Hi\", name)\n    greet(\"Ana\")\n    greet(\"Bo\")\n\ngreet_all()  # Hi Ana / Hi Bo\nThe inner def runs each time greet_all runs, creating a helper only greet_all uses.",
+          "practice": "Predict output and call order for nested defs.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "The inner function can read the outer function's variables",
+          "worked_example": "def receipt(price):\n    tax = 0.2\n    def total():\n        return price + price * tax\n    return total()\n\nprint(receipt(10))  # 12.0\ntotal has no price or tax of its own, so Python looks in the enclosing function.",
+          "practice": "Predict results when an inner function reads outer variables and parameters.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "scope.local_variables"
+          ]
+        },
+        {
+          "title": "The inner function does not exist outside",
+          "worked_example": "def outer():\n    def tidy():\n        return 1\n    return tidy()\n\nprint(outer())  # 1\nprint(tidy())  # NameError: name 'tidy' is not defined\ntidy is a local name of outer, like any local variable.",
+          "practice": "Decide which calls work and which raise NameError.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "scope.local_variables"
+          ]
+        },
+        {
+          "title": "Lookup order: Local, Enclosing, Global, Built-in",
+          "worked_example": "x = \"global\"\n\ndef outer():\n    x = \"enclosing\"\n    def inner():\n        return x\n    return inner()\n\nprint(outer())  # enclosing\nlen = 5\nprint(len(\"abc\"))  # TypeError: 'int' object is not callable\nThe nearest x wins; a global named len hides the built-in len.",
+          "practice": "Predict which of several same-named variables a line reads; fix a program that shadowed a built-in.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "scope.global_variables"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "scope.local_variables",
+          "weight": 0.3
+        },
+        {
+          "topic": "functions.flow_of_execution",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "closures.function_factories",
+      "title": "Returning functions: closures and function factories",
+      "concept": "closures",
+      "summary": "Write a function that builds and returns another function which remembers values from where it was made, and avoid the late-binding trap.",
+      "minutes": 19,
+      "core": true,
+      "prerequisites": [
+        "closures.nested_functions",
+        "lambda_functions.write_lambda",
+        "parameters_arguments.default_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Return the inner function itself",
+          "worked_example": "def make_greeter(greeting):\n    def greet(name):\n        return f\"{greeting}, {name}!\"\n    return greet\n\nhello = make_greeter(\"Hello\")\nprint(hello(\"Ana\"))  # Hello, Ana!\nreturn greet (no parentheses) hands back the function; it still knows greeting after make_greeter has finished.",
+          "practice": "Predict calls to returned functions; fix a factory that returns greet() instead of greet.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        },
+        {
+          "title": "Each call makes a separate closure",
+          "worked_example": "def make_multiplier(n):\n    def multiply(x):\n        return x * n\n    return multiply\n\ndouble = make_multiplier(2)\ntriple = make_multiplier(3)\nprint(double(5), triple(5))  # 10 15\nEach call of make_multiplier has its own n, and each returned function remembers its own.",
+          "practice": "Predict results from several functions made by one factory; write a factory for a described family of functions.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "closures.nested_functions"
+          ]
+        },
+        {
+          "title": "Returning a lambda",
+          "worked_example": "def make_adder(n):\n    return lambda x: x + n\n\nadd5 = make_adder(5)\nprint(add5(10))  # 15\nprint(make_adder(1)(1))  # 2\nA lambda closes over n just like a def; make_adder(1)(1) builds and calls in one line.",
+          "practice": "Rewrite def-based factories with lambdas; predict chained calls like f(a)(b).",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lambda_functions.write_lambda"
+          ]
+        },
+        {
+          "title": "Late binding: closures see the variable, not its old value",
+          "worked_example": "n = 2\ntimes_n = lambda x: x * n\nn = 10\nprint(times_n(3))  # 30, not 6\n\nm = 2\ntimes_m = lambda x, m=m: x * m\nm = 10\nprint(times_m(3))  # 6\ntimes_n reads n when it is called, not when it was made; a default m=m freezes the value at creation, because defaults are computed once.",
+          "practice": "Predict results when a captured variable changes after the function is made (including functions made in a loop); fix the bug with a default argument or a factory call.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "closures.nested_functions",
+          "weight": 0.6
+        },
+        {
+          "topic": "lambda_functions.write_lambda",
+          "weight": 0.3
+        },
+        {
+          "topic": "higher_order_functions.functions_are_values",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "closures.nonlocal_state",
+      "title": "Closures that remember state with nonlocal",
+      "concept": "closures",
+      "summary": "Use nonlocal to update a variable of the enclosing function, build independent counters, and know when mutation needs no nonlocal.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "closures.function_factories",
+        "mutability_aliasing.names_refer_to_objects"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "nonlocal lets the inner function rebind an outer variable",
+          "worked_example": "def make_counter():\n    count = 0\n    def counter():\n        nonlocal count\n        count += 1\n        return count\n    return counter\n\nc = make_counter()\nprint(c(), c(), c())  # 1 2 3\ncount lives on between calls because the closure keeps it.",
+          "practice": "Predict values returned by repeated calls; fill in the missing nonlocal line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "closures.function_factories"
+          ]
+        },
+        {
+          "title": "Without nonlocal: UnboundLocalError",
+          "worked_example": "def make_counter():\n    count = 0\n    def counter():\n        count += 1\n        return count\n    return counter\n\nc = make_counter()\nc()  # UnboundLocalError: cannot access local variable 'count' where it is not associated with a value\nAssigning to count makes it local to counter, exactly like the global case; nonlocal is the fix.",
+          "practice": "Find and fix the missing nonlocal; predict which snippets raise UnboundLocalError.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "Every closure has its own state",
+          "worked_example": "def make_counter():\n    count = 0\n    def counter():\n        nonlocal count\n        count += 1\n        return count\n    return counter\n\na = make_counter()\nb = make_counter()\na(); a()\nprint(a(), b())  # 3 1\nUnlike a global counter, two counters made by the factory never interfere.",
+          "practice": "Trace interleaved calls to several counters; write a factory for a running total.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "closures.function_factories"
+          ]
+        },
+        {
+          "title": "Changing a captured list needs no nonlocal",
+          "worked_example": "def make_logger():\n    log = []\n    def add(msg):\n        log.append(msg)\n        return log\n    return add\n\nadd = make_logger()\nadd(\"start\")\nprint(add(\"stop\"))  # ['start', 'stop']\nnonlocal is needed only to rebind a name (=, +=); calling a method on the object is not rebinding.",
+          "practice": "Decide which inner functions need nonlocal; predict outputs of closures that mutate a list.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "closures.function_factories",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "currying.curry_and_partial",
+      "title": "Currying and partial application",
+      "concept": "currying",
+      "summary": "Turn a multi-argument function into a chain of one-argument functions, fix some arguments to make specialised functions, and use functools.partial.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "closures.function_factories",
+        "higher_order_functions.map_and_filter",
+        "parameters_arguments.keyword_arguments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "f(a, b) becomes f(a)(b)",
+          "worked_example": "def add(a, b):\n    return a + b\n\ndef curried_add(a):\n    def add_b(b):\n        return a + b\n    return add_b\n\nprint(add(2, 3), curried_add(2)(3))  # 5 5\nThe curried version takes one argument at a time and returns a function waiting for the next.",
+          "practice": "Convert two-argument functions to curried form; predict chained calls.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "closures.function_factories"
+          ]
+        },
+        {
+          "title": "Fixing one argument makes a specialised function",
+          "worked_example": "def power(exponent):\n    return lambda base: base ** exponent\n\nsquare = power(2)\ncube = power(3)\nprint(list(map(cube, [1, 2, 3])))  # [1, 8, 27]\nSupplying the first argument early gives a one-argument function, ready for map or key=.",
+          "practice": "Make specialised functions from a curried one and pass them to map or sorted.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.map_and_filter"
+          ]
+        },
+        {
+          "title": "Three levels of currying",
+          "worked_example": "def volume(length):\n    return lambda width: lambda height: length * width * height\n\nprint(volume(2)(3)(4))  # 24\nbase_2x3 = volume(2)(3)\nprint(base_2x3(10))  # 60\nEach call consumes one argument; stopping early gives a partly applied function.",
+          "practice": "Predict results of partly applied chains; count how many calls are needed to get a number.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "closures.function_factories"
+          ]
+        },
+        {
+          "title": "functools.partial does it for any function",
+          "worked_example": "from functools import partial\n\nfrom_binary = partial(int, base=2)\nprint(from_binary(\"101\"))  # 5\nprint(partial(pow, 2)(5))  # 32\npartial(f, fixed args) returns a new function with those arguments already filled in.",
+          "practice": "Write partial calls that build a requested function; predict their results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "closures.function_factories",
+          "weight": 0.7
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "decorators.wrap_a_function",
+      "title": "Wrapping a function to add behaviour",
+      "concept": "decorators",
+      "summary": "Write a function that takes a function and returns a wrapper which runs extra code around the original, and replace the original with it.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "closures.function_factories",
+        "higher_order_functions.pass_function_as_argument",
+        "return_values.none_from_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A wrapper runs code before and after",
+          "worked_example": "def announce(func):\n    def wrapper():\n        print(\"Before\")\n        func()\n        print(\"After\")\n    return wrapper\n\ndef hello():\n    print(\"hello\")\n\nwrapped = announce(hello)\nwrapped()  # Before / hello / After\nannounce takes a function and returns a new one that calls it in the middle.",
+          "practice": "Predict the printed lines when a wrapped function is called; put the lines of a wrapper in order.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "closures.function_factories"
+          ]
+        },
+        {
+          "title": "Replacing a function with its wrapped version",
+          "worked_example": "def announce(func):\n    def wrapper():\n        print(\"Before\")\n        func()\n    return wrapper\n\ndef hello():\n    print(\"hello\")\n\nhello = announce(hello)\nhello()  # Before / hello\nAfter hello = announce(hello), the name hello means the wrapper; the wrapper still holds the original.",
+          "practice": "Predict output after reassigning a name to its wrapped version; predict what happens when it is wrapped twice.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.functions_are_values"
+          ]
+        },
+        {
+          "title": "Passing the argument through and returning the result",
+          "worked_example": "def shout(func):\n    def wrapper(text):\n        return func(text).upper()\n    return wrapper\n\ndef greet(name):\n    return \"hi \" + name\n\ngreet = shout(greet)\nprint(greet(\"ana\"))  # HI ANA\nThe wrapper takes the same argument as the original, calls it, and can change the result.",
+          "practice": "Write a wrapper that changes a one-argument function's result (round it, upper-case it, double it).",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "A wrapper that forgets to return gives None",
+          "worked_example": "def log_call(func):\n    def wrapper(x):\n        print(\"calling\")\n        func(x)  # bug: result thrown away\n    return wrapper\n\ndef square(x):\n    return x * x\n\nsquare = log_call(square)\nprint(square(4))  # calling / None\nThe wrapper must return func(x), otherwise every wrapped call returns None.",
+          "practice": "Find and fix wrappers that lose the result; predict their printed output.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "closures.function_factories",
+          "weight": 0.6
+        },
+        {
+          "topic": "higher_order_functions.pass_function_as_argument",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "decorators.at_syntax",
+      "title": "Decorators with @",
+      "concept": "decorators",
+      "summary": "Apply a decorator with @, know it runs once when the def runs, and predict the order of stacked decorators.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "decorators.wrap_a_function",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "@decorator means f = decorator(f)",
+          "worked_example": "def announce(func):\n    def wrapper():\n        print(\"Before\")\n        func()\n    return wrapper\n\n@announce\ndef hello():\n    print(\"hello\")\n\nhello()  # Before / hello\n@announce on the line above def is shorthand for hello = announce(hello) right after it.",
+          "practice": "Rewrite explicit reassignment as @ and back; predict output of decorated calls.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decorators.wrap_a_function"
+          ]
+        },
+        {
+          "title": "The decorator runs once, when the def runs",
+          "worked_example": "def register(func):\n    print(\"registering\", func.__name__)\n    return func\n\n@register\ndef ping():\n    print(\"pong\")\n\nprint(\"start\")\nping()  # registering ping / start / pong\nThe code in the decorator body runs at definition time; only the wrapper (or func) runs at each call.",
+          "practice": "Predict the full output order of programs that define and then call decorated functions.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "Stacked decorators apply bottom-up",
+          "worked_example": "def bold(func):\n    def wrapper():\n        return \"<b>\" + func() + \"</b>\"\n    return wrapper\n\ndef italic(func):\n    def wrapper():\n        return \"<i>\" + func() + \"</i>\"\n    return wrapper\n\n@bold\n@italic\ndef word():\n    return \"hi\"\n\nprint(word())  # <b><i>hi</i></b>\nThe decorator nearest the def wraps first: word = bold(italic(word)).",
+          "practice": "Predict results of two stacked decorators in both orders; choose the order that gives a target output.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "decorators.wrap_a_function"
+          ]
+        },
+        {
+          "title": "A decorator that guards the input",
+          "worked_example": "def non_negative(func):\n    def wrapper(x):\n        if x < 0:\n            return 0\n        return func(x)\n    return wrapper\n\n@non_negative\ndef root(x):\n    return x ** 0.5\n\nprint(root(9), root(-4))  # 3.0 0\nA wrapper can decide not to call the original at all, so one check serves many functions.",
+          "practice": "Write a decorator that checks or adjusts its argument before calling the original.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decorators.wrap_a_function",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "decorators.general_wrappers",
+      "title": "Decorators for any function: *args, **kwargs and functools.wraps",
+      "concept": "decorators",
+      "summary": "Write a wrapper that accepts and forwards any arguments with *args and **kwargs, and keep the original's name with functools.wraps.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "decorators.at_syntax",
+        "args_kwargs.unpack_in_calls"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "wrapper(*args, **kwargs) works for any signature",
+          "worked_example": "def log_call(func):\n    def wrapper(*args, **kwargs):\n        print(\"args:\", args, kwargs)\n        return func(*args, **kwargs)\n    return wrapper\n\n@log_call\ndef power(base, exp=2):\n    return base ** exp\n\nprint(power(3, exp=3))  # args: (3,) {'exp': 3} / 27\nThe wrapper collects whatever it is given and spreads it back into the original call.",
+          "practice": "Predict what the wrapper collects for different calls; fill in the forwarding line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.unpack_in_calls"
+          ]
+        },
+        {
+          "title": "A fixed-size wrapper breaks other functions",
+          "worked_example": "def log_call(func):\n    def wrapper(x):\n        print(\"calling\")\n        return func(x)\n    return wrapper\n\n@log_call\ndef add(a, b):\n    return a + b\n\nadd(1, 2)  # TypeError: log_call.<locals>.wrapper() takes 1 positional argument but 2 were given\nThe error names wrapper, not add: the call goes to the wrapper first.",
+          "practice": "Read the error, then fix the wrapper so it handles any arguments.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_args"
+          ]
+        },
+        {
+          "title": "Keep the name with functools.wraps",
+          "worked_example": "from functools import wraps\n\ndef log_call(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        return func(*args, **kwargs)\n    return wrapper\n\n@log_call\ndef add(a, b):\n    return a + b\n\nprint(add.__name__)  # add (without @wraps: wrapper)\n@wraps(func) copies the name and docstring onto the wrapper, so help() and error messages stay useful.",
+          "practice": "Predict __name__ with and without @wraps; add the missing @wraps line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax"
+          ]
+        },
+        {
+          "title": "A reusable decorator that changes results",
+          "worked_example": "def rounded(func):\n    def wrapper(*args, **kwargs):\n        return round(func(*args, **kwargs), 2)\n    return wrapper\n\n@rounded\ndef average(a, b, c):\n    return (a + b + c) / 3\n\nprint(average(1, 2, 2))  # 1.67\nBecause it forwards any arguments, @rounded works on any function that returns a number.",
+          "practice": "Write a general decorator (round, clamp, upper-case) and apply it to functions with different parameters.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decorators.at_syntax",
+          "weight": 0.8
+        },
+        {
+          "topic": "args_kwargs.unpack_in_calls",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "decorators.decorator_factories",
+      "title": "Decorators that take arguments",
+      "concept": "decorators",
+      "summary": "Write a decorator factory such as @repeat(3), predict how @name(args) is evaluated, and fix the missing-parentheses bug.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "decorators.general_wrappers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A function that returns a decorator",
+          "worked_example": "def repeat(times):\n    def decorator(func):\n        def wrapper(*args, **kwargs):\n            for _ in range(times):\n                func(*args, **kwargs)\n        return wrapper\n    return decorator\n\n@repeat(3)\ndef cheer():\n    print(\"hip\")\n\ncheer()  # hip / hip / hip\nThree levels: repeat takes the setting, decorator takes the function, wrapper takes the call's arguments.",
+          "practice": "Put the three nested defs in order; predict the output for different settings.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decorators.general_wrappers"
+          ]
+        },
+        {
+          "title": "@repeat(3) is called first, then applied",
+          "worked_example": "def repeat(times):\n    print(\"making decorator for\", times)\n    def decorator(func):\n        return func\n    return decorator\n\n@repeat(2)\ndef f():\n    pass\n# making decorator for 2\n@repeat(2) means f = repeat(2)(f): the call in the @ line runs first and must return a decorator.",
+          "practice": "Rewrite @factory(args) lines as plain assignments; predict printed setup messages.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax"
+          ]
+        },
+        {
+          "title": "Forgetting the parentheses",
+          "worked_example": "def repeat(times):\n    def decorator(func):\n        def wrapper():\n            for _ in range(times):\n                func()\n        return wrapper\n    return decorator\n\n@repeat\ndef cheer():\n    print(\"hip\")\n\ncheer()  # TypeError: repeat.<locals>.decorator() missing 1 required positional argument: 'func'\n@repeat passed cheer in as times, so cheer became the inner decorator, which then wanted a function.",
+          "practice": "Diagnose and fix factory decorators used without arguments.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decorators.general_wrappers",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "generators.yield_values",
+      "title": "Generator functions and yield",
+      "concept": "generators",
+      "summary": "Write a generator function with yield, step through it with next() and for, and know that a generator is used up after one pass.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "iteration.iter_and_next",
+        "return_values.early_return",
+        "while_loops.repeat_while_true"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "yield turns a function into a generator",
+          "worked_example": "def count_up(n):\n    i = 1\n    while i <= n:\n        yield i\n        i += 1\n\nfor x in count_up(3):\n    print(x)  # 1 / 2 / 3\nEach yield hands one value to the for loop; the function then continues from where it stopped.",
+          "practice": "Predict what a for loop over a generator prints; write a generator for a described sequence.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Calling it runs nothing yet; next() runs to the next yield",
+          "worked_example": "def count_up(n):\n    i = 1\n    while i <= n:\n        yield i\n        i += 1\n\ng = count_up(2)\nprint(next(g), next(g))  # 1 2\nnext(g)  # StopIteration\ncount_up(2) only creates a generator object; next() runs the body until the next yield, and StopIteration means it finished.",
+          "practice": "Predict a sequence of next() calls, including the one that raises StopIteration.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "iteration.iter_and_next"
+          ]
+        },
+        {
+          "title": "yield pauses; return ends",
+          "worked_example": "def steps():\n    print(\"A\")\n    yield 1\n    print(\"B\")\n    yield 2\n    print(\"C\")\n\nfor value in steps():\n    print(value)  # A 1 B 2 C, one per line\nLocal state and position are kept between values; return (or reaching the end) stops the generator for good.",
+          "practice": "Trace interleaved prints from a generator and its loop; contrast with a function that returns a list.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "A generator is used up after one pass",
+          "worked_example": "def count_up(n):\n    i = 1\n    while i <= n:\n        yield i\n        i += 1\n\ng = count_up(3)\nprint(list(g))  # [1, 2, 3]\nprint(list(g))  # []\nlist(g) collects every value; the second pass finds nothing. Call count_up(3) again for a fresh generator.",
+          "practice": "Predict results of reusing a generator; fix code that loops twice over one generator.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "iteration.iter_and_next"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "iteration.iter_and_next",
+          "weight": 0.4
+        },
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "generators.lazy_and_infinite",
+      "title": "Lazy and infinite generators",
+      "concept": "generators",
+      "summary": "Write generators that produce values only when asked, including endless ones consumed with break, and generators that yield only matching values.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "generators.yield_values",
+        "break_continue.while_true_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An endless generator and a loop that breaks",
+          "worked_example": "def naturals():\n    n = 1\n    while True:\n        yield n\n        n += 1\n\nfor n in naturals():\n    if n * n > 50:\n        print(n)  # 8\n        break\nThe generator never ends on its own; it only computes values the loop asks for, so break is enough to stop it.",
+          "practice": "Predict where a loop over an endless generator stops; write the loop that finds the first value passing a test.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        },
+        {
+          "title": "Taking the first n values",
+          "worked_example": "def naturals():\n    n = 1\n    while True:\n        yield n\n        n += 1\n\ng = naturals()\nfirst = []\nfor _ in range(3):\n    first.append(next(g))\nprint(first)  # [1, 2, 3]\nprint(next(g))  # 4\nnext() continues the same generator, so the following call carries on from 4.",
+          "practice": "Predict values when next() is called on a generator between loops; write a take(g, n) helper.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "iteration.iter_and_next"
+          ]
+        },
+        {
+          "title": "Yielding only some values",
+          "worked_example": "def multiples_of(k, limit):\n    for n in range(1, limit + 1):\n        if n % k == 0:\n            yield n\n\nprint(list(multiples_of(4, 20)))  # [4, 8, 12, 16, 20]\nPut yield inside an if to produce only the values that pass, like a lazy filter.",
+          "practice": "Write generators that produce primes, evens or matching words; predict their first few values.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "return stops a generator early",
+          "worked_example": "def until_zero(numbers):\n    for n in numbers:\n        if n == 0:\n            return\n        yield n\n\nprint(list(until_zero([5, 3, 0, 7])))  # [5, 3]\nA bare return in a generator ends it, just like reaching the end of the body.",
+          "practice": "Predict output of generators with an early return; fix one that uses break where the caller expects it to stop.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "generators.yield_values",
+          "weight": 0.8
+        },
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "generators.generator_expressions",
+      "title": "Generator expressions",
+      "concept": "generators",
+      "summary": "Write (expr for x in items) and (expr for x in items if cond) and pass them straight to sum(), max() and similar built-ins.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "generators.yield_values",
+        "higher_order_functions.map_and_filter",
+        "list_comprehensions.any_all_and_sum"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Parentheses make a generator expression",
+          "worked_example": "squares = (x * x for x in range(5))\nprint(squares)  # <generator object <genexpr> at 0x...>\nprint(list(squares))  # [0, 1, 4, 9, 16]\nIt is a one-line generator: nothing is computed until something asks for values.",
+          "practice": "Convert short generator functions to generator expressions; predict their contents with list().",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "generators.yield_values"
+          ]
+        },
+        {
+          "title": "Drop the brackets of a comprehension inside a call",
+          "worked_example": "words = [\"kiwi\", \"fig\", \"banana\"]\nprint(max([len(w) for w in words]))  # 6: builds a list first\nprint(max(len(w) for w in words))    # 6: no list is ever built\nprint(sum(x * x for x in range(1, 4)))  # 14\nInside a call's own parentheses no extra pair is needed; the values arrive one at a time.",
+          "practice": "Rewrite comprehensions passed to sum(), max() and any() as generator expressions; compare with the equivalent map(); predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.any_all_and_sum",
+            "higher_order_functions.map_and_filter"
+          ]
+        },
+        {
+          "title": "Filtering with if",
+          "worked_example": "words = [\"kiwi\", \"fig\", \"banana\"]\nprint(sum(1 for w in words if len(w) > 3))  # 2\nThe if keeps only matching items; sum(1 for ...) counts them.",
+          "practice": "Count and total items that meet a condition with a single expression.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.any_all_and_sum"
+          ]
+        },
+        {
+          "title": "Used up after one pass, like any generator",
+          "worked_example": "evens = (n for n in range(6) if n % 2 == 0)\nprint(sum(evens))  # 6\nprint(sum(evens))  # 0\nThe second sum finds the generator empty; build a list if you need the values twice.",
+          "practice": "Predict repeated use of one generator expression; fix code that reuses it.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "generators.yield_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "generators.yield_values",
+          "weight": 0.4
+        },
+        {
+          "topic": "higher_order_functions.map_and_filter",
+          "weight": 0.3
+        },
+        {
+          "topic": "list_comprehensions.any_all_and_sum",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "generators.pipelines",
+      "title": "Chaining generators into pipelines",
+      "concept": "generators",
+      "summary": "Connect generators so each one consumes another's output, and delegate to another iterable with yield from.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "generators.lazy_and_infinite",
+        "generators.generator_expressions",
+        "string_methods.strip_whitespace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One generator feeding another",
+          "worked_example": "def evens(numbers):\n    for n in numbers:\n        if n % 2 == 0:\n            yield n\n\ndef squares(numbers):\n    for n in numbers:\n        yield n * n\n\nprint(list(squares(evens(range(7)))))  # [0, 4, 16, 36]\nEach value travels through the whole chain before the next is produced.",
+          "practice": "Predict the output of two- and three-stage pipelines; write a stage for a described step.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "generators.lazy_and_infinite"
+          ]
+        },
+        {
+          "title": "yield from hands over to another iterable",
+          "worked_example": "def both(a, b):\n    yield from a\n    yield from b\n\nprint(list(both([1, 2], \"ab\")))  # [1, 2, 'a', 'b']\nyield from x is short for: for item in x: yield item.",
+          "practice": "Rewrite for/yield loops with yield from; predict the combined output.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "generators.yield_values"
+          ]
+        },
+        {
+          "title": "A text-cleaning pipeline",
+          "worked_example": "lines = [\"  apple \", \"\", \" pear\", \"   \"]\nstripped = (line.strip() for line in lines)\nnon_empty = (line for line in stripped if line)\nprint(list(non_empty))  # ['apple', 'pear']\nEach stage is one small step; nothing runs until list() pulls values through.",
+          "practice": "Order the stages of a pipeline to produce a target result; add a stage that upper-cases.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.strip_whitespace",
+            "generators.generator_expressions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "generators.lazy_and_infinite",
+          "weight": 0.5
+        },
+        {
+          "topic": "generators.generator_expressions",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "args_kwargs.star_args",
+      "title": "Any number of positional arguments: *args",
+      "concept": "args_kwargs",
+      "summary": "Define functions with *args, use the tuple it collects, and combine it with ordinary and keyword-only parameters.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.default_values",
+        "tuples.create_and_index",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "*args collects extra positional arguments into a tuple",
+          "worked_example": "def show(*args):\n    print(args)\n\nshow(1, 2, 3)  # (1, 2, 3)\nshow()  # ()\nThe star in the def means: pack all positional arguments into one tuple; the name args is only a convention.",
+          "practice": "Predict the tuple collected for different calls, including no arguments.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Looping over args",
+          "worked_example": "def total(*numbers):\n    result = 0\n    for n in numbers:\n        result += n\n    return result\n\nprint(total(4, 5, 6))  # 15\nprint(total())  # 0\nargs is an ordinary tuple: loop over it, index it, take its len.",
+          "practice": "Write *args functions such as largest(*nums) or average(*nums); handle the no-argument case.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Ordinary parameters first, then *args",
+          "worked_example": "def greet(greeting, *names):\n    for name in names:\n        print(greeting, name)\n\ngreet(\"Hi\", \"Ana\", \"Bo\")  # Hi Ana / Hi Bo\nThe first argument fills greeting; everything after it goes into names.",
+          "practice": "Predict which arguments land in which parameter; fill in a def line for a described call.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "Parameters after *args must be passed by keyword",
+          "worked_example": "def tag(*words, end=\"!\"):\n    for w in words:\n        print(w + end)\n\ntag(\"hi\", \"yo\", end=\"?\")  # hi? / yo?\ntag(\"hi\", \"yo\", \"?\")      # hi! / yo! / ?!\nWithout end=, the \"?\" is just one more word swallowed by *words.",
+          "practice": "Predict results of calls with and without the keyword; fix calls that pass the option by position.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.default_values",
+          "weight": 0.2
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "args_kwargs.star_kwargs",
+      "title": "Any number of keyword arguments: **kwargs",
+      "concept": "args_kwargs",
+      "summary": "Define functions with **kwargs, read the dict it collects, and order ordinary, *args, keyword-only and **kwargs parameters correctly.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "args_kwargs.star_args",
+        "dictionaries.loop_keys_values_items"
+      ],
+      "knowledge_points": [
+        {
+          "title": "**kwargs collects keyword arguments into a dict",
+          "worked_example": "def show(**kwargs):\n    print(kwargs)\n\nshow(name=\"Ana\", age=31)  # {'name': 'Ana', 'age': 31}\nshow()  # {}\nEach name=value becomes a key and its value; the keys are the parameter names as strings.",
+          "practice": "Predict the dict collected for different calls.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "Reading the collected values",
+          "worked_example": "def describe(**info):\n    for key in info:\n        print(key, \"=\", info[key])\n\ndescribe(colour=\"red\", size=3)  # colour = red / size = 3\nLoop over the keys and look each value up, in the order the arguments were given.",
+          "practice": "Write functions that print or build text from their keyword arguments; look up one expected key.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_args",
+            "dictionaries.loop_keys_values_items"
+          ]
+        },
+        {
+          "title": "The full order: normal, *args, keyword-only, **kwargs",
+          "worked_example": "def f(a, *args, flag=False, **kwargs):\n    print(a, args, flag, kwargs)\n\nf(1, 2, 3, flag=True, x=9)  # 1 (2, 3) True {'x': 9}\nPositional arguments fill a, then args; named ones fill flag if it matches, else kwargs.",
+          "practice": "Predict where each argument goes; put the parameters of a def in a legal order.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_args"
+          ]
+        },
+        {
+          "title": "Positional arguments cannot go into **kwargs",
+          "worked_example": "def show(**kwargs):\n    print(kwargs)\n\nshow(\"Ana\")  # TypeError: show() takes 0 positional arguments but 1 was given\n**kwargs only accepts name=value arguments; add *args if positional ones are needed too.",
+          "practice": "Predict which calls raise TypeError; fix the def or the call.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "args_kwargs.star_args",
+          "weight": 0.4
+        },
+        {
+          "topic": "parameters_arguments.keyword_arguments",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "args_kwargs.unpack_in_calls",
+      "title": "Spreading a list or dict into a call with * and **",
+      "concept": "args_kwargs",
+      "summary": "Unpack a list or tuple into positional arguments with * and a dict into keyword arguments with **, and forward arguments from one function to another.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "args_kwargs.star_kwargs",
+        "unpacking.star_unpacking"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "* in a call spreads a sequence into arguments",
+          "worked_example": "def area(width, height):\n    return width * height\n\nsize = [3, 4]\nprint(area(*size))  # 12\nJust as print(*nums) spreads a list into print, area(*size) is area(3, 4); without the star, size would be one argument.",
+          "practice": "Predict calls that use *; fix a call that passes a list where separate arguments are needed.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_args",
+            "unpacking.star_unpacking"
+          ]
+        },
+        {
+          "title": "The counts must match",
+          "worked_example": "def area(width, height):\n    return width * height\n\nprint(area(*[1, 2, 3]))  # TypeError: area() takes 2 positional arguments but 3 were given\nThe star spreads every item; the function still decides how many it accepts.",
+          "practice": "Decide which spread calls succeed; predict the error message for the others.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_args"
+          ]
+        },
+        {
+          "title": "** in a call spreads a dict into keyword arguments",
+          "worked_example": "options = {\"sep\": \"-\", \"end\": \"!\\n\"}\nprint(\"a\", \"b\", **options)  # a-b!\nEach key becomes a parameter name; it is the same as print(\"a\", \"b\", sep=\"-\", end=\"!\\n\").",
+          "practice": "Rewrite keyword calls using a dict and **; predict the result.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_kwargs"
+          ]
+        },
+        {
+          "title": "Forwarding arguments to another function",
+          "worked_example": "def describe(name, age=0):\n    return f\"{name} is {age}\"\n\ndef shout_describe(*args, **kwargs):\n    return describe(*args, **kwargs).upper()\n\nprint(shout_describe(\"Ana\", age=31))  # ANA IS 31\nCollect with *args/**kwargs in the def, spread with * and ** in the call: the caller's arguments pass through unchanged.",
+          "practice": "Write a forwarding function; predict results of forwarded calls.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_kwargs"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "args_kwargs.star_kwargs",
+          "weight": 0.5
+        },
+        {
+          "topic": "args_kwargs.star_args",
+          "weight": 0.4
+        },
+        {
+          "topic": "unpacking.star_unpacking",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "args_kwargs.keyword_only_and_positional_only",
+      "title": "Keyword-only and positional-only parameters: * and /",
+      "concept": "args_kwargs",
+      "summary": "Use a bare * to force keyword arguments and / to forbid them, and read these markers in function signatures.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "args_kwargs.star_args"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A bare * makes the following parameters keyword-only",
+          "worked_example": "def make_box(*, width, height):\n    return width * height\n\nprint(make_box(width=2, height=5))  # 10\nmake_box(2, 5)  # TypeError: make_box() takes 0 positional arguments but 2 were given\nForcing names stops callers mixing up arguments of the same type.",
+          "practice": "Predict which calls succeed; add * to a def so a call must name its options.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "/ makes the earlier parameters positional-only",
+          "worked_example": "def half(x, /):\n    return x / 2\n\nprint(half(8))  # 4.0\nhalf(x=8)  # TypeError: half() got some positional-only arguments passed as keyword arguments: 'x'\nParameters before / cannot be named in the call, so their names can change freely later.",
+          "practice": "Predict which calls raise TypeError for a def using /.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "Reading signatures with / and *",
+          "worked_example": "# sorted(iterable, /, *, key=None, reverse=False)\nprint(sorted([3, 1, 2], reverse=True))  # [3, 2, 1]\nsorted([3, 1, 2], True)  # TypeError: sorted expected 1 argument, got 2\nhelp() shows signatures like this: iterable is positional-only, key and reverse are keyword-only.",
+          "practice": "Given a signature, decide which calls are legal; write the def line for a described signature.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "args_kwargs.star_args"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.keyword_arguments",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "recursion.base_and_recursive_case",
+      "title": "Recursion: functions that call themselves",
+      "concept": "recursion",
+      "summary": "Write a recursive function with a base case that stops and a recursive case that moves toward it, for countdowns, sums, factorials and powers.",
+      "minutes": 19,
+      "core": true,
+      "prerequisites": [
+        "return_values.early_return",
+        "functions.flow_of_execution"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A function that calls itself",
+          "worked_example": "def countdown(n):\n    if n == 0:\n        print(\"Go!\")\n    else:\n        print(n)\n        countdown(n - 1)\n\ncountdown(3)  # 3 / 2 / 1 / Go!\nEach call handles one number and asks a smaller call to do the rest; n == 0 stops it.",
+          "practice": "Predict the output of short recursive printing functions; identify the base case and the recursive call.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "Base case returns, recursive case builds on a smaller call",
+          "worked_example": "def sum_to(n):\n    if n == 0:\n        return 0\n    return n + sum_to(n - 1)\n\nprint(sum_to(4))  # 10\nsum_to(4) = 4 + sum_to(3) = 4 + 3 + 2 + 1 + 0.",
+          "practice": "Predict return values; fill in the base case or the recursive expression.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "Factorial from its definition",
+          "worked_example": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(5))  # 120\nn! = n * (n - 1)!, and 1! = 1: the code is the definition written down.",
+          "practice": "Write factorial and similar product functions; predict results for small inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Writing a function from a recurrence",
+          "worked_example": "def power(base, exp):\n    if exp == 0:\n        return 1\n    return base * power(base, exp - 1)\n\nprint(power(2, 5))  # 32\nState the rule (b^e = b * b^(e-1), b^0 = 1), then translate the base case and the rule.",
+          "practice": "Given a rule in words, write the recursive function (power, multiply by adding, count digits).",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.early_return",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "recursion.trace_recursive_calls",
+      "title": "Tracing recursive calls",
+      "concept": "recursion",
+      "summary": "Trace recursive calls with a call stack: each call's own variables, work done before versus after the recursive call, and how results return.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "recursion.base_and_recursive_case",
+        "scope.local_variables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Each call has its own n",
+          "worked_example": "def sum_to(n):\n    if n == 0:\n        return 0\n    return n + sum_to(n - 1)\n\nprint(sum_to(3))  # 6\n# calls: sum_to(3) -> sum_to(2) -> sum_to(1) -> sum_to(0)\nFour calls are waiting at once, each with its own n, like four separate copies of the function.",
+          "practice": "Fill in a trace table of calls and their n values; count how many calls a given input makes.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "scope.local_variables"
+          ]
+        },
+        {
+          "title": "Results return back up the stack",
+          "worked_example": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(4))  # 24\n# returns: 1, then 2*1=2, then 3*2=6, then 4*6=24\nThe deepest call returns first; each waiting call then finishes its multiplication.",
+          "practice": "Fill in the return value of each call in order; predict the final result.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case"
+          ]
+        },
+        {
+          "title": "Work before or after the recursive call",
+          "worked_example": "def down(n):\n    if n == 0:\n        return\n    print(n)\n    down(n - 1)\n\ndef up(n):\n    if n == 0:\n        return\n    up(n - 1)\n    print(n)\n\ndown(3)  # 3 / 2 / 1\nup(3)  # 1 / 2 / 3\nPrinting before the call happens on the way down; printing after happens on the way back.",
+          "practice": "Predict output order for functions that print before, after, or both.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.base_and_recursive_case",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "recursion.recursion_bugs",
+      "title": "Fixing recursion bugs: missing base cases and lost results",
+      "concept": "recursion",
+      "summary": "Recognise and fix RecursionError from a missing or unreachable base case, None from a missing return, and inputs too deep for recursion.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "recursion.trace_recursive_calls",
+        "return_values.none_from_functions",
+        "loop_patterns.accumulate_sum"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "No base case: RecursionError",
+          "worked_example": "def sum_to(n):\n    return n + sum_to(n - 1)\n\nsum_to(3)  # RecursionError: maximum recursion depth exceeded\nWithout a stopping case the calls never end; Python stops them at about 1000 deep.",
+          "practice": "Spot which recursive functions can never stop; add the missing base case.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case"
+          ]
+        },
+        {
+          "title": "A base case the input never reaches",
+          "worked_example": "def count_down_by_two(n):\n    if n == 0:\n        return 0\n    return 1 + count_down_by_two(n - 2)\n\nprint(count_down_by_two(4))  # 2\ncount_down_by_two(3)  # RecursionError: maximum recursion depth exceeded\n3, 1, -1, ... skips 0. Test n <= 0 instead, and check negative inputs too.",
+          "practice": "Trace inputs that jump over the base case; fix the condition.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Forgetting to return the recursive result",
+          "worked_example": "def sum_to(n):\n    if n == 0:\n        return 0\n    n + sum_to(n - 1)  # bug: no return\n\nprint(sum_to(1))  # None\nprint(sum_to(2))  # TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'\nThe recursive case computed a value and threw it away, so the call returned None.",
+          "practice": "Predict what a function missing return gives; fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        },
+        {
+          "title": "Correct but too deep: use a loop",
+          "worked_example": "def sum_to(n):\n    if n == 0:\n        return 0\n    return n + sum_to(n - 1)\n\nprint(sum_to(500))  # 125250\nsum_to(5000)  # RecursionError: maximum recursion depth exceeded\nEach waiting call uses stack space; for long simple chains a loop is the right tool in Python.",
+          "practice": "Decide which inputs exceed the limit; rewrite a simple recursive function as a loop.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.trace_recursive_calls",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "recursion.recursion_on_sequences",
+      "title": "Recursion on strings and lists",
+      "concept": "recursion",
+      "summary": "Solve string and list problems recursively by handling the first item (or both ends) and recursing on the rest via slicing.",
+      "minutes": 20,
+      "core": true,
+      "prerequisites": [
+        "recursion.trace_recursive_calls",
+        "list_slicing.slice_lists",
+        "lists.membership_and_operators"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "First character plus the rest",
+          "worked_example": "def reverse(s):\n    if s == \"\":\n        return \"\"\n    return reverse(s[1:]) + s[0]\n\nprint(reverse(\"abc\"))  # cba\nThe empty string is the base case; s[1:] is one character shorter, so every call moves toward it.",
+          "practice": "Predict results of recursive string functions; write count_vowels(s) recursively.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "First item plus the rest of a list",
+          "worked_example": "def total(nums):\n    if nums == []:\n        return 0\n    return nums[0] + total(nums[1:])\n\nprint(total([3, 4, 5]))  # 12\nSame shape for lists: handle nums[0], recurse on nums[1:].",
+          "practice": "Write recursive length, total and maximum of a list; trace one call chain.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "Working from both ends",
+          "worked_example": "def is_palindrome(s):\n    if len(s) <= 1:\n        return True\n    if s[0] != s[-1]:\n        return False\n    return is_palindrome(s[1:-1])\n\nprint(is_palindrome(\"level\"), is_palindrome(\"lever\"))  # True False\nTwo base cases: nothing left to compare (True) and a mismatch (False).",
+          "practice": "Predict palindrome checks; fill in the missing base case.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.negative_indices"
+          ]
+        },
+        {
+          "title": "Building a new list recursively",
+          "worked_example": "def only_evens(nums):\n    if nums == []:\n        return []\n    rest = only_evens(nums[1:])\n    if nums[0] % 2 == 0:\n        return [nums[0]] + rest\n    return rest\n\nprint(only_evens([1, 2, 3, 4]))  # [2, 4]\nEach call returns a list; the current item is added in front only if it passes.",
+          "practice": "Write recursive filters and transforms that return lists; compare with the loop version.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.base_and_recursive_case",
+          "weight": 0.6
+        },
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_indexing_slicing.slice_start_stop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "recursion.multiple_recursive_calls",
+      "title": "Branching recursion: Fibonacci and Towers of Hanoi",
+      "concept": "recursion",
+      "summary": "Write recursive functions that make two calls per step, trace their call trees, and recognise why naive versions grow exponentially.",
+      "minutes": 19,
+      "core": true,
+      "prerequisites": [
+        "recursion.trace_recursive_calls",
+        "scope.global_variables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two recursive calls and two base cases",
+          "worked_example": "def fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nprint(fib(6))  # 8\nfib(0) = 0 and fib(1) = 1 are the base cases; every other value is the sum of the two before.",
+          "practice": "Predict small Fibonacci values; write a recursive function with two calls (e.g. a 1-or-2-steps staircase count).",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case"
+          ]
+        },
+        {
+          "title": "The call tree",
+          "worked_example": "def fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\n# fib(4) calls fib(3) and fib(2); fib(3) calls fib(2) and fib(1) ...\nprint(fib(4))  # 3, after 9 calls in total\nDraw each call as a node with its two children; fib(2) is computed twice, fib(1) three times.",
+          "practice": "Count the calls in a call tree; list the calls in the order they happen.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "recursion.trace_recursive_calls"
+          ]
+        },
+        {
+          "title": "Why naive branching recursion gets slow",
+          "worked_example": "calls = 0\n\ndef fib(n):\n    global calls\n    calls += 1\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nfib(20)\nprint(calls)  # 21891\nEach extra n multiplies the work by about 1.6, so fib(40) takes hundreds of millions of calls.",
+          "practice": "Estimate how the call count grows as n grows; choose which functions will be slow.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "Towers of Hanoi: solving by trusting the smaller call",
+          "worked_example": "def hanoi(n, start, end, spare):\n    if n == 0:\n        return\n    hanoi(n - 1, start, spare, end)\n    print(\"move\", n, start, \"->\", end)\n    hanoi(n - 1, spare, end, start)\n\nhanoi(2, \"A\", \"C\", \"B\")  # move 1 A -> B / move 2 A -> C / move 1 B -> C\nMove n - 1 disks out of the way, move the biggest, move the n - 1 back on top: assume the smaller call works.",
+          "practice": "Predict the moves for 2-3 disks; count moves for n disks (2^n - 1).",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "recursion.trace_recursive_calls"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.trace_recursive_calls",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "recursion.nested_lists",
+      "title": "Recursion on nested lists",
+      "concept": "recursion",
+      "summary": "Process lists that contain lists to any depth (sum, flatten, depth) by recursing whenever an item is itself a list.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "recursion.recursion_on_sequences",
+        "objects_methods.isinstance_checks",
+        "nested_data_structures.grid_index_and_loop",
+        "list_methods.insert_extend"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Items that are lists themselves",
+          "worked_example": "data = [1, [2, 3], [4, [5]]]\nfor item in data:\n    print(item, isinstance(item, list))\n# 1 False / [2, 3] True / [4, [5]] True\nA loop sees only the top level; isinstance(item, list) tells which items need going into.",
+          "practice": "Predict len() and the type checks of nested lists; count top-level items.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "objects_methods.isinstance_checks",
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Summing at every depth",
+          "worked_example": "def nested_sum(items):\n    total = 0\n    for item in items:\n        if isinstance(item, list):\n            total += nested_sum(item)\n        else:\n            total += item\n    return total\n\nprint(nested_sum([1, [2, 3], [4, [5]]]))  # 15\nA loop handles the items of one list; recursion handles each list inside it, however deep.",
+          "practice": "Write nested_sum / nested_count; trace which calls are made for a small input.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "recursion.recursion_on_sequences"
+          ]
+        },
+        {
+          "title": "Flattening into one list",
+          "worked_example": "def flatten(items):\n    flat = []\n    for item in items:\n        if isinstance(item, list):\n            flat.extend(flatten(item))\n        else:\n            flat.append(item)\n    return flat\n\nprint(flatten([1, [2, [3, 4]], 5]))  # [1, 2, 3, 4, 5]\nextend adds the items of the flattened sub-list; append would put the list itself back in.",
+          "practice": "Fix a flatten that uses append for sub-lists; predict flatten results.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "Measuring the depth",
+          "worked_example": "def depth(items):\n    deepest = 0\n    for item in items:\n        if isinstance(item, list):\n            d = depth(item)\n            if d > deepest:\n                deepest = d\n    return deepest + 1\n\nprint(depth([1, [2, [3]]]))  # 3\nEach level adds one to the deepest level found among its sub-lists (the 'largest so far' pattern).",
+          "practice": "Predict the depth of given lists; write the function that finds the largest number at any depth.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.recursion_on_sequences",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "recursion.memoize_with_cache",
+      "title": "Speeding up recursion: caching and loops",
+      "concept": "recursion",
+      "summary": "Make branching recursion fast by caching results, with functools.cache or a hand-written dict, or by rewriting it as a loop.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "recursion.multiple_recursive_calls",
+        "decorators.at_syntax",
+        "variables.swap_values",
+        "dictionaries.membership_and_get"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The same subproblems are solved again and again",
+          "worked_example": "calls = []\n\ndef fib(n):\n    calls.append(n)\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nfib(5)\nprint(calls.count(1), calls.count(2))  # 5 3\nfib(5) computes fib(1) five times: remembering answers would save almost all the work.",
+          "practice": "Count repeated calls in a call tree; choose which inputs are recomputed.",
+          "formats": [
+            "numeric",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "recursion.multiple_recursive_calls"
+          ]
+        },
+        {
+          "title": "@cache remembers results",
+          "worked_example": "from functools import cache\n\n@cache\ndef fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nprint(fib(80))  # 23416728348467685\nThe decorator stores each fib(n) the first time; later calls return it at once, so fib(80) is instant.",
+          "practice": "Add @cache to slow recursive functions; predict how many times the body runs for a given input.",
+          "formats": [
+            "fill_in_blank",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax"
+          ]
+        },
+        {
+          "title": "Or count up with a loop",
+          "worked_example": "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n\nprint(fib(10))  # 55\nBuilding from the base cases upward needs only the last two values and no recursion at all.",
+          "practice": "Trace the two-variable loop; rewrite another branching recursion (staircase count) as a loop.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values"
+          ]
+        },
+        {
+          "title": "Memoising by hand with a dict",
+          "worked_example": "def fib(n, memo):\n    if n in memo:\n        return memo[n]\n    if n < 2:\n        return n\n    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)\n    return memo[n]\n\nprint(fib(80, {}))  # 23416728348467685\nThis is what @cache does for you: look the answer up first, store it after computing it.",
+          "practice": "Fill in the lookup and store lines of a memoised function; trace which calls are answered from the dict.",
+          "formats": [
+            "fill_in_blank",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.multiple_recursive_calls",
+          "weight": 0.6
+        },
+        {
+          "topic": "decorators.at_syntax",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "pure_functions.pure_vs_impure",
+      "title": "Pure functions and side effects",
+      "concept": "pure_functions",
+      "summary": "Tell pure functions (same inputs, same output, nothing else changed) from ones with side effects or hidden inputs, and rewrite impure functions as pure ones.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "decomposition.one_job_per_function",
+        "mutability_aliasing.lists_in_functions",
+        "scope.global_variables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Same inputs, same output, nothing else changes",
+          "worked_example": "def area(w, h):\n    return w * h\n\nprint(area(3, 4), area(3, 4))  # 12 12\narea is pure: its result depends only on its arguments and calling it changes nothing.",
+          "practice": "Classify short functions as pure or not, giving the reason.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "Side effects: printing, input, changing globals, mutating arguments",
+          "worked_example": "def add_item(cart, item):\n    cart.append(item)\n    return cart\n\nmine = [\"tea\"]\nadd_item(mine, \"jam\")\nprint(mine)  # ['tea', 'jam']\nThe caller's list changed: that is a side effect, even though the function also returns a value.",
+          "practice": "Identify every side effect in given functions; predict the state of variables after the calls.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.lists_in_functions"
+          ]
+        },
+        {
+          "title": "Hidden inputs: reading a global",
+          "worked_example": "rate = 0.2\n\ndef with_tax(price):\n    return price * (1 + rate)\n\nprint(with_tax(10))  # 12.0\nrate = 0.5\nprint(with_tax(10))  # 15.0\nSame argument, different result: the global is an input the call does not show.",
+          "practice": "Predict results after a global changes; fix the function by making the value a parameter.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "Rewriting an impure function as a pure one",
+          "worked_example": "def add_item(cart, item):\n    return cart + [item]\n\nmine = [\"tea\"]\nnew = add_item(mine, \"jam\")\nprint(mine, new)  # ['tea'] ['tea', 'jam']\nReturn a new value instead of changing the old one; pure functions are easy to test and reuse.",
+          "practice": "Rewrite functions that mutate, print or read globals so they are pure.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.lists_in_functions",
+          "weight": 0.4
+        },
+        {
+          "topic": "scope.global_variables",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "functional_programming.loops_to_pipelines",
+      "title": "From loops to map, filter and built-ins: declarative style",
+      "concept": "functional_programming",
+      "summary": "Rewrite imperative accumulation loops as compositions of filter, map, sorted and sum, without mutating data, and judge which version reads better.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lambda_functions.lambda_as_argument",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Same task, two styles",
+          "worked_example": "nums = [3, 8, 1, 6]\ntotal = 0\nfor n in nums:\n    if n > 2:\n        total += n * n\nprint(total)  # 109\nprint(sum(map(lambda n: n * n, filter(lambda n: n > 2, nums))))  # 109\nThe loop says how to compute step by step; the second line says what: square the large ones and add.",
+          "practice": "Match loops to equivalent map/filter/sum expressions; predict both versions.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.map_and_filter",
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Building a pipeline step by step",
+          "worked_example": "words = [\"Pear\", \"fig\", \"Apple\", \"kiwi\"]\nlower = map(str.lower, words)\nlong = filter(lambda w: len(w) > 3, lower)\nprint(sorted(long))  # ['apple', 'kiwi', 'pear']\nEach step takes the previous result; read the pipeline in order.",
+          "practice": "Order the steps of a pipeline (Parsons); write one for a described transformation.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lambda_functions.lambda_as_argument"
+          ]
+        },
+        {
+          "title": "No mutation: produce new values",
+          "worked_example": "scores = [70, 95, 82]\nranked = sorted(scores, reverse=True)\nprint(scores, ranked)  # [70, 95, 82] [95, 82, 70]\nsorted returns a new list and leaves scores alone; sort() would have changed it.",
+          "practice": "Replace mutating steps (sort, append, +=) with expressions that return new values.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        },
+        {
+          "title": "When the loop reads better",
+          "worked_example": "# Hard to read:\n# print(list(map(lambda p: p[0], filter(lambda p: p[1] > 50 and p[0] != \"x\", pairs))))\npairs = [(\"a\", 60), (\"x\", 90), (\"b\", 40)]\nfor name, score in pairs:\n    if score > 50 and name != \"x\":\n        print(name)  # a\nDeeply nested map/filter with long lambdas is harder to read than a short loop; pick the clearer one.",
+          "practice": "Choose the clearer version for several tasks and justify the choice.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "higher_order_functions.map_and_filter",
+          "weight": 0.6
+        },
+        {
+          "topic": "lambda_functions.lambda_as_argument",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.aggregate_builtins",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "functional_programming.reduce",
+      "title": "Folding a list into one value with reduce()",
+      "concept": "functional_programming",
+      "summary": "Use functools.reduce with and without an initial value, trace how it combines items, and prefer sum/max/join when they exist.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "functional_programming.loops_to_pipelines",
+        "string_methods.join_pieces"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "reduce combines items two at a time",
+          "worked_example": "from functools import reduce\n\nprint(reduce(lambda acc, x: acc + x, [1, 2, 3, 4]))  # 10\n# ((1 + 2) + 3) + 4\nThe function gets the result so far and the next item, like an accumulator loop.",
+          "practice": "Trace the accumulator through each step; predict the result.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "An initial value, and the empty-list error",
+          "worked_example": "from functools import reduce\n\nprint(reduce(lambda acc, x: acc * x, [2, 3, 4], 1))  # 24\nprint(reduce(lambda acc, x: acc + x, [], 0))  # 0\nreduce(lambda acc, x: acc + x, [])  # TypeError: reduce() of empty iterable with no initial value\nThe third argument is the starting accumulator; it also makes empty input safe.",
+          "practice": "Predict results with and without an initial value; fix a reduce that crashes on empty input.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "functional_programming.loops_to_pipelines"
+          ]
+        },
+        {
+          "title": "Reductions that are not sums",
+          "worked_example": "from functools import reduce\n\nwords = [\"a\", \"bb\", \"ccc\"]\nprint(reduce(lambda acc, w: acc + len(w), words, 0))  # 6\nprint(reduce(lambda a, b: a if a > b else b, [3, 9, 2]))  # 9\nThe initial value can be a different type from the items (an int for a list of strings).",
+          "practice": "Write reduce calls for product, maximum and total length.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lambda_functions.write_lambda"
+          ]
+        },
+        {
+          "title": "Prefer the built-in when there is one",
+          "worked_example": "nums = [3, 9, 2]\nprint(sum(nums), max(nums), \"-\".join([\"a\", \"b\"]))  # 14 9 a-b\nsum, max, min and join are reductions with names; reach for reduce only when none fits.",
+          "practice": "Pick the clearest tool (built-in, reduce or loop) for described reductions.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.sum_max_min"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functional_programming.loops_to_pipelines",
+          "weight": 0.3
+        },
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy",
+        "bootdev"
+      ]
+    }
+  ]
+}

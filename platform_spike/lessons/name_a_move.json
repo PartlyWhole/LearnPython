@@ -1,0 +1,121 @@
+{
+  "format": 1,
+  "id": "name_a_move",
+  "title": "Name a move",
+  "concept": "Define a new command with def, then call it",
+  "topics": [
+    "functions.define_and_call"
+  ],
+  "watch": {
+    "world": {
+      "width": 4,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "2,0": 1
+      }
+    },
+    "steps": [
+      {
+        "say": "Fetch the gem, then come back to the start.",
+        "focus": "world"
+      },
+      {
+        "say": "Two left turns face the robot the other way.",
+        "code": "move()\nmove()\npick()\nturn_left()\nturn_left()\nmove()\nmove()\n",
+        "focus": "editor:4"
+      },
+      {
+        "say": "`def` names a new command. The indented lines are what it does.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\nmove()\nmove()\npick()\nturn_left()\nturn_left()\nmove()\nmove()\n",
+        "focus": "editor:1"
+      },
+      {
+        "say": "Calling `turn_around()` runs those lines.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\nmove()\nmove()\npick()\nturn_around()\nmove()\nmove()\n",
+        "focus": "editor:8"
+      },
+      {
+        "say": "Where will the robot end up? Pick the cell.",
+        "predict": {
+          "cell": true,
+          "answer": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "say": "Run it.",
+        "run": true
+      }
+    ]
+  },
+  "guided": {
+    "level": "turn_right",
+    "steps": [
+      {
+        "say": "Fill in `turn_right()` with three left turns.",
+        "done_when": [
+          {
+            "defines": "turn_right",
+            "body_calls": {
+              "turn_left": 3
+            }
+          }
+        ],
+        "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\nmove()\nmove()\n"
+      },
+      {
+        "say": "Use `turn_right()` wherever the robot must turn right.",
+        "done_when": [
+          {
+            "calls": "turn_right",
+            "outside": "def",
+            "min": 2
+          }
+        ],
+        "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\nmove()\nmove()\nturn_right()\nmove()\nmove()\nturn_right()\nmove()\nmove()\npick()\n"
+      },
+      {
+        "say": "Run it.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "Same corner as before, now with your own command."
+  },
+  "practice": [
+    "fetch_gem",
+    "climb_stairs"
+  ],
+  "twist": "around_the_block",
+  "recap": {
+    "say": "`def name():` plus an indented body makes a command. `name()` runs it.",
+    "code": "def name():\n    ..."
+  },
+  "hints": {
+    "fetch_gem": [
+      "Compare your result with the Goal view: home again, facing east.",
+      "Turning around is two left turns. Give it a name with `def turn_around():`.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    __\n    __\n\n\ndef go_to_gem():\n    move()\n    turn_right()\n    move()\n    turn_left()\n    move()\n    move()\n\n\ndef come_home():\n    turn_around()\n    __\n\n\ngo_to_gem()\npick()\ncome_home()\n"
+    ],
+    "climb_stairs": [
+      "Compare your result with the Goal view: the gem is on top of the third step.",
+      "Every step is the same: up one cell, turn right, onto the step. `climb_step()` can call `turn_right()`.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef climb_step():\n    turn_left()\n    move()\n    __\n    __\n\n\nclimb_step()\n__\n__\npick()\n"
+    ],
+    "around_the_block": [
+      "Compare your result with the Goal view: four gems picked, and the robot home facing east.",
+      "Every corner takes the same moves. Name them once with `def go_around_corner():`, then call it four times.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around_corner():\n    move()\n    move()\n    __\n    __\n    __\n\n\ngo_around_corner()\n__\n__\n__\n"
+    ]
+  }
+}

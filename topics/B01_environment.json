@@ -1,0 +1,1509 @@
+{
+  "batch": "B01",
+  "title": "Environment and first programs",
+  "concept_map": {
+    "print_output": {
+      "topics": [
+        "print_output.hello_world",
+        "print_output.multiple_values",
+        "print_output.sep_and_end",
+        "print_output.newlines_and_tabs"
+      ],
+      "entry_topic": "print_output.hello_world",
+      "notes": "Printing variables, expressions (print(2 + 3) vs print('2 + 3')) and f-strings are left to B02 variables/expressions and B03 string_formatting; they should encompass these topics. Quotes inside strings and escaping quotes are left to B03 strings; only \\n and \\t are taught here because output layout needs them."
+    },
+    "running_scripts": {
+      "topics": [
+        "running_scripts.statements_run_in_order",
+        "running_scripts.run_from_terminal"
+      ],
+      "entry_topic": "running_scripts.statements_run_in_order",
+      "notes": "statements_run_in_order is environment-agnostic (works in a browser IDE) so it can be core; run_from_terminal is the local-install path. Full traceback reading belongs to B09 debugging/exceptions."
+    },
+    "comments": {
+      "topics": [
+        "comments.write_comments",
+        "comments.useful_comments"
+      ],
+      "entry_topic": "comments.write_comments",
+      "notes": "Docstrings are B05; pseudocode-as-comments is B05 pseudocode."
+    },
+    "command_line": {
+      "topics": [
+        "command_line.prompt_and_navigation",
+        "command_line.absolute_and_relative_paths",
+        "command_line.create_move_delete"
+      ],
+      "entry_topic": "command_line.prompt_and_navigation",
+      "notes": "Only what a Python learner needs (navigation, paths, file management). Linux filesystem, permissions, redirection are out of scope per plan.json. Command-line arguments to scripts are B10 command_line_args."
+    },
+    "python_setup": {
+      "topics": [
+        "python_setup.install_and_verify",
+        "python_setup.which_python_runs"
+      ],
+      "entry_topic": "python_setup.install_and_verify",
+      "notes": "pip and virtual environments belong to tool_pip / third_party_packages in a later batch."
+    },
+    "repl": {
+      "topics": [
+        "repl.start_and_evaluate",
+        "repl.echo_vs_print"
+      ],
+      "entry_topic": "repl.start_and_evaluate"
+    },
+    "ide_editor": {
+      "topics": [
+        "ide_editor.create_and_save_file",
+        "ide_editor.run_in_editor",
+        "ide_editor.editor_feedback"
+      ],
+      "entry_topic": "ide_editor.create_and_save_file",
+      "notes": "The debugger is B09 debugging."
+    },
+    "pep8_style": {
+      "topics": [
+        "pep8_style.spacing_and_layout",
+        "pep8_style.linters_and_formatters"
+      ],
+      "entry_topic": "pep8_style.spacing_and_layout",
+      "notes": "Only layout rules applicable to wave-1 code. Naming conventions (snake_case, UPPER_CASE constants, CapWords classes) should be owned by B02 variables/constants, B05 functions and the OOP batch, encompassing pep8_style.spacing_and_layout."
+    },
+    "computer_architecture": {
+      "topics": [
+        "computer_architecture.hardware_and_programs"
+      ],
+      "entry_topic": "computer_architecture.hardware_and_programs",
+      "notes": "Introduced by py4e only; one supplemental topic."
+    }
+  },
+  "topics": [
+    {
+      "id": "print_output.hello_world",
+      "title": "Your first program: printing text",
+      "concept": "print_output",
+      "summary": "Write print(\"...\") to display a line of text, use matching quotes, print blank lines, and recognise the typos that stop print from working.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Print a line of text",
+          "worked_example": "print(\"Hello, world!\")\n# Hello, world!\nThe text goes in quotes, inside the parentheses after print.",
+          "practice": "Predict the exact output of one or two print calls; write the call that displays a given sentence.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Single or double quotes, as long as they match",
+          "worked_example": "print('Hi there')\nprint(\"Hi there\")\n# Both print: Hi there\nprint('Hi there\") is a SyntaxError: the quotes must match.",
+          "practice": "Decide which of several print lines run and which are SyntaxErrors; fix a line with mismatched quotes.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Each print starts a new line; print() alone prints a blank line",
+          "worked_example": "print(\"one\")\nprint()\nprint(\"two\")\n# one\n#\n# two  (the middle line is empty)",
+          "practice": "Predict multi-line output including blank lines; reorder print lines (Parsons) to produce a target output.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Typos that break print",
+          "worked_example": "Print(\"hi\")    # NameError: Python names are case-sensitive\nprint \"hi\"     # SyntaxError: missing parentheses\nprint(\"hi\"     # SyntaxError: \"(\" was never closed",
+          "practice": "For each line say 'prints' or 'error' and which error; fix three broken print lines.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "print_output.multiple_values",
+      "title": "Printing numbers and several values at once",
+      "concept": "print_output",
+      "summary": "Print numbers, and pass several comma-separated values to one print call, which separates them with a space.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "print_output.hello_world"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Printing numbers without quotes",
+          "worked_example": "print(42)\nprint(\"42\")\n# 42\n# 42\nNumbers need no quotes; both lines look the same on screen.",
+          "practice": "Predict output of prints with numbers and quoted digits; spot which line is a number and which is text.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Several values in one print, separated by a space",
+          "worked_example": "print(\"Hello\", \"Ada\")\n# Hello Ada\nEach comma-separated value is printed with one space between.",
+          "practice": "Predict output of print calls with 2-4 arguments; write one print that matches a target line.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Mixing text and numbers",
+          "worked_example": "print(\"Age:\", 36)\nprint(\"Total\", 3, \"items\")\n# Age: 36\n# Total 3 items",
+          "practice": "Write print calls that combine a label and a number; predict the exact spacing.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A comma inside quotes vs between arguments",
+          "worked_example": "print(\"a,b\")\nprint(\"a\", \"b\")\n# a,b\n# a b\nInside quotes a comma is just text; outside it separates values.",
+          "practice": "Predict the output of look-alike pairs; fix a print that shows a stray comma or misses a space.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "print_output.sep_and_end",
+      "title": "Controlling separators and line endings: sep and end",
+      "concept": "print_output",
+      "summary": "Use print's sep= and end= keyword arguments to change what goes between values and what is printed after them.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "print_output.multiple_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sep changes the separator",
+          "worked_example": "print(\"2026\", \"10\", \"12\", sep=\"-\")\n# 2026-10-12\nsep replaces the default single space.",
+          "practice": "Predict output for different sep values; write a print that produces a dash- or slash-joined line.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "sep=\"\" glues values together",
+          "worked_example": "print(\"snow\", \"man\", sep=\"\")\n# snowman",
+          "practice": "Predict output with sep=\"\"; fix a print that leaves an unwanted space between values.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "end changes what comes after the line",
+          "worked_example": "print(\"Loading\", end=\"...\")\nprint(\"done\")\n# Loading...done\nThe default end is a newline; replacing it keeps the next print on the same line.",
+          "practice": "Predict the combined output of two or three prints using end; fill in the end= value to join two lines.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Combining sep and end",
+          "worked_example": "print(\"a\", \"b\", sep=\"+\", end=\"=\")\nprint(\"ab\")\n# a+b=ab",
+          "practice": "Predict output of prints using both arguments; write a print matching a target exactly.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.multiple_values",
+          "weight": 0.8
+        },
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "code_in_place",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "print_output.newlines_and_tabs",
+      "title": "Laying out output with \\n and \\t",
+      "concept": "print_output",
+      "summary": "Put line breaks and tabs inside a printed string with the escape sequences \\n and \\t to lay out multi-line output from a single print.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "print_output.hello_world"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "\\n starts a new line inside one string",
+          "worked_example": "print(\"Roses\\nViolets\")\n# Roses\n# Violets\nBackslash-n is one character: a line break.",
+          "practice": "Predict how many lines a print with \\n produces and what is on each.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Several prints vs one print with \\n",
+          "worked_example": "print(\"a\")\nprint(\"b\")\nprint(\"a\\nb\")\n# both produce a, then b on the next line",
+          "practice": "Rewrite three print calls as one; decide which pairs of programs give identical output.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "\\t lines text up in columns",
+          "worked_example": "print(\"Name\\tScore\")\nprint(\"Ada\\t9\")\nTabs jump to the next tab stop, so short columns line up.",
+          "practice": "Fill in escape sequences to build a two-column table; predict output containing tabs.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Common slips: /n and blank lines",
+          "worked_example": "print(\"Hi/nthere\")   # prints Hi/nthere: forward slash is not an escape\nprint(\"Hi\\n\")        # prints Hi then an empty line",
+          "practice": "Fix programs that use /n or produce an extra blank line; draw small text art from a single print.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "running_scripts.statements_run_in_order",
+      "title": "How a program runs: top to bottom, until an error",
+      "concept": "running_scripts",
+      "summary": "Predict what a program prints given that statements run in order, a SyntaxError stops everything before it starts, and a runtime error stops the program at that line; read the line number and error type in the message.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "print_output.hello_world"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Statements run top to bottom, one at a time",
+          "worked_example": "print(\"first\")\nprint(\"second\")\nprint(\"third\")\nOutput appears in exactly the order of the lines.",
+          "practice": "Predict output order; reorder lines (Parsons) to print a target sequence.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "A SyntaxError means nothing runs",
+          "worked_example": "print(\"one\")\nprint(\"two\"\nprint(\"three\")\nNo output at all: Python checks the whole file before running any of it.",
+          "practice": "Predict output (or none) for files containing a syntax error on various lines.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "A runtime error stops at its line; earlier lines already ran",
+          "worked_example": "print(\"one\")\nPrint(\"two\")\nprint(\"three\")\n# one\n# NameError on line 2; line 3 never runs.",
+          "practice": "Predict which lines print before the error; contrast with the SyntaxError case.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Reading the error message: line number and error type",
+          "worked_example": "Traceback (most recent call last):\n  File \"hello.py\", line 2, in <module>\n    Print(\"two\")\nNameError: name 'Print' is not defined\nThe last line names the error; \"line 2\" says where to look.",
+          "practice": "Given an error message, give the line number and error type; fix the line it points to.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "helsinki_mooc",
+        "code_in_place",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "running_scripts.run_from_terminal",
+      "title": "Running a .py file from the terminal",
+      "concept": "running_scripts",
+      "summary": "Run a saved script with python3 file.py from the right folder, fix the 'can't open file' error, and re-run after editing.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "command_line.absolute_and_relative_paths",
+        "python_setup.install_and_verify",
+        "ide_editor.create_and_save_file",
+        "running_scripts.statements_run_in_order"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "python3 hello.py runs the file",
+          "worked_example": "$ python3 hello.py\nHello, world!\nThe terminal runs every line of hello.py and shows its output.",
+          "practice": "Pick the command that runs a named file; predict the terminal output for a given hello.py.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "python_setup.install_and_verify",
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "You must be in the folder that holds the file",
+          "worked_example": "$ python3 hello.py\npython3: can't open file '/Users/ada/hello.py': [Errno 2] No such file or directory\n$ cd projects\n$ python3 hello.py",
+          "practice": "Diagnose 'can't open file' from a pwd/ls transcript; write the cd that fixes it.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        },
+        {
+          "title": "Run a file in another folder by giving its path",
+          "worked_example": "$ python3 projects/hello.py\nThe argument is a path, so relative and absolute paths both work.",
+          "practice": "Write the command that runs a file given the current folder and the file's location.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "command_line.absolute_and_relative_paths"
+          ]
+        },
+        {
+          "title": "Edit, save, re-run",
+          "worked_example": "Change the file, save it, then press Up and Enter to repeat python3 hello.py.\nAn unsaved edit runs the old version.",
+          "practice": "Predict output when a change was or was not saved; order the edit-save-run steps.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "ide_editor.create_and_save_file"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line.absolute_and_relative_paths",
+          "weight": 0.3
+        },
+        {
+          "topic": "command_line.prompt_and_navigation",
+          "weight": 0.3
+        },
+        {
+          "topic": "running_scripts.statements_run_in_order",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "py4e",
+        "bootdev",
+        "helsinki_mooc",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "comments.write_comments",
+      "title": "Writing comments with #",
+      "concept": "comments",
+      "summary": "Add full-line and inline comments that Python ignores, tell comments apart from # inside text, and comment out a line to switch it off.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "print_output.hello_world"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A # line is ignored",
+          "worked_example": "# Greet the user\nprint(\"Hello\")\nEverything after # on a line is for humans; Python skips it.",
+          "practice": "Predict output of programs containing comment lines.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Inline comments after code",
+          "worked_example": "print(\"Hi\")  # says hi\nCode before the # runs; the rest of the line is ignored.",
+          "practice": "Predict output; fix a line where the comment swallowed part of the code.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "# inside quotes is text, not a comment",
+          "worked_example": "print(\"#1 fan\")  # a real comment\n# #1 fan",
+          "practice": "Predict output of lines mixing # in strings and comments.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Commenting out code to switch it off",
+          "worked_example": "print(\"a\")\n# print(\"b\")\nprint(\"c\")\n# a\n# c",
+          "practice": "Choose which line to comment out to produce a target output; predict output after commenting out lines.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "comments.useful_comments",
+      "title": "Writing comments that help",
+      "concept": "comments",
+      "summary": "Judge and write comments that explain why rather than restate the code, keep them in sync with the code, and span several lines correctly.",
+      "minutes": 12,
+      "core": false,
+      "prerequisites": [
+        "comments.write_comments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Explain why, not what",
+          "worked_example": "# print(\"Total:\", 3)  restates the code: unhelpful\n# Sandcastle needs 3 buckets per tower  explains the reason: helpful",
+          "practice": "Pick the most useful comment for a snippet; rewrite a 'what' comment as a 'why' comment.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "comments.write_comments"
+          ]
+        },
+        {
+          "title": "Out-of-date comments mislead",
+          "worked_example": "# Prints the price in euros\nprint(\"Price:\", 5, \"USD\")\nThe comment and code disagree; fix one so they match.",
+          "practice": "Find the comment that no longer matches its code in a short program.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Multi-line comments: one # per line",
+          "worked_example": "# Step 1: greet the user\n# Step 2: print the menu\nprint(\"Welcome\")\nEach comment line needs its own #.",
+          "practice": "Fix a block where a continuation line lacks #; write a two-line plan as comments above code.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "comments.write_comments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comments.write_comments",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "py4e"
+      ]
+    },
+    {
+      "id": "command_line.prompt_and_navigation",
+      "title": "The terminal: prompt, commands and moving between folders",
+      "concept": "command_line",
+      "summary": "Read a shell prompt, type commands with arguments, and use pwd, ls and cd to find out where you are and move between folders.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Prompt, command, arguments",
+          "worked_example": "$ ls -l projects\nls is the command, -l is an option (flag), projects is an argument. $ is the prompt: don't type it.",
+          "practice": "Label the command, options and arguments in several command lines.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "pwd and ls: where am I, what is here",
+          "worked_example": "$ pwd\n/Users/ada\n$ ls\nDesktop  Documents  projects",
+          "practice": "Given a folder tree, predict pwd and ls output.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "cd into a folder and cd .. back out",
+          "worked_example": "$ cd projects\n$ pwd\n/Users/ada/projects\n$ cd ..\n$ pwd\n/Users/ada",
+          "practice": "Trace pwd through a sequence of cd commands; write the cd commands to reach a target folder.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "When cd fails",
+          "worked_example": "$ cd Projects\ncd: no such file or directory: Projects\nNames are case-sensitive on macOS/Linux, and cd only sees folders inside the current one.",
+          "practice": "Decide whether each cd succeeds from a given location; fix the failing command.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "command_line.absolute_and_relative_paths",
+      "title": "Absolute and relative paths",
+      "concept": "command_line",
+      "summary": "Write absolute and relative paths, use ~, . and .., and quote paths containing spaces.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "command_line.prompt_and_navigation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Absolute paths start at the root",
+          "worked_example": "$ cd /Users/ada/projects\nA path starting with / works from anywhere; one without / is relative to the current folder.",
+          "practice": "Classify paths as absolute or relative; predict the folder reached from a given starting point.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        },
+        {
+          "title": "Relative paths with folders and ..",
+          "worked_example": "From /Users/ada/projects:\n$ cd ../Documents/notes\n$ pwd\n/Users/ada/Documents/notes",
+          "practice": "Trace multi-step relative paths; write the relative path between two folders in a tree.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        },
+        {
+          "title": "~ is home, . is here",
+          "worked_example": "$ cd ~/projects    # same as /Users/ada/projects\n$ ls .            # list the current folder",
+          "practice": "Expand ~ paths to absolute paths; choose equivalent paths.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Paths with spaces need quotes",
+          "worked_example": "$ cd My Files      # fails: two arguments\n$ cd \"My Files\"    # works",
+          "practice": "Fix commands that break on spaces in names.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line.prompt_and_navigation",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "py4e"
+      ]
+    },
+    {
+      "id": "command_line.create_move_delete",
+      "title": "Creating, moving and deleting files in the terminal",
+      "concept": "command_line",
+      "summary": "Make folders and files, rename and move them with mv, delete them with rm (which has no undo), and save typing with Tab completion and history.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "command_line.absolute_and_relative_paths"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "mkdir makes a folder, a new file comes from the editor or touch",
+          "worked_example": "$ mkdir week1\n$ cd week1\n$ touch hello.py\n$ ls\nhello.py",
+          "practice": "Predict ls output after a sequence of mkdir/touch/cd commands.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        },
+        {
+          "title": "mv renames or moves",
+          "worked_example": "$ mv hello.py greet.py      # rename\n$ mv greet.py ../archive/    # move into another folder",
+          "practice": "Predict the folder tree after mv commands; write the mv for a given rename or move.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "command_line.absolute_and_relative_paths"
+          ]
+        },
+        {
+          "title": "rm deletes for good",
+          "worked_example": "$ rm old.py\n$ rm -r drafts      # whole folder\nThere is no trash and no undo; double-check before pressing Enter.",
+          "practice": "Choose which command removes exactly the intended files; spot the dangerous command in a list.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Tab completion and Up-arrow history",
+          "worked_example": "Type cd pro then Tab to complete projects/; press Up to recall the previous command.\nThis avoids typos in long names.",
+          "practice": "Order the keystrokes that repeat a previous command; predict what Tab completes to in a given folder.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line.absolute_and_relative_paths",
+          "weight": 0.4
+        },
+        {
+          "topic": "command_line.prompt_and_navigation",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "python_setup.install_and_verify",
+      "title": "Installing Python and checking the version",
+      "concept": "python_setup",
+      "summary": "Install Python 3, confirm it from the terminal with a version command, read the version number, and diagnose 'command not found'.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "command_line.prompt_and_navigation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Check the version from the terminal",
+          "worked_example": "$ python3 --version\nPython 3.12.4\nOn Windows the launcher is: py --version",
+          "practice": "Choose the right version command for macOS/Linux and Windows; read a version from sample output.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        },
+        {
+          "title": "Reading a version number",
+          "worked_example": "Python 3.12.4 means major 3, minor 12, patch 4.\nPython 2.7 is a different, retired language version: code in this course needs 3.x.",
+          "practice": "Order versions from oldest to newest; decide whether a given version is new enough for a requirement.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Install from python.org or a package manager",
+          "worked_example": "Download the installer from python.org (on Windows tick 'Add python.exe to PATH'), then open a NEW terminal and re-check the version.",
+          "practice": "Order the installation and verification steps.",
+          "formats": [
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "'command not found' means not installed or not on PATH",
+          "worked_example": "$ python3 --version\nzsh: command not found: python3\nThe shell searches the folders in PATH; fix by installing or adding Python to PATH, then reopen the terminal.",
+          "practice": "Diagnose sample error transcripts: not installed, wrong command name (python vs python3 vs py), or terminal not restarted.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line.prompt_and_navigation",
+          "weight": 0.1
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "python_setup.which_python_runs",
+      "title": "Which Python is running?",
+      "concept": "python_setup",
+      "summary": "Find which Python installation the terminal and the editor are using, and fix 'works in one place but not the other' mismatches.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "python_setup.install_and_verify",
+        "ide_editor.run_in_editor"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Several Pythons can be installed",
+          "worked_example": "$ which python3\n/opt/homebrew/bin/python3\nOn Windows: where python. The first match on PATH is the one that runs.",
+          "practice": "Given which/where output, decide which installation a command will run.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "python_setup.install_and_verify"
+          ]
+        },
+        {
+          "title": "The editor picks its own interpreter",
+          "worked_example": "VS Code shows the selected interpreter in the status bar (e.g. 3.12.4). If it differs from the terminal's python3, the two can behave differently.",
+          "practice": "Match symptoms to the cause 'editor and terminal use different interpreters'; choose the fix.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "ide_editor.run_in_editor"
+          ]
+        },
+        {
+          "title": "Browser-based environments come with Python",
+          "worked_example": "cs50.dev, the Code in Place IDE and py4e's online shell already have Python installed; checking python3 --version there still works.",
+          "practice": "Decide for each scenario whether a local install is needed.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "python_setup.install_and_verify",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "100_days_of_code",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "repl.start_and_evaluate",
+      "title": "The interactive interpreter (REPL)",
+      "concept": "repl",
+      "summary": "Start the Python REPL, evaluate expressions at the >>> prompt, leave it, and tell the shell prompt and the Python prompt apart.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "python_setup.install_and_verify"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Start the REPL",
+          "worked_example": "$ python3\nPython 3.12.4 ...\n>>>\nThe >>> prompt means Python is waiting for one line of code.",
+          "practice": "Identify which prompt ($ or >>>) a transcript is at; choose the command that starts the REPL.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "python_setup.install_and_verify"
+          ]
+        },
+        {
+          "title": "Values are echoed back",
+          "worked_example": ">>> 7\n7\n>>> 'hi'\n'hi'\n>>> print('hi')\nhi\nThe REPL shows each value it evaluates.",
+          "practice": "Predict what the REPL shows after each typed line.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Leave with exit() or Ctrl-D",
+          "worked_example": ">>> exit()\n$\nCtrl-D (macOS/Linux) or Ctrl-Z then Enter (Windows) also quits.",
+          "practice": "Choose how to leave the REPL on each OS; order the keystrokes to start, run a line, and quit.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Typing at the wrong prompt",
+          "worked_example": ">>> python3 hello.py\nSyntaxError: invalid syntax\nShell commands go at $, Python code at >>>.",
+          "practice": "For each transcript say which prompt the line belonged at; fix the session.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "python_setup.install_and_verify",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "repl.echo_vs_print",
+      "title": "REPL echo vs print in a script",
+      "concept": "repl",
+      "summary": "Explain why the REPL shows quotes and a script shows nothing for a bare value, use print in scripts, and use help() in the REPL.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "repl.start_and_evaluate",
+        "running_scripts.run_from_terminal"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Echo shows quotes, print shows text",
+          "worked_example": ">>> 'Ada'\n'Ada'\n>>> print('Ada')\nAda\nThe echo shows how Python writes the value; print shows the text itself.",
+          "practice": "Predict REPL output for echoed values vs printed values.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "repl.start_and_evaluate",
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "A bare value in a script prints nothing",
+          "worked_example": "# hello.py\n'Hello'\nprint('Bye')\n$ python3 hello.py\nBye\nOnly the REPL echoes; scripts need print.",
+          "practice": "Predict script output; fix a script that 'prints nothing'.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "help() in the REPL",
+          "worked_example": ">>> help(print)\nShows print's documentation, including sep and end; press q to leave.",
+          "practice": "Use help output to answer a question about print's default separator.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "repl.start_and_evaluate"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "repl.start_and_evaluate",
+          "weight": 0.5
+        },
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "ide_editor.create_and_save_file",
+      "title": "Creating and saving a .py file in a code editor",
+      "concept": "ide_editor",
+      "summary": "Create a .py file in a code editor (not a word processor), save it in a known folder, and avoid curly-quote and unsaved-file bugs.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "print_output.hello_world"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A code editor, not a word processor",
+          "worked_example": "print(“Hi”)   # SyntaxError: invalid character '“'\nWord processors turn quotes curly; code editors keep plain \" quotes.",
+          "practice": "Spot lines with curly quotes or other pasted characters; fix them.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Name the file with .py",
+          "worked_example": "hello.py is a Python file; hello.txt or hello.py.txt is not run as Python by the editor.",
+          "practice": "Pick valid Python file names; fix names that would not be recognised.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Save before you run",
+          "worked_example": "A dot or circle on the tab means unsaved changes. Running now runs the last saved version.",
+          "practice": "Predict output when the visible code and the saved code differ.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Know which folder the file is in",
+          "worked_example": "Open a folder (workspace) first, then create the file inside it, so the terminal can find it later.",
+          "practice": "Given an editor sidebar and a file path, say which folder holds the file.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "ide_editor.run_in_editor",
+      "title": "Running code from the editor",
+      "concept": "ide_editor",
+      "summary": "Run the current file with the editor's Run button, find its output and errors in the output panel or integrated terminal, and avoid running the wrong file.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "ide_editor.create_and_save_file",
+        "running_scripts.statements_run_in_order"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The Run button and the output panel",
+          "worked_example": "Click Run (or press the shortcut) and the editor runs python3 on the open file; output appears in the panel below.",
+          "practice": "Predict what appears in the output panel for a given file.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "ide_editor.create_and_save_file"
+          ]
+        },
+        {
+          "title": "Errors appear in the same panel",
+          "worked_example": "A traceback in the panel names the file and line; the program stopped there.",
+          "practice": "Read an editor error panel and give the file and line to fix.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Run runs the active file",
+          "worked_example": "With test.py focused, Run runs test.py even if you were editing hello.py a moment ago.",
+          "practice": "Diagnose 'my change did nothing' scenarios caused by the wrong active file or an unsaved file.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "ide_editor.create_and_save_file",
+          "weight": 0.4
+        },
+        {
+          "topic": "running_scripts.statements_run_in_order",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "ide_editor.editor_feedback",
+      "title": "Using editor feedback: colours, squiggles, line numbers",
+      "concept": "ide_editor",
+      "summary": "Use syntax highlighting, error underlines and line numbers to find mistakes before and after running, and toggle comments with a shortcut.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "ide_editor.create_and_save_file",
+        "running_scripts.statements_run_in_order",
+        "comments.write_comments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Syntax colours reveal an unclosed string",
+          "worked_example": "print(\"Hello)\nprint(\"Bye\")\nWhen the rest of the file turns string-coloured, a quote is missing.",
+          "practice": "Given highlighted code, locate the missing quote or parenthesis.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Red underlines and the Problems list",
+          "worked_example": "Pylance/PyCharm underline Print(\"hi\") with \"Print is not defined\" before you run anything.",
+          "practice": "Match underline messages to the line that causes them; fix the flagged lines.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Jump to the line in an error message",
+          "worked_example": "Error says line 14: use Go to Line (Ctrl+G) or the line-number gutter to land on it.",
+          "practice": "Given an error message and numbered code, identify the faulty line.",
+          "formats": [
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Toggle comments with a shortcut",
+          "worked_example": "Select lines and press Ctrl+/ (Cmd+/ on macOS): each line gets or loses a leading #.",
+          "practice": "Predict output after toggling comments on selected lines.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comments.write_comments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "running_scripts.statements_run_in_order",
+          "weight": 0.2
+        },
+        {
+          "topic": "comments.write_comments",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "100_days_of_code",
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "pep8_style.spacing_and_layout",
+      "title": "Code layout style: spaces, line length and comments",
+      "concept": "pep8_style",
+      "summary": "Apply PEP 8 layout rules to the code written so far: spacing in calls and keyword arguments, inline-comment spacing, and line length.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "print_output.sep_and_end",
+        "comments.write_comments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Space after commas, none inside or before the parentheses",
+          "worked_example": "print ( \"a\",\"b\" )   # cramped and padded\nprint(\"a\", \"b\")     # PEP 8",
+          "practice": "Choose the PEP 8 version of each line; fix spacing in a short program.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "No spaces around = in keyword arguments",
+          "worked_example": "print(\"a\", \"b\", sep = \"-\")   # not PEP 8\nprint(\"a\", \"b\", sep=\"-\")     # PEP 8",
+          "practice": "Fix keyword-argument spacing; spot the one correctly styled line.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.sep_and_end"
+          ]
+        },
+        {
+          "title": "Inline comments: two spaces before #, one after",
+          "worked_example": "print(\"Hi\")  # greet\nprint(\"Hi\") #greet   # not PEP 8",
+          "practice": "Fix comment spacing in several lines.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "comments.write_comments"
+          ]
+        },
+        {
+          "title": "Keep lines to 79 characters",
+          "worked_example": "Long print calls can break inside the parentheses:\nprint(\"first part\",\n      \"second part\")",
+          "practice": "Decide which lines exceed the limit; rewrap a long print call so it still runs.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.multiple_values",
+          "weight": 0.4
+        },
+        {
+          "topic": "print_output.sep_and_end",
+          "weight": 0.3
+        },
+        {
+          "topic": "comments.write_comments",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "pep8_style.linters_and_formatters",
+      "title": "Linters and formatters",
+      "concept": "pep8_style",
+      "summary": "Read a style checker's message (file:line:column code), fix what it flags, and let a formatter fix layout automatically, knowing style warnings don't stop a program.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "pep8_style.spacing_and_layout",
+        "ide_editor.editor_feedback"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Reading a linter message",
+          "worked_example": "hello.py:3:12: E231 missing whitespace after ','\nFile, line 3, column 12, rule E231, description.",
+          "practice": "Extract file, line and problem from linter output; fix the indicated line.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "pep8_style.spacing_and_layout"
+          ]
+        },
+        {
+          "title": "A formatter rewrites layout for you",
+          "worked_example": "Before: print( \"a\",\"b\" )\nAfter running ruff format: print(\"a\", \"b\")",
+          "practice": "Predict the formatter's output for badly spaced lines.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "pep8_style.spacing_and_layout"
+          ]
+        },
+        {
+          "title": "Style warnings vs errors",
+          "worked_example": "print(\"a\",\"b\")  runs fine and prints a b; the linter only complains about style.\nprint(\"a\" \"b\"  is a SyntaxError and never runs.",
+          "practice": "For each flagged line decide whether the program still runs and what it prints.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "pep8_style.spacing_and_layout",
+          "weight": 0.6
+        },
+        {
+          "topic": "ide_editor.editor_feedback",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "computer_architecture.hardware_and_programs",
+      "title": "What a computer does when it runs a program",
+      "concept": "computer_architecture",
+      "summary": "Name the CPU, main memory, secondary storage and input/output devices, say which keeps data after power-off, and order the steps by which Python source code gets run.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The four parts",
+          "worked_example": "CPU: does the work. Main memory (RAM): fast, temporary. Secondary storage (SSD/disk): slow, permanent. Input/output: keyboard, screen, network.",
+          "practice": "Classify devices and descriptions into the four parts.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "What survives a power cut",
+          "worked_example": "Your open, unsaved hello.py lives in RAM and is lost on power-off; the saved file on disk survives.",
+          "practice": "Decide for each scenario whether the data survives; explain why saving matters.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "From file to running program",
+          "worked_example": "1. hello.py sits on disk. 2. python3 loads it into memory. 3. The CPU executes the instructions. 4. Output goes to the screen.",
+          "practice": "Order the steps of running a program (Parsons).",
+          "formats": [
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Interpreters translate source code",
+          "worked_example": "The CPU only understands machine code. Python is an interpreter: it reads your source code and carries it out step by step.",
+          "practice": "Choose correct statements about source code, machine code, interpreters and compilers.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "py4e"
+      ]
+    }
+  ]
+}

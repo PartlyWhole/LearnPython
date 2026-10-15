@@ -1,0 +1,94 @@
+{
+  "format": 1,
+  "id": "sweep",
+  "title": "Sweep the room",
+  "brief": "Gems are scattered around a rectangular room. Sweep it row by row, back and forth, and collect every one. Rooms come in all shapes, including a single row and a single column.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef collect():\n    while gems_here() > 0:\n        pick()\n\n\ndef sweep_row():\n    collect()\n    while front_is_clear():\n        move()\n        collect()\n\n\nsweep_row()\n",
+  "world": {
+    "width": 5,
+    "height": 4,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "1,0": 1,
+      "4,1": 2,
+      "0,2": 1,
+      "2,3": 1,
+      "4,3": 1
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 2
+      },
+      "name": "one cell"
+    },
+    {
+      "width": 6,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "5,0": 1,
+        "2,0": 1
+      },
+      "name": "one row"
+    },
+    {
+      "width": 1,
+      "height": 5,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,4": 1,
+        "0,2": 1
+      },
+      "name": "one column"
+    },
+    {
+      "width": 4,
+      "height": 5,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "3,4": 3,
+        "0,4": 1,
+        "1,1": 1
+      },
+      "name": "odd number of rows"
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "nested_loops.grids_and_patterns",
+    "variables.reassign_and_trace",
+    "decomposition.top_down_design"
+  ]
+}

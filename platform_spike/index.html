@@ -1,0 +1,69 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Grid world runtime audit</title>
+<style>body{font:14px/1.5 ui-monospace,Menlo,monospace;margin:16px;background:#fff;color:#111}</style>
+<h1>Grid world runtime audit</h1>
+<pre id="out">running…</pre>
+<script type="module">
+const out = document.getElementById("out");
+const results = {};
+const log = (k, v) => { results[k] = v; out.textContent = JSON.stringify(results, null, 1); };
+
+function makeWorker() {
+  const w = new Worker("worker.js");
+  let n = 0; const pending = new Map();
+  w.onmessage = (e) => { pending.get(e.data.id)?.(e.data); pending.delete(e.data.id); };
+  w.call = (kind, code = "") => new Promise((res) => { const id = ++n; pending.set(id, res); w.postMessage({ id, kind, code }); });
+  return w;
+}
+const timeout = (ms) => new Promise((r) => setTimeout(() => r("TIMEOUT"), ms));
+
+// main-thread responsiveness probe: max gap between 50 ms ticks
+let last = performance.now(), maxGap = 0;
+setInterval(() => { const now = performance.now(); maxGap = Math.max(maxGap, now - last); last = now; }, 50);
+
+try {
+  const t0 = performance.now();
+  let w = makeWorker();
+  const load = await w.call("load");
+  log("1_load", { ...load.result, wallMs: Math.round(performance.now() - t0) });
+
+  const expected = await (await fetch("tests/golden_traces.json", { cache: "no-store" })).json();
+  const cases = (await w.call("cases")).result;
+  const cmp = {};
+  for (const [name, r] of Object.entries(expected.cases)) cmp[name] = { same: cases[name]?.digest === r.digest, pyodide: cases[name]?.digest, cpython: r.digest, errorLine: cases[name]?.error?.line ?? null };
+  log("2_same_trace_as_cpython", cmp);
+  log("2b_100k_calls_seconds", { pyodide: cases.turn_left_100k_seconds, cpython: expected.turn_left_100k_seconds });
+
+  await w.call("exec_shared_globals", "leak = 'from run 1'");
+  const leak = await w.call("exec_shared_globals", "leak");
+  const iso1 = await w.call("exec_engine", "secret = 1");
+  const iso2 = await w.call("exec_engine", "print(secret)");
+  log("3_state_between_runs", { naiveRunPython: leak.result, viaRunProgram: iso2.result?.error });
+
+  const sleep = await w.call("raw", "import time\nt=time.time()\ntime.sleep(0.5)\nround(time.time()-t,3)");
+  log("4_time_sleep_in_worker", { ok: sleep.ok, sleptSeconds: sleep.result, error: sleep.error });
+
+  const esc = await w.call("raw", "import js\nstr([type(js.fetch).__name__, str(js.self.location.href), hasattr(js, 'indexedDB')])");
+  log("5_student_code_can_reach_js", { ok: esc.ok, result: esc.result, error: esc.error });
+
+  maxGap = 0; last = performance.now();
+  const tLoop = performance.now();
+  const loop = await Promise.race([w.call("raw", "x = 0\nwhile True:\n    x += 1\n"), timeout(1500)]);
+  const gapDuringLoop = Math.round(maxGap);
+  w.terminate();
+  const tRe = performance.now();
+  w = makeWorker();
+  const reload = await w.call("load");
+  const after = await w.call("raw", "1 + 1");
+  log("6_infinite_pure_loop", { outcome: loop === "TIMEOUT" ? "no reply in 1.5 s, worker terminated" : loop,
+    mainThreadMaxGapMs: gapDuringLoop, restartMs: Math.round(performance.now() - tRe), pyodideReloadMs: Math.round(reload.result.loadMs), worksAfter: after.result,
+    detectedAfterMs: Math.round(performance.now() - tLoop) });
+  const ticks = [];
+  const t7 = performance.now();
+  w.addEventListener("message", (e) => { if (e.data && e.data.tick !== undefined) ticks.push(Math.round(performance.now() - t7)); });
+  const st = await w.call("stream");
+  log("7_live_streaming_during_run", { finished: st.result, tickArrivalMs: ticks, finishedAtMs: Math.round(performance.now() - t7) });
+  log("done", true);
+} catch (e) { log("FAILED", String(e)); }
+</script>

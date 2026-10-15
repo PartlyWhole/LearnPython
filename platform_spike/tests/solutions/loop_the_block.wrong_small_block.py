@@ -1,0 +1,16 @@
+def turn_right():
+    turn_left()
+    turn_left()
+    turn_left()
+
+
+def go_around_corner():
+    move()
+    move()
+    pick()
+    turn_right()
+    move()
+
+
+for i in range(4):
+    go_around_corner()

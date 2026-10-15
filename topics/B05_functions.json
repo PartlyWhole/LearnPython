@@ -1,0 +1,2521 @@
+{
+  "batch": "B05",
+  "title": "Functions and decomposition",
+  "concept_map": {
+    "builtin_functions": {
+      "topics": [
+        "builtin_functions.call_anatomy",
+        "builtin_functions.sum_max_min",
+        "builtin_functions.help_and_dir"
+      ],
+      "entry_topic": "builtin_functions.call_anatomy",
+      "notes": "round()/abs() stay with B02 integers_floats; ord/chr with B03. sum/max/min here use several arguments, ranges and strings only, because lists are in B06 (parallel batch): B06 lists should teach len/sum/max/min of a list and encompass builtin_functions.sum_max_min. any()/all() and summing booleans need iterables of booleans, so they are left to B07 list_comprehensions (generator expressions); sorted() and key= are B06 sorting / B08 higher_order_functions; map/filter are B08; isinstance is B11; divmod/pow were left out (operators // % ** cover them)."
+    },
+    "functions": {
+      "topics": [
+        "functions.define_and_call",
+        "functions.flow_of_execution",
+        "functions.main_and_helpers"
+      ],
+      "entry_topic": "functions.define_and_call",
+      "notes": "Entry is builtin_functions.call_anatomy (calling before defining, as py4e does). Parameters, return values and scope are owned by their own concepts. Functions as objects (passing/storing functions, MIT L8, 100 Days 'functions in a dict') are B08 higher_order_functions; lambda is B08; recursion is B08. try/except inside helper functions (cs50p get_int) is B09."
+    },
+    "parameters_arguments": {
+      "topics": [
+        "parameters_arguments.one_parameter",
+        "parameters_arguments.several_parameters",
+        "parameters_arguments.keyword_arguments",
+        "parameters_arguments.default_values",
+        "parameters_arguments.mutable_default_trap"
+      ],
+      "entry_topic": "parameters_arguments.one_parameter",
+      "notes": "*args/**kwargs and keyword-only/positional-only markers (*, /) are B08 args_kwargs. mutable_default_trap needs lists, so it carries pending_prerequisites concept:lists and concept:mutability_aliasing; if B06 also wrote a mutable-default topic, the stitching pass should keep one. Passing a list into a function and mutating it is B06 mutability_aliasing."
+    },
+    "return_values": {
+      "topics": [
+        "return_values.return_a_value",
+        "return_values.none_from_functions",
+        "return_values.early_return",
+        "return_values.boolean_functions",
+        "return_values.multiple_return_values"
+      ],
+      "entry_topic": "return_values.return_a_value",
+      "notes": "multiple_return_values teaches only return a, b and unpacking into names; B06 tuples/unpacking should encompass it rather than re-teach it. Breaking out of nested loops via return (B04 note) is a practice item in early_return. Pure vs side-effecting functions as a concept is B08 pure_functions, which can build on decomposition.one_job_per_function."
+    },
+    "scope": {
+      "topics": [
+        "scope.local_variables",
+        "scope.global_variables"
+      ],
+      "entry_topic": "scope.local_variables",
+      "notes": "Enclosing scope, nonlocal and the full LEGB rule belong to B08 closures. Module-level scope across files is B13 modules_imports."
+    },
+    "docstrings": {
+      "topics": [
+        "docstrings.write_docstrings",
+        "docstrings.specifications"
+      ],
+      "entry_topic": "docstrings.write_docstrings",
+      "notes": "Doctests are left to B09 unit_testing. specifications is non-core (MIT, Code in Place only) but feeds abstraction and B09 testing/defensive_programming."
+    },
+    "type_hints": {
+      "topics": [
+        "type_hints.annotate_functions",
+        "type_hints.optional_and_union",
+        "type_hints.collection_hints"
+      ],
+      "entry_topic": "type_hints.annotate_functions",
+      "notes": "Generic container hints (list[int], dict[str, int], tuple[int, int]) belong to B06/B07 when those types are taught; checking hints with mypy is B09 tool_mypy. Reconciliation: container hints (list[int], dict[str, int], tuple[...]) were added as collection_hints; tool_mypy and lib_sqlalchemy.relationships depend on it."
+    },
+    "decomposition": {
+      "topics": [
+        "decomposition.extract_repeated_code",
+        "decomposition.top_down_design",
+        "decomposition.one_job_per_function"
+      ],
+      "entry_topic": "decomposition.extract_repeated_code",
+      "notes": "Meta-skill taught as three problem-based topics (Parsons, refactoring, fill-in). Function naming conventions (deferred from B01 pep8_style) live in one_job_per_function KP3. Module-level decomposition (own modules) is B13; class-level design is B12."
+    },
+    "abstraction": {
+      "topics": [
+        "abstraction.functions_as_black_boxes"
+      ],
+      "entry_topic": "abstraction.functions_as_black_boxes",
+      "notes": "Procedural abstraction only. Data abstraction and the OOP 'abstraction pillar' (bootdev, codecademy, MIT L17) belong to B11/B12."
+    },
+    "pseudocode": {
+      "topics": [
+        "pseudocode.plan_in_comments"
+      ],
+      "entry_topic": "pseudocode.plan_in_comments",
+      "notes": "Only cs50p teaches it, so one non-core topic. Flowcharts (100 Days Day 7) were not given a topic."
+    },
+    "computational_thinking": {
+      "topics": [
+        "computational_thinking.precise_algorithms"
+      ],
+      "entry_topic": "computational_thinking.precise_algorithms",
+      "notes": "One non-core topic on algorithms (declarative vs imperative, precision, tracing). Its parts decomposition and abstraction have their own topics; guess-and-check, bisection and Newton are B14."
+    },
+    "karel_robot": {
+      "topics": [
+        "karel_robot.commands_and_new_commands",
+        "karel_robot.conditions_and_loops"
+      ],
+      "entry_topic": "karel_robot.commands_and_new_commands",
+      "notes": "Non-core: needs a Karel world embedded in the platform (Code in Place / Reeborg). Placed after functions, so it serves as practice for defining commands rather than as a first-week entry point."
+    },
+    "main_guard": {
+      "topics": [
+        "main_guard.if_name_main"
+      ],
+      "entry_topic": "main_guard.if_name_main",
+      "notes": "Needs import to show its point, so it has pending_prerequisites concept:modules_imports (B13, a later wave). The plain main() pattern without the guard is core and lives in functions.main_and_helpers, so B09 unit_testing can depend on that if it should not wait for B13."
+    }
+  },
+  "topics": [
+    {
+      "id": "builtin_functions.call_anatomy",
+      "title": "Calling functions: arguments in, a result out",
+      "concept": "builtin_functions",
+      "summary": "Read and write calls to built-in functions as name(arguments) that produce a value, nest calls, tell functions from methods, and avoid hiding a built-in behind a variable.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "strings.length_and_membership",
+        "integers_floats.rounding_and_float_surprises",
+        "type_conversion.strings_to_numbers",
+        "string_methods.calling_methods_case"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A call: name, arguments in parentheses, a result",
+          "worked_example": "n = abs(-7)\nprint(n + len(\"hello\"))   # 12\nYou have already called print, input, len, int, round and abs: each takes arguments and gives back a value you can store or use.",
+          "practice": "Identify the function name, the arguments and the result in a call; predict the value of expressions that combine calls with arithmetic.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "strings.length_and_membership",
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Nested calls run from the inside out",
+          "worked_example": "print(len(str(2 ** 10)))   # 4\n2 ** 10 is 1024, str() makes \"1024\", len() counts 4 characters, print shows it. int(input(\"Age: \")) works the same way.",
+          "practice": "Number the order in which the calls in a nested expression run; predict the printed result.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Functions vs methods",
+          "worked_example": "word = \"hi\"\nprint(len(word))      # 2: a function, the value goes inside ()\nprint(word.upper())   # HI: a method, called on the value with a dot\nword.len() raises AttributeError: 'str' object has no attribute 'len'.",
+          "practice": "Classify calls as function or method calls; fix calls written the wrong way round (s.len(), upper(s)).",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "Don't reuse a built-in's name for a variable",
+          "worked_example": "len = 3\nprint(len(\"hi\"))\n# TypeError: 'int' object is not callable\nThe name len now means 3. Rename the variable (length = 3).",
+          "practice": "Find the line that hides a built-in and explain the TypeError; pick safe variable names from a list.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "strings.length_and_membership",
+          "weight": 0.2
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "codecademy",
+        "bootdev",
+        "helsinki_mooc",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "builtin_functions.sum_max_min",
+      "title": "Built-ins that replace loops: sum(), max() and min()",
+      "concept": "builtin_functions",
+      "summary": "Use max() and min() on several values or a string and sum() on a range instead of writing accumulator loops, and know what happens with empty input.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "builtin_functions.call_anatomy",
+        "loop_patterns.accumulate_sum",
+        "loop_patterns.max_min_tracking",
+        "range_function.step_and_countdown"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "max() and min() of several values",
+          "worked_example": "print(max(3, 9, 4))        # 9\nprint(min(2.5, -1, 0))     # -1\nprint(max(\"pear\", \"apple\")) # pear: strings compare alphabetically",
+          "practice": "Predict max/min of mixed lists of arguments, including strings; rewrite an if-chain that finds the larger of two numbers as one max() call.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "sum() of a range replaces the accumulator loop",
+          "worked_example": "print(sum(range(1, 101)))     # 5050\nprint(sum(range(0, 11, 2)))   # 30: 0+2+4+6+8+10\nSame result as total = 0 / for i in range(...): total += i, in one line.",
+          "practice": "Rewrite a running-total loop as sum(range(...)); predict sums, watching the excluded stop value.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum",
+            "range_function.step_and_countdown"
+          ]
+        },
+        {
+          "title": "max() and min() of one string compare its characters",
+          "worked_example": "print(max(\"hello\"))   # o\nprint(min(\"Hello\"))   # H: capitals have smaller codes than lowercase letters",
+          "practice": "Predict the largest and smallest character of short strings, including mixed case and digits.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        },
+        {
+          "title": "Empty and single inputs",
+          "worked_example": "print(sum(range(0)))   # 0\nmax(\"\")   # ValueError: max() iterable argument is empty\nmax(5)    # TypeError: 'int' object is not iterable\nOne argument must be something to loop over; give two or more numbers to compare numbers.",
+          "practice": "Predict whether each call returns a value or raises an error, and which error.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        },
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.3
+        },
+        {
+          "topic": "builtin_functions.call_anatomy",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "py4e",
+        "bootdev",
+        "cs50p",
+        "100_days_of_code",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "builtin_functions.help_and_dir",
+      "title": "Finding out how to call a function: help() and dir()",
+      "concept": "builtin_functions",
+      "summary": "Read a function's signature and description with help(), spot optional arguments, and check which methods a type has with dir().",
+      "minutes": 13,
+      "core": true,
+      "prerequisites": [
+        "builtin_functions.call_anatomy"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "help(name) shows the signature and what it does",
+          "worked_example": "help(len)\n# len(obj, /)\n#     Return the number of items in a container.\nPass the function itself, without parentheses: help(len), not help(len()).",
+          "practice": "Use help() output to answer how many arguments a function takes and what it returns; fix help(len()) and help(\"len\")-style mistakes.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "name=value in a signature marks an optional argument",
+          "worked_example": "help(round)\n# round(number, ndigits=None)\nndigits has a default, so round(2.567) and round(2.567, 2) both work.",
+          "practice": "Read signatures and decide which calls are valid; predict results of calls that omit optional arguments.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "dir() and help() for methods",
+          "worked_example": "print(\"upper\" in dir(str))   # True\nhelp(str.upper)   # shows how str.upper is called\ndir(str) lists every method strings have.",
+          "practice": "Decide whether a method exists for strings; use help(str.<method>) output to choose the right method for a task.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "builtin_functions.call_anatomy",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "functions.define_and_call",
+      "title": "Defining and calling your own function",
+      "concept": "functions",
+      "summary": "Write a def with an indented body, call it as many times as needed, and fix the common errors: calling before defining, missing parentheses, missing indentation.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "builtin_functions.call_anatomy",
+        "conditionals.if_statement",
+        "running_scripts.statements_run_in_order"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "def creates a function; calling it runs the body",
+          "worked_example": "def greet():\n    print(\"Hello!\")\n    print(\"Welcome.\")\n\ngreet()\n# Hello!\n# Welcome.\nThe indented lines are the body; greet() runs them.",
+          "practice": "Predict the output of short programs with one function and one call; write a function that prints a given two-line message.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "Defining does not run it; each call runs it again",
+          "worked_example": "def cheer():\n    print(\"Go!\")\n\nprint(\"start\")\ncheer()\ncheer()\n# start\n# Go!\n# Go!\nNothing prints at the def; every call runs the whole body.",
+          "practice": "Predict outputs when a function is defined but called zero, one or several times.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Call after the def, and with parentheses",
+          "worked_example": "cheer()   # NameError: name 'cheer' is not defined\ndef cheer():\n    print(\"Go!\")\nPython runs top to bottom, so the def must run before the call. Writing cheer without () names the function but does not call it.",
+          "practice": "Find why a program prints nothing or raises NameError; reorder lines so every call comes after its def.",
+          "formats": [
+            "fix_the_bug",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "The body must be indented and not empty",
+          "worked_example": "def greet():\nprint(\"hi\")\n# IndentationError: expected an indented block after function definition on line 1\nIndent the body; use pass as a placeholder for a function you will write later.",
+          "practice": "Fix indentation errors in function definitions; decide which lines belong to the body.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "builtin_functions.call_anatomy",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "functions.flow_of_execution",
+      "title": "Tracing calls: where the program goes and comes back",
+      "concept": "functions",
+      "summary": "Trace programs where functions call other functions, including calls inside loops, predicting the exact order of the output.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "functions.define_and_call",
+        "for_loops.repeat_n_times"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A call jumps into the function and comes back",
+          "worked_example": "def middle():\n    print(\"2\")\n\nprint(\"1\")\nmiddle()\nprint(\"3\")\n# 1\n# 2\n# 3",
+          "practice": "Predict the output order; number the lines in the order they run.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "A function can call another function",
+          "worked_example": "def line():\n    print(\"-----\")\n\ndef title():\n    line()\n    print(\"MENU\")\n    line()\n\ntitle()\n# -----\n# MENU\n# -----",
+          "practice": "Predict output of two- and three-level call chains; write a function built from calls to given helpers.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "Order of defs does not matter, only that they exist when called",
+          "worked_example": "def a():\n    b()       # fine: b is defined before a() is called\n\ndef b():\n    print(\"b\")\n\na()   # b\nMoving a() above def b would raise NameError.",
+          "practice": "Decide which arrangements of defs and calls run without NameError.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Calling a function inside a loop",
+          "worked_example": "def stars():\n    print(\"***\")\n\nfor i in range(3):\n    stars()\nprint(\"done\")\n# *** three times, then done",
+          "practice": "Predict how many lines a loop of calls prints; trace a loop that calls two different functions.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "for_loops.repeat_n_times"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functions.define_and_call",
+          "weight": 0.8
+        },
+        {
+          "topic": "for_loops.repeat_n_times",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy",
+        "code_in_place",
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "functions.main_and_helpers",
+      "title": "Organising a program: main() and helper functions",
+      "concept": "functions",
+      "summary": "Structure a script as a main() function that calls helper functions, with one call to main() at the bottom.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "functions.flow_of_execution"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Put the program's steps in main()",
+          "worked_example": "def main():\n    greet()\n    show_menu()\n\ndef greet():\n    print(\"Hi!\")\n\ndef show_menu():\n    print(\"1) Play  2) Quit\")\n\nmain()\n# Hi!\n# 1) Play  2) Quit",
+          "practice": "Predict the output of a main()-structured program; write main() for a program from a list of helper names.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "Forgetting to call main() runs nothing",
+          "worked_example": "def main():\n    print(\"Hello\")\n# no main() at the bottom: the program defines a function and ends, printing nothing",
+          "practice": "Find why a program prints nothing; spot a stray extra main() call that runs the program twice.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "Reading a program by following main()",
+          "worked_example": "def main():\n    show_menu()\n    greet()\n    show_menu()\nWith the helpers above this prints the menu, Hi!, then the menu again: main() decides the order, not the order of the defs.",
+          "practice": "Trace programs where main() calls helpers in a different order from their definitions, or calls one twice.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functions.flow_of_execution",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "code_in_place",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "parameters_arguments.one_parameter",
+      "title": "Giving a function input: one parameter",
+      "concept": "parameters_arguments",
+      "summary": "Define a function with a parameter, call it with different arguments (literals, variables, expressions), and read TypeErrors about argument counts.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "functions.define_and_call",
+        "string_formatting.fstring_basics"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A parameter receives the argument",
+          "worked_example": "def greet(name):\n    print(f\"Hello, {name}!\")\n\ngreet(\"Ada\")   # Hello, Ada!\ngreet(\"Bo\")    # Hello, Bo!",
+          "practice": "Predict outputs for calls with different arguments; write a one-parameter function that prints a formatted message.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call",
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Arguments can be variables or expressions; names need not match",
+          "worked_example": "def show_square(n):\n    print(n * n)\n\nx = 4\nshow_square(x)       # 16\nshow_square(x + 1)   # 25\nThe argument is evaluated first, then its value is given to n.",
+          "practice": "Predict outputs when the argument is a variable with a different name or an expression; trace the value of the parameter in each call.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "Parameter vs argument",
+          "worked_example": "def double(n):   # n is the parameter: a name in the def\n    print(n * 2)\n\ndouble(7)        # 7 is the argument: the value in the call",
+          "practice": "Label parameters and arguments in code; choose the correct term in sentences about a program.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Wrong number of arguments is a TypeError",
+          "worked_example": "greet()\n# TypeError: greet() missing 1 required positional argument: 'name'\ngreet(\"Ada\", \"Bo\")\n# TypeError: greet() takes 1 positional argument but 2 were given",
+          "practice": "Predict which calls raise TypeError; fix the call or the def so they match.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functions.define_and_call",
+          "weight": 0.8
+        },
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "parameters_arguments.several_parameters",
+      "title": "Several parameters, matched by position",
+      "concept": "parameters_arguments",
+      "summary": "Define and call functions with two or three parameters, matching arguments by position and noticing when swapped arguments give wrong results silently.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.one_parameter",
+        "string_concatenation.repeat_with_star"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Arguments fill parameters left to right",
+          "worked_example": "def describe(name, age):\n    print(f\"{name} is {age}\")\n\ndescribe(\"Ada\", 36)   # Ada is 36",
+          "practice": "Predict outputs of calls to two- and three-parameter functions; write a function with two parameters.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.one_parameter"
+          ]
+        },
+        {
+          "title": "Swapped arguments run but give the wrong answer",
+          "worked_example": "def power(base, exp):\n    print(base ** exp)\n\npower(2, 3)   # 8\npower(3, 2)   # 9: no error, just a different result\ndescribe(36, \"Ada\") prints 36 is Ada.",
+          "practice": "Find the call whose arguments are in the wrong order; predict outputs when order changes.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.one_parameter"
+          ]
+        },
+        {
+          "title": "Using parameters inside loops and conditions",
+          "worked_example": "def row(char, width):\n    print(char * width)\n\nfor h in range(1, 4):\n    row(\"#\", h)\n# #\n# ##\n# ###",
+          "practice": "Predict the output of a loop that calls a two-parameter function; write a function whose parameters control a loop.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_concatenation.repeat_with_star"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.one_parameter",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "parameters_arguments.keyword_arguments",
+      "title": "Keyword arguments: naming the parameter in the call",
+      "concept": "parameters_arguments",
+      "summary": "Call functions with name=value arguments, mix positional and keyword arguments in the allowed order, and read the errors when names clash or are misspelled.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.several_parameters"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Name the parameter, and order no longer matters",
+          "worked_example": "def describe(name, age):\n    print(f\"{name} is {age}\")\n\ndescribe(age=36, name=\"Ada\")   # Ada is 36",
+          "practice": "Predict outputs of keyword calls; rewrite a positional call using keywords.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "Positional arguments first, then keyword ones",
+          "worked_example": "describe(\"Ada\", age=36)    # fine\ndescribe(name=\"Ada\", 36)\n# SyntaxError: positional argument follows keyword argument",
+          "practice": "Decide which mixed calls are valid; fix calls that put a positional argument after a keyword one.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "A keyword must match a parameter, once",
+          "worked_example": "describe(\"Ada\", name=\"Bo\")\n# TypeError: describe() got multiple values for argument 'name'\ndescribe(nam=\"Ada\", age=3)\n# TypeError: describe() got an unexpected keyword argument 'nam'",
+          "practice": "Predict which error each call raises; fix misspelled or duplicated keywords.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.several_parameters",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "codecademy",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "parameters_arguments.default_values",
+      "title": "Default parameter values",
+      "concept": "parameters_arguments",
+      "summary": "Give parameters default values, override some of them positionally or by keyword, and know that defaults go last and are evaluated once.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.keyword_arguments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A default makes an argument optional",
+          "worked_example": "def greet(name, greeting=\"Hello\"):\n    print(f\"{greeting}, {name}!\")\n\ngreet(\"Ada\")          # Hello, Ada!\ngreet(\"Ada\", \"Hi\")    # Hi, Ada!",
+          "practice": "Predict outputs with and without the optional argument; add a default to an existing function.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "Skip one default and set a later one by keyword",
+          "worked_example": "def order(item, size=\"M\", qty=1):\n    print(item, size, qty)\n\norder(\"tea\", qty=2)   # tea M 2\norder(\"tea\", 2) would set size to 2, not qty.",
+          "practice": "Write the call that changes only one of several defaults; find calls that fill the wrong parameter.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "Parameters with defaults come last",
+          "worked_example": "def greet(greeting=\"Hello\", name):\n    ...\n# SyntaxError: parameter without a default follows parameter with a default",
+          "practice": "Decide which def lines are valid; reorder parameters to fix the SyntaxError.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "The default is computed once, when def runs",
+          "worked_example": "RATE = 0.1\ndef tax(price, rate=RATE):\n    print(price * rate)\n\nRATE = 0.2\ntax(100)   # 10.0: the default was fixed at def time",
+          "practice": "Predict outputs when a variable used as a default changes after the def.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.keyword_arguments",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "codecademy",
+        "mit_6100l",
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "parameters_arguments.mutable_default_trap",
+      "title": "The mutable default argument trap",
+      "concept": "parameters_arguments",
+      "summary": "Recognise that a list default is shared between calls, and fix it with a None default.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.default_values",
+        "none_type.check_for_none",
+        "mutability_aliasing.lists_in_functions"
+      ],
+      "knowledge_points": [
+        {
+          "title": "A list default is shared between calls",
+          "worked_example": "def add(item, items=[]):\n    items.append(item)\n    return items\n\nprint(add(\"a\"))   # ['a']\nprint(add(\"b\"))   # ['a', 'b']: the same list as last time",
+          "practice": "Predict the result of repeated calls to a function with a list default.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values",
+            "mutability_aliasing.lists_in_functions"
+          ]
+        },
+        {
+          "title": "Fix: default to None and make a new list inside",
+          "worked_example": "def add(item, items=None):\n    if items is None:\n        items = []\n    items.append(item)\n    return items\n\nprint(add(\"a\"), add(\"b\"))   # ['a'] ['b']",
+          "practice": "Rewrite functions with list or dict defaults using the None pattern.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "Which defaults are safe",
+          "worked_example": "def f(n=0, name=\"\", items=None):   # safe: numbers, strings and None cannot be changed in place\ndef g(items=[]):                   # trap: a list can",
+          "practice": "Classify def lines as safe or trap.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.default_values",
+          "weight": 0.4
+        },
+        {
+          "topic": "mutability_aliasing.lists_in_functions",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "return_values.return_a_value",
+      "title": "Returning a value",
+      "concept": "return_values",
+      "summary": "Write functions that return a result, and use that result in assignments, expressions and as the argument of another call.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.one_parameter",
+        "expressions.evaluate_expressions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "return sends a value back to the caller",
+          "worked_example": "def double(n):\n    return n * 2\n\nresult = double(21)\nprint(result)   # 42",
+          "practice": "Predict stored results; write one-line functions that return a computed value.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.one_parameter"
+          ]
+        },
+        {
+          "title": "A call can go anywhere a value can",
+          "worked_example": "print(double(5) + 1)       # 11\nif double(4) > 7:\n    print(\"big\")           # big",
+          "practice": "Predict values of expressions and conditions that contain calls.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "expressions.evaluate_expressions"
+          ]
+        },
+        {
+          "title": "One function's result as another's argument",
+          "worked_example": "def square(n):\n    return n * n\n\nprint(double(square(3)))   # 18: square runs first, then double\nprint(square(double(3)))   # 36",
+          "practice": "Trace nested calls of your own functions; write a composition that computes a described result.",
+          "formats": [
+            "trace_table",
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "A result you don't store or use is lost",
+          "worked_example": "double(5)          # runs, but the 10 is thrown away\nx = double(5)      # keep it\nprint(x)           # 10",
+          "practice": "Find why a program prints nothing or uses a stale value after calling a returning function.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.one_parameter"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.one_parameter",
+          "weight": 0.7
+        },
+        {
+          "topic": "expressions.evaluate_expressions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "return_values.none_from_functions",
+      "title": "Printing is not returning: functions that give back None",
+      "concept": "return_values",
+      "summary": "Predict when a function returns None, explain why print(f()) can print None, and fix code that uses the result of a function that only prints.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "none_type.none_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "No return statement means the result is None",
+          "worked_example": "def greet():\n    print(\"hi\")\n\nx = greet()   # prints hi\nprint(x)      # None",
+          "practice": "Predict the stored value after calling functions with and without return.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "print(f()) shows the output and then None",
+          "worked_example": "print(greet())\n# hi\n# None\nThe function prints hi; then print shows the value greet returned: None.",
+          "practice": "Predict outputs of print wrapped around printing functions and returning functions.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Using a printing function's result fails later",
+          "worked_example": "def add(a, b):\n    print(a + b)\n\ntotal = add(2, 3) + 1\n# prints 5, then TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'\nFix: return a + b instead of printing it.",
+          "practice": "Find and fix functions that print where the caller needs a returned value.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "Choosing return or print",
+          "worked_example": "def area(w, h):\n    return w * h       # the caller can print it, add it, compare it\nprint(area(2, 3) + area(1, 4))   # 10\nReturn values that other code needs; print only when showing the user is the whole job.",
+          "practice": "Choose return or print for described functions; convert printing functions to returning ones.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.6
+        },
+        {
+          "topic": "none_type.none_value",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "code_in_place",
+        "helsinki_mooc",
+        "cs50p",
+        "codecademy",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "return_values.early_return",
+      "title": "return ends the function: early exits and several returns",
+      "concept": "return_values",
+      "summary": "Use return inside if branches and loops to finish a function early, write guard clauses, and avoid returning too soon inside a loop.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "conditionals.elif_chains",
+        "for_loops.if_inside_loop",
+        "none_type.none_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "return stops the function at once",
+          "worked_example": "def f():\n    print(\"a\")\n    return 1\n    print(\"b\")   # never runs\n\nprint(f())   # a, then 1",
+          "practice": "Predict outputs when statements follow a return; find unreachable lines.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "One return per branch",
+          "worked_example": "def grade(score):\n    if score >= 90:\n        return \"A\"\n    elif score >= 75:\n        return \"B\"\n    return \"C\"\n\nprint(grade(80))   # B\nNo else needed: reaching the last line means no earlier return ran.",
+          "practice": "Predict results for boundary inputs; write a classifier function with several returns.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "Guard clause: deal with the bad case first",
+          "worked_example": "def safe_divide(a, b):\n    if b == 0:\n        return None\n    return a / b\n\nprint(safe_divide(6, 0))   # None",
+          "practice": "Rewrite a nested if/else as a guard clause plus a main return; predict results for the guarded case.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains",
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "return in a loop: stop at the first match, decide 'none found' after the loop",
+          "worked_example": "def first_divisor(n):\n    for d in range(2, n):\n        if n % d == 0:\n            return d\n    return None\n\nprint(first_divisor(91))   # 7\nBug: an else: return None inside the loop would give up after checking only d = 2.",
+          "practice": "Fix search functions that return too early inside the loop; predict results for inputs with and without a match.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.6
+        },
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.4
+        },
+        {
+          "topic": "for_loops.if_inside_loop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "code_in_place",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "return_values.boolean_functions",
+      "title": "Functions that answer yes or no",
+      "concept": "return_values",
+      "summary": "Write predicate functions such as is_even that return True or False directly, and use them in if and while conditions.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "conditionals.if_else",
+        "logical_operators.and_or_not"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A predicate returns True or False",
+          "worked_example": "def is_even(n):\n    return n % 2 == 0\n\nprint(is_even(4), is_even(7))   # True False",
+          "practice": "Predict predicate results; write predicates such as is_positive or is_vowel.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Return the condition itself, not if/else True/False",
+          "worked_example": "def is_adult(age):\n    if age >= 18:\n        return True\n    else:\n        return False\n# same as:  return age >= 18",
+          "practice": "Shorten verbose predicates to one return; combine conditions with and/or inside the return.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "Use predicates in if and while",
+          "worked_example": "for n in range(1, 6):\n    if is_even(n):\n        print(n)   # 2, 4\nwhile not is_even(x): reads like the sentence it means.",
+          "practice": "Predict outputs of loops and branches that call predicates; fill in the condition using a predicate and not.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Bug: testing the function instead of calling it",
+          "worked_example": "if is_even:          # always true: is_even without () is the function itself\n    print(\"even\")\nWrite if is_even(n): instead. Also avoid if is_even(n) == True: the == True adds nothing.",
+          "practice": "Find predicates used without parentheses or without an argument; simplify comparisons with True.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.6
+        },
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.3
+        },
+        {
+          "topic": "logical_operators.and_or_not",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "return_values.multiple_return_values",
+      "title": "Returning two or more values",
+      "concept": "return_values",
+      "summary": "Return several values with return a, b and unpack them into separate variables, matching the number of names to the number of values.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "variables.swap_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "return a, b sends back two values; unpack them with two names",
+          "worked_example": "def divide(a, b):\n    return a // b, a % b\n\nq, r = divide(17, 5)\nprint(q, r)   # 3 2",
+          "practice": "Predict unpacked values; write a function that returns two computed results.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values",
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Without unpacking you get one value holding both",
+          "worked_example": "print(divide(17, 5))   # (3, 2)\nThe parentheses show a single grouped value (a tuple; more on these with lists and tuples).",
+          "practice": "Predict whether a call prints a pair or two separate values.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "The number of names must match",
+          "worked_example": "q, r, x = divide(17, 5)\n# ValueError: not enough values to unpack (expected 3, got 2)",
+          "practice": "Predict which unpacking lines raise ValueError; fix them.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.6
+        },
+        {
+          "topic": "variables.swap_values",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "scope.local_variables",
+      "title": "Local variables: each call has its own",
+      "concept": "scope",
+      "summary": "Predict which variables exist where: names created inside a function, including parameters, are local to each call and invisible outside it.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "variables.reassign_and_trace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Variables made inside a function exist only during the call",
+          "worked_example": "def make_total():\n    total = 5\n    return total\n\nmake_total()\nprint(total)\n# NameError: name 'total' is not defined",
+          "practice": "Predict which prints succeed and which raise NameError; fix by using the returned value.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Changing a parameter does not change the caller's variable",
+          "worked_example": "def add_one(n):\n    n = n + 1\n    return n\n\nx = 5\nadd_one(x)\nprint(x)            # 5\nx = add_one(x)      # 6: store the result to change x",
+          "practice": "Trace caller and function variables side by side; predict values after calls.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Same name in two functions, two different variables",
+          "worked_example": "def a():\n    count = 1\n    return count\n\ndef b():\n    count = 2\n    return count\n\nprint(a(), b())   # 1 2",
+          "practice": "Predict outputs where several functions reuse a local name.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "No separate scope for if and for blocks inside a function",
+          "worked_example": "def last_index():\n    for i in range(3):\n        last = i\n    return last\n\nprint(last_index())   # 2: last is still visible after the loop",
+          "practice": "Predict whether names set inside loops or ifs are visible later in the same function; spot the NameError when the loop never runs.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.4
+        },
+        {
+          "topic": "variables.reassign_and_trace",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "code_in_place",
+        "codecademy",
+        "100_days_of_code",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "scope.global_variables",
+      "title": "Global variables and the global statement",
+      "concept": "scope",
+      "summary": "Read global constants inside functions, predict what assignment inside a function does to a global, fix UnboundLocalError, and prefer returning values over global.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "scope.local_variables",
+        "constants.named_constants",
+        "variables.update_with_own_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Functions can read global variables",
+          "worked_example": "TAX_RATE = 0.2\n\ndef with_tax(price):\n    return price * (1 + TAX_RATE)\n\nprint(with_tax(50))   # 60.0\nGlobal constants are the normal, safe use of globals.",
+          "practice": "Predict results of functions that read globals, including after the global changes before the call.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "constants.named_constants"
+          ]
+        },
+        {
+          "title": "Assigning inside a function makes a new local",
+          "worked_example": "score = 0\n\ndef reset():\n    score = 10   # a new local score\n\nreset()\nprint(score)   # 0: the global is unchanged",
+          "practice": "Predict the global's value after calls that assign to the same name.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "scope.local_variables"
+          ]
+        },
+        {
+          "title": "Reading then assigning: UnboundLocalError",
+          "worked_example": "count = 0\n\ndef inc():\n    count += 1\n\ninc()\n# UnboundLocalError: cannot access local variable 'count' where it is not associated with a value\nThe assignment makes count local, so it has no value yet when += reads it.",
+          "practice": "Predict which functions raise UnboundLocalError.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "global lets a function rebind; returning is usually better",
+          "worked_example": "def inc():\n    global count\n    count += 1\n# better: pass and return\ndef inc(n):\n    return n + 1\ncount = inc(count)",
+          "practice": "Fix an UnboundLocalError both ways; rewrite a global-modifying function to take a parameter and return.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "scope.local_variables"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "scope.local_variables",
+          "weight": 0.6
+        },
+        {
+          "topic": "constants.named_constants",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc",
+        "cs50p",
+        "codecademy",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "docstrings.write_docstrings",
+      "title": "Documenting a function with a docstring",
+      "concept": "docstrings",
+      "summary": "Write a one-line or multi-line docstring as the first statement of a function and read it back with help().",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "builtin_functions.help_and_dir",
+        "strings.multiline_and_raw"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A string as the first line of the body",
+          "worked_example": "def area(w, h):\n    \"\"\"Return the area of a w-by-h rectangle.\"\"\"\n    return w * h\nA docstring says what the function does and returns; a # comment explains a line of code.",
+          "practice": "Add one-line docstrings to given functions; choose the best docstring for a function from options.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "strings.multiline_and_raw"
+          ]
+        },
+        {
+          "title": "help() shows your docstring",
+          "worked_example": "help(area)\n# area(w, h)\n#     Return the area of a w-by-h rectangle.",
+          "practice": "Predict what help() shows for functions with and without docstrings.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.help_and_dir"
+          ]
+        },
+        {
+          "title": "Only the first statement counts",
+          "worked_example": "def f():\n    x = 1\n    \"\"\"Not a docstring.\"\"\"\n    return x\nhelp(f) shows no description: the string is not the first statement.",
+          "practice": "Decide which strings are docstrings; move misplaced ones.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.multiline_and_raw"
+          ]
+        },
+        {
+          "title": "Multi-line docstrings: summary, blank line, details",
+          "worked_example": "def bmi(kg, m):\n    \"\"\"Return body-mass index.\n\n    kg: weight in kilograms\n    m: height in metres\n    \"\"\"\n    return kg / m ** 2",
+          "practice": "Reorder the lines of a multi-line docstring; write one that names each parameter and the result.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "strings.multiline_and_raw"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.2
+        },
+        {
+          "topic": "builtin_functions.help_and_dir",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "cs50p",
+        "100_days_of_code",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "docstrings.specifications",
+      "title": "Specifications: what a function promises",
+      "concept": "docstrings",
+      "summary": "Write and read function specifications with preconditions (what the caller must provide) and postconditions (what the function guarantees), and test code against them.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "docstrings.write_docstrings",
+        "return_values.early_return",
+        "loop_patterns.accumulate_sum"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A spec states inputs and result",
+          "worked_example": "def sum_to(n):\n    \"\"\"Return 1 + 2 + ... + n.\n\n    Requires: n is an int, n >= 1.\n    \"\"\"\nThe Requires line is the precondition; the Return line is the postcondition.",
+          "practice": "Identify the precondition and postcondition in docstrings; predict results from the spec alone.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "docstrings.write_docstrings"
+          ]
+        },
+        {
+          "title": "Breaking the precondition is the caller's fault",
+          "worked_example": "sum_to(-3) may return anything: the spec only promises results for n >= 1. The function is not buggy; the call is.",
+          "practice": "Decide for given calls whether the caller or the function is at fault when results look wrong.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "docstrings.write_docstrings"
+          ]
+        },
+        {
+          "title": "Test an implementation against its spec",
+          "worked_example": "def sum_to(n):\n    total = 0\n    for i in range(1, n):\n        total += i\n    return total\nprint(sum_to(3))   # 3, but the spec promises 6: range(1, n) misses n",
+          "practice": "Find a valid input where an implementation breaks its spec; fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Write a spec for an existing function",
+          "worked_example": "def average(total, count):\n    return total / count\n# Spec: Return the mean. Requires: count > 0.\nThe precondition records the case that would crash (count = 0 raises ZeroDivisionError).",
+          "practice": "Choose or write the precondition that rules out crashing inputs; pick the spec that matches the code.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "docstrings.write_docstrings",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "type_hints.annotate_functions",
+      "title": "Type hints on parameters and return values",
+      "concept": "type_hints",
+      "summary": "Annotate a function's parameters and return type, read annotated signatures, and know that Python does not enforce hints at run time.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "return_values.none_from_functions",
+        "data_types.values_have_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Annotate parameters and the return type",
+          "worked_example": "def area(w: float, h: float) -> float:\n    return w * h\n\nprint(area(2.0, 3.5))   # 7.0",
+          "practice": "Add hints to given functions; read a signature and say what types go in and come out.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "-> None for functions that only print",
+          "worked_example": "def greet(name: str) -> None:\n    print(f\"Hello, {name}\")\nA function with no return gives back None, so its hint is -> None.",
+          "practice": "Choose the right return hint for printing and returning functions.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        },
+        {
+          "title": "Hints are not checked when the code runs",
+          "worked_example": "def double(n: int) -> int:\n    return n * 2\n\nprint(double(\"ab\"))   # abab: no error; a type checker would flag this",
+          "practice": "Predict outputs of calls that ignore the hints; spot calls that disagree with the hints.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Annotating variables",
+          "worked_example": "count: int = 0\nname: str = \"Ada\"\nprint(count, name)   # 0 Ada\nThe hint documents the intended type; assignment works as usual.",
+          "practice": "Annotate variables; find the annotation that disagrees with its value.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_types.values_have_types",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "type_hints.optional_and_union",
+      "title": "Hints with | : values that may be None or one of several types",
+      "concept": "type_hints",
+      "summary": "Write hints such as int | None and int | float, and use them to spot code that forgets the None case.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "type_hints.annotate_functions",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "X | None for a function that may return None",
+          "worked_example": "def safe_divide(a: float, b: float) -> float | None:\n    if b == 0:\n        return None\n    return a / b",
+          "practice": "Choose the return hint for functions that sometimes return None.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "int | float, and int is accepted where float is expected",
+          "worked_example": "def half(x: int | float) -> float:\n    return x / 2\nWriting x: float also accepts ints by convention.",
+          "practice": "Pick hints that accept every intended argument type.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions"
+          ]
+        },
+        {
+          "title": "Hints reveal the forgotten None case",
+          "worked_example": "d = safe_divide(1, 0)   # None\nprint(d + 1)   # TypeError\nThe hint int | None warns the caller to check: if d is not None: ...",
+          "practice": "Fix callers that use an Optional result without checking for None.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "type_hints.annotate_functions",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "type_hints.collection_hints",
+      "title": "Type hints for collections: list[int], dict[str, float], tuple[str, str]",
+      "concept": "type_hints",
+      "summary": "Annotate parameters, return values and variables that hold lists, dicts and tuples with their item types, and know that hints are not checked when the program runs.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "type_hints.annotate_functions",
+        "dictionaries.create_and_look_up",
+        "tuples.lists_of_tuples"
+      ],
+      "knowledge_points": [
+        {
+          "title": "list[str]: a list and the type of its items",
+          "worked_example": "def first_word(words: list[str]) -> str:\n    return words[0]\n\nprint(first_word([\"hi\", \"there\"]))  # hi\nThe type in square brackets says what every item is; a plain list hint would say nothing about the items.",
+          "practice": "Choose the right hint for described parameters (list of names, list of prices); fill in hints for short functions.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions"
+          ]
+        },
+        {
+          "title": "dict[key, value]",
+          "worked_example": "def price_of(prices: dict[str, float], item: str) -> float:\n    return prices[item]\n\nprint(price_of({\"tea\": 2.5, \"cake\": 4.0}, \"tea\"))  # 2.5\nA dict hint names the key type first, then the value type; set[str] works the same way with one type.",
+          "practice": "Write hints for dicts described in words (word counts, phone books); spot hints with key and value swapped.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "tuple[str, str] and lists of tuples",
+          "worked_example": "def split_name(full: str) -> tuple[str, str]:\n    first, last = full.split()\n    return first, last\n\npeople: list[tuple[str, int]] = [(\"ana\", 31), (\"bo\", 25)]\nprint(split_name(\"Ada Lovelace\"), people[1][0])  # ('Ada', 'Lovelace') bo\nA tuple hint lists the type of each position; hints nest, and a variable can carry one too.",
+          "practice": "Match functions that return several values to their tuple hints; write the hint for a list of (name, score) records.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "Hints are not checked at run time; list(int) is a bug",
+          "worked_example": "print(first_word([10, 20]))  # 10: runs anyway\n\ndef total(nums: list(int)) -> int:\n    return 0\n# TypeError: 'type' object is not iterable\nPython ignores the hint when running (first_word from KP1); a checker such as mypy reports the mismatch. Hints use square brackets, never a call.",
+          "practice": "Predict whether code with wrong-type arguments runs; fix hints written with parentheses.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "type_hints.annotate_functions",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [],
+      "notes": "Added in reconciliation (gap: B05 handed generic container hints to B06/B07, neither wrote them). Non-core like type_hints.optional_and_union. Snippets run with Python 3.13."
+    },
+    {
+      "id": "decomposition.extract_repeated_code",
+      "title": "Turning repeated code into a function",
+      "concept": "decomposition",
+      "summary": "Spot blocks of code that repeat with small differences and replace them with one function whose parameters are the parts that differ.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "parameters_arguments.several_parameters",
+        "return_values.return_a_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Repeated lines become one function",
+          "worked_example": "print(\"*\" * 10)\nprint(\"Score\")\nprint(\"*\" * 10)\nprint(\"*\" * 10)\nprint(\"Lives\")\nprint(\"*\" * 10)\n# becomes\ndef banner(text):\n    print(\"*\" * 10)\n    print(text)\n    print(\"*\" * 10)\nbanner(\"Score\")\nbanner(\"Lives\")",
+          "practice": "Pick the lines that form the repeated block; reorder lines into the extracted function (Parsons).",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.one_parameter"
+          ]
+        },
+        {
+          "title": "Whatever differs becomes a parameter",
+          "worked_example": "Two blocks that differ in the text and the character:\ndef banner(text, char):\n    print(char * 10)\n    print(text)\n    print(char * 10)",
+          "practice": "Given two or three similar blocks, decide which values become parameters and write the call for each block.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "A repeated calculation becomes a returning function",
+          "worked_example": "def to_celsius(f):\n    return (f - 32) * 5 / 9\n\nprint(to_celsius(212), to_celsius(32))   # 100.0 0.0",
+          "practice": "Replace a formula written out several times with a function and calls.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "Fix once, fixed everywhere",
+          "worked_example": "If the formula above had 5 / 8 by mistake in three copied places, all three need fixing; in to_celsius, one edit fixes every call.",
+          "practice": "Count how many edits a change needs before and after extracting a function; fix a bug in a shared helper.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.several_parameters",
+          "weight": 0.5
+        },
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy",
+        "code_in_place",
+        "mit_6100l",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "decomposition.top_down_design",
+      "title": "Top-down design: outline main(), then fill in helpers",
+      "concept": "decomposition",
+      "summary": "Break a task into named steps written as calls in main(), run the outline with stub helpers, and refine each helper in turn.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "functions.main_and_helpers",
+        "decomposition.extract_repeated_code",
+        "user_input.input_compute_output"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Write main() as a list of named steps",
+          "worked_example": "def main():\n    price = ask_price()\n    tip = compute_tip(price)\n    show_total(price, tip)\nEach line names one step; the details come later.",
+          "practice": "Reorder helper calls into a working main() for a described program (Parsons); name the steps of a task.",
+          "formats": [
+            "parsons",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Stubs let the outline run before it is finished",
+          "worked_example": "def compute_tip(price):\n    return 0      # TODO: real formula\nThe program runs end to end; replace one stub at a time and rerun.",
+          "practice": "Write stubs for given helper names so main() runs; predict output of a stubbed program.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Refine a step that is still too big",
+          "worked_example": "def play_round():\n    show_board()\n    move = ask_move()\n    apply_move(move)\nA helper can itself be split into helpers, level by level.",
+          "practice": "Split a long described step into two to four helper calls.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "decomposition.extract_repeated_code"
+          ]
+        },
+        {
+          "title": "Fill in a helper and test it on its own",
+          "worked_example": "def compute_tip(price):\n    return round(price * 0.15, 2)\n\nprint(compute_tip(20))   # 3.0\nCheck each helper with a quick call before relying on it in main().",
+          "practice": "Implement one helper of a given outline so that its test calls print the expected values.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "user_input.input_compute_output"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functions.main_and_helpers",
+          "weight": 0.5
+        },
+        {
+          "topic": "decomposition.extract_repeated_code",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "mit_6100l",
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "decomposition.one_job_per_function",
+      "title": "One job per function: separating input, work and output",
+      "concept": "decomposition",
+      "summary": "Split code that mixes input, calculation and printing into functions that each do one job, with descriptive verb names in snake_case.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "decomposition.extract_repeated_code",
+        "return_values.none_from_functions",
+        "return_values.early_return",
+        "variables.naming_rules"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Separate getting input, computing and showing",
+          "worked_example": "def get_age():\n    return int(input(\"Age: \"))\n\ndef category(age):\n    if age >= 18:\n        return \"adult\"\n    return \"minor\"\n\nprint(category(get_age()))",
+          "practice": "Sort the lines of a mixed program into input, computing and output functions (Parsons).",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        },
+        {
+          "title": "Computing functions return; they do not print or ask",
+          "worked_example": "def category(age):\n    if age >= 18:\n        print(\"adult\")   # hard to reuse or test\n    else:\n        print(\"minor\")\nReturning the label lets the caller print it, compare it or store it.",
+          "practice": "Rewrite computing functions that print or call input() so they take parameters and return.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        },
+        {
+          "title": "Name functions for what they do",
+          "worked_example": "def calc(x): ...        # vague\ndef to_celsius(f): ...  # verb phrase, snake_case\ndef is_valid(code): ... # is_/has_ for True/False answers",
+          "practice": "Choose the best name for described functions; rename badly named ones.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "variables.naming_rules"
+          ]
+        },
+        {
+          "title": "If the name needs 'and', split the function",
+          "worked_example": "def read_and_check_and_print(): ...\n# becomes read_code(), is_valid(code), show_result(ok)",
+          "practice": "Split a function that does several jobs into named helpers and a short caller.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "decomposition.extract_repeated_code"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decomposition.extract_repeated_code",
+          "weight": 0.4
+        },
+        {
+          "topic": "variables.naming_rules",
+          "weight": 0.3
+        },
+        {
+          "topic": "return_values.none_from_functions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "abstraction.functions_as_black_boxes",
+      "title": "Abstraction: using and generalising functions as black boxes",
+      "concept": "abstraction",
+      "summary": "Use a function from its name and specification alone, swap implementations without changing callers, and generalise a function by turning fixed values into parameters.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "docstrings.specifications",
+        "decomposition.extract_repeated_code",
+        "parameters_arguments.default_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Use a function from its spec alone",
+          "worked_example": "def is_leap(year):\n    \"\"\"Return True if year is a leap year.\"\"\"\n    ...\nprint(is_leap(2024))   # True: you need the spec, not the body",
+          "practice": "Predict results of calls from docstrings alone (bodies hidden).",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "docstrings.specifications"
+          ]
+        },
+        {
+          "title": "Different insides, same behaviour",
+          "worked_example": "def sum_to(n):\n    return n * (n + 1) // 2\n# replaces the loop version; every caller still gets sum_to(4) == 10",
+          "practice": "Decide which replacement implementations keep every caller working; find one that breaks the spec for some input.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "docstrings.specifications"
+          ]
+        },
+        {
+          "title": "Generalise: turn a fixed value into a parameter",
+          "worked_example": "def line():\n    print(\"-\" * 10)\n# generalised, old calls still work:\ndef line(width=10, char=\"-\"):\n    print(char * width)\nline()          # ----------\nline(3, \"=\")    # ===",
+          "practice": "Generalise hard-coded functions with parameters and defaults so existing calls keep working.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        },
+        {
+          "title": "Code that reads at one level of detail",
+          "worked_example": "def main():\n    order = take_order()\n    bill = price(order)\n    print_receipt(bill)\nmain() hides how each step works; the details live one level down.",
+          "practice": "Choose which version of a program hides detail at the right level; replace inline detail with a named call.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "decomposition.extract_repeated_code"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decomposition.extract_repeated_code",
+          "weight": 0.3
+        },
+        {
+          "topic": "parameters_arguments.default_values",
+          "weight": 0.3
+        },
+        {
+          "topic": "docstrings.specifications",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "code_in_place",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "pseudocode.plan_in_comments",
+      "title": "Planning with pseudocode before writing code",
+      "concept": "pseudocode",
+      "summary": "Write a program's steps as plain-English comments, put them in order, translate each into Python, and spot missing steps.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "comments.write_comments",
+        "user_input.input_compute_output",
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Write the steps first, as comments",
+          "worked_example": "# ask for the bill\n# ask for the tip percent\n# compute the tip\n# print the total\nEach comment becomes one or two lines of code underneath it.",
+          "practice": "Write pseudocode steps for a described small program; choose the clearest pseudocode from options.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comments.write_comments"
+          ]
+        },
+        {
+          "title": "Put the steps in a working order",
+          "worked_example": "Computing the tip before asking for the percent cannot work: every step may only use what earlier steps produced.",
+          "practice": "Reorder shuffled pseudocode lines (Parsons); find the step used before it is available.",
+          "formats": [
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "user_input.input_compute_output"
+          ]
+        },
+        {
+          "title": "Translate each step into Python",
+          "worked_example": "# ask for the bill\nbill = float(input(\"Bill: \"))\n# if the bill is over 100, give 10% off\nif bill > 100:\n    bill = bill * 0.9",
+          "practice": "Match pseudocode lines to code; fill in the code under each comment.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Find the step the plan forgot",
+          "worked_example": "# ask for the age\n# print whether the person can vote\nage = input(\"Age: \")\nif age >= 18: ...   # TypeError: the plan missed \"convert to a number\"",
+          "practice": "Find the missing pseudocode step that causes a bug, and add it.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "user_input.input_compute_output"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "user_input.input_compute_output",
+          "weight": 0.3
+        },
+        {
+          "topic": "comments.write_comments",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "computational_thinking.precise_algorithms",
+      "title": "From a problem to precise steps: algorithms",
+      "concept": "computational_thinking",
+      "summary": "Tell 'what' knowledge from 'how' knowledge, recognise instructions that are too vague or never stop, trace an algorithm by hand and turn it into a loop.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "while_loops.loop_until_condition",
+        "variables.swap_values",
+        "arithmetic_operators.floor_division_and_modulo"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Declarative vs imperative knowledge",
+          "worked_example": "What: the GCD of a and b is the largest number dividing both.\nHow: while b is not 0, replace (a, b) with (b, a % b); then a is the GCD.\nOnly the \"how\" can be turned into a program.",
+          "practice": "Classify statements as declarative (what) or imperative (how).",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Steps must be exact and must finish",
+          "worked_example": "\"Make the number smaller until it is small\" is vague.\n\"Halve n until n < 1\" is exact, and stops because n keeps shrinking.",
+          "practice": "Pick the instruction a computer could follow; decide whether a described loop always stops.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        },
+        {
+          "title": "Trace an algorithm by hand",
+          "worked_example": "a, b = 48, 18\n# a=48 b=18 -> a=18 b=12 -> a=12 b=6 -> a=6 b=0\n# GCD is 6",
+          "practice": "Fill in a trace table for the GCD algorithm on new inputs.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        },
+        {
+          "title": "Turn the traced steps into code",
+          "worked_example": "a, b = 48, 18\nwhile b != 0:\n    a, b = b, a % b\nprint(a)   # 6",
+          "practice": "Reorder the lines of the algorithm (Parsons); write the loop for a described step-by-step method.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values",
+            "while_loops.loop_until_condition"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "while_loops.loop_until_condition",
+          "weight": 0.3
+        },
+        {
+          "topic": "variables.swap_values",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "py4e",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "karel_robot.commands_and_new_commands",
+      "title": "Karel the robot: commands and new commands",
+      "concept": "karel_robot",
+      "summary": "Predict where Karel ends up after a sequence of move(), turn_left(), put_beeper() and pick_beeper(), and define new commands such as turn_right() from existing ones.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "functions.flow_of_execution"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Karel's world and four commands",
+          "worked_example": "move()          # one corner forward\nturn_left()     # quarter turn left\nput_beeper()\npick_beeper()\nStarting at (1, 1) facing east, move(); move() ends at (3, 1).",
+          "practice": "Predict Karel's final corner and direction after short command sequences.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Define turn_right() from three left turns",
+          "worked_example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()",
+          "practice": "Write turn_around(); predict direction after calls to the new commands.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "Build bigger commands from smaller ones",
+          "worked_example": "def climb_step():\n    turn_left()\n    move()\n    turn_right()\n    move()",
+          "practice": "Reorder lines into a new command that solves a pictured task (Parsons); trace calls through two levels of commands.",
+          "formats": [
+            "parsons",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "Errors: moving into a wall, picking from an empty corner",
+          "worked_example": "Karel facing a wall: move() stops the program with an error.\npick_beeper() with no beeper on the corner also stops it.",
+          "practice": "Find the command in a sequence that crashes Karel in a pictured world.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functions.flow_of_execution",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "karel_robot.conditions_and_loops",
+      "title": "Karel with loops and conditions",
+      "concept": "karel_robot",
+      "summary": "Make Karel programs work in any world size with for, while front_is_clear() and if beepers_present(), including the last-corner fencepost case.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "karel_robot.commands_and_new_commands",
+        "while_loops.repeat_while_true",
+        "for_loops.repeat_n_times",
+        "conditionals.if_statement"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Repeat a fixed number of times with for",
+          "worked_example": "for i in range(4):\n    put_beeper()\n    move()",
+          "practice": "Predict beepers placed and final corner; write a for loop for a fixed-length task.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "for_loops.repeat_n_times"
+          ]
+        },
+        {
+          "title": "while front_is_clear(): works in any world",
+          "worked_example": "while front_is_clear():\n    move()\nKarel walks to the wall whatever the width.",
+          "practice": "Choose between for and while for pictured worlds of unknown size; write a move-to-wall command.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Fencepost: the last corner needs one more step",
+          "worked_example": "while front_is_clear():\n    put_beeper()\n    move()\nput_beeper()   # the corner at the wall\nWithout the last line the final corner is left empty.",
+          "practice": "Fix programs that miss the last corner; predict beeper counts for a given width.",
+          "formats": [
+            "fix_the_bug",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Check before acting with if",
+          "worked_example": "if beepers_present():\n    pick_beeper()\nAvoids the crash from picking on an empty corner.",
+          "practice": "Add the condition that prevents a crash; predict which corners end with beepers.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "karel_robot.commands_and_new_commands",
+          "weight": 0.5
+        },
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.3
+        },
+        {
+          "topic": "for_loops.repeat_n_times",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "main_guard.if_name_main",
+      "title": "Running main() only when the file is run: if __name__ == \"__main__\"",
+      "concept": "main_guard",
+      "summary": "Call main() through the __name__ guard and predict which code runs when a file is run directly and when it is imported.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "functions.main_and_helpers",
+        "modules_imports.own_modules"
+      ],
+      "knowledge_points": [
+        {
+          "title": "__name__ is \"__main__\" in the file you run",
+          "worked_example": "print(__name__)   # __main__\nPython sets __name__ for every file; it is \"__main__\" only for the file being run.",
+          "practice": "Predict the value printed by print(__name__) in a run file.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Call main() through the guard",
+          "worked_example": "def main():\n    print(\"running\")\n\nif __name__ == \"__main__\":\n    main()   # running",
+          "practice": "Write the guard at the bottom of a main()-structured program.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "When imported, the guard keeps main() from running",
+          "worked_example": "# shapes.py has def area(...) and the guard\n# app.py:\nimport shapes\nprint(shapes.area(2, 3))   # 6, and shapes.main() did not run\nInside shapes.py during the import, __name__ is \"shapes\".",
+          "practice": "Predict the output of running one file that imports another, with and without the guard.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "Common mistakes in the guard",
+          "worked_example": "if __name__ == \"main\":     # never true: the value is \"__main__\"\nif __name__ == \"__main__\":\n    main                   # missing (): nothing runs",
+          "practice": "Find and fix broken guards.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "functions.main_and_helpers",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    }
+  ]
+}

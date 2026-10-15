@@ -1,0 +1,14 @@
+# Dependencies (reinstall with `npm install` in platform_spike/; only needed to rebuild vendor/codemirror.js)
+node_modules/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS clutter
+.DS_Store
+
+# Machine- and session-specific Claude Code config (points at local scratch folders)
+.claude/launch.json
+.claude/settings.local.json

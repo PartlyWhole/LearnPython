@@ -1,0 +1,102 @@
+{
+  "format": 1,
+  "id": "from_clicks_to_code",
+  "title": "From clicks to code",
+  "concept": "A program is commands that run top to bottom",
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ],
+  "watch": {
+    "world": {
+      "width": 5,
+      "height": 3,
+      "start": [
+        0,
+        2,
+        "E"
+      ],
+      "gems": {
+        "2,0": 1
+      },
+      "blocked": [
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "say": "Your moves from Pick it up, written as a program.",
+        "code": "move()\nmove()\nturn_left()\nmove()\nmove()\npick()\n",
+        "code_from": "drive_pick",
+        "focus": "editor"
+      },
+      {
+        "say": "Each line is one command. They run top to bottom.",
+        "focus": "editor:1"
+      },
+      {
+        "say": "Where will the robot end up?",
+        "predict": {
+          "cell": true,
+          "answer": [
+            2,
+            0
+          ]
+        }
+      },
+      {
+        "say": "Run it: the robot repeats your drive.",
+        "run": true
+      },
+      {
+        "say": "From now on you type the commands yourself.",
+        "focus": "editor"
+      }
+    ]
+  },
+  "guided": {
+    "level": "first_steps",
+    "steps": [
+      {
+        "say": "Add `move()` lines until the robot reaches the gem.",
+        "done_when": [
+          {
+            "calls": "move",
+            "min": 3,
+            "outside": "def"
+          }
+        ],
+        "example": "move()\nmove()\nmove()\n"
+      },
+      {
+        "say": "Then `pick()` it up.",
+        "done_when": [
+          {
+            "calls": "pick"
+          }
+        ],
+        "example": "move()\nmove()\nmove()\npick()\n"
+      },
+      {
+        "say": "Run it.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "Your first typed program."
+  },
+  "practice": [],
+  "recap": {
+    "say": "A program is a list of commands that run top to bottom.",
+    "code": "move()\nturn_left()\npick()"
+  }
+}

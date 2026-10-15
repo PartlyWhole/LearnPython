@@ -1,0 +1,130 @@
+{
+  "format": 1,
+  "id": "while_loops",
+  "title": "Keep going while…",
+  "concept": "Repeat a block while a condition is True, so one program fits any size",
+  "topics": [
+    "while_loops.loop_until_condition"
+  ],
+  "watch": {
+    "world": {
+      "width": 8,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ]
+    },
+    "steps": [
+      {
+        "say": "The robot must walk to the end of the corridor.",
+        "focus": "world"
+      },
+      {
+        "say": "`for` counts. `range(5)` moves exactly 5 times.",
+        "code": "for i in range(5):\n    move()\n",
+        "focus": "editor:1"
+      },
+      {
+        "say": "Run it. This corridor needs 7 moves, so the robot stops short.",
+        "run": true
+      },
+      {
+        "say": "`while` checks. It repeats `move()` as long as `front_is_clear()` is True.",
+        "code": "while front_is_clear():\n    move()\n",
+        "focus": "editor:1"
+      },
+      {
+        "say": "The condition is checked before every pass. Where will the robot stop?",
+        "predict": {
+          "cell": true,
+          "answer": [
+            7,
+            0
+          ]
+        }
+      },
+      {
+        "say": "Run it. At the wall, `front_is_clear()` is False, so the loop ends.",
+        "run": true
+      },
+      {
+        "say": "Same code in a 1-cell corridor: the condition is False at once, so `move()` never runs.",
+        "world": {
+          "width": 1,
+          "height": 1,
+          "start": [
+            0,
+            0,
+            "E"
+          ],
+          "gems": {
+            "0,0": 3
+          }
+        },
+        "run": true
+      },
+      {
+        "say": "A condition can be about gems too. `while gems_here():` picks until the cell is empty.",
+        "code": "while front_is_clear():\n    move()\nwhile gems_here():\n    pick()\n",
+        "focus": "editor:3",
+        "run": true
+      }
+    ]
+  },
+  "guided": {
+    "level": "collect_row",
+    "steps": [
+      {
+        "say": "After `move()`, look at the cell: add `if gems_here():` with `pick()` inside the loop.",
+        "done_when": [
+          {
+            "calls": "gems_here",
+            "inside": "while"
+          }
+        ],
+        "example": "while front_is_clear():\n    move()\n    if gems_here():\n        pick()\n"
+      },
+      {
+        "say": "A pile needs more than one `pick()`. Change `if` to `while`.",
+        "done_when": [
+          {
+            "calls": "pick",
+            "inside": "while>while"
+          }
+        ],
+        "example": "while front_is_clear():\n    move()\n    while gems_here():\n        pick()\n"
+      },
+      {
+        "say": "Run it in every corridor.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "Every pile cleared, in corridors of any length."
+  },
+  "practice": [
+    "piles"
+  ],
+  "twist": "follow_trail",
+  "recap": {
+    "say": "`while condition:` repeats its block until the condition is False.",
+    "code": "while condition:\n    ..."
+  },
+  "hints": {
+    "piles": [
+      "Look at the result for the world with a pile on the start cell.",
+      "`if` picks one gem; `while gems_here():` clears a pile. Clear the start cell before the walk.",
+      "while __:\n    pick()\nwhile front_is_clear():\n    __\n    while __:\n        pick()\n"
+    ],
+    "follow_trail": [
+      "Look where the robot must stop in the Goal view: just past the last gem, not at the wall.",
+      "Loop on the gems, not the wall: repeat while there is a gem here.",
+      "while __:\n    pick()\n    __\n"
+    ]
+  }
+}

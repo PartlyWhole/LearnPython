@@ -1,0 +1,96 @@
+{
+  "format": 1,
+  "id": "midpoint",
+  "title": "Find the middle",
+  "brief": "Put one gem on the middle cell of the corridor (for an even length, the left one of the two middle cells). scan() returns a list with one number per cell ahead of you, so its length tells you how far the wall is.",
+  "starter_code": "ahead = scan()\nprint(ahead)\n",
+  "world": {
+    "width": 7,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "bag": 1,
+    "goal": {
+      "gems_exactly": {
+        "3,0": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 1,
+      "name": "one cell",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1
+        }
+      }
+    },
+    {
+      "width": 2,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 1,
+      "name": "two cells",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1
+        }
+      }
+    },
+    {
+      "width": 10,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 1,
+      "name": "even length",
+      "goal": {
+        "gems_exactly": {
+          "4,0": 1
+        }
+      }
+    },
+    {
+      "width": 13,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 1,
+      "name": "odd length",
+      "goal": {
+        "gems_exactly": {
+          "6,0": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "topics": [
+    "lists.create_and_index",
+    "builtin_functions.call_anatomy",
+    "arithmetic_operators.floor_division_and_modulo"
+  ]
+}

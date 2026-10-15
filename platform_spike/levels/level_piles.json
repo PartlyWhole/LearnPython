@@ -1,0 +1,166 @@
+{
+  "format": 1,
+  "id": "level_piles",
+  "title": "Level the piles",
+  "brief": "Make every cell in the corridor hold exactly 2 gems: add to small piles, take from big ones, fill empty cells. Your bag never runs out.",
+  "starter_code": "while front_is_clear():\n    move()\n",
+  "world": {
+    "width": 8,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "0,0": 1,
+      "1,0": 4,
+      "3,0": 2,
+      "4,0": 3,
+      "5,0": 1,
+      "7,0": 6
+    },
+    "bag": "infinite",
+    "goal": {
+      "gems_exactly": {
+        "0,0": 2,
+        "1,0": 2,
+        "2,0": 2,
+        "3,0": 2,
+        "4,0": 2,
+        "5,0": 2,
+        "6,0": 2,
+        "7,0": 2
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 5,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "name": "no gems",
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 2,
+          "1,0": 2,
+          "2,0": 2,
+          "3,0": 2,
+          "4,0": 2
+        }
+      }
+    },
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 5
+      },
+      "name": "one cell",
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 2
+        }
+      }
+    },
+    {
+      "width": 4,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 2,
+        "1,0": 2,
+        "2,0": 2,
+        "3,0": 2
+      },
+      "name": "already level",
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 2,
+          "1,0": 2,
+          "2,0": 2,
+          "3,0": 2
+        }
+      }
+    },
+    {
+      "width": 6,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 7,
+        "2,0": 1,
+        "3,0": 3,
+        "5,0": 1
+      },
+      "name": "crowded start",
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 2,
+          "1,0": 2,
+          "2,0": 2,
+          "3,0": 2,
+          "4,0": 2,
+          "5,0": 2
+        }
+      }
+    },
+    {
+      "width": 3,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "2,0": 9
+      },
+      "name": "big pile at the end",
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 2,
+          "1,0": 2,
+          "2,0": 2
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ],
+    "required": [
+      "compare"
+    ]
+  },
+  "topics": [
+    "comparison_operators.compare_numbers",
+    "while_loops.loop_until_condition"
+  ]
+}

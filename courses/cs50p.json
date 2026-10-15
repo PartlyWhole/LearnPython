@@ -1,0 +1,1844 @@
+{
+  "course": {
+    "id": "cs50p",
+    "title": "CS50's Introduction to Programming with Python (CS50P)",
+    "provider": "Harvard University (CS50)",
+    "url": "https://cs50.harvard.edu/python/",
+    "format": "self-paced (OpenCourseWare / edX), 10 weeks (Week 0-9) of lectures + 9 problem sets + final project",
+    "audience": "beginners; no prior programming experience required",
+    "sources": [
+      "https://cs50.harvard.edu/python/",
+      "https://cs50.harvard.edu/python/weeks/0/",
+      "https://cs50.harvard.edu/python/notes/0/",
+      "https://cs50.harvard.edu/python/notes/1/",
+      "https://cs50.harvard.edu/python/notes/2/",
+      "https://cs50.harvard.edu/python/notes/3/",
+      "https://cs50.harvard.edu/python/notes/4/",
+      "https://cs50.harvard.edu/python/notes/5/",
+      "https://cs50.harvard.edu/python/notes/6/",
+      "https://cs50.harvard.edu/python/notes/7/",
+      "https://cs50.harvard.edu/python/notes/8/",
+      "https://cs50.harvard.edu/python/notes/9/",
+      "https://cs50.harvard.edu/python/psets/0/",
+      "https://cs50.harvard.edu/python/psets/1/",
+      "https://cs50.harvard.edu/python/psets/2/",
+      "https://cs50.harvard.edu/python/psets/3/",
+      "https://cs50.harvard.edu/python/psets/4/",
+      "https://cs50.harvard.edu/python/psets/5/",
+      "https://cs50.harvard.edu/python/psets/6/",
+      "https://cs50.harvard.edu/python/psets/7/",
+      "https://cs50.harvard.edu/python/psets/8/",
+      "https://cs50.harvard.edu/python/project/",
+      "https://cs50.harvard.edu/python/psets/4/emojize/",
+      "https://cs50.harvard.edu/python/psets/4/figlet/",
+      "https://cs50.harvard.edu/python/psets/4/adieu/",
+      "https://cs50.harvard.edu/python/psets/4/bitcoin/",
+      "https://cs50.harvard.edu/python/psets/6/pizza/",
+      "https://cs50.harvard.edu/python/psets/6/shirt/",
+      "https://cs50.harvard.edu/python/psets/7/response/",
+      "https://cs50.harvard.edu/python/psets/8/seasons/",
+      "https://cs50.harvard.edu/python/psets/8/shirtificate/"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Edition: lectures/notes are the 2022 recording (CDN paths cdn.cs50.net/python/2022/x/; submit50 slugs cs50/problems/2022/python/...), still the current OCW edition as of retrieval; problem sets show a 2027-06-30 deadline and were updated in place (e.g. Bitcoin Price Index now uses the CoinCap v3 API with an API key). Weeks are numbered 0-9 as on the site; module 'order' follows that numbering, with the Final Project as order 10. Week 9 (Et Cetera) has no problem set. Topics are the h2/h3 headings of the official lecture notes (Summing Up headings omitted). Per-problem library mappings verified from problem pages for psets 4, 6, 7, 8; Guessing Game/Little Professor use random (from problem names/lecture, not individually verified). lambda (as sort key) appears in Lecture 6 body text, not a heading. Lecture 9 also mentions pyttsx3 and Sphinx (not modeled). Depth ratings are editorial judgments based on headings and problem-set emphasis. Lecture 8 decorators are taught via @property/@classmethod/@staticmethod, not writing custom decorators."
+  },
+  "modules": [
+    {
+      "id": "cs50p:week0",
+      "title": "Week 0: Functions, Variables",
+      "order": 0,
+      "url": "https://cs50.harvard.edu/python/weeks/0/",
+      "topics": [
+        "Creating Code with Python",
+        "Functions",
+        "Bugs",
+        "Improving Your First Python Program",
+        "Variables",
+        "Comments",
+        "Pseudocode",
+        "Further Improving Your First Python Program",
+        "Strings and Parameters",
+        "A small problem with quotation marks",
+        "Formatting Strings",
+        "More on Strings",
+        "Integers or int",
+        "Readability Wins",
+        "Float Basics",
+        "More on Floats",
+        "Def",
+        "Returning Values"
+      ],
+      "projects": [
+        "Indoor Voice",
+        "Playback Speed",
+        "Making Faces",
+        "Einstein",
+        "Tip Calculator"
+      ],
+      "concepts": [
+        "ide_editor",
+        "command_line",
+        "running_scripts",
+        "print_output",
+        "user_input",
+        "functions",
+        "builtin_functions",
+        "parameters_arguments",
+        "return_values",
+        "variables",
+        "comments",
+        "pseudocode",
+        "debugging",
+        "strings",
+        "string_methods",
+        "string_formatting",
+        "string_concatenation",
+        "integers_floats",
+        "arithmetic_operators",
+        "type_conversion",
+        "data_types",
+        "expressions"
+      ]
+    },
+    {
+      "id": "cs50p:week1",
+      "title": "Week 1: Conditionals",
+      "order": 1,
+      "url": "https://cs50.harvard.edu/python/weeks/1/",
+      "topics": [
+        "Conditionals",
+        "if Statements",
+        "Control Flow, elif, and else",
+        "or",
+        "and",
+        "Modulo",
+        "Creating Our Own Parity Function",
+        "Pythonic",
+        "match"
+      ],
+      "projects": [
+        "Deep Thought",
+        "Home Federal Savings Bank",
+        "File Extensions",
+        "Math Interpreter",
+        "Meal Time"
+      ],
+      "concepts": [
+        "conditionals",
+        "comparison_operators",
+        "logical_operators",
+        "booleans",
+        "arithmetic_operators",
+        "match_statement",
+        "functions",
+        "return_values"
+      ]
+    },
+    {
+      "id": "cs50p:week2",
+      "title": "Week 2: Loops",
+      "order": 2,
+      "url": "https://cs50.harvard.edu/python/weeks/2/",
+      "topics": [
+        "Loops",
+        "While Loops",
+        "For Loops",
+        "Improving with User Input",
+        "More About Lists",
+        "Length",
+        "Dictionaries",
+        "Mario"
+      ],
+      "projects": [
+        "camelCase",
+        "Coke Machine",
+        "Just setting up my twttr",
+        "Vanity Plates",
+        "Nutrition Facts"
+      ],
+      "concepts": [
+        "while_loops",
+        "for_loops",
+        "range_function",
+        "break_continue",
+        "lists",
+        "iteration",
+        "builtin_functions",
+        "dictionaries",
+        "nested_data_structures",
+        "nested_loops",
+        "loop_patterns",
+        "abstraction",
+        "decomposition",
+        "collections"
+      ]
+    },
+    {
+      "id": "cs50p:week3",
+      "title": "Week 3: Exceptions",
+      "order": 3,
+      "url": "https://cs50.harvard.edu/python/weeks/3/",
+      "topics": [
+        "Exceptions",
+        "Runtime Errors",
+        "try",
+        "else",
+        "Creating a Function to Get an Integer",
+        "pass"
+      ],
+      "projects": [
+        "Fuel Gauge",
+        "Felipe’s Taqueria",
+        "Grocery List",
+        "Outdated"
+      ],
+      "concepts": [
+        "exceptions",
+        "debugging",
+        "defensive_programming",
+        "user_input",
+        "type_conversion",
+        "while_loops",
+        "break_continue",
+        "functions",
+        "dictionaries"
+      ]
+    },
+    {
+      "id": "cs50p:week4",
+      "title": "Week 4: Libraries",
+      "order": 4,
+      "url": "https://cs50.harvard.edu/python/weeks/4/",
+      "topics": [
+        "Libraries",
+        "Random",
+        "Statistics",
+        "Command-Line Arguments",
+        "slice",
+        "Packages",
+        "APIs",
+        "Making Your Own Libraries"
+      ],
+      "projects": [
+        "Emojize",
+        "Frank, Ian and Glen's Letters",
+        "Adieu, Adieu",
+        "Guessing Game",
+        "Little Professor",
+        "Bitcoin Price Index"
+      ],
+      "concepts": [
+        "modules_imports",
+        "standard_library",
+        "random_module",
+        "statistics_module",
+        "os_sys_module",
+        "command_line_args",
+        "list_slicing",
+        "third_party_packages",
+        "tool_pip",
+        "apis_http",
+        "json_data",
+        "lib_requests",
+        "main_guard",
+        "lib_cowsay",
+        "lib_emoji",
+        "lib_pyfiglet",
+        "lib_inflect"
+      ]
+    },
+    {
+      "id": "cs50p:week5",
+      "title": "Week 5: Unit Tests",
+      "order": 5,
+      "url": "https://cs50.harvard.edu/python/weeks/5/",
+      "topics": [
+        "Unit Tests",
+        "assert",
+        "pytest",
+        "Testing Strings",
+        "Organizing Tests into Folders"
+      ],
+      "projects": [
+        "Testing my twttr",
+        "Back to the Bank",
+        "Re-requesting a Vanity Plate",
+        "Refueling"
+      ],
+      "concepts": [
+        "unit_testing",
+        "assertions",
+        "lib_pytest",
+        "raising_exceptions",
+        "modules_imports",
+        "main_guard"
+      ]
+    },
+    {
+      "id": "cs50p:week6",
+      "title": "Week 6: File I/O",
+      "order": 6,
+      "url": "https://cs50.harvard.edu/python/weeks/6/",
+      "topics": [
+        "File I/O",
+        "open",
+        "with",
+        "CSV",
+        "Binary Files and PIL"
+      ],
+      "projects": [
+        "Lines of Code",
+        "Pizza Py",
+        "Scourgify",
+        "CS50 P-Shirt"
+      ],
+      "concepts": [
+        "file_io",
+        "context_managers",
+        "csv_files",
+        "sorting",
+        "lambda_functions",
+        "dictionaries",
+        "lists",
+        "os_sys_module",
+        "command_line_args",
+        "file_paths",
+        "lib_pil",
+        "lib_tabulate"
+      ]
+    },
+    {
+      "id": "cs50p:week7",
+      "title": "Week 7: Regular Expressions",
+      "order": 7,
+      "url": "https://cs50.harvard.edu/python/weeks/7/",
+      "topics": [
+        "Regular Expressions",
+        "Case Sensitivity",
+        "Cleaning Up User Input",
+        "Extracting User Input"
+      ],
+      "projects": [
+        "NUMB3RS",
+        "Watch on YouTube",
+        "Working 9 to 5",
+        "Regular, um, Expressions",
+        "Response Validation"
+      ],
+      "concepts": [
+        "regular_expressions",
+        "defensive_programming",
+        "string_methods",
+        "unit_testing",
+        "lib_validators"
+      ]
+    },
+    {
+      "id": "cs50p:week8",
+      "title": "Week 8: Object-Oriented Programming",
+      "order": 8,
+      "url": "https://cs50.harvard.edu/python/weeks/8/",
+      "topics": [
+        "Object-Oriented Programming",
+        "Classes",
+        "raise",
+        "Decorators",
+        "Connecting to Previous Work in this Course",
+        "Class Methods",
+        "Static Methods",
+        "Inheritance",
+        "Inheritance and Exceptions",
+        "Operator Overloading"
+      ],
+      "projects": [
+        "Seasons of Love",
+        "Cookie Jar",
+        "CS50 Shirtificate"
+      ],
+      "concepts": [
+        "object_oriented_design",
+        "tuples",
+        "classes",
+        "objects_methods",
+        "instance_attributes",
+        "constructors",
+        "raising_exceptions",
+        "dunder_methods",
+        "encapsulation",
+        "decorators",
+        "class_attributes",
+        "inheritance",
+        "exceptions",
+        "datetime_module",
+        "lib_inflect",
+        "lib_fpdf"
+      ]
+    },
+    {
+      "id": "cs50p:week9",
+      "title": "Week 9: Et Cetera",
+      "order": 9,
+      "url": "https://cs50.harvard.edu/python/weeks/9/",
+      "topics": [
+        "Et Cetera",
+        "set",
+        "Global Variables",
+        "Constants",
+        "Type Hints",
+        "Docstrings",
+        "argparse",
+        "Unpacking",
+        "args and kwargs",
+        "map",
+        "List Comprehensions",
+        "filter",
+        "Dictionary Comprehensions",
+        "enumerate",
+        "Generators and Iterators",
+        "Congratulations!",
+        "This was CS50!"
+      ],
+      "projects": [],
+      "concepts": [
+        "sets",
+        "scope",
+        "constants",
+        "type_hints",
+        "tool_mypy",
+        "docstrings",
+        "command_line_args",
+        "unpacking",
+        "args_kwargs",
+        "higher_order_functions",
+        "list_comprehensions",
+        "dict_comprehensions",
+        "enumerate_zip",
+        "generators",
+        "iteration",
+        "lib_cowsay"
+      ]
+    },
+    {
+      "id": "cs50p:project",
+      "title": "Final Project",
+      "order": 10,
+      "url": "https://cs50.harvard.edu/python/project/",
+      "topics": [
+        "project.py with main and at least three other top-level functions",
+        "test_project.py with pytest tests for at least three functions",
+        "requirements.txt for pip-installable dependencies",
+        "README.md and a short demo video"
+      ],
+      "projects": [
+        "Final Project"
+      ],
+      "concepts": [
+        "decomposition",
+        "functions",
+        "unit_testing",
+        "lib_pytest",
+        "third_party_packages",
+        "tool_pip",
+        "main_guard"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "ide_editor",
+      "label": "Editors/IDEs",
+      "category": "environment",
+      "first_module": "cs50p:week0",
+      "depth": "introduced",
+      "course_label": "Visual Studio Code / cs50.dev codespace"
+    },
+    {
+      "id": "command_line",
+      "label": "Terminal/shell basics",
+      "category": "environment",
+      "first_module": "cs50p:week0",
+      "depth": "introduced",
+      "course_label": "terminal: code, python, ls..."
+    },
+    {
+      "id": "running_scripts",
+      "label": "Running .py files",
+      "category": "environment",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "python hello.py"
+    },
+    {
+      "id": "print_output",
+      "label": "print() output",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "print, sep and end parameters"
+    },
+    {
+      "id": "user_input",
+      "label": "input()",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "input"
+    },
+    {
+      "id": "functions",
+      "label": "Defining & calling functions",
+      "category": "functions",
+      "first_module": "cs50p:week0",
+      "depth": "deep",
+      "course_label": "Functions / def"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Built-in functions",
+      "category": "functions",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "print, input, round, len..."
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters & arguments",
+      "category": "functions",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "Strings and Parameters"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "Returning Values"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "practiced"
+    },
+    {
+      "id": "comments",
+      "label": "Comments & readability",
+      "category": "environment",
+      "first_module": "cs50p:week0",
+      "depth": "introduced"
+    },
+    {
+      "id": "pseudocode",
+      "label": "Pseudocode",
+      "category": "functions",
+      "first_module": "cs50p:week0",
+      "depth": "introduced",
+      "course_label": "Pseudocode",
+      "new": true
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging & reading errors",
+      "category": "errors_testing",
+      "first_module": "cs50p:week0",
+      "depth": "introduced",
+      "course_label": "Bugs; Runtime Errors"
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "category": "strings",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "str"
+    },
+    {
+      "id": "string_methods",
+      "label": "String methods",
+      "category": "strings",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "strip, capitalize, title, split, lower"
+    },
+    {
+      "id": "string_formatting",
+      "label": "String formatting",
+      "category": "strings",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "f-strings (Formatting Strings)"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation",
+      "category": "strings",
+      "first_module": "cs50p:week0",
+      "depth": "introduced",
+      "course_label": "+"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Numeric types",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "Integers or int; Float Basics"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "incl. Modulo"
+    },
+    {
+      "id": "type_conversion",
+      "label": "Type conversion",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "practiced",
+      "course_label": "int(), float()"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "introduced"
+    },
+    {
+      "id": "expressions",
+      "label": "Expressions",
+      "category": "fundamentals",
+      "first_module": "cs50p:week0",
+      "depth": "introduced"
+    },
+    {
+      "id": "conditionals",
+      "label": "if/elif/else",
+      "category": "control_flow",
+      "first_module": "cs50p:week1",
+      "depth": "deep",
+      "course_label": "if Statements; Control Flow, elif, and else"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "cs50p:week1",
+      "depth": "practiced"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "cs50p:week1",
+      "depth": "practiced",
+      "course_label": "or / and"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "cs50p:week1",
+      "depth": "practiced",
+      "course_label": "bool; Pythonic"
+    },
+    {
+      "id": "match_statement",
+      "label": "match statement",
+      "category": "control_flow",
+      "first_module": "cs50p:week1",
+      "depth": "introduced",
+      "course_label": "match"
+    },
+    {
+      "id": "while_loops",
+      "label": "while loops",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "deep",
+      "course_label": "While Loops"
+    },
+    {
+      "id": "for_loops",
+      "label": "for loops",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "deep",
+      "course_label": "For Loops"
+    },
+    {
+      "id": "range_function",
+      "label": "range()",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "practiced"
+    },
+    {
+      "id": "break_continue",
+      "label": "break/continue",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "practiced",
+      "course_label": "break"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "cs50p:week2",
+      "depth": "practiced",
+      "course_label": "More About Lists"
+    },
+    {
+      "id": "iteration",
+      "label": "Iteration",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "practiced",
+      "course_label": "Generators and Iterators"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "cs50p:week2",
+      "depth": "practiced",
+      "course_label": "Dictionaries"
+    },
+    {
+      "id": "nested_data_structures",
+      "label": "Nested data structures",
+      "category": "collections",
+      "first_module": "cs50p:week2",
+      "depth": "introduced",
+      "course_label": "list of dicts"
+    },
+    {
+      "id": "nested_loops",
+      "label": "Nested loops",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "practiced",
+      "course_label": "Mario"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns",
+      "category": "control_flow",
+      "first_module": "cs50p:week2",
+      "depth": "practiced"
+    },
+    {
+      "id": "abstraction",
+      "label": "Abstraction",
+      "category": "functions",
+      "first_module": "cs50p:week2",
+      "depth": "introduced",
+      "course_label": "Mario"
+    },
+    {
+      "id": "decomposition",
+      "label": "Problem decomposition",
+      "category": "functions",
+      "first_module": "cs50p:week2",
+      "depth": "practiced"
+    },
+    {
+      "id": "collections",
+      "label": "Collections",
+      "category": "collections",
+      "first_module": "cs50p:week2",
+      "depth": "introduced"
+    },
+    {
+      "id": "exceptions",
+      "label": "Exceptions (try/except/else)",
+      "category": "errors_testing",
+      "first_module": "cs50p:week3",
+      "depth": "deep",
+      "course_label": "try, else, pass; ValueError, NameError"
+    },
+    {
+      "id": "defensive_programming",
+      "label": "Input validation",
+      "category": "errors_testing",
+      "first_module": "cs50p:week3",
+      "depth": "practiced",
+      "course_label": "Creating a Function to Get an Integer"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Modules & imports",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "deep",
+      "course_label": "Libraries; Making Your Own Libraries"
+    },
+    {
+      "id": "standard_library",
+      "label": "Standard library",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced"
+    },
+    {
+      "id": "random_module",
+      "label": "random module",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "Random"
+    },
+    {
+      "id": "statistics_module",
+      "label": "statistics module",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "Statistics",
+      "new": true
+    },
+    {
+      "id": "os_sys_module",
+      "label": "sys / os",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "sys.argv, sys.exit; os.path.splitext"
+    },
+    {
+      "id": "command_line_args",
+      "label": "Command-line arguments",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "Command-Line Arguments; argparse"
+    },
+    {
+      "id": "list_slicing",
+      "label": "Slicing",
+      "category": "collections",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "slice (sys.argv[1:])"
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third-party packages",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "Packages (PyPI)"
+    },
+    {
+      "id": "tool_pip",
+      "label": "pip / packages",
+      "category": "environment",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "pip install"
+    },
+    {
+      "id": "apis_http",
+      "label": "HTTP APIs",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "APIs"
+    },
+    {
+      "id": "json_data",
+      "label": "JSON",
+      "category": "files_io",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "json module"
+    },
+    {
+      "id": "lib_requests",
+      "label": "requests",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "requests"
+    },
+    {
+      "id": "main_guard",
+      "label": "if __name__ == \"__main__\"",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "practiced",
+      "course_label": "Making Your Own Libraries",
+      "new": true
+    },
+    {
+      "id": "lib_cowsay",
+      "label": "cowsay",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "cowsay",
+      "new": true
+    },
+    {
+      "id": "lib_emoji",
+      "label": "emoji",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "emoji (Emojize)",
+      "new": true
+    },
+    {
+      "id": "lib_pyfiglet",
+      "label": "pyfiglet",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "pyfiglet (Frank, Ian and Glen's Letters)",
+      "new": true
+    },
+    {
+      "id": "lib_inflect",
+      "label": "inflect",
+      "category": "modules_libs",
+      "first_module": "cs50p:week4",
+      "depth": "introduced",
+      "course_label": "inflect (Adieu, Adieu; Seasons of Love)",
+      "new": true
+    },
+    {
+      "id": "unit_testing",
+      "label": "Unit testing",
+      "category": "errors_testing",
+      "first_module": "cs50p:week5",
+      "depth": "deep",
+      "course_label": "Unit Tests"
+    },
+    {
+      "id": "assertions",
+      "label": "assert",
+      "category": "errors_testing",
+      "first_module": "cs50p:week5",
+      "depth": "practiced",
+      "course_label": "assert"
+    },
+    {
+      "id": "lib_pytest",
+      "label": "pytest",
+      "category": "errors_testing",
+      "first_module": "cs50p:week5",
+      "depth": "deep",
+      "course_label": "pytest",
+      "new": true
+    },
+    {
+      "id": "raising_exceptions",
+      "label": "raise & custom exceptions",
+      "category": "errors_testing",
+      "first_module": "cs50p:week5",
+      "depth": "practiced",
+      "course_label": "raise; Inheritance and Exceptions"
+    },
+    {
+      "id": "file_io",
+      "label": "File I/O",
+      "category": "files_io",
+      "first_module": "cs50p:week6",
+      "depth": "deep",
+      "course_label": "open"
+    },
+    {
+      "id": "context_managers",
+      "label": "with statement",
+      "category": "files_io",
+      "first_module": "cs50p:week6",
+      "depth": "practiced",
+      "course_label": "with"
+    },
+    {
+      "id": "csv_files",
+      "label": "CSV files",
+      "category": "files_io",
+      "first_module": "cs50p:week6",
+      "depth": "practiced",
+      "course_label": "CSV: csv.reader, DictReader, DictWriter"
+    },
+    {
+      "id": "sorting",
+      "label": "Sorting",
+      "category": "collections",
+      "first_module": "cs50p:week6",
+      "depth": "introduced",
+      "course_label": "sorted(..., key=...)"
+    },
+    {
+      "id": "lambda_functions",
+      "label": "Lambda functions",
+      "category": "functions",
+      "first_module": "cs50p:week6",
+      "depth": "introduced",
+      "course_label": "lambda (sort key)"
+    },
+    {
+      "id": "file_paths",
+      "label": "File paths",
+      "category": "files_io",
+      "first_module": "cs50p:week6",
+      "depth": "introduced",
+      "course_label": "os.path.splitext (CS50 P-Shirt)"
+    },
+    {
+      "id": "lib_pil",
+      "label": "Pillow (PIL)",
+      "category": "modules_libs",
+      "first_module": "cs50p:week6",
+      "depth": "practiced",
+      "course_label": "Binary Files and PIL",
+      "new": true
+    },
+    {
+      "id": "lib_tabulate",
+      "label": "tabulate",
+      "category": "modules_libs",
+      "first_module": "cs50p:week6",
+      "depth": "introduced",
+      "course_label": "tabulate (Pizza Py)",
+      "new": true
+    },
+    {
+      "id": "regular_expressions",
+      "label": "Regular expressions",
+      "category": "strings",
+      "first_module": "cs50p:week7",
+      "depth": "deep",
+      "course_label": "re: search, match, fullmatch, sub"
+    },
+    {
+      "id": "lib_validators",
+      "label": "validators / validator-collection",
+      "category": "modules_libs",
+      "first_module": "cs50p:week7",
+      "depth": "introduced",
+      "course_label": "Response Validation",
+      "new": true
+    },
+    {
+      "id": "object_oriented_design",
+      "label": "OOP paradigm",
+      "category": "data_web",
+      "first_module": "cs50p:week8",
+      "depth": "introduced",
+      "course_label": "Object-Oriented Programming"
+    },
+    {
+      "id": "tuples",
+      "label": "Tuples",
+      "category": "collections",
+      "first_module": "cs50p:week8",
+      "depth": "introduced",
+      "course_label": "tuple (returning multiple values)"
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "deep",
+      "course_label": "Classes"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Objects & methods",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced",
+      "course_label": "Connecting to Previous Work in this Course"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced"
+    },
+    {
+      "id": "constructors",
+      "label": "__init__",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced",
+      "course_label": "__init__"
+    },
+    {
+      "id": "dunder_methods",
+      "label": "Dunder methods",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced",
+      "course_label": "__str__; Operator Overloading (__add__)"
+    },
+    {
+      "id": "encapsulation",
+      "label": "Properties/encapsulation",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced",
+      "course_label": "@property, setters"
+    },
+    {
+      "id": "decorators",
+      "label": "Decorators",
+      "category": "functions",
+      "first_module": "cs50p:week8",
+      "depth": "introduced",
+      "course_label": "Decorators (@property, @classmethod, @staticmethod)"
+    },
+    {
+      "id": "class_attributes",
+      "label": "Class/static methods",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced",
+      "course_label": "Class Methods; Static Methods"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "cs50p:week8",
+      "depth": "practiced",
+      "course_label": "Inheritance"
+    },
+    {
+      "id": "datetime_module",
+      "label": "datetime",
+      "category": "modules_libs",
+      "first_module": "cs50p:week8",
+      "depth": "introduced",
+      "course_label": "datetime.date (Seasons of Love)"
+    },
+    {
+      "id": "lib_fpdf",
+      "label": "fpdf2",
+      "category": "modules_libs",
+      "first_module": "cs50p:week8",
+      "depth": "introduced",
+      "course_label": "fpdf2 (CS50 Shirtificate)",
+      "new": true
+    },
+    {
+      "id": "sets",
+      "label": "Sets",
+      "category": "collections",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "set"
+    },
+    {
+      "id": "scope",
+      "label": "Scope",
+      "category": "functions",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Global Variables"
+    },
+    {
+      "id": "constants",
+      "label": "Constants",
+      "category": "fundamentals",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Constants"
+    },
+    {
+      "id": "type_hints",
+      "label": "Type hints",
+      "category": "functions",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Type Hints"
+    },
+    {
+      "id": "tool_mypy",
+      "label": "mypy",
+      "category": "environment",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "mypy",
+      "new": true
+    },
+    {
+      "id": "docstrings",
+      "label": "Docstrings",
+      "category": "functions",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Docstrings"
+    },
+    {
+      "id": "unpacking",
+      "label": "Unpacking",
+      "category": "collections",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Unpacking"
+    },
+    {
+      "id": "args_kwargs",
+      "label": "*args/**kwargs",
+      "category": "functions",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "args and kwargs"
+    },
+    {
+      "id": "higher_order_functions",
+      "label": "Higher-order functions",
+      "category": "functions",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "map; filter"
+    },
+    {
+      "id": "list_comprehensions",
+      "label": "List comprehensions",
+      "category": "collections",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "List Comprehensions"
+    },
+    {
+      "id": "dict_comprehensions",
+      "label": "Dict comprehensions",
+      "category": "collections",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Dictionary Comprehensions"
+    },
+    {
+      "id": "enumerate_zip",
+      "label": "enumerate",
+      "category": "collections",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "enumerate"
+    },
+    {
+      "id": "generators",
+      "label": "Generators",
+      "category": "functions",
+      "first_module": "cs50p:week9",
+      "depth": "introduced",
+      "course_label": "Generators and Iterators (yield)"
+    }
+  ],
+  "edges": [
+    {
+      "source": "cs50p:week0",
+      "target": "cs50p:week1",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week1",
+      "target": "cs50p:week2",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week2",
+      "target": "cs50p:week3",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week3",
+      "target": "cs50p:week4",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week4",
+      "target": "cs50p:week5",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week5",
+      "target": "cs50p:week6",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week6",
+      "target": "cs50p:week7",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week7",
+      "target": "cs50p:week8",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week8",
+      "target": "cs50p:week9",
+      "type": "precedes"
+    },
+    {
+      "source": "cs50p:week9",
+      "target": "cs50p:project",
+      "type": "precedes"
+    },
+    {
+      "source": "functions",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "return_values",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "match_statement",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "nested_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "type_conversion",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "defensive_programming",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "modules_imports",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "random_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "os_sys_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "os_sys_module",
+      "target": "command_line_args",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "third_party_packages",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "third_party_packages",
+      "target": "lib_requests",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "main_guard",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "main_guard",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "assertions",
+      "target": "lib_pytest",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "file_io",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "context_managers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "context_managers",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "command_line_args",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "regular_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "regular_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "unit_testing",
+      "target": "regular_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "raising_exceptions",
+      "target": "constructors",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "raising_exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "dunder_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decorators",
+      "target": "encapsulation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "class_attributes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "sets",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "command_line_args",
+      "target": "args_kwargs",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "unpacking",
+      "target": "args_kwargs",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "list_comprehensions",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "iteration",
+      "target": "generators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "type_hints",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "docstrings",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "unit_testing",
+      "target": "lib_pytest",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "tuples",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "sets",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "match_statement",
+      "target": "conditionals",
+      "type": "is_a"
+    },
+    {
+      "source": "random_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "statistics_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "os_sys_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "datetime_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_requests",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_cowsay",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_emoji",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_pyfiglet",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_inflect",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_pytest",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_pil",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_tabulate",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_validators",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_fpdf",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "dict_comprehensions",
+      "target": "list_comprehensions",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_pytest",
+      "target": "unit_testing",
+      "type": "is_a"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "constructors",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "instance_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "dunder_methods",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "class_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "encapsulation",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "assertions",
+      "target": "unit_testing",
+      "type": "part_of"
+    },
+    {
+      "source": "break_continue",
+      "target": "while_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "context_managers",
+      "target": "file_io",
+      "type": "part_of"
+    },
+    {
+      "source": "main_guard",
+      "target": "modules_imports",
+      "type": "part_of"
+    },
+    {
+      "source": "unit_testing",
+      "target": "lib_pytest",
+      "type": "uses_tool"
+    },
+    {
+      "source": "apis_http",
+      "target": "lib_requests",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week4",
+      "target": "lib_cowsay",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week4",
+      "target": "lib_emoji",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week4",
+      "target": "lib_pyfiglet",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week4",
+      "target": "lib_inflect",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week4",
+      "target": "lib_requests",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week5",
+      "target": "lib_pytest",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week6",
+      "target": "lib_pil",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week6",
+      "target": "lib_tabulate",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week7",
+      "target": "lib_validators",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week8",
+      "target": "lib_fpdf",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week8",
+      "target": "lib_inflect",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:project",
+      "target": "lib_pytest",
+      "type": "uses_tool"
+    },
+    {
+      "source": "type_hints",
+      "target": "tool_mypy",
+      "type": "uses_tool"
+    },
+    {
+      "source": "third_party_packages",
+      "target": "tool_pip",
+      "type": "uses_tool"
+    },
+    {
+      "source": "cs50p:week0",
+      "target": "ide_editor",
+      "type": "uses_tool"
+    },
+    {
+      "source": "pseudocode",
+      "target": "decomposition",
+      "type": "related_to"
+    },
+    {
+      "source": "regular_expressions",
+      "target": "defensive_programming",
+      "type": "related_to"
+    },
+    {
+      "source": "sorting",
+      "target": "lambda_functions",
+      "type": "related_to"
+    },
+    {
+      "source": "json_data",
+      "target": "apis_http",
+      "type": "related_to"
+    },
+    {
+      "source": "decorators",
+      "target": "higher_order_functions",
+      "type": "related_to"
+    },
+    {
+      "source": "generators",
+      "target": "iteration",
+      "type": "related_to"
+    }
+  ]
+}

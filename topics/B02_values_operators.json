@@ -1,0 +1,2594 @@
+{
+  "batch": "B02",
+  "title": "Values, types and operators",
+  "concept_map": {
+    "variables": {
+      "topics": [
+        "variables.assign_and_print",
+        "variables.reassign_and_trace",
+        "variables.update_with_own_value",
+        "variables.swap_values",
+        "variables.naming_rules"
+      ],
+      "entry_topic": "variables.assign_and_print",
+      "notes": "Scope and global variables are B05 scope. a, b = b, a is used in swap_values as a preview; tuple unpacking proper is B06 unpacking. Names-as-references for mutable objects (aliasing) is B06 mutability_aliasing. naming_rules covers the PEP 8 naming conventions B01 deferred here; it is core, so pep8_style.spacing_and_layout (non-core) is neither a prerequisite nor encompassed."
+    },
+    "data_types": {
+      "topics": [
+        "data_types.values_have_types",
+        "data_types.types_decide_operations"
+      ],
+      "entry_topic": "data_types.values_have_types",
+      "notes": "Only two topics because the type-specific material is owned by integers_floats, booleans, none_type and type_conversion in this batch, and strings by B03. isinstance() and classes-as-types belong to the OOP batch (B11). D2 previews \"2\" + \"3\" joining strings; B03 string_concatenation owns concatenation and should encompass data_types.types_decide_operations."
+    },
+    "integers_floats": {
+      "topics": [
+        "integers_floats.int_vs_float",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "entry_topic": "integers_floats.int_vs_float",
+      "notes": "round() and abs() are taught here because floats need them early; B05 builtin_functions should reference rather than re-teach them. Binary representation, epsilon methods and the decimal module are B14 floating_point_precision; math module functions are B13 math_module."
+    },
+    "arithmetic_operators": {
+      "topics": [
+        "arithmetic_operators.basic_four",
+        "arithmetic_operators.floor_division_and_modulo",
+        "arithmetic_operators.modulo_patterns",
+        "arithmetic_operators.exponents"
+      ],
+      "entry_topic": "arithmetic_operators.basic_four",
+      "notes": "Augmented assignment (+= etc.) is owned by variables.update_with_own_value. Divisibility tests with if are B04 conditionals, which should encompass modulo_patterns. ^ is mentioned only as 'not power'; bitwise operators are B14 binary_bitwise."
+    },
+    "expressions": {
+      "topics": [
+        "expressions.evaluate_expressions",
+        "expressions.operator_precedence",
+        "expressions.translate_formulas"
+      ],
+      "entry_topic": "expressions.evaluate_expressions",
+      "notes": "print(2 + 3) vs print('2 + 3') (deferred from B01 print_output) is expressions.evaluate_expressions KP1. Conditional expressions (x if c else y) are B04."
+    },
+    "constants": {
+      "topics": [
+        "constants.named_constants"
+      ],
+      "entry_topic": "constants.named_constants",
+      "notes": "Global constants used inside functions belong to B05 scope; math.pi etc. to B13 math_module; Enum to B11 enums."
+    },
+    "none_type": {
+      "topics": [
+        "none_type.none_value",
+        "none_type.check_for_none"
+      ],
+      "entry_topic": "none_type.none_value",
+      "notes": "Functions that return None implicitly (and print() returning None) belong to B05 return_values, which should encompass none_type.none_value. 'is' vs '==' on mutable objects belongs to B06 mutability_aliasing; check_for_none only covers None and the literal warning."
+    },
+    "type_conversion": {
+      "topics": [
+        "type_conversion.strings_to_numbers",
+        "type_conversion.numbers_and_strings"
+      ],
+      "entry_topic": "type_conversion.strings_to_numbers",
+      "notes": "bool() conversion is booleans.truthiness. Handling ValueError with try/except is B09 exceptions (cs50p 'get an integer' function). str() for building output with + is B03 string_concatenation, which should encompass type_conversion.numbers_and_strings. list()/tuple()/set() conversions belong to B06/B07."
+    },
+    "user_input": {
+      "topics": [
+        "user_input.read_text",
+        "user_input.read_numbers",
+        "user_input.input_compute_output"
+      ],
+      "entry_topic": "user_input.read_text",
+      "notes": "The concept graph says user_input comes before variables; here it comes after, since storing the answer needs assignment. Re-prompting until valid input is B04 while_loops (sentinel) and B09 exceptions. Input methods like .strip()/.lower() on answers are B03 string_methods."
+    },
+    "booleans": {
+      "topics": [
+        "booleans.true_and_false",
+        "booleans.truthiness"
+      ],
+      "entry_topic": "booleans.true_and_false",
+      "notes": "Using truthiness in if/while (if name:) is B04 conditionals; summing booleans to count is B04 loop_patterns / B05 builtin_functions."
+    },
+    "comparison_operators": {
+      "topics": [
+        "comparison_operators.compare_numbers",
+        "comparison_operators.compare_mixed_types",
+        "comparison_operators.ranges_and_float_equality"
+      ],
+      "entry_topic": "comparison_operators.compare_numbers",
+      "notes": "String comparison is owned here; B03 should only add case-insensitive comparison via .lower(). The membership operator in is B03 strings / B06 lists. math.isclose is B13 math_module."
+    },
+    "logical_operators": {
+      "topics": [
+        "logical_operators.and_or_not",
+        "logical_operators.combine_conditions",
+        "logical_operators.negation_de_morgan",
+        "logical_operators.short_circuit"
+      ],
+      "entry_topic": "logical_operators.and_or_not",
+      "notes": "All examples are standalone expressions; B04 conditionals uses them in if/while and should encompass logical_operators.and_or_not and combine_conditions."
+    }
+  },
+  "topics": [
+    {
+      "id": "variables.assign_and_print",
+      "title": "Storing a value in a variable",
+      "concept": "variables",
+      "summary": "Assign a value to a name with =, use the name to get the value back, and recognise the NameError from using a name that was never assigned.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "print_output.multiple_values",
+        "running_scripts.statements_run_in_order"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assign a value, then use the name",
+          "worked_example": "age = 36\nprint(age)\n# 36\n= stores the value on the right under the name on the left.",
+          "practice": "Predict what a short program prints; write the assignment that makes a given print show a target value.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "A name vs text in quotes",
+          "worked_example": "city = \"Lima\"\nprint(city)\nprint(\"city\")\n# Lima\n# city\nWithout quotes Python looks up the variable; with quotes it is just text.",
+          "practice": "Predict output of look-alike pairs with and without quotes; fix a print that shows the name instead of the value.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "Using a name before assigning it is a NameError",
+          "worked_example": "print(score)\nscore = 10\n# NameError: name 'score' is not defined\nThe assignment must run before the line that uses it.",
+          "practice": "Decide which programs run and which stop with NameError; reorder lines (Parsons) so the program works.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Names are case-sensitive and must be spelled exactly",
+          "worked_example": "total = 5\nprint(Total)\n# NameError: Total and total are different names",
+          "practice": "Find the misspelled or wrongly capitalised name in short programs and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.multiple_values",
+          "weight": 0.4
+        },
+        {
+          "topic": "running_scripts.statements_run_in_order",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "variables.reassign_and_trace",
+      "title": "Reassigning variables and tracing their values",
+      "concept": "variables",
+      "summary": "Predict a variable's value after several assignments, including copying one variable into another, using a trace table.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "variables.assign_and_print"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Reassignment replaces the old value",
+          "worked_example": "x = 5\nx = 8\nprint(x)\n# 8\nA variable holds one value at a time; the 5 is gone.",
+          "practice": "Predict the printed value after two or three assignments to the same name.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Order matters: a print shows the value at that moment",
+          "worked_example": "x = 5\nprint(x)\nx = 8\nprint(x)\n# 5\n# 8",
+          "practice": "Predict multi-line output where prints and reassignments are interleaved.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "b = a copies the current value; later changes to a do not affect b",
+          "worked_example": "a = 3\nb = a\na = 10\nprint(a, b)\n# 10 3",
+          "practice": "Predict both values after copy-then-reassign sequences; multiple choice designed around the 'b follows a' misconception.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Tracing several variables with a table",
+          "worked_example": "a = 1\nb = 2\na = b\nb = 7\n# line | a | b\n#  1   | 1 | -\n#  2   | 1 | 2\n#  3   | 2 | 2\n#  4   | 2 | 7",
+          "practice": "Fill in a trace table for 4-6 assignments across two or three variables.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "variables.update_with_own_value",
+      "title": "Updating a variable from its own value",
+      "concept": "variables",
+      "summary": "Use x = x + 1 and the augmented operators +=, -=, *= to update counters and running totals, and avoid updating a variable that was never initialised.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "variables.reassign_and_trace",
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "x = x + 1: the right side uses the old value",
+          "worked_example": "count = 4\ncount = count + 1\nprint(count)\n# 5\nPython evaluates count + 1 first (4 + 1), then stores 5 in count.",
+          "practice": "Predict values after one or two self-updates; trace a sequence of updates.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace",
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "Shorthand: +=, -=, *=, /=",
+          "worked_example": "score = 10\nscore += 5   # same as score = score + 5\nscore -= 3\nprint(score)\n# 12",
+          "practice": "Rewrite long-form updates with augmented operators; predict the result of a mixed sequence.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "A running total over several steps",
+          "worked_example": "total = 0\ntotal += 4\ntotal += 7\ntotal += 2\nprint(total)\n# 13\nStart at 0, then add each amount.",
+          "practice": "Write the lines that total a shopping list of given prices; fill a trace table for the total.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Common bugs: no starting value, and an update that is never stored",
+          "worked_example": "count += 1      # NameError: count was never assigned\nx = 5\nx + 1           # computed, then thrown away\nprint(x)        # still 5",
+          "practice": "Spot why each program fails or prints the wrong value; fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.reassign_and_trace",
+          "weight": 0.5
+        },
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "variables.swap_values",
+      "title": "Swapping the values of two variables",
+      "concept": "variables",
+      "summary": "Swap two variables correctly with a temporary variable or a, b = b, a, and explain why the naive two-line swap loses a value.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "variables.reassign_and_trace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The naive swap loses a value",
+          "worked_example": "a = 1\nb = 2\na = b\nb = a\nprint(a, b)\n# 2 2  (the original 1 was overwritten)",
+          "practice": "Trace the naive swap; predict the output.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Swap with a temporary variable",
+          "worked_example": "temp = a\na = b\nb = temp\nThe temp keeps a's old value safe while a is overwritten.",
+          "practice": "Reorder the three swap lines (Parsons); fix a temp swap with two lines in the wrong order.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Python's one-line swap",
+          "worked_example": "a, b = b, a\nThe right side is evaluated fully first, then both names are assigned. (Unpacking is explained fully later.)",
+          "practice": "Predict values after one-line swaps; replace a temp swap with the one-liner.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Rotating three values",
+          "worked_example": "x, y, z = 1, 2, 3\nx, y, z = y, z, x\nprint(x, y, z)\n# 2 3 1",
+          "practice": "Predict the result of a three-way rotation; write a rotation that produces a target order.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.reassign_and_trace",
+          "weight": 0.7
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "py4e",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "variables.naming_rules",
+      "title": "Naming variables: rules and conventions",
+      "concept": "variables",
+      "summary": "Choose names that are legal (letters, digits, underscores, not starting with a digit, not a keyword), do not shadow built-ins like print, and follow PEP 8's descriptive snake_case.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "variables.assign_and_print"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "What makes a name legal",
+          "worked_example": "user_age = 30    # ok\n_count = 0       # ok\n2nd_place = 1    # SyntaxError: cannot start with a digit\nfirst-name = 1   # SyntaxError: - is minus",
+          "practice": "Classify a list of names as legal or illegal; fix illegal names.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Keywords cannot be names; built-in names should not be",
+          "worked_example": "class = 3       # SyntaxError: class is a keyword\nprint = 5\nprint(\"hi\")     # TypeError: print is now the number 5",
+          "practice": "Pick which names are keywords; explain (multiple choice) why a program broke after assigning to print or input.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "PEP 8: lower_snake_case",
+          "worked_example": "totalPrice = 5   # works, but not Python style\ntotal_price = 5  # PEP 8",
+          "practice": "Choose the PEP 8 name among options; rename variables in a short program.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Descriptive names make code readable",
+          "worked_example": "x = 60 * 24        # what is x?\nminutes_per_day = 60 * 24\nPrefer names that say what the value means; single letters only for short-lived values.",
+          "practice": "Pick the best name for a described value; rename vague variables in a 4-line program.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "data_types.values_have_types",
+      "title": "Every value has a type",
+      "concept": "data_types",
+      "summary": "Name the type of int, float, str and bool values, check it with type(), and explain that a variable's type is the type of the value it currently holds.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "variables.assign_and_print"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Four basic types and type()",
+          "worked_example": "print(type(42))      # <class 'int'>\nprint(type(3.5))     # <class 'float'>\nprint(type(\"hi\"))    # <class 'str'>\nprint(type(True))    # <class 'bool'>",
+          "practice": "Predict type() for literals; match values to their type names.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Quotes make a string, even around digits",
+          "worked_example": "print(type(\"42\"))   # <class 'str'>\nprint(type(42))     # <class 'int'>\nprint(\"42\", 42)     # 42 42  (they print the same)",
+          "practice": "Classify look-alike values (\"42\", 42, \"4.2\", 4.2, \"True\", True) by type.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A variable's type follows its current value",
+          "worked_example": "x = 7\nprint(type(x))   # <class 'int'>\nx = \"seven\"\nprint(type(x))   # <class 'str'>",
+          "practice": "Predict the type after each reassignment in a short program; trace types in a table.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "data_types.types_decide_operations",
+      "title": "Types decide what operators do",
+      "concept": "data_types",
+      "summary": "Predict whether an operation works by looking at the types involved: + adds numbers but joins strings, and mixing a string with a number raises TypeError.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "data_types.values_have_types",
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Same operator, different types",
+          "worked_example": "print(2 + 3)       # 5\nprint(\"2\" + \"3\")   # 23\nOn numbers + adds; on strings it joins the text.",
+          "practice": "Predict outputs for + on pairs of numbers and pairs of strings.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types",
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "A string plus a number is a TypeError",
+          "worked_example": "print(\"2\" + 3)\n# TypeError: can only concatenate str (not \"int\") to str\nPython will not guess whether you meant 5 or \"23\".",
+          "practice": "For each expression decide: value or TypeError; give the value where there is one.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Finding where a value got the wrong type",
+          "worked_example": "price = \"5\"       # quotes: this is a str\ntotal = price + 1   # TypeError on this line\nThe error appears where the value is used, but the bug is where it was created.",
+          "practice": "Locate and fix the line that gave a variable the wrong type.",
+          "formats": [
+            "fix_the_bug",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_types.values_have_types",
+          "weight": 0.5
+        },
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "py4e",
+        "helsinki_mooc",
+        "codecademy",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "arithmetic_operators.basic_four",
+      "title": "Adding, subtracting, multiplying and dividing",
+      "concept": "arithmetic_operators",
+      "summary": "Compute with + - * and /, knowing that / always gives a float and that dividing by zero is an error.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "variables.assign_and_print",
+        "data_types.values_have_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "+, - and * on numbers",
+          "worked_example": "print(7 + 5)   # 12\nprint(7 - 5)   # 2\nprint(7 * 5)   # 35\n* is multiplication (not x).",
+          "practice": "Predict results; write the expression for a word problem.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "/ always gives a float",
+          "worked_example": "print(6 / 3)   # 2.0\nprint(7 / 2)   # 3.5\nEven when it divides exactly, / gives a decimal result.",
+          "practice": "Predict results of divisions, including exact ones; multiple choice between 2 and 2.0.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Arithmetic with variables",
+          "worked_example": "price = 4\nqty = 3\ncost = price * qty\nprint(cost)   # 12",
+          "practice": "Write the line that computes a result from given variables; predict output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Dividing by zero is an error",
+          "worked_example": "print(5 / 0)\n# ZeroDivisionError: division by zero",
+          "practice": "Decide which lines raise ZeroDivisionError (including via a variable that is 0).",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "arithmetic_operators.floor_division_and_modulo",
+      "title": "Floor division // and remainder %",
+      "concept": "arithmetic_operators",
+      "summary": "Use // for the whole-number quotient and % for the remainder, convert units such as minutes to hours and minutes, and predict results with negative numbers.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "// gives the whole number of times",
+          "worked_example": "print(7 // 2)     # 3\nprint(7.0 // 2)   # 3.0\n// drops the fractional part; the type follows the operands.",
+          "practice": "Predict // results for ints and floats.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "% gives the remainder",
+          "worked_example": "print(7 % 2)    # 1\nprint(20 % 5)   # 0\nprint(3 % 10)   # 3",
+          "practice": "Predict remainders, including when the left number is smaller.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "Using // and % together to convert units",
+          "worked_example": "minutes = 135\nprint(minutes // 60, minutes % 60)\n# 2 15  (2 hours 15 minutes)",
+          "practice": "Write code that converts seconds into minutes and seconds, or cents into euros and cents.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Negative numbers: // rounds down",
+          "worked_example": "print(-7 // 2)   # -4, not -3\nprint(-7 % 2)    # 1\n// rounds toward negative infinity.",
+          "practice": "Predict // and % with one negative operand.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "arithmetic_operators.modulo_patterns",
+      "title": "Patterns with %: even/odd, digits and wrap-around",
+      "concept": "arithmetic_operators",
+      "summary": "Apply % and // to classic problems: test even/odd, extract the last digit, and wrap a value around a cycle such as hours on a clock.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "arithmetic_operators.floor_division_and_modulo"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Even or odd with % 2",
+          "worked_example": "print(14 % 2)   # 0 -> even\nprint(9 % 2)    # 1 -> odd",
+          "practice": "Predict n % 2 for several numbers; say which are even.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        },
+        {
+          "title": "Last digit with % 10, dropping it with // 10",
+          "worked_example": "n = 4721\nprint(n % 10)    # 1\nprint(n // 10)   # 472",
+          "practice": "Predict last digits and shortened numbers; write code printing the tens digit.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        },
+        {
+          "title": "Wrapping around a cycle",
+          "worked_example": "hour = 22\nprint((hour + 5) % 24)   # 3\nThe % keeps the result inside 0-23.",
+          "practice": "Compute clock times and weekdays after adding hours or days; fix a version that forgets the % and prints 27.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.floor_division_and_modulo",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "100_days_of_code",
+        "code_in_place",
+        "py4e",
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "arithmetic_operators.exponents",
+      "title": "Powers with **",
+      "concept": "arithmetic_operators",
+      "summary": "Raise numbers to powers with **, take square roots with ** 0.5, and know that ^ is not the power operator.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "** raises to a power",
+          "worked_example": "print(2 ** 10)   # 1024\nprint(5 ** 2)    # 25",
+          "practice": "Predict powers; write the expression for the area of a square of side s.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "^ is not power",
+          "worked_example": "print(2 ^ 3)    # 1  (a different operator)\nprint(2 ** 3)   # 8\nUse ** for powers.",
+          "practice": "Fix formulas that used ^; multiple choice on which expression computes 2 cubed.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Roots and negative powers give floats",
+          "worked_example": "print(9 ** 0.5)   # 3.0\nprint(2 ** -1)    # 0.5",
+          "practice": "Predict results of fractional and negative exponents; write a square-root expression.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Integers can be as big as you like",
+          "worked_example": "print(2 ** 100)\n# 1267650600228229401496703205376\nPython ints never overflow; they are exact.",
+          "practice": "Predict whether a huge power prints exactly or as a float (int vs float base).",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "codecademy",
+        "bootdev",
+        "py4e",
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "integers_floats.int_vs_float",
+      "title": "Integers and floats",
+      "concept": "integers_floats",
+      "summary": "Tell int from float values, predict when a result becomes a float, and read large and very small numbers written with underscores or e-notation.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "7 and 7.0 are different types",
+          "worked_example": "print(type(7))     # <class 'int'>\nprint(type(7.0))   # <class 'float'>\nprint(7 == 7.0)    # True: same value",
+          "practice": "Classify values as int or float; predict type() results.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Mixing int and float gives a float",
+          "worked_example": "print(2 + 0.5)    # 2.5\nprint(3 * 1.0)    # 3.0\nprint(8 / 4)      # 2.0  (/ is always float)",
+          "practice": "Predict the value and type of mixed expressions.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "Writing large numbers with underscores",
+          "worked_example": "population = 8_100_000_000\nprint(population)   # 8100000000\nUnderscores are ignored; commas would make several values.",
+          "practice": "Fix a number written with commas; predict printed values of underscore literals.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "Scientific notation: e means times ten to the power",
+          "worked_example": "print(1.5e3)       # 1500.0\nprint(0.00001)      # 1e-05\nVery large or small floats print in e-notation.",
+          "practice": "Convert between e-notation and ordinary decimals; predict how a value prints.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.3
+        },
+        {
+          "topic": "data_types.values_have_types",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "integers_floats.rounding_and_float_surprises",
+      "title": "Rounding and float surprises",
+      "concept": "integers_floats",
+      "summary": "Expect small errors in float arithmetic, round results with round(x) and round(x, n), and use abs() for distances.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "integers_floats.int_vs_float"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Floats are approximations",
+          "worked_example": "print(0.1 + 0.2)\n# 0.30000000000000004\nMost decimals cannot be stored exactly in binary, so tiny errors appear.",
+          "practice": "Predict which sums print exactly and which show a tiny error (multiple choice); explain the cause.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "integers_floats.int_vs_float"
+          ]
+        },
+        {
+          "title": "round(x) to the nearest whole number; ties go to the even neighbour",
+          "worked_example": "print(round(3.7))   # 4\nprint(round(2.5))   # 2\nprint(round(3.5))   # 4",
+          "practice": "Predict round() results, including .5 cases.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "integers_floats.int_vs_float"
+          ]
+        },
+        {
+          "title": "round(x, n) for n decimal places",
+          "worked_example": "print(round(10 / 3, 2))   # 3.33\nprint(round(0.1 + 0.2, 2))   # 0.3",
+          "practice": "Write expressions that round prices and averages for display; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "abs() for size and distance",
+          "worked_example": "print(abs(-3.5))       # 3.5\nprint(abs(4 - 10))     # 6: how far apart 4 and 10 are",
+          "practice": "Write the distance between two variables; predict abs() results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "integers_floats.int_vs_float",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "mit_6100l",
+        "bootdev",
+        "100_days_of_code",
+        "helsinki_mooc",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "expressions.evaluate_expressions",
+      "title": "Expressions produce values",
+      "concept": "expressions",
+      "summary": "Recognise an expression as something that evaluates to a value, evaluate it using variables' current values, and use expressions directly as print arguments.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "print(2 + 3) vs print(\"2 + 3\")",
+          "worked_example": "print(2 + 3)     # 5\nprint(\"2 + 3\")   # 2 + 3\nWithout quotes Python evaluates the expression; with quotes it is text.",
+          "practice": "Predict output for quoted and unquoted look-alikes.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "Expressions use the variables' current values",
+          "worked_example": "x = 4\nprint(x * 2 + 1)   # 9\nx = 10\nprint(x * 2 + 1)   # 21",
+          "practice": "Evaluate expressions given variable values; trace values across reassignments.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "A bare expression line computes but shows nothing in a script",
+          "worked_example": "x = 4\nx * 2          # evaluated, then discarded\nprint(x * 2)   # 8",
+          "practice": "Predict output of scripts mixing bare expressions and prints; fix a script that prints nothing.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Expressions as arguments",
+          "worked_example": "price = 4\nqty = 3\nprint(\"Total:\", price * qty)\n# Total: 12",
+          "practice": "Write one print that shows a label and a computed value.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.5
+        },
+        {
+          "topic": "print_output.multiple_values",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "expressions.operator_precedence",
+      "title": "Order of operations",
+      "concept": "expressions",
+      "summary": "Predict the value of mixed expressions using Python's precedence rules (** first, then * / // %, then + -, left to right) and add parentheses to change or clarify the order.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "expressions.evaluate_expressions",
+        "arithmetic_operators.floor_division_and_modulo",
+        "arithmetic_operators.exponents"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "* and / before + and -",
+          "worked_example": "print(2 + 3 * 4)    # 14\nprint(10 - 6 / 2)   # 7.0",
+          "practice": "Evaluate expressions step by step; predict results.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "expressions.evaluate_expressions"
+          ]
+        },
+        {
+          "title": "Parentheses go first",
+          "worked_example": "print((2 + 3) * 4)   # 20",
+          "practice": "Add parentheses so an expression gives a target value.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "expressions.evaluate_expressions"
+          ]
+        },
+        {
+          "title": "Same level: left to right; // and % share * and /'s level",
+          "worked_example": "print(10 - 4 - 3)   # 3\nprint(12 / 2 * 3)   # 18.0\nprint(7 + 9 % 4)    # 8",
+          "practice": "Predict results of chains of same-level operators.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        },
+        {
+          "title": "** binds tightest, even tighter than a leading minus",
+          "worked_example": "print(-2 ** 2)     # -4, i.e. -(2 ** 2)\nprint((-2) ** 2)   # 4\nprint(2 ** 3 ** 2)  # 512: ** groups right to left",
+          "practice": "Predict results with unary minus and stacked powers.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "expressions.evaluate_expressions",
+          "weight": 0.6
+        },
+        {
+          "topic": "arithmetic_operators.floor_division_and_modulo",
+          "weight": 0.3
+        },
+        {
+          "topic": "arithmetic_operators.exponents",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "py4e",
+        "codecademy",
+        "helsinki_mooc",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "expressions.translate_formulas",
+      "title": "Turning formulas into Python",
+      "concept": "expressions",
+      "summary": "Translate everyday and maths formulas into correct Python expressions, using parentheses and intermediate variables to avoid precedence bugs. (Project-shaped: pairs well with a multistep exercise.)",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "expressions.operator_precedence",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The average bug: a + b / 2",
+          "worked_example": "a = 4\nb = 8\nprint(a + b / 2)     # 8.0  wrong\nprint((a + b) / 2)   # 6.0  right",
+          "practice": "Fix formulas missing parentheses; predict both versions.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "expressions.operator_precedence"
+          ]
+        },
+        {
+          "title": "Temperature conversion",
+          "worked_example": "f = 98.6\nc = (f - 32) * 5 / 9\nprint(round(c, 1))   # 37.0",
+          "practice": "Write Python for given formulas (Celsius to Fahrenheit, km to miles).",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "expressions.operator_precedence",
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Formulas with powers",
+          "worked_example": "p = 1000\nr = 0.05\nn = 3\nprint(round(p * (1 + r) ** n, 2))   # 1157.63",
+          "practice": "Write compound-growth and area/volume formulas; predict values.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        },
+        {
+          "title": "Break a long formula into named steps",
+          "worked_example": "subtotal = price * qty\ntax = subtotal * 0.08\ntotal = subtotal + tax\nEach line is easy to check on its own.",
+          "practice": "Rewrite a one-line formula as named steps (Parsons); fill in a missing step.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "expressions.operator_precedence",
+          "weight": 0.7
+        },
+        {
+          "topic": "integers_floats.rounding_and_float_surprises",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "py4e",
+        "helsinki_mooc",
+        "cs50p",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "constants.named_constants",
+      "title": "Named constants instead of magic numbers",
+      "concept": "constants",
+      "summary": "Give fixed values UPPER_CASE names, use them in place of unexplained numbers, and know Python treats this as a convention rather than a rule.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "variables.naming_rules",
+        "expressions.evaluate_expressions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "UPPER_CASE names for values that never change",
+          "worked_example": "TAX_RATE = 0.08\nprice = 50\nprint(price * TAX_RATE)   # 4.0",
+          "practice": "Pick which names follow the constant convention; write a constant and use it.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.naming_rules"
+          ]
+        },
+        {
+          "title": "Replacing magic numbers",
+          "worked_example": "print(3 * 7 * 24)\nDAYS_PER_WEEK = 7\nHOURS_PER_DAY = 24\nprint(3 * DAYS_PER_WEEK * HOURS_PER_DAY)",
+          "practice": "Rewrite a short program replacing magic numbers with constants.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "expressions.evaluate_expressions"
+          ]
+        },
+        {
+          "title": "Change it in one place",
+          "worked_example": "If the tax rate changes, edit only TAX_RATE = 0.10; every use updates.",
+          "practice": "Fix a program where a hard-coded rate was updated in one place but not another.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Python does not enforce constants",
+          "worked_example": "MAX_SPEED = 120\nMAX_SPEED = 200   # allowed, but breaks the promise\nprint(MAX_SPEED)  # 200",
+          "practice": "Predict output when a constant is reassigned; multiple choice on what UPPER_CASE signals.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.naming_rules",
+          "weight": 0.2
+        },
+        {
+          "topic": "expressions.evaluate_expressions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "none_type.none_value",
+      "title": "None: the value that means 'nothing yet'",
+      "concept": "none_type",
+      "summary": "Use None as a placeholder value, tell it apart from 0, \"\" and \"None\", and recognise the TypeError from doing arithmetic on a value that is still None.",
+      "minutes": 13,
+      "core": true,
+      "prerequisites": [
+        "data_types.values_have_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "None is a value of its own type",
+          "worked_example": "result = None\nprint(result)         # None\nprint(type(result))   # <class 'NoneType'>",
+          "practice": "Predict print() and type() output for None.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "None is not 0, not \"\" and not \"None\"",
+          "worked_example": "print(type(0), type(\"\"), type(\"None\"), type(None))\n# int, str, str, NoneType",
+          "practice": "Classify look-alike values by type; multiple choice on which means 'no value'.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "A placeholder until the real value is known",
+          "worked_example": "best_score = None\n# ... later ...\nbest_score = 42\nprint(best_score)   # 42",
+          "practice": "Trace a variable that starts as None and is later assigned.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Using None as if it were a number fails",
+          "worked_example": "total = None\nprint(total + 1)\n# TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'",
+          "practice": "Find why a program raises TypeError mentioning NoneType and fix the initial value.",
+          "formats": [
+            "fix_the_bug",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_types.values_have_types",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "none_type.check_for_none",
+      "title": "Checking for None with is",
+      "concept": "none_type",
+      "summary": "Test for None with is None / is not None, use == (not is) for numbers and strings, and distinguish 'is None' from 'is falsy'.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "none_type.none_value",
+        "comparison_operators.compare_numbers",
+        "booleans.truthiness"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "x is None and x is not None",
+          "worked_example": "x = None\nprint(x is None)       # True\nprint(x is not None)   # False",
+          "practice": "Predict results of is None checks after assignments.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "Why is, not ==, for None",
+          "worked_example": "is asks 'is this the very same object?'. There is only one None, so x is None is exact and is the PEP 8 style.",
+          "practice": "Choose the idiomatic check among options; rewrite == None checks.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "Use == for numbers and strings, never is",
+          "worked_example": "x = 5\nprint(x == 5)   # True\nprint(x is 5)   # Python warns: \"is\" with a literal, did you mean \"==\"?",
+          "practice": "Fix comparisons that misuse is; predict which lines produce a warning.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "None is falsy, but so is 0",
+          "worked_example": "x = 0\nprint(not x)       # True\nprint(x is None)   # False\nOnly is None tells 'no value' apart from a real 0.",
+          "practice": "Predict not x vs x is None for 0, \"\", None and 5.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "none_type.none_value",
+          "weight": 0.5
+        },
+        {
+          "topic": "comparison_operators.compare_numbers",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "type_conversion.strings_to_numbers",
+      "title": "Converting strings to numbers with int() and float()",
+      "concept": "type_conversion",
+      "summary": "Turn numeric text into int or float values so arithmetic works, and predict which strings raise ValueError.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "data_types.types_decide_operations",
+        "integers_floats.int_vs_float"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "int(\"42\") and float(\"3.5\")",
+          "worked_example": "n = int(\"42\")\nprint(n + 1)          # 43\nprint(float(\"3.5\") * 2)   # 7.0",
+          "practice": "Predict results of conversions followed by arithmetic.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.types_decide_operations"
+          ]
+        },
+        {
+          "title": "Fixing \"5\" + 3",
+          "worked_example": "print(\"5\" + 3)        # TypeError\nprint(int(\"5\") + 3)   # 8",
+          "practice": "Fix TypeErrors from mixing strings and numbers by converting the string.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "data_types.types_decide_operations"
+          ]
+        },
+        {
+          "title": "Spaces are fine; other characters are a ValueError",
+          "worked_example": "print(int(\" 7 \"))      # 7\nint(\"7 apples\")\n# ValueError: invalid literal for int() with base 10",
+          "practice": "For each string decide: converts (to what) or ValueError.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "int(\"3.5\") fails: decimals need float()",
+          "worked_example": "int(\"3.5\")          # ValueError\nfloat(\"3.5\")        # 3.5\nint(float(\"3.5\"))   # 3",
+          "practice": "Choose the right conversion for each string; fix a crashing conversion.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "integers_floats.int_vs_float"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_types.types_decide_operations",
+          "weight": 0.4
+        },
+        {
+          "topic": "integers_floats.int_vs_float",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "type_conversion.numbers_and_strings",
+      "title": "Converting between numbers and to text",
+      "concept": "type_conversion",
+      "summary": "Use str() to turn numbers into text, int() to truncate floats (toward zero) and float() to widen ints, and choose between int() and round().",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "type_conversion.strings_to_numbers",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "str() turns a number into text",
+          "worked_example": "s = str(42)\nprint(type(s))   # <class 'str'>\nprint(str(3.5)) # 3.5",
+          "practice": "Predict the type and value of str() results.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "int() of a float chops off the decimals, toward zero",
+          "worked_example": "print(int(3.9))    # 3\nprint(int(-3.9))   # -3",
+          "practice": "Predict int() of positive and negative floats.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "integers_floats.int_vs_float"
+          ]
+        },
+        {
+          "title": "int() truncates, round() rounds",
+          "worked_example": "print(int(3.9), round(3.9))   # 3 4",
+          "practice": "Choose int() or round() for a described goal; fix a program that should round but truncates.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "float() widens an int",
+          "worked_example": "print(float(3))   # 3.0\nprint(float(\"7\")) # 7.0",
+          "practice": "Pick the conversion that produces a target value and type from a given one.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.4
+        },
+        {
+          "topic": "integers_floats.rounding_and_float_surprises",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "user_input.read_text",
+      "title": "Reading text from the user with input()",
+      "concept": "user_input",
+      "summary": "Ask the user a question with input(\"prompt\"), store the answer in a variable and use it, predicting output for given typed responses.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "variables.assign_and_print"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "input() waits and returns what the user typed",
+          "worked_example": "name = input()\nprint(\"Hi\", name)\n# user types: Ada\n# Hi Ada",
+          "practice": "Predict output for a given typed response.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "A prompt tells the user what to type",
+          "worked_example": "name = input(\"Your name: \")\nThe prompt is shown, not stored. Without the trailing space the answer is jammed against the colon.",
+          "practice": "Predict the exact screen transcript including the prompt; fix a prompt missing its space.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        },
+        {
+          "title": "Several inputs, read in order",
+          "worked_example": "first = input(\"First: \")\nlast = input(\"Last: \")\nprint(last, first)\n# user types Ada, then Lovelace -> Lovelace Ada",
+          "practice": "Predict output for two or three inputs; reorder lines (Parsons) to ask then print.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "Bugs: answer not stored, or quotes around the name",
+          "worked_example": "input(\"Name: \")\nprint(name)        # NameError: the answer was never stored\nprint(\"name\")      # prints the word name",
+          "practice": "Fix input programs that lose the answer or print the wrong thing.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "user_input.read_numbers",
+      "title": "Reading numbers from the user",
+      "concept": "user_input",
+      "summary": "Convert input() results with int() or float() before doing arithmetic, and recognise the bugs when you forget (\"3\" + \"4\" gives 34) or pick the wrong conversion.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "user_input.read_text",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "input() always returns a string",
+          "worked_example": "age = input(\"Age: \")\nprint(type(age))\n# user types: 30\n# <class 'str'>",
+          "practice": "Predict type() of input results for numeric-looking answers.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "user_input.read_text",
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Convert right away: int(input(...))",
+          "worked_example": "age = int(input(\"Age: \"))\nprint(age + 1)\n# user types: 30 -> 31",
+          "practice": "Write the line that reads a whole number; predict output for typed values.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Forgetting to convert: \"3\" + \"4\" is 34",
+          "worked_example": "a = input()\nb = input()\nprint(a + b)\n# user types 3, then 4 -> 34",
+          "practice": "Predict output of unconverted input arithmetic; fix it.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "data_types.types_decide_operations"
+          ]
+        },
+        {
+          "title": "float() for decimals; int() fails on \"2.5\"",
+          "worked_example": "price = float(input(\"Price: \"))\n# user types 2.5 -> 2.5\nint(input()) with 2.5 typed raises ValueError.",
+          "practice": "Choose int or float for each prompt; predict which typed answers crash.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "user_input.read_text",
+          "weight": 0.6
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "user_input.input_compute_output",
+      "title": "Input, compute, output: small console programs",
+      "concept": "user_input",
+      "summary": "Write short programs that read values, compute a result with a formula, and print it, such as a tip calculator or unit converter. (Project-shaped: a natural multistep.)",
+      "minutes": 20,
+      "core": true,
+      "prerequisites": [
+        "user_input.read_numbers",
+        "expressions.translate_formulas"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Read one number, compute, print",
+          "worked_example": "c = float(input(\"Celsius: \"))\nf = c * 9 / 5 + 32\nprint(\"Fahrenheit:\", f)\n# user types 100 -> Fahrenheit: 212.0",
+          "practice": "Predict output for a typed value; write a converter for a given formula.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "user_input.read_numbers",
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "Two inputs combined",
+          "worked_example": "bill = float(input(\"Bill: \"))\npct = int(input(\"Tip %: \"))\nprint(\"Tip:\", round(bill * pct / 100, 2))",
+          "practice": "Write a program combining two inputs (area, tip, average); test it with given inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "user_input.read_numbers",
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Putting the steps in order",
+          "worked_example": "Read -> convert -> compute -> print. Computing before reading is a NameError.",
+          "practice": "Reorder a scrambled program (Parsons); fix one that computes before reading.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "user_input.read_numbers",
+          "weight": 0.8
+        },
+        {
+          "topic": "expressions.translate_formulas",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "booleans.true_and_false",
+      "title": "True and False",
+      "concept": "booleans",
+      "summary": "Use the bool values True and False, store them in descriptively named variables, and avoid the 'true' and \"True\" look-alikes.",
+      "minutes": 12,
+      "core": true,
+      "prerequisites": [
+        "data_types.values_have_types",
+        "variables.naming_rules"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "True and False are values of type bool",
+          "worked_example": "is_raining = True\nprint(is_raining)         # True\nprint(type(is_raining))   # <class 'bool'>",
+          "practice": "Predict print and type() output for bool variables.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Capital T and F; no quotes",
+          "worked_example": "x = true      # NameError: Python sees an unknown name\ny = \"True\"    # a str, not a bool\nz = True      # a bool",
+          "practice": "Classify look-alikes as bool, str or error; fix them.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Name booleans as yes/no questions",
+          "worked_example": "is_logged_in = False\nhas_ticket = True\nNames like is_/has_ read naturally later in conditions.",
+          "practice": "Pick the best bool name; write two flag variables for a described situation.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.naming_rules"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_types.values_have_types",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "booleans.truthiness",
+      "title": "Truthy and falsy values",
+      "concept": "booleans",
+      "summary": "Predict bool() of numbers, strings and None (0, 0.0, \"\" and None are False; everything else here is True) and use True/False as 1/0 in arithmetic.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "booleans.true_and_false",
+        "none_type.none_value",
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Numbers: zero is False, everything else True",
+          "worked_example": "print(bool(0), bool(0.0))   # False False\nprint(bool(7), bool(-1))    # True True",
+          "practice": "Predict bool() of several numbers.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "Strings: only the empty string is False",
+          "worked_example": "print(bool(\"\"))        # False\nprint(bool(\" \"))       # True (a space)\nprint(bool(\"False\"))   # True (non-empty text)",
+          "practice": "Predict bool() of strings including tricky ones.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "None is False",
+          "worked_example": "print(bool(None))   # False\nFalsy so far: False, 0, 0.0, \"\", None.",
+          "practice": "Sort a list of values into truthy and falsy.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "True and False count as 1 and 0",
+          "worked_example": "print(True + True)   # 2\nprint(False * 10)    # 0",
+          "practice": "Predict arithmetic on bools.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "booleans.true_and_false",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev",
+        "codecademy",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "comparison_operators.compare_numbers",
+      "title": "Comparing numbers: < > <= >= == !=",
+      "concept": "comparison_operators",
+      "summary": "Write comparisons that evaluate to True or False, use == (not =) for equality, and store comparison results in bool variables.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "booleans.true_and_false",
+        "expressions.evaluate_expressions",
+        "arithmetic_operators.modulo_patterns"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "< > <= >= produce True or False",
+          "worked_example": "print(3 < 5)    # True\nprint(5 <= 5)   # True\nprint(7 > 9)    # False",
+          "practice": "Predict the result of comparisons, especially the <= / < boundary.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "== tests equality; = assigns",
+          "worked_example": "x = 4         # assignment\nprint(x == 4) # True\nprint(x = 4)  # TypeError: inside print, x = 4 is read as a keyword argument",
+          "practice": "Fix comparisons written with =; multiple choice between = and ==.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print"
+          ]
+        },
+        {
+          "title": "!= means not equal",
+          "worked_example": "print(3 != 4)   # True\nprint(4 != 4)   # False",
+          "practice": "Predict != results; rewrite a described condition using != or ==.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Comparing expressions and storing the result",
+          "worked_example": "age = 20\nis_adult = age >= 18\nis_even = age % 2 == 0\nprint(is_adult, is_even)   # True True",
+          "practice": "Write bool variables for described conditions (even, positive, over limit).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.modulo_patterns",
+            "expressions.evaluate_expressions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "booleans.true_and_false",
+          "weight": 0.4
+        },
+        {
+          "topic": "expressions.evaluate_expressions",
+          "weight": 0.3
+        },
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "comparison_operators.compare_mixed_types",
+      "title": "Comparing across types and comparing strings",
+      "concept": "comparison_operators",
+      "summary": "Predict comparisons between ints and floats, strings and numbers, and strings with each other (exact, case-sensitive, ordered character by character).",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "comparison_operators.compare_numbers",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "int vs float compare by value",
+          "worked_example": "print(3 == 3.0)   # True\nprint(2 < 2.5)    # True",
+          "practice": "Predict mixed int/float comparisons.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "A string never equals a number; ordering them is a TypeError",
+          "worked_example": "print(\"3\" == 3)   # False\nprint(\"3\" < 4)\n# TypeError: '<' not supported between 'str' and 'int'",
+          "practice": "For each comparison give True, False or TypeError; fix with int().",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "String equality is exact",
+          "worked_example": "print(\"yes\" == \"yes\")   # True\nprint(\"yes\" == \"Yes\")   # False\nprint(\"yes\" == \"yes \")  # False: trailing space",
+          "practice": "Predict equality of strings differing in case or spacing.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "String ordering goes character by character",
+          "worked_example": "print(\"apple\" < \"banana\")   # True\nprint(\"Zoo\" < \"apple\")     # True: capitals sort first\nprint(\"10\" < \"9\")          # True: compares '1' with '9'",
+          "practice": "Predict string orderings, including digits-as-text and capitals.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_numbers",
+          "weight": 0.6
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy",
+        "bootdev",
+        "helsinki_mooc",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "comparison_operators.ranges_and_float_equality",
+      "title": "Range checks and comparing floats",
+      "concept": "comparison_operators",
+      "summary": "Write chained range checks such as 0 <= x < 10 with the right inclusive/exclusive bounds, and compare floats with a tolerance instead of ==.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "comparison_operators.compare_numbers",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Chained comparisons",
+          "worked_example": "x = 7\nprint(0 < x < 10)   # True\nIt means 0 < x and x < 10.",
+          "practice": "Predict chained comparisons for several x values.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Inclusive or exclusive bounds",
+          "worked_example": "score = 100\nprint(0 <= score <= 100)   # True\nprint(0 <= score < 100)    # False: 100 is excluded",
+          "practice": "Choose the right bounds for a described range; fix an off-by-one boundary.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "== on floats can surprise",
+          "worked_example": "print(0.1 + 0.2 == 0.3)   # False\nThe sum is 0.30000000000000004.",
+          "practice": "Predict float equality results.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Compare floats with a tolerance",
+          "worked_example": "a = 0.1 + 0.2\nprint(abs(a - 0.3) < 1e-9)   # True",
+          "practice": "Rewrite float == checks using abs(a - b) < tolerance.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_numbers",
+          "weight": 0.6
+        },
+        {
+          "topic": "integers_floats.rounding_and_float_surprises",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev",
+        "py4e",
+        "cs50p",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "logical_operators.and_or_not",
+      "title": "Combining conditions with and, or, not",
+      "concept": "logical_operators",
+      "summary": "Evaluate and, or and not on True/False and use them to combine comparisons.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "comparison_operators.compare_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "and: True only if both sides are True",
+          "worked_example": "print(True and True)    # True\nprint(True and False)   # False",
+          "practice": "Fill in the truth table for and; predict results.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "or: True if at least one side is True",
+          "worked_example": "print(False or True)    # True\nprint(False or False)   # False",
+          "practice": "Fill in the truth table for or; predict results.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "not flips a bool",
+          "worked_example": "print(not True)       # False\nprint(not (3 > 5))    # True",
+          "practice": "Predict not applied to bools and comparisons.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Combining comparisons",
+          "worked_example": "age = 15\nis_teen = age >= 13 and age <= 19\nprint(is_teen)   # True",
+          "practice": "Write bool expressions for described rules (teen, weekend, free ticket).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_numbers",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "logical_operators.combine_conditions",
+      "title": "Precedence and common mistakes with and/or",
+      "concept": "logical_operators",
+      "summary": "Predict expressions mixing not, and, or by precedence, add parentheses for intended meaning, and avoid the x == 1 or 2 bug.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "logical_operators.and_or_not",
+        "booleans.truthiness"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "not, then and, then or",
+          "worked_example": "print(True or False and False)    # True: and goes first\nprint((True or False) and False)  # False",
+          "practice": "Predict mixed expressions; add parentheses to match a stated meaning.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "Outside a range: or, not and",
+          "worked_example": "x = 120\nprint(x < 0 or x > 100)   # True\nx < 0 and x > 100 can never be True.",
+          "practice": "Choose and or or for described conditions; fix an impossible condition.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "The x == 1 or 2 bug",
+          "worked_example": "x = 5\nprint(x == 1 or 2)        # 2 (truthy!), not False\nprint(x == 1 or x == 2)   # False\nEach side of or is a separate condition.",
+          "practice": "Fix conditions that compare against several values; predict the buggy version's result.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "logical_operators.and_or_not",
+          "weight": 0.7
+        },
+        {
+          "topic": "booleans.truthiness",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "codecademy",
+        "helsinki_mooc",
+        "bootdev",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "logical_operators.negation_de_morgan",
+      "title": "Negating conditions (De Morgan's laws)",
+      "concept": "logical_operators",
+      "summary": "Rewrite the negation of a combined condition: not (a and b) is (not a) or (not b), and simplify not around comparisons.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "logical_operators.combine_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "not around a comparison flips the operator",
+          "worked_example": "x = 3\nprint(not x > 5)   # True\nprint(x <= 5)      # True: the same check",
+          "practice": "Rewrite not-comparisons without not.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "not (a and b) == (not a) or (not b)",
+          "worked_example": "a, b = True, False\nprint(not (a and b))       # True\nprint((not a) or (not b))  # True",
+          "practice": "Check equivalence with a truth table; choose the correct rewrite.",
+          "formats": [
+            "trace_table",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "not (a or b) == (not a) and (not b)",
+          "worked_example": "x = 50\nprint(not (x < 0 or x > 100))   # True\nprint(x >= 0 and x <= 100)      # True",
+          "practice": "Rewrite negated range checks; fix a negation that only flipped the operators.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "logical_operators.combine_conditions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "logical_operators.combine_conditions",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "logical_operators.short_circuit",
+      "title": "Short-circuit evaluation",
+      "concept": "logical_operators",
+      "summary": "Predict when and/or stop early, use that to guard risky expressions such as division, and understand that and/or return one of their operands.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "logical_operators.combine_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "and stops at the first False",
+          "worked_example": "x = 0\nprint(x != 0 and 10 / x > 1)   # False, no error\nThe right side never runs when the left is False.",
+          "practice": "Predict whether a guarded expression errors or gives a value.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not",
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "Order matters: put the guard first",
+          "worked_example": "x = 0\nprint(10 / x > 1 and x != 0)\n# ZeroDivisionError: the risky part ran first",
+          "practice": "Fix expressions whose guard is on the wrong side.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "or stops at the first True",
+          "worked_example": "print(True or 1 / 0)   # True, no error",
+          "practice": "Predict which expressions short-circuit and which raise errors.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "and/or return an operand, not always a bool",
+          "worked_example": "name = \"\"\nprint(name or \"guest\")   # guest\nprint(0 and 5)           # 0",
+          "practice": "Predict the value of and/or on non-bool operands; write a default-value expression.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "logical_operators.combine_conditions",
+          "weight": 0.4
+        },
+        {
+          "topic": "booleans.truthiness",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "bootdev"
+      ]
+    }
+  ]
+}

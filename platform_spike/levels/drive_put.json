@@ -1,0 +1,32 @@
+{
+  "format": 1,
+  "id": "drive_put",
+  "title": "Put it down",
+  "brief": "Carry your gem to the marked cell.",
+  "starter_code": "",
+  "world": {
+    "width": 5,
+    "height": 3,
+    "start": [
+      0,
+      2,
+      "E"
+    ],
+    "bag": 1
+  },
+  "goal": {
+    "gems_exactly": {
+      "3,0": 1
+    }
+  },
+  "drive": {
+    "buttons": [
+      "move",
+      "turn_left",
+      "put"
+    ]
+  },
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ]
+}

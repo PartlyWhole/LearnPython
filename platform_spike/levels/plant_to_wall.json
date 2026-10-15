@@ -1,0 +1,234 @@
+{
+  "format": 1,
+  "id": "plant_to_wall",
+  "title": "Plant the bed",
+  "brief": "Plant one gem on every cell of the garden bed, from where the robot stands up to the wall. Beds come in different lengths; some have only one cell.",
+  "starter_code": "",
+  "world": {
+    "width": 3,
+    "height": 7,
+    "start": [
+      1,
+      6,
+      "N"
+    ],
+    "bag": "infinite",
+    "blocked": [
+      [
+        0,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "goal": {
+      "gems_exactly": {
+        "1,0": 1,
+        "1,1": 1,
+        "1,2": 1,
+        "1,3": 1,
+        "1,4": 1,
+        "1,5": 1,
+        "1,6": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "N"
+      ],
+      "bag": "infinite",
+      "name": "one cell",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1
+        }
+      }
+    },
+    {
+      "width": 2,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "name": "two cells",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "1,0": 1
+        }
+      }
+    },
+    {
+      "width": 10,
+      "height": 1,
+      "start": [
+        9,
+        0,
+        "W"
+      ],
+      "bag": "infinite",
+      "name": "long bed",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "1,0": 1,
+          "2,0": 1,
+          "3,0": 1,
+          "4,0": 1,
+          "5,0": 1,
+          "6,0": 1,
+          "7,0": 1,
+          "8,0": 1,
+          "9,0": 1
+        }
+      }
+    },
+    {
+      "width": 3,
+      "height": 4,
+      "start": [
+        1,
+        3,
+        "N"
+      ],
+      "bag": "infinite",
+      "blocked": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "name": "short bed",
+      "goal": {
+        "gems_exactly": {
+          "1,0": 1,
+          "1,1": 1,
+          "1,2": 1,
+          "1,3": 1
+        }
+      }
+    },
+    {
+      "width": 1,
+      "height": 5,
+      "start": [
+        0,
+        0,
+        "S"
+      ],
+      "bag": "infinite",
+      "name": "bed going south",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "0,1": 1,
+          "0,2": 1,
+          "0,3": 1,
+          "0,4": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "required": [
+      "while"
+    ],
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "loop_patterns.fencepost",
+    "while_loops.infinite_and_off_by_one"
+  ]
+}

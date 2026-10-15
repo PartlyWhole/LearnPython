@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "id": "compare",
+  "title": "Compare",
+  "concept": "Compare numbers with >, <, == and != to make a condition",
+  "topics": ["comparison_operators.compare_numbers"],
+  "watch": {
+    "world": {"width": 3, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 4}, "bag": "infinite"},
+    "steps": [
+      {"say": "This cell holds 4 gems. The robot should leave exactly 2.", "focus": "cell:0,0"},
+      {"say": "`while gems_here():` only asks \"any gems?\", so it takes all 4.",
+       "code": "while gems_here():\n    pick()\n", "focus": "editor:1", "run": true},
+      {"say": "`gems_here() > 2` asks a sharper question: is the count more than 2?",
+       "code": "print(gems_here() > 2)\n", "focus": "editor:1"},
+      {"say": "What will it print?", "predict": {"choices": ["True", "False", "4"], "answer": "True"}},
+      {"say": "Run it. A comparison is True or False, like a sensor.", "run": true},
+      {"say": "Use it as the condition. The loop stops when the answer turns False.",
+       "code": "while gems_here() > 2:\n    pick()\n", "focus": "editor:1", "run": true},
+      {"say": "`<` means less than. This adds gems until there are 6. Also: `==` equal, `!=` not equal.",
+       "code": "while gems_here() < 6:\n    put()\n", "focus": "editor:1", "run": true}
+    ]
+  },
+  "guided": {
+    "level": "keep_one",
+    "steps": [
+      {"say": "After `move()`, add `while gems_here() > 1:` with `pick()` inside. Not `if`: piles need several picks.",
+       "done_when": [{"has": "while", "min": 2}, {"calls": "pick", "inside": "while"}],
+       "example": "while front_is_clear():\n    move()\n    while gems_here() > 1:\n        pick()\n"},
+      {"say": "The start cell counts too. Trim it before the walk.",
+       "done_when": [{"calls": "gems_here", "outside": "while"}],
+       "example": "while gems_here() > 1:\n    pick()\nwhile front_is_clear():\n    move()\n    while gems_here() > 1:\n        pick()\n"},
+      {"say": "Run it. If whole piles vanish, check the number after `>`.",
+       "done_when": [{"run": "passed"}]}
+    ],
+    "done": "One gem left on every pile, whatever its size."
+  },
+  "practice": ["big_piles_only"],
+  "twist": "level_piles",
+  "recap": {
+    "say": "A comparison is a condition: `while gems_here() > 1:` repeats while the count is more than 1.",
+    "code": "while gems_here() > ...:\n    ..."
+  },
+  "hints": {
+    "big_piles_only": [
+      "Compare your result with the Goal view: which piles should stay?",
+      "Decide once per cell with `if gems_here() > 2:`, then clear that pile with a `while`.",
+      "def take_big_pile():\n    if gems_here() > __:\n        while __:\n            pick()\n\n\ntake_big_pile()\nwhile front_is_clear():\n    move()\n    __\n"
+    ],
+    "level_piles": [
+      "Look at the Goal view: every cell ends with 2 gems, even empty ones.",
+      "Two loops on each cell: `while gems_here() < 2:` adds, `while gems_here() > 2:` takes.",
+      "def level_pile():\n    while gems_here() < __:\n        __\n    while gems_here() > __:\n        __\n\n\nlevel_pile()\nwhile front_is_clear():\n    __\n    level_pile()\n"
+    ]
+  }
+}

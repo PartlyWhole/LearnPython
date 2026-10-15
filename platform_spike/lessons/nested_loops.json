@@ -1,0 +1,156 @@
+{
+  "format": 1,
+  "id": "nested_loops",
+  "title": "Rows of rows",
+  "concept": "Put a loop inside a loop: the inner loop runs completely on every pass of the outer one",
+  "topics": [
+    "nested_loops.loop_inside_loop"
+  ],
+  "watch": {
+    "world": {
+      "width": 5,
+      "height": 4,
+      "start": [
+        0,
+        3,
+        "E"
+      ],
+      "bag": "infinite"
+    },
+    "steps": [
+      {
+        "say": "Fill 3 rows of 4 gems, bottom row first.",
+        "focus": "world"
+      },
+      {
+        "say": "`plant_row()` fills one row. Three rows means writing the pair three times.",
+        "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_row():\n    for i in range(4):\n        put()\n        move()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nplant_row()\ngo_to_next_row()\nplant_row()\ngo_to_next_row()\nplant_row()\ngo_to_next_row()\n",
+        "focus": "editor:23"
+      },
+      {
+        "say": "An outer `for` repeats the row and the trip to the next one.",
+        "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_row():\n    for i in range(4):\n        put()\n        move()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    plant_row()\n    go_to_next_row()\n",
+        "focus": "editor:23"
+      },
+      {
+        "say": "How many gems will the grid hold at the end?",
+        "predict": {
+          "choices": [
+            "4",
+            "7",
+            "12"
+          ],
+          "answer": "12"
+        }
+      },
+      {
+        "say": "Run it: 3 passes, 4 gems each.",
+        "run": true,
+        "focus": "world"
+      },
+      {
+        "say": "Put `plant_row`'s loop straight inside: a `for` inside a `for`. The robot moves the same.",
+        "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    for i in range(4):\n        put()\n        move()\n    go_to_next_row()\n",
+        "focus": "editor:10",
+        "run": true
+      }
+    ]
+  },
+  "guided": {
+    "level": "gem_grid",
+    "steps": [
+      {
+        "say": "Define `fill_row()`: a `for` loop that does `put()` and `move()` 5 times.",
+        "done_when": [
+          {
+            "has": "for",
+            "inside": "def fill_row"
+          },
+          {
+            "calls": "put",
+            "inside": "def fill_row>for"
+          },
+          {
+            "calls": "move",
+            "inside": "def fill_row>for"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(5):\n        put()\n        move()\n"
+      },
+      {
+        "say": "Call `fill_row()` and run it to test one row.",
+        "done_when": [
+          {
+            "calls": "fill_row",
+            "outside": "def"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(5):\n        put()\n        move()\n\n\nfill_row()\n"
+      },
+      {
+        "say": "Wrap the call in `for row in range(3):`. Run it: the robot hits the wall.",
+        "done_when": [
+          {
+            "calls": "fill_row",
+            "inside": "for",
+            "outside": "def"
+          },
+          {
+            "has": "for",
+            "range": 3
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(5):\n        put()\n        move()\n\n\nfor row in range(3):\n    fill_row()\n"
+      },
+      {
+        "say": "Define `next_row()`: back to the left, down one row. Call it inside the loop too.",
+        "done_when": [
+          {
+            "defines": "next_row"
+          },
+          {
+            "calls": "next_row",
+            "inside": "for",
+            "outside": "def"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(5):\n        put()\n        move()\n\n\ndef next_row():\n    turn_around()\n    for i in range(5):\n        move()\n    turn_left()\n    move()\n    turn_left()\n\n\nfor row in range(3):\n    fill_row()\n    next_row()\n"
+      },
+      {
+        "say": "Run it and watch the grid fill.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "Three rows of five: one loop inside another."
+  },
+  "practice": [
+    "stripes",
+    "square_of_squares"
+  ],
+  "twist": "staircase_build",
+  "recap": {
+    "say": "The inner loop runs completely, once for each pass of the outer loop.",
+    "code": "for row in range(...):\n    for i in range(...):\n        ...\n    ..."
+  },
+  "hints": {
+    "stripes": [
+      "Compare your result with the Goal view: an empty row after every stripe.",
+      "Same loop as the gem grid. Only the trip to the next stripe changes: down two rows, not one.",
+      "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(__):\n        put()\n        move()\n\n\ndef next_stripe():\n    turn_around()\n    for i in range(5):\n        move()\n    turn_left()\n    for i in range(__):\n        move()\n    turn_left()\n\n\nfor stripe in range(__):\n    __\n    __\n"
+    ],
+    "square_of_squares": [
+      "Compare your result with the Goal view: four squares, one empty column between them.",
+      "A square is two short rows, so `fill_square()` holds a `for` inside a `for`. Then repeat it 4 times.",
+      "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef fill_square():\n    for row in range(__):\n        for i in range(__):\n            put()\n            move()\n        # back to the left of the square, one row down\n        __\n\n\ndef next_square():\n    # up to the top row, then to the next square\n    __\n\n\nfor square in range(4):\n    fill_square()\n    next_square()\n"
+    ],
+    "staircase_build": [
+      "Compare your result with the Goal view: each row has one more gem than the row above.",
+      "The outer loop variable counts rows from 0. Row `row` needs `row + 1` gems, so use it in the inner `range`.",
+      "def turn_around():\n    turn_left()\n    turn_left()\n\n\nfor row in range(4):\n    for i in range(__):\n        put()\n        move()\n    # back to the left, one row down\n    __\n"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "grid-world-platform",
+  "private": true,
+  "type": "module",
+  "description": "No runtime dependencies and no build step for the app: plain ES modules served as-is. CodeMirror is vendored into vendor/codemirror.js by npm run vendor (docs/decisions.md D12, D15).",
+  "scripts": {
+    "test": "node --test \"tests/js/*.test.mjs\"",
+    "vendor": "esbuild tools/vendor/codemirror-entry.js --bundle --format=esm --minify --legal-comments=eof --outfile=vendor/codemirror.js"
+  },
+  "devDependencies": {
+    "@codemirror/autocomplete": "6.20.3",
+    "@codemirror/commands": "6.11.1",
+    "@codemirror/lang-python": "6.2.1",
+    "@codemirror/language": "6.13.1",
+    "@codemirror/state": "6.7.6",
+    "@codemirror/view": "6.43.14",
+    "@lezer/highlight": "1.2.5",
+    "codemirror": "6.0.2",
+    "esbuild": "0.28.2"
+  }
+}

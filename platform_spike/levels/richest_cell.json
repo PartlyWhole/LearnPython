@@ -1,0 +1,100 @@
+{
+  "format": 1,
+  "id": "richest_cell",
+  "title": "The richest cell",
+  "brief": "Look down the corridor with scan(), find the cell with the most gems, go there and collect only those. Leave every other gem where it is. The richest cell is always ahead of you and never tied.",
+  "starter_code": "ahead = scan()\nprint(ahead)\n",
+  "world": {
+    "width": 8,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "2,0": 2,
+      "4,0": 5,
+      "6,0": 1,
+      "7,0": 3
+    },
+    "goal": {
+      "gems_exactly": {
+        "2,0": 2,
+        "6,0": 1,
+        "7,0": 3
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 2,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 4
+      },
+      "name": "right next to you",
+      "goal": {
+        "gems_exactly": {}
+      }
+    },
+    {
+      "width": 6,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 1,
+        "5,0": 6
+      },
+      "name": "at the far end",
+      "goal": {
+        "gems_exactly": {
+          "1,0": 1
+        }
+      }
+    },
+    {
+      "width": 7,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 9,
+        "3,0": 2,
+        "6,0": 8
+      },
+      "name": "first is richest",
+      "goal": {
+        "gems_exactly": {
+          "3,0": 2,
+          "6,0": 8
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "banned": [
+      "while"
+    ]
+  },
+  "topics": [
+    "lists.aggregate_builtins",
+    "list_methods.index_and_count",
+    "lists.create_and_index"
+  ]
+}

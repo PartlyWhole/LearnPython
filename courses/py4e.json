@@ -1,0 +1,1881 @@
+{
+  "course": {
+    "id": "py4e",
+    "title": "Python for Everybody (PY4E): Exploring Data in Python 3",
+    "provider": "University of Michigan (Dr. Charles Severance); also Coursera Python for Everybody Specialization",
+    "url": "https://www.py4e.com/",
+    "format": "self-paced; 17 py4e.com lessons (install + 16 textbook chapters) mapped onto a 5-course Coursera specialization",
+    "audience": "absolute beginners (no prerequisites, minimal math)",
+    "sources": [
+      "https://www.py4e.com/lessons",
+      "https://www.py4e.com/html3/",
+      "https://www.py4e.com/book",
+      "https://www.py4e.com/lessons/network",
+      "https://www.py4e.com/lessons/servces",
+      "https://www.py4e.com/lessons/database",
+      "https://www.py4e.com/lessons/dataviz",
+      "https://www.coursera.org/specializations/python",
+      "https://online.umich.edu/series/python-for-everybody"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Modules = py4e.com lessons (install + book chapters 1-16; ch14 OOP is taught after ch13 in Course 4). Coursera mapping recorded as the first entry of each module's topics: C1 Programming for Everybody = install + ch1-5; C2 Python Data Structures = ch6-10; C3 Using Python to Access Web Data = ch11-13; C4 Using Databases with Python = ch14-15; C5 Capstone (Retrieving, Processing, and Visualizing Data with Python) = ch16 visualization worked examples plus peer-graded open-ended projects. The C1-C4 chapter mapping comes from course descriptions via mirror sites (Coursera pages were not fetched directly); Coursera also repeats an install week in later courses. Topics are the html3 book section headings verbatim (Glossary/Exercises omitted), plus 'Lecture:' items taken from py4e.com lesson video titles. Projects = autograder/peer-graded assignments listed on py4e.com lesson pages (quizzes omitted); ch14 lists no autograder; ch16 projects are worked examples rather than graded assignments, and Capstone peer-graded assignment names were not verified. Exercise 7.1 is a worked exercise on the lesson page; only 7.2 is listed as an autograder there (both included). The current online book edition's ch13 has generic 'Application Programming Interfaces' and 'Security and API usage' sections (older editions covered Google geocoding and the Twitter API); the GeoJSON/geocoding API assignment is on py4e.com's own py4e-data proxy. lesson slug 'servces' is a typo on py4e.com, kept as-is in the URL."
+  },
+  "modules": [
+    {
+      "id": "py4e:install",
+      "title": "Installing Python",
+      "order": 1,
+      "url": "https://www.py4e.com/lessons/install",
+      "topics": [
+        "[Coursera course 1: Programming for Everybody (Getting Started with Python)]",
+        "Recommended Programming Text Editors",
+        "Python Shell - Browser Based Development Environment",
+        "Installing Python (Windows / macOS)"
+      ],
+      "projects": [
+        "Peer Graded: Installation Screen Shots"
+      ],
+      "concepts": [
+        "python_setup",
+        "ide_editor",
+        "command_line",
+        "running_scripts",
+        "repl"
+      ]
+    },
+    {
+      "id": "py4e:ch01",
+      "title": "Chapter 1: Why Program? (Introduction)",
+      "order": 2,
+      "url": "https://www.py4e.com/lessons/intro",
+      "topics": [
+        "[Coursera course 1: Programming for Everybody (Getting Started with Python)]",
+        "Why should you learn to write programs?",
+        "Creativity and motivation",
+        "Computer hardware architecture",
+        "Understanding programming",
+        "Words and sentences",
+        "Conversing with Python",
+        "Terminology: Interpreter and compiler",
+        "Writing a program",
+        "What is a program?",
+        "The building blocks of programs",
+        "What could possibly go wrong?",
+        "Debugging",
+        "The learning journey"
+      ],
+      "projects": [
+        "Autograder: Write Hello World"
+      ],
+      "concepts": [
+        "computational_thinking",
+        "computer_architecture",
+        "repl",
+        "running_scripts",
+        "print_output",
+        "debugging",
+        "algorithms"
+      ]
+    },
+    {
+      "id": "py4e:ch02",
+      "title": "Chapter 2: Variables, expressions, and statements",
+      "order": 3,
+      "url": "https://www.py4e.com/lessons/memory",
+      "topics": [
+        "[Coursera course 1: Programming for Everybody (Getting Started with Python)]",
+        "Values and types",
+        "Variables",
+        "Variable names and keywords",
+        "Statements",
+        "Operators and operands",
+        "Expressions",
+        "Order of operations",
+        "Modulus operator",
+        "String operations",
+        "Asking the user for input",
+        "Comments",
+        "Choosing mnemonic variable names",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Exercise 2.2",
+        "Autograder: Exercise 2.3"
+      ],
+      "concepts": [
+        "variables",
+        "data_types",
+        "integers_floats",
+        "arithmetic_operators",
+        "expressions",
+        "string_concatenation",
+        "user_input",
+        "comments",
+        "type_conversion",
+        "print_output",
+        "strings"
+      ]
+    },
+    {
+      "id": "py4e:ch03",
+      "title": "Chapter 3: Conditional execution",
+      "order": 4,
+      "url": "https://www.py4e.com/lessons/logic",
+      "topics": [
+        "[Coursera course 1: Programming for Everybody (Getting Started with Python)]",
+        "Boolean expressions",
+        "Logical operators",
+        "Conditional execution",
+        "Alternative execution",
+        "Chained conditionals",
+        "Nested conditionals",
+        "Catching exceptions using try and except",
+        "Short-circuit evaluation of logical expressions",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Exercise 3.1",
+        "Autograder: Exercise 3.3"
+      ],
+      "concepts": [
+        "booleans",
+        "comparison_operators",
+        "logical_operators",
+        "conditionals",
+        "nested_conditionals",
+        "exceptions",
+        "debugging"
+      ]
+    },
+    {
+      "id": "py4e:ch04",
+      "title": "Chapter 4: Functions",
+      "order": 5,
+      "url": "https://www.py4e.com/lessons/functions",
+      "topics": [
+        "[Coursera course 1: Programming for Everybody (Getting Started with Python)]",
+        "Function calls",
+        "Built-in functions",
+        "Type conversion functions",
+        "Math functions",
+        "Random numbers",
+        "Adding new functions",
+        "Definitions and uses",
+        "Flow of execution",
+        "Parameters and arguments",
+        "Fruitful functions and void functions",
+        "Why functions?",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Exercise 4.6"
+      ],
+      "concepts": [
+        "functions",
+        "builtin_functions",
+        "type_conversion",
+        "math_module",
+        "random_module",
+        "modules_imports",
+        "parameters_arguments",
+        "return_values",
+        "none_type",
+        "decomposition"
+      ]
+    },
+    {
+      "id": "py4e:ch05",
+      "title": "Chapter 5: Loops and Iteration",
+      "order": 6,
+      "url": "https://www.py4e.com/lessons/loops",
+      "topics": [
+        "[Coursera course 1: Programming for Everybody (Getting Started with Python)]",
+        "Updating variables",
+        "The while statement",
+        "Infinite loops",
+        "Finishing iterations with continue",
+        "Definite loops using for",
+        "Loop patterns",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Exercise 5.2"
+      ],
+      "concepts": [
+        "iteration",
+        "while_loops",
+        "for_loops",
+        "break_continue",
+        "loop_patterns",
+        "none_type"
+      ]
+    },
+    {
+      "id": "py4e:ch06",
+      "title": "Chapter 6: Strings",
+      "order": 7,
+      "url": "https://www.py4e.com/lessons/strings",
+      "topics": [
+        "[Coursera course 2: Python Data Structures]",
+        "A string is a sequence",
+        "Getting the length of a string using len",
+        "Traversal through a string with a loop",
+        "String slices",
+        "Strings are immutable",
+        "Looping and counting",
+        "The in operator",
+        "String comparison",
+        "String methods",
+        "Parsing strings",
+        "Formatted String Literals",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Exercise 6.5"
+      ],
+      "concepts": [
+        "strings",
+        "string_indexing_slicing",
+        "string_immutability",
+        "string_methods",
+        "string_formatting",
+        "comparison_operators",
+        "loop_patterns",
+        "objects_methods",
+        "builtin_functions"
+      ]
+    },
+    {
+      "id": "py4e:ch07",
+      "title": "Chapter 7: Files",
+      "order": 8,
+      "url": "https://www.py4e.com/lessons/files",
+      "topics": [
+        "[Coursera course 2: Python Data Structures]",
+        "Persistence",
+        "Opening files",
+        "Text files and lines",
+        "Reading files",
+        "Searching through a file",
+        "Letting the user choose the file name",
+        "Using try, except, and open",
+        "Writing files",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Exercise 7.1",
+        "Autograder: Exercise 7.2"
+      ],
+      "concepts": [
+        "file_io",
+        "exceptions",
+        "string_methods",
+        "loop_patterns",
+        "defensive_programming",
+        "user_input"
+      ]
+    },
+    {
+      "id": "py4e:ch08",
+      "title": "Chapter 8: Lists",
+      "order": 9,
+      "url": "https://www.py4e.com/lessons/lists",
+      "topics": [
+        "[Coursera course 2: Python Data Structures]",
+        "A list is a sequence",
+        "Lists are mutable",
+        "Traversing a list",
+        "List operations",
+        "List slices",
+        "List methods",
+        "Deleting elements",
+        "Lists and functions",
+        "Lists and strings",
+        "Parsing lines",
+        "Objects and values",
+        "Aliasing",
+        "List arguments",
+        "Debugging",
+        "Lecture: Lists, Files and the Guardian Pattern"
+      ],
+      "projects": [
+        "Autograder: Exercise 8.4",
+        "Autograder: Exercise 8.5"
+      ],
+      "concepts": [
+        "lists",
+        "list_methods",
+        "list_slicing",
+        "mutability_aliasing",
+        "builtin_functions",
+        "sorting",
+        "defensive_programming",
+        "file_io",
+        "string_methods",
+        "collections"
+      ]
+    },
+    {
+      "id": "py4e:ch09",
+      "title": "Chapter 9: Dictionaries",
+      "order": 10,
+      "url": "https://www.py4e.com/lessons/dictionary",
+      "topics": [
+        "[Coursera course 2: Python Data Structures]",
+        "Dictionary as a set of counters",
+        "Dictionaries and files",
+        "Looping and dictionaries",
+        "Advanced text parsing",
+        "Debugging",
+        "Lecture: Counting Word Frequency using a Dictionary"
+      ],
+      "projects": [
+        "Autograder: Exercise 9.4"
+      ],
+      "concepts": [
+        "dictionaries",
+        "loop_patterns",
+        "file_io",
+        "string_methods",
+        "collections"
+      ]
+    },
+    {
+      "id": "py4e:ch10",
+      "title": "Chapter 10: Tuples",
+      "order": 11,
+      "url": "https://www.py4e.com/lessons/tuples",
+      "topics": [
+        "[Coursera course 2: Python Data Structures]",
+        "Tuples are immutable",
+        "Comparing tuples",
+        "Tuple assignment",
+        "Dictionaries and tuples",
+        "Multiple assignment with dictionaries",
+        "The most common words",
+        "Using tuples as keys in dictionaries",
+        "Sequences: strings, lists, and tuples - Oh My!",
+        "List comprehension",
+        "Debugging",
+        "Lecture: Sorting a Dictionary Using Tuples"
+      ],
+      "projects": [
+        "Autograder: Exercise 10.2"
+      ],
+      "concepts": [
+        "tuples",
+        "unpacking",
+        "sorting",
+        "dictionaries",
+        "list_comprehensions",
+        "collections"
+      ]
+    },
+    {
+      "id": "py4e:ch11",
+      "title": "Chapter 11: Regular Expressions",
+      "order": 12,
+      "url": "https://www.py4e.com/lessons/regex",
+      "topics": [
+        "[Coursera course 3: Using Python to Access Web Data]",
+        "Character matching in regular expressions",
+        "Extracting data using regular expressions",
+        "Combining searching and extracting",
+        "Escape character",
+        "Summary",
+        "Bonus section for Unix / Linux users",
+        "Debugging"
+      ],
+      "projects": [
+        "Autograder: Regular Expressions (Extracting Data With Regular Expressions)"
+      ],
+      "concepts": [
+        "regular_expressions",
+        "string_methods",
+        "file_io",
+        "command_line"
+      ]
+    },
+    {
+      "id": "py4e:ch12",
+      "title": "Chapter 12: Networked Programs",
+      "order": 13,
+      "url": "https://www.py4e.com/lessons/network",
+      "topics": [
+        "[Coursera course 3: Using Python to Access Web Data]",
+        "Hypertext Transfer Protocol - HTTP",
+        "The world's simplest web browser",
+        "Retrieving an image over HTTP",
+        "Retrieving web pages with urllib",
+        "Reading binary files using urllib",
+        "Parsing HTML and scraping the web",
+        "Parsing HTML using regular expressions",
+        "Parsing HTML using BeautifulSoup",
+        "Bonus section for Unix / Linux users",
+        "Lecture: Networks and Packets",
+        "Lecture: Servers and Protocols",
+        "Lecture: Characters, ASCII, and Unicode"
+      ],
+      "projects": [
+        "Autograder: Request-Response Cycle",
+        "Autograder: Scraping HTML Data with BeautifulSoup",
+        "Autograder: Following Links with BeautifulSoup"
+      ],
+      "concepts": [
+        "networking_sockets",
+        "lib_socket",
+        "apis_http",
+        "lib_urllib",
+        "unicode_encoding",
+        "web_scraping",
+        "lib_beautifulsoup",
+        "html_css_basics",
+        "regular_expressions",
+        "file_io",
+        "third_party_packages"
+      ]
+    },
+    {
+      "id": "py4e:ch13",
+      "title": "Chapter 13: Using Web Services",
+      "order": 14,
+      "url": "https://www.py4e.com/lessons/servces",
+      "topics": [
+        "[Coursera course 3: Using Python to Access Web Data]",
+        "eXtensible Markup Language - XML",
+        "Parsing XML",
+        "Looping through nodes",
+        "JavaScript Object Notation - JSON",
+        "Parsing JSON",
+        "Application Programming Interfaces",
+        "Security and API usage",
+        "Lecture: Web Services - XML Schema",
+        "Lecture: Web Services - SOA (Service Oriented Architecture)",
+        "Lecture: Web Services - GeoJSON"
+      ],
+      "projects": [
+        "Autograder: Extracting Data from XML",
+        "Autograder: Extract Data from JSON",
+        "Autograder: Using the GeoJSON API"
+      ],
+      "concepts": [
+        "xml_parsing",
+        "lib_elementtree",
+        "json_data",
+        "lib_json",
+        "apis_http",
+        "web_services",
+        "tool_geocoding_api",
+        "nested_data_structures",
+        "lib_urllib"
+      ]
+    },
+    {
+      "id": "py4e:ch14",
+      "title": "Chapter 14: Object-oriented programming",
+      "order": 15,
+      "url": "https://www.py4e.com/lessons/Objects",
+      "topics": [
+        "[Coursera course 4: Using Databases with Python]",
+        "Managing larger programs",
+        "Getting started",
+        "Using objects",
+        "Starting with programs",
+        "Subdividing a problem",
+        "Our first Python object",
+        "Classes as types",
+        "Object lifecycle",
+        "Multiple instances",
+        "Inheritance",
+        "Summary"
+      ],
+      "projects": [],
+      "concepts": [
+        "objects_methods",
+        "classes",
+        "instance_attributes",
+        "constructors",
+        "inheritance",
+        "decomposition",
+        "data_types"
+      ]
+    },
+    {
+      "id": "py4e:ch15",
+      "title": "Chapter 15: Using Databases and SQL",
+      "order": 16,
+      "url": "https://www.py4e.com/lessons/database",
+      "topics": [
+        "[Coursera course 4: Using Databases with Python]",
+        "What is a database?",
+        "Database concepts",
+        "Database Browser for SQLite",
+        "Creating a database table",
+        "Structured Query Language summary",
+        "Multiple tables and basic data modeling",
+        "Data model diagrams",
+        "Automatically creating primary keys",
+        "Logical keys for fast lookup",
+        "Adding constraints to the database",
+        "Sample multi-table application",
+        "Many to many relationships in databases",
+        "Modeling data at the many-to-many connection",
+        "Summary",
+        "Debugging",
+        "Lecture: Databases - Foreign Keys",
+        "Lecture: Databases - JOIN"
+      ],
+      "projects": [
+        "Autograder: Single Table SQL",
+        "Autograder: Counting Email in a Database",
+        "Autograder: Multi-Table Database - Tracks",
+        "Autograder: Many Students in Many Courses"
+      ],
+      "concepts": [
+        "databases_sql",
+        "lib_sqlite3",
+        "tool_sqlite_browser",
+        "data_modeling",
+        "sql_joins",
+        "json_data",
+        "file_io"
+      ]
+    },
+    {
+      "id": "py4e:ch16",
+      "title": "Chapter 16: Visualizing data",
+      "order": 17,
+      "url": "https://www.py4e.com/lessons/dataviz",
+      "topics": [
+        "[Coursera course 5: Capstone: Retrieving, Processing, and Visualizing Data with Python]",
+        "Building a OpenStreetMap from geocoded data",
+        "Visualizing networks and interconnections",
+        "Visualizing mail data",
+        "Lecture: Visualization - Page Rank (spidering, computation, visualization)",
+        "Lecture: Visualization - Gmane (email) spider, model, visualization"
+      ],
+      "projects": [
+        "Worked example: OpenGeo (geocoding + map)",
+        "Worked example: Page Rank (spider, compute, visualize)",
+        "Worked example: Gmane email data (spider, model, visualize)"
+      ],
+      "concepts": [
+        "data_visualization",
+        "data_analysis",
+        "tool_geocoding_api",
+        "web_scraping",
+        "databases_sql",
+        "lib_sqlite3",
+        "graph_algorithms",
+        "tool_d3js",
+        "apis_http"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "python_setup",
+      "label": "Installing Python",
+      "category": "environment",
+      "first_module": "py4e:install",
+      "depth": "practiced"
+    },
+    {
+      "id": "ide_editor",
+      "label": "Editors / IDEs",
+      "category": "environment",
+      "first_module": "py4e:install",
+      "depth": "introduced",
+      "course_label": "Recommended Programming Text Editors"
+    },
+    {
+      "id": "command_line",
+      "label": "Command line basics",
+      "category": "environment",
+      "first_module": "py4e:install",
+      "depth": "introduced"
+    },
+    {
+      "id": "running_scripts",
+      "label": "Running .py files",
+      "category": "environment",
+      "first_module": "py4e:install",
+      "depth": "practiced"
+    },
+    {
+      "id": "repl",
+      "label": "Interactive interpreter",
+      "category": "environment",
+      "first_module": "py4e:install",
+      "depth": "introduced",
+      "course_label": "Conversing with Python"
+    },
+    {
+      "id": "computational_thinking",
+      "label": "Computational thinking",
+      "category": "data_web",
+      "first_module": "py4e:ch01",
+      "depth": "introduced",
+      "course_label": "Why Program?"
+    },
+    {
+      "id": "computer_architecture",
+      "label": "Computer hardware architecture (CPU, memory, storage)",
+      "category": "fundamentals",
+      "first_module": "py4e:ch01",
+      "depth": "introduced",
+      "course_label": "Computer hardware architecture",
+      "new": true
+    },
+    {
+      "id": "algorithms",
+      "label": "Algorithmic thinking",
+      "category": "algorithms",
+      "first_module": "py4e:ch01",
+      "depth": "introduced",
+      "course_label": "What is a program?"
+    },
+    {
+      "id": "print_output",
+      "label": "print() output",
+      "category": "fundamentals",
+      "first_module": "py4e:ch01",
+      "depth": "practiced"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging",
+      "category": "errors_testing",
+      "first_module": "py4e:ch01",
+      "depth": "practiced",
+      "course_label": "Debugging sections"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced",
+      "course_label": "Values and types"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Numeric types",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced",
+      "course_label": "Operators and operands; Modulus operator"
+    },
+    {
+      "id": "expressions",
+      "label": "Expressions & order of operations",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation",
+      "category": "strings",
+      "first_module": "py4e:ch02",
+      "depth": "introduced",
+      "course_label": "String operations"
+    },
+    {
+      "id": "user_input",
+      "label": "input()",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced",
+      "course_label": "Asking the user for input"
+    },
+    {
+      "id": "comments",
+      "label": "Comments & mnemonic names",
+      "category": "environment",
+      "first_module": "py4e:ch02",
+      "depth": "introduced"
+    },
+    {
+      "id": "type_conversion",
+      "label": "Type conversion",
+      "category": "fundamentals",
+      "first_module": "py4e:ch02",
+      "depth": "practiced",
+      "course_label": "Type conversion functions"
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "category": "strings",
+      "first_module": "py4e:ch02",
+      "depth": "deep"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "py4e:ch03",
+      "depth": "practiced",
+      "course_label": "Boolean expressions"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "py4e:ch03",
+      "depth": "practiced"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "py4e:ch03",
+      "depth": "practiced",
+      "course_label": "incl. short-circuit evaluation"
+    },
+    {
+      "id": "conditionals",
+      "label": "if/elif/else",
+      "category": "control_flow",
+      "first_module": "py4e:ch03",
+      "depth": "deep",
+      "course_label": "Conditional / Alternative / Chained conditionals"
+    },
+    {
+      "id": "nested_conditionals",
+      "label": "Nested conditionals",
+      "category": "control_flow",
+      "first_module": "py4e:ch03",
+      "depth": "practiced"
+    },
+    {
+      "id": "exceptions",
+      "label": "try/except",
+      "category": "errors_testing",
+      "first_module": "py4e:ch03",
+      "depth": "practiced",
+      "course_label": "Catching exceptions using try and except"
+    },
+    {
+      "id": "functions",
+      "label": "Functions",
+      "category": "functions",
+      "first_module": "py4e:ch04",
+      "depth": "deep"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Built-in functions",
+      "category": "functions",
+      "first_module": "py4e:ch04",
+      "depth": "practiced"
+    },
+    {
+      "id": "math_module",
+      "label": "math module",
+      "category": "modules_libs",
+      "first_module": "py4e:ch04",
+      "depth": "introduced",
+      "course_label": "Math functions"
+    },
+    {
+      "id": "random_module",
+      "label": "random module",
+      "category": "modules_libs",
+      "first_module": "py4e:ch04",
+      "depth": "introduced",
+      "course_label": "Random numbers"
+    },
+    {
+      "id": "modules_imports",
+      "label": "import",
+      "category": "modules_libs",
+      "first_module": "py4e:ch04",
+      "depth": "introduced"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters & arguments",
+      "category": "functions",
+      "first_module": "py4e:ch04",
+      "depth": "practiced"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "py4e:ch04",
+      "depth": "practiced",
+      "course_label": "Fruitful functions and void functions"
+    },
+    {
+      "id": "none_type",
+      "label": "None",
+      "category": "fundamentals",
+      "first_module": "py4e:ch04",
+      "depth": "introduced"
+    },
+    {
+      "id": "decomposition",
+      "label": "Decomposition",
+      "category": "functions",
+      "first_module": "py4e:ch04",
+      "depth": "introduced",
+      "course_label": "Why functions? / Subdividing a problem"
+    },
+    {
+      "id": "iteration",
+      "label": "Iteration",
+      "category": "control_flow",
+      "first_module": "py4e:ch05",
+      "depth": "deep"
+    },
+    {
+      "id": "while_loops",
+      "label": "while loops",
+      "category": "control_flow",
+      "first_module": "py4e:ch05",
+      "depth": "practiced",
+      "course_label": "The while statement / indefinite loops"
+    },
+    {
+      "id": "for_loops",
+      "label": "for loops",
+      "category": "control_flow",
+      "first_module": "py4e:ch05",
+      "depth": "practiced",
+      "course_label": "Definite loops using for"
+    },
+    {
+      "id": "break_continue",
+      "label": "break / continue",
+      "category": "control_flow",
+      "first_module": "py4e:ch05",
+      "depth": "practiced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns",
+      "category": "control_flow",
+      "first_module": "py4e:ch05",
+      "depth": "deep",
+      "course_label": "Counting, summing, max/min loops"
+    },
+    {
+      "id": "string_indexing_slicing",
+      "label": "String indexing & slicing",
+      "category": "strings",
+      "first_module": "py4e:ch06",
+      "depth": "practiced",
+      "course_label": "String slices"
+    },
+    {
+      "id": "string_immutability",
+      "label": "String immutability",
+      "category": "strings",
+      "first_module": "py4e:ch06",
+      "depth": "introduced",
+      "course_label": "Strings are immutable"
+    },
+    {
+      "id": "string_methods",
+      "label": "String methods & parsing",
+      "category": "strings",
+      "first_module": "py4e:ch06",
+      "depth": "deep",
+      "course_label": "String methods; Parsing strings"
+    },
+    {
+      "id": "string_formatting",
+      "label": "String formatting",
+      "category": "strings",
+      "first_module": "py4e:ch06",
+      "depth": "introduced",
+      "course_label": "Formatted String Literals"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Using objects/methods",
+      "category": "oop",
+      "first_module": "py4e:ch06",
+      "depth": "introduced",
+      "course_label": "String methods / Using objects"
+    },
+    {
+      "id": "file_io",
+      "label": "File I/O",
+      "category": "files_io",
+      "first_module": "py4e:ch07",
+      "depth": "deep"
+    },
+    {
+      "id": "defensive_programming",
+      "label": "Guardian pattern / input validation",
+      "category": "errors_testing",
+      "first_module": "py4e:ch07",
+      "depth": "practiced",
+      "course_label": "Guardian Pattern"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "py4e:ch08",
+      "depth": "deep"
+    },
+    {
+      "id": "list_methods",
+      "label": "List methods",
+      "category": "collections",
+      "first_module": "py4e:ch08",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_slicing",
+      "label": "List slicing",
+      "category": "collections",
+      "first_module": "py4e:ch08",
+      "depth": "practiced",
+      "course_label": "List slices"
+    },
+    {
+      "id": "mutability_aliasing",
+      "label": "Mutability & aliasing",
+      "category": "collections",
+      "first_module": "py4e:ch08",
+      "depth": "introduced",
+      "course_label": "Objects and values; Aliasing"
+    },
+    {
+      "id": "sorting",
+      "label": "Sorting",
+      "category": "collections",
+      "first_module": "py4e:ch08",
+      "depth": "practiced",
+      "course_label": "Sorting a Dictionary Using Tuples"
+    },
+    {
+      "id": "collections",
+      "label": "Collections",
+      "category": "collections",
+      "first_module": "py4e:ch08",
+      "depth": "practiced"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "py4e:ch09",
+      "depth": "deep"
+    },
+    {
+      "id": "tuples",
+      "label": "Tuples",
+      "category": "collections",
+      "first_module": "py4e:ch10",
+      "depth": "deep"
+    },
+    {
+      "id": "unpacking",
+      "label": "Tuple assignment / unpacking",
+      "category": "collections",
+      "first_module": "py4e:ch10",
+      "depth": "practiced",
+      "course_label": "Tuple assignment"
+    },
+    {
+      "id": "list_comprehensions",
+      "label": "List comprehensions",
+      "category": "collections",
+      "first_module": "py4e:ch10",
+      "depth": "introduced",
+      "course_label": "List comprehension"
+    },
+    {
+      "id": "regular_expressions",
+      "label": "Regular expressions",
+      "category": "strings",
+      "first_module": "py4e:ch11",
+      "depth": "deep"
+    },
+    {
+      "id": "networking_sockets",
+      "label": "Sockets & networking",
+      "category": "data_web",
+      "first_module": "py4e:ch12",
+      "depth": "practiced",
+      "course_label": "Networks and Packets; The world's simplest web browser"
+    },
+    {
+      "id": "lib_socket",
+      "label": "socket module",
+      "category": "modules_libs",
+      "first_module": "py4e:ch12",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "apis_http",
+      "label": "HTTP & web APIs",
+      "category": "modules_libs",
+      "first_module": "py4e:ch12",
+      "depth": "deep",
+      "course_label": "Hypertext Transfer Protocol; Application Programming Interfaces"
+    },
+    {
+      "id": "lib_urllib",
+      "label": "urllib",
+      "category": "modules_libs",
+      "first_module": "py4e:ch12",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "unicode_encoding",
+      "label": "Unicode & encodings",
+      "category": "strings",
+      "first_module": "py4e:ch12",
+      "depth": "introduced",
+      "course_label": "Characters, ASCII, and Unicode"
+    },
+    {
+      "id": "web_scraping",
+      "label": "Web scraping / spidering",
+      "category": "modules_libs",
+      "first_module": "py4e:ch12",
+      "depth": "practiced",
+      "course_label": "Parsing HTML and scraping the web"
+    },
+    {
+      "id": "lib_beautifulsoup",
+      "label": "BeautifulSoup",
+      "category": "modules_libs",
+      "first_module": "py4e:ch12",
+      "depth": "practiced"
+    },
+    {
+      "id": "html_css_basics",
+      "label": "HTML basics",
+      "category": "data_web",
+      "first_module": "py4e:ch12",
+      "depth": "introduced"
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third-party packages",
+      "category": "modules_libs",
+      "first_module": "py4e:ch12",
+      "depth": "introduced",
+      "course_label": "installing/bundling bs4"
+    },
+    {
+      "id": "xml_parsing",
+      "label": "XML parsing",
+      "category": "data_web",
+      "first_module": "py4e:ch13",
+      "depth": "practiced",
+      "course_label": "eXtensible Markup Language - XML"
+    },
+    {
+      "id": "lib_elementtree",
+      "label": "xml.etree.ElementTree",
+      "category": "modules_libs",
+      "first_module": "py4e:ch13",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "json_data",
+      "label": "JSON",
+      "category": "files_io",
+      "first_module": "py4e:ch13",
+      "depth": "practiced",
+      "course_label": "JavaScript Object Notation - JSON"
+    },
+    {
+      "id": "lib_json",
+      "label": "json module",
+      "category": "modules_libs",
+      "first_module": "py4e:ch13",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "web_services",
+      "label": "Web services / service-oriented architecture",
+      "category": "data_web",
+      "first_module": "py4e:ch13",
+      "depth": "introduced",
+      "course_label": "Web Services - SOA",
+      "new": true
+    },
+    {
+      "id": "tool_geocoding_api",
+      "label": "Geocoding API (GeoJSON)",
+      "category": "data_web",
+      "first_module": "py4e:ch13",
+      "depth": "practiced",
+      "course_label": "GeoJSON API / OpenGeo",
+      "new": true
+    },
+    {
+      "id": "nested_data_structures",
+      "label": "Nested data structures",
+      "category": "collections",
+      "first_module": "py4e:ch13",
+      "depth": "practiced",
+      "course_label": "parsed JSON lists/dicts"
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "category": "oop",
+      "first_module": "py4e:ch14",
+      "depth": "introduced",
+      "course_label": "Our first Python object"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "py4e:ch14",
+      "depth": "introduced"
+    },
+    {
+      "id": "constructors",
+      "label": "Constructors / object lifecycle",
+      "category": "oop",
+      "first_module": "py4e:ch14",
+      "depth": "introduced",
+      "course_label": "Object lifecycle (__init__ / __del__)"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "py4e:ch14",
+      "depth": "introduced"
+    },
+    {
+      "id": "databases_sql",
+      "label": "Databases & SQL",
+      "category": "data_web",
+      "first_module": "py4e:ch15",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_sqlite3",
+      "label": "sqlite3",
+      "category": "modules_libs",
+      "first_module": "py4e:ch15",
+      "depth": "deep"
+    },
+    {
+      "id": "tool_sqlite_browser",
+      "label": "DB Browser for SQLite",
+      "category": "environment",
+      "first_module": "py4e:ch15",
+      "depth": "practiced",
+      "course_label": "Database Browser for SQLite",
+      "new": true
+    },
+    {
+      "id": "data_modeling",
+      "label": "Relational data modeling (primary/foreign/logical keys, many-to-many)",
+      "category": "data_web",
+      "first_module": "py4e:ch15",
+      "depth": "deep",
+      "course_label": "Multiple tables and basic data modeling",
+      "new": true
+    },
+    {
+      "id": "sql_joins",
+      "label": "SQL JOIN",
+      "category": "data_web",
+      "first_module": "py4e:ch15",
+      "depth": "practiced",
+      "course_label": "Databases - JOIN",
+      "new": true
+    },
+    {
+      "id": "data_visualization",
+      "label": "Data visualization",
+      "category": "data_web",
+      "first_module": "py4e:ch16",
+      "depth": "practiced"
+    },
+    {
+      "id": "data_analysis",
+      "label": "Data analysis pipeline (retrieve, process, visualize)",
+      "category": "data_web",
+      "first_module": "py4e:ch16",
+      "depth": "practiced"
+    },
+    {
+      "id": "graph_algorithms",
+      "label": "Graph algorithms",
+      "category": "algorithms",
+      "first_module": "py4e:ch16",
+      "depth": "introduced",
+      "course_label": "PageRank"
+    },
+    {
+      "id": "tool_d3js",
+      "label": "D3.js (browser visualization)",
+      "category": "data_web",
+      "first_module": "py4e:ch16",
+      "depth": "introduced",
+      "course_label": "D3 visualization",
+      "new": true
+    },
+    {
+      "id": "standard_library",
+      "label": "Python standard library",
+      "category": "modules_libs",
+      "first_module": "py4e:ch04",
+      "depth": "introduced"
+    }
+  ],
+  "edges": [
+    {
+      "source": "py4e:install",
+      "target": "py4e:ch01",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch01",
+      "target": "py4e:ch02",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch02",
+      "target": "py4e:ch03",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch03",
+      "target": "py4e:ch04",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch04",
+      "target": "py4e:ch05",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch05",
+      "target": "py4e:ch06",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch06",
+      "target": "py4e:ch07",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch07",
+      "target": "py4e:ch08",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch08",
+      "target": "py4e:ch09",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch09",
+      "target": "py4e:ch10",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch10",
+      "target": "py4e:ch11",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch11",
+      "target": "py4e:ch12",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch12",
+      "target": "py4e:ch13",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch13",
+      "target": "py4e:ch14",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch14",
+      "target": "py4e:ch15",
+      "type": "precedes"
+    },
+    {
+      "source": "py4e:ch15",
+      "target": "py4e:ch16",
+      "type": "precedes"
+    },
+    {
+      "source": "python_setup",
+      "target": "running_scripts",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "print_output",
+      "target": "variables",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "expressions",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "logical_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "nested_conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "type_conversion",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "expressions",
+      "target": "functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "parameters_arguments",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "return_values",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "break_continue",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "strings",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_indexing_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "loop_patterns",
+      "target": "file_io",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "file_io",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "defensive_programming",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "loop_patterns",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "tuples",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "tuples",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tuples",
+      "target": "sorting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "regular_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "regular_expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "networking_sockets",
+      "target": "apis_http",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "apis_http",
+      "target": "web_scraping",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "regular_expressions",
+      "target": "web_scraping",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "unicode_encoding",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "apis_http",
+      "target": "xml_parsing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "apis_http",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "json_data",
+      "target": "tool_geocoding_api",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "objects_methods",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "constructors",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "databases_sql",
+      "target": "data_modeling",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_modeling",
+      "target": "sql_joins",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "json_data",
+      "target": "databases_sql",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "web_scraping",
+      "target": "data_analysis",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "databases_sql",
+      "target": "data_analysis",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_analysis",
+      "target": "data_visualization",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tool_geocoding_api",
+      "target": "data_visualization",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "tuples",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_sqlite3",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_urllib",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_socket",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_json",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_elementtree",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "math_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "random_module",
+      "target": "standard_library",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_beautifulsoup",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "tool_geocoding_api",
+      "target": "web_services",
+      "type": "is_a"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_immutability",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "nested_conditionals",
+      "target": "conditionals",
+      "type": "part_of"
+    },
+    {
+      "source": "break_continue",
+      "target": "iteration",
+      "type": "part_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "iteration",
+      "type": "part_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "iteration",
+      "type": "part_of"
+    },
+    {
+      "source": "loop_patterns",
+      "target": "iteration",
+      "type": "part_of"
+    },
+    {
+      "source": "sql_joins",
+      "target": "databases_sql",
+      "type": "part_of"
+    },
+    {
+      "source": "data_modeling",
+      "target": "databases_sql",
+      "type": "part_of"
+    },
+    {
+      "source": "constructors",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "instance_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "unpacking",
+      "target": "tuples",
+      "type": "part_of"
+    },
+    {
+      "source": "list_comprehensions",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "return_values",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "networking_sockets",
+      "target": "lib_socket",
+      "type": "uses_tool"
+    },
+    {
+      "source": "apis_http",
+      "target": "lib_urllib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_scraping",
+      "target": "lib_urllib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_scraping",
+      "target": "lib_beautifulsoup",
+      "type": "uses_tool"
+    },
+    {
+      "source": "xml_parsing",
+      "target": "lib_elementtree",
+      "type": "uses_tool"
+    },
+    {
+      "source": "json_data",
+      "target": "lib_json",
+      "type": "uses_tool"
+    },
+    {
+      "source": "databases_sql",
+      "target": "lib_sqlite3",
+      "type": "uses_tool"
+    },
+    {
+      "source": "databases_sql",
+      "target": "tool_sqlite_browser",
+      "type": "uses_tool"
+    },
+    {
+      "source": "data_visualization",
+      "target": "tool_d3js",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch12",
+      "target": "lib_socket",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch12",
+      "target": "lib_urllib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch12",
+      "target": "lib_beautifulsoup",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch13",
+      "target": "lib_elementtree",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch13",
+      "target": "lib_json",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch13",
+      "target": "tool_geocoding_api",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch15",
+      "target": "lib_sqlite3",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch15",
+      "target": "tool_sqlite_browser",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch16",
+      "target": "tool_geocoding_api",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch16",
+      "target": "lib_sqlite3",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch16",
+      "target": "tool_d3js",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch16",
+      "target": "lib_urllib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "py4e:ch16",
+      "target": "lib_beautifulsoup",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_services",
+      "target": "apis_http",
+      "type": "related_to"
+    },
+    {
+      "source": "graph_algorithms",
+      "target": "web_scraping",
+      "type": "related_to"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "lists",
+      "type": "related_to"
+    },
+    {
+      "source": "computer_architecture",
+      "target": "computational_thinking",
+      "type": "related_to"
+    },
+    {
+      "source": "regular_expressions",
+      "target": "command_line",
+      "type": "related_to"
+    }
+  ]
+}

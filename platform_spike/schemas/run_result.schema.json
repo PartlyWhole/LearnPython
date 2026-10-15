@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run_result.schema.json",
+  "title": "RunResult",
+  "description": "What engine.run_program returns for one world: the trace the renderer replays, any learner error, captured print() output and the final state. Crosses the worker -> page boundary as JSON.",
+  "type": "object",
+  "required": [
+    "format",
+    "trace",
+    "error",
+    "output",
+    "final"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": 1
+    },
+    "trace": {
+      "type": "array",
+      "description": "One event per API call, in order. State fields are the state AFTER the action.",
+      "items": {
+        "type": "object",
+        "required": [
+          "line",
+          "action",
+          "x",
+          "y",
+          "dir",
+          "bag"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "line": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Learner's source line that made the call; null if not called from learner code."
+          },
+          "action": {
+            "enum": [
+              "move",
+              "turn_left",
+              "front_is_clear",
+              "pick",
+              "put",
+              "gems_here",
+              "scan",
+              "coin_flip"
+            ]
+          },
+          "x": {
+            "type": "integer"
+          },
+          "y": {
+            "type": "integer"
+          },
+          "dir": {
+            "enum": [
+              "E",
+              "N",
+              "W",
+              "S"
+            ]
+          },
+          "bag": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "result": {
+            "description": "Return value for sensors (bool, int or list of ints); absent for actions."
+          }
+        }
+      }
+    },
+    "error": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "message",
+            "line"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Python exception class name, e.g. WorldError, NameError, SyntaxError."
+            },
+            "message": {
+              "type": "string",
+              "description": "Shown to the learner. WorldError messages are written for learners."
+            },
+            "line": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "kind": {
+              "enum": [
+                "wall",
+                "no_gem",
+                "empty_bag",
+                "step_limit",
+                "unavailable"
+              ],
+              "description": "Present only for WorldError: what the renderer should mark."
+            }
+          }
+        }
+      ]
+    },
+    "output": {
+      "type": "string",
+      "description": "Everything the program printed."
+    },
+    "final": {
+      "type": "object",
+      "required": [
+        "x",
+        "y",
+        "dir",
+        "bag",
+        "gems_left",
+        "gems"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "dir": {
+          "enum": [
+            "E",
+            "N",
+            "W",
+            "S"
+          ]
+        },
+        "bag": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gems_left": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gems": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[0-9]+,[0-9]+$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "description": "Final gem layout, keyed by \"x,y\" (empty cells omitted)."
+        }
+      }
+    }
+  }
+}

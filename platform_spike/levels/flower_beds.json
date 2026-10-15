@@ -1,0 +1,50 @@
+{
+  "format": 1,
+  "id": "flower_beds",
+  "title": "Flower beds",
+  "brief": "Plant three flower beds along the path, all the same shape. Then wait at the gate on the far east end, facing east. Write one function that plants a bed and ends where the next bed starts.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n",
+  "world": {
+    "width": 16,
+    "height": 3,
+    "start": [
+      0,
+      2,
+      "E"
+    ],
+    "bag": "infinite"
+  },
+  "goal": {
+    "no_error": true,
+    "gems_exactly": {
+      "0,2": 1,
+      "1,1": 1,
+      "2,2": 1,
+      "5,2": 1,
+      "6,1": 1,
+      "7,2": 1,
+      "10,2": 1,
+      "11,1": 1,
+      "12,2": 1
+    },
+    "end_at": [
+      15,
+      2
+    ],
+    "facing": "E"
+  },
+  "constraints": {
+    "required": [
+      "def",
+      "for"
+    ],
+    "max_lines": 24,
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "decomposition.extract_repeated_code",
+    "decomposition.top_down_design"
+  ]
+}

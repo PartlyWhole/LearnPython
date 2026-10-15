@@ -1,0 +1,2800 @@
+{
+  "batch": "B18",
+  "title": "Data analysis and visualization",
+  "concept_map": {
+    "data_analysis": {
+      "topics": [
+        "data_analysis.question_to_answer",
+        "data_analysis.check_your_results"
+      ],
+      "entry_topic": "data_analysis.question_to_answer",
+      "notes": "Umbrella-like process concept: the library skills live in lib_pandas; these two problem-based topics teach the workflow and sanity checks. Text analysis (Boot.dev BookBot) is covered by B07 dictionaries.counting_pattern and B10 cli_applications; py4e's spider/visualise pipelines by B16/B17. Portfolio projects (Days 99-100) are multistep material built from these topics."
+    },
+    "lib_numpy": {
+      "topics": [
+        "lib_numpy.create_arrays",
+        "lib_numpy.vectorised_arithmetic",
+        "lib_numpy.index_and_slice",
+        "lib_numpy.boolean_masks",
+        "lib_numpy.axes_broadcasting_matmul"
+      ],
+      "entry_topic": "lib_numpy.create_arrays",
+      "notes": "Five topics (Day 77): arrays, vectorised ops, indexing, boolean masks, axes/broadcasting/@. Installing numpy (pip/%pip) is third_party_packages.find_and_install and is not a prerequisite: the browser platform is assumed to ship numpy, pandas, matplotlib, seaborn, plotly, scipy and scikit-learn. Images as 3D arrays (Day 77 image manipulation, Day 92 colour palette) are left to B19 image_processing, which can depend on lib_numpy.index_and_slice. np.random.default_rng is used once (statistics_hypothesis_testing.distributions_and_spread) as a recipe line. Snippets were run with NumPy 2.0.2."
+    },
+    "lib_pandas": {
+      "topics": [
+        "lib_pandas.series_basics",
+        "lib_pandas.dataframe_basics",
+        "lib_pandas.select_columns_rows",
+        "lib_pandas.filter_rows",
+        "lib_pandas.sort_and_derive",
+        "lib_pandas.clean_data",
+        "lib_pandas.groupby_aggregate",
+        "lib_pandas.merge_tables",
+        "lib_pandas.dates_and_time_series",
+        "lib_pandas.to_python_and_files"
+      ],
+      "entry_topic": "lib_pandas.series_basics",
+      "notes": "Ten topics (100 Days Days 25-26, 31-32, 72-76). Entry depends on lib_numpy.vectorised_arithmetic so vectorisation and masks are taught once, in NumPy; 100 Days teaches pandas first, so a reviewer may prefer to cut that link. Examples print .tolist() and scalars rather than whole tables, because NumPy 2 scalar reprs (np.int64(12)) and table layout vary by version. pandas was not installed: these snippets were not run; outputs were checked by hand and by recomputing with NumPy. Reading a table from SQL (pd.read_sql) belongs to B17 databases_sql; pd.read_html scraping to B16 web_scraping; Tkinter flash cards (Day 31) use to_python_and_files and belong to B19."
+    },
+    "data_visualization": {
+      "topics": [
+        "data_visualization.choose_chart",
+        "data_visualization.honest_readable_charts"
+      ],
+      "entry_topic": "data_visualization.choose_chart",
+      "notes": "Library-independent chart choice and honesty; the drawing calls are owned by lib_matplotlib, lib_seaborn and lib_plotly. tool_d3js (py4e) is not in this batch's concept list and was not given a topic. Plot topics are graded by matching calls to chart sketches, predicting heights/counts, and fix-the-bug on arguments, since rendered images cannot be compared."
+    },
+    "lib_matplotlib": {
+      "topics": [
+        "lib_matplotlib.line_plots",
+        "lib_matplotlib.bar_scatter_hist",
+        "lib_matplotlib.figure_and_axes",
+        "lib_matplotlib.plot_pandas_data"
+      ],
+      "entry_topic": "lib_matplotlib.line_plots",
+      "notes": "Entry topic needs only lists (MIT L25 plots lists), so it can be taught before pandas. Locators/date formatters (Day 75) were folded into plot_pandas_data practice rather than given a KP. Snippets were not run (matplotlib not installed); the quoted ValueError and TypeError texts are matplotlib's standard messages."
+    },
+    "lib_seaborn": {
+      "topics": [
+        "lib_seaborn.relational_plots",
+        "lib_seaborn.distribution_and_category_plots"
+      ],
+      "entry_topic": "lib_seaborn.relational_plots",
+      "notes": "Not run (seaborn not installed). regplot leads into linear_regression, but linear_regression does not depend on seaborn: numpy polyfit + matplotlib scatter carry the same idea."
+    },
+    "lib_plotly": {
+      "topics": [
+        "lib_plotly.express_bar_pie",
+        "lib_plotly.scatter_box_options",
+        "lib_plotly.maps_and_hierarchies"
+      ],
+      "entry_topic": "lib_plotly.express_bar_pie",
+      "notes": "plotly.express only (Days 76, 79); graph_objects was left out. Not run (plotly not installed)."
+    },
+    "lib_scipy": {
+      "topics": [
+        "lib_scipy.scipy_stats_calls"
+      ],
+      "entry_topic": "lib_scipy.scipy_stats_calls",
+      "notes": "One topic on calling scipy.stats; the meaning of tests is owned by statistics_hypothesis_testing. Not run (scipy not installed): the t statistic, p-values and r were recomputed independently with NumPy and numerical integration of the t distribution."
+    },
+    "lib_scikit_learn": {
+      "topics": [
+        "lib_scikit_learn.fit_and_predict"
+      ],
+      "entry_topic": "lib_scikit_learn.fit_and_predict",
+      "notes": "One topic on the estimator API (fit/predict, 2D X, trailing-underscore attributes, train_test_split). Regression meaning is linear_regression. Not run (scikit-learn not installed); coefficients and R-squared were recomputed with numpy.polyfit/lstsq."
+    },
+    "linear_regression": {
+      "topics": [
+        "linear_regression.line_of_best_fit",
+        "linear_regression.fit_and_interpret",
+        "linear_regression.multivariable_and_log"
+      ],
+      "entry_topic": "linear_regression.line_of_best_fit",
+      "notes": "Days 78 and 81. Feature scaling, regularisation and multicollinearity were left out (not taught by any course)."
+    },
+    "statistics_hypothesis_testing": {
+      "topics": [
+        "statistics_hypothesis_testing.distributions_and_spread",
+        "statistics_hypothesis_testing.p_values_by_simulation",
+        "statistics_hypothesis_testing.t_test_two_groups"
+      ],
+      "entry_topic": "statistics_hypothesis_testing.distributions_and_spread",
+      "notes": "Day 80 (Semmelweis). p-values are introduced by a shuffling simulation in plain Python (run with 3.13) before scipy, building on B14 simulation_monte_carlo, so the t-test is not a black box. Confidence intervals, chi-squared and one-sided tests were left out."
+    }
+  },
+  "topics": [
+    {
+      "id": "lib_numpy.create_arrays",
+      "title": "NumPy arrays: making them and reading their shape",
+      "concept": "lib_numpy",
+      "summary": "Create 1D and 2D NumPy arrays from lists and with arange/zeros/linspace, and read shape, ndim and dtype.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.from_import_and_alias",
+        "lists.create_and_index",
+        "nested_data_structures.grid_index_and_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "import numpy as np and make an array from a list",
+          "worked_example": "import numpy as np\na = np.array([2, 4, 6])\nprint(a)          # [2 4 6]\nprint(len(a), a[0])  # 3 2\nnp is the standard alias; an array prints without commas.",
+          "practice": "Predict what printing an array shows; write the import line and the array for a given list.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias",
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "2D arrays: shape, ndim and dtype",
+          "worked_example": "grid = np.array([[1, 2, 3], [4, 5, 6]])\nprint(grid.shape)  # (2, 3)\nprint(grid.ndim)   # 2\nprint(grid.dtype)  # int64\nshape is (rows, columns). Rows must be the same length: np.array([[1, 2], [3]])\n# ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape ...",
+          "practice": "Predict shape and ndim of nested lists turned into arrays; spot the list that cannot become an array.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Every element has one type",
+          "worked_example": "print(np.array([1, 2.5, 3]))   # [1.  2.5 3. ]\nprint(np.array([1, 'a']))      # ['1' 'a']\nOne float turns every element into a float; one string turns them all into strings.",
+          "practice": "Predict the dtype (int, float or text) of arrays built from mixed lists.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Ready-made arrays: arange, zeros and linspace",
+          "worked_example": "print(np.arange(0, 10, 3))   # [0 3 6 9]\nprint(np.zeros(3))           # [0. 0. 0.]\nprint(np.linspace(0, 1, 5))  # [0.   0.25 0.5  0.75 1.  ]\narange is like range (stop excluded); linspace takes a count and includes the stop.",
+          "practice": "Predict the arrays these calls make; choose arange or linspace for described sequences.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.from_import_and_alias",
+          "weight": 0.2
+        },
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_numpy.vectorised_arithmetic",
+      "title": "Vectorised arithmetic: maths on whole arrays",
+      "concept": "lib_numpy",
+      "summary": "Apply arithmetic and functions to every element at once, combine equal-length arrays, and summarise with sum/mean/max/argmax.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.create_arrays",
+        "lists.membership_and_operators",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An operator applies to every element",
+          "worked_example": "prices = np.array([10, 20, 30])\nprint(prices * 2)        # [20 40 60]\nprint([10, 20, 30] * 2)  # [10, 20, 30, 10, 20, 30]\nThe same * repeats a list but doubles each element of an array: no loop needed.",
+          "practice": "Predict results of +, *, ** on arrays and the same operator on lists.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "Two arrays combine element by element",
+          "worked_example": "a = np.array([1, 2, 3])\nb = np.array([10, 20, 30])\nprint(a + b)  # [11 22 33]\nprint(b / a)  # [10. 10. 10.]\nnp.array([1, 2]) + np.array([1, 2, 3])\n# ValueError: operands could not be broadcast together with shapes (2,) (3,)",
+          "practice": "Predict element-wise results; fix code that combines arrays of different lengths.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.create_arrays"
+          ]
+        },
+        {
+          "title": "Summaries: sum, mean, max and argmax",
+          "worked_example": "temps = np.array([12, 18, 15, 21])\nprint(temps.sum(), temps.mean(), temps.max())  # 66 16.5 21\nprint(temps.argmax())  # 3\nargmax gives the position of the largest value, not the value.",
+          "practice": "Predict summary values; use argmax to find which day was hottest from a parallel list of names.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "NumPy functions work on whole arrays; math functions do not",
+          "worked_example": "x = np.array([1, 4, 9])\nprint(np.sqrt(x))   # [1. 2. 3.]\nimport math\nmath.sqrt(x)\n# TypeError: only length-1 arrays can be converted to Python scalars",
+          "practice": "Replace a loop that rounds or square-roots each item with one NumPy call; fix code that calls math on an array.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.create_arrays"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_numpy.create_arrays",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.aggregate_builtins",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_numpy.index_and_slice",
+      "title": "Indexing and slicing arrays, rows and columns",
+      "concept": "lib_numpy",
+      "summary": "Index and slice 1D and 2D arrays with [row, col], take whole rows and columns, and know that slices are views of the original.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.create_arrays",
+        "list_slicing.slice_lists",
+        "nested_data_structures.rows_columns_diagonals",
+        "mutability_aliasing.names_refer_to_objects"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "1D indexing and slicing work like lists",
+          "worked_example": "a = np.array([5, 10, 15, 20, 25])\nprint(a[1], a[-1])  # 10 25\nprint(a[1:4])       # [10 15 20]\nprint(a[::2])       # [ 5 15 25]",
+          "practice": "Predict the result of indexes and slices with negative positions and steps.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "2D: one bracket, row then column",
+          "worked_example": "grid = np.array([[1, 2, 3], [4, 5, 6]])\nprint(grid[1, 2])  # 6\nprint(grid[1][2])  # 6\nBoth work; grid[r, c] is the NumPy way (grid[r][c] makes a row first).",
+          "practice": "Predict single elements of a 2D array; write the index for a described cell.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Whole rows and columns with :",
+          "worked_example": "print(grid[0])      # [1 2 3]\nprint(grid[:, 1])   # [2 5]\nprint(grid[:, 1:])  # [[2 3]\n                    #  [5 6]]\n: means every row (or column). A column needs no loop, unlike a list of lists.",
+          "practice": "Write the expression for a given row, column or block; predict sums of a column.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.rows_columns_diagonals"
+          ]
+        },
+        {
+          "title": "Slices are views: changing one changes the original",
+          "worked_example": "a = np.array([1, 2, 3, 4])\npart = a[:2]\npart[0] = 99\nprint(a)   # [99  2  3  4]\nA list slice is a copy; an array slice is not. Use a[:2].copy() to get an independent array.",
+          "practice": "Predict the original array after changing a slice; fix code that must not change its input.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.4
+        },
+        {
+          "topic": "nested_data_structures.rows_columns_diagonals",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_numpy.create_arrays",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_numpy.boolean_masks",
+      "title": "Selecting with boolean masks",
+      "concept": "lib_numpy",
+      "summary": "Compare an array to get a True/False mask, select and count matching elements, combine conditions with & | ~, and use np.where.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.vectorised_arithmetic",
+        "lib_numpy.index_and_slice",
+        "logical_operators.combine_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A comparison gives an array of booleans",
+          "worked_example": "scores = np.array([55, 72, 90, 40])\nprint(scores > 60)   # [False  True  True False]",
+          "practice": "Predict the mask for comparisons with <, >=, ==.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "Use a mask to select and to count",
+          "worked_example": "print(scores[scores > 60])      # [72 90]\nprint((scores > 60).sum())      # 2\nInside [] a mask keeps the True positions; summing counts the Trues.",
+          "practice": "Write the expression that selects or counts the elements meeting a condition.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.index_and_slice"
+          ]
+        },
+        {
+          "title": "Combine conditions with & and |, in parentheses",
+          "worked_example": "print(scores[(scores > 50) & (scores < 80)])  # [55 72]\nscores[scores > 50 and scores < 80]\n# ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()\nand/or work on single True/False values; & | ~ work element by element. Without parentheses & binds first and gives the same error.",
+          "practice": "Fix masks written with and/or or missing parentheses; write a mask for a range or an either-or condition.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "logical_operators.combine_conditions"
+          ]
+        },
+        {
+          "title": "np.where and assigning through a mask",
+          "worked_example": "print(np.where(scores >= 60, 'pass', 'fail'))  # ['fail' 'pass' 'pass' 'fail']\nscores[scores < 50] = 50\nprint(scores)   # [55 72 90 50]",
+          "practice": "Predict np.where labels; write one line that caps or floors values.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_numpy.vectorised_arithmetic",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_numpy.index_and_slice",
+          "weight": 0.4
+        },
+        {
+          "topic": "logical_operators.combine_conditions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_numpy.axes_broadcasting_matmul",
+      "title": "Axes, reshaping, broadcasting and matrix multiplication",
+      "concept": "lib_numpy",
+      "summary": "Summarise a 2D array along axis 0 or 1, reshape arrays, predict broadcasting of a row across rows, and tell element-wise * from matrix @.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.vectorised_arithmetic",
+        "lib_numpy.index_and_slice"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Summaries along an axis",
+          "worked_example": "sales = np.array([[3, 5], [4, 1], [2, 2]])   # 3 days x 2 shops\nprint(sales.sum(axis=0))  # [9 8]    one total per column\nprint(sales.sum(axis=1))  # [8 5 4]  one total per row\naxis=0 collapses the rows; axis=1 collapses the columns.",
+          "practice": "Predict per-row and per-column sums, means and maxima; choose the axis for a described total.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "Reshaping keeps the elements, changes the shape",
+          "worked_example": "a = np.arange(6)\nprint(a.reshape(2, 3))  # [[0 1 2]\n                        #  [3 4 5]]\na.reshape(4, 2)\n# ValueError: cannot reshape array of size 6 into shape (4,2)",
+          "practice": "Predict reshaped arrays; pick the shapes a 12-element array can take.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.index_and_slice"
+          ]
+        },
+        {
+          "title": "Broadcasting: a row is applied to every row",
+          "worked_example": "print(sales * np.array([2, 10]))  # [[ 6 50]\n                                  #  [ 8 10]\n                                  #  [ 4 20]]\nShapes (3, 2) and (2,) line up from the right, so the price row is reused for each day.",
+          "practice": "Predict broadcast results; decide whether two shapes are compatible.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "Matrix multiplication with @ is not *",
+          "worked_example": "A = np.array([[1, 2], [3, 4]])\nB = np.array([[5, 6], [7, 8]])\nprint(A * B)   # [[ 5 12]\n               #  [21 32]]\nprint(A @ B)   # [[19 22]\n               #  [43 50]]\nprint(sales @ np.array([2, 10]))  # [56 18 24]  revenue per day",
+          "practice": "Compute small @ products by hand; choose * or @ for a described calculation.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_numpy.vectorised_arithmetic",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_numpy.index_and_slice",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.series_basics",
+      "title": "pandas Series: labelled columns of data",
+      "concept": "lib_pandas",
+      "summary": "Create a Series from a list or dict, look values up by label, and use vectorised maths and summaries, including label alignment that produces NaN.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.vectorised_arithmetic",
+        "dictionaries.create_and_look_up"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A Series is values plus an index",
+          "worked_example": "import pandas as pd\ntemps = pd.Series([12, 18, 15])\nprint(temps)\n# 0    12\n# 1    18\n# 2    15\n# dtype: int64\nThe left column is the index (row labels), not data.",
+          "practice": "Predict the index and values of a printed Series; write the import line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.create_arrays"
+          ]
+        },
+        {
+          "title": "Labels from a dict, lookup by label",
+          "worked_example": "temps = pd.Series({'Mon': 12, 'Tue': 18, 'Wed': 15})\nprint(temps['Tue'])       # 18\nprint(list(temps.index))  # ['Mon', 'Tue', 'Wed']\ntemps['Fri']\n# KeyError: 'Fri'",
+          "practice": "Predict lookups, including a missing label; build a Series from a dict.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Maths and summaries work like NumPy",
+          "worked_example": "print(temps.mean())                  # 15.0\nprint((temps * 2)['Wed'])            # 30\nprint(temps.max(), temps.idxmax())   # 18 Tue\nidxmax returns the label of the largest value.",
+          "practice": "Predict results of arithmetic and summaries; find the label of the minimum.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "Two Series line up by label; gaps become NaN",
+          "worked_example": "a = pd.Series({'x': 1, 'y': 2})\nb = pd.Series({'y': 10, 'z': 20})\nprint((a + b).tolist())  # [nan, 12.0, nan]\nOnly 'y' is in both; NaN (not a number) marks the missing results.",
+          "practice": "Predict the result of adding Series with partly different labels.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_numpy.vectorised_arithmetic",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.create_and_look_up",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.dataframe_basics",
+      "title": "DataFrames: building, loading and inspecting tables",
+      "concept": "lib_pandas",
+      "summary": "Build a DataFrame from a dict of lists or read_csv, and inspect it with shape, columns, head, dtypes and describe.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.series_basics",
+        "csv_files.read_with_csv_reader",
+        "nested_data_structures.dict_of_lists_and_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A DataFrame from a dict of lists",
+          "worked_example": "df = pd.DataFrame({'name': ['Ana', 'Bo', 'Cy'], 'age': [31, 27, 45]})\nprint(df.shape)          # (3, 2)\nprint(list(df.columns))  # ['name', 'age']\nEach key becomes a column; every list must have the same length.",
+          "practice": "Predict shape and columns; write the dict that builds a described table.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.dict_of_lists_and_dicts"
+          ]
+        },
+        {
+          "title": "Load a CSV file with read_csv",
+          "worked_example": "# weather.csv\n# day,temp,rain\n# Mon,12,0.0\n# Tue,18,2.5\n# Wed,15,0.0\ndf = pd.read_csv('weather.csv')\nprint(df.shape)          # (3, 3)\nprint(list(df.columns))  # ['day', 'temp', 'rain']\nThe header row becomes column names and numbers are converted for you, unlike csv.reader.",
+          "practice": "Predict the shape and columns read from a short CSV; compare with the csv.reader version.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "csv_files.read_with_csv_reader"
+          ]
+        },
+        {
+          "title": "Look before you analyse: head, dtypes, describe",
+          "worked_example": "print(df.head(2))              # first 2 rows\nprint(df['temp'].dtype)        # int64\nprint(df['rain'].dtype)        # float64\nprint(df['temp'].describe()['mean'])  # 15.0\nIn Jupyter, a cell ending in df.head() shows a formatted table; describe() gives count, mean, std, min, quartiles, max.",
+          "practice": "Predict dtypes of columns from CSV text; read values off a describe() table.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.series_basics"
+          ]
+        },
+        {
+          "title": "Column names must match exactly",
+          "worked_example": "df['Temp']\n# KeyError: 'Temp'\nprint(list(df.columns))   # check the real names first\nCase and spaces count: ' temp' is not 'temp'.",
+          "practice": "Fix KeyErrors caused by case, spaces or typos in column names.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.series_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.series_basics",
+          "weight": 0.4
+        },
+        {
+          "topic": "csv_files.read_with_csv_reader",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.select_columns_rows",
+      "title": "Selecting columns and rows: [], loc and iloc",
+      "concept": "lib_pandas",
+      "summary": "Select one or several columns, rows by position with iloc and by label with loc, and know that loc slices include the end.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.dataframe_basics",
+        "lib_numpy.index_and_slice"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One column is a Series; a list of columns is a DataFrame",
+          "worked_example": "# weather.csv\n# day,temp,rain\n# Mon,12,0.0\n# Tue,18,2.5\n# Wed,15,0.0\ntemps = df['temp']\nprint(temps.max())            # 18\nsub = df[['day', 'temp']]\nprint(sub.shape)              # (3, 2)\ndf['day', 'temp']\n# KeyError: ('day', 'temp')",
+          "practice": "Predict whether a selection gives a Series or DataFrame; fix the missing inner brackets.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.dataframe_basics"
+          ]
+        },
+        {
+          "title": "Rows by position with iloc",
+          "worked_example": "print(df.iloc[0]['day'])     # Mon\nprint(df.iloc[-1]['temp'])   # 15\nprint(df.iloc[0:2].shape)    # (2, 3)\niloc uses positions like list indexes; the end of a slice is excluded.",
+          "practice": "Predict iloc lookups and slice sizes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.index_and_slice"
+          ]
+        },
+        {
+          "title": "Rows and columns by label with loc",
+          "worked_example": "byday = df.set_index('day')\nprint(byday.loc['Tue', 'temp'])               # 18\nprint(byday.loc['Mon':'Tue', 'rain'].sum())   # 2.5\nloc[row label, column name]; a label slice includes its end.",
+          "practice": "Write loc expressions for described cells and ranges; predict sums over label slices.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.dataframe_basics"
+          ]
+        },
+        {
+          "title": "loc vs iloc on a numbered index",
+          "worked_example": "print(len(df.loc[0:1]), len(df.iloc[0:1]))   # 2 1\nWith the default 0, 1, 2 index both look alike, but loc includes the end label and iloc excludes the end position.",
+          "practice": "Predict row counts of loc/iloc slices; choose loc or iloc for a described selection.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.index_and_slice"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.dataframe_basics",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_numpy.index_and_slice",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.filter_rows",
+      "title": "Filtering rows with conditions",
+      "concept": "lib_pandas",
+      "summary": "Keep rows matching a condition, combine conditions with & | ~, use isin and str.contains, and select or change matching rows with .loc[mask, col].",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.select_columns_rows",
+        "lib_numpy.boolean_masks"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A boolean mask keeps matching rows",
+          "worked_example": "# weather.csv\n# day,temp,rain\n# Mon,12,0.0\n# Tue,18,2.5\n# Wed,15,0.0\nwarm = df[df['temp'] > 14]\nprint(warm['day'].tolist())   # ['Tue', 'Wed']\ndf['temp'] > 14 is a Series of True/False, one per row.",
+          "practice": "Predict which rows a mask keeps; write the filter for a described condition.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.boolean_masks"
+          ]
+        },
+        {
+          "title": "Combine conditions with &, | and ~",
+          "worked_example": "dry_warm = df[(df['temp'] > 14) & (df['rain'] == 0)]\nprint(dry_warm['day'].tolist())   # ['Wed']\ndf[df['temp'] > 14 and df['rain'] == 0]\n# ValueError: The truth value of a Series is ambiguous. ...",
+          "practice": "Fix filters that use and/or or lack parentheses; write a filter with ~ (not).",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.boolean_masks"
+          ]
+        },
+        {
+          "title": "isin and text conditions with .str",
+          "worked_example": "print(df[df['day'].isin(['Mon', 'Wed'])]['temp'].tolist())   # [12, 15]\nprint(len(df[df['day'].str.contains('e')]))                   # 2\nisin replaces a chain of == ... |; .str applies string methods to every row.",
+          "practice": "Predict row counts for isin and str.contains filters; rewrite an | chain with isin.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "Select or change only matching rows with .loc[mask, column]",
+          "worked_example": "print(df.loc[df['rain'] > 0, 'day'].tolist())   # ['Tue']\ndf.loc[df['temp'] < 13, 'temp'] = 13\nprint(df['temp'].tolist())                       # [13, 18, 15]",
+          "practice": "Write .loc lines that read or overwrite a column for matching rows; predict the column afterwards.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.select_columns_rows",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_numpy.boolean_masks",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.sort_and_derive",
+      "title": "Sorting rows and adding new columns",
+      "concept": "lib_pandas",
+      "summary": "Sort by a column, find top rows and the row of a maximum, add a column computed from others, and remember that most methods return a new table.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.select_columns_rows",
+        "sorting.sort_and_sorted"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sort_values, ascending or descending",
+          "worked_example": "# weather.csv\n# day,temp,rain\n# Mon,12,0.0\n# Tue,18,2.5\n# Wed,15,0.0\nprint(df.sort_values('temp')['day'].tolist())                   # ['Mon', 'Wed', 'Tue']\nprint(df.sort_values('temp', ascending=False)['day'].tolist())  # ['Tue', 'Wed', 'Mon']",
+          "practice": "Predict the order after sorting by a column, ascending and descending.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        },
+        {
+          "title": "The top rows and the row of the maximum",
+          "worked_example": "print(df.loc[df['temp'].idxmax(), 'day'])       # Tue\nprint(df.nlargest(2, 'temp')['day'].tolist())   # ['Tue', 'Wed']\nidxmax gives the row label; loc then reads another column of that row.",
+          "practice": "Write the expression for 'which X has the highest Y'; predict nlargest/nsmallest results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "A new column computed from others",
+          "worked_example": "df['feels'] = df['temp'] - df['rain'] * 2\nprint(df['feels'].tolist())   # [12.0, 13.0, 15.0]\nAssigning to a new column name adds it; the maths runs row by row without a loop.",
+          "practice": "Predict a derived column; write the line that adds a ratio or difference column.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "Methods return a new table: assign the result",
+          "worked_example": "df.sort_values('temp')\ndf.drop(columns=['rain'])\nprint('rain' in df.columns)   # True: nothing changed\ndf = df.drop(columns=['rain'])   # keep the result\nLike sorted(), these return a new DataFrame; rename(columns={'temp': 'temp_c'}) works the same way.",
+          "practice": "Fix code whose sort, drop or rename has no effect; predict shapes after a sequence of calls.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.select_columns_rows",
+          "weight": 0.4
+        },
+        {
+          "topic": "sorting.sort_and_sorted",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.clean_data",
+      "title": "Cleaning data: missing values, duplicates and text numbers",
+      "concept": "lib_pandas",
+      "summary": "Count and handle missing values with isna/dropna/fillna, remove duplicate rows, and turn text like '1,000+' into numbers.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.filter_rows",
+        "lib_pandas.sort_and_derive",
+        "type_conversion.strings_to_numbers",
+        "string_methods.replace_text"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Find missing values",
+          "worked_example": "df = pd.DataFrame({'city': ['Oslo', 'Rome', None], 'pop': [1.5, None, 2.5]})\nprint(df.isna().sum().tolist())   # [1, 1]\nprint(df['pop'].mean())             # 2.0\nMissing values show as NaN (or None); summaries skip them.",
+          "practice": "Predict missing-value counts per column and summaries that skip NaN.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.filter_rows"
+          ]
+        },
+        {
+          "title": "Drop or fill missing values",
+          "worked_example": "print(len(df.dropna()))                # 1\nprint(df['pop'].fillna(0).tolist())   # [1.5, 0.0, 2.5]\ndropna removes any row with a NaN in any column; fillna replaces NaN with a value.",
+          "practice": "Predict row counts after dropna; choose dropna or fillna for a described situation and write it.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.sort_and_derive"
+          ]
+        },
+        {
+          "title": "Duplicate rows",
+          "worked_example": "df = pd.DataFrame({'name': ['Ana', 'Bo', 'Ana'], 'score': [3, 5, 3]})\nprint(df.duplicated().tolist())   # [False, False, True]\nprint(len(df.drop_duplicates()))  # 2\nduplicated marks repeats of an earlier row; subset=['name'] compares only that column.",
+          "practice": "Predict duplicated() masks with and without subset; write the de-duplication line.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.filter_rows"
+          ]
+        },
+        {
+          "title": "Text that should be numbers",
+          "worked_example": "installs = pd.Series(['1,000+', '50+', '500+'])\nclean = installs.str.replace(',', '').str.replace('+', '')\nprint(pd.to_numeric(clean).sum())   # 1550\nWithout cleaning, the column holds strings and cannot be summed as numbers. errors='coerce' turns leftovers like 'Free' into NaN.",
+          "practice": "Write the chain that strips symbols and converts; fix code that compares or sums a text column.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers",
+            "string_methods.replace_text"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.filter_rows",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_methods.replace_text",
+          "weight": 0.2
+        },
+        {
+          "topic": "lib_pandas.sort_and_derive",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.groupby_aggregate",
+      "title": "Grouping and aggregating: groupby, value_counts and pivot tables",
+      "concept": "lib_pandas",
+      "summary": "Split rows into groups and summarise each with groupby, count rows per group, compute several aggregates, and cross-tabulate with pivot_table.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.sort_and_derive",
+        "dictionaries.grouping_into_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "groupby one column, summarise another",
+          "worked_example": "sales = pd.DataFrame({'shop': ['A', 'B', 'A', 'B', 'A'],\n                      'item': ['tea', 'tea', 'cake', 'cake', 'tea'],\n                      'amount': [3, 5, 4, 1, 2]})\ntotals = sales.groupby('shop')['amount'].sum()\nprint(totals['A'], totals['B'])   # 9 6\nOne line replaces the dict-of-lists grouping loop; the result is a Series indexed by shop.",
+          "practice": "Predict per-group sums and means; write the groupby for a described question.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.grouping_into_lists"
+          ]
+        },
+        {
+          "title": "Counting rows per group",
+          "worked_example": "print(sales['shop'].value_counts()['A'])     # 3\nprint(sales.groupby('item').size()['tea'])   # 3\nvalue_counts counts each value of one column, largest first.",
+          "practice": "Predict counts; choose value_counts, size or sum for 'how many' vs 'how much' questions.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.grouping_into_lists"
+          ]
+        },
+        {
+          "title": "Several aggregates at once with agg",
+          "worked_example": "summary = sales.groupby('shop')['amount'].agg(['sum', 'mean', 'count'])\nprint(summary.loc['A', 'mean'])   # 3.0\nThe result is a DataFrame: one row per group, one column per aggregate; sort it with sort_values.",
+          "practice": "Read values from an agg table; write an agg call and sort the groups by one aggregate.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.sort_and_derive"
+          ]
+        },
+        {
+          "title": "Two keys: pivot_table",
+          "worked_example": "table = sales.pivot_table(index='shop', columns='item', values='amount', aggfunc='sum')\nprint(table.loc['A', 'tea'])   # 5\nsales.pivot(index='shop', columns='item', values='amount')\n# ValueError: Index contains duplicate entries, cannot reshape\npivot only reshapes; pivot_table also aggregates repeats.",
+          "practice": "Fill in a pivot table by hand from raw rows; fix a pivot that fails on duplicates.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.sort_and_derive",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.grouping_into_lists",
+          "weight": 0.2
+        },
+        {
+          "topic": "lib_pandas.select_columns_rows",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.merge_tables",
+      "title": "Combining tables with merge",
+      "concept": "lib_pandas",
+      "summary": "Join two DataFrames on a key column (primary/foreign keys), handle different key names, keep unmatched rows with how='left', and catch rows multiplied by duplicate keys.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.clean_data",
+        "lib_pandas.groupby_aggregate"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "merge on a shared key column",
+          "worked_example": "sets = pd.DataFrame({'name': ['Castle', 'Ship', 'Car'], 'theme_id': [1, 2, 9]})\nthemes = pd.DataFrame({'theme_id': [1, 2, 3], 'theme': ['Medieval', 'Pirates', 'Space']})\nm = pd.merge(sets, themes, on='theme_id')\nprint(m['theme'].tolist())   # ['Medieval', 'Pirates']\nThe default inner join keeps only keys found in both tables (Car's 9 is dropped).",
+          "practice": "Predict the rows of an inner merge; write the merge for two given tables.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "Keys with different names: left_on and right_on",
+          "worked_example": "themes = themes.rename(columns={'theme_id': 'id'})\nm = pd.merge(sets, themes, left_on='theme_id', right_on='id')\nid is the primary key of themes (unique); theme_id in sets is a foreign key pointing at it.",
+          "practice": "Identify primary and foreign keys in two tables; fill in left_on/right_on.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.sort_and_derive"
+          ]
+        },
+        {
+          "title": "how='left' keeps unmatched rows as NaN",
+          "worked_example": "m = pd.merge(sets, themes, left_on='theme_id', right_on='id', how='left')\nprint(len(m), m['theme'].isna().sum())   # 3 1",
+          "practice": "Predict row counts and NaNs for inner vs left merges.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.clean_data"
+          ]
+        },
+        {
+          "title": "Duplicate keys multiply rows: check the count",
+          "worked_example": "dup = pd.DataFrame({'id': [1, 1], 'theme': ['Medieval', 'Castles']})\nm = pd.merge(sets, dup, left_on='theme_id', right_on='id', how='left')\nprint(len(m))   # 4, from a 3-row table\nCompare len() before and after; a lookup table needs unique keys.",
+          "practice": "Predict row counts when keys repeat; find the duplicated key that inflated a merged total.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.select_columns_rows",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_pandas.clean_data",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.dates_and_time_series",
+      "title": "Dates and time series in pandas",
+      "concept": "lib_pandas",
+      "summary": "Convert text to datetimes, extract parts with .dt, total by month with groupby or resample, and smooth with a rolling mean.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.groupby_aggregate",
+        "datetime_module.dates_and_datetimes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "pd.to_datetime and the .dt accessor",
+          "worked_example": "df = pd.DataFrame({'date': ['2024-01-15', '2024-02-03', '2024-02-20'], 'posts': [5, 8, 3]})\ndf['date'] = pd.to_datetime(df['date'])\nprint(df['date'].dt.month.tolist())   # [1, 2, 2]\nAs text, '2024-9-1' sorts after '2024-10-1'; as datetimes they compare correctly.",
+          "practice": "Predict .dt.year/.dt.month values; fix sorting or filtering that treats dates as text.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "Totals per month with groupby",
+          "worked_example": "monthly = df.groupby(df['date'].dt.month)['posts'].sum()\nprint(monthly[2])   # 11",
+          "practice": "Write the groupby for per-year or per-month totals; predict the totals.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        },
+        {
+          "title": "resample on a date index",
+          "worked_example": "s = df.set_index('date')['posts']\nprint(s.resample('MS').sum().tolist())   # [5, 11]\nresample groups by calendar period ('MS' month start, 'YS' year start) and includes empty periods; it needs dates in the index.",
+          "practice": "Predict resampled totals, including an empty month; fix resample called on a non-date index.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "Smoothing with a rolling mean",
+          "worked_example": "s = pd.Series([2, 4, 6, 8])\nprint(s.rolling(window=2).mean().tolist())   # [nan, 3.0, 5.0, 7.0]\nEach value averages the last 2; the first window - 1 values are NaN.",
+          "practice": "Compute rolling means by hand; predict how many NaNs a window size leaves.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.series_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.groupby_aggregate",
+          "weight": 0.4
+        },
+        {
+          "topic": "datetime_module.dates_and_datetimes",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pandas.to_python_and_files",
+      "title": "Between pandas, plain Python and files",
+      "concept": "lib_pandas",
+      "summary": "Turn columns and rows into lists and dicts (tolist, to_dict, iterrows) for ordinary Python code, and save a DataFrame with to_csv without an extra index column.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.dataframe_basics",
+        "nested_data_structures.list_of_dicts",
+        "dict_comprehensions.build_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Columns to lists and lookup dicts",
+          "worked_example": "# weather.csv\n# day,temp,rain\n# Mon,12,0.0\n# Tue,18,2.5\n# Wed,15,0.0\ndays = df['day'].tolist()            # ['Mon', 'Tue', 'Wed']\nlookup = dict(zip(df['day'], df['temp']))\nprint(lookup['Tue'])                 # 18",
+          "practice": "Write the line that turns two columns into a lookup dict; predict lookups.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.dict_of_lists_and_dicts"
+          ]
+        },
+        {
+          "title": "Rows as a list of dicts",
+          "worked_example": "records = df.to_dict(orient='records')\nprint(records[0])   # {'day': 'Mon', 'temp': 12, 'rain': 0.0}\nEach row becomes a dict, ready for loops, random.choice or json.",
+          "practice": "Predict an element of to_dict(orient='records'); loop over the records to print a report.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Looping over rows with iterrows",
+          "worked_example": "for index, row in df.iterrows():\n    print(row['day'], row['temp'])\n# Mon 12\n# Tue 18\n# Wed 15\ncode = {row['day']: row['temp'] for (index, row) in df.iterrows()}\nPrefer vectorised column maths; loop only when each row needs ordinary Python.",
+          "practice": "Write a dict comprehension over iterrows; rewrite a row loop as one column expression.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "dict_comprehensions.build_dicts"
+          ]
+        },
+        {
+          "title": "Saving with to_csv(index=False)",
+          "worked_example": "df.to_csv('out.csv')\nprint(list(pd.read_csv('out.csv').columns))\n# ['Unnamed: 0', 'day', 'temp', 'rain']\ndf.to_csv('out.csv', index=False)   # no extra index column",
+          "practice": "Fix a save/load round trip that grows an 'Unnamed: 0' column.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.dataframe_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.3
+        },
+        {
+          "topic": "dict_comprehensions.build_dicts",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_pandas.dataframe_basics",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "data_analysis.question_to_answer",
+      "title": "From a question to an answer: the analysis workflow",
+      "concept": "data_analysis",
+      "summary": "Order the steps of an analysis (load, inspect, clean, transform, answer), translate a question into the pandas operation that answers it, and report shares with the mean of a mask.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.groupby_aggregate",
+        "lib_pandas.clean_data",
+        "tool_jupyter.notebook_cells"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Load, inspect, clean, transform, answer",
+          "worked_example": "df = pd.read_csv('majors.csv')            # load\nprint(df.shape)                           # inspect\ndf = df.dropna()                          # clean\ndf['spread'] = df['p90'] - df['p10']      # transform\nprint(df.nsmallest(3, 'spread')['major'].tolist())   # answer\nIn a notebook, each step is its own cell so you can look at the result.",
+          "practice": "Put the cells of a short analysis in order; find the step that was skipped when a result is wrong.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tool_jupyter.notebook_cells",
+            "lib_pandas.clean_data"
+          ]
+        },
+        {
+          "title": "Match the question to the operation",
+          "worked_example": "df = pd.DataFrame({'group': ['STEM', 'Arts', 'STEM', 'Arts'], 'salary': [60, 40, 70, 42]})\n# Which group earns most on average?\nprint(df.groupby('group')['salary'].mean().idxmax())   # STEM\n'Which most' -> idxmax/nlargest; 'how many per' -> value_counts; 'average per' -> groupby mean.",
+          "practice": "For each question, choose and then write the pandas expression that answers it.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        },
+        {
+          "title": "Shares and percentages from a mask",
+          "worked_example": "print((df['salary'] > 50).mean())   # 0.5\nTrue counts as 1, so the mean of a mask is the share of rows that match; * 100 gives a percentage.",
+          "practice": "Write expressions for 'what fraction of rows...'; predict shares for small tables.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.filter_rows"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.groupby_aggregate",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_pandas.clean_data",
+          "weight": 0.2
+        },
+        {
+          "topic": "lib_pandas.filter_rows",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "data_analysis.check_your_results",
+      "title": "Checking an analysis: counts, outliers and correlation",
+      "concept": "data_analysis",
+      "summary": "Check row counts through each step, notice tiny groups and outliers (mean vs median), and measure a relationship with corr without claiming causation.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "data_analysis.question_to_answer",
+        "lib_pandas.merge_tables",
+        "statistics_module.mean_median_mode"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Count rows after every step",
+          "worked_example": "print(len(df))\ndf = df.dropna()\nprint(len(df))\nsummary = df.groupby('group')['salary'].agg(['mean', 'count'])\nA filter, dropna or merge that silently changes the row count changes every answer; a mean of 2 rows says little.",
+          "practice": "Given row counts at each step, find the step that lost or duplicated rows; decide which group means to trust.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.merge_tables"
+          ]
+        },
+        {
+          "title": "An outlier pulls the mean, not the median",
+          "worked_example": "pay = pd.Series([30, 32, 35, 31, 400])\nprint(pay.mean(), pay.median())   # 105.6 32.0\nCheck max() and describe(); report the median for skewed data such as salaries or prices.",
+          "practice": "Predict mean and median with and without an outlier; choose which to report.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "statistics_module.mean_median_mode"
+          ]
+        },
+        {
+          "title": "Correlation: how strongly two columns move together",
+          "worked_example": "x = pd.Series([1, 2, 3, 4])\nprint(round(x.corr(pd.Series([2, 4, 6, 8])), 2))   # 1.0\nprint(round(x.corr(pd.Series([8, 6, 4, 2])), 2))   # -1.0\ncorr runs from -1 to 1. Ice-cream sales correlate with sunburn, but neither causes the other: hot weather drives both.",
+          "practice": "Match scatter descriptions to correlation values; judge whether a claimed cause follows from a correlation.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.series_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_analysis.question_to_answer",
+          "weight": 0.3
+        },
+        {
+          "topic": "statistics_module.mean_median_mode",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_matplotlib.line_plots",
+      "title": "Line charts with matplotlib",
+      "concept": "lib_matplotlib",
+      "summary": "Draw a line chart from two lists, label it, plot several lines with a legend, and fix the length-mismatch error.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.from_import_and_alias",
+        "lists.create_and_index",
+        "parameters_arguments.keyword_arguments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "plot(x, y) then show()",
+          "worked_example": "import matplotlib.pyplot as plt\nyears = [2020, 2021, 2022]\nusers = [5, 9, 14]\nplt.plot(years, users)\nplt.show()\nx values first, y values second; each (x, y) pair is a point and the points are joined by lines.",
+          "practice": "Predict the coordinates of the plotted points; write the plot call for two given lists.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias",
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Title and axis labels",
+          "worked_example": "plt.plot(years, users)\nplt.title('Users per year')\nplt.xlabel('Year')\nplt.ylabel('Users (thousands)')\nplt.show()",
+          "practice": "Fill in the missing label calls to match a described chart; spot the label put on the wrong axis.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Several lines with label= and legend()",
+          "worked_example": "plt.plot(years, users, label='App')\nplt.plot(years, [3, 4, 4], label='Web')\nplt.legend()\nplt.show()\nEach plot call adds a line; without label= the legend has nothing to show.",
+          "practice": "Predict how many lines and legend entries a script draws; fix a legend that comes out empty.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "plot(y) alone, and the length-mismatch error",
+          "worked_example": "plt.plot(users)          # x is 0, 1, 2\nplt.plot([1, 2, 3], [4, 5])\n# ValueError: x and y must have same first dimension, but have shapes (3,) and (2,)\nA format string styles the line: plt.plot(years, users, 'o--') draws dots joined by dashes.",
+          "practice": "Predict the x positions when only y is given; fix mismatched lists.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.from_import_and_alias",
+          "weight": 0.2
+        },
+        {
+          "topic": "parameters_arguments.keyword_arguments",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lib_matplotlib.bar_scatter_hist",
+      "title": "Bar charts, scatter plots, histograms and pies",
+      "concept": "lib_matplotlib",
+      "summary": "Draw bar, scatter, histogram and pie charts, predict which chart a call draws, and work out histogram bar heights from raw values.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_matplotlib.line_plots"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Bar charts compare categories",
+          "worked_example": "plt.bar(['Tea', 'Cake', 'Pie'], [5, 3, 7])\nplt.show()\nOne bar per category; heights are given. plt.barh draws them sideways for long names.",
+          "practice": "Predict the tallest bar; write the bar call from a dict of counts (keys and values).",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.line_plots"
+          ]
+        },
+        {
+          "title": "Scatter plots show pairs without joining them",
+          "worked_example": "heights = [150, 160, 170, 180]\nweights = [50, 58, 66, 80]\nplt.scatter(heights, weights)\nplt.show()\nUse scatter when order means nothing; plot would draw a misleading line through the points.",
+          "practice": "Choose plot or scatter for described data; predict where a given point appears.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.line_plots"
+          ]
+        },
+        {
+          "title": "Histograms count values into bins",
+          "worked_example": "ages = [21, 22, 25, 31, 33, 38, 45]\nplt.hist(ages, bins=[20, 30, 40, 50])\nplt.show()\n# bar heights: 3, 3, 1\nhist takes raw values and does the counting; bar takes counts you already have.",
+          "practice": "Compute histogram bar heights from raw values and bin edges; fix a bar() call given raw values.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.line_plots"
+          ]
+        },
+        {
+          "title": "Which call draws which chart?",
+          "worked_example": "plt.pie([3, 1], labels=['Yes', 'No'])   # a circle, 3/4 and 1/4\nplt.plot(x, y)     -> line\nplt.bar(x, h)      -> bars\nplt.scatter(x, y)  -> dots\nplt.hist(values)   -> bars of counts",
+          "practice": "Match calls to sketches of charts; pick the call that draws a described chart.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.line_plots"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_matplotlib.line_plots",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lib_matplotlib.figure_and_axes",
+      "title": "Figures and axes: subplots, limits and two y-axes",
+      "concept": "lib_matplotlib",
+      "summary": "Use fig, ax = plt.subplots() and ax.set_* methods, lay out a grid of charts, add a second y-axis with twinx, set limits and ticks, and save to a file.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_matplotlib.bar_scatter_hist",
+        "unpacking.unpack_sequences"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "fig, ax = plt.subplots() and the ax methods",
+          "worked_example": "fig, ax = plt.subplots(figsize=(8, 4))\nax.plot(years, users)\nax.set_title('Users')\nax.set_xlabel('Year')\nax.title('Users')\n# TypeError: 'Text' object is not callable\nplt.title becomes ax.set_title, plt.xlabel becomes ax.set_xlabel.",
+          "practice": "Translate plt.* code into ax.* code; fix ax calls missing set_.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "A grid of charts",
+          "worked_example": "fig, axes = plt.subplots(1, 2)\naxes[0].bar(['a', 'b'], [3, 5])\naxes[1].hist(ages)\nWith plt.subplots(2, 2), pick a chart with axes[row, col].",
+          "practice": "Predict which panel each call draws in; write the index of a described panel.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "Two y-axes with twinx",
+          "worked_example": "fig, ax1 = plt.subplots()\nax2 = ax1.twinx()\nax1.plot(dates, price, color='red')\nax2.plot(dates, searches, color='blue')\nBoth lines share the x-axis; each gets its own y scale, so colour each axis label to match its line.",
+          "practice": "Choose when two series need two y-axes; fix code that draws both series on ax1.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.line_plots"
+          ]
+        },
+        {
+          "title": "Limits, ticks and saving",
+          "worked_example": "ax.set_ylim(0, 100)\nax.tick_params(axis='x', rotation=45)\nfig.savefig('chart.png', dpi=150)\nSave before plt.show(): once the window closes the figure may be empty.",
+          "practice": "Fill in limits and rotation for a described chart; order the lines of a save-and-show script.",
+          "formats": [
+            "fill_in_blank",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.line_plots"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_matplotlib.bar_scatter_hist",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_matplotlib.line_plots",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_matplotlib.plot_pandas_data",
+      "title": "Plotting pandas data with matplotlib",
+      "concept": "lib_matplotlib",
+      "summary": "Plot DataFrame columns against dates, draw one line per column of a pivot table, plot rolling means, and use the df.plot shortcut.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_matplotlib.figure_and_axes",
+        "lib_pandas.dates_and_time_series"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Columns as x and y",
+          "worked_example": "fig, ax = plt.subplots()\nax.plot(df['date'], df['posts'])\nax.set_ylabel('Posts')\nConvert dates with pd.to_datetime first, or matplotlib treats them as text labels.",
+          "practice": "Write the plot call for two named columns; fix a chart whose dates are plotted as text.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.dates_and_time_series"
+          ]
+        },
+        {
+          "title": "One line per column of a pivoted table",
+          "worked_example": "table = df.pivot_table(index='date', columns='language', values='posts', aggfunc='sum')\nfor col in table.columns:\n    ax.plot(table.index, table[col], label=col)\nax.legend()",
+          "practice": "Predict how many lines and legend entries the loop draws; fill in the loop body.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        },
+        {
+          "title": "Plotting a Series uses its index as x; smoothing with rolling",
+          "worked_example": "smooth = table['python'].rolling(window=6).mean()\nax.plot(smooth)\nThe dates in the index become the x values; a 6-period rolling mean hides month-to-month noise.",
+          "practice": "Choose a window size for a described smoothing; predict where the smoothed line starts.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.dates_and_time_series"
+          ]
+        },
+        {
+          "title": "The df.plot shortcut",
+          "worked_example": "ax = df.plot(x='date', y='posts', kind='line')\ncounts.plot(kind='bar')\npandas calls matplotlib for you and returns the ax, so ax.set_title still works.",
+          "practice": "Predict which chart a df.plot(kind=...) call draws; rewrite an ax.plot call as df.plot.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.figure_and_axes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_matplotlib.figure_and_axes",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_pandas.dates_and_time_series",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "data_visualization.choose_chart",
+      "title": "Choosing the right chart for the question",
+      "concept": "data_visualization",
+      "summary": "Pick a line, bar, histogram/box, scatter or pie chart from what the question asks and the shape of the data.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_matplotlib.bar_scatter_hist",
+        "lib_pandas.groupby_aggregate"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Change over time -> line; compare categories -> bar",
+          "worked_example": "Monthly posts per language    -> plt.plot(months, posts)\nTotal sales per shop          -> plt.bar(shops, totals)\nSort the bars (sort_values) so the ranking is visible at a glance.",
+          "practice": "For described questions, choose line or bar and write the call.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "How values are spread -> histogram or box plot",
+          "worked_example": "Distribution of app ratings   -> plt.hist(df['rating'], bins=20)\nRatings for free vs paid apps -> a box plot per group\nA bar of the mean hides the spread; a histogram shows it.",
+          "practice": "Choose a chart for distribution questions; explain what a mean-only bar chart hides.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "Two numbers per row -> scatter; parts of a whole -> pie",
+          "worked_example": "Budget vs revenue per film     -> plt.scatter(df['budget'], df['revenue'])\nShare of apps per content rating -> pie or donut, only with a few slices\nMore than about 5 slices: use a sorted bar chart instead.",
+          "practice": "Match questions to chart types across all five kinds; fix a pie chart with too many slices.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_matplotlib.bar_scatter_hist",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "data_visualization.honest_readable_charts",
+      "title": "Making charts honest and readable",
+      "concept": "data_visualization",
+      "summary": "Label axes with units, avoid truncated y-axes that exaggerate differences, use a log scale for data spanning orders of magnitude, and reduce clutter.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "data_visualization.choose_chart",
+        "lib_matplotlib.figure_and_axes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Every chart needs a title, axis labels and units",
+          "worked_example": "ax.set_title('Revenue by year')\nax.set_xlabel('Year')\nax.set_ylabel('Revenue (USD millions)')\nA reader should not have to guess what an axis measures.",
+          "practice": "Find what is missing from described charts; fill in the labels.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.figure_and_axes"
+          ]
+        },
+        {
+          "title": "Bar charts start at zero",
+          "worked_example": "ax.bar(['A', 'B'], [98, 100])\nax.set_ylim(95, 101)   # B looks 3 times taller than A\nax.set_ylim(0, 105)    # the honest view: a 2% difference",
+          "practice": "Judge whether an axis range misleads; fix the limits.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.figure_and_axes"
+          ]
+        },
+        {
+          "title": "Log scale for values spanning orders of magnitude",
+          "worked_example": "ax.scatter(df['installs'], df['rating'])\nax.set_xscale('log')\nOn a linear axis apps with 1,000 and 100,000 installs are squashed against zero; on a log axis each power of 10 gets equal space.",
+          "practice": "Decide when a log axis helps; read values off a log axis.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.figure_and_axes"
+          ]
+        },
+        {
+          "title": "Reduce clutter: fewer lines, smoothed noise",
+          "worked_example": "top5 = totals.nlargest(5).index\nfor lang in top5:\n    ax.plot(table.index, table[lang].rolling(6).mean(), label=lang)\nTwenty overlapping lines are unreadable; keep the top few and smooth the noise.",
+          "practice": "Choose how to simplify a cluttered chart; write the line that keeps the top n categories.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "data_visualization.choose_chart"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_visualization.choose_chart",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_matplotlib.figure_and_axes",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lib_seaborn.relational_plots",
+      "title": "Seaborn scatter, bubble and regression plots",
+      "concept": "lib_seaborn",
+      "summary": "Draw scatter plots from DataFrame columns with data=, x=, y=, add hue and size to make bubble charts, overlay a regression line with regplot, and style through the returned ax.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_matplotlib.figure_and_axes",
+        "lib_pandas.select_columns_rows"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "scatterplot with data=, x= and y=",
+          "worked_example": "import seaborn as sns\nsns.scatterplot(data=df, x='budget', y='revenue')\nplt.show()\nColumns are named as strings; seaborn looks them up in data.",
+          "practice": "Write the seaborn call for two named columns; fix a call whose column name has the wrong case.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "hue and size: colour and bubble size from columns",
+          "worked_example": "sns.scatterplot(data=df, x='budget', y='revenue', hue='genre', size='votes')\nhue colours each point by a column; size scales it, making a bubble chart.",
+          "practice": "Predict what colour and size encode in a described call; fill in hue/size for a target chart.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "regplot: scatter plus a best-fit line",
+          "worked_example": "sns.regplot(data=df, x='budget', y='revenue', scatter_kws={'alpha': 0.4}, line_kws={'color': 'red'})\nThe shaded band around the line shows the uncertainty of the fit.",
+          "practice": "Choose scatterplot or regplot for a question; fill in styling keyword dicts.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "Seaborn draws on matplotlib axes",
+          "worked_example": "fig, ax = plt.subplots(figsize=(8, 4))\nsns.scatterplot(data=df, x='budget', y='revenue', ax=ax)\nax.set(xlabel='Budget ($)', ylabel='Revenue ($)')\nwith sns.axes_style('darkgrid'): applies a style to the charts drawn inside the with block.",
+          "practice": "Combine seaborn calls with ax methods to match a described chart; order the lines.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.figure_and_axes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_matplotlib.figure_and_axes",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_pandas.select_columns_rows",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_seaborn.distribution_and_category_plots",
+      "title": "Seaborn distributions and category plots",
+      "concept": "lib_seaborn",
+      "summary": "Show distributions with histplot/kdeplot, compare groups with hue and box plots, and predict bar heights of barplot (mean) vs countplot (count).",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_seaborn.relational_plots",
+        "lib_pandas.groupby_aggregate"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "histplot with a KDE curve",
+          "worked_example": "sns.histplot(data=df, x='rating', bins=20, kde=True)\nThe KDE is a smoothed outline of the histogram: where values are dense, the curve is high.",
+          "practice": "Match histograms to KDE curves; pick the column a histplot needs.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_seaborn.relational_plots"
+          ]
+        },
+        {
+          "title": "Comparing groups with hue",
+          "worked_example": "sns.kdeplot(data=df, x='pct_deaths', hue='washing', fill=True)\nOne curve per group on the same axes shows whether the distributions shifted.",
+          "practice": "Read which group has higher typical values from overlaid curves; fill in hue.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_seaborn.relational_plots"
+          ]
+        },
+        {
+          "title": "Box plots: median, middle half and outliers",
+          "worked_example": "sns.boxplot(data=df, x='type', y='price')\nThe line is the median, the box holds the middle 50% of values, dots beyond the whiskers are outliers.",
+          "practice": "Read medians and spread from box plots; compute a median to predict the line position.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        },
+        {
+          "title": "barplot shows a mean; countplot shows a count",
+          "worked_example": "small = pd.DataFrame({'x': ['a', 'a', 'b'], 'y': [2, 4, 5]})\nsns.barplot(data=small, x='x', y='y')   # heights: a 3, b 5\nsns.countplot(data=small, x='x')        # heights: a 2, b 1",
+          "practice": "Predict bar heights for barplot and countplot on small tables.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_seaborn.relational_plots",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_pandas.groupby_aggregate",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_plotly.express_bar_pie",
+      "title": "Interactive charts with plotly.express: bar, pie and donut",
+      "concept": "lib_plotly",
+      "summary": "Make interactive bar, pie and donut charts with plotly.express from lists or value_counts results, and set titles and labels with update_layout/update_traces.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_matplotlib.bar_scatter_hist",
+        "lib_pandas.groupby_aggregate"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "px.bar and fig.show()",
+          "worked_example": "import plotly.express as px\nfig = px.bar(x=['Tea', 'Cake'], y=[5, 3])\nfig.show()\nThe chart is interactive: hover shows values, drag zooms. Every px function returns a fig.",
+          "practice": "Translate a plt.bar call into px.bar; predict what hovering over a bar shows.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "Charts from value_counts",
+          "worked_example": "counts = df['category'].value_counts()\nfig = px.bar(x=counts.index, y=counts.values, color=counts.values)\nThe index holds the categories and .values the counts; color= shades bars by a number.",
+          "practice": "Write the px.bar call for a counts Series; predict the order of the bars.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        },
+        {
+          "title": "Pie and donut charts",
+          "worked_example": "fig = px.pie(names=counts.index, values=counts.values, hole=0.6)\nnames labels the slices, values sizes them; hole turns the pie into a donut.",
+          "practice": "Fix a pie with names and values swapped; fill in hole for a donut.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.groupby_aggregate"
+          ]
+        },
+        {
+          "title": "Titles and labels with update_layout and update_traces",
+          "worked_example": "fig.update_layout(title='Apps per category', xaxis_title='Category', yaxis_title='Apps')\nfig.update_traces(textposition='outside', textinfo='percent+label')   # for a pie",
+          "practice": "Fill in update_layout arguments to match a target chart; choose the update method for a described change.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.groupby_aggregate",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_matplotlib.bar_scatter_hist",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_plotly.scatter_box_options",
+      "title": "Plotly scatter and box charts: colour, size, hover and log axes",
+      "concept": "lib_plotly",
+      "summary": "Build plotly scatter and box charts from DataFrame columns with color, size and hover_name, switch an axis to log scale, and group bars by colour.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_plotly.express_bar_pie",
+        "lib_pandas.filter_rows"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "px.scatter from a DataFrame",
+          "worked_example": "fig = px.scatter(df, x='installs', y='rating', size='reviews', color='category', hover_name='app')\nPass the DataFrame first and name columns; hover_name shows each point's label on hover.",
+          "practice": "Fill in the arguments that produce a described bubble chart; predict what the hover box shows.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_plotly.express_bar_pie"
+          ]
+        },
+        {
+          "title": "A log axis",
+          "worked_example": "fig.update_layout(xaxis_type='log')\nInstalls range from 1 to 1,000,000,000; a log axis spreads them out.",
+          "practice": "Choose which axis needs a log scale; write the update_layout line.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_plotly.express_bar_pie"
+          ]
+        },
+        {
+          "title": "Box plots by group",
+          "worked_example": "paid = df[df['type'] == 'Paid']\nfig = px.box(df, x='type', y='installs', color='type', points='all', notched=True)\nOne box per group; points='all' shows every app beside its box.",
+          "practice": "Read which group has the higher median; write a filter and box call for a subgroup.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.filter_rows"
+          ]
+        },
+        {
+          "title": "Grouped bars by colour",
+          "worked_example": "fig = px.bar(counts_df, x='genre', y='apps', color='type', barmode='group')\ncolor splits each bar by a column; barmode='group' puts them side by side instead of stacked.",
+          "practice": "Predict stacked vs grouped results; fill in color and barmode.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_plotly.express_bar_pie"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_plotly.express_bar_pie",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_pandas.filter_rows",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_plotly.maps_and_hierarchies",
+      "title": "Maps and nested charts: choropleth and sunburst",
+      "concept": "lib_plotly",
+      "summary": "Colour countries on a choropleth map from ISO country codes, prepare per-country counts with groupby, and draw a sunburst whose rings follow a path of columns.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_plotly.scatter_box_options",
+        "lib_pandas.merge_tables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Choropleth maps need ISO codes",
+          "worked_example": "fig = px.choropleth(df, locations='iso_code', color='prizes', hover_name='country', color_continuous_scale='matter')\nlocations must be 3-letter ISO codes ('USA', 'GBR'); full names like 'United Kingdom' leave countries blank.",
+          "practice": "Fix a map that shows no countries; fill in the arguments for a target map.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_plotly.scatter_box_options"
+          ]
+        },
+        {
+          "title": "Prepare counts per country",
+          "worked_example": "per_country = df.groupby(['country', 'iso_code'], as_index=False)['prize'].count()\nfig = px.choropleth(per_country, locations='iso_code', color='prize')\nThe map needs one row per country; merge in codes from a lookup table if they are missing.",
+          "practice": "Order the lines that count rows per country and draw the map; choose the groupby keys.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.merge_tables"
+          ]
+        },
+        {
+          "title": "Sunburst: rings follow the path",
+          "worked_example": "fig = px.sunburst(df, path=['continent', 'country', 'city'], values='prizes')\nThe first column in path is the inner ring; each ring splits its parent slice.",
+          "practice": "Predict what the inner and outer rings show; reorder path for a target chart.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_plotly.express_bar_pie"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_plotly.scatter_box_options",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_pandas.groupby_aggregate",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_scipy.scipy_stats_calls",
+      "title": "Statistical tests with scipy.stats",
+      "concept": "lib_scipy",
+      "summary": "Call scipy.stats test functions, read or unpack their statistic and p-value, and avoid NaN results from missing data.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.boolean_masks",
+        "unpacking.unpack_sequences"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "from scipy import stats; read .statistic and .pvalue",
+          "worked_example": "from scipy import stats\nresult = stats.ttest_ind([8, 9, 7, 10, 9], [5, 6, 7, 5, 6])\nprint(round(result.statistic, 2), round(result.pvalue, 4))   # 4.43 0.0022\nscipy is organised in subpackages; stats holds the tests.",
+          "practice": "Write the import and the test call; predict which attribute holds the p-value.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "The result unpacks like a tuple",
+          "worked_example": "t, p = stats.ttest_ind([8, 9, 7, 10, 9], [5, 6, 7, 5, 6])\nprint(p < 0.05)   # True",
+          "practice": "Unpack test results into names; fix an unpacking in the wrong order.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "Correlation with a p-value: pearsonr",
+          "worked_example": "r, p = stats.pearsonr([1, 2, 3, 4, 5], [2, 4, 5, 4, 5])\nprint(round(r, 2), round(p, 2))   # 0.77 0.12\nA strong-looking r from 5 points can still be weak evidence.",
+          "practice": "Predict the sign of r for described data; decide whether a given p-value is below 0.05.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "NaN in, NaN out",
+          "worked_example": "import numpy as np\nresult = stats.ttest_ind([1, 2, np.nan], [3, 4, 5])\nprint(result.pvalue)   # nan\nDrop missing values first (a mask or dropna), or pass nan_policy='omit'.",
+          "practice": "Fix a test that returns nan; write the mask that removes NaN before testing.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.boolean_masks"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_numpy.boolean_masks",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "statistics_hypothesis_testing.distributions_and_spread",
+      "title": "Describing a distribution: centre, spread and shape",
+      "concept": "statistics_hypothesis_testing",
+      "summary": "Compute standard deviation (and know NumPy's ddof=0 vs pandas' ddof=1), recognise skew from mean vs median and from a histogram, apply the 68-95-99.7 rule, and compute z-scores.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.boolean_masks",
+        "statistics_module.mean_median_mode",
+        "lib_matplotlib.bar_scatter_hist"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Standard deviation, and ddof",
+          "worked_example": "x = np.array([2, 4, 4, 4, 5, 5, 7, 9])\nprint(x.std())                    # 2.0\nprint(round(x.std(ddof=1), 2))    # 2.14\nNumPy divides by n by default; statistics.stdev and pandas .std() divide by n - 1 (ddof=1).",
+          "practice": "Predict which call gives which value; fix a comparison of NumPy and pandas spreads that disagree.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "statistics_module.mean_median_mode"
+          ]
+        },
+        {
+          "title": "Shape: symmetric or skewed",
+          "worked_example": "incomes: mean 58,000, median 41,000 -> long right tail (a few very high values)\nheights: mean 170, median 170 -> roughly symmetric\nA histogram shows the same thing: the tail stretches towards the side the mean is pulled to.",
+          "practice": "Classify histograms and mean/median pairs as symmetric, right- or left-skewed.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        },
+        {
+          "title": "The normal distribution and 68-95-99.7",
+          "worked_example": "rng = np.random.default_rng(0)\nx = rng.normal(loc=100, scale=15, size=10_000)\nprint(round(((x > 85) & (x < 115)).mean(), 2))   # 0.68\nAbout 68% of a normal distribution lies within 1 std of the mean, 95% within 2, 99.7% within 3.",
+          "practice": "Estimate the share of values in a range for a normal distribution with given mean and std.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.boolean_masks"
+          ]
+        },
+        {
+          "title": "z-scores: how many stds from the mean",
+          "worked_example": "x = np.array([2, 4, 4, 4, 5, 5, 7, 9])\nz = (x - x.mean()) / x.std()\nprint(z.tolist())   # [-1.5, -0.5, -0.5, -0.5, 0.0, 0.0, 1.0, 2.0]\n|z| above about 2 is unusual.",
+          "practice": "Compute z-scores by hand; write the mask that flags unusual values.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "statistics_module.mean_median_mode",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_numpy.boolean_masks",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_numpy.vectorised_arithmetic",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "statistics_hypothesis_testing.p_values_by_simulation",
+      "title": "Null hypothesis and p-values, by shuffling",
+      "concept": "statistics_hypothesis_testing",
+      "summary": "State a null hypothesis for a difference between two groups, estimate a p-value by shuffling group labels, and interpret it correctly.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "statistics_hypothesis_testing.distributions_and_spread",
+        "simulation_monte_carlo.estimate_probability",
+        "random_module.choice_shuffle_sample"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The null hypothesis: 'no real difference'",
+          "worked_example": "before = [12, 15, 11, 14, 13]   # % deaths per month\nafter = [8, 9, 11, 7, 10]\nobserved = statistics.mean(before) - statistics.mean(after)\nprint(observed)   # 4\nNull hypothesis: the change made no difference, and 4 is just luck in which months landed where.",
+          "practice": "Write the null hypothesis for described studies; compute the observed difference.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "statistics_module.mean_median_mode"
+          ]
+        },
+        {
+          "title": "Shuffle the labels to see what luck alone does",
+          "worked_example": "random.seed(1)\npooled = before + after\nextreme = 0\nfor _ in range(10_000):\n    random.shuffle(pooled)\n    diff = statistics.mean(pooled[:5]) - statistics.mean(pooled[5:])\n    if diff >= observed:\n        extreme += 1\nprint(extreme / 10_000)   # 0.0093",
+          "practice": "Order the lines of a permutation test; predict how the p-value changes if the groups overlap more.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "simulation_monte_carlo.estimate_probability",
+            "random_module.choice_shuffle_sample"
+          ]
+        },
+        {
+          "title": "Reading a p-value",
+          "worked_example": "p = 0.0093: if there were no real difference, a gap this big would appear in under 1% of shuffles.\np < 0.05 -> reject the null hypothesis.\np is NOT the chance the null is true; p > 0.05 does NOT prove the groups are equal.",
+          "practice": "Pick the correct reading of given p-values; spot false statements about p-values.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "simulation_monte_carlo.estimate_probability"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "simulation_monte_carlo.estimate_probability",
+          "weight": 0.4
+        },
+        {
+          "topic": "random_module.choice_shuffle_sample",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "statistics_hypothesis_testing.t_test_two_groups",
+      "title": "Comparing two groups with a t-test",
+      "concept": "statistics_hypothesis_testing",
+      "summary": "Split a DataFrame into two groups, run a two-sample t-test, decide at the 0.05 level, and report the size of the difference alongside the p-value.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "statistics_hypothesis_testing.p_values_by_simulation",
+        "lib_scipy.scipy_stats_calls",
+        "lib_pandas.filter_rows"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Split the data into two groups",
+          "worked_example": "df = pd.DataFrame({'washing': ['no'] * 5 + ['yes'] * 5,\n                   'pct_deaths': [8, 9, 7, 10, 9, 5, 6, 7, 5, 6]})\nbefore = df[df['washing'] == 'no']['pct_deaths']\nafter = df[df['washing'] == 'yes']['pct_deaths']\nprint(before.mean(), after.mean())   # 8.6 5.8",
+          "practice": "Write the masks that split a table into two groups; predict the group means.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.filter_rows"
+          ]
+        },
+        {
+          "title": "Run the t-test and decide",
+          "worked_example": "t, p = stats.ttest_ind(before, after)\nprint(round(p, 4))   # 0.0022\nprint(p < 0.05)      # True: significant at the 0.05 level\nThe t-test does in one call what the shuffling simulation estimated.",
+          "practice": "Write the test and the decision line; predict the decision for given p-values and thresholds.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_scipy.scipy_stats_calls"
+          ]
+        },
+        {
+          "title": "Report the size of the effect too",
+          "worked_example": "print(round(before.mean() - after.mean(), 1))   # 2.8 percentage points\nWith huge samples a tiny, unimportant difference can be 'significant'; always give the difference itself.",
+          "practice": "Choose the better report of a result; judge whether a significant result matters in practice.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "statistics_hypothesis_testing.p_values_by_simulation"
+          ]
+        },
+        {
+          "title": "Unequal spreads: Welch's t-test",
+          "worked_example": "t, p = stats.ttest_ind(before, after, equal_var=False)\nThe default assumes both groups have similar spread; equal_var=False drops that assumption.",
+          "practice": "Decide from two stds whether to pass equal_var=False; fill in the call.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "statistics_hypothesis_testing.distributions_and_spread"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_scipy.scipy_stats_calls",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_pandas.filter_rows",
+          "weight": 0.3
+        },
+        {
+          "topic": "statistics_hypothesis_testing.p_values_by_simulation",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_scikit_learn.fit_and_predict",
+      "title": "The scikit-learn pattern: create, fit, predict",
+      "concept": "lib_scikit_learn",
+      "summary": "Create a model, fit it on a 2D feature table and a target, predict new values, read learned attributes, and split data into training and test sets.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pandas.select_columns_rows",
+        "lib_numpy.axes_broadcasting_matmul",
+        "unpacking.unpack_sequences"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Create, fit, predict",
+          "worked_example": "from sklearn.linear_model import LinearRegression\nX = pd.DataFrame({'hours': [1, 2, 3, 4]})\ny = pd.Series([52, 54, 56, 58])\nmodel = LinearRegression()\nmodel.fit(X, y)\nprint(model.predict(pd.DataFrame({'hours': [5]})))   # [60.]",
+          "practice": "Order the create/fit/predict lines; predict the output for exactly linear data.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "X must be 2D: a table, not a single column",
+          "worked_example": "model.fit([1, 2, 3, 4], y)\n# ValueError: Expected 2D array, got 1D array instead: ...\nUse df[['hours']] (double brackets) or [[1], [2], [3], [4]]; df['hours'] is 1D and fails too.",
+          "practice": "Fix fit and predict calls that pass 1D data; predict the shape of df[['a']] vs df['a'].",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.axes_broadcasting_matmul",
+            "lib_pandas.select_columns_rows"
+          ]
+        },
+        {
+          "title": "Learned attributes end in _",
+          "worked_example": "print(round(model.coef_[0], 2), round(model.intercept_, 2))   # 2.0 50.0\ncoef_ and intercept_ exist only after fit; on an unfitted model:\n# AttributeError: 'LinearRegression' object has no attribute 'coef_'",
+          "practice": "Predict learned attributes for exactly linear data; fix code that reads coef_ before fit.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.axes_broadcasting_matmul"
+          ]
+        },
+        {
+          "title": "Hold out test data with train_test_split",
+          "worked_example": "from sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)\nprint(len(X_train), len(X_test))   # 3 1\nThe four results come back in this order; random_state makes the split repeatable.",
+          "practice": "Fix an unpacking in the wrong order; predict split sizes for given test_size values.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pandas.select_columns_rows",
+          "weight": 0.3
+        },
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "linear_regression.line_of_best_fit",
+      "title": "Lines of best fit: slope, intercept and residuals",
+      "concept": "linear_regression",
+      "summary": "Predict with y = slope * x + intercept, compute residuals and the sum of squared residuals, compare candidate lines, and fit one with np.polyfit.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_numpy.vectorised_arithmetic",
+        "expressions.translate_formulas",
+        "lib_matplotlib.bar_scatter_hist"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A line predicts y from x",
+          "worked_example": "x = np.array([1, 2, 3])\npred = 3 * x + 10\nprint(pred)   # [13 16 19]\nslope 3: each extra unit of x adds 3 to y; intercept 10: the prediction at x = 0.",
+          "practice": "Compute predictions from a slope and intercept; read slope and intercept off a plotted line.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "Residuals: actual minus predicted",
+          "worked_example": "y = np.array([14, 15, 20])\nresid = y - pred\nprint(resid, (resid ** 2).sum())   # [ 1 -1  1] 3\nPoints above the line have positive residuals.",
+          "practice": "Compute residuals and their squared sum; mark points above or below a line on a scatter plot.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "Least squares: the smallest squared error wins",
+          "worked_example": "resid2 = y - (3 * x + 11)\nprint(resid2, (resid2 ** 2).sum())   # [ 0 -2  0] 4\n3x + 10 (total 3) fits better than 3x + 11 (total 4), even though 3x + 11 hits two points exactly.",
+          "practice": "Compare candidate lines by squared error; explain why residuals are squared before summing.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_numpy.vectorised_arithmetic"
+          ]
+        },
+        {
+          "title": "Fit the best line with np.polyfit",
+          "worked_example": "slope, intercept = np.polyfit(x, y, 1)\nprint(round(slope, 2), round(intercept, 2))   # 3.0 10.33\nDegree 1 means a straight line; plot it over plt.scatter(x, y) to check the fit.",
+          "practice": "Write the polyfit call and unpack its result; predict a value from the fitted line.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lib_matplotlib.bar_scatter_hist"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_numpy.vectorised_arithmetic",
+          "weight": 0.4
+        },
+        {
+          "topic": "expressions.translate_formulas",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "linear_regression.fit_and_interpret",
+      "title": "Fitting and judging a regression with scikit-learn",
+      "concept": "linear_regression",
+      "summary": "Fit a one-feature linear regression, state what the slope means in context, judge the fit with R-squared, and recognise unsafe extrapolation.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "linear_regression.line_of_best_fit",
+        "lib_scikit_learn.fit_and_predict"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Fit and state the slope in words",
+          "worked_example": "X = pd.DataFrame({'budget': [10, 20, 30, 40]})   # $ millions\ny = [25, 45, 70, 80]\nmodel = LinearRegression().fit(X, y)\nprint(round(model.coef_[0], 2), round(model.intercept_, 2))   # 1.9 7.5\nEach extra $1M of budget goes with about $1.9M more revenue.",
+          "practice": "Write the interpretation of a fitted slope with units; predict revenue for a given budget.",
+          "formats": [
+            "short_answer",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lib_scikit_learn.fit_and_predict"
+          ]
+        },
+        {
+          "title": "R-squared with score",
+          "worked_example": "print(round(model.score(X, y), 2))   # 0.98\nR-squared is the share of the variation in y the line explains: 1 is a perfect fit, 0 no better than the mean.",
+          "practice": "Rank fits by R-squared; compute R-squared from given squared-error totals.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "linear_regression.line_of_best_fit"
+          ]
+        },
+        {
+          "title": "Do not trust the line far outside the data",
+          "worked_example": "print(model.predict(pd.DataFrame({'budget': [0]})))   # [7.5]\nA film with no budget earning $7.5M is not a real prediction: the data started at $10M.",
+          "practice": "Decide which predictions are interpolation and which are risky extrapolation.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "linear_regression.line_of_best_fit"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_scikit_learn.fit_and_predict",
+          "weight": 0.5
+        },
+        {
+          "topic": "linear_regression.line_of_best_fit",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "linear_regression.multivariable_and_log",
+      "title": "Several features, log transforms and residual checks",
+      "concept": "linear_regression",
+      "summary": "Fit a regression on several features and read one coefficient per column, model a skewed target in log units and convert predictions back, and check residuals for patterns.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "linear_regression.fit_and_interpret",
+        "lib_pandas.sort_and_derive"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One coefficient per feature",
+          "worked_example": "X = pd.DataFrame({'rooms': [2, 3, 4, 3], 'dist': [1, 2, 1, 4]})\ny = [18, 21, 28, 17]\nmodel = LinearRegression().fit(X, y)\nprint(round(model.coef_[0], 2), round(model.coef_[1], 2))   # 5.0 -2.0\nCoefficients follow the column order: +5 per room, -2 per km, holding the other fixed.",
+          "practice": "Pair coefficients with column names; interpret the sign of each.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "linear_regression.fit_and_interpret"
+          ]
+        },
+        {
+          "title": "Skewed target: fit log(price), convert back with exp",
+          "worked_example": "df['log_price'] = np.log(df['price'])\nmodel.fit(X, df['log_price'])\nlog_pred = model.predict(new_house)\nprint(np.exp(log_pred))   # back in dollars\nForgetting np.exp reports a 'price' of about 12.",
+          "practice": "Fix code that reports log-scale predictions as prices; choose when a log transform helps.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pandas.sort_and_derive"
+          ]
+        },
+        {
+          "title": "Residuals should look like random noise",
+          "worked_example": "resid = y - model.predict(X)\nplt.scatter(model.predict(X), resid)\nResiduals centred on 0 with no pattern: the line fits. A curve or funnel shape means a missing feature or a transform is needed.",
+          "practice": "Classify residual plots as fine or problematic; compute residuals for small data.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "linear_regression.line_of_best_fit"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "linear_regression.fit_and_interpret",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_pandas.sort_and_derive",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    }
+  ]
+}

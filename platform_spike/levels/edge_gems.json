@@ -1,0 +1,107 @@
+{
+  "format": 1,
+  "id": "edge_gems",
+  "title": "Gems at both ends",
+  "brief": "Mark both ends of the corridor: one gem on the first cell and one on the last, nothing in between. Corridors come in different lengths. In a one-cell corridor, that cell gets one gem.",
+  "starter_code": "",
+  "world": {
+    "width": 7,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "bag": "infinite",
+    "goal": {
+      "gems_exactly": {
+        "0,0": 1,
+        "6,0": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "name": "one cell",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1
+        }
+      }
+    },
+    {
+      "width": 2,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "name": "two cells",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "1,0": 1
+        }
+      }
+    },
+    {
+      "width": 3,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "name": "three cells",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "2,0": 1
+        }
+      }
+    },
+    {
+      "width": 12,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "name": "long corridor",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "11,0": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "required": [
+      "while"
+    ],
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "loop_patterns.fencepost",
+    "conditionals.if_statement"
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "format": 1,
+  "id": "harvest_rows",
+  "title": "The icicle cave",
+  "brief": "Gems hang from the cave roof in lines, like icicles, above the cells of the floor. Collect every gem, then go back to your starting cell and face east. Icicles come in every length (some cells have none), and the roof is higher in some places.",
+  "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\n# Your plan goes here.\n",
+  "world": {
+    "width": 7,
+    "height": 7,
+    "start": [
+      0,
+      6,
+      "E"
+    ],
+    "bag": 0,
+    "blocked": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        6,
+        0
+      ]
+    ],
+    "gems": {
+      "0,1": 1,
+      "0,2": 1,
+      "1,2": 1,
+      "1,3": 1,
+      "1,4": 1,
+      "3,3": 1,
+      "4,1": 1,
+      "4,2": 1,
+      "4,3": 1,
+      "4,4": 1,
+      "4,5": 1,
+      "5,2": 1,
+      "6,1": 1,
+      "6,2": 1
+    },
+    "goal": {
+      "end_at": [
+        0,
+        6
+      ]
+    }
+  },
+  "hidden_worlds": [
+    {
+      "name": "icicle over the start",
+      "width": 4,
+      "height": 4,
+      "start": [
+        0,
+        3,
+        "E"
+      ],
+      "bag": 0,
+      "blocked": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "gems": {
+        "0,1": 1,
+        "0,2": 1,
+        "2,2": 1
+      },
+      "goal": {
+        "end_at": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "name": "one cell wide",
+      "width": 1,
+      "height": 5,
+      "start": [
+        0,
+        4,
+        "E"
+      ],
+      "bag": 0,
+      "blocked": [
+        [
+          0,
+          0
+        ]
+      ],
+      "gems": {
+        "0,1": 1,
+        "0,2": 1,
+        "0,3": 1
+      },
+      "goal": {
+        "end_at": [
+          0,
+          4
+        ]
+      }
+    },
+    {
+      "name": "no icicles",
+      "width": 5,
+      "height": 4,
+      "start": [
+        0,
+        3,
+        "E"
+      ],
+      "bag": 0,
+      "blocked": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "goal": {
+        "end_at": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "name": "no headroom",
+      "width": 4,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 0,
+      "goal": {
+        "end_at": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "one cell",
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 0,
+      "goal": {
+        "end_at": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "long cave",
+      "width": 10,
+      "height": 5,
+      "start": [
+        0,
+        4,
+        "E"
+      ],
+      "bag": 0,
+      "blocked": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      "gems": {
+        "1,2": 1,
+        "1,3": 1,
+        "2,1": 1,
+        "2,2": 1,
+        "2,3": 1,
+        "4,2": 1,
+        "5,1": 1,
+        "5,2": 1,
+        "5,3": 1,
+        "7,1": 1,
+        "7,2": 1,
+        "8,1": 1,
+        "9,2": 1,
+        "9,3": 1
+      },
+      "goal": {
+        "end_at": [
+          0,
+          4
+        ]
+      }
+    },
+    {
+      "name": "high roof",
+      "width": 3,
+      "height": 9,
+      "start": [
+        0,
+        8,
+        "E"
+      ],
+      "bag": 0,
+      "blocked": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "gems": {
+        "0,1": 1,
+        "2,3": 1
+      },
+      "goal": {
+        "end_at": [
+          0,
+          8
+        ]
+      }
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true,
+    "facing": "E"
+  },
+  "constraints": {
+    "required": [
+      "def",
+      "while"
+    ],
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "decomposition.top_down_design",
+    "docstrings.write_docstrings",
+    "loop_patterns.fencepost"
+  ]
+}

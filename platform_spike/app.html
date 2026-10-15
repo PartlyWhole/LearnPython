@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gem Rover</title>
+<link rel="stylesheet" href="src/app.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1 id="level-title">Loading level…</h1>
+    <p id="level-brief" class="brief"></p>
+  </div>
+  <div class="top-right">
+    <span id="runtime-status" class="status" role="status" data-state="loading" title="Starting Python…"><span class="status-dot" aria-hidden="true"></span><span class="status-text sr-only">Starting Python…</span></span>
+    <button id="watch-demo" class="icon-button" data-icon="replay" aria-label="Watch the demo again" title="Watch the demo again" hidden></button>
+    <button id="open-settings" class="icon-button" data-icon="gear" aria-label="Settings" title="Settings"></button>
+    <button id="open-levels" class="levels-button" data-icon="levels" aria-label="Levels" title="Levels"><span id="levels-count" class="levels-count"></span></button>
+  </div>
+</header>
+
+<dialog id="levels-dialog" aria-labelledby="levels-title">
+  <div class="dialog-head">
+    <h2 id="levels-title">Levels</h2>
+    <button id="close-levels" class="icon-button" data-icon="close" aria-label="Close"></button>
+  </div>
+  <div id="levels-list"></div>
+</dialog>
+
+<dialog id="settings-dialog" aria-labelledby="settings-title" class="small-dialog">
+  <div class="dialog-head">
+    <h2 id="settings-title">Settings</h2>
+    <button id="close-settings" class="icon-button" data-icon="close" aria-label="Close"></button>
+  </div>
+  <label class="switch">
+    <input type="checkbox" id="setting-step" role="switch">
+    <span class="track" aria-hidden="true"></span>
+    <span>Step-by-step help</span>
+  </label>
+  <button id="export-events" class="export-events" data-icon="download">Playtest log</button>
+</dialog>
+
+<main class="layout">
+  <section class="panel editor-panel" aria-label="Your program">
+    <section id="demo" class="strip demo" hidden aria-labelledby="demo-name">
+      <div class="strip-head">
+        <span id="demo-name" class="strip-title"></span>
+        <span id="demo-dots" class="dots" aria-hidden="true"></span>
+        <span id="demo-count" class="sr-only"></span>
+        <button id="demo-replay" class="icon-button" data-icon="replay" aria-label="Start the demo again" title="Start again"></button>
+        <button id="demo-skip" class="icon-button" data-icon="close" aria-label="Skip the demo" title="Skip"></button>
+      </div>
+      <p id="demo-say" class="strip-say" aria-live="polite"></p>
+      <div id="demo-predict" class="demo-predict" hidden></div>
+      <p id="demo-feedback" class="demo-feedback" aria-hidden="true" hidden></p>
+      <p id="demo-sr" class="sr-only" aria-live="polite"></p>
+      <div class="strip-actions">
+        <button id="demo-back" class="icon-button" data-icon="back" aria-label="Back" title="Back"></button>
+        <button id="demo-next" class="round-button" data-icon="next" aria-label="Next" title="Next"><span class="label"></span></button>
+      </div>
+    </section>
+    <section id="drive" class="drive" hidden aria-label="Drive the robot">
+      <div id="drive-buttons" class="drive-buttons"></div>
+      <div class="drive-tools">
+        <button id="drive-undo" class="icon-button" data-icon="undo" aria-label="Undo the last move" title="Undo (Backspace)" disabled></button>
+        <button id="drive-reset" class="icon-button" data-icon="replay" aria-label="Start again" title="Start again" disabled></button>
+        <p id="drive-msg" class="drive-msg"></p>
+      </div>
+      <ol id="drive-log" class="drive-log" aria-label="Your moves"></ol>
+      <p id="drive-sr" class="sr-only" aria-live="polite"></p>
+    </section>
+    <section id="guide" class="strip guide" hidden aria-label="Step-by-step help">
+      <div class="strip-head">
+        <span id="guide-dots" class="dots" aria-hidden="true"></span>
+        <button id="guide-show" class="icon-button" data-icon="eye" aria-label="Show me" title="Show me" aria-expanded="false" aria-controls="guide-preview"></button>
+        <button id="guide-hide" class="icon-button" data-icon="close" aria-label="Hide steps" title="Hide steps"></button>
+      </div>
+      <p id="guide-say" class="strip-say" aria-hidden="true"></p>
+      <p id="guide-sr" class="sr-only" aria-live="polite"></p>
+      <div id="guide-preview" class="guide-preview" hidden>
+        <pre id="guide-preview-code"></pre>
+        <div class="strip-actions">
+          <button id="guide-preview-close" class="icon-button" data-icon="close" aria-label="Close the preview" title="Close"></button>
+          <button id="guide-use" class="round-button" data-icon="check" aria-label="Use this code" title="Use this"></button>
+        </div>
+      </div>
+      <div id="guide-offer" class="guide-offer" hidden>
+        <span>You're ahead of the guide. Turn it off?</span>
+        <button id="guide-offer-off">Turn off</button>
+        <button id="guide-offer-keep" class="quiet">Keep</button>
+      </div>
+    </section>
+    <div class="editor" id="editor" aria-label="Your program"></div>
+    <div class="actions">
+      <button id="run" class="round-button run-button" data-icon="play" aria-label="Run (Ctrl or ⌘ + Enter)" title="Run (Ctrl/⌘ + Enter)" disabled></button>
+      <button id="stop" class="icon-button" data-icon="stop" aria-label="Stop" title="Stop" disabled></button>
+      <button id="reset" class="icon-button" data-icon="undo" aria-label="Reset code: go back to this level's starting code" title="Back to the starting code"></button>
+      <span id="run-note" class="note"></span>
+      <button id="guide-chip" class="icon-button chip" data-icon="steps" aria-label="Show steps" title="Show steps" hidden></button>
+      <button id="open-help" class="icon-button" data-icon="help" aria-label="Commands and keys" title="Commands and keys" aria-expanded="false" aria-controls="help-pop"></button>
+    </div>
+    <div id="help-pop" class="help-pop" role="dialog" aria-label="Commands and keys" hidden>
+      <div id="help-commands" class="help-commands"></div>
+      <dl class="help-keys">
+        <dt><kbd>Ctrl</kbd>/<kbd>⌘</kbd> <kbd>Enter</kbd></dt><dd>run</dd>
+        <dt><kbd>Ctrl</kbd> <kbd>Space</kbd></dt><dd>suggest commands</dd>
+        <dt><kbd>Tab</kbd></dt><dd>indent</dd>
+        <dt><kbd>Esc</kbd> then <kbd>Tab</kbd></dt><dd>leave the editor</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="panel world-panel" aria-label="World">
+    <div class="world-row">
+      <div class="world" id="world"></div>
+      <figure class="goal-view" aria-labelledby="goal-title">
+        <figcaption id="goal-title">Goal</figcaption>
+        <div class="goal-grid" id="goal"></div>
+        <p class="goal-summary" id="goal-summary"></p>
+      </figure>
+    </div>
+    <div class="caption">
+      <span id="caption-line" class="line-tag"></span>
+      <code id="caption-text"></code>
+      <span class="counters">
+        <span class="counter" title="In the bag"><span data-glyph="bag"></span><span id="bag">0</span></span>
+        <span class="counter" title="Gems left on the floor"><span data-glyph="gem"></span><span id="left">0</span></span>
+      </span>
+    </div>
+    <div class="transport" role="group" aria-label="Replay">
+      <button id="back" class="icon-button" data-icon="step_back" title="Step back" aria-label="Step back"></button>
+      <button id="play" class="icon-button" data-icon="play" title="Play" aria-label="Play"></button>
+      <button id="fwd" class="icon-button" data-icon="step_fwd" title="Step forward" aria-label="Step forward"></button>
+      <input id="scrub" type="range" min="0" max="0" value="0" aria-label="Replay position">
+      <button id="speed" class="speed-button" data-speed="1" aria-label="Replay speed: Normal" title="Speed: Normal"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+    </div>
+  </section>
+
+  <section class="panel results-panel" aria-label="Results" hidden>
+    <button id="hint-offer" class="hint-offer" data-icon="bulb" aria-label="Want a hint?" title="Want a hint?" hidden></button>
+    <section id="hint" class="strip hint-strip" hidden aria-label="Hint">
+      <div class="strip-head">
+        <span id="hint-dots" class="dots" aria-hidden="true"></span>
+        <button id="hint-demo" class="icon-button" data-icon="replay" aria-label="Watch the demo again" title="Watch the demo again" hidden></button>
+        <button id="hint-copy" class="icon-button" data-icon="copy" aria-label="Copy this code" title="Copy" hidden></button>
+        <button id="hint-close" class="icon-button" data-icon="close" aria-label="Not now" title="Not now"></button>
+      </div>
+      <p id="hint-say" class="strip-say"></p>
+      <pre id="hint-code" class="hint-code" hidden></pre>
+    </section>
+    <div id="results" class="results" aria-live="polite"></div>
+    <p id="hint-sr" class="sr-only" aria-live="polite"></p>
+    <details id="output-wrap" hidden><summary><span data-glyph="output"></span> Printed output</summary><pre id="output"></pre></details>
+  </section>
+</main>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

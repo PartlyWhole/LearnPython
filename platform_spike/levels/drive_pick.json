@@ -1,0 +1,42 @@
+{
+  "format": 1,
+  "id": "drive_pick",
+  "title": "Pick it up",
+  "brief": "Drive to the gem and pick it up.",
+  "starter_code": "",
+  "world": {
+    "width": 5,
+    "height": 3,
+    "start": [
+      0,
+      2,
+      "E"
+    ],
+    "gems": {
+      "2,0": 1
+    },
+    "blocked": [
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        1
+      ]
+    ]
+  },
+  "goal": {
+    "all_gems_collected": true
+  },
+  "drive": {
+    "buttons": [
+      "move",
+      "turn_left",
+      "pick"
+    ]
+  },
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ]
+}

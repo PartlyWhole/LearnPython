@@ -1,0 +1,96 @@
+{
+  "format": 1,
+  "id": "keep_one",
+  "title": "Leave one behind",
+  "brief": "Along the corridor, some cells hold several gems. Leave exactly one gem on every cell that has any, and leave empty cells empty.",
+  "starter_code": "while front_is_clear():\n    move()\n",
+  "world": {
+    "width": 7,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "1,0": 3,
+      "2,0": 1,
+      "4,0": 2,
+      "5,0": 4
+    },
+    "goal": {
+      "gems_exactly": {
+        "1,0": 1,
+        "2,0": 1,
+        "4,0": 1,
+        "5,0": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 3,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 2,
+        "2,0": 1
+      },
+      "name": "crowded start",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "2,0": 1
+        }
+      }
+    },
+    {
+      "width": 5,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "name": "no gems",
+      "goal": {
+        "gems_exactly": {}
+      }
+    },
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 5
+      },
+      "name": "one cell",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "comparison_operators.compare_numbers",
+    "while_loops.loop_until_condition",
+    "conditionals.if_statement"
+  ]
+}

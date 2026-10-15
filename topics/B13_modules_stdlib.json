@@ -1,0 +1,2312 @@
+{
+  "batch": "B13",
+  "title": "Modules, packages and the standard library",
+  "concept_map": {
+    "modules_imports": {
+      "topics": [
+        "modules_imports.import_module",
+        "modules_imports.from_import_and_alias",
+        "modules_imports.own_modules",
+        "modules_imports.packages_and_import_errors"
+      ],
+      "entry_topic": "modules_imports.import_module",
+      "notes": "Owns import X / from X import Y / as / own modules / packages. Earlier batches used memorised one-line imports (import copy B06; from collections/itertools/functools B07-B08; import csv/json/os/sys/argparse/pickle, from pathlib/contextlib B10; import unittest/pytest B09): import_module KP3 and from_import_and_alias KP2 practise reading and rewriting exactly those lines, with small non_ancestor encompassings of copying.shallow_vs_deep, json_data.json_strings and collections_module.counter. Stitching: main_guard.if_name_main's pending concept:modules_imports resolves to modules_imports.own_modules (KP3 'importing runs top-level code' sets up the guard); lib_pytest.write_and_run_tests' pending resolves to modules_imports.own_modules, and lib_pytest.raises_and_test_folders (tests/ folder, __init__.py) should list modules_imports.packages_and_import_errors. Module-level globals across files (B05 scope handoff) appear only in own_modules KP1-2; a module's own global namespace was not given a separate KP. Relative imports, importlib, __all__ and the time module (B08 wanted time.perf_counter for timing decorators) were left out."
+    },
+    "random_module": {
+      "topics": [
+        "random_module.random_numbers",
+        "random_module.choice_shuffle_sample",
+        "random_module.seed_and_testing",
+        "random_module.random_games"
+      ],
+      "entry_topic": "random_module.random_numbers",
+      "notes": "Guessing game with a random secret (B04 handoff) is random_games KP1; random.choice on lists (B06 handoff) is choice_shuffle_sample. Estimating probabilities by repeated simulation is B14 simulation_monte_carlo, which should depend on random_numbers and choice_shuffle_sample; random colours for graphics are B19. Examples avoid comprehensions and print only values that do not depend on the random draw."
+    },
+    "math_module": {
+      "topics": [
+        "math_module.functions_and_constants",
+        "math_module.isclose_and_inf"
+      ],
+      "entry_topic": "math_module.functions_and_constants",
+      "notes": "math.pi (B02 constants handoff) and math.isclose (B02 comparison_operators handoff) are here. B14 floating_point_precision (parallel) owns binary representation, epsilon reasoning and decimal; if it also teaches isclose, keep isclose_and_inf KP1-2 and have B14 encompass it. Trig functions and radians were left out (only needed by graphics/games batches)."
+    },
+    "datetime_module": {
+      "topics": [
+        "datetime_module.dates_and_datetimes",
+        "datetime_module.timedelta_arithmetic",
+        "datetime_module.format_and_parse"
+      ],
+      "entry_topic": "datetime_module.dates_and_datetimes",
+      "notes": "Date format specs in f-strings (B03 handoff) are format_and_parse KP2. Time zones, the time module (time.sleep, time.time) and calendar were left out; scheduling (B16 scheduling_cron) and pandas datetime conversion (B18) build on these topics."
+    },
+    "statistics_module": {
+      "topics": [
+        "statistics_module.mean_median_mode"
+      ],
+      "entry_topic": "statistics_module.mean_median_mode",
+      "notes": "One non-core topic (cs50p introduces it only). Hypothesis testing and numpy/pandas statistics are B18."
+    },
+    "tool_pip": {
+      "topics": [
+        "tool_pip.pip_install",
+        "tool_pip.virtual_environments",
+        "tool_pip.requirements_files"
+      ],
+      "entry_topic": "tool_pip.pip_install",
+      "notes": "All non-core (needs a terminal). pip/venv deferred by B01 python_setup. B09 lib_pytest used 'pip install pytest' as a memorised line; a stitching pass could add tool_pip.pip_install as its prerequisite. pipenv/poetry/uv were not given topics: they automate the same venv + requirements workflow."
+    },
+    "third_party_packages": {
+      "topics": [
+        "third_party_packages.find_and_install",
+        "third_party_packages.learn_from_docs"
+      ],
+      "entry_topic": "third_party_packages.find_and_install",
+      "notes": "General skills only; each named library (requests, pygame, pillow, cowsay, ...) is owned by its lib_ concept in B16-B19, which should depend on find_and_install. learn_from_docs uses PrettyTable (100 Days Day 16), which no lib_ concept owns; its snippets were not run (not installed), so its output is described rather than quoted. Attribute assignment on an object (table.field_names = ...) is used as copied-from-docs before B11 classes."
+    },
+    "regular_expressions": {
+      "topics": [
+        "regular_expressions.search_and_match_objects",
+        "regular_expressions.classes_and_quantifiers",
+        "regular_expressions.anchors_and_validation",
+        "regular_expressions.groups_and_alternation",
+        "regular_expressions.findall_sub_split",
+        "regular_expressions.greedy_and_pitfalls"
+      ],
+      "entry_topic": "regular_expressions.search_and_match_objects",
+      "notes": "Regex validation (B09 handoff) is anchors_and_validation, which depends on and encompasses defensive_programming.clean_and_validate_text. Raw strings come from B03 strings.multiline_and_raw. Named groups, lookarounds, re.compile and verbose mode were left out; HTML parsing with regex vs BeautifulSoup belongs to B16 web_scraping, Markdown parsing to B20."
+    },
+    "environment_variables": {
+      "topics": [
+        "environment_variables.read_environment",
+        "environment_variables.secrets_out_of_code"
+      ],
+      "entry_topic": "environment_variables.read_environment",
+      "notes": "os.environ (B10 os_sys_module handoff) is read_environment. Both non-core (terminal). The concept graph puts this after apis_http (B16, later wave); examples use a placeholder WEATHER_API_KEY without making HTTP calls, so B16 apis_http can depend on secrets_out_of_code. Deployment config (B17) builds on it. The python-dotenv snippet was not run (package not installed)."
+    },
+    "subprocess_module": {
+      "topics": [
+        "subprocess_module.run_external_programs"
+      ],
+      "entry_topic": "subprocess_module.run_external_programs",
+      "notes": "One non-core topic (bootdev AI agent runs Python files with a timeout). The agent's sandboxing and function-calling are B20. Popen, pipes between processes and shell=True usage were left out on purpose."
+    },
+    "tool_jupyter": {
+      "topics": [
+        "tool_jupyter.notebook_cells"
+      ],
+      "entry_topic": "tool_jupyter.notebook_cells",
+      "notes": "One non-core topic; pandas inside notebooks is B18. Magics beyond %pip and notebook display of DataFrames/plots were left to B18."
+    }
+  },
+  "topics": [
+    {
+      "id": "modules_imports.import_module",
+      "title": "Using a module: import and dot notation",
+      "concept": "modules_imports",
+      "summary": "Import a standard-library module, call its functions with module.name, recognise the NameErrors from a missing import or prefix, and explore a module with dir() and help().",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "builtin_functions.help_and_dir",
+        "debugging.common_error_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "import a module, then use module.name",
+          "worked_example": "import math\nprint(math.sqrt(16))  # 4.0\nprint(math.pi)        # 3.141592653589793\nA module is a file of ready-made functions and values; the dot reaches inside it.",
+          "practice": "Predict the output of short programs that import a module and call its functions; fill in the module prefix in a call.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "Missing import or missing prefix: NameError",
+          "worked_example": "print(math.sqrt(16))\n# NameError: name 'math' is not defined. Did you forget to import 'math'?\nimport math\nprint(sqrt(16))\n# NameError: name 'sqrt' is not defined\nimport math makes only the name math available; sqrt lives inside it.",
+          "practice": "Predict which programs raise NameError and which name the message mentions; fix each by adding the import or the prefix.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "debugging.common_error_types"
+          ]
+        },
+        {
+          "title": "Imports go at the top, before first use",
+          "worked_example": "import copy\nimport json\nbackup = copy.deepcopy([[1, 2], [3]])\nprint(json.dumps(backup))  # [[1, 2], [3]]\nThe import lines you copied earlier (import csv, json, copy, os, sys) all work this way: one import per module, at the top of the file.",
+          "practice": "Name the module and the function in lines such as json.loads(text) or os.listdir('.'); fix programs whose import comes after the line that uses it.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "Explore a module with dir() and help()",
+          "worked_example": "import math\nprint(\"sqrt\" in dir(math))  # True\nhelp(math.floor)  # floor(x, /) ... Return the floor of x as an Integral.\ndir(module) lists its names; help(module.name) explains one.",
+          "practice": "Decide whether a module has a given function; use help() output to choose the right function and its arguments.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.help_and_dir"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "builtin_functions.help_and_dir",
+          "weight": 0.3
+        },
+        {
+          "topic": "debugging.common_error_types",
+          "weight": 0.1
+        },
+        {
+          "topic": "copying.shallow_vs_deep",
+          "weight": 0.1,
+          "non_ancestor": true
+        },
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.1,
+          "non_ancestor": true
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "modules_imports.from_import_and_alias",
+      "title": "from-imports, aliases and name clashes",
+      "concept": "modules_imports",
+      "summary": "Import single names with from ... import, rename with as, choose between the styles, and avoid overwriting a module or function name.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "variables.reassign_and_trace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "from module import name",
+          "worked_example": "from math import sqrt, pi\nprint(sqrt(25), round(pi, 2))  # 5.0 3.14\nThe listed names can be used without a prefix.",
+          "practice": "Predict output of programs using from-imports; write the from-import line a given program needs.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Each style makes different names available",
+          "worked_example": "import collections\nprint(collections.Counter(\"aab\")[\"a\"])  # 2\nfrom collections import Counter\nprint(Counter(\"aab\")[\"a\"])  # 2\nfrom math import sqrt\nprint(math.sqrt(4))\n# NameError: name 'math' is not defined",
+          "practice": "Rewrite lines between the two styles (Counter, deque, reduce, partial, deepcopy); predict which names exist after each import.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Short names with as",
+          "worked_example": "import statistics as stats\nprint(stats.mean([2, 4, 9]))  # 5\nprint(statistics.mean([2, 4, 9]))\n# NameError: name 'statistics' is not defined\nAfter as, only the new name exists.",
+          "practice": "Predict which calls work after an aliased import; fill in an alias line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Names can be overwritten: shadowing and import *",
+          "worked_example": "import random\nrandom = random.randint(1, 6)\nprint(random.randint(1, 6))\n# AttributeError: 'int' object has no attribute 'randint'\npi = 3\nfrom math import *\nprint(pi)  # 3.141592653589793\nA variable can replace a module name, and import * can silently replace your names.",
+          "practice": "Find the line that broke a module name; predict values after import *; rename variables to fix clashes.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.import_module",
+          "weight": 0.6
+        },
+        {
+          "topic": "collections_module.counter",
+          "weight": 0.1,
+          "non_ancestor": true
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "modules_imports.own_modules",
+      "title": "Writing and importing your own modules",
+      "concept": "modules_imports",
+      "summary": "Move functions and constants into your own .py file, import them from another file, and predict what runs at import time.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "modules_imports.from_import_and_alias",
+        "functions.define_and_call",
+        "constants.named_constants"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Your .py file is a module",
+          "worked_example": "# helpers.py\nTAX_RATE = 0.2\ndef with_tax(price):\n    return price * (1 + TAX_RATE)\n\n# main.py (same folder)\nimport helpers\nprint(helpers.with_tax(10))  # 12.0",
+          "practice": "Predict output of a two-file program; write main.py lines that use a function from a given helpers.py.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call"
+          ]
+        },
+        {
+          "title": "from-imports and file-name rules",
+          "worked_example": "from helpers import with_tax, TAX_RATE\nprint(TAX_RATE)  # 0.2\nimport helpers.py   # wrong: leave off .py\nimport my-tools     # SyntaxError: invalid syntax\nThe module name is the file name without .py, and it must be a valid Python name.",
+          "practice": "Write the import for a given file; choose which file names can be imported.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "Importing runs the module's top-level code once",
+          "worked_example": "# helpers.py also has: print(\"loading helpers\")\nimport helpers\nimport helpers\nprint(helpers.with_tax(10))\n# loading helpers\n# 12.0\nTop-level lines run on the first import only; keep modules to definitions.",
+          "practice": "Predict the full output when imported modules contain print calls or a main() call at the bottom.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Do not name your file after a module you import",
+          "worked_example": "# random.py (your own file)\nimport random\nprint(random.randint(1, 6))\n# AttributeError: module 'random' has no attribute 'randint' (consider renaming ... random.py ...)\nPython finds your random.py before the standard one.",
+          "practice": "Diagnose AttributeErrors caused by files named random.py, math.py or csv.py; pick a safe file name.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.from_import_and_alias",
+          "weight": 0.5
+        },
+        {
+          "topic": "functions.define_and_call",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "100_days_of_code",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "modules_imports.packages_and_import_errors",
+      "title": "Packages, dotted imports and import errors",
+      "concept": "modules_imports",
+      "summary": "Import from a package folder and dotted standard-library modules, tell ModuleNotFoundError from ImportError, and predict where Python looks for modules.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.own_modules"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A package is a folder of modules",
+          "worked_example": "# shapes/__init__.py (may be empty)\n# shapes/area.py has def rect(w, h)\nfrom shapes.area import rect\nfrom shapes import area\nprint(rect(2, 3), area.rect(4, 5))  # 6 20",
+          "practice": "Write import lines for functions in a given folder layout; predict output of dotted calls.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.own_modules"
+          ]
+        },
+        {
+          "title": "Dotted standard-library imports",
+          "worked_example": "import os.path\nprint(os.path.join(\"data\", \"a.txt\"))  # data/a.txt\nfrom os import path\nprint(path.basename(\"data/a.txt\"))  # a.txt\nThe dots name a module inside a package, just like your own folders.",
+          "practice": "Match dotted import lines to the call each allows; fix calls that use the wrong prefix.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "ModuleNotFoundError vs ImportError",
+          "worked_example": "import shapez\n# ModuleNotFoundError: No module named 'shapez'\nfrom shapes.area import circle\n# ImportError: cannot import name 'circle' from 'shapes.area'\nThe first means no such module; the second means the module exists but lacks that name.",
+          "practice": "Classify import errors and pick the fix: spelling, wrong folder, missing name, or a package that is not installed.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "debugging.read_tracebacks"
+          ]
+        },
+        {
+          "title": "Where Python looks: the script's folder first",
+          "worked_example": "import sys\nprint(sys.path[0])  # the folder of the file you ran\nPython searches that folder, then the standard library, then installed packages. That is why random.py shadows random, and why tests run from the project folder can import its modules.",
+          "practice": "Given folder layouts and the file that is run (including a tests/ folder), predict which imports succeed.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.own_modules"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.own_modules",
+          "weight": 0.5
+        },
+        {
+          "topic": "file_paths.path_parts",
+          "weight": 0.1,
+          "non_ancestor": true
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "random_module.random_numbers",
+      "title": "Random numbers: randint, random and randrange",
+      "concept": "random_module",
+      "summary": "Generate random whole numbers and floats in a chosen range, use random() for chances, and reason about which results are possible.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "range_function.start_stop",
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "randint(a, b) includes both ends",
+          "worked_example": "import random\nroll = random.randint(1, 6)\nprint(1 <= roll <= 6)  # True\nUnlike range(1, 6), randint(1, 6) can give 6.",
+          "practice": "Write the randint call for dice, coins (0/1) and percentages; spot off-by-one ranges.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Predict the possible values, not the value",
+          "worked_example": "x = random.randint(1, 3) * 2\nprint(x)  # 2, 4 or 6, different on each run\nRandom programs are checked by the set of values they can produce.",
+          "practice": "Choose every output a random expression could produce; reject impossible ones.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "random() for chances",
+          "worked_example": "if random.random() < 0.3:\n    print(\"rain\")\nelse:\n    print(\"sun\")\nrandom() gives a float with 0 <= x < 1, so the condition is true about 30% of the time.",
+          "practice": "Write conditions that happen with a given probability; predict which branch is possible for given values of random().",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "randrange like range, uniform for floats",
+          "worked_example": "n = random.randrange(0, 10, 2)  # one of 0, 2, 4, 6, 8\nt = random.uniform(1.5, 2.5)   # a float from 1.5 to 2.5\nrandrange takes range's arguments and also excludes stop.",
+          "practice": "Pick the function and arguments that produce a described set of values.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "range_function.start_stop",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "random_module.choice_shuffle_sample",
+      "title": "Random picks from a list: choice, shuffle, sample and choices",
+      "concept": "random_module",
+      "summary": "Pick one item, shuffle a list in place, and draw several items with or without repeats, avoiding the shuffle-returns-None bug.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "random_module.random_numbers",
+        "list_methods.insert_extend"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "choice picks one item",
+          "worked_example": "import random\nmove = random.choice([\"rock\", \"paper\", \"scissors\"])\nprint(move in [\"rock\", \"paper\", \"scissors\"])  # True\nrandom.choice([])\n# IndexError: Cannot choose from an empty sequence",
+          "practice": "Write choice calls on lists and strings; predict which calls raise IndexError.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "shuffle changes the list and returns None",
+          "worked_example": "cards = [\"A\", \"K\", \"Q\"]\nhand = random.shuffle(cards)\nprint(hand)  # None\nrandom.shuffle(cards) reorders cards itself; use cards afterwards.",
+          "practice": "Fix programs that store the result of shuffle; predict what is printed.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "sample(k) draws k different items",
+          "worked_example": "numbers = random.sample(range(1, 50), 6)  # 6 different lottery numbers\nrandom.sample([1, 2, 3], 5)\n# ValueError: Sample larger than population or is negative",
+          "practice": "Write a lottery draw; predict which sample calls fail.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "random_module.random_numbers"
+          ]
+        },
+        {
+          "title": "choices(k=...) allows repeats",
+          "worked_example": "flips = random.choices(\"HT\", k=5)  # a list like ['H', 'T', 'T', 'H', 'H']\nUse choices when the same item may come up again (coin flips, password characters), sample when it may not (lottery, dealing).",
+          "practice": "Choose sample or choices for described situations; predict length and possible repeats of the result.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "random_module.random_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "random_module.random_numbers",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "random_module.seed_and_testing",
+      "title": "Repeatable randomness: seed and testing random code",
+      "concept": "random_module",
+      "summary": "Make random sequences repeat with seed, avoid reseeding in a loop, and keep random calls out of the functions you test.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "random_module.random_numbers",
+        "unit_testing.testable_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The same seed gives the same sequence",
+          "worked_example": "random.seed(42)\na = [random.randint(1, 100), random.randint(1, 100)]\nrandom.seed(42)\nb = [random.randint(1, 100), random.randint(1, 100)]\nprint(a == b)  # True\nThe numbers are pseudo-random: computed from a starting seed.",
+          "practice": "Predict whether two sequences are equal given seed calls; explain why programs differ between runs without a seed.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "random_module.random_numbers"
+          ]
+        },
+        {
+          "title": "Seed once, not inside the loop",
+          "worked_example": "for _ in range(3):\n    random.seed(1)\n    print(random.randint(1, 6))\n# 2\n# 2\n# 2\nReseeding restarts the sequence every pass.",
+          "practice": "Find why a dice loop repeats the same number; move the seed.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "random_module.random_numbers"
+          ]
+        },
+        {
+          "title": "Keep randomness outside the function you test",
+          "worked_example": "def is_hit(roll):\n    return roll >= 5\n\nresult = is_hit(random.randint(1, 6))\nassert is_hit(5) and not is_hit(4)\nThe random value is passed in, so tests can choose it.",
+          "practice": "Refactor a function that calls randint internally so it takes the value as a parameter; write asserts for it.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unit_testing.testable_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.testable_functions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "random_module.random_games",
+      "title": "Building small games with random",
+      "concept": "random_module",
+      "summary": "Combine random with loops and lists to write a guessing game, a computer opponent, a password generator and a card deal.",
+      "minutes": 20,
+      "core": false,
+      "prerequisites": [
+        "random_module.choice_shuffle_sample",
+        "break_continue.while_true_loops",
+        "list_methods.remove_pop_del"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A guessing game with a random secret",
+          "worked_example": "secret = random.randint(1, 10)\nwhile True:\n    guess = int(input(\"Guess 1-10: \"))\n    if guess < secret:\n        print(\"Too low\")\n    elif guess > secret:\n        print(\"Too high\")\n    else:\n        print(\"Got it!\")\n        break",
+          "practice": "Predict the transcript for a given secret and guesses; reorder the lines of the game loop.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        },
+        {
+          "title": "A computer opponent",
+          "worked_example": "player = \"rock\"\ncomputer = random.choice([\"rock\", \"paper\", \"scissors\"])\nif player == computer:\n    print(\"draw\")\nelif player == \"rock\" and computer == \"scissors\":\n    print(\"you win\")\nelif player == \"paper\" and computer == \"rock\":\n    print(\"you win\")\nelif player == \"scissors\" and computer == \"paper\":\n    print(\"you win\")\nelse:\n    print(\"you lose\")",
+          "practice": "Predict the result for each possible computer move; fill in the missing winning condition.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "random_module.choice_shuffle_sample"
+          ]
+        },
+        {
+          "title": "Build a random password",
+          "worked_example": "letters = \"abcdefghjkmnpqrstuvwxyz23456789\"\npassword = \"\"\nfor _ in range(8):\n    password += random.choice(letters)\nprint(len(password))  # 8",
+          "practice": "Write a generator for a given length and alphabet; fix one that picks once and repeats the same character.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "random_module.choice_shuffle_sample"
+          ]
+        },
+        {
+          "title": "Shuffle a deck and deal with pop()",
+          "worked_example": "deck = [\"A\", \"K\", \"Q\", \"J\", \"10\"]\nrandom.shuffle(deck)\nhand = [deck.pop(), deck.pop()]\nprint(len(hand), len(deck))  # 2 3\nDealt cards leave the deck, so they cannot be dealt twice.",
+          "practice": "Predict deck and hand sizes after dealing; write a deal of n cards to two players.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "random_module.choice_shuffle_sample",
+          "weight": 0.6
+        },
+        {
+          "topic": "random_module.random_numbers",
+          "weight": 0.4
+        },
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "math_module.functions_and_constants",
+      "title": "The math module: sqrt, pi, floor and ceil",
+      "concept": "math_module",
+      "summary": "Use math.sqrt, math.pi, floor, ceil and a few other math functions in formulas, and recognise the math domain error.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "integers_floats.rounding_and_float_surprises",
+        "expressions.translate_formulas"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sqrt and pi in formulas",
+          "worked_example": "import math\narea = math.pi * 3 ** 2\nprint(round(area, 1))  # 28.3\nprint(math.sqrt(16))  # 4.0 (always a float)",
+          "practice": "Translate geometry formulas (circle area, hypotenuse) into Python with math; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "floor and ceil vs int() and round()",
+          "worked_example": "print(math.floor(3.7), math.ceil(3.2))   # 3 4\nprint(math.floor(-3.7), int(-3.7))     # -4 -3\nfloor always goes down, ceil always up; int() just drops the decimals.",
+          "practice": "Predict floor/ceil/int/round for positive and negative numbers; choose ceil for 'how many boxes are needed'.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Impossible inputs raise ValueError",
+          "worked_example": "print(math.sqrt(-1))\n# ValueError: math domain error\nCheck the value first (if d >= 0) when it might be negative.",
+          "practice": "Predict which calls fail; add a guard before a square root.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "More tools: factorial, gcd, log10",
+          "worked_example": "print(math.factorial(5), math.gcd(12, 18), math.log10(1000))  # 120 6 3.0\nhelp(math) lists the rest.",
+          "practice": "Pick the math function for a described task; predict results.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "expressions.translate_formulas",
+          "weight": 0.4
+        },
+        {
+          "topic": "modules_imports.import_module",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "math_module.isclose_and_inf",
+      "title": "Comparing floats with isclose, infinity, and the quadratic formula",
+      "concept": "math_module",
+      "summary": "Compare floats with math.isclose (with abs_tol near zero), start min searches at math.inf, and solve a quadratic safely.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "math_module.functions_and_constants",
+        "comparison_operators.ranges_and_float_equality",
+        "loop_patterns.max_min_tracking"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "isclose instead of ==",
+          "worked_example": "print(0.1 + 0.2 == 0.3)               # False\nprint(math.isclose(0.1 + 0.2, 0.3))   # True",
+          "practice": "Rewrite float equality checks with isclose; predict results.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.ranges_and_float_equality"
+          ]
+        },
+        {
+          "title": "Near zero, isclose needs abs_tol",
+          "worked_example": "print(math.isclose(1e-10, 0))               # False\nprint(math.isclose(1e-10, 0, abs_tol=1e-9))  # True\nThe default tolerance is relative, so nothing is 'close' to exactly 0.",
+          "practice": "Predict isclose results against 0; add abs_tol to a failing check.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "math_module.functions_and_constants"
+          ]
+        },
+        {
+          "title": "math.inf as a starting value",
+          "worked_example": "lowest = math.inf\nfor t in [12, 7, 9]:\n    if t < lowest:\n        lowest = t\nprint(lowest)  # 7\nEvery number is smaller than inf, so the first comparison always replaces it.",
+          "practice": "Fill in the start value for min/max searches (inf or -inf); predict results.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        },
+        {
+          "title": "Solving a quadratic equation",
+          "worked_example": "a, b, c = 1, -3, 2\nd = b ** 2 - 4 * a * c\nif d < 0:\n    print(\"no real roots\")\nelse:\n    print((-b + math.sqrt(d)) / (2 * a), (-b - math.sqrt(d)) / (2 * a))  # 2.0 1.0",
+          "practice": "Write the solver; predict output for equations with two, one and no real roots.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "math_module.functions_and_constants"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "math_module.functions_and_constants",
+          "weight": 0.5
+        },
+        {
+          "topic": "comparison_operators.ranges_and_float_equality",
+          "weight": 0.3
+        },
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "datetime_module.dates_and_datetimes",
+      "title": "Dates and times with datetime",
+      "concept": "datetime_module",
+      "summary": "Create dates, get today's date and the current time, read their parts, compare them, and avoid the datetime-module-vs-class mix-up.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "modules_imports.from_import_and_alias",
+        "comparison_operators.compare_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Make a date and read its parts",
+          "worked_example": "from datetime import date\nd = date(2024, 3, 15)\nprint(d)  # 2024-03-15\nprint(d.year, d.month, d.day)  # 2024 3 15\nprint(d.weekday())  # 4 (Monday is 0, so Friday)",
+          "practice": "Predict printed dates and parts; write the date for a described day.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "Today and now",
+          "worked_example": "from datetime import date, datetime\ntoday = date.today()\nnow = datetime.now()\nprint(now.hour, now.minute)  # e.g. 14 5\nThe values depend on when the program runs.",
+          "practice": "Write code that prints today's year or greets by time of day; choose date or datetime for a task.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "The module and the class share a name",
+          "worked_example": "import datetime\nprint(datetime.now())\n# AttributeError: module 'datetime' has no attribute 'now'\nFix: from datetime import datetime, or datetime.datetime.now().",
+          "practice": "Fix programs that mix up the datetime module and the datetime class; predict which lines fail.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "Compare dates; impossible dates fail",
+          "worked_example": "print(date(2024, 12, 25) > date(2024, 3, 15))  # True\ndate(2024, 2, 30)\n# ValueError: day is out of range for month",
+          "practice": "Predict comparisons between dates; predict which dates can be created.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "modules_imports.from_import_and_alias",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "datetime_module.timedelta_arithmetic",
+      "title": "Date arithmetic with timedelta",
+      "concept": "datetime_module",
+      "summary": "Subtract dates to get a timedelta, add days or hours to a date or datetime, and convert durations to days or minutes.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "datetime_module.dates_and_datetimes",
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "date - date gives a timedelta",
+          "worked_example": "gap = date(2024, 12, 25) - date(2024, 3, 15)\nprint(gap.days)  # 285\nprint((date(2024, 3, 15) - date(2024, 12, 25)).days)  # -285",
+          "practice": "Predict days between dates (including negative results); write a days-until-birthday calculation.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "date + timedelta crosses months and leap years",
+          "worked_example": "from datetime import date, timedelta\nprint(date(2024, 1, 31) + timedelta(days=30))  # 2024-03-01\nprint(date(2024, 3, 1) - timedelta(days=1))   # 2024-02-29",
+          "practice": "Predict due dates after adding days; write a 'one week from today' expression.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "Hours and minutes with datetime",
+          "worked_example": "start = datetime(2024, 3, 15, 9, 30)\nend = start + timedelta(hours=2, minutes=45)\nprint(end)  # 2024-03-15 12:15:00\nprint((end - start).total_seconds() / 60)  # 165.0",
+          "practice": "Predict end times; convert durations to minutes or hours.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "You cannot add a plain number to a date",
+          "worked_example": "date(2024, 3, 15) + 30\n# TypeError: unsupported operand type(s) for +: 'datetime.date' and 'int'\nWrap the number: timedelta(days=30).",
+          "practice": "Fix date arithmetic that uses plain numbers.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "datetime_module.dates_and_datetimes",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "datetime_module.format_and_parse",
+      "title": "Formatting and parsing dates",
+      "concept": "datetime_module",
+      "summary": "Turn dates into text with strftime and f-string format codes, and turn text into dates with strptime and fromisoformat, handling bad input.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "datetime_module.dates_and_datetimes",
+        "string_formatting.fstring_basics",
+        "exceptions.try_except_basics"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "strftime: date to text with % codes",
+          "worked_example": "d = date(2024, 3, 5)\nprint(d.strftime(\"%d.%m.%Y\"))     # 05.03.2024\nprint(d.strftime(\"%A %d %B %Y\"))  # Tuesday 05 March 2024",
+          "practice": "Predict strftime output; write the format string for a described layout.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "The same codes inside an f-string",
+          "worked_example": "print(f\"{d:%Y-%m-%d}\")  # 2024-03-05\nprint(f\"Due: {d:%b %d}\")  # Due: Mar 05",
+          "practice": "Rewrite strftime calls as f-strings; predict output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "strptime and fromisoformat: text to date",
+          "worked_example": "from datetime import datetime, date\nd = datetime.strptime(\"15.03.2024\", \"%d.%m.%Y\")\nprint(d.date())  # 2024-03-15\nprint(date.fromisoformat(\"2024-03-15\").year)  # 2024",
+          "practice": "Write the format string that parses a given text; predict the parsed date.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "datetime_module.dates_and_datetimes"
+          ]
+        },
+        {
+          "title": "Text that does not match raises ValueError",
+          "worked_example": "try:\n    d = datetime.strptime(\"2024-03-15\", \"%d.%m.%Y\")\nexcept ValueError:\n    print(\"Use DD.MM.YYYY\")\n# Use DD.MM.YYYY",
+          "practice": "Predict which inputs parse; write the try/except that prints a format hint for bad input.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.2
+        },
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.2
+        },
+        {
+          "topic": "datetime_module.dates_and_datetimes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "statistics_module.mean_median_mode",
+      "title": "Summary statistics with the statistics module",
+      "concept": "statistics_module",
+      "summary": "Compute mean, median, mode and standard deviation of a list, choose median when outliers distort the mean, and handle empty data.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "mean, median and mode",
+          "worked_example": "import statistics\nscores = [70, 85, 85, 90, 100]\nprint(statistics.mean(scores), statistics.median(scores), statistics.mode(scores))\n# 86 85 85\nmean replaces sum(scores) / len(scores).",
+          "practice": "Predict the three statistics for short lists; rewrite a sum/len average with mean.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "Median of an even-length list",
+          "worked_example": "print(statistics.median([3, 1, 4, 2]))  # 2.5\nprint(statistics.median([3, 1, 4]))     # 3\nmedian sorts first; with an even count it averages the middle two.",
+          "practice": "Predict medians of odd and even lists, unsorted input included.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "An outlier pulls the mean, not the median",
+          "worked_example": "pay = [30, 32, 35, 31, 400]\nprint(statistics.mean(pay), statistics.median(pay))  # 105.6 32",
+          "practice": "Choose mean or median to describe given data; predict the effect of adding an outlier.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "Spread with stdev; empty data raises an error",
+          "worked_example": "print(round(statistics.stdev([2, 4, 4, 4, 5, 5, 7, 9]), 2))  # 2.14\nstatistics.mean([])\n# statistics.StatisticsError: mean requires at least one data point",
+          "practice": "Compare spreads of two lists; add an empty-list guard before computing statistics.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.aggregate_builtins",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "tool_pip.pip_install",
+      "title": "Installing packages with pip",
+      "concept": "tool_pip",
+      "summary": "Install, list, upgrade and uninstall packages from PyPI with python -m pip, and tell which modules need installing.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "python_setup.which_python_runs",
+        "command_line.prompt_and_navigation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Install a package, then import it",
+          "worked_example": "$ python3 -c \"import prettytable\"\nModuleNotFoundError: No module named 'prettytable'\n$ python3 -m pip install prettytable\nSuccessfully installed prettytable-3.x wcwidth-0.x\nNow import prettytable works. pip downloads from PyPI, the Python Package Index.",
+          "practice": "Order the steps to install and use a package; choose the command that fixes a ModuleNotFoundError.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "python -m pip installs into the Python you run",
+          "worked_example": "$ pip install requests       # may go to a different Python\n$ python3 -m pip install requests   # goes to the python3 you run\n'Installed but still ModuleNotFoundError' usually means two Pythons.",
+          "practice": "Diagnose transcripts where a package was installed for a different interpreter; pick the corrected command.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "python_setup.which_python_runs"
+          ]
+        },
+        {
+          "title": "list, show, upgrade, uninstall",
+          "worked_example": "$ python3 -m pip list\n$ python3 -m pip show prettytable   # version, location, requires\n$ python3 -m pip install --upgrade prettytable\n$ python3 -m pip uninstall prettytable",
+          "practice": "Match commands to tasks; read pip show output to answer which version is installed.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "command_line.prompt_and_navigation"
+          ]
+        },
+        {
+          "title": "The standard library needs no install",
+          "worked_example": "import math, random, json, csv   # come with Python\nimport requests, pytest           # must be installed first\n'pip install random' is never needed.",
+          "practice": "Sort module names into standard library vs needs pip install.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "python_setup.which_python_runs",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "tool_pip.virtual_environments",
+      "title": "Virtual environments with venv",
+      "concept": "tool_pip",
+      "summary": "Create, activate, use and deactivate a per-project virtual environment so each project gets its own packages.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "tool_pip.pip_install"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Why one environment per project",
+          "worked_example": "Project A needs library v1, project B needs v2; one shared Python can hold only one.\nA virtual environment is a folder with its own Python and its own installed packages.",
+          "practice": "Choose which problems a virtual environment solves (version clashes, clean installs) and which it does not.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tool_pip.pip_install"
+          ]
+        },
+        {
+          "title": "Create and activate",
+          "worked_example": "$ python3 -m venv .venv\n$ source .venv/bin/activate        # Windows: .venv\\Scripts\\activate\n(.venv) $ python -m pip install prettytable\nThe (.venv) prefix shows it is active; installs now go into .venv.",
+          "practice": "Order the commands to start a new project with a venv; read a prompt to tell whether a venv is active.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tool_pip.pip_install"
+          ]
+        },
+        {
+          "title": "Check which Python is active",
+          "worked_example": "(.venv) $ which python\n/home/ada/project/.venv/bin/python\n(.venv) $ deactivate\n$ which python3\n/usr/bin/python3",
+          "practice": "Predict which interpreter runs, and where a package installs, before and after activate/deactivate.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "python_setup.which_python_runs"
+          ]
+        },
+        {
+          "title": "Do not commit or edit .venv",
+          "worked_example": "Add .venv/ to .gitignore; delete and recreate it rather than editing it.\nThe environment can be rebuilt from a requirements file.",
+          "practice": "Choose which project files to share and which to recreate.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tool_pip.pip_install"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tool_pip.pip_install",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "tool_pip.requirements_files",
+      "title": "Recording dependencies in requirements.txt",
+      "concept": "tool_pip",
+      "summary": "Write a requirements.txt with pip freeze or by hand, pin versions, and recreate an environment with pip install -r.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "tool_pip.virtual_environments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "pip freeze lists exact versions",
+          "worked_example": "(.venv) $ python -m pip freeze > requirements.txt\n$ cat requirements.txt\nprettytable==3.10.0\nwcwidth==0.2.13",
+          "practice": "Read a requirements file: which packages and versions; predict what freeze prints after installs.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tool_pip.virtual_environments"
+          ]
+        },
+        {
+          "title": "Recreate the environment with -r",
+          "worked_example": "$ python3 -m venv .venv\n$ source .venv/bin/activate\n(.venv) $ python -m pip install -r requirements.txt",
+          "practice": "Order the steps for running someone else's project.",
+          "formats": [
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "tool_pip.virtual_environments"
+          ]
+        },
+        {
+          "title": "Version specifiers: ==, >=, ~=",
+          "worked_example": "requests==2.32.3   # exactly this version\nrequests>=2.30     # this or newer\nrequests~=2.32     # 2.32 or a later 2.x\nOnly third-party packages go in the file, never math or random.",
+          "practice": "Choose which versions satisfy a specifier; fix a requirements file that lists standard-library modules.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "tool_pip.pip_install"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tool_pip.virtual_environments",
+          "weight": 0.4
+        },
+        {
+          "topic": "tool_pip.pip_install",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "third_party_packages.find_and_install",
+      "title": "Finding, installing and importing third-party packages",
+      "concept": "third_party_packages",
+      "summary": "Find a package on PyPI, know that its install name can differ from its import name, diagnose why it will not import, and prefer the standard library when it suffices.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "tool_pip.pip_install",
+        "modules_imports.packages_and_import_errors"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Install name vs import name",
+          "worked_example": "$ python3 -m pip install beautifulsoup4   ->  import bs4\n$ python3 -m pip install pillow           ->  import PIL\n$ python3 -m pip install python-dotenv    ->  import dotenv\nThe package page on PyPI shows both names.",
+          "practice": "Match install commands to import lines; fix an import that uses the install name.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "tool_pip.pip_install"
+          ]
+        },
+        {
+          "title": "Why a package will not import",
+          "worked_example": "ModuleNotFoundError after installing usually means one of: not installed in this Python or venv, wrong import name, or your own file has the same name.\nCheck with python -m pip show <name>.",
+          "practice": "Diagnose short transcripts and pick the fix.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "modules_imports.packages_and_import_errors"
+          ]
+        },
+        {
+          "title": "Standard library first",
+          "worked_example": "Reading JSON: json (built in). Averages: statistics (built in). Web pages over HTTP: requests (third-party) is much simpler than urllib.\nEach install is a dependency to keep updated.",
+          "practice": "For described tasks, choose a standard-library module or a third-party package.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tool_pip.pip_install",
+          "weight": 0.3
+        },
+        {
+          "topic": "modules_imports.packages_and_import_errors",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "third_party_packages.learn_from_docs",
+      "title": "Using a new package from its documentation",
+      "concept": "third_party_packages",
+      "summary": "Read a package's quickstart, adapt its example code to your own data, and look up options in its reference docs.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.find_and_install",
+        "lists.loop_over_items",
+        "string_methods.calling_methods_case"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Start from the quickstart example",
+          "worked_example": "from prettytable import PrettyTable\ntable = PrettyTable()\ntable.field_names = [\"Pokemon\", \"Type\"]\ntable.add_row([\"Pikachu\", \"Electric\"])\nprint(table)   # a boxed text table with a header row\nCopy the import line exactly; the object's methods are called with a dot, like string methods.",
+          "practice": "Identify the import line, the object creation and the method calls in a docs example; predict how many rows the table has.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "Adapt the example to your data",
+          "worked_example": "rows = [[\"Pikachu\", \"Electric\"], [\"Squirtle\", \"Water\"]]\nfor row in rows:\n    table.add_row(row)\nKeep the docs' structure; swap in your own values and loops.",
+          "practice": "Fill in the loop that feeds a list of records to a library call; fix a call with arguments in the wrong shape.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Look up an option in the reference",
+          "worked_example": "Docs: table.align = 'l' left-aligns every column.\ntable.align = \"l\"\nhelp(PrettyTable.add_row) also shows a method's parameters.",
+          "practice": "Use a supplied docs excerpt to choose the line that achieves a described change.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.help_and_dir"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "third_party_packages.find_and_install",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "cs50p",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "regular_expressions.search_and_match_objects",
+      "title": "Searching text with re.search",
+      "concept": "regular_expressions",
+      "summary": "Search for a pattern with re.search, test the result for None, read the matched text with group(), and write patterns as raw strings.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "strings.multiline_and_raw",
+        "none_type.check_for_none",
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "re.search returns a match or None",
+          "worked_example": "import re\nprint(re.search(\"cat\", \"concatenate\"))  # <re.Match object; span=(3, 6), match='cat'>\nprint(re.search(\"dog\", \"concatenate\"))  # None\nif re.search(\"cat\", \"my cat\"):\n    print(\"found\")",
+          "practice": "Predict whether each search finds a match; use search in an if.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "group() gives the matched text; check for None first",
+          "worked_example": "m = re.search(\"dog\", \"a cat\")\nprint(m.group())\n# AttributeError: 'NoneType' object has no attribute 'group'\nWrite if m: before m.group().",
+          "practice": "Fix programs that call group() on a failed search; predict the text returned by group().",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": ". matches any character; \\. matches a dot",
+          "worked_example": "print(re.search(\"c.t\", \"the cut rope\").group())  # cut\nprint(re.search(\"3.14\", \"pi is 3x14\") is None)    # False\nprint(re.search(r\"3\\.14\", \"pi is 3x14\") is None)  # True",
+          "practice": "Predict matches for patterns containing . and \\.; fix a pattern that matches too much.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Write patterns as raw strings",
+          "worked_example": "print(re.search(\"\\bcat\\b\", \"a cat sat\"))          # None\nprint(re.search(r\"\\bcat\\b\", \"a cat sat\").group())  # cat\nWithout r, Python turns \\b into a backspace before re sees it (\\b means word edge).",
+          "practice": "Choose which patterns need the r prefix; fix patterns broken by escape sequences.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.multiline_and_raw"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "none_type.check_for_none",
+          "weight": 0.3
+        },
+        {
+          "topic": "strings.multiline_and_raw",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "regular_expressions.classes_and_quantifiers",
+      "title": "Character classes and repetition in patterns",
+      "concept": "regular_expressions",
+      "summary": "Match sets of characters with [...] and \\d \\w \\s, and control repetition with + * ? and {n,m}.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "regular_expressions.search_and_match_objects"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "[...] matches one character from a set",
+          "worked_example": "print(re.search(\"gr[ae]y\", \"a grey cat\").group())  # grey\nprint(re.search(\"[0-9]\", \"room B12\").group())      # 1\nprint(re.search(\"[^0-9 ]\", \"42 x\").group())        # x\n[a-z] is a range; [^...] means any character not listed.",
+          "practice": "Predict the first match for set and range patterns; write a set for vowels or hex digits.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.search_and_match_objects"
+          ]
+        },
+        {
+          "title": "Shorthands \\d, \\w, \\s",
+          "worked_example": "print(re.search(r\"\\d\\d\", \"Room 7, floor 12\").group())  # 12\nprint(re.search(r\"\\w+\", \"  hello world\").group())    # hello\n\\d digit, \\w letter/digit/underscore, \\s whitespace.",
+          "practice": "Translate between shorthands and [...] sets; predict matches.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.search_and_match_objects"
+          ]
+        },
+        {
+          "title": "+ one or more, * zero or more, ? optional",
+          "worked_example": "print(re.search(r\"\\d+\", \"order 4521 shipped\").group())  # 4521\nprint(re.search(r\"colou?r\", \"nice color\").group())   # color\nprint(re.search(r\"ab*c\", \"ac\").group(), re.search(r\"ab+c\", \"ac\"))  # ac None",
+          "practice": "Predict matches for patterns with + * ?; choose the quantifier for a description.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.search_and_match_objects"
+          ]
+        },
+        {
+          "title": "{n} and {n,m} for exact counts",
+          "worked_example": "print(re.search(r\"\\d{3}\", \"12 345 6789\").group())  # 345\nprint(re.search(r\"\\d{2,4}\", \"1 23456\").group())    # 2345\nRepetition takes as many as allowed (greedy).",
+          "practice": "Write patterns for a 5-digit ZIP or a 2-4 letter code; predict matches.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.search_and_match_objects"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "regular_expressions.search_and_match_objects",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "regular_expressions.anchors_and_validation",
+      "title": "Validating input with anchors and fullmatch",
+      "concept": "regular_expressions",
+      "summary": "Anchor patterns with ^ and $, check whole strings with re.fullmatch, write is_valid_...() functions with regex, and ignore case with a flag.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "regular_expressions.classes_and_quantifiers",
+        "defensive_programming.clean_and_validate_text"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "search finds a part; ^ and $ pin the ends",
+          "worked_example": "print(bool(re.search(r\"\\d{5}\", \"zip 920371\")))   # True\nprint(bool(re.search(r\"^\\d{5}$\", \"920371\")))      # False\nprint(bool(re.search(r\"^\\d{5}$\", \"92037\")))       # True",
+          "practice": "Predict which strings pass anchored and unanchored patterns; fix a validator that accepts extra characters.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.classes_and_quantifiers"
+          ]
+        },
+        {
+          "title": "re.fullmatch checks the whole string",
+          "worked_example": "print(bool(re.fullmatch(r\"\\d{5}\", \"92037\")), bool(re.fullmatch(r\"\\d{5}\", \"920371\")))  # True False\nfullmatch is the same as anchoring both ends.",
+          "practice": "Rewrite anchored searches as fullmatch; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.classes_and_quantifiers"
+          ]
+        },
+        {
+          "title": "A validator function with fullmatch",
+          "worked_example": "def is_valid_plate(text):\n    return re.fullmatch(r\"[A-Z]{2,3}\\d{1,4}\", text.strip()) is not None\n\nprint(is_valid_plate(\" CS50 \"), is_valid_plate(\"CS05X\"), is_valid_plate(\"C1\"))  # True False False",
+          "practice": "Write is_valid_...() for PINs, times (9:00) and codes; replace a hand-written isdigit/len check with a pattern.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "defensive_programming.clean_and_validate_text"
+          ]
+        },
+        {
+          "title": "re.IGNORECASE",
+          "worked_example": "print(bool(re.fullmatch(r\"yes|y\", \"YES\")))                  # False\nprint(bool(re.fullmatch(r\"yes|y\", \"YES\", re.IGNORECASE)))   # True",
+          "practice": "Add the flag to make a check case-insensitive; predict results with and without it.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.search_and_match_objects"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "defensive_programming.clean_and_validate_text",
+          "weight": 0.5
+        },
+        {
+          "topic": "regular_expressions.classes_and_quantifiers",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "regular_expressions.groups_and_alternation",
+      "title": "Capturing parts with groups and choosing with |",
+      "concept": "regular_expressions",
+      "summary": "Capture parts of a match with (...) and group(n), choose between alternatives with |, and make parts optional with (...)?.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "regular_expressions.anchors_and_validation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Parentheses capture parts",
+          "worked_example": "m = re.search(r\"(\\w+)@(\\w+)\\.edu\", \"mail ada@salk.edu now\")\nprint(m.group(), m.group(1), m.group(2))  # ada@salk.edu ada salk\nprint(m.groups())  # ('ada', 'salk')",
+          "practice": "Predict group(n) values; add parentheses to capture a requested part.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.classes_and_quantifiers"
+          ]
+        },
+        {
+          "title": "Use groups to reorganise text",
+          "worked_example": "m = re.search(r\"^(\\w+), (\\w+)$\", \"Malan, David\")\nif m:\n    print(m.group(2), m.group(1))  # David Malan",
+          "practice": "Write code that reformats names, dates or times using captured groups.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.anchors_and_validation"
+          ]
+        },
+        {
+          "title": "| means 'or', and needs a group",
+          "worked_example": "print(bool(re.search(r\"^cat|dog$\", \"catfish\")))    # True: ^cat OR dog$\nprint(bool(re.search(r\"^(cat|dog)$\", \"catfish\")))  # False\n| splits the whole pattern unless it is inside parentheses.",
+          "practice": "Predict results of alternations with and without grouping; fix an alternation that accepts too much.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.anchors_and_validation"
+          ]
+        },
+        {
+          "title": "Optional parts with (...)?",
+          "worked_example": "pattern = r\"(https?://)?(www\\.)?twitter\\.com/(\\w+)\"\nprint(re.search(pattern, \"https://twitter.com/davidjmalan\").group(3))  # davidjmalan\nprint(re.search(pattern, \"twitter.com/ada\").group(1))  # None",
+          "practice": "Predict group values when optional parts are missing; write a pattern that accepts several URL forms.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.classes_and_quantifiers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "regular_expressions.anchors_and_validation",
+          "weight": 0.5
+        },
+        {
+          "topic": "regular_expressions.classes_and_quantifiers",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "py4e",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "regular_expressions.findall_sub_split",
+      "title": "Extracting and replacing: findall, sub and split",
+      "concept": "regular_expressions",
+      "summary": "Pull every match out of text with findall, search each line of a file, and clean or split text with re.sub and re.split.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "regular_expressions.groups_and_alternation",
+        "file_io.loop_over_lines"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "findall returns every match as a list",
+          "worked_example": "print(re.findall(r\"\\d+\", \"3 apples, 12 pears, 7 figs\"))  # ['3', '12', '7']\nprint(re.findall(r\"x\", \"abc\"))  # []\ntotal = 0\nfor n in re.findall(r\"\\d+\", \"3 apples, 12 pears\"):\n    total += int(n)\nprint(total)  # 15",
+          "practice": "Predict findall lists; total or count extracted numbers.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "With groups, findall returns the groups",
+          "worked_example": "print(re.findall(r\"(\\w+)=(\\d+)\", \"a=1, b=22\"))  # [('a', '1'), ('b', '22')]\nOne group gives a list of strings; several give a list of tuples.",
+          "practice": "Predict findall output with zero, one and two groups; index into the returned tuples.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.groups_and_alternation"
+          ]
+        },
+        {
+          "title": "Search each line of a file",
+          "worked_example": "with open(\"mbox.txt\") as f:\n    for line in f:\n        m = re.search(r\"^From: (\\S+@\\S+)\", line)\n        if m:\n            print(m.group(1))\n# ada@salk.edu\n# bo@mit.edu",
+          "practice": "Write a loop that extracts a field from matching lines; predict output for a short file.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.loop_over_lines"
+          ]
+        },
+        {
+          "title": "re.sub replaces, re.split splits on a pattern",
+          "worked_example": "print(re.sub(r\"\\s+\", \" \", \"too    many   spaces\"))  # too many spaces\nprint(re.split(r\"\\s*[,;]\\s*\", \"a, b;c ;d\"))  # ['a', 'b', 'c', 'd']\nUnlike str.replace and str.split, these take patterns.",
+          "practice": "Predict sub/split results; clean messy input (repeated spaces, mixed separators).",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "regular_expressions.groups_and_alternation",
+          "weight": 0.5
+        },
+        {
+          "topic": "file_io.loop_over_lines",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.1
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "regular_expressions.greedy_and_pitfalls",
+      "title": "Regex pitfalls: greedy matching, escaping and match vs search",
+      "concept": "regular_expressions",
+      "summary": "Use non-greedy quantifiers, escape special characters with re.escape, know that re.match only looks at the start, and test patterns on edge cases.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "regular_expressions.findall_sub_split"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Greedy .+ vs non-greedy .+?",
+          "worked_example": "print(re.search(r\"<.+>\", \"<b>bold</b>\").group())   # <b>bold</b>\nprint(re.search(r\"<.+?>\", \"<b>bold</b>\").group())  # <b>\nAdding ? makes the repetition stop as early as possible.",
+          "practice": "Predict greedy and non-greedy matches; fix an extraction that grabs too much.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.classes_and_quantifiers"
+          ]
+        },
+        {
+          "title": "Escape special characters",
+          "worked_example": "print(re.search(\"a.c\", \"a+c a.c\").group())  # a+c\nprint(re.escape(\"1+1=2\"))  # 1\\+1=2\n. + * ? ( ) [ ] { } ^ $ | \\ are special; escape them with \\ or re.escape for user text.",
+          "practice": "Spot unescaped special characters; fix patterns that search for literal prices or file names.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.search_and_match_objects"
+          ]
+        },
+        {
+          "title": "re.match only checks the start",
+          "worked_example": "print(re.match(r\"\\d+\", \"abc 123\"))           # None\nprint(re.match(r\"\\d+\", \"123 abc\").group())   # 123\nmatch anchors at the start only; fullmatch anchors both ends; search looks anywhere.",
+          "practice": "Predict results of match, search and fullmatch on the same inputs.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.anchors_and_validation"
+          ]
+        },
+        {
+          "title": "Test a pattern on inputs it should reject",
+          "worked_example": "print(bool(re.fullmatch(r\".+@.+\", \"a@b@c\")))         # True: too loose\nprint(bool(re.fullmatch(r\"\\w+@\\w+\\.edu\", \"a@b@c\")))  # False\nList good and bad inputs and check both.",
+          "practice": "For a given validator, pick inputs it wrongly accepts or rejects and tighten the pattern.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.anchors_and_validation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "regular_expressions.anchors_and_validation",
+          "weight": 0.3
+        },
+        {
+          "topic": "regular_expressions.classes_and_quantifiers",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "environment_variables.read_environment",
+      "title": "Reading environment variables with os.environ",
+      "concept": "environment_variables",
+      "summary": "Read settings from the environment with os.environ and get() defaults, convert their string values, set them in the terminal, and understand PATH.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "dictionaries.membership_and_get",
+        "running_scripts.run_from_terminal"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "os.environ works like a dict",
+          "worked_example": "import os\nprint(os.environ[\"HOME\"])  # /home/ada\nprint(os.environ[\"NO_SUCH_VAR\"])\n# KeyError: 'NO_SUCH_VAR'",
+          "practice": "Predict lookups for present and missing variables.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "get() with a default; values are strings",
+          "worked_example": "port = os.environ.get(\"PORT\", \"5000\")\nprint(port + 1)\n# TypeError: can only concatenate str (not \"int\") to str\nport = int(os.environ.get(\"PORT\", \"5000\"))\nos.getenv(\"NAME\") is the same as os.environ.get(\"NAME\").",
+          "practice": "Write lookups with defaults; fix code that uses a numeric setting without int().",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Set a variable in the terminal",
+          "worked_example": "$ export GREETING=hello        # Windows PowerShell: $env:GREETING=\"hello\"\n$ python3 app.py               # os.environ[\"GREETING\"] is 'hello'\n$ GREETING=hi python3 app.py   # only for this one run",
+          "practice": "Predict what a program prints after a sequence of export and run commands.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "PATH tells the shell where programs live",
+          "worked_example": "$ echo $PATH\n/usr/local/bin:/usr/bin:/bin\n'command not found' means no folder on PATH holds that program.",
+          "practice": "Decide which commands will be found for a given PATH; explain a 'command not found' error.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "environment_variables.secrets_out_of_code",
+      "title": "Keeping API keys and secrets out of code",
+      "concept": "environment_variables",
+      "summary": "Move secrets from source code into environment variables or a .env file, stop with a clear message when one is missing, and keep .env out of version control.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "environment_variables.read_environment",
+        "tool_pip.pip_install",
+        "os_sys_module.sys_exit_and_stderr"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A key in the code is a leaked key",
+          "worked_example": "API_KEY = \"sk-12345\"            # bad: anyone who sees the code has it\nAPI_KEY = os.environ.get(\"WEATHER_API_KEY\")   # good: the key lives outside the code",
+          "practice": "Fix programs that hard-code keys or passwords; choose which values belong in the environment.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "environment_variables.read_environment"
+          ]
+        },
+        {
+          "title": "Stop early when a secret is missing",
+          "worked_example": "key = os.environ.get(\"WEATHER_API_KEY\")\nif key is None:\n    sys.exit(\"Set WEATHER_API_KEY first\")\nA clear message now beats a confusing error later.",
+          "practice": "Add a missing-variable check to a program; predict what happens with and without the variable.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "os_sys_module.sys_exit_and_stderr"
+          ]
+        },
+        {
+          "title": "A .env file with python-dotenv",
+          "worked_example": "# .env\nWEATHER_API_KEY=sk-12345\n# app.py  (python3 -m pip install python-dotenv)\nfrom dotenv import load_dotenv\nload_dotenv()\nkey = os.getenv(\"WEATHER_API_KEY\")",
+          "practice": "Order the steps to use a .env file; predict the value read for a given .env.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tool_pip.pip_install"
+          ]
+        },
+        {
+          "title": "Keep .env out of git; share .env.example",
+          "worked_example": "# .gitignore\n.env\n# .env.example (committed)\nWEATHER_API_KEY=your-key-here",
+          "practice": "Choose which files to commit; spot a repository that leaks a secret.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "environment_variables.read_environment"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "environment_variables.read_environment",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "subprocess_module.run_external_programs",
+      "title": "Running other programs with subprocess.run",
+      "concept": "subprocess_module",
+      "summary": "Run a command from Python with subprocess.run, capture its output as text, check its exit code, and stop it with a timeout.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "lists.create_and_index",
+        "exceptions.try_except_basics",
+        "os_sys_module.sys_exit_and_stderr"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Run a command given as a list",
+          "worked_example": "import subprocess\nresult = subprocess.run([\"python3\", \"child.py\"])\n# hi from child\nprint(result.returncode)  # 0\nsubprocess.run(\"python3 child.py\")\n# FileNotFoundError: [Errno 2] No such file or directory: 'python3 child.py'",
+          "practice": "Write the argument list for a command line; fix calls that pass one string.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "capture_output and text",
+          "worked_example": "r = subprocess.run([\"python3\", \"child.py\"], capture_output=True, text=True)\nprint(r.stdout == \"hi from child\\n\")  # True\nWithout text=True, r.stdout is bytes: b'hi from child\\n'.",
+          "practice": "Predict stdout values with and without text=True; compare captured output with an expected string.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Exit codes, stderr and check=True",
+          "worked_example": "r = subprocess.run([\"python3\", \"fail.py\"], capture_output=True, text=True)\nprint(r.returncode, r.stderr.strip())  # 3 oops\nsubprocess.run([\"python3\", \"fail.py\"], check=True)\n# subprocess.CalledProcessError: ... returned non-zero exit status 3.",
+          "practice": "Predict returncode and whether check=True raises; write code that reports a failed command.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "os_sys_module.sys_exit_and_stderr"
+          ]
+        },
+        {
+          "title": "timeout, and never shell=True with user input",
+          "worked_example": "try:\n    subprocess.run([\"python3\", \"loop.py\"], timeout=1)\nexcept subprocess.TimeoutExpired:\n    print(\"stopped after 1 second\")\nA list of arguments keeps user text from being run as extra commands.",
+          "practice": "Add a timeout and handler to a call; choose the safe way to pass a user-supplied file name.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.2
+        },
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.1
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "tool_jupyter.notebook_cells",
+      "title": "Working in Jupyter and Colab notebooks",
+      "concept": "tool_jupyter",
+      "summary": "Run code cells, read what a cell displays, predict state when cells run out of order, and restart-and-run-all to check a notebook.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "repl.echo_vs_print",
+        "variables.reassign_and_trace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Cells run one at a time and share variables",
+          "worked_example": "[1]: price = 10\n[2]: price * 2\n     20\nThe number in brackets is the run order; later cells see variables from earlier runs.",
+          "practice": "Predict what a cell shows given previously run cells.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Only the last expression is displayed",
+          "worked_example": "[3]: price + 1\n     price + 2\n     12\nLike the REPL, a cell echoes its last expression; use print() to show more.",
+          "practice": "Predict the displayed output of multi-line cells; add print where several values are needed.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "repl.echo_vs_print"
+          ]
+        },
+        {
+          "title": "Run order, not page order, decides the state",
+          "worked_example": "Cell A: x = 1   Cell B: x = x + 1   Cell C: print(x)\nRun A, B, B, C -> 3. Reading top to bottom suggests 2.\nHidden state from out-of-order runs is the classic notebook bug.",
+          "practice": "Trace variable values for a given run order of cells.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Restart and run all; installing in a notebook",
+          "worked_example": "Kernel > Restart & Run All runs every cell top to bottom from a clean state.\n%pip install prettytable   (Colab also accepts !pip install)",
+          "practice": "Choose when to restart; predict which cells fail after restart-and-run-all in a notebook that relied on deleted cells.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "repl.echo_vs_print",
+          "weight": 0.3
+        },
+        {
+          "topic": "variables.reassign_and_trace",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    }
+  ]
+}

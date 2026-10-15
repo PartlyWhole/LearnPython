@@ -1,0 +1,1751 @@
+{
+  "course": {
+    "id": "mit_6100l",
+    "title": "6.100L Introduction to CS and Programming using Python",
+    "provider": "MIT OpenCourseWare (Ana Bell)",
+    "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/",
+    "format": "full-semester lecture course, 26 lectures (2x/week), 6 problem sets (PS0 ungraded + PS1\u2013PS5), finger exercises, microquizzes",
+    "audience": "students with little or no programming experience; no prerequisites; Python 3",
+    "sources": [
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/syllabus/",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/calendar/",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/problem-sets/",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/mit6_100l_f22_ps0.pdf",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/mit6_100l_f22_ps1.pdf",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/mit6_100l_f22_ps2.pdf",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/mit6_100l_f22_ps3.pdf",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/mit6_100l_f22_ps4.pdf",
+      "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/mit6_100l_f22_ps5.pdf",
+      "https://introcomp.mit.edu/6.100A_fa25/queue",
+      "https://catalog.mit.edu/subjects/6/"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Edition: OCW Fall 2022 (the only OCW edition of 6.100L found). 6.100L is the slower full-semester version of 6.100A (formerly 6.0001); textbook Guttag, Introduction to Computation and Programming Using Python, 3rd ed. A Fall 2025 introcomp.mit.edu site exists (described as 'the old 6.100L') but is behind MIT login, so not used; the MIT catalog has since reorganized intro CS (6.100A/6.100B/6.1000). Lecture titles are verbatim from 'Materials by Lecture'; module topics are taken from the OCW Calendar topic column (lecture slides were not individually parsed), so per-lecture concept lists are inferred from those titles/topics and are approximate. Problem sets are attached to the lecture at which they were released per the calendar (PS0 L1, PS1 L2, PS2 L9, PS3 L12, PS4 L16, PS5 L20); PS concepts come from the PS PDFs (PS1 compound interest incl. bisection search; PS2 Hangman; PS3 Document Distance with dictionaries/TF-IDF; PS4 recursion on trees + Caesar/one-time-pad cipher with Message class hierarchy; PS5 Using Libraries: PIL colorblindness filters and image steganography). Lecture 25 'Plotting' assumed to use matplotlib (calendar says 'visualization library'). Concepts 'random_module' and 'simulation_monte_carlo' in L26 inferred from 'Simulations'. PS concepts taught in later lectures (e.g. bisection in PS1 Part C, classes/inheritance in PS4 Parts B\u2013C) are attached to the lecture that teaches them rather than the release lecture. Concept first_module reflects first appearance including problem-set concepts (e.g. file_io via Hangman word loading at L9)."
+  },
+  "modules": [
+    {
+      "id": "mit_6100l:lec01",
+      "title": "Lecture 1: Introduction",
+      "order": 1,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Intro to Python",
+        "Objects and types",
+        "Variables and bindings",
+        "IDEs (Spyder/Anaconda)",
+        "Computational thinking: declarative vs imperative knowledge"
+      ],
+      "projects": [
+        "Problem Set 0: Introduction & Installation (not graded)"
+      ],
+      "concepts": [
+        "computational_thinking",
+        "python_setup",
+        "ide_editor",
+        "repl",
+        "data_types",
+        "integers_floats",
+        "variables",
+        "expressions",
+        "arithmetic_operators",
+        "type_conversion",
+        "print_output"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec02",
+      "title": "Lecture 2: Strings, Input/Output, Branching",
+      "order": 2,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Strings",
+        "Input/Output",
+        "f-strings",
+        "Operators",
+        "Branching (if/elif/else)"
+      ],
+      "projects": [
+        "Problem Set 1: Compound Interest (Part A: Saving for a House; Part B: Saving with a raise; Part C: Choosing an Interest Rate) \u2014 out"
+      ],
+      "concepts": [
+        "strings",
+        "string_concatenation",
+        "string_indexing_slicing",
+        "user_input",
+        "print_output",
+        "string_formatting",
+        "comparison_operators",
+        "logical_operators",
+        "booleans",
+        "conditionals",
+        "nested_conditionals",
+        "algorithms"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec03",
+      "title": "Lecture 3: Iteration",
+      "order": 3,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Control flow",
+        "while loops",
+        "for loops",
+        "range"
+      ],
+      "projects": [],
+      "concepts": [
+        "while_loops",
+        "for_loops",
+        "range_function",
+        "break_continue",
+        "loop_patterns",
+        "iteration"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec04",
+      "title": "Lecture 4: Loops over Strings, Guess-and-Check, Binary",
+      "order": 4,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Loops over strings",
+        "Guess-and-check (exhaustive enumeration)",
+        "Binary numbers",
+        "Fractions"
+      ],
+      "projects": [],
+      "concepts": [
+        "for_loops",
+        "strings",
+        "guess_and_check",
+        "binary_numbers",
+        "algorithms",
+        "floating_point_precision"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec05",
+      "title": "Lecture 5: Floats and Approximation Methods",
+      "order": 5,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Floats and their representation",
+        "Approximation method (epsilon)"
+      ],
+      "projects": [],
+      "concepts": [
+        "integers_floats",
+        "floating_point_precision",
+        "guess_and_check",
+        "algorithms"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec06",
+      "title": "Lecture 6: Bisection Search",
+      "order": 6,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Bisection search",
+        "Newton-Raphson"
+      ],
+      "projects": [],
+      "concepts": [
+        "bisection_method",
+        "binary_search",
+        "newton_raphson",
+        "floating_point_precision"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec07",
+      "title": "Lecture 7: Decomposition, Abstraction, Functions",
+      "order": 7,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Decomposition",
+        "Abstraction",
+        "Functions",
+        "Specifications (docstrings)"
+      ],
+      "projects": [],
+      "concepts": [
+        "decomposition",
+        "abstraction",
+        "functions",
+        "parameters_arguments",
+        "return_values",
+        "docstrings",
+        "none_type"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec08",
+      "title": "Lecture 8: Functions as Objects",
+      "order": 8,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Function environments",
+        "Scope",
+        "Functions as objects"
+      ],
+      "projects": [],
+      "concepts": [
+        "scope",
+        "higher_order_functions",
+        "functions"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec09",
+      "title": "Lecture 9: Lambda Functions, Tuples, and Lists",
+      "order": 9,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Lambda functions",
+        "Tuples",
+        "Lists"
+      ],
+      "projects": [
+        "Problem Set 1 due; Problem Set 2: Hangman \u2014 out"
+      ],
+      "concepts": [
+        "lambda_functions",
+        "tuples",
+        "unpacking",
+        "lists",
+        "string_methods",
+        "functions",
+        "file_io",
+        "random_module"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec10",
+      "title": "Lecture 10: Lists, Mutability",
+      "order": 10,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "List operations",
+        "Mutability",
+        "Aliasing"
+      ],
+      "projects": [],
+      "concepts": [
+        "lists",
+        "list_methods",
+        "list_slicing",
+        "mutability_aliasing",
+        "string_methods",
+        "sorting"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec11",
+      "title": "Lecture 11: Aliasing, Cloning",
+      "order": 11,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Aliasing",
+        "Cloning",
+        "List comprehensions"
+      ],
+      "projects": [],
+      "concepts": [
+        "mutability_aliasing",
+        "copying",
+        "nested_data_structures",
+        "list_comprehensions"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec12",
+      "title": "Lecture 12: List Comprehension, Functions as Objects, Testing, Debugging",
+      "order": 12,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "List comprehension",
+        "Functions as objects",
+        "Keyword and default arguments",
+        "Testing",
+        "Debugging"
+      ],
+      "projects": [
+        "Problem Set 2 due; Problem Set 3: Document Distance \u2014 out"
+      ],
+      "concepts": [
+        "list_comprehensions",
+        "higher_order_functions",
+        "parameters_arguments",
+        "unit_testing",
+        "debugging",
+        "dictionaries",
+        "string_methods"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec13",
+      "title": "Lecture 13: Exceptions, Assertions",
+      "order": 13,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Exceptions",
+        "Assertions"
+      ],
+      "projects": [],
+      "concepts": [
+        "exceptions",
+        "raising_exceptions",
+        "assertions",
+        "defensive_programming"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec14",
+      "title": "Lecture 14: Dictionaries",
+      "order": 14,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Dictionaries"
+      ],
+      "projects": [],
+      "concepts": [
+        "dictionaries",
+        "collections",
+        "iteration"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec15",
+      "title": "Lecture 15: Recursion",
+      "order": 15,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Recursion",
+        "Iteration vs. recursion",
+        "Inductive reasoning"
+      ],
+      "projects": [],
+      "concepts": [
+        "recursion",
+        "mathematical_induction"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec16",
+      "title": "Lecture 16: Recursion on Non-Numerics",
+      "order": 16,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Fibonacci",
+        "Recursion on lists",
+        "Towers of Hanoi (extra)"
+      ],
+      "projects": [
+        "Problem Set 3 due; Problem Set 4: Recursion and Caesar Cipher (Part A: Recursive Operations on Trees; Part B: Encryption with One Time Pads; Part C: Using Your Classes) \u2014 out"
+      ],
+      "concepts": [
+        "recursion",
+        "nested_data_structures",
+        "dictionaries",
+        "trees"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec17",
+      "title": "Lecture 17: Python Classes",
+      "order": 17,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Data abstraction",
+        "Classes",
+        "Instances",
+        "Methods"
+      ],
+      "projects": [],
+      "concepts": [
+        "object_oriented_design",
+        "objects_methods",
+        "classes",
+        "constructors",
+        "instance_attributes",
+        "encapsulation",
+        "abstraction"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec18",
+      "title": "Lecture 18: More Python Class Methods",
+      "order": 18,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Dunder methods",
+        "Examples"
+      ],
+      "projects": [],
+      "concepts": [
+        "dunder_methods",
+        "classes"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec19",
+      "title": "Lecture 19: Inheritance",
+      "order": 19,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Hierarchies",
+        "Subclasses"
+      ],
+      "projects": [],
+      "concepts": [
+        "inheritance",
+        "polymorphism",
+        "class_attributes"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec20",
+      "title": "Lecture 20: Fitness Tracker Object-Oriented Programming Example",
+      "order": 20,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Inheritance: more examples",
+        "Fitness tracker OOP example"
+      ],
+      "projects": [
+        "Problem Set 4 due; Problem Set 5: Using Libraries (Colorblindness Filters; Hidden Messages in Images) \u2014 out"
+      ],
+      "concepts": [
+        "inheritance",
+        "object_oriented_design",
+        "classes",
+        "image_processing",
+        "lib_pillow",
+        "third_party_packages",
+        "modules_imports"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec21",
+      "title": "Lecture 21: Timing Programs, Counting Operations",
+      "order": 21,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Measuring efficiency",
+        "Timing programs",
+        "Counting operations"
+      ],
+      "projects": [],
+      "concepts": [
+        "complexity_big_o"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec22",
+      "title": "Lecture 22: Big Oh and Theta",
+      "order": 22,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Big-Oh",
+        "Big-Theta"
+      ],
+      "projects": [],
+      "concepts": [
+        "complexity_big_o"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec23",
+      "title": "Lecture 23: Complexity Classes Examples",
+      "order": 23,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "String/list complexity",
+        "Linear search",
+        "Bisection search"
+      ],
+      "projects": [],
+      "concepts": [
+        "complexity_big_o",
+        "linear_search",
+        "binary_search"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec24",
+      "title": "Lecture 24: Sorting Algorithms",
+      "order": 24,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Bogo sort",
+        "Bubble sort",
+        "Selection sort",
+        "Merge sort"
+      ],
+      "projects": [],
+      "concepts": [
+        "sorting_algorithms",
+        "complexity_big_o",
+        "recursion"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec25",
+      "title": "Lecture 25: Plotting",
+      "order": 25,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Visualization library (matplotlib)"
+      ],
+      "projects": [
+        "Problem Set 5 due"
+      ],
+      "concepts": [
+        "data_visualization",
+        "lib_matplotlib",
+        "modules_imports"
+      ]
+    },
+    {
+      "id": "mit_6100l:lec26",
+      "title": "Lecture 26: List Access, Hashing, Simulations, and Wrap-Up",
+      "order": 26,
+      "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/pages/material-by-lecture/",
+      "topics": [
+        "Lists in memory",
+        "Hashing",
+        "Simulations",
+        "Wrap-up"
+      ],
+      "projects": [],
+      "concepts": [
+        "hash_maps_internals",
+        "simulation_monte_carlo",
+        "random_module"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "computational_thinking",
+      "label": "Computational thinking",
+      "category": "data_web",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "python_setup",
+      "label": "Installing Python, running the interpreter",
+      "category": "environment",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "ide_editor",
+      "label": "Editors/IDEs (VS Code, Thonny, PyCharm, Replit)",
+      "category": "environment",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "repl",
+      "label": "Interactive interpreter",
+      "category": "environment",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "data_types",
+      "label": "Type concept, type()",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "practiced"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Numeric types",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "practiced"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "practiced"
+    },
+    {
+      "id": "expressions",
+      "label": "Expressions vs statements, evaluation order",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "+ - * / // % **",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "type_conversion",
+      "label": "Int(), str(), float() casting",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "print_output",
+      "label": "Print(), output",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec01",
+      "depth": "introduced"
+    },
+    {
+      "id": "strings",
+      "label": "String type basics",
+      "category": "strings",
+      "first_module": "mit_6100l:lec02",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "+ and *",
+      "category": "strings",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "string_indexing_slicing",
+      "label": "Indexing & slicing",
+      "category": "strings",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "user_input",
+      "label": "Input()",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec02",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_formatting",
+      "label": "F-strings, .format(), %",
+      "category": "strings",
+      "first_module": "mit_6100l:lec02",
+      "depth": "practiced"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "== != < > etc.",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "logical_operators",
+      "label": "And/or/not",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "booleans",
+      "label": "True/False, bool type",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "conditionals",
+      "label": "If/elif/else",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec02",
+      "depth": "deep"
+    },
+    {
+      "id": "nested_conditionals",
+      "label": "Nested conditionals",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "algorithms",
+      "label": "Umbrella, algorithmic thinking",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec02",
+      "depth": "introduced"
+    },
+    {
+      "id": "while_loops",
+      "label": "While loops",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec03",
+      "depth": "deep"
+    },
+    {
+      "id": "for_loops",
+      "label": "For loops",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec03",
+      "depth": "deep"
+    },
+    {
+      "id": "range_function",
+      "label": "Range function",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec03",
+      "depth": "introduced"
+    },
+    {
+      "id": "break_continue",
+      "label": "Break continue",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec03",
+      "depth": "introduced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Accumulators, counters, search, min/max",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec03",
+      "depth": "practiced"
+    },
+    {
+      "id": "iteration",
+      "label": "Iterables, iteration protocol",
+      "category": "control_flow",
+      "first_module": "mit_6100l:lec03",
+      "depth": "introduced"
+    },
+    {
+      "id": "guess_and_check",
+      "label": "Exhaustive enumeration",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec04",
+      "depth": "deep",
+      "course_label": "Guess-and-check"
+    },
+    {
+      "id": "binary_numbers",
+      "label": "Binary number representation",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec04",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "floating_point_precision",
+      "label": "Float representation, epsilon",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec04",
+      "depth": "deep",
+      "course_label": "Floats and approximation"
+    },
+    {
+      "id": "bisection_method",
+      "label": "Bisection / approximation",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec06",
+      "depth": "deep",
+      "course_label": "Bisection search"
+    },
+    {
+      "id": "binary_search",
+      "label": "Binary search",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec06",
+      "depth": "practiced"
+    },
+    {
+      "id": "newton_raphson",
+      "label": "Newton-Raphson root approximation",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec06",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "decomposition",
+      "label": "Problem decomposition, top-down design",
+      "category": "functions",
+      "first_module": "mit_6100l:lec07",
+      "depth": "deep"
+    },
+    {
+      "id": "abstraction",
+      "label": "Abstraction",
+      "category": "functions",
+      "first_module": "mit_6100l:lec07",
+      "depth": "deep"
+    },
+    {
+      "id": "functions",
+      "label": "Defining & calling",
+      "category": "functions",
+      "first_module": "mit_6100l:lec07",
+      "depth": "deep"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Positional, keyword, default args",
+      "category": "functions",
+      "first_module": "mit_6100l:lec07",
+      "depth": "practiced"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "mit_6100l:lec07",
+      "depth": "practiced"
+    },
+    {
+      "id": "docstrings",
+      "label": "Docstrings",
+      "category": "functions",
+      "first_module": "mit_6100l:lec07",
+      "depth": "practiced",
+      "course_label": "Specifications"
+    },
+    {
+      "id": "none_type",
+      "label": "None",
+      "category": "fundamentals",
+      "first_module": "mit_6100l:lec07",
+      "depth": "introduced"
+    },
+    {
+      "id": "scope",
+      "label": "Local/global, LEGB",
+      "category": "functions",
+      "first_module": "mit_6100l:lec08",
+      "depth": "practiced"
+    },
+    {
+      "id": "higher_order_functions",
+      "label": "Functions as values, map/filter",
+      "category": "functions",
+      "first_module": "mit_6100l:lec08",
+      "depth": "practiced",
+      "course_label": "Functions as objects"
+    },
+    {
+      "id": "lambda_functions",
+      "label": "Lambda functions",
+      "category": "functions",
+      "first_module": "mit_6100l:lec09",
+      "depth": "practiced"
+    },
+    {
+      "id": "tuples",
+      "label": "Tuples",
+      "category": "collections",
+      "first_module": "mit_6100l:lec09",
+      "depth": "practiced"
+    },
+    {
+      "id": "unpacking",
+      "label": "Tuple/sequence unpacking",
+      "category": "collections",
+      "first_module": "mit_6100l:lec09",
+      "depth": "introduced"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "mit_6100l:lec09",
+      "depth": "deep"
+    },
+    {
+      "id": "string_methods",
+      "label": ".upper(), .split(), .strip(), .find()...",
+      "category": "strings",
+      "first_module": "mit_6100l:lec09",
+      "depth": "practiced"
+    },
+    {
+      "id": "file_io",
+      "label": "Open/read/write",
+      "category": "files_io",
+      "first_module": "mit_6100l:lec09",
+      "depth": "introduced"
+    },
+    {
+      "id": "random_module",
+      "label": "Random module",
+      "category": "modules_libs",
+      "first_module": "mit_6100l:lec09",
+      "depth": "introduced"
+    },
+    {
+      "id": "list_methods",
+      "label": "Append, pop, sort...",
+      "category": "collections",
+      "first_module": "mit_6100l:lec10",
+      "depth": "introduced"
+    },
+    {
+      "id": "list_slicing",
+      "label": "List slicing",
+      "category": "collections",
+      "first_module": "mit_6100l:lec10",
+      "depth": "introduced"
+    },
+    {
+      "id": "mutability_aliasing",
+      "label": "References, aliasing, mutable vs immutable",
+      "category": "collections",
+      "first_module": "mit_6100l:lec10",
+      "depth": "deep",
+      "course_label": "Mutability, aliasing"
+    },
+    {
+      "id": "sorting",
+      "label": "Sort/sorted, key functions",
+      "category": "collections",
+      "first_module": "mit_6100l:lec10",
+      "depth": "introduced"
+    },
+    {
+      "id": "copying",
+      "label": "Shallow vs deep copy",
+      "category": "collections",
+      "first_module": "mit_6100l:lec11",
+      "depth": "practiced",
+      "course_label": "Cloning"
+    },
+    {
+      "id": "nested_data_structures",
+      "label": "Lists of lists, dicts of lists, 2D grids",
+      "category": "collections",
+      "first_module": "mit_6100l:lec11",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_comprehensions",
+      "label": "List comprehensions",
+      "category": "collections",
+      "first_module": "mit_6100l:lec11",
+      "depth": "practiced"
+    },
+    {
+      "id": "unit_testing",
+      "label": "Unittest/pytest",
+      "category": "errors_testing",
+      "first_module": "mit_6100l:lec12",
+      "depth": "practiced"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugger, print debugging, reading tracebacks",
+      "category": "errors_testing",
+      "first_module": "mit_6100l:lec12",
+      "depth": "practiced"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "mit_6100l:lec12",
+      "depth": "deep"
+    },
+    {
+      "id": "exceptions",
+      "label": "Try/except/else/finally",
+      "category": "errors_testing",
+      "first_module": "mit_6100l:lec13",
+      "depth": "deep"
+    },
+    {
+      "id": "raising_exceptions",
+      "label": "Raise, custom exceptions",
+      "category": "errors_testing",
+      "first_module": "mit_6100l:lec13",
+      "depth": "introduced"
+    },
+    {
+      "id": "assertions",
+      "label": "Assertions",
+      "category": "errors_testing",
+      "first_module": "mit_6100l:lec13",
+      "depth": "practiced"
+    },
+    {
+      "id": "defensive_programming",
+      "label": "Input validation",
+      "category": "errors_testing",
+      "first_module": "mit_6100l:lec13",
+      "depth": "introduced"
+    },
+    {
+      "id": "collections",
+      "label": "Umbrella",
+      "category": "collections",
+      "first_module": "mit_6100l:lec14",
+      "depth": "introduced"
+    },
+    {
+      "id": "recursion",
+      "label": "Recursion",
+      "category": "functions",
+      "first_module": "mit_6100l:lec15",
+      "depth": "deep"
+    },
+    {
+      "id": "mathematical_induction",
+      "label": "Inductive reasoning / mathematical induction for recursion",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec15",
+      "depth": "introduced",
+      "course_label": "Inductive reasoning",
+      "new": true
+    },
+    {
+      "id": "trees",
+      "label": "Trees",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec16",
+      "depth": "practiced"
+    },
+    {
+      "id": "object_oriented_design",
+      "label": "Paradigm, design",
+      "category": "data_web",
+      "first_module": "mit_6100l:lec17",
+      "depth": "deep",
+      "course_label": "Data abstraction / OOP"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Using objects/methods",
+      "category": "oop",
+      "first_module": "mit_6100l:lec17",
+      "depth": "introduced"
+    },
+    {
+      "id": "classes",
+      "label": "Class definitions",
+      "category": "oop",
+      "first_module": "mit_6100l:lec17",
+      "depth": "deep"
+    },
+    {
+      "id": "constructors",
+      "label": "__init__",
+      "category": "oop",
+      "first_module": "mit_6100l:lec17",
+      "depth": "practiced"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "mit_6100l:lec17",
+      "depth": "practiced"
+    },
+    {
+      "id": "encapsulation",
+      "label": "Private attributes, properties, getters/setters",
+      "category": "oop",
+      "first_module": "mit_6100l:lec17",
+      "depth": "introduced"
+    },
+    {
+      "id": "dunder_methods",
+      "label": "__str__, __repr__, __eq__, operator overloading",
+      "category": "oop",
+      "first_module": "mit_6100l:lec18",
+      "depth": "practiced"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "mit_6100l:lec19",
+      "depth": "deep"
+    },
+    {
+      "id": "polymorphism",
+      "label": "Polymorphism",
+      "category": "oop",
+      "first_module": "mit_6100l:lec19",
+      "depth": "introduced"
+    },
+    {
+      "id": "class_attributes",
+      "label": "Class vs instance variables, static/class methods",
+      "category": "oop",
+      "first_module": "mit_6100l:lec19",
+      "depth": "introduced"
+    },
+    {
+      "id": "image_processing",
+      "label": "Image processing (pixels, filters, steganography)",
+      "category": "data_web",
+      "first_module": "mit_6100l:lec20",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_pillow",
+      "label": "Pillow (PIL) imaging library",
+      "category": "modules_libs",
+      "first_module": "mit_6100l:lec20",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third party packages",
+      "category": "modules_libs",
+      "first_module": "mit_6100l:lec20",
+      "depth": "introduced"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Import, from ... import",
+      "category": "modules_libs",
+      "first_module": "mit_6100l:lec20",
+      "depth": "introduced"
+    },
+    {
+      "id": "complexity_big_o",
+      "label": "Complexity big o",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec21",
+      "depth": "deep",
+      "course_label": "Big Oh and Theta"
+    },
+    {
+      "id": "linear_search",
+      "label": "Linear search",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec23",
+      "depth": "practiced"
+    },
+    {
+      "id": "sorting_algorithms",
+      "label": "Bubble/selection/merge/insertion",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec24",
+      "depth": "deep"
+    },
+    {
+      "id": "data_visualization",
+      "label": "Data visualization",
+      "category": "data_web",
+      "first_module": "mit_6100l:lec25",
+      "depth": "practiced"
+    },
+    {
+      "id": "lib_matplotlib",
+      "label": "Lib matplotlib",
+      "category": "modules_libs",
+      "first_module": "mit_6100l:lec25",
+      "depth": "practiced",
+      "course_label": "Plotting"
+    },
+    {
+      "id": "hash_maps_internals",
+      "label": "Hash maps internals",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec26",
+      "depth": "introduced",
+      "course_label": "Hashing"
+    },
+    {
+      "id": "simulation_monte_carlo",
+      "label": "Simulation monte carlo",
+      "category": "algorithms",
+      "first_module": "mit_6100l:lec26",
+      "depth": "introduced"
+    }
+  ],
+  "edges": [
+    {
+      "source": "mit_6100l:lec01",
+      "target": "mit_6100l:lec02",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec02",
+      "target": "mit_6100l:lec03",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec03",
+      "target": "mit_6100l:lec04",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec04",
+      "target": "mit_6100l:lec05",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec05",
+      "target": "mit_6100l:lec06",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec06",
+      "target": "mit_6100l:lec07",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec07",
+      "target": "mit_6100l:lec08",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec08",
+      "target": "mit_6100l:lec09",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec09",
+      "target": "mit_6100l:lec10",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec10",
+      "target": "mit_6100l:lec11",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec11",
+      "target": "mit_6100l:lec12",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec12",
+      "target": "mit_6100l:lec13",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec13",
+      "target": "mit_6100l:lec14",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec14",
+      "target": "mit_6100l:lec15",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec15",
+      "target": "mit_6100l:lec16",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec16",
+      "target": "mit_6100l:lec17",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec17",
+      "target": "mit_6100l:lec18",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec18",
+      "target": "mit_6100l:lec19",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec19",
+      "target": "mit_6100l:lec20",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec20",
+      "target": "mit_6100l:lec21",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec21",
+      "target": "mit_6100l:lec22",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec22",
+      "target": "mit_6100l:lec23",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec23",
+      "target": "mit_6100l:lec24",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec24",
+      "target": "mit_6100l:lec25",
+      "type": "precedes"
+    },
+    {
+      "source": "mit_6100l:lec25",
+      "target": "mit_6100l:lec26",
+      "type": "precedes"
+    },
+    {
+      "source": "variables",
+      "target": "strings",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_types",
+      "target": "type_conversion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_formatting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "guess_and_check",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "guess_and_check",
+      "target": "floating_point_precision",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "integers_floats",
+      "target": "floating_point_precision",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "floating_point_precision",
+      "target": "bisection_method",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "guess_and_check",
+      "target": "bisection_method",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "bisection_method",
+      "target": "newton_raphson",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "bisection_method",
+      "target": "decomposition",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decomposition",
+      "target": "functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "abstraction",
+      "target": "functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "lambda_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tuples",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "mutability_aliasing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "copying",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "unit_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "unit_testing",
+      "target": "debugging",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "debugging",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "exceptions",
+      "target": "assertions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "mathematical_induction",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "recursion",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "abstraction",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "dunder_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "polymorphism",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "complexity_big_o",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "complexity_big_o",
+      "target": "linear_search",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "bisection_method",
+      "target": "binary_search",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "complexity_big_o",
+      "target": "binary_search",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "complexity_big_o",
+      "target": "sorting_algorithms",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "recursion",
+      "target": "sorting_algorithms",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "data_visualization",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "hash_maps_internals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "hash_maps_internals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "random_module",
+      "target": "simulation_monte_carlo",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "recursion",
+      "target": "trees",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "image_processing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "tuples",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "guess_and_check",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "bisection_method",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "newton_raphson",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "linear_search",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "binary_search",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "sorting_algorithms",
+      "target": "algorithms",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_matplotlib",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "lib_pillow",
+      "target": "third_party_packages",
+      "type": "is_a"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "constructors",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "instance_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "dunder_methods",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "class_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "return_values",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "docstrings",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "break_continue",
+      "target": "iteration",
+      "type": "part_of"
+    },
+    {
+      "source": "raising_exceptions",
+      "target": "exceptions",
+      "type": "part_of"
+    },
+    {
+      "source": "classes",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "inheritance",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "encapsulation",
+      "target": "object_oriented_design",
+      "type": "part_of"
+    },
+    {
+      "source": "decomposition",
+      "target": "computational_thinking",
+      "type": "part_of"
+    },
+    {
+      "source": "abstraction",
+      "target": "computational_thinking",
+      "type": "part_of"
+    },
+    {
+      "source": "data_visualization",
+      "target": "lib_matplotlib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "mit_6100l:lec25",
+      "target": "lib_matplotlib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "image_processing",
+      "target": "lib_pillow",
+      "type": "uses_tool"
+    },
+    {
+      "source": "mit_6100l:lec20",
+      "target": "lib_pillow",
+      "type": "uses_tool"
+    },
+    {
+      "source": "simulation_monte_carlo",
+      "target": "random_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "mit_6100l:lec01",
+      "target": "ide_editor",
+      "type": "uses_tool"
+    },
+    {
+      "source": "binary_search",
+      "target": "bisection_method",
+      "type": "related_to"
+    },
+    {
+      "source": "hash_maps_internals",
+      "target": "dictionaries",
+      "type": "related_to"
+    },
+    {
+      "source": "binary_numbers",
+      "target": "floating_point_precision",
+      "type": "related_to"
+    },
+    {
+      "source": "newton_raphson",
+      "target": "floating_point_precision",
+      "type": "related_to"
+    },
+    {
+      "source": "recursion",
+      "target": "mathematical_induction",
+      "type": "related_to"
+    }
+  ]
+}

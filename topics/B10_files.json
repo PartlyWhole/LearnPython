@@ -1,0 +1,2259 @@
+{
+  "batch": "B10",
+  "title": "Files and the command line",
+  "concept_map": {
+    "file_io": {
+      "topics": [
+        "file_io.open_and_read",
+        "file_io.loop_over_lines",
+        "file_io.parse_lines_into_data",
+        "file_io.write_files",
+        "file_io.append_and_modes",
+        "file_io.copy_and_transform",
+        "file_io.handle_missing_file",
+        "file_io.encodings_and_binary"
+      ],
+      "entry_topic": "file_io.open_and_read",
+      "notes": "open_and_read teaches open/read/close once; every later topic uses with (context_managers.with_open, owned by context_managers but taught second). Loops over file lines (deferred by B03/B04) are file_io.loop_over_lines. handle_missing_file only applies try/except to files and has pending concept:exceptions (B09 owns try/except itself); if B09 writes its own FileNotFoundError example the stitching pass should make B09's generic try/except topic the prerequisite and keep this file-specific one. encoding='utf-8' (deferred by B03 unicode_encoding) is in encodings_and_binary. Binary images with PIL are B19 lib_pillow. Counting words in a file with a dict (py4e ch. 9) is B07 dictionaries, which can list file_io.loop_over_lines as a prerequisite in a later stitch. `import` lines (csv, json, os, sys) are used as memorised one-liners before B13 modules_imports, as B06 did with `import copy`."
+    },
+    "context_managers": {
+      "topics": [
+        "context_managers.with_open",
+        "context_managers.write_with_contextlib"
+      ],
+      "entry_topic": "context_managers.with_open",
+      "notes": "with_open is the second file topic and core. write_with_contextlib is non-core (Codecademy only) and pending on concept:generators (yield, B08) and concept:exceptions (try/finally, B09); @contextmanager is used as a memorised line rather than requiring B08 decorators. Class-based context managers (__enter__/__exit__) belong to B11 dunder_methods. Nested managers are file_io.copy_and_transform KP2."
+    },
+    "file_paths": {
+      "topics": [
+        "file_paths.paths_in_code",
+        "file_paths.path_parts",
+        "file_paths.pathlib_paths"
+      ],
+      "entry_topic": "file_paths.paths_in_code",
+      "notes": "Non-core: the browser platform's files sit next to the program, so core file topics use bare names. Terminal-side paths are B01 command_line.absolute_and_relative_paths (a prerequisite). os.path string functions are owned here; filesystem changes (listdir, mkdir, rename, remove) are os_sys_module."
+    },
+    "csv_files": {
+      "topics": [
+        "csv_files.read_with_csv_reader",
+        "csv_files.write_with_csv_writer",
+        "csv_files.dict_reader_writer"
+      ],
+      "entry_topic": "csv_files.read_with_csv_reader",
+      "notes": "Manual split(';') parsing (Helsinki 'Reading CSV files') is file_io.parse_lines_into_data; csv.reader is motivated by its failure on quoted commas. dict_reader_writer has pending concept:dictionaries (B07). pandas read_csv is B18 lib_pandas. Sorting rows by a column needs key=lambda (B08) and was left to that batch's practice."
+    },
+    "json_data": {
+      "topics": [
+        "json_data.json_strings",
+        "json_data.json_files",
+        "json_data.navigate_nested_json",
+        "json_data.json_pitfalls"
+      ],
+      "entry_topic": "json_data.json_strings",
+      "notes": "json_strings KP1 uses lists only so it works before dicts; KP3-4 and later topics need dicts, hence pending concept:dictionaries. navigate_nested_json is pending concept:nested_data_structures (B07). JSON from HTTP APIs (requests .json()) is B16 apis_http, which should depend on navigate_nested_json. Handling a missing JSON file on first run combines json_data.json_files with file_io.handle_missing_file (practice item for later stitching, not a separate topic)."
+    },
+    "lib_json": {
+      "covered_by": [
+        "json_data.json_strings",
+        "json_data.json_files",
+        "json_data.json_pitfalls"
+      ],
+      "notes": "The json module (loads/dumps/load/dump, indent, JSONDecodeError) is fully taught by the json_data topics; a separate topic would duplicate them."
+    },
+    "serialization": {
+      "topics": [
+        "serialization.choose_a_format"
+      ],
+      "entry_topic": "serialization.choose_a_format",
+      "notes": "Only Boot.dev teaches it (in Go, for pub/sub, which is out of scope). One non-core topic that generalises JSON/CSV/text and introduces pickle. Serializing custom objects (to_dict/from_dict) belongs to B11 classes."
+    },
+    "os_sys_module": {
+      "topics": [
+        "os_sys_module.manage_files_and_folders",
+        "os_sys_module.sys_exit_and_stderr"
+      ],
+      "entry_topic": "os_sys_module.manage_files_and_folders",
+      "notes": "sys.argv is owned by command_line_args; os.path string functions by file_paths; os.environ by B13 environment_variables; subprocess by B13. shutil (copying/removing folder trees) was left out. Uses `import os` / `import sys` before B13 modules_imports as memorised lines."
+    },
+    "command_line_args": {
+      "topics": [
+        "command_line_args.read_sys_argv",
+        "command_line_args.validate_arguments",
+        "command_line_args.argparse_basics"
+      ],
+      "entry_topic": "command_line_args.read_sys_argv",
+      "notes": "Non-core because running with arguments needs a terminal (B01 running_scripts.run_from_terminal is non-core); a browser platform would need an 'arguments' box to make these core. *args/**kwargs (which the concept graph places after this) are B08. Validating with try/except int() is B09 practice."
+    },
+    "cli_applications": {
+      "topics": [
+        "cli_applications.file_report_tool",
+        "cli_applications.command_loop"
+      ],
+      "entry_topic": "cli_applications.file_report_tool",
+      "notes": "Project-shaped (Boot.dev BookBot, Pokedex REPL): best delivered as multisteps; these two topics teach the reusable structure. Character counting with dicts and sorting the report (BookBot) need B07 dictionaries and B08 key functions and are left as later practice. Command dispatch through a dict of functions is B08 higher_order_functions."
+    }
+  },
+  "topics": [
+    {
+      "id": "file_io.open_and_read",
+      "title": "Opening a file and reading all of its text",
+      "concept": "file_io",
+      "summary": "Open a text file by name, read its whole contents into one string with read(), close it, and recognise FileNotFoundError.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "builtin_functions.call_anatomy",
+        "string_methods.split_into_parts",
+        "string_methods.find_and_count"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "open(), read(), close()",
+          "worked_example": "# fruits.txt contains three lines: apple, banana, cherry\nf = open(\"fruits.txt\")\ntext = f.read()\nf.close()\nprint(text)\nopen() gives a file object; read() returns everything in the file as one string.",
+          "practice": "Put open/read/close/print lines in order; predict what a short program prints for a given file.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.call_anatomy"
+          ]
+        },
+        {
+          "title": "The contents are one string, newlines included",
+          "worked_example": "text = open(\"fruits.txt\").read()\nprint(len(text.split()))  # 3\nprint(text.count(\"\\n\"))  # 3\nEach line ends with \\n, so string methods can count words and lines.",
+          "practice": "Given a file's contents, predict word, line and character counts computed from read().",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts",
+            "string_methods.find_and_count"
+          ]
+        },
+        {
+          "title": "read() only gives the text once",
+          "worked_example": "f = open(\"fruits.txt\")\nfirst = f.read()\nsecond = f.read()\nprint(second == \"\")  # True\nThe file object remembers its position; after reading to the end, read() returns \"\".",
+          "practice": "Predict the result of reading twice; fix a program that reads twice and finds nothing the second time.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A wrong name raises FileNotFoundError",
+          "worked_example": "open(\"fruit.txt\")\n# FileNotFoundError: [Errno 2] No such file or directory: 'fruit.txt'\nThe name must match exactly, and Python looks for it in the folder the program runs in.",
+          "practice": "Given a folder listing, predict which open() calls succeed and which raise FileNotFoundError.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.3
+        },
+        {
+          "topic": "builtin_functions.call_anatomy",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "file_io.loop_over_lines",
+      "title": "Reading a file line by line",
+      "concept": "file_io",
+      "summary": "Loop over the lines of a file with for, strip the trailing newline, filter lines, and use readline(), readlines() and splitlines() when they fit.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "context_managers.with_open",
+        "string_methods.strip_whitespace",
+        "string_methods.check_content",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "for line in f gives one line at a time",
+          "worked_example": "with open(\"fruits.txt\") as f:\n    for line in f:\n        print(line)\n# apple, a blank line, banana, a blank line, cherry, a blank line\nEach line keeps its \\n and print adds another, so output is double-spaced.",
+          "practice": "Predict the output of a line loop, including the blank lines; count how many times the loop body runs.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items",
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "Strip the newline before using a line",
+          "worked_example": "with open(\"fruits.txt\") as f:\n    for line in f:\n        word = line.strip()\n        print(word, len(word))  # apple 5 ...\nWithout strip(), len('apple\\n') is 6 and comparisons with 'apple' fail.",
+          "practice": "Fix a program whose comparison line == 'banana' never matches; predict lengths with and without strip().",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.strip_whitespace"
+          ]
+        },
+        {
+          "title": "Search: only process matching lines",
+          "worked_example": "count = 0\nwith open(\"mbox.txt\") as f:\n    for line in f:\n        if line.startswith(\"From:\"):\n            count += 1\nprint(count)\nThe py4e pattern: loop, test each line, act only on the ones you want.",
+          "practice": "Write code that counts or prints lines matching a condition (starts with, contains, non-blank).",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_methods.check_content"
+          ]
+        },
+        {
+          "title": "readline(), readlines() and read().splitlines()",
+          "worked_example": "with open(\"fruits.txt\") as f:\n    print(f.readlines())  # ['apple\\n', 'banana\\n', 'cherry\\n']\nwith open(\"fruits.txt\") as f:\n    print(f.read().splitlines())  # ['apple', 'banana', 'cherry']\nreadline() reads just the next line; splitlines() gives a list without the newlines.",
+          "practice": "Choose which call produces a given result; predict the list each call returns for a small file.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "context_managers.with_open",
+          "weight": 0.8
+        },
+        {
+          "topic": "string_methods.strip_whitespace",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "file_io.parse_lines_into_data",
+      "title": "Turning lines of a file into data",
+      "concept": "file_io",
+      "summary": "Split each line into fields, convert the numbers, skip a header line, and collect the records into a list for later processing.",
+      "minutes": 20,
+      "core": true,
+      "prerequisites": [
+        "file_io.loop_over_lines",
+        "lists.text_to_list_and_back",
+        "unpacking.unpack_sequences",
+        "loop_patterns.accumulate_sum"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Split a line into named fields",
+          "worked_example": "# grades.txt: ana;12;15 then bo;9;7\nwith open(\"grades.txt\") as f:\n    for line in f:\n        name, a, b = line.strip().split(\";\")\n        print(name, a, b)\nStrip first, then split on the separator, then unpack into names.",
+          "practice": "Predict fields for lines with different separators; fix a ValueError caused by unpacking into the wrong number of names.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences",
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "Convert fields and compute per line",
+          "worked_example": "with open(\"grades.txt\") as f:\n    for line in f:\n        name, a, b = line.strip().split(\";\")\n        print(name, int(a) + int(b))  # ana 27, bo 16\nFields are always strings; convert before doing arithmetic.",
+          "practice": "Write code that prints a total or average per line; fix a program that prints '1215' instead of 27.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers",
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Skip a header line with readline()",
+          "worked_example": "with open(\"scores.txt\") as f:\n    header = f.readline()  # 'name;score\\n'\n    for line in f:\n        name, score = line.strip().split(\";\")\nThe for loop continues from where readline() stopped, so the header is not parsed.",
+          "practice": "Fix a program that crashes on int('score'); predict which lines the loop sees after one readline().",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.loop_over_lines"
+          ]
+        },
+        {
+          "title": "Collect records into a list, then process",
+          "worked_example": "records = []\nwith open(\"grades.txt\") as f:\n    for line in f:\n        name, a, b = line.strip().split(\";\")\n        records.append((name, int(a) + int(b)))\nprint(records)  # [('ana', 27), ('bo', 16)]\nLoad once into a list; later code (max, sort, report) works on the list, not the file.",
+          "practice": "Write a load function body that returns a list of tuples; then compute a total or best record from it.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build",
+            "lists.text_to_list_and_back"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.loop_over_lines",
+          "weight": 0.9
+        },
+        {
+          "topic": "lists.text_to_list_and_back",
+          "weight": 0.6
+        },
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.6
+        },
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "py4e",
+        "cs50p",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "file_io.write_files",
+      "title": "Writing text to a file",
+      "concept": "file_io",
+      "summary": "Open a file for writing with 'w', write strings with write(), add the newlines yourself, and write a list of values one per line.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "context_managers.with_open",
+        "string_formatting.fstring_basics",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Open with 'w' and call write()",
+          "worked_example": "with open(\"out.txt\", \"w\") as f:\n    f.write(\"hi\")\nprint(open(\"out.txt\").read())  # hi\nThe second argument 'w' means write; the file is created if it does not exist.",
+          "practice": "Fill in the mode and write call; predict the file contents after a short program.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "write() does not add a newline",
+          "worked_example": "with open(\"out.txt\", \"w\") as f:\n    f.write(\"hi\")\n    f.write(\"there\")\n# out.txt contains: hithere\nUnlike print(), write() writes exactly the characters you give it; add \"\\n\" yourself.",
+          "practice": "Predict file contents for sequences of write() calls with and without \\n; fix a file that came out on one line.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Only strings can be written",
+          "worked_example": "score = 42\nwith open(\"score.txt\", \"w\") as f:\n    f.write(f\"{score}\\n\")\n# f.write(score) raises TypeError: write() argument must be str, not int\nConvert numbers with an f-string (or str()) first.",
+          "practice": "Fix write() calls that pass numbers; write a formatted line such as 'ana: 12'.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Write a list, one item per line",
+          "worked_example": "names = [\"ana\", \"bo\", \"cy\"]\nwith open(\"names.txt\", \"w\") as f:\n    for name in names:\n        f.write(name + \"\\n\")\nprint(open(\"names.txt\").read().splitlines())  # ['ana', 'bo', 'cy']\nOne write per item, each ending in \\n, gives a file that reads back line by line.",
+          "practice": "Write code that saves a list of numbers or strings one per line; Parsons for a save-then-reload program.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "context_managers.with_open",
+          "weight": 0.8
+        },
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.4
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "file_io.append_and_modes",
+      "title": "Appending, overwriting and choosing a file mode",
+      "concept": "file_io",
+      "summary": "Pick between 'r', 'w' and 'a', predict what each does to existing contents, and update a file by reading it, changing the data, and writing it back.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "file_io.write_files",
+        "file_io.loop_over_lines"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "'a' adds to the end",
+          "worked_example": "with open(\"log.txt\", \"a\") as f:\n    f.write(\"started\\n\")\nRun twice and log.txt has two 'started' lines. Append mode keeps the old contents and writes after them.",
+          "practice": "Predict file contents after a program using 'a' is run once, twice, three times.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        },
+        {
+          "title": "'w' wipes the file the moment it opens",
+          "worked_example": "with open(\"names.txt\", \"w\") as f:\n    pass\nprint(open(\"names.txt\").read() == \"\")  # True\nOpening with 'w' empties an existing file even if nothing is written. This is the classic way to lose data.",
+          "practice": "Predict contents after mixed 'w' and 'a' runs; choose the mode for a high-score file vs a log.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        },
+        {
+          "title": "The mode limits what you can do",
+          "worked_example": "with open(\"out.txt\") as f:\n    f.write(\"x\")\n# io.UnsupportedOperation: not writable\nThe default mode is 'r' (read only); a file opened with 'w' or 'a' cannot be read.",
+          "practice": "Match each mode to the operations it allows; fix programs that write to a file opened for reading.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Update a file: read, change, write back",
+          "worked_example": "with open(\"todo.txt\") as f:\n    items = f.read().splitlines()\nitems.remove(\"buy milk\")\nwith open(\"todo.txt\", \"w\") as f:\n    for item in items:\n        f.write(item + \"\\n\")\nRead everything first and close; only then reopen with 'w'.",
+          "practice": "Parsons for a read-modify-write update; spot the bug where 'w' is opened before the old contents were read.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "file_io.loop_over_lines"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.write_files",
+          "weight": 0.8
+        },
+        {
+          "topic": "file_io.loop_over_lines",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy",
+        "100_days_of_code",
+        "cs50p",
+        "py4e"
+      ]
+    },
+    {
+      "id": "file_io.copy_and_transform",
+      "title": "Reading one file and writing another",
+      "concept": "file_io",
+      "summary": "Process an input file line by line into a new output file, using two files in one with statement and print(..., file=...).",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "file_io.append_and_modes",
+        "file_io.parse_lines_into_data"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two with blocks: load, then save",
+          "worked_example": "with open(\"names.txt\") as f:\n    names = f.read().splitlines()\nwith open(\"upper.txt\", \"w\") as f:\n    for name in names:\n        f.write(name.upper() + \"\\n\")\nThe simplest transform: read everything, close, write the result.",
+          "practice": "Predict the output file for a given input and transformation; fill in the missing write line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "file_io.append_and_modes"
+          ]
+        },
+        {
+          "title": "Two files in one with statement",
+          "worked_example": "with open(\"names.txt\") as src, open(\"upper.txt\", \"w\") as dst:\n    for line in src:\n        dst.write(line.upper())\nBoth files stay open together, so each line can be written as soon as it is read.",
+          "practice": "Parsons for a one-with copy program; fix a version that writes to src instead of dst.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "print(..., file=f) writes a line for you",
+          "worked_example": "with open(\"report.txt\", \"w\") as out:\n    print(\"ana\", 27, file=out)\n# report.txt contains: ana 27 and a newline\nprint() converts values, adds spaces and the newline, but sends the text to the file.",
+          "practice": "Rewrite write() calls as print(..., file=...) and predict the resulting file contents.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        },
+        {
+          "title": "Filter and reshape records into a new file",
+          "worked_example": "with open(\"grades.txt\") as src, open(\"passed.txt\", \"w\") as dst:\n    for line in src:\n        name, a, b = line.strip().split(\";\")\n        if int(a) + int(b) >= 20:\n            print(name, file=dst)\nRead, parse, decide, write: the shape of most file-cleaning scripts (CS50 Scourgify).",
+          "practice": "Write a program that converts 'last, first' lines to 'first last' or keeps only qualifying records.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "file_io.parse_lines_into_data"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.parse_lines_into_data",
+          "weight": 0.6
+        },
+        {
+          "topic": "file_io.write_files",
+          "weight": 0.7
+        },
+        {
+          "topic": "file_io.loop_over_lines",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "100_days_of_code",
+        "py4e"
+      ]
+    },
+    {
+      "id": "file_io.handle_missing_file",
+      "title": "Handling a missing file",
+      "concept": "file_io",
+      "summary": "Apply try/except FileNotFoundError to file programs: report a clear message, fall back to a default, create the file on first run, and re-ask for a file name.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "file_io.append_and_modes",
+        "break_continue.while_true_loops",
+        "exceptions.try_except_basics"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Catch FileNotFoundError with a clear message",
+          "worked_example": "try:\n    with open(\"data.txt\") as f:\n        text = f.read()\nexcept FileNotFoundError:\n    print(\"data.txt not found\")\nOnly the open/read goes inside try; catch the specific error, not everything.",
+          "practice": "Predict output when the file exists and when it does not; fill in the exception name.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "file_io.open_and_read",
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "Fall back to a default value",
+          "worked_example": "try:\n    with open(\"highscore.txt\") as f:\n        best = int(f.read())\nexcept FileNotFoundError:\n    best = 0\nOn the very first run there is no file yet, so the program starts from a sensible default.",
+          "practice": "Write a load function that returns a default when the file is missing; predict best on first and second runs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.append_and_modes"
+          ]
+        },
+        {
+          "title": "Create the file if it does not exist",
+          "worked_example": "try:\n    with open(\"notes.txt\") as f:\n        notes = f.read().splitlines()\nexcept FileNotFoundError:\n    notes = []\n    with open(\"notes.txt\", \"w\") as f:\n        pass\nThe except branch can do real work: here it creates an empty file.",
+          "practice": "Parsons for a load-or-create helper; fix a version that creates the file with 'w' before trying to read it.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "file_io.append_and_modes"
+          ]
+        },
+        {
+          "title": "Ask again until the file opens",
+          "worked_example": "while True:\n    name = input(\"File: \")\n    try:\n        with open(name) as f:\n            text = f.read()\n        break\n    except FileNotFoundError:\n        print(\"No such file, try again\")\nCombines the while True + break pattern with try/except (py4e 'letting the user choose the file name').",
+          "practice": "Trace the loop for a sequence of typed names; write the loop for a word-count program.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.open_and_read",
+          "weight": 0.5
+        },
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "100_days_of_code",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "file_io.encodings_and_binary",
+      "title": "Text encodings and binary files",
+      "concept": "file_io",
+      "summary": "Pass encoding='utf-8' when opening text, recognise UnicodeDecodeError, and read or copy binary files with 'rb' and 'wb'.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "file_io.write_files",
+        "unicode_encoding.text_vs_bytes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Name the encoding when you open text",
+          "worked_example": "with open(\"cafe.txt\", encoding=\"utf-8\") as f:\n    print(f.read().strip())  # café\nWithout encoding=, Python uses the computer's default, which differs between systems; utf-8 is the safe choice.",
+          "practice": "Choose which open() call reads a UTF-8 file correctly on every system; fill in the keyword argument.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes"
+          ]
+        },
+        {
+          "title": "A wrong encoding raises UnicodeDecodeError",
+          "worked_example": "# cafe.txt was saved as latin-1\nwith open(\"cafe.txt\", encoding=\"utf-8\") as f:\n    f.read()\n# UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe9 in position 3: invalid continuation byte\nThe bytes in the file do not match the encoding you asked for.",
+          "practice": "Predict whether reading succeeds for given (saved-as, opened-as) pairs; fix the open() call.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes"
+          ]
+        },
+        {
+          "title": "'rb' gives bytes, not str",
+          "worked_example": "with open(\"cafe.txt\", \"rb\") as f:\n    data = f.read()\nprint(data)  # b'caf\\xc3\\xa9\\n'\nprint(data.decode(\"utf-8\").strip())  # café\nBinary mode skips decoding; decode() turns the bytes into text yourself.",
+          "practice": "Predict the type and length of data read in text vs binary mode.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes"
+          ]
+        },
+        {
+          "title": "Copy a binary file with 'rb' and 'wb'",
+          "worked_example": "with open(\"photo.jpg\", \"rb\") as src, open(\"copy.jpg\", \"wb\") as dst:\n    dst.write(src.read())\nImages, audio and other non-text files must be opened in binary mode on both sides.",
+          "practice": "Fix a copy that opens an image in text mode; choose the mode for each kind of file.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unicode_encoding.text_vs_bytes",
+          "weight": 0.5
+        },
+        {
+          "topic": "file_io.write_files",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "py4e"
+      ]
+    },
+    {
+      "id": "context_managers.with_open",
+      "title": "Opening files safely with with",
+      "concept": "context_managers",
+      "summary": "Use with open(...) as f so the file is closed automatically, and know that the file cannot be used after the block ends.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "file_io.open_and_read"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "with ... as f: an indented block",
+          "worked_example": "with open(\"fruits.txt\") as f:\n    text = f.read()\nprint(text)\nThe file is open inside the indented block and closed automatically when the block ends.",
+          "practice": "Fill in the with line; Parsons for a with-based read-and-print program.",
+          "formats": [
+            "fill_in_blank",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "file_io.open_and_read"
+          ]
+        },
+        {
+          "title": "After the block the file is closed",
+          "worked_example": "with open(\"fruits.txt\") as f:\n    pass\nprint(f.closed)  # True\nf.read()\n# ValueError: I/O operation on closed file.\nThe name f still exists, but the file behind it is closed.",
+          "practice": "Predict whether each statement works or raises ValueError; fix code that reads after the block.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Keep the data, not the file",
+          "worked_example": "with open(\"fruits.txt\") as f:\n    lines = f.read().splitlines()\nprint(len(lines))  # 3\nRead what you need into a variable inside the block; use the variable afterwards.",
+          "practice": "Restructure programs so all file access happens inside the block and processing happens after it.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "Why with beats close()",
+          "worked_example": "f = open(\"fruits.txt\")\ntext = f.read()\n# forgot f.close(): the file stays open until Python cleans up\nwith closes the file even if you forget, or if an error happens inside the block.",
+          "practice": "Rewrite open/close code using with; choose which programs leave a file open.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_io.open_and_read"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.open_and_read",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "100_days_of_code",
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "context_managers.write_with_contextlib",
+      "title": "Writing your own context manager with contextlib",
+      "concept": "context_managers",
+      "summary": "Write a generator-based context manager with @contextmanager whose setup runs before the block and whose cleanup runs after it, even on errors.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "context_managers.with_open",
+        "generators.yield_values",
+        "exceptions.else_and_finally",
+        "functions.define_and_call"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Setup, yield, cleanup",
+          "worked_example": "from contextlib import contextmanager\n\n@contextmanager\ndef announce(name):\n    print(\"start\", name)\n    yield\n    print(\"end\", name)\n\nwith announce(\"task\"):\n    print(\"working\")\n# start task / working / end task\nCode before yield runs on entry, code after it on exit.",
+          "practice": "Predict the order of printed lines for several with blocks using a small context manager.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "functions.define_and_call",
+            "context_managers.with_open",
+            "generators.yield_values"
+          ]
+        },
+        {
+          "title": "yield a value to bind with as",
+          "worked_example": "@contextmanager\ndef opened(path):\n    f = open(path)\n    yield f\n    f.close()\n\nwith opened(\"fruits.txt\") as f:\n    print(f.read())\nWhatever is yielded becomes the name after as.",
+          "practice": "Fill in the yield; write a context manager that yields a list and prints its length on exit.",
+          "formats": [
+            "fill_in_blank",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "try/finally makes cleanup run on errors",
+          "worked_example": "@contextmanager\ndef announce(name):\n    print(\"start\", name)\n    try:\n        yield\n    finally:\n        print(\"end\", name)\nWithout try/finally, an error inside the with block skips the cleanup line.",
+          "practice": "Predict output when the block raises, with and without try/finally; fix a manager that leaks.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "exceptions.else_and_finally"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "context_managers.with_open",
+          "weight": 0.5
+        },
+        {
+          "topic": "exceptions.else_and_finally",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "file_paths.paths_in_code",
+      "title": "File paths in your program",
+      "concept": "file_paths",
+      "summary": "Open files in sub-folders with relative paths, know they are relative to the current working directory, use absolute paths, and avoid backslash problems.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "command_line.absolute_and_relative_paths",
+        "file_io.open_and_read",
+        "strings.multiline_and_raw"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A relative path reaches into a folder",
+          "worked_example": "with open(\"data/scores.txt\") as f:\n    print(f.read())\n'data/scores.txt' means: the folder data, inside the folder the program is running in, then the file.",
+          "practice": "Given a folder tree, write the relative path to each file; predict which paths raise FileNotFoundError.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "command_line.absolute_and_relative_paths"
+          ]
+        },
+        {
+          "title": "Relative to the working directory, not the script",
+          "worked_example": "import os\nprint(os.getcwd())  # the folder you ran python from\nRunning python project/app.py from your home folder makes 'data.txt' mean ~/data.txt, not project/data.txt.",
+          "practice": "Given a working directory and a command, predict which file a relative path refers to.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "command_line.absolute_and_relative_paths"
+          ]
+        },
+        {
+          "title": "Absolute paths and ..",
+          "worked_example": "open(\"/Users/ana/notes/todo.txt\")  # absolute: same file from anywhere\nopen(\"../shared/todo.txt\")  # one folder up, then into shared\nAbsolute paths do not depend on where you run, but break on another computer.",
+          "practice": "Classify paths as absolute or relative; resolve .. paths against a given working directory.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "command_line.absolute_and_relative_paths"
+          ]
+        },
+        {
+          "title": "Windows backslashes: use / or a raw string",
+          "worked_example": "path = \"C:\\new\\table.txt\"   # \\n and \\t become newline and tab!\npath = r\"C:\\new\\table.txt\"  # raw string: backslashes kept\npath = \"C:/new/table.txt\"   # forward slashes also work on Windows",
+          "practice": "Spot the broken path among several; fix it two ways.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "strings.multiline_and_raw"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line.absolute_and_relative_paths",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "file_paths.path_parts",
+      "title": "Building and splitting paths with os.path",
+      "concept": "file_paths",
+      "summary": "Join path pieces with os.path.join, take paths apart with basename, dirname and splitext, and check that a path exists before opening it.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "file_paths.paths_in_code",
+        "unpacking.unpack_sequences",
+        "string_methods.calling_methods_case"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "os.path.join builds a path",
+          "worked_example": "import os\npath = os.path.join(\"data\", \"scores.csv\")\nprint(path)  # data/scores.csv (data\\scores.csv on Windows)\njoin uses the right separator for the system, so you never glue '/' by hand.",
+          "practice": "Predict joined paths; rewrite string concatenation of paths with os.path.join.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "file_paths.paths_in_code"
+          ]
+        },
+        {
+          "title": "basename and dirname",
+          "worked_example": "print(os.path.basename(\"data/photo.jpg\"))  # photo.jpg\nprint(os.path.dirname(\"data/photo.jpg\"))   # data\nbasename is the last part; dirname is everything before it.",
+          "practice": "Predict basename and dirname for several paths, including one with no folder.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_paths.paths_in_code"
+          ]
+        },
+        {
+          "title": "splitext separates the extension",
+          "worked_example": "name, ext = os.path.splitext(\"photo.JPG\")\nprint(name, ext.lower())  # photo .jpg\nsplitext returns a pair; compare extensions in lower case (CS50 P-Shirt checks input and output match).",
+          "practice": "Write a check that two file names have the same extension; predict splitext on names with several dots.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences",
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "os.path.exists before opening",
+          "worked_example": "if os.path.exists(\"scores.csv\"):\n    print(\"found\")\nelse:\n    print(\"missing\")\nexists() answers True/False without raising, useful for a quick check or a choice of default.",
+          "practice": "Predict output for a given folder listing; write a check that picks a default file when one is missing.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_paths.paths_in_code",
+          "weight": 0.5
+        },
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "file_paths.pathlib_paths",
+      "title": "Paths as objects with pathlib",
+      "concept": "file_paths",
+      "summary": "Use pathlib.Path to build paths with /, read their parts, check existence, read and write whole files, and list matching files with glob.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "file_paths.path_parts",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Path and the / operator",
+          "worked_example": "from pathlib import Path\np = Path(\"data\") / \"photo.jpg\"\nprint(p)  # data/photo.jpg\n/ joins path parts, like os.path.join but shorter.",
+          "practice": "Predict the printed path for several / expressions; translate os.path.join calls to Path.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "file_paths.path_parts"
+          ]
+        },
+        {
+          "title": "name, stem, suffix, parent",
+          "worked_example": "print(p.name, p.stem, p.suffix, p.parent)\n# photo.jpg photo .jpg data\nThese attributes replace basename, splitext and dirname.",
+          "practice": "Match each attribute to its value for given paths.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_paths.path_parts"
+          ]
+        },
+        {
+          "title": "read_text and write_text",
+          "worked_example": "Path(\"note.txt\").write_text(\"hi\\n\")\nprint(Path(\"note.txt\").read_text().splitlines())  # ['hi']\nOne call opens, reads or writes, and closes; write_text overwrites like 'w'.",
+          "practice": "Rewrite a with-open read as read_text(); predict contents after write_text calls.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.open_and_read"
+          ]
+        },
+        {
+          "title": "List files with glob",
+          "worked_example": "for p in Path(\".\").glob(\"*.csv\"):\n    print(p.name)\n# out.csv, people.csv, scores.csv (order not guaranteed)\n* matches any characters; sort the names if order matters.",
+          "practice": "Predict which files a pattern matches in a given folder; write a loop that counts .txt files.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_paths.path_parts",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "os_sys_module.manage_files_and_folders",
+      "title": "Managing files and folders with os",
+      "concept": "os_sys_module",
+      "summary": "List a folder with os.listdir, make folders with os.makedirs, and rename and delete files with os.rename and os.remove, predicting the errors each can raise.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "file_paths.path_parts",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "os.listdir lists a folder",
+          "worked_example": "import os\nfor name in sorted(os.listdir(\".\")):\n    print(name)\nlistdir returns a list of names (files and folders, no paths, in no particular order).",
+          "practice": "Predict the result of listdir plus filtering by extension; write code counting .txt files in a folder.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Make folders: mkdir vs makedirs(exist_ok=True)",
+          "worked_example": "os.makedirs(\"backup\", exist_ok=True)\nos.mkdir(\"backup\")\n# FileExistsError: [Errno 17] File exists: 'backup'\nexist_ok=True makes creation safe to repeat.",
+          "practice": "Predict which calls fail when a folder already exists; fix a script that crashes on its second run.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Rename or move with os.rename",
+          "worked_example": "os.rename(\"note.txt\", \"backup/note.txt\")\nprint(os.listdir(\"backup\"))  # ['note.txt']\nrename changes a file's path, which also moves it between folders.",
+          "practice": "Predict folder contents after a sequence of renames; write the call to move a file into a folder.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "file_paths.path_parts"
+          ]
+        },
+        {
+          "title": "Delete with os.remove (no undo)",
+          "worked_example": "os.remove(\"backup/note.txt\")\nos.remove(\"backup/note.txt\")\n# FileNotFoundError: [Errno 2] No such file or directory: 'backup/note.txt'\nDeleted files skip the trash; check with os.path.exists first if unsure.",
+          "practice": "Predict outcomes of remove calls; add an exists check to a cleanup script.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "file_paths.path_parts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_paths.path_parts",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "os_sys_module.sys_exit_and_stderr",
+      "title": "Stopping a program with sys.exit and reporting errors",
+      "concept": "os_sys_module",
+      "summary": "End a program early with sys.exit, pass a message or exit code, and send error messages to sys.stderr.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "running_scripts.run_from_terminal",
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sys.exit stops the program now",
+          "worked_example": "import sys\nprint(\"one\")\nsys.exit()\nprint(\"two\")  # never runs\nNothing after sys.exit() runs, wherever it is called from.",
+          "practice": "Predict the output of programs that exit inside an if or a loop.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "Exit with a message",
+          "worked_example": "if 2 > 3:\n    print(\"ok\")\nelse:\n    sys.exit(\"Something went wrong\")\nA string argument is printed (to stderr) and the program ends with exit code 1.",
+          "practice": "Fill in the sys.exit call for a failure case; predict what the terminal shows.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Exit codes: 0 means success",
+          "worked_example": "$ python greet.py\nUsage: python greet.py NAME\n$ echo $?\n1\nsys.exit() or reaching the end gives 0; sys.exit('msg') or sys.exit(1) signals failure to the shell.",
+          "practice": "Give the exit code for each ending of a program.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "Errors go to sys.stderr",
+          "worked_example": "print(\"result: 42\")\nprint(\"warning: bad line skipped\", file=sys.stderr)\nstdout is for results, stderr for problems, so redirecting results to a file still shows errors on screen.",
+          "practice": "Classify messages as stdout or stderr; rewrite error prints to use file=sys.stderr.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "command_line_args.read_sys_argv",
+      "title": "Reading command-line arguments with sys.argv",
+      "concept": "command_line_args",
+      "summary": "Read the words typed after the script name from sys.argv, convert them to numbers, and loop over sys.argv[1:].",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "running_scripts.run_from_terminal",
+        "list_slicing.slice_lists",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sys.argv is a list of what was typed",
+          "worked_example": "# args.py\nimport sys\nprint(sys.argv)\n$ python args.py hello 3\n['args.py', 'hello', '3']\nIndex 0 is the script name; the arguments start at index 1.",
+          "practice": "Predict sys.argv and len(sys.argv) for several command lines.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Arguments are always strings",
+          "worked_example": "# add.py\nimport sys\nprint(sys.argv[1] + sys.argv[2])\nprint(int(sys.argv[1]) + int(sys.argv[2]))\n$ python add.py 2 3\n23\n5",
+          "practice": "Fix programs that join instead of add; predict output with and without int().",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Quotes keep spaces together",
+          "worked_example": "$ python args.py New York\n['args.py', 'New', 'York']\n$ python args.py \"New York\"\n['args.py', 'New York']\nThe shell splits on spaces unless the words are quoted.",
+          "practice": "Predict sys.argv for command lines with and without quotes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "Loop over sys.argv[1:]",
+          "worked_example": "for name in sys.argv[1:]:\n    print(f\"hello, {name}\")\n$ python hi.py ana bo\nhello, ana\nhello, bo\nSlicing off index 0 leaves just the user's arguments.",
+          "practice": "Write a script that sums all numeric arguments; fix one that greets the script name.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.2
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "command_line_args.validate_arguments",
+      "title": "Checking command-line arguments",
+      "concept": "command_line_args",
+      "summary": "Check how many arguments were given and whether they are valid, and exit with a usage message instead of crashing.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "command_line_args.read_sys_argv",
+        "os_sys_module.sys_exit_and_stderr",
+        "conditionals.elif_chains"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A missing argument raises IndexError",
+          "worked_example": "$ python greet.py\nprint(sys.argv[1])\n# IndexError: list index out of range\nWith no arguments sys.argv is just ['greet.py'], so index 1 does not exist.",
+          "practice": "Predict which command lines crash a given script.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "command_line_args.read_sys_argv"
+          ]
+        },
+        {
+          "title": "Check len(sys.argv) and print usage",
+          "worked_example": "import sys\nif len(sys.argv) != 2:\n    sys.exit(\"Usage: python greet.py NAME\")\nprint(f\"Hello, {sys.argv[1]}\")\nCheck before you index; the usage line tells the user how to call the script.",
+          "practice": "Fill in the length check for scripts expecting 1, 2 or 'at least 1' arguments.",
+          "formats": [
+            "fill_in_blank",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "os_sys_module.sys_exit_and_stderr"
+          ]
+        },
+        {
+          "title": "Too few vs too many",
+          "worked_example": "if len(sys.argv) < 2:\n    sys.exit(\"Too few command-line arguments\")\nelif len(sys.argv) > 2:\n    sys.exit(\"Too many command-line arguments\")\nCS50's pattern: a specific message for each way the call can be wrong.",
+          "practice": "Predict the message for several command lines; fix an off-by-one that counts the script name wrongly.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "Validate the value, not just the count",
+          "worked_example": "if not sys.argv[1].endswith(\".py\"):\n    sys.exit(\"Not a Python file\")\nAfter the count, check each argument's form (extension, number, choice) before using it.",
+          "practice": "Write validation for a script that expects a .csv file name and a positive number.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "command_line_args.read_sys_argv"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line_args.read_sys_argv",
+          "weight": 0.7
+        },
+        {
+          "topic": "os_sys_module.sys_exit_and_stderr",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "command_line_args.argparse_basics",
+      "title": "Command-line options with argparse",
+      "concept": "command_line_args",
+      "summary": "Declare positional arguments, typed options with defaults, and on/off flags with argparse, and read them from the parsed args.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "command_line_args.validate_arguments",
+        "parameters_arguments.default_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A positional argument",
+          "worked_example": "import argparse\nparser = argparse.ArgumentParser()\nparser.add_argument(\"word\")\nargs = parser.parse_args()\nprint(args.word)\n$ python ap.py hi\nhi\nEach add_argument becomes an attribute of args.",
+          "practice": "Parsons for a minimal argparse script; predict args values for given command lines.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "command_line_args.read_sys_argv"
+          ]
+        },
+        {
+          "title": "Options with type and default",
+          "worked_example": "parser.add_argument(\"-n\", \"--times\", type=int, default=1)\n$ python ap.py hi -n 3\nhihihi\ntype=int converts for you; default is used when the option is left out.",
+          "practice": "Predict args.times for several command lines; fill in type= and default=.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        },
+        {
+          "title": "On/off flags with store_true",
+          "worked_example": "parser.add_argument(\"--upper\", action=\"store_true\")\n$ python ap.py hi --upper\nHI\nA flag takes no value: present means True, absent means False.",
+          "practice": "Predict args.upper for command lines with and without the flag; add a --verbose flag.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Free help and error messages",
+          "worked_example": "$ python ap.py\nusage: ap.py [-h] [-n TIMES] [--upper] word\nap.py: error: the following arguments are required: word\nargparse checks counts and types itself and prints usage; -h shows help.",
+          "practice": "Predict whether a command line runs or which error argparse prints; compare with the hand-written sys.argv checks.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "command_line_args.validate_arguments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "command_line_args.validate_arguments",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "cli_applications.file_report_tool",
+      "title": "Building a command-line report tool",
+      "concept": "cli_applications",
+      "summary": "Assemble a small CLI program (like Boot.dev's BookBot): take a file path from the command line, load and analyse the file in helper functions, and print a formatted report or a clear error.",
+      "minutes": 22,
+      "core": false,
+      "prerequisites": [
+        "command_line_args.validate_arguments",
+        "file_io.parse_lines_into_data",
+        "functions.main_and_helpers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The shape: arguments, load, analyse, report",
+          "worked_example": "def main():\n    path = get_path()\n    text = load(path)\n    counts = analyse(text)\n    report(counts)\nmain()\nEach step is one helper; main() reads like the program's outline.",
+          "practice": "Parsons for a main() that wires four helpers in order; match each helper to its job.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Helpers return data; only report() prints",
+          "worked_example": "def load(path):\n    with open(path) as f:\n        return f.read()\n\ndef analyse(text):\n    return len(text.split())\nReturning values lets you test analyse() on a string without any file.",
+          "practice": "Fix helpers that print instead of return; write analyse() for a word or line count.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "file_io.parse_lines_into_data"
+          ]
+        },
+        {
+          "title": "Get and check the path in one helper",
+          "worked_example": "def get_path():\n    if len(sys.argv) != 2:\n        sys.exit(\"Usage: python bookbot.py FILE\")\n    return sys.argv[1]\nAll command-line handling lives in one place.",
+          "practice": "Write get_path() for a tool that also accepts an optional second argument.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "command_line_args.validate_arguments"
+          ]
+        },
+        {
+          "title": "A readable report",
+          "worked_example": "def report(path, words):\n    print(f\"--- Report for {path} ---\")\n    print(f\"{words} words found\")\n    print(\"--- End ---\")\nA fixed header and footer make output easy to read and to check by tests.",
+          "practice": "Predict the full output of the tool for a given input file; extend report() with a line count.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.parse_lines_into_data",
+          "weight": 0.4
+        },
+        {
+          "topic": "command_line_args.validate_arguments",
+          "weight": 0.4
+        },
+        {
+          "topic": "functions.main_and_helpers",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "cli_applications.command_loop",
+      "title": "An interactive command loop",
+      "concept": "cli_applications",
+      "summary": "Write a program that repeatedly reads a command, dispatches it to a function, handles arguments, quit and unknown commands.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "break_continue.while_true_loops",
+        "lists.text_to_list_and_back",
+        "functions.main_and_helpers",
+        "higher_order_functions.dispatch_tables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Read commands until quit",
+          "worked_example": "while True:\n    cmd = input(\"> \").strip().lower()\n    if cmd == \"quit\":\n        break\n    print(\"you typed\", cmd)\nThe REPL shape: prompt, read, act, repeat.",
+          "practice": "Trace the loop for a sequence of typed commands; predict how many prompts appear.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        },
+        {
+          "title": "Dispatch each command through a table of functions",
+          "worked_example": "commands = {\"help\": show_help, \"list\": show_items}\nif cmd in commands:\n    commands[cmd]()\nelse:\n    print(\"Unknown command; type help\")\nThe loop stays three lines however many commands there are; the work lives in the functions.",
+          "practice": "Fill in the dispatch lines of a command loop; fix a loop that calls commands[cmd] without checking the command exists.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.dispatch_tables",
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Commands with arguments",
+          "worked_example": "words = input(\"> \").split()\ncommand = words[0]\nargs = words[1:]\n# 'add milk eggs' -> command 'add', args ['milk', 'eggs']\nThe first word picks the action; the rest are its arguments.",
+          "practice": "Predict command and args for several inputs; write the add command that appends all args to a list.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.text_to_list_and_back"
+          ]
+        },
+        {
+          "title": "Empty input should not crash",
+          "worked_example": "words = input(\"> \").split()\nif words:\n    run(words[0], words[1:])\nPressing Enter gives [], and words[0] would raise IndexError; only dispatch when there is a word.",
+          "practice": "Fix a command loop that crashes on an empty line; predict the behaviour for blank and whitespace-only input.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.6
+        },
+        {
+          "topic": "lists.text_to_list_and_back",
+          "weight": 0.3
+        },
+        {
+          "topic": "higher_order_functions.dispatch_tables",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "csv_files.read_with_csv_reader",
+      "title": "Reading CSV files with csv.reader",
+      "concept": "csv_files",
+      "summary": "Read comma-separated files with the csv module, skip the header with next(), and convert fields, instead of splitting on commas by hand.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "file_io.parse_lines_into_data"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Why split(',') is not enough",
+          "worked_example": "# people.csv line: \"Potter, Harry\",London\nprint(line.strip().split(\",\"))\n# ['\"Potter', ' Harry\"', 'London']\nCSV allows quoted fields that contain commas; a hand-written split breaks them apart.",
+          "practice": "Predict split(',') results for lines with and without quoted commas; choose when csv is needed.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_io.parse_lines_into_data"
+          ]
+        },
+        {
+          "title": "csv.reader gives a list per row",
+          "worked_example": "import csv\nwith open(\"people.csv\") as f:\n    for row in csv.reader(f):\n        print(row)\n# ['name', 'city']\n# ['Potter, Harry', 'London']\nThe reader handles quoting; each row is a list of strings.",
+          "practice": "Predict rows for small CSV files, including quoted fields and empty fields.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "context_managers.with_open"
+          ]
+        },
+        {
+          "title": "Skip the header with next()",
+          "worked_example": "with open(\"scores.csv\") as f:\n    reader = csv.reader(f)\n    header = next(reader)\n    for row in reader:\n        print(row)\nprint(header)  # ['name', 'score']\nnext() takes one row off the reader; the loop continues with the rest.",
+          "practice": "Fix a program that crashes on int('score'); fill in the line that saves the header.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "file_io.parse_lines_into_data"
+          ]
+        },
+        {
+          "title": "Unpack and convert each row",
+          "worked_example": "total = 0\nwith open(\"scores.csv\") as f:\n    reader = csv.reader(f)\n    next(reader)\n    for name, score in reader:\n        total += int(score)\nprint(total)  # 21\nValues are still strings; csv does not convert numbers.",
+          "practice": "Write code that totals, averages or filters a numeric column; use delimiter=';' for a semicolon file.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences",
+            "type_conversion.strings_to_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.parse_lines_into_data",
+          "weight": 0.6
+        },
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "csv_files.write_with_csv_writer",
+      "title": "Writing CSV files with csv.writer",
+      "concept": "csv_files",
+      "summary": "Write rows to a CSV file with writerow and writerows, open it with newline='', and let the writer quote fields that contain commas.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "csv_files.read_with_csv_reader",
+        "file_io.write_files"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "writerow writes one list as one line",
+          "worked_example": "with open(\"out.csv\", \"w\", newline=\"\") as f:\n    w = csv.writer(f)\n    w.writerow([\"name\", \"score\"])\n    w.writerow([\"ana\", 12])\n# out.csv: name,score / ana,12\nNumbers are converted to text for you.",
+          "practice": "Predict the file contents for a sequence of writerow calls.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        },
+        {
+          "title": "Commas inside a field get quoted",
+          "worked_example": "w.writerow([\"Potter, Harry\", 7])\n# written as: \"Potter, Harry\",7\nThe writer adds quotes so a reader gets the field back in one piece.",
+          "practice": "Predict the written line for fields containing commas or quotes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "csv_files.read_with_csv_reader"
+          ]
+        },
+        {
+          "title": "writerows writes a whole list of rows",
+          "worked_example": "rows = [[\"bo\", 9], [\"cy\", 14]]\nw.writerows(rows)\n# two lines: bo,9 and cy,14\nPass a list of lists (or tuples) to write everything at once.",
+          "practice": "Write code that saves a list of records (with a header) to CSV.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Always open with newline=\"\"",
+          "worked_example": "with open(\"out.csv\", \"w\", newline=\"\") as f:\n    ...\nWithout newline=\"\" CSV files written on Windows get an extra blank line after every row.",
+          "practice": "Fix the open() call for a CSV writer; choose which of several open calls is correct.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "file_io.write_files",
+          "weight": 0.5
+        },
+        {
+          "topic": "csv_files.read_with_csv_reader",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "csv_files.dict_reader_writer",
+      "title": "CSV rows as dictionaries: DictReader and DictWriter",
+      "concept": "csv_files",
+      "summary": "Read rows as dictionaries keyed by the header with DictReader, and write dictionaries with DictWriter, fieldnames and writeheader.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "csv_files.write_with_csv_writer",
+        "dictionaries.create_and_look_up"
+      ],
+      "knowledge_points": [
+        {
+          "title": "DictReader uses the header as keys",
+          "worked_example": "with open(\"scores.csv\") as f:\n    for row in csv.DictReader(f):\n        print(row[\"name\"], int(row[\"score\"]) * 2)\n# ana 24\n# bo 18\nNo next() needed: the first line becomes the keys of every row.",
+          "practice": "Predict printed values for a DictReader loop; fill in the column name to read.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "csv_files.read_with_csv_reader",
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Values are still strings",
+          "worked_example": "print(row)  # {'name': 'bo', 'score': '9'}\nDictReader only names the fields; convert numbers yourself before comparing or adding.",
+          "practice": "Fix a program that sorts or compares scores as text; predict '9' > '12'.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "DictWriter: fieldnames and writeheader",
+          "worked_example": "with open(\"out.csv\", \"w\", newline=\"\") as f:\n    w = csv.DictWriter(f, fieldnames=[\"name\", \"score\"])\n    w.writeheader()\n    w.writerow({\"name\": \"ana\", \"score\": 12})\n# out.csv: name,score / ana,12\nfieldnames fixes the column order.",
+          "practice": "Parsons for a DictWriter program; predict the file when the field order changes.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "csv_files.write_with_csv_writer"
+          ]
+        },
+        {
+          "title": "Keys must match the fieldnames",
+          "worked_example": "w.writerow({\"name\": \"ana\", \"age\": 12})\n# ValueError: dict contains fields not in fieldnames: 'age'\nEvery key you write must be one of the fieldnames.",
+          "practice": "Spot and fix rows whose keys do not match the fieldnames.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "csv_files.write_with_csv_writer"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "csv_files.read_with_csv_reader",
+          "weight": 0.5
+        },
+        {
+          "topic": "csv_files.write_with_csv_writer",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "json_data.json_strings",
+      "title": "JSON text and Python values: loads and dumps",
+      "concept": "json_data",
+      "summary": "Recognise JSON syntax, turn JSON text into Python lists and dicts with json.loads, and turn Python values into JSON text with json.dumps.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "lists.create_and_index",
+        "strings.literals_and_quotes",
+        "none_type.none_value",
+        "dictionaries.create_and_look_up"
+      ],
+      "knowledge_points": [
+        {
+          "title": "json.loads turns text into Python values",
+          "worked_example": "import json\ndata = json.loads('[1, 2, \"a\", true, null]')\nprint(data)  # [1, 2, 'a', True, None]\nprint(data[2])  # a\nThe result is a real list you can index, not a string.",
+          "practice": "Predict the Python value and its type for short JSON texts.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "JSON spelling vs Python spelling",
+          "worked_example": "print(json.dumps([1, \"a\", True, None]))  # [1, \"a\", true, null]\nJSON writes true, false and null, and always uses double quotes.",
+          "practice": "Translate values between Python and JSON spelling; spot invalid JSON (single quotes, True).",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value",
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "JSON objects become dictionaries",
+          "worked_example": "person = json.loads('{\"name\": \"ana\", \"age\": 31}')\nprint(person[\"age\"])  # 31\nprint(json.dumps(person))  # {\"name\": \"ana\", \"age\": 31}\n{...} in JSON is an object; Python reads it as a dict.",
+          "practice": "Predict lookups on loaded objects; write the dumps call for a given dict.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "dumps gives a string; indent makes it readable",
+          "worked_example": "text = json.dumps({\"name\": \"ana\", \"tags\": [\"x\", \"y\"]}, indent=2)\nprint(type(text).__name__)  # str\nindent= spreads the text over lines; the data is the same.",
+          "practice": "Predict the type of loads/dumps results; predict the indented layout of a small value.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code",
+        "codecademy",
+        "helsinki_mooc",
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "json_data.json_files",
+      "title": "Saving and loading JSON files",
+      "concept": "json_data",
+      "summary": "Save Python data to a file with json.dump, load it back with json.load, and update a JSON file by loading, changing and dumping it.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "json_data.json_strings",
+        "file_io.write_files"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "json.dump writes data to a file",
+          "worked_example": "data = {\"name\": \"ana\", \"scores\": [12, 15]}\nwith open(\"data.json\", \"w\") as f:\n    json.dump(data, f, indent=4)\ndump (no s) writes to a file object; dumps returns a string.",
+          "practice": "Fill in dump vs dumps; predict the file contents for a small value.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files",
+            "json_data.json_strings"
+          ]
+        },
+        {
+          "title": "json.load reads it back",
+          "worked_example": "with open(\"data.json\") as f:\n    data = json.load(f)\nprint(data[\"scores\"][1])  # 15\nThe loaded value has the same structure that was saved.",
+          "practice": "Predict values read from a given JSON file; fix code that calls loads on a file object.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings"
+          ]
+        },
+        {
+          "title": "Update: load, change, dump",
+          "worked_example": "with open(\"data.json\") as f:\n    data = json.load(f)\ndata[\"scores\"].append(9)\nwith open(\"data.json\", \"w\") as f:\n    json.dump(data, f, indent=4)\nThe 100 Days password-manager pattern: never edit JSON text by hand in code.",
+          "practice": "Parsons for a load-change-save program; predict the saved data after two runs.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "file_io.write_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.7
+        },
+        {
+          "topic": "file_io.write_files",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "codecademy",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "json_data.navigate_nested_json",
+      "title": "Digging into nested JSON data",
+      "concept": "json_data",
+      "summary": "Apply nested-data paths to JSON text from files and web APIs: parse it, collect the fields you need, handle JSON null, and explore an unfamiliar response level by level.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "json_data.json_strings",
+        "nested_data_structures.navigate_deep_data",
+        "lists.loop_over_items",
+        "list_methods.append_build"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Parse, then follow the path",
+          "worked_example": "data = json.loads('{\"results\": [{\"name\": \"Oslo\", \"rating\": null}, {\"name\": \"Bergen\", \"rating\": 4.5}]}')\nprint(data[\"results\"][1][\"name\"])  # Bergen\nOnce loaded, JSON is ordinary nested dicts and lists, so the paths from navigate_deep_data apply unchanged.",
+          "practice": "Write the lookup expression that reaches a given value in loaded JSON; predict the value of a given chain.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings",
+            "nested_data_structures.navigate_deep_data"
+          ]
+        },
+        {
+          "title": "Collect fields into a new list",
+          "worked_example": "names = []\nfor place in data[\"results\"]:\n    names.append(place[\"name\"])\nprint(names)  # ['Oslo', 'Bergen']\nMost API answers hold a list of similar objects; extract just what you need before processing further (data as in KP1).",
+          "practice": "Write code that extracts a list of values meeting a condition (py4e GeoJSON / comment counts).",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "JSON null arrives as None",
+          "worked_example": "for place in data[\"results\"]:\n    if place[\"rating\"] is None:\n        print(place[\"name\"], \"no rating\")\n    else:\n        print(place[\"name\"], place[\"rating\"])\n# Oslo no rating\n# Bergen 4.5\nnull (and true/false) become None (True/False); check for None before doing arithmetic with a field.",
+          "practice": "Predict the Python values of JSON fields containing null, true and false; fix a total that crashes on a null field.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings",
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "Explore an unfamiliar response one level at a time",
+          "worked_example": "print(list(data))                         # ['results']\nprint(type(data[\"results\"]), len(data[\"results\"]))  # <class 'list'> 2\nprint(list(data[\"results\"][0]))          # ['name', 'rating']\nBefore writing a path into a big response, print the keys and types of each level; when a path fails, inspect the level above it.",
+          "practice": "Given printed keys and types of a response, write the path to a described value; choose what to print next to find a field.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.navigate_deep_data"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "nested_data_structures.navigate_deep_data",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code",
+        "helsinki_mooc",
+        "bootdev"
+      ],
+      "notes": "Reconciliation: KP1, KP2 and KP4 duplicated nested_data_structures.navigate_deep_data (paths, looping over the list, KeyError/TypeError per step); rewritten as JSON-specific steps that build on it. Snippets run with Python 3.13."
+    },
+    {
+      "id": "json_data.json_pitfalls",
+      "title": "What JSON cannot hold",
+      "concept": "json_data",
+      "summary": "Predict what changes in a JSON round trip (tuples become lists, keys become strings), which values cannot be saved, and the errors raised by invalid JSON text.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "json_data.json_strings",
+        "dictionaries.valid_keys_and_tuple_keys",
+        "tuples.create_and_index"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Tuples come back as lists",
+          "worked_example": "print(json.loads(json.dumps((1, 2))))  # [1, 2]\nJSON has only arrays, so a tuple is saved as an array and loaded as a list.",
+          "practice": "Predict the loaded value and type for tuples and nested tuples.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Keys always become strings",
+          "worked_example": "print(json.loads(json.dumps({1: \"a\"})))  # {'1': 'a'}\nJSON object keys are text, so data[1] fails after loading; use data['1'] or convert.",
+          "practice": "Predict lookups after a round trip; fix code that looks up an int key in loaded JSON.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings"
+          ]
+        },
+        {
+          "title": "Some values cannot be saved",
+          "worked_example": "json.dumps({(1, 2): \"a\"})\n# TypeError: keys must be str, int, float, bool or None, not tuple\nOnly dict, list, str, int, float, bool and None (and tuples, as lists) can be saved, and keys must be simple values; convert anything else first.",
+          "practice": "Classify values and dicts as JSON-saveable or not; fix code that saves an unsaveable value or key by converting it first.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings",
+            "dictionaries.valid_keys_and_tuple_keys"
+          ]
+        },
+        {
+          "title": "Invalid JSON raises JSONDecodeError",
+          "worked_example": "json.loads(\"{'a': 1}\")\n# json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\nSingle quotes, trailing commas and True/None are Python, not JSON.",
+          "practice": "Find the error in each invalid JSON text and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "json_data.json_strings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "serialization.choose_a_format",
+      "title": "Serialization: saving data and getting it back",
+      "concept": "serialization",
+      "summary": "Explain serialization as turning in-memory data into text or bytes and back, check that a round trip preserves the data, and choose between plain text, CSV, JSON and pickle.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "json_data.json_files",
+        "csv_files.write_with_csv_writer"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Serialize and deserialize by hand",
+          "worked_example": "score = 42\ntext = str(score)        # serialize\nprint(int(text) == score)  # True: deserialized back\nAny save format is a pair of conversions: value -> text/bytes and text/bytes -> value.",
+          "practice": "Name the serialize and deserialize steps in short save/load programs.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "type_conversion.numbers_and_strings"
+          ]
+        },
+        {
+          "title": "Test the round trip",
+          "worked_example": "data = {\"pos\": (1, 2)}\nprint(json.loads(json.dumps(data)) == data)  # False\nComparing before and after shows what a format loses (here the tuple became a list).",
+          "practice": "Predict whether round trips through text, CSV and JSON give back equal data.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "json_data.json_files"
+          ]
+        },
+        {
+          "title": "pickle: Python-only bytes",
+          "worked_example": "import pickle\nb = pickle.dumps({\"a\": (1, 2)})\nprint(type(b).__name__, pickle.loads(b))  # bytes {'a': (1, 2)}\npickle keeps Python types exactly, but only Python can read it, and loading untrusted pickle data can run code.",
+          "practice": "Choose when pickle is acceptable; predict the type returned by dumps and loads.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Choose a format",
+          "worked_example": "Table of rows for a spreadsheet -> CSV\nNested data for a web API or config -> JSON\nPython objects cached by your own program -> pickle\nOne number or a word list -> plain text",
+          "practice": "Pick the best format for each scenario and justify it in one phrase.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "csv_files.write_with_csv_writer",
+            "json_data.json_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "json_data.json_files",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    }
+  ]
+}

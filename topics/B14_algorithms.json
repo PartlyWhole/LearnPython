@@ -1,0 +1,2315 @@
+{
+  "batch": "B14",
+  "title": "Algorithms and numerical methods",
+  "concept_map": {
+    "guess_and_check": {
+      "topics": [
+        "guess_and_check.exhaustive_enumeration",
+        "guess_and_check.approximate_with_epsilon"
+      ],
+      "entry_topic": "guess_and_check.exhaustive_enumeration",
+      "notes": "Owns exhaustive enumeration and the stepping/epsilon approximation (MIT L4-L5), as B04 loop_patterns and B05 computational_thinking deferred. Bisection and Newton build on approximate_with_epsilon."
+    },
+    "bisection_method": {
+      "topics": [
+        "bisection_method.bisection_square_root",
+        "bisection_method.robust_bisection"
+      ],
+      "entry_topic": "bisection_method.bisection_square_root",
+      "notes": "Two topics (MIT only, deep). Bisection on numbers; bisection on list positions is binary_search, which depends on bisection_square_root. The integer guessing game appears only as a practice item; with random secrets it needs B13 random_module."
+    },
+    "newton_raphson": {
+      "topics": [
+        "newton_raphson.newton_square_root"
+      ],
+      "entry_topic": "newton_raphson.newton_square_root",
+      "notes": "One non-core topic; derivatives are given as formulas, not taught."
+    },
+    "floating_point_precision": {
+      "topics": [
+        "floating_point_precision.accumulating_errors",
+        "floating_point_precision.binary_fractions",
+        "floating_point_precision.decimal_and_fraction"
+      ],
+      "entry_topic": "floating_point_precision.accumulating_errors",
+      "notes": "B02 integers_floats / comparison_operators already teach 0.1 + 0.2, round() and abs(a - b) < tol; these topics are not repeated. math.isclose is left to B13 math_module (sibling), which could encompass accumulating_errors. Decimal/Fraction (codecademy) imports are memorised one-liners for B13 to link back to. Reconciliation: math.isclose stays with B13 math_module.isclose_and_inf (no duplicate here); decimal_and_fraction now depends on and encompasses it."
+    },
+    "binary_bitwise": {
+      "topics": [
+        "binary_bitwise.read_binary",
+        "binary_bitwise.decimal_to_binary_loop",
+        "binary_bitwise.bitwise_operators"
+      ],
+      "entry_topic": "binary_bitwise.read_binary",
+      "notes": "read_binary and the % 2 / // 2 conversion loop (MIT L4); bitwise operators (Boot.dev 'Computing'). All non-core: nothing later in the plan is expected to depend on them. B02 deferred ^ here."
+    },
+    "linear_search": {
+      "topics": [
+        "linear_search.search_a_list"
+      ],
+      "entry_topic": "linear_search.search_a_list",
+      "notes": "One core topic; list.index/in as built-in linear search is mentioned, not re-taught (B06 owns them)."
+    },
+    "binary_search": {
+      "topics": [
+        "binary_search.iterative_binary_search",
+        "binary_search.boundary_bugs",
+        "binary_search.recursive_and_bisect"
+      ],
+      "entry_topic": "binary_search.iterative_binary_search",
+      "notes": "Iterative version is core; bugs and recursive/bisect versions are non-core. Recursive version with slicing vs indexes ties to complexity_big_o.cost_of_builtin_operations. import bisect is a memorised one-liner for B13."
+    },
+    "sorting_algorithms": {
+      "topics": [
+        "sorting_algorithms.bubble_sort",
+        "sorting_algorithms.selection_sort",
+        "sorting_algorithms.insertion_sort",
+        "sorting_algorithms.merge_sorted_lists",
+        "sorting_algorithms.merge_sort",
+        "sorting_algorithms.quick_sort",
+        "sorting_algorithms.compare_and_choose"
+      ],
+      "entry_topic": "sorting_algorithms.bubble_sort",
+      "notes": "Bubble, selection, merge (MIT L24) and insertion, quick (Boot.dev) plus a comparison topic containing bogo sort and stability. sorted()/sort()/key= are B06 sorting and B08; not re-taught. Bogo sort uses import random as a memorised one-liner (random.shuffle)."
+    },
+    "complexity_big_o": {
+      "topics": [
+        "complexity_big_o.timing_programs",
+        "complexity_big_o.counting_operations",
+        "complexity_big_o.big_o_notation",
+        "complexity_big_o.complexity_classes",
+        "complexity_big_o.cost_of_builtin_operations"
+      ],
+      "entry_topic": "complexity_big_o.timing_programs",
+      "notes": "Timing, counting, Big O/Theta, classes and built-in operation costs (MIT L21-L23, L26 'lists in memory, hashing'). Big O of set/dict membership (deferred by B07) is cost_of_builtin_operations KP1; hash table internals are B15 hash_maps_internals, which should depend on cost_of_builtin_operations. timing_programs uses import time as a memorised one-liner (B13 has no time-module concept)."
+    },
+    "simulation_monte_carlo": {
+      "topics": [
+        "simulation_monte_carlo.estimate_probability",
+        "simulation_monte_carlo.estimate_area_pi"
+      ],
+      "entry_topic": "simulation_monte_carlo.estimate_probability",
+      "notes": "Both topics need random.randint/random.random/random.seed, owned by B13 random_module (sibling), hence pending concept:random_module; the snippets use import random as a memorised line. Random walks and full games (Code in Place 'Simulations and games') are left as multistep projects."
+    },
+    "mathematical_induction": {
+      "topics": [
+        "mathematical_induction.induction_and_recursion"
+      ],
+      "entry_topic": "mathematical_induction.induction_and_recursion",
+      "notes": "One non-core topic placed after B08 recursion.base_and_recursive_case (B08 left it without a topic); the concept graph puts induction before recursion, but the topic uses recursive functions as its main application."
+    }
+  },
+  "topics": [
+    {
+      "id": "guess_and_check.exhaustive_enumeration",
+      "title": "Guess and check: trying every possible answer",
+      "concept": "guess_and_check",
+      "summary": "Solve a problem by looping over every candidate answer and testing each, stopping at the answer, reporting when there is none, and handling negative inputs and two unknowns.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "loop_patterns.search_flag",
+        "arithmetic_operators.exponents",
+        "while_loops.loop_until_condition",
+        "nested_loops.loop_inside_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Loop over the candidates, test each one",
+          "worked_example": "x = 27\nfor guess in range(x + 1):\n    if guess ** 3 == x:\n        print('cube root of', x, 'is', guess)\n# cube root of 27 is 3\nThe loop generates guesses, the if checks them. The answer must be somewhere in range(x + 1).",
+          "practice": "Predict what a guess-and-check loop prints; fill in the test that checks a guess (e.g. 'guess * guess == x', 'guess * 7 == n').",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.search_flag",
+            "arithmetic_operators.exponents"
+          ]
+        },
+        {
+          "title": "Stop once the guess is big enough, then check for an exact hit",
+          "worked_example": "x = 30\nguess = 0\nwhile guess ** 3 < x:\n    guess += 1\nif guess ** 3 == x:\n    print(guess)\nelse:\n    print(x, 'is not a perfect cube')\n# 30 is not a perfect cube\nOnce guess ** 3 reaches x, larger guesses cannot help. One check after the loop says whether we landed exactly on x.",
+          "practice": "Predict the output for perfect and non-perfect inputs; write a loop that finds the integer square root of n or reports that there is none.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        },
+        {
+          "title": "Negative inputs: search with abs(x), then fix the sign",
+          "worked_example": "x = -8\nguess = 0\nwhile guess ** 3 < abs(x):\n    guess += 1\nif x < 0:\n    guess = -guess\nprint(guess)  # -2\nWith guess ** 3 < x the loop would stop at once for x = -8 (0 < -8 is False) and report 0.",
+          "practice": "Spot why the cube-root search gives 0 for negative x and fix it; predict results for -27 and 64.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        },
+        {
+          "title": "Two unknowns: one loop inside another",
+          "worked_example": "for a in range(10):\n    for b in range(10):\n        if 5 * a + 7 * b == 41:\n            print(a, b)\n# 4 3\nEvery pair (a, b) is tried: 100 checks. When one unknown can be computed from the other (pigs = heads - chickens), one loop is enough.",
+          "practice": "Write a search for two unknowns (chickens and pigs from heads and legs; coins adding to an amount); count how many pairs a nested search checks.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.search_flag",
+          "weight": 0.4
+        },
+        {
+          "topic": "while_loops.loop_until_condition",
+          "weight": 0.4
+        },
+        {
+          "topic": "nested_loops.loop_inside_loop",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "guess_and_check.approximate_with_epsilon",
+      "title": "Approximate answers: small steps and a tolerance",
+      "concept": "guess_and_check",
+      "summary": "Find an approximate square root by stepping a float guess until it is within epsilon of the answer, count the guesses, and stop safely when the step jumps past the answer.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "guess_and_check.exhaustive_enumeration",
+        "comparison_operators.ranges_and_float_equality",
+        "logical_operators.and_or_not"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Close enough: abs(guess ** 2 - x) < epsilon",
+          "worked_example": "x = 2\nepsilon = 0.01\nprint(abs(1.41 ** 2 - x) < epsilon)   # False: 1.9881 is 0.0119 away\nprint(abs(1.414 ** 2 - x) < epsilon)  # True: 1.999396 is close enough\nMost square roots are not exact floats, so we accept any guess whose square is within epsilon of x.",
+          "practice": "Decide whether given guesses are good enough for a given epsilon; fill in the tolerance test.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.ranges_and_float_equality"
+          ]
+        },
+        {
+          "title": "Step the guess up until it is close enough",
+          "worked_example": "x = 25\nepsilon = 0.01\nstep = 0.0001\nguess = 0.0\nwhile abs(guess ** 2 - x) >= epsilon:\n    guess += step\nprint(round(guess, 4))  # 4.999\nThe loop runs while the guess is NOT good enough; the condition is the opposite of the 'close enough' test.",
+          "practice": "Reorder the lines of an approximation loop; predict roughly where a loop with a given step stops.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "guess_and_check.exhaustive_enumeration"
+          ]
+        },
+        {
+          "title": "Count the guesses: smaller steps cost more",
+          "worked_example": "x = 25\nepsilon = 0.01\nstep = 0.0001\nguess = 0.0\nnum_guesses = 0\nwhile abs(guess ** 2 - x) >= epsilon:\n    guess += step\n    num_guesses += 1\nprint(num_guesses)  # 49990\nAbout 5 / 0.0001 guesses. Ten times smaller steps mean ten times more guesses: accuracy costs time.",
+          "practice": "Estimate the number of guesses for a given x and step; choose which change (smaller step, larger epsilon) makes the loop faster.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Stepping past the answer: stop when guess ** 2 passes x",
+          "worked_example": "x = 54321\nepsilon = 0.01\nstep = 0.0001\nguess = 0.0\nwhile abs(guess ** 2 - x) >= epsilon and guess ** 2 <= x:\n    guess += step\nif abs(guess ** 2 - x) >= epsilon:\n    print('Failed on', x)  # Failed on 54321\nelse:\n    print(guess)\nNear 233 each step changes guess ** 2 by about 0.047, more than 2 * epsilon, so it can jump over the window. Without the second condition the loop would never end.",
+          "practice": "Find why an approximation loop never ends and add the missing stop condition; predict whether it succeeds for given x, step and epsilon.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "guess_and_check.exhaustive_enumeration",
+          "weight": 0.5
+        },
+        {
+          "topic": "comparison_operators.ranges_and_float_equality",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "floating_point_precision.accumulating_errors",
+      "title": "When float errors pile up",
+      "concept": "floating_point_precision",
+      "summary": "Predict how tiny float errors grow in loops and with large numbers, and avoid them by stopping loops with < and counting with integers (cents, not dollars).",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "comparison_operators.ranges_and_float_equality",
+        "loop_patterns.accumulate_sum",
+        "while_loops.infinite_and_off_by_one"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Adding 0.1 ten times is not 1.0",
+          "worked_example": "total = 0.0\nfor i in range(10):\n    total += 0.1\nprint(total)         # 0.9999999999999999\nprint(total == 1.0)  # False\nEach 0.1 is slightly off, and every addition carries the error along.",
+          "practice": "Predict the result and the == comparison after repeated float additions; rewrite the check with a tolerance.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.ranges_and_float_equality",
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "A float loop runs one time too many",
+          "worked_example": "x = 0.0\ncount = 0\nwhile x < 1.0:\n    x += 0.1\n    count += 1\nprint(count)  # 11, not 10\nAfter ten steps x is 0.9999999999999999, still < 1.0. With while x != 1.0 the loop would never stop at all.",
+          "practice": "Predict how many times float-stepping loops run; pick which loop condition never terminates.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.infinite_and_off_by_one"
+          ]
+        },
+        {
+          "title": "Count with integers, compute floats from them",
+          "worked_example": "cents = 0\nfor i in range(10):\n    cents += 10\nprint(cents == 100)  # True\nprint(cents / 100)   # 1.0\nIntegers are exact. Keep money in cents (or loop over an int i and compute i / 10) and convert only for display.",
+          "practice": "Rewrite a float-stepping loop to use an integer counter; convert a price calculation to cents.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Large plus small: floats keep only about 16 digits",
+          "worked_example": "print(1e16 + 1 == 1e16)  # True: the 1 is lost\nprint(2 ** 60 + 1)       # 1152921504606846977: ints are exact\nprint(1e308 * 10)        # inf\nA float stores about 15-17 significant digits and has a maximum size; Python ints have neither limit.",
+          "practice": "Predict which expressions lose digits or overflow to inf; choose int or float for counting large quantities exactly.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.ranges_and_float_equality",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "binary_bitwise.read_binary",
+      "title": "Binary numbers: place values and Python's 0b",
+      "concept": "binary_bitwise",
+      "summary": "Convert between binary and decimal by place value and with 0b literals, bin() and int(s, 2), and work out how many values n bits can hold.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "arithmetic_operators.exponents",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Place values are powers of 2",
+          "worked_example": "# 1011 in binary = 1*8 + 0*4 + 1*2 + 1*1\nprint(1 * 2**3 + 0 * 2**2 + 1 * 2**1 + 1 * 2**0)  # 11\nLike decimal digits are worth 1, 10, 100, binary digits (bits) are worth 1, 2, 4, 8 from the right.",
+          "practice": "Convert 4-6 bit binary numbers to decimal by hand; convert small decimals to binary by subtracting powers of 2.",
+          "formats": [
+            "numeric",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        },
+        {
+          "title": "Binary in Python: 0b, bin() and int(s, 2)",
+          "worked_example": "print(0b1011)          # 11\nprint(bin(11))         # 0b1011\nprint(int('1011', 2))  # 11\n0b marks a binary literal; bin() returns a string; int() with base 2 reads a binary string.",
+          "practice": "Predict the output of bin() and int(..., 2) calls; write the expression that converts a binary string to a number.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "n bits give 2 ** n values",
+          "worked_example": "print(2 ** 8)     # 256: one byte holds 0 to 255\nprint(bin(255))   # 0b11111111\nprint(bin(256))   # 0b100000000\nEach extra bit doubles the number of values; the largest n-bit number is 2 ** n - 1.",
+          "practice": "Compute how many values n bits hold and how many bits a number needs; pick the largest value of a byte.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        },
+        {
+          "title": "Hexadecimal: four bits per digit",
+          "worked_example": "print(0xff)            # 255\nprint(hex(255))        # 0xff\nprint(int('1f', 16))   # 31\nHex digits run 0-9 then a-f (10-15); each hex digit is exactly four bits, which is why colours and bytes are written in hex.",
+          "practice": "Convert between short hex, binary and decimal values; predict hex() output.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.exponents",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "binary_bitwise.decimal_to_binary_loop",
+      "title": "Converting to binary with % 2 and // 2",
+      "concept": "binary_bitwise",
+      "summary": "Write the loop that converts a non-negative or negative integer to a binary string by repeatedly taking n % 2 and n // 2, including the zero case.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "binary_bitwise.read_binary",
+        "arithmetic_operators.modulo_patterns",
+        "while_loops.repeat_while_true",
+        "string_concatenation.numbers_into_text"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The last bit is n % 2, the rest is n // 2",
+          "worked_example": "n = 11\nprint(n % 2, n // 2)  # 1 5\n# 11 is 0b1011: last bit 1, and 5 is 0b101, the bits that are left\nLike n % 10 and n // 10 split off the last decimal digit, % 2 and // 2 split off the last bit.",
+          "practice": "Predict n % 2 and n // 2 for several n and match them to the binary digits.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.modulo_patterns"
+          ]
+        },
+        {
+          "title": "Repeat until n is 0, putting each bit in front",
+          "worked_example": "n = 11\nresult = ''\nwhile n > 0:\n    result = str(n % 2) + result\n    n = n // 2\nprint(result)  # 1011\nBits come out last-first, so each new bit is added to the front of the string.",
+          "practice": "Trace result and n through the loop; reorder the lines of the conversion loop.",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true",
+            "string_concatenation.numbers_into_text"
+          ]
+        },
+        {
+          "title": "Zero needs its own case",
+          "worked_example": "n = 0\nresult = ''\nwhile n > 0:\n    result = str(n % 2) + result\n    n = n // 2\nif result == '':\n    result = '0'\nprint(result)  # 0\nFor n = 0 the loop never runs and result stays empty, so it is fixed up afterwards.",
+          "practice": "Find the input that makes the converter print nothing and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Negative numbers: convert abs(n), then add '-'",
+          "worked_example": "n = -6\nm = abs(n)\nresult = ''\nwhile m > 0:\n    result = str(m % 2) + result\n    m = m // 2\nif n < 0:\n    result = '-' + result\nprint(result, bin(n))  # -110 -0b110\nSame trick as the negative cube root: work on the size, restore the sign at the end. bin() confirms the answer.",
+          "practice": "Write a full to_binary(n) function and check it against bin() for several inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "binary_bitwise.read_binary"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.5
+        },
+        {
+          "topic": "binary_bitwise.read_binary",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "binary_bitwise.bitwise_operators",
+      "title": "Bitwise operators: & | ^ << >>",
+      "concept": "binary_bitwise",
+      "summary": "Combine integers bit by bit with &, | and ^, shift bits with << and >>, and use bit masks as on/off flags without the precedence trap.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "binary_bitwise.read_binary",
+        "logical_operators.and_or_not"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "& and | work bit by bit",
+          "worked_example": "a, b = 0b1100, 0b1010\nprint(bin(a & b))  # 0b1000: 1 only where both are 1\nprint(bin(a | b))  # 0b1110: 1 where either is 1\n& and | apply 'and' and 'or' to each pair of bits, unlike the logical and/or which work on whole values.",
+          "practice": "Compute & and | of short binary numbers by hand; predict the printed results.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "binary_bitwise.read_binary"
+          ]
+        },
+        {
+          "title": "^ is exclusive or, not a power",
+          "worked_example": "print(2 ^ 3)                 # 1: 10 xor 11 = 01\nprint(2 ** 3)                # 8\nprint(bin(0b1100 ^ 0b1010))  # 0b110\n^ gives 1 where the bits differ. Writing 2 ^ 3 for 'two cubed' is a classic silent bug.",
+          "practice": "Fix code that uses ^ for powers; predict ^ results.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Shifts multiply and divide by powers of 2",
+          "worked_example": "print(5 << 1, 5 << 3)  # 10 40\nprint(40 >> 2)         # 10\nprint(bin(5), bin(5 << 1))  # 0b101 0b1010\n<< k appends k zero bits (times 2 ** k); >> k drops k bits (floor division by 2 ** k).",
+          "practice": "Predict shifted values; write a shift equal to multiplying by 16.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Flags and masks: & is not and",
+          "worked_example": "READ, WRITE, EXEC = 4, 2, 1\nperms = READ | WRITE         # 6 = 0b110\nprint(perms & WRITE != 0)    # True: the write bit is on\nprint(perms & EXEC != 0)     # False\nprint(bool(perms and EXEC))  # True: 'and' only asks whether both are non-zero\n| switches flags on and & tests one bit. In Python & binds tighter than !=, so no brackets are needed; using the logical and instead of & is the common bug.",
+          "practice": "Combine and test permission flags; fix a flag test that uses and instead of &.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "binary_bitwise.read_binary",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "floating_point_precision.binary_fractions",
+      "title": "Why 0.1 cannot be stored exactly",
+      "concept": "floating_point_precision",
+      "summary": "Write fractions in binary, test whether a decimal has an exact binary form by doubling, and see the value Python really stores for 0.1.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "binary_bitwise.read_binary",
+        "floating_point_precision.accumulating_errors",
+        "string_formatting.number_format_specs",
+        "while_loops.loop_until_condition"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Binary fractions: halves, quarters, eighths",
+          "worked_example": "# 0.101 in binary = 1/2 + 0/4 + 1/8\nprint(1/2 + 1/8)              # 0.625\nprint(0.625 + 0.125 == 0.75)  # True: both are exact in binary\nAfter the binary point the places are worth 1/2, 1/4, 1/8, ... Sums of these are stored exactly.",
+          "practice": "Convert short binary fractions to decimal; predict which float comparisons are exactly True.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "binary_bitwise.read_binary"
+          ]
+        },
+        {
+          "title": "Double until whole: is the fraction exact in binary?",
+          "worked_example": "x = 0.375\np = 0\nwhile x != int(x):\n    x = x * 2\n    p += 1\nprint(x, p)  # 3.0 3\n0.375 * 2 ** 3 = 3, so 0.375 = 3 / 8 = 0b11 shifted three places: 0.011 in binary.",
+          "practice": "Find p for given fractions (0.5, 0.75, 0.6875); write the binary digits from the result.",
+          "formats": [
+            "numeric",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        },
+        {
+          "title": "1/10 repeats forever in binary",
+          "worked_example": "num, den = 1, 10\nbits = ''\nfor i in range(12):\n    num = num * 2\n    bits = bits + str(num // den)\n    num = num % den\nprint('0.' + bits)  # 0.000110011001\nLong division by 10 in base 2 never ends: 0011 repeats, like 1/3 = 0.333... in decimal. Python must cut it off.",
+          "practice": "Predict the first binary digits of 1/4 and 1/5 with this loop; classify decimals as exact or repeating in binary.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "See the value that is really stored",
+          "worked_example": "print(f'{0.1:.20f}')  # 0.10000000000000000555\nprint(f'{0.5:.20f}')  # 0.50000000000000000000\nprint(0.1) shows the shortest text that maps back to the stored float; 20 decimals reveal the rounding.",
+          "practice": "Predict whether 20-decimal formatting shows extra digits for given numbers.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_formatting.number_format_specs"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "binary_bitwise.read_binary",
+          "weight": 0.3
+        },
+        {
+          "topic": "floating_point_precision.accumulating_errors",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "floating_point_precision.decimal_and_fraction",
+      "title": "Exact arithmetic with Decimal and Fraction",
+      "concept": "floating_point_precision",
+      "summary": "Use decimal.Decimal (built from strings) for exact money arithmetic and rounding with quantize, and fractions.Fraction for exact ratios.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "floating_point_precision.accumulating_errors",
+        "math_module.isclose_and_inf"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Decimal from a string is exact",
+          "worked_example": "from decimal import Decimal\nprint(Decimal('0.1') + Decimal('0.2'))                    # 0.3\nprint(Decimal('0.1') + Decimal('0.2') == Decimal('0.3'))  # True\nDecimal stores decimal digits, so 0.1 really is 0.1 and == works without math.isclose. from decimal import Decimal is used as a set phrase here.",
+          "practice": "Predict Decimal sums and comparisons next to the same float expressions. Choose between math.isclose (approximate floats) and Decimal (exact decimal values) for described tasks.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "floating_point_precision.accumulating_errors",
+            "math_module.isclose_and_inf"
+          ]
+        },
+        {
+          "title": "Decimal(0.1) copies the float's error",
+          "worked_example": "from decimal import Decimal\nprint(Decimal(0.1))\n# 0.1000000000000000055511151231257827021181583404541015625\nThe float is already wrong before Decimal sees it. Build Decimals from strings, never from float literals.",
+          "practice": "Fix code that builds Decimals from floats; choose the correct constructor call.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Rounding money with quantize",
+          "worked_example": "from decimal import Decimal\nprint(round(2.675, 2))                            # 2.67: the float is just below 2.675\nprint(Decimal('2.675').quantize(Decimal('0.01')))  # 2.68\nquantize rounds to the given number of places on the exact decimal value (ties go to the even digit by default).",
+          "practice": "Round prices to cents with quantize; predict where float round() and quantize disagree.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Fraction for exact ratios",
+          "worked_example": "from fractions import Fraction\nprint(Fraction(1, 3) + Fraction(1, 6))         # 1/2\nprint(Fraction(1, 10) * 3 == Fraction(3, 10))  # True\nA Fraction keeps an integer numerator and denominator, so thirds and tenths stay exact.",
+          "practice": "Predict Fraction results; choose between float, Decimal and Fraction for a task.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "floating_point_precision.accumulating_errors",
+          "weight": 0.2
+        },
+        {
+          "topic": "math_module.isclose_and_inf",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "bisection_method.bisection_square_root",
+      "title": "Bisection: halving the range of possible answers",
+      "concept": "bisection_method",
+      "summary": "Approximate a square or cube root by repeatedly guessing the middle of [low, high] and keeping the half that contains the answer, and see why it needs far fewer guesses than stepping.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "guess_and_check.approximate_with_epsilon",
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One bisection step: guess the middle, keep one half",
+          "worked_example": "x = 25\nlow, high = 0.0, x\nguess = (low + high) / 2   # 12.5\nif guess ** 2 > x:\n    high = guess           # the root is in [0, 12.5]\nelse:\n    low = guess\nprint(low, high)  # 0.0 12.5\nIf the guess is too big, the answer is below it: move high down. Otherwise move low up.",
+          "practice": "Trace low, high and guess for three bisection steps by hand.",
+          "formats": [
+            "trace_table",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Loop until the guess is within epsilon",
+          "worked_example": "x = 25\nepsilon = 0.01\nlow, high = 0.0, x\nguess = (low + high) / 2\nwhile abs(guess ** 2 - x) >= epsilon:\n    if guess ** 2 < x:\n        low = guess\n    else:\n        high = guess\n    guess = (low + high) / 2\nprint(guess)  # 5.00030517578125\nSame stopping test as the stepping search; only the way the next guess is chosen has changed.",
+          "practice": "Reorder the lines of the bisection loop; fill in the update of low or high.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "guess_and_check.approximate_with_epsilon"
+          ]
+        },
+        {
+          "title": "Count guesses: halving beats stepping",
+          "worked_example": "x = 25\nepsilon = 0.01\nlow, high = 0.0, x\nguess = (low + high) / 2\nnum_guesses = 0\nwhile abs(guess ** 2 - x) >= epsilon:\n    if guess ** 2 < x:\n        low = guess\n    else:\n        high = guess\n    guess = (low + high) / 2\n    num_guesses += 1\nprint(num_guesses)  # 13 (stepping by 0.0001 took 49990)\nEach guess halves the range, so k guesses shrink it by 2 ** k: doubling x adds only about one guess.",
+          "practice": "Estimate how many halvings shrink a range below a given width; compare guess counts with the stepping method.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Same method, different function: cube roots",
+          "worked_example": "x = 27\nepsilon = 0.01\nlow, high = 0.0, x\nguess = (low + high) / 2\nwhile abs(guess ** 3 - x) >= epsilon:\n    if guess ** 3 < x:\n        low = guess\n    else:\n        high = guess\n    guess = (low + high) / 2\nprint(round(guess, 3))  # 3.0\nBisection only needs to know whether a guess is too big or too small, so it works for any steadily increasing function.",
+          "practice": "Adapt the loop to cube roots or to solving guess * guess * 2 == x.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "guess_and_check.approximate_with_epsilon",
+          "weight": 0.5
+        },
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "bisection_method.robust_bisection",
+      "title": "Making bisection work for every input",
+      "concept": "bisection_method",
+      "summary": "Choose a starting range that really contains the answer (inputs below 1, negative cube roots), package bisection as a function, and guard against an epsilon that floats cannot reach.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "bisection_method.bisection_square_root",
+        "parameters_arguments.default_values",
+        "floating_point_precision.accumulating_errors",
+        "builtin_functions.sum_max_min"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Inputs below 1: the root is bigger than x",
+          "worked_example": "x = 0.25\nprint(0.5 > x)              # True: sqrt(0.25) = 0.5 is outside [0, x]\nlow, high = 0.0, max(1.0, x)\nprint(low, high)            # 0.0 1.0\nWith high = x every guess is too small, low creeps up to 0.25 and the loop never ends.",
+          "practice": "Predict whether [0, x] contains the root for given x; fix the starting range.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "bisection_method.bisection_square_root"
+          ]
+        },
+        {
+          "title": "Negative cube roots: the range must include x",
+          "worked_example": "x = -27\nlow, high = min(x, -1.0), max(x, 1.0)\nprint(low, high)  # -27 1.0\nThe cube root of -27 is -3, below 0. min and max give a range that works for any sign and size.",
+          "practice": "Choose low and high for given x values; predict them from min/max expressions.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Wrap it in a function with a default epsilon",
+          "worked_example": "def cube_root(x, epsilon=0.01):\n    low, high = min(x, -1.0), max(x, 1.0)\n    guess = (low + high) / 2\n    while abs(guess ** 3 - x) >= epsilon:\n        if guess ** 3 < x:\n            low = guess\n        else:\n            high = guess\n        guess = (low + high) / 2\n    return guess\nprint(round(cube_root(-27), 2), round(cube_root(0.125), 2))  # -3.0 0.5\nOne function now handles every input; callers can pass a smaller epsilon when they need more accuracy.",
+          "practice": "Write sqrt_bisect(x, epsilon=0.01); predict the results of calls with and without epsilon.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.default_values"
+          ]
+        },
+        {
+          "title": "An epsilon floats cannot reach: limit the steps",
+          "worked_example": "x, epsilon = 2.0, 1e-20\nlow, high = 0.0, x\nguess = (low + high) / 2\nsteps = 0\nwhile abs(guess ** 2 - x) >= epsilon and steps < 100:\n    if guess ** 2 < x:\n        low = guess\n    else:\n        high = guess\n    guess = (low + high) / 2\n    steps += 1\nprint(steps)  # 100: no float is that close to the root of 2\nFloats have about 16 digits, so after ~55 halvings low and high stop changing. A step limit turns an endless loop into a clear failure.",
+          "practice": "Explain why a given epsilon never ends the loop; add a step limit to a loop.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "floating_point_precision.accumulating_errors"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "bisection_method.bisection_square_root",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "newton_raphson.newton_square_root",
+      "title": "Newton-Raphson: improving a guess with the slope",
+      "concept": "newton_raphson",
+      "summary": "Apply the Newton-Raphson update guess - f(guess) / f'(guess) to approximate square and cube roots, compare its speed with bisection, and avoid a zero slope.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "bisection_method.bisection_square_root",
+        "expressions.translate_formulas"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One Newton step for a square root",
+          "worked_example": "x = 25\nguess = x / 2   # 12.5\nguess = guess - (guess ** 2 - x) / (2 * guess)\nprint(guess)    # 7.25\nFor f(g) = g ** 2 - x the slope is 2 * g; following the slope down to zero gives a much better guess.",
+          "practice": "Compute one or two Newton steps by hand for given x and starting guesses.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "Repeat until close enough",
+          "worked_example": "x = 25\nepsilon = 0.01\nguess = x / 2\nwhile abs(guess ** 2 - x) >= epsilon:\n    guess = guess - (guess ** 2 - x) / (2 * guess)\nprint(guess)  # 5.000012953048684\nThe loop is the same shape as bisection, but there is no low and high: each guess is computed from the last one.",
+          "practice": "Reorder the lines of the Newton loop; trace the guesses for x = 16.",
+          "formats": [
+            "parsons",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "bisection_method.bisection_square_root"
+          ]
+        },
+        {
+          "title": "Count the steps: Newton vs bisection",
+          "worked_example": "x = 25\nepsilon = 0.01\nguess = x / 2\nsteps = 0\nwhile abs(guess ** 2 - x) >= epsilon:\n    guess = guess - (guess ** 2 - x) / (2 * guess)\n    steps += 1\nprint(steps)  # 4 (bisection needed 13)\nNear the answer each Newton step roughly doubles the number of correct digits.",
+          "practice": "Count steps for both methods on the same input; choose the faster method for a given situation.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Other functions, and the zero-slope trap",
+          "worked_example": "guess = 1.0\nfor i in range(8):\n    guess = guess - (guess ** 3 - 27) / (3 * guess ** 2)\nprint(round(guess, 4))  # 3.0\n# starting from guess = 0.0: ZeroDivisionError: float division by zero\nFor f(g) = g ** 3 - 27 the slope is 3 * g ** 2 (given). A guess where the slope is 0 cannot be improved.",
+          "practice": "Write the Newton update for a given function and slope; fix a loop that starts at 0.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "expressions.translate_formulas",
+          "weight": 0.3
+        },
+        {
+          "topic": "bisection_method.bisection_square_root",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "complexity_big_o.timing_programs",
+      "title": "Timing code, and why timing is not enough",
+      "concept": "complexity_big_o",
+      "summary": "Measure how long code takes with time.perf_counter, see that timings vary by run and machine, and watch how time grows as the input grows.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "return_values.return_a_value",
+        "loop_patterns.accumulate_sum",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Time a piece of code",
+          "worked_example": "import time\nstart = time.perf_counter()\ntotal = 0\nfor i in range(1000000):\n    total += i\nelapsed = time.perf_counter() - start\nprint(round(elapsed, 3), 'seconds')  # e.g. 0.05 seconds\nperf_counter() reads a stopwatch; the difference of two readings is the time in between. import time is used as a set phrase.",
+          "practice": "Reorder the lines of a timing snippet; fill in the elapsed-time expression.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Same code, different times",
+          "worked_example": "Running the snippet above three times printed 0.051, 0.047 and 0.049 seconds;\na faster laptop printed 0.021. The work did not change; the machine and its load did.\nTimings measure the code, the computer and whatever else is running, so they cannot compare algorithms on their own.",
+          "practice": "Choose which factors change a timing (input size, machine, other programs, the code).",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Grow the input and watch the time",
+          "worked_example": "import time\ndef total_to(n):\n    total = 0\n    for i in range(n):\n        total += i\n    return total\nfor n in [1000000, 2000000, 4000000]:\n    start = time.perf_counter()\n    total_to(n)\n    print(n, round(time.perf_counter() - start, 3))\n# each doubling of n roughly doubles the time\nWhat we care about is the trend: how time changes when the input doubles.",
+          "practice": "Given timings for several n, predict the time for a larger n; match timing tables to 'grows like n' or 'stays flat'.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "A better algorithm beats a faster computer",
+          "worked_example": "def total_formula(n):\n    return n * (n - 1) // 2\nprint(total_formula(4000000))  # 7999998000000, as fast for n = 4 as for n = 4 million\nThe formula does one calculation whatever n is; the loop does n additions. As n grows, the gap grows without limit.",
+          "practice": "Compare two functions' timing tables and decide which scales better.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "complexity_big_o.counting_operations",
+      "title": "Counting the steps a program takes",
+      "concept": "complexity_big_o",
+      "summary": "Count the basic steps code performs as a function of the input size n, for single loops, loops in sequence and nested loops, including an inner loop that depends on the outer one.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "complexity_big_o.timing_programs",
+        "nested_loops.inner_depends_on_outer"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One step per simple line, n steps for a loop",
+          "worked_example": "def total_to(n):\n    total = 0           # 1 step\n    for i in range(n):  # n passes\n        total += i      # 1 step each pass\n    return total        # 1 step\n# about n + 2 steps\nCounting steps gives the same answer on every machine, unlike timing.",
+          "practice": "Count the steps of short functions as an expression in n.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.timing_programs"
+          ]
+        },
+        {
+          "title": "Let the program count for you",
+          "worked_example": "n = 5\nsteps = 0\nfor i in range(n):\n    for j in range(n):\n        steps += 1\nprint(steps)  # 25 = n * n\nAdding a counter to the innermost line checks a step count you worked out by hand.",
+          "practice": "Predict a step counter's final value for given n.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "nested_loops.inner_depends_on_outer"
+          ]
+        },
+        {
+          "title": "Loops one after another add; loops inside loops multiply",
+          "worked_example": "n = 10\nsteps = 0\nfor i in range(n):\n    steps += 1\nfor i in range(n):\n    for j in range(n):\n        steps += 1\nprint(steps)  # 110 = n + n * n\nCode in sequence: add the counts. A loop body that is itself a loop: multiply.",
+          "practice": "Write the step count in n for code mixing sequential and nested loops.",
+          "formats": [
+            "short_answer",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "An inner loop that depends on the outer variable",
+          "worked_example": "n = 10\nsteps = 0\nfor i in range(n):\n    for j in range(i):\n        steps += 1\nprint(steps)  # 45 = n * (n - 1) / 2\n0 + 1 + ... + (n - 1) steps: about half of n * n, but still growing like n * n.",
+          "practice": "Predict the count for triangle-shaped loops; choose the formula that matches.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "nested_loops.inner_depends_on_outer"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_loops.inner_depends_on_outer",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "complexity_big_o.big_o_notation",
+      "title": "Big O: keeping only the fastest-growing term",
+      "concept": "complexity_big_o",
+      "summary": "Describe a step count with Big O by dropping constants and smaller terms, read the order straight from code, and distinguish worst and best case and O from Theta.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "complexity_big_o.counting_operations",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Drop constant factors and smaller terms",
+          "worked_example": "for n in [10, 1000]:\n    print(n, 3 * n ** 2, 5 * n + 2)\n# 10 300 52\n# 1000 3000000 5002\nFor large n the n ** 2 term dwarfs the rest, so 3n² + 5n + 2 is O(n²): only how fast it grows matters.",
+          "practice": "Simplify step-count expressions to Big O (e.g. 4n + 7, n²/2 + n, 100).",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.counting_operations"
+          ]
+        },
+        {
+          "title": "Read the order from the code",
+          "worked_example": "def f(nums):\n    first = nums[0]       # O(1)\n    for x in nums:        # O(n)\n        for y in nums:    # O(n) inside O(n): O(n²)\n            pass\n# total O(1 + n²) = O(n²)\nNo loop over the input: O(1). One loop: O(n). A loop inside a loop: O(n²). Sequence: keep the biggest.",
+          "practice": "Give the Big O of short functions without counting every step.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Worst case and best case",
+          "worked_example": "def contains(nums, target):\n    for x in nums:\n        if x == target:\n            return True\n    return False\n# best: target first, 1 step. Worst: target absent, n steps. We report the worst: O(n)\nInputs of the same size can take very different time; Big O usually describes the worst case.",
+          "practice": "Name the best- and worst-case inputs for search-like functions and their step counts.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "O is an upper bound; Theta is a tight one",
+          "worked_example": "contains() above never takes more than about n steps, so it is O(n).\nIt is also O(n²) (true but loose). Theta(n) says it grows exactly like n in the worst case.\nO(g) means 'grows no faster than g'; Theta(g) means 'grows like g'. When people say O they usually mean the tight bound.",
+          "practice": "Decide which O and Theta statements about given functions are true.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "complexity_big_o.counting_operations",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "complexity_big_o.complexity_classes",
+      "title": "Common growth rates: from O(1) to O(2^n)",
+      "concept": "complexity_big_o",
+      "summary": "Recognise O(log n) halving loops, O(n log n) and exponential branching recursion, and rank the common complexity classes by how fast they grow.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "complexity_big_o.big_o_notation",
+        "recursion.multiple_recursive_calls",
+        "while_loops.loop_until_condition"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Halving loops are O(log n)",
+          "worked_example": "n = 1000\nsteps = 0\nwhile n > 1:\n    n = n // 2\n    steps += 1\nprint(steps)  # 9: about log2(1000)\nEach pass halves what is left, so doubling n adds only one step. Bisection works like this.",
+          "practice": "Predict step counts of halving loops; identify O(log n) code among several snippets.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        },
+        {
+          "title": "A halving loop inside an O(n) loop: O(n log n)",
+          "worked_example": "n = 16\nsteps = 0\nfor i in range(n):\n    m = n\n    while m > 1:\n        m = m // 2\n        steps += 1\nprint(steps)  # 64 = 16 * 4\nn passes of a log n loop: n log n. Good sorting algorithms land here.",
+          "practice": "Count steps and give the class of nested loops mixing halving and counting.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Branching recursion can be exponential",
+          "worked_example": "calls = 0\ndef fib(n):\n    global calls\n    calls += 1\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\nfib(20)\nprint(calls)  # 21891 (fib(10) makes 177)\nEach call makes two more, so the call count multiplies as n grows: exponential, written O(2^n).",
+          "practice": "Predict call counts for small n; classify recursive functions with one vs two recursive calls.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "recursion.multiple_recursive_calls"
+          ]
+        },
+        {
+          "title": "Rank the classes",
+          "worked_example": "n = 30\nprint(n, n * 5, n ** 2, 2 ** n)  # 30 150 900 1073741824\n# roughly: n, n log n, n², 2^n\nO(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2^n). For big inputs the class matters more than any constant.",
+          "practice": "Order functions by growth; pick the largest n each class can handle in a fixed budget.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "complexity_big_o.big_o_notation",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "complexity_big_o.cost_of_builtin_operations",
+      "title": "Hidden loops: the cost of in, insert and slicing",
+      "concept": "complexity_big_o",
+      "summary": "Know the Big O of everyday list, set and string operations (in, append, insert(0), slicing) and spot a hidden loop that makes code O(n²).",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "complexity_big_o.big_o_notation",
+        "sets.create_and_membership",
+        "list_methods.insert_extend",
+        "list_slicing.slice_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "x in list scans; x in set jumps",
+          "worked_example": "nums = list(range(1000000))\nlookup = set(nums)\nprint(999999 in nums)    # True, after checking a million items: O(n)\nprint(999999 in lookup)  # True, found directly: O(1) on average\nA list has to be searched item by item; a set (and dict keys) use hashing to go straight to the item.",
+          "practice": "Classify membership tests as O(n) or O(1); choose a list or set for frequent lookups.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        },
+        {
+          "title": "A hidden loop inside a loop",
+          "worked_example": "def has_duplicates(items):\n    seen = []\n    for x in items:\n        if x in seen:      # scans seen: O(n) each time\n            return True\n        seen.append(x)\n    return False\n# O(n²) overall; with seen = set() and seen.add(x) it is O(n)\nOne line can hide a whole loop. Count the cost of each operation, not just the visible for statements.",
+          "practice": "Find the hidden O(n) operation in a loop and rewrite it to bring the whole function down to O(n).",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        },
+        {
+          "title": "The end of a list is cheap, the front is not",
+          "worked_example": "nums = [1, 2, 3]\nnums.append(4)     # O(1): nothing moves\nnums.insert(0, 0)  # O(n): every item shifts right\nprint(nums)        # [0, 1, 2, 3, 4]\nappend and pop() work at the end; insert(0, x) and pop(0) shift every item, so they cost O(n).",
+          "practice": "Classify list operations by cost; pick the cheaper way to build a list.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "Slices copy",
+          "worked_example": "nums = [5, 6, 7, 8]\nrest = nums[1:]   # copies 3 items: O(k) for a slice of length k\nrest[0] = 99\nprint(nums)       # [5, 6, 7, 8]: rest is a separate copy\nA slice builds a new list, so slicing inside a loop or a recursive call adds a hidden O(n).",
+          "practice": "Give the cost of code that slices inside a loop; predict output that shows the copy.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "complexity_big_o.big_o_notation",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "linear_search.search_a_list",
+      "title": "Linear search: checking items one by one",
+      "concept": "linear_search",
+      "summary": "Write a linear search that returns the index of the first match or -1, avoid the early-return bug, count its comparisons, and stop early on sorted input.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "complexity_big_o.big_o_notation",
+        "return_values.early_return",
+        "lists.loop_over_indexes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Return the index of the first match, or -1",
+          "worked_example": "def linear_search(items, target):\n    for i in range(len(items)):\n        if items[i] == target:\n            return i\n    return -1\nprint(linear_search([4, 8, 15, 16], 15), linear_search([4, 8], 7))  # 2 -1\nThe return -1 comes after the loop: only when every item has been checked do we know the target is missing.",
+          "practice": "Write linear_search; predict its results for present, absent and repeated targets.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return",
+            "lists.loop_over_indexes"
+          ]
+        },
+        {
+          "title": "Bug: giving up after the first item",
+          "worked_example": "def linear_search(items, target):\n    for i in range(len(items)):\n        if items[i] == target:\n            return i\n        else:\n            return -1   # bug: returns on the first mismatch\nprint(linear_search([4, 8, 15], 15))  # -1\nAn else: return inside the loop ends the search after one comparison.",
+          "practice": "Find and fix the misplaced return in search functions.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "Count comparisons: linear search is O(n)",
+          "worked_example": "nums = list(range(1000))\nchecks = 0\nfor x in nums:\n    checks += 1\n    if x == 999:\n        break\nprint(checks)  # 1000: the worst case\nBest case 1 check, worst case n, about n / 2 on average: O(n). x in nums and nums.index(x) do the same scan.",
+          "practice": "Give the number of comparisons for given targets and list sizes.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        },
+        {
+          "title": "Sorted input: stop once items pass the target",
+          "worked_example": "def search_sorted(items, target):\n    for i in range(len(items)):\n        if items[i] == target:\n            return i\n        if items[i] > target:\n            return -1   # everything after is bigger too\n    return -1\nprint(search_sorted([2, 5, 9, 14], 6))  # -1 after 3 checks\nSorting lets a missing item be detected early, but the worst case is still n checks: still O(n).",
+          "practice": "Predict how many items are checked; decide whether the early stop changes the Big O.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.early_return",
+          "weight": 0.4
+        },
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "binary_search.iterative_binary_search",
+      "title": "Binary search on a sorted list",
+      "concept": "binary_search",
+      "summary": "Search a sorted list in O(log n) by comparing with the middle item and keeping low/high indexes on the half that can still contain the target.",
+      "minutes": 19,
+      "core": true,
+      "prerequisites": [
+        "linear_search.search_a_list",
+        "bisection_method.bisection_square_root",
+        "complexity_big_o.complexity_classes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Look at the middle, throw away half",
+          "worked_example": "items = [3, 8, 12, 19, 25, 31, 40]\nlow, high = 0, len(items) - 1\nmid = (low + high) // 2\nprint(mid, items[mid])  # 3 19\n# looking for 25: 25 > 19, so only indexes 4..6 are left\nBisection on positions: because the list is sorted, one comparison rules out half of it.",
+          "practice": "Trace low, mid and high for searches in a 7-15 item list.",
+          "formats": [
+            "trace_table",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "bisection_method.bisection_square_root"
+          ]
+        },
+        {
+          "title": "The binary search loop",
+          "worked_example": "def binary_search(items, target):\n    low, high = 0, len(items) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if items[mid] == target:\n            return mid\n        if items[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\nprint(binary_search([3, 8, 12, 19, 25, 31, 40], 25))  # 4\nmid + 1 and mid - 1: the middle has been checked, so it is excluded from the next range.",
+          "practice": "Reorder the lines of binary search; fill in the updates of low and high.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "linear_search.search_a_list"
+          ]
+        },
+        {
+          "title": "Not found: the range becomes empty",
+          "worked_example": "# binary_search(items, 20) on the list above:\n# low=0 high=6 mid=3: 19 < 20, low=4\n# low=4 high=6 mid=5: 31 > 20, high=4\n# low=4 high=4 mid=4: 25 > 20, high=3\n# low=4 > high=3: loop ends, return -1\nWhen low passes high there is nowhere left to look.",
+          "practice": "Trace unsuccessful searches to the point where the loop stops; predict the return value.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Only on sorted lists, and why it is O(log n)",
+          "worked_example": "print(binary_search([40, 3, 25, 8], 8))  # -1, although 8 is there\n# a sorted list of 1,000,000 items needs at most 20 comparisons\nOn unsorted data the halves cannot be ruled out. On sorted data each step halves the range: O(log n) versus O(n) for linear search.",
+          "practice": "Decide when binary search can be used; compute the maximum number of comparisons for given sizes.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.complexity_classes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "bisection_method.bisection_square_root",
+          "weight": 0.2
+        },
+        {
+          "topic": "linear_search.search_a_list",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "binary_search.boundary_bugs",
+      "title": "Binary search bugs: off-by-one and endless loops",
+      "concept": "binary_search",
+      "summary": "Find and fix the classic binary search mistakes (< instead of <=, high = len(items), low = mid) and adapt the loop to find the first of several equal items.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "binary_search.iterative_binary_search",
+        "while_loops.infinite_and_off_by_one"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "while low < high misses the last candidate",
+          "worked_example": "items = [7]\nlow, high = 0, len(items) - 1\nprint(low < high, low <= high)  # False True\n# with while low < high the loop never runs, so 7 is reported missing\nWhen low == high one item is still left to check, so the condition must be <=.",
+          "practice": "Predict the result of a binary search with < for one- and two-item lists; fix the condition.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "binary_search.iterative_binary_search"
+          ]
+        },
+        {
+          "title": "high = len(items) runs off the end",
+          "worked_example": "items = [3, 8, 12]\nlow, high = 3, len(items)   # searching for 20: low has moved past 8 and 12\nmid = (low + high) // 2\nprint(items[mid])  # IndexError: list index out of range\nhigh = len(items) is one past the last index. It must be the last valid index, len(items) - 1, when the loop uses <=.",
+          "practice": "Find the input that makes a buggy search crash and fix the starting value.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.infinite_and_off_by_one"
+          ]
+        },
+        {
+          "title": "low = mid can loop forever",
+          "worked_example": "low, high = 0, 1\nmid = (low + high) // 2   # 0\nlow = mid                 # still 0\nprint(low, high)          # 0 1: the next pass picks the same mid\nIf the range does not shrink on every pass, the loop never ends. Exclude mid with mid + 1 and mid - 1.",
+          "practice": "Trace a buggy search until it repeats; fix the update.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "while_loops.infinite_and_off_by_one"
+          ]
+        },
+        {
+          "title": "Finding the first of several equal items",
+          "worked_example": "def first_index(items, target):\n    low, high = 0, len(items) - 1\n    answer = -1\n    while low <= high:\n        mid = (low + high) // 2\n        if items[mid] < target:\n            low = mid + 1\n        else:\n            if items[mid] == target:\n                answer = mid\n            high = mid - 1\n    return answer\nprint(first_index([1, 2, 2, 2, 5], 2))  # 1\nPlain binary search returns whichever 2 it hits first (here index 2). Remembering the match and continuing left finds the first one.",
+          "practice": "Predict what plain and first-match searches return on lists with duplicates; modify the loop to find the last match.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "binary_search.iterative_binary_search"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "binary_search.iterative_binary_search",
+          "weight": 0.7
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "binary_search.recursive_and_bisect",
+      "title": "Recursive binary search and the bisect module",
+      "concept": "binary_search",
+      "summary": "Write binary search recursively, first with slices and then with low/high arguments to avoid copying, and use bisect_left and insort from the standard library.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "binary_search.iterative_binary_search",
+        "recursion.recursion_on_sequences",
+        "complexity_big_o.cost_of_builtin_operations"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Recursive search on halves",
+          "worked_example": "def contains(items, target):\n    if items == []:\n        return False\n    mid = len(items) // 2\n    if items[mid] == target:\n        return True\n    if items[mid] < target:\n        return contains(items[mid + 1:], target)\n    return contains(items[:mid], target)\nprint(contains([3, 8, 12, 19, 25], 8))  # True\nBase cases: empty list or a hit. Otherwise recurse on the half that can contain the target.",
+          "practice": "Reorder the lines of the recursive search; trace the lists passed to each call.",
+          "formats": [
+            "parsons",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "recursion.recursion_on_sequences"
+          ]
+        },
+        {
+          "title": "Slices copy: pass low and high instead",
+          "worked_example": "def search(items, target, low, high):\n    if low > high:\n        return -1\n    mid = (low + high) // 2\n    if items[mid] == target:\n        return mid\n    if items[mid] < target:\n        return search(items, target, mid + 1, high)\n    return search(items, target, low, mid - 1)\nprint(search([3, 8, 12, 19, 25], 19, 0, 4))  # 3\nEach slice copies half the list, which makes the sliced version O(n); passing indexes keeps it O(log n) and returns a position.",
+          "practice": "Give the cost of the sliced and index versions; fill in the recursive calls.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.cost_of_builtin_operations"
+          ]
+        },
+        {
+          "title": "bisect_left finds where an item is or would go",
+          "worked_example": "import bisect\nitems = [3, 8, 12, 19, 25]\ni = bisect.bisect_left(items, 19)\nprint(i, i < len(items) and items[i] == 19)  # 3 True\nprint(bisect.bisect_left(items, 10))         # 2: 10 would go before 12\nbisect_left is a ready-made binary search. Check items[i] to tell 'found' from 'would go here'. import bisect is used as a set phrase.",
+          "practice": "Predict bisect_left results; write a found-or-not check with it.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "binary_search.iterative_binary_search"
+          ]
+        },
+        {
+          "title": "insort keeps a list sorted",
+          "worked_example": "import bisect\nitems = [3, 8, 12]\nbisect.insort(items, 10)\nprint(items)  # [3, 8, 10, 12]\nFinding the spot is O(log n); the insert still shifts items, O(n), but it beats appending and re-sorting.",
+          "practice": "Predict lists after several insort calls.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "binary_search.iterative_binary_search",
+          "weight": 0.5
+        },
+        {
+          "topic": "recursion.recursion_on_sequences",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.bubble_sort",
+      "title": "Bubble sort: swapping neighbours",
+      "concept": "sorting_algorithms",
+      "summary": "Sort a list in place by repeatedly swapping out-of-order neighbours until a pass makes no swaps, and explain why that is O(n²) in the worst case and O(n) on sorted input.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_indexes",
+        "variables.swap_values",
+        "loop_patterns.search_flag",
+        "complexity_big_o.big_o_notation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One pass: swap neighbours that are out of order",
+          "worked_example": "nums = [5, 1, 4, 2]\nfor i in range(len(nums) - 1):\n    if nums[i] > nums[i + 1]:\n        nums[i], nums[i + 1] = nums[i + 1], nums[i]\nprint(nums)  # [1, 4, 2, 5]: the largest has bubbled to the end\nrange(len(nums) - 1) stops one early because each step looks at nums[i + 1].",
+          "practice": "Predict the list after one pass; fix a pass that raises IndexError by using range(len(nums)).",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_indexes",
+            "variables.swap_values"
+          ]
+        },
+        {
+          "title": "Repeat passes until nothing is swapped",
+          "worked_example": "nums = [5, 1, 4, 2]\nswapped = True\nwhile swapped:\n    swapped = False\n    for i in range(len(nums) - 1):\n        if nums[i] > nums[i + 1]:\n            nums[i], nums[i + 1] = nums[i + 1], nums[i]\n            swapped = True\nprint(nums)  # [1, 2, 4, 5]\nThe swapped flag answers 'did any pair need fixing?'; a pass with no swaps proves the list is sorted.",
+          "practice": "Reorder the lines of bubble sort; fill in where the flag is reset and set.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.search_flag"
+          ]
+        },
+        {
+          "title": "Trace the passes",
+          "worked_example": "# [5, 1, 4, 2]\n# after pass 1: [1, 4, 2, 5]\n# after pass 2: [1, 2, 4, 5]\n# pass 3: no swaps, stop\nAfter pass k the k largest items are in their final places at the end.",
+          "practice": "Fill in a trace table of the list after each pass; count the passes needed.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Cost: O(n²) in the worst case, O(n) if already sorted",
+          "worked_example": "def comparisons(nums):\n    count, swapped = 0, True\n    while swapped:\n        swapped = False\n        for i in range(len(nums) - 1):\n            count += 1\n            if nums[i] > nums[i + 1]:\n                nums[i], nums[i + 1] = nums[i + 1], nums[i]\n                swapped = True\n    return count\nprint(comparisons(list(range(10, 0, -1))), comparisons(list(range(10))))  # 90 9\nReversed input needs n passes of n - 1 comparisons; sorted input stops after one pass.",
+          "practice": "Give comparison counts for small sorted and reversed lists; state best- and worst-case Big O.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.swap_values",
+          "weight": 0.5
+        },
+        {
+          "topic": "loop_patterns.search_flag",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.selection_sort",
+      "title": "Selection sort: choosing the smallest each time",
+      "concept": "sorting_algorithms",
+      "summary": "Sort a list by repeatedly finding the smallest remaining item and swapping it into the next position, trace the growing sorted prefix, and count its always-O(n²) comparisons.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_indexes",
+        "variables.swap_values",
+        "loop_patterns.max_min_tracking",
+        "complexity_big_o.big_o_notation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Find the position of the smallest item from i onward",
+          "worked_example": "nums = [29, 10, 14, 37, 13]\ni = 2\nsmallest = i\nfor j in range(i + 1, len(nums)):\n    if nums[j] < nums[smallest]:\n        smallest = j\nprint(smallest, nums[smallest])  # 4 13\nTrack the position of the smallest so far, not its value, so it can be swapped afterwards.",
+          "practice": "Predict the index found for given i; fix a version that tracks the value instead of the index.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        },
+        {
+          "title": "Swap it into place, for every position",
+          "worked_example": "nums = [29, 10, 14, 37, 13]\nfor i in range(len(nums)):\n    smallest = i\n    for j in range(i + 1, len(nums)):\n        if nums[j] < nums[smallest]:\n            smallest = j\n    nums[i], nums[smallest] = nums[smallest], nums[i]\nprint(nums)  # [10, 13, 14, 29, 37]\nThe outer loop picks the next position to fill; the inner loop chooses what goes there.",
+          "practice": "Reorder the lines of selection sort; fill in the swap.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values",
+            "lists.loop_over_indexes"
+          ]
+        },
+        {
+          "title": "The sorted part grows by one each pass",
+          "worked_example": "# [29, 10, 14, 37, 13]\n# i=0: [10, 29, 14, 37, 13]\n# i=1: [10, 13, 14, 37, 29]\n# i=2: [10, 13, 14, 37, 29]\n# i=3: [10, 13, 14, 29, 37]\nAfter pass i, positions 0..i hold the smallest items in order and never change again.",
+          "practice": "Fill in the list after each pass of selection sort.",
+          "formats": [
+            "trace_table"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Always about n²/2 comparisons",
+          "worked_example": "n = 5\nprint(n * (n - 1) // 2)  # 10 comparisons, even for an already sorted list\nThe inner loop always scans the whole rest, so selection sort is O(n²) in every case, but makes at most n swaps.",
+          "practice": "Compute comparison counts for given n; compare best cases of selection and bubble sort.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.5
+        },
+        {
+          "topic": "variables.swap_values",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.insertion_sort",
+      "title": "Insertion sort: sliding each item into place",
+      "concept": "sorting_algorithms",
+      "summary": "Sort a list by inserting each item into the sorted part before it, shifting larger items right, guard the shift with j >= 0, and see why it is fast on nearly sorted input.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lists.loop_over_indexes",
+        "logical_operators.short_circuit",
+        "complexity_big_o.big_o_notation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Insert one item into a sorted prefix",
+          "worked_example": "nums = [2, 5, 9, 4]   # the first three are sorted\nkey = nums[3]\nj = 2\nwhile j >= 0 and nums[j] > key:\n    nums[j + 1] = nums[j]\n    j -= 1\nnums[j + 1] = key\nprint(nums)  # [2, 4, 5, 9]\nLarger items shift one place right until the gap is where key belongs.",
+          "practice": "Trace j and the list while one item is inserted.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_indexes"
+          ]
+        },
+        {
+          "title": "Do it for every item",
+          "worked_example": "def insertion_sort(nums):\n    for i in range(1, len(nums)):\n        key = nums[i]\n        j = i - 1\n        while j >= 0 and nums[j] > key:\n            nums[j + 1] = nums[j]\n            j -= 1\n        nums[j + 1] = key\nnums = [5, 2, 9, 1]\ninsertion_sort(nums)\nprint(nums)  # [1, 2, 5, 9]\nStart at index 1: a one-item prefix is already sorted.",
+          "practice": "Reorder the lines of insertion sort; predict the list after each outer pass.",
+          "formats": [
+            "parsons",
+            "trace_table"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Bug: the j >= 0 guard must come first",
+          "worked_example": "nums = [3, 1]\nkey, j = nums[1], 0\nnums[1] = nums[0]\nj -= 1\nprint(j, nums[j])  # -1 3: without j >= 0 the loop would compare with the last item\nnums[-1] is valid Python, so a missing guard gives wrong results instead of an error. and stops before nums[j] once j >= 0 is False.",
+          "practice": "Find the missing or misordered guard in insertion sort code; predict what the buggy version does.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "logical_operators.short_circuit"
+          ]
+        },
+        {
+          "title": "Fast on nearly sorted lists",
+          "worked_example": "Sorted input: each key is compared once and nothing shifts, n - 1 comparisons: O(n).\nReversed input: key i shifts past all i earlier items, about n²/2 shifts: O(n²).\nThat is why insertion sort is used for small or nearly sorted data, even inside Python's own sorted().",
+          "practice": "Count shifts for given inputs; choose the best algorithm for nearly sorted data.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.merge_sorted_lists",
+      "title": "Merging two sorted lists",
+      "concept": "sorting_algorithms",
+      "summary": "Combine two sorted lists into one sorted list in O(n) by repeatedly taking the smaller front item and then adding the leftovers.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "list_methods.insert_extend",
+        "list_slicing.slice_lists",
+        "while_loops.repeat_while_true",
+        "complexity_big_o.big_o_notation"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Compare the fronts, take the smaller",
+          "worked_example": "left, right = [1, 4, 9], [2, 3, 10]\nmerged = []\nif left[0] <= right[0]:\n    merged.append(left[0])\nelse:\n    merged.append(right[0])\nprint(merged)  # [1]\nThe smallest item overall must be at the front of one of the two lists.",
+          "practice": "Predict which item is taken next from given positions in two lists.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "Loop with two positions until one list runs out",
+          "worked_example": "left, right = [1, 4, 9], [2, 3, 10]\nmerged = []\ni, j = 0, 0\nwhile i < len(left) and j < len(right):\n    if left[i] <= right[j]:\n        merged.append(left[i])\n        i += 1\n    else:\n        merged.append(right[j])\n        j += 1\nprint(merged, i, j)  # [1, 2, 3, 4, 9] 3 2\ni and j mark the next unused item in each list; only the list we took from moves forward.",
+          "practice": "Trace i, j and merged; reorder the lines of the merge loop.",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Don't forget the leftovers",
+          "worked_example": "def merge(left, right):\n    merged = []\n    i, j = 0, 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            merged.append(left[i])\n            i += 1\n        else:\n            merged.append(right[j])\n            j += 1\n    merged.extend(left[i:])\n    merged.extend(right[j:])\n    return merged\nprint(merge([1, 4, 9], [2, 3, 10]))  # [1, 2, 3, 4, 9, 10]\nWhen one list runs out the other still has sorted items; extend adds them. Without these lines 10 would be lost.",
+          "practice": "Find the missing leftover step in a merge that drops items; predict merges of unequal lengths.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "Merging is O(n)",
+          "worked_example": "Every pass of the loop appends one item and never goes back,\nso merging lists with n items in total takes about n steps.\nThis linear merge step is what makes merge sort fast.",
+          "practice": "Count the comparisons a merge makes for given lists; give its Big O.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.big_o_notation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_methods.insert_extend",
+          "weight": 0.3
+        },
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.merge_sort",
+      "title": "Merge sort: divide, sort, merge",
+      "concept": "sorting_algorithms",
+      "summary": "Sort a list recursively by splitting it in halves, sorting each half and merging them, trace the splits and merges, and explain why it is O(n log n).",
+      "minutes": 19,
+      "core": true,
+      "prerequisites": [
+        "sorting_algorithms.merge_sorted_lists",
+        "recursion.multiple_recursive_calls",
+        "complexity_big_o.complexity_classes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Split in halves until one item is left",
+          "worked_example": "def split(nums):\n    print(nums)\n    if len(nums) > 1:\n        mid = len(nums) // 2\n        split(nums[:mid])\n        split(nums[mid:])\nsplit([38, 27, 43, 3])\n# [38, 27, 43, 3] / [38, 27] / [38] / [27] / [43, 3] / [43] / [3]\nLists of length 0 or 1 are already sorted: that is the base case.",
+          "practice": "Predict the order in which the halves are printed; draw the split tree for 6-8 items.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "recursion.multiple_recursive_calls"
+          ]
+        },
+        {
+          "title": "Sort both halves, then merge them",
+          "worked_example": "def merge_sort(nums):\n    if len(nums) <= 1:\n        return nums\n    mid = len(nums) // 2\n    left = merge_sort(nums[:mid])\n    right = merge_sort(nums[mid:])\n    return merge(left, right)\nprint(merge_sort([38, 27, 43, 3, 9]))  # [3, 9, 27, 38, 43]\nmerge is the function from the merging topic. Trust the recursive calls to return sorted halves.",
+          "practice": "Reorder the lines of merge_sort; fix a version without a base case (RecursionError).",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "sorting_algorithms.merge_sorted_lists"
+          ]
+        },
+        {
+          "title": "Trace the merges",
+          "worked_example": "# merge_sort([38, 27, 43, 3])\n# merge([38], [27]) -> [27, 38]\n# merge([43], [3])  -> [3, 43]\n# merge([27, 38], [3, 43]) -> [3, 27, 38, 43]\nMerges happen on the way back up, smallest lists first.",
+          "practice": "List the merges in order for a 4-8 item input.",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Why merge sort is O(n log n)",
+          "worked_example": "n = 8: splitting gives log2(8) = 3 levels;\neach level merges all 8 items once: about 8 * 3 = 24 steps.\nlog n levels times O(n) merging per level. For n = 1,000,000 that is about 20 million steps instead of 10**12 for O(n²).",
+          "practice": "Compute levels and total steps for given n; compare with O(n²) sorts.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "complexity_big_o.complexity_classes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sorting_algorithms.merge_sorted_lists",
+          "weight": 0.6
+        },
+        {
+          "topic": "recursion.multiple_recursive_calls",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.quick_sort",
+      "title": "Quick sort: partition around a pivot",
+      "concept": "sorting_algorithms",
+      "summary": "Sort a list by splitting it into items smaller and larger than a pivot and sorting each side recursively, avoid the infinite-recursion bug, and know its O(n²) worst case.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "sorting_algorithms.merge_sort",
+        "list_comprehensions.filter_with_if"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Partition around a pivot",
+          "worked_example": "nums = [7, 2, 9, 4, 1]\npivot = nums[0]\nsmaller = [x for x in nums[1:] if x < pivot]\nlarger = [x for x in nums[1:] if x >= pivot]\nprint(smaller, pivot, larger)  # [2, 4, 1] 7 [9]\nThe pivot ends up between the two groups, already in its final place.",
+          "practice": "Predict both groups for given lists and pivots.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.filter_with_if"
+          ]
+        },
+        {
+          "title": "Sort each side recursively",
+          "worked_example": "def quick_sort(nums):\n    if len(nums) <= 1:\n        return nums\n    pivot = nums[0]\n    smaller = [x for x in nums[1:] if x < pivot]\n    larger = [x for x in nums[1:] if x >= pivot]\n    return quick_sort(smaller) + [pivot] + quick_sort(larger)\nprint(quick_sort([7, 2, 9, 4, 1, 7]))  # [1, 2, 4, 7, 7, 9]\nUnlike merge sort, the work happens before the recursive calls; joining is just +.",
+          "practice": "Reorder the lines of quick_sort; trace the calls for a 5-item list.",
+          "formats": [
+            "parsons",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "sorting_algorithms.merge_sort"
+          ]
+        },
+        {
+          "title": "Bug: leaving the pivot in a group",
+          "worked_example": "def quick_sort(nums):\n    if len(nums) <= 1:\n        return nums\n    pivot = nums[0]\n    smaller = [x for x in nums if x < pivot]\n    larger = [x for x in nums if x >= pivot]   # includes the pivot\n    return quick_sort(smaller) + [pivot] + quick_sort(larger)\nprint(quick_sort([3, 1, 2]))  # RecursionError: maximum recursion depth exceeded\nlarger never gets shorter than nums, so the recursion never reaches the base case. Use nums[1:].",
+          "practice": "Find why a quick sort never finishes or duplicates the pivot, and fix it.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Average O(n log n), worst case O(n²)",
+          "worked_example": "With the first item as pivot, an already sorted list splits into [] and n - 1 items every time:\nn levels of O(n) work, O(n²). Random data splits roughly in half: O(n log n).\nChoosing a random or middle pivot makes the bad case unlikely.",
+          "practice": "Predict the split sizes for sorted and random input; give the Big O for each.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_comprehensions.filter_with_if",
+          "weight": 0.5
+        },
+        {
+          "topic": "sorting_algorithms.merge_sort",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sorting_algorithms.compare_and_choose",
+      "title": "Comparing sorting algorithms",
+      "concept": "sorting_algorithms",
+      "summary": "Contrast bogo, bubble, selection and merge sort by cost, recognise stable sorting, and decide when to use sorted() and when sorting before searching pays off.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "sorting_algorithms.merge_sort",
+        "sorting_algorithms.bubble_sort",
+        "sorting.sort_tuples_and_keys",
+        "binary_search.iterative_binary_search"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Bogo sort: shuffle until sorted",
+          "worked_example": "import random\ndef is_sorted(nums):\n    for i in range(len(nums) - 1):\n        if nums[i] > nums[i + 1]:\n            return False\n    return True\nnums = [3, 1, 2]\nwhile not is_sorted(nums):\n    random.shuffle(nums)\nprint(nums)  # [1, 2, 3], after a random number of shuffles\nCorrect but hopeless: n items have n! orders, and there is no bound on the worst case. import random is used as a set phrase.",
+          "practice": "Write is_sorted; explain why bogo sort has no worst-case bound.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "sorting_algorithms.bubble_sort"
+          ]
+        },
+        {
+          "title": "Compare the costs",
+          "worked_example": "n = 1000\nprint(n ** 2, n * 10)  # 1000000 10000\n# bubble/selection: about n² steps; merge sort and sorted(): about n log2 n\nFor a thousand items the O(n log n) sorts do about 100 times less work, and the gap grows with n.",
+          "practice": "Match algorithms to best/worst-case Big O; pick an algorithm for given data sizes.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "sorting_algorithms.merge_sort"
+          ]
+        },
+        {
+          "title": "Stable sorts keep ties in their original order",
+          "worked_example": "words = ['bob', 'al', 'cy', 'dee']\nprint(sorted(words, key=len))  # ['al', 'cy', 'bob', 'dee']\nal and cy have the same length and stay in their original order: sorted() is stable, as are merge and insertion sort.",
+          "practice": "Predict sorted(..., key=...) output with ties; decide which algorithms are stable.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_tuples_and_keys"
+          ]
+        },
+        {
+          "title": "When sorting first pays off",
+          "worked_example": "One search: linear search, n steps.\nk searches: k * n steps, or sort once (n log n) then k binary searches (k log n).\nn = 1,000,000, k = 1000: 10**9 steps versus about 2 * 10**7.\nSorting costs more than one search but is paid back after a few searches.",
+          "practice": "For given n and k, compute both costs and choose a strategy.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "binary_search.iterative_binary_search"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sorting_algorithms.bubble_sort",
+          "weight": 0.2
+        },
+        {
+          "topic": "sorting.sort_tuples_and_keys",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "simulation_monte_carlo.estimate_probability",
+      "title": "Simulation: estimating a probability by repeating trials",
+      "concept": "simulation_monte_carlo",
+      "summary": "Estimate the probability of a random event by running many simulated trials and taking the fraction of successes, use a seed for repeatable results, and check a simulation against a known answer.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "loop_patterns.count_matches",
+        "return_values.boolean_functions",
+        "random_module.random_numbers"
+      ],
+      "knowledge_points": [
+        {
+          "title": "One random trial",
+          "worked_example": "import random\nroll = random.randint(1, 6)\nprint(roll == 6)  # True or False: True about one time in six\nOne trial says almost nothing; its result changes each run. import random is used as a set phrase.",
+          "practice": "Write single trials (coin flip, die roll, two dice) as one-line expressions.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "random_module.random_numbers"
+          ]
+        },
+        {
+          "title": "Many trials: the fraction estimates the probability",
+          "worked_example": "import random\nrandom.seed(1)\ntrials = 10000\nsixes = 0\nfor i in range(trials):\n    if random.randint(1, 6) == 6:\n        sixes += 1\nprint(sixes / trials)  # 0.1627, close to 1/6 = 0.1667\nCount successes over many trials. random.seed(1) makes the run repeatable, so results can be checked.",
+          "practice": "Reorder the lines of a simulation loop; write a simulation for a coin landing heads.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.count_matches"
+          ]
+        },
+        {
+          "title": "More trials, steadier answers",
+          "worked_example": "import random\nrandom.seed(5)\nfor trials in [10, 100, 100000]:\n    sixes = 0\n    for i in range(trials):\n        if random.randint(1, 6) == 6:\n            sixes += 1\n    print(trials, sixes / trials)\n# 10 0.4 / 100 0.11 / 100000 0.16641\nSmall samples jump around; the estimate settles as trials grow. 100 times more trials gives about 10 times less error.",
+          "practice": "Choose which estimate to trust; predict how much more work halves the error.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Check against a known answer, then simulate an unknown one",
+          "worked_example": "import random\nrandom.seed(3)\ndef at_least_one_six(rolls):\n    for i in range(rolls):\n        if random.randint(1, 6) == 6:\n            return True\n    return False\nhits = 0\nfor i in range(100000):\n    if at_least_one_six(4):\n        hits += 1\nprint(hits / 100000)  # 0.51563 (exact: 1 - (5/6)**4 = 0.5177)\nTest the simulation on a question you can answer exactly; then trust it on ones you cannot.",
+          "practice": "Write a trial function returning True or False and estimate its probability; spot a simulation bug by comparing with a known answer.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.count_matches",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "simulation_monte_carlo.estimate_area_pi",
+      "title": "Monte Carlo: estimating pi and areas with random points",
+      "concept": "simulation_monte_carlo",
+      "summary": "Estimate pi, and the area under a curve, by throwing random points into a square and counting the fraction that land inside the shape.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "simulation_monte_carlo.estimate_probability",
+        "expressions.translate_formulas"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Is a random point inside the circle?",
+          "worked_example": "import random\nx, y = random.random(), random.random()\nprint(x * x + y * y <= 1)  # True if this point fell inside the quarter circle\nrandom.random() gives a float in [0, 1); the point (x, y) is inside the unit circle when x² + y² <= 1.",
+          "practice": "Decide whether given points are inside; write the inside test for other shapes (e.g. y <= x).",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "pi from the fraction inside",
+          "worked_example": "import random\nrandom.seed(1)\nn = 100000\ninside = 0\nfor i in range(n):\n    x, y = random.random(), random.random()\n    if x * x + y * y <= 1:\n        inside += 1\nprint(4 * inside / n)  # 3.13784\nThe quarter circle covers pi/4 of the unit square, so pi is about 4 * inside / n.",
+          "practice": "Reorder the lines of the pi estimator; compute an estimate from given counts.",
+          "formats": [
+            "parsons",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "simulation_monte_carlo.estimate_probability"
+          ]
+        },
+        {
+          "title": "Accuracy grows slowly",
+          "worked_example": "n = 100 gives estimates like 3.2 or 2.96; n = 1,000,000 is usually within 0.002 of 3.14159.\nEach extra correct digit needs about 100 times more points.\nThe error shrinks like 1 / sqrt(n), so Monte Carlo is easy but slow to make precise.",
+          "practice": "Predict how many points are needed for a given accuracy; choose between estimates.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Any area: under the curve y = x²",
+          "worked_example": "import random\nrandom.seed(1)\nn = 100000\nbelow = 0\nfor i in range(n):\n    x, y = random.random(), random.random()\n    if y <= x * x:\n        below += 1\nprint(below / n)  # 0.33315 (exact: 1/3)\nSame recipe: the fraction of the square under the curve is the area, since the square has area 1.",
+          "practice": "Write an estimator for a given curve or shape inside the unit square.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "simulation_monte_carlo.estimate_probability",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "mathematical_induction.induction_and_recursion",
+      "title": "Induction: proving a formula and a recursive function correct",
+      "concept": "mathematical_induction",
+      "summary": "Prove a statement for every n with a base case and an inductive step, and use the same argument to check that a recursive function is correct or find where it breaks.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "recursion.base_and_recursive_case",
+        "builtin_functions.sum_max_min"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Testing small cases is not a proof",
+          "worked_example": "for n in range(1, 6):\n    print(n, sum(range(n + 1)), n * (n + 1) // 2)\n# 1 1 1 / 2 3 3 / 3 6 6 / 4 10 10 / 5 15 15\nThe formula 0 + 1 + ... + n = n(n + 1)/2 matches for every n we tried, but no number of tries covers all n.",
+          "practice": "Check formulas for small n with code; choose which claims have been proved.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.sum_max_min"
+          ]
+        },
+        {
+          "title": "Base case and inductive step",
+          "worked_example": "Base: n = 0, the sum is 0 and 0 * 1 / 2 = 0.\nStep: assume 0 + ... + k = k(k + 1)/2. Then 0 + ... + k + (k + 1) = k(k + 1)/2 + (k + 1) = (k + 1)(k + 2)/2.\nSo it holds for 0, hence 1, hence 2, ... for every n.\nProve the first case, then prove 'if it holds for k, it holds for k + 1'.",
+          "practice": "Put the lines of an induction proof in order; fill in the missing algebra step.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "The same argument proves recursion correct",
+          "worked_example": "def sum_to(n):\n    if n == 0:\n        return 0             # base case: correct for n = 0\n    return n + sum_to(n - 1)  # correct if sum_to(n - 1) is\nprint(sum_to(5))  # 15\nIf the base case is right and each recursive case is right whenever the smaller call is, the function is right for every n.",
+          "practice": "Identify the base case and the inductive assumption for given recursive functions.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case"
+          ]
+        },
+        {
+          "title": "Find the part that breaks",
+          "worked_example": "def power(b, e):\n    if e == 0:\n        return 0             # wrong base case: b ** 0 is 1\n    return b * power(b, e - 1)\nprint(power(2, 3))  # 0: every answer is built on the wrong base\nA correct step on a wrong base (or a right base with a wrong step) fails for every n.",
+          "practice": "Decide whether the base case or the step is wrong in buggy recursive functions, and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.base_and_recursive_case",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    }
+  ]
+}

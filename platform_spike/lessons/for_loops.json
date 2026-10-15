@@ -1,0 +1,123 @@
+{
+  "format": 1,
+  "id": "for_loops",
+  "title": "Do it n times",
+  "concept": "Repeat a block a fixed number of times with for and range",
+  "topics": [
+    "for_loops.repeat_n_times"
+  ],
+  "watch": {
+    "world": {
+      "width": 3,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite"
+    },
+    "steps": [
+      {
+        "say": "The robot needs 7 gems on its own cell.",
+        "focus": "cell:0,0"
+      },
+      {
+        "say": "Seven `put()` lines would work. That's a lot of typing.",
+        "code": "put()\nput()\nput()\nput()\nput()\nput()\nput()\n",
+        "focus": "editor"
+      },
+      {
+        "say": "`for` repeats the indented lines. `range(7)` means 7 times.",
+        "code": "for i in range(7):\n    put()\n",
+        "focus": "editor:1"
+      },
+      {
+        "say": "How many gems will be on the cell?",
+        "predict": {
+          "choices": [
+            "1",
+            "7",
+            "8"
+          ],
+          "answer": "7"
+        }
+      },
+      {
+        "say": "Run it and count.",
+        "run": true,
+        "focus": "cell:0,0"
+      },
+      {
+        "say": "Change 7 to 3: the same loop, a different count.",
+        "code": "for i in range(3):\n    put()\n",
+        "focus": "editor:1",
+        "run": true
+      }
+    ]
+  },
+  "guided": {
+    "level": "plant_row",
+    "steps": [
+      {
+        "say": "Start a loop that runs 5 times, with `put()` indented under it.",
+        "done_when": [
+          {
+            "has": "for",
+            "range": 5
+          },
+          {
+            "calls": "put",
+            "inside": "for"
+          }
+        ],
+        "example": "for i in range(5):\n    put()\nmove()\n"
+      },
+      {
+        "say": "Indent `move()` too. Indentation decides what repeats.",
+        "done_when": [
+          {
+            "calls": "move",
+            "inside": "for"
+          }
+        ],
+        "example": "for i in range(5):\n    put()\n    move()\n"
+      },
+      {
+        "say": "Run it and watch the row fill.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "Five gems, one loop."
+  },
+  "practice": [
+    "stack_and_step",
+    "square_walk"
+  ],
+  "twist": "loop_the_block",
+  "recap": {
+    "say": "`for i in range(n):` repeats the indented block n times.",
+    "code": "for i in range(n):\n    ..."
+  },
+  "hints": {
+    "stack_and_step": [
+      "Compare your result with the Goal view: 12 gems, then 9.",
+      "Two stacks: two loops, one after the other. Only `put()` goes inside each loop.",
+      "move()\nfor i in range(12):\n    put()\n__\n__\nfor i in range(__):\n    __\n"
+    ],
+    "square_walk": [
+      "Compare your result with the Goal view: a gem on each corner, and the robot home facing east.",
+      "One side is `put()`, four moves and `turn_left()`. Indent all of them so the whole side repeats.",
+      "for i in range(__):\n    put()\n    __\n    __\n    __\n    __\n    __\n"
+    ],
+    "loop_the_block": [
+      "Compare your result with the Goal view: this block is bigger than last time.",
+      "Four corners, one function: call `go_around_corner()` inside a `for` loop.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around_corner():\n    move()\n    move()\n    move()\n    __\n    __\n    __\n\n\nfor i in range(__):\n    __\n"
+    ]
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "format": 1,
+  "id": "follow_trail",
+  "title": "Follow the trail",
+  "brief": "A trail of gems starts under the robot. Pick up every gem and stop on the first empty cell after the trail, not at the wall. Trails come in different lengths.",
+  "starter_code": "",
+  "world": {
+    "width": 10,
+    "height": 1,
+    "start": [
+      1,
+      0,
+      "E"
+    ],
+    "gems": {
+      "1,0": 1,
+      "2,0": 1,
+      "3,0": 1,
+      "4,0": 1,
+      "5,0": 1
+    },
+    "goal": {
+      "end_at": [
+        6,
+        0
+      ]
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 5,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 1
+      },
+      "name": "one gem",
+      "goal": {
+        "end_at": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "width": 4,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "name": "no trail",
+      "goal": {
+        "end_at": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "width": 14,
+      "height": 1,
+      "start": [
+        2,
+        0,
+        "E"
+      ],
+      "gems": {
+        "2,0": 1,
+        "3,0": 1,
+        "4,0": 1,
+        "5,0": 1,
+        "6,0": 1,
+        "7,0": 1,
+        "8,0": 1,
+        "9,0": 1,
+        "10,0": 1
+      },
+      "name": "long trail",
+      "goal": {
+        "end_at": [
+          11,
+          0
+        ]
+      }
+    },
+    {
+      "width": 6,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 1,
+        "1,0": 1,
+        "2,0": 1,
+        "3,0": 1
+      },
+      "name": "trail near the wall",
+      "goal": {
+        "end_at": [
+          4,
+          0
+        ]
+      }
+    },
+    {
+      "width": 1,
+      "height": 7,
+      "start": [
+        0,
+        6,
+        "N"
+      ],
+      "gems": {
+        "0,6": 1,
+        "0,5": 1,
+        "0,4": 1
+      },
+      "name": "trail going north",
+      "goal": {
+        "end_at": [
+          0,
+          3
+        ]
+      }
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true
+  },
+  "constraints": {
+    "required": [
+      "while"
+    ],
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "while_loops.loop_until_condition",
+    "while_loops.repeat_while_true"
+  ]
+}

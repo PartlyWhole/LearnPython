@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "id": "plant_row",
+  "title": "Plant a row",
+  "brief": "Put one gem on each of the first five cells, starting where you stand. You have exactly five gems. Use a for loop instead of writing the same lines five times.",
+  "starter_code": "put()\nmove()\n",
+  "world": {
+    "width": 8,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "bag": 5
+  },
+  "goal": {
+    "gems_exactly": {
+      "0,0": 1,
+      "1,0": 1,
+      "2,0": 1,
+      "3,0": 1,
+      "4,0": 1
+    }
+  },
+  "constraints": {
+    "required": [
+      "for"
+    ],
+    "max_lines": 4
+  },
+  "topics": [
+    "for_loops.repeat_n_times"
+  ]
+}

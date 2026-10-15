@@ -1,0 +1,2104 @@
+{
+  "batch": "B15",
+  "title": "Data structures",
+  "concept_map": {
+    "linked_lists": {
+      "topics": [
+        "linked_lists.nodes_and_traversal",
+        "linked_lists.add_head_and_tail",
+        "linked_lists.remove_nodes",
+        "linked_lists.reverse_in_place",
+        "linked_lists.compare_with_python_list"
+      ],
+      "entry_topic": "linked_lists.nodes_and_traversal",
+      "notes": "Node and LinkedList classes are used before B11 teaches classes: entry topics carry pending concept:classes and present the class lines as a copied template. Making the list iterable with __iter__/yield and __repr__ (Boot.dev) was left to B11 dunder_methods. Step-count comparisons carry pending concept:complexity_big_o (B14). Doubly linked lists were not given a topic. Reconciliation: Node/LinkedList are now taught classes (pending concept:classes resolved to constructors.init_sets_attributes); long examples trimmed to the changed lines. reverse_in_place kept: a distinct, classic pointer exercise with no overlap."
+    },
+    "trees": {
+      "topics": [
+        "trees.binary_tree_nodes",
+        "trees.recursive_tree_functions",
+        "trees.traversal_orders",
+        "trees.general_trees",
+        "trees.bst_search_and_insert",
+        "trees.bst_delete_and_sorted_order"
+      ],
+      "entry_topic": "trees.binary_tree_nodes",
+      "notes": "Builds on B08 recursion (multiple_recursive_calls, recursion_on_sequences) as B08's note asked. BST search carries pending concept:binary_search (B14) because it is the tree form of the same idea. Level-order traversal is graph_algorithms.breadth_first_search. Duplicate values in a BST go right and are not discussed further. general_trees uses isinstance as a copied line before B11/B12."
+    },
+    "balanced_trees": {
+      "topics": [
+        "balanced_trees.why_balance",
+        "balanced_trees.red_black_rules",
+        "balanced_trees.rotations_and_insert_fixup"
+      ],
+      "entry_topic": "balanced_trees.why_balance",
+      "notes": "Red-black only (Boot.dev). Insert fix-up is traced, not implemented with parent pointers; rotations are written without parent pointers. Red-black deletion and AVL trees were left out."
+    },
+    "tries": {
+      "topics": [
+        "tries.insert_and_search",
+        "tries.prefix_search_and_matching"
+      ],
+      "entry_topic": "tries.insert_and_search",
+      "notes": "Nested dicts with a '*' end marker, as in Boot.dev; plain functions instead of a Trie class, so no classes dependency."
+    },
+    "graphs": {
+      "topics": [
+        "graphs.adjacency_list",
+        "graphs.matrix_directed_weighted"
+      ],
+      "entry_topic": "graphs.adjacency_list",
+      "notes": "Graphs are dicts of sets/dicts and lists of lists, so no classes dependency. Examples iterate sorted(graph[v]) because set order of strings varies between runs."
+    },
+    "graph_algorithms": {
+      "topics": [
+        "graph_algorithms.depth_first_search",
+        "graph_algorithms.breadth_first_search",
+        "graph_algorithms.shortest_path_bfs",
+        "graph_algorithms.connected_components",
+        "graph_algorithms.pagerank_iteration"
+      ],
+      "entry_topic": "graph_algorithms.depth_first_search",
+      "notes": "BFS/DFS/paths from Boot.dev; pagerank_iteration from py4e (introduced only). Weighted shortest paths (Dijkstra), topological sort and cycle detection in directed graphs are taught by none of the 8 courses and were left out. Uses `from collections import deque` (B07). Grid KPs build neighbour lists with plain loops."
+    },
+    "hash_maps_internals": {
+      "topics": [
+        "hash_maps_internals.hash_to_index",
+        "hash_maps_internals.collisions",
+        "hash_maps_internals.load_factor_and_resize"
+      ],
+      "entry_topic": "hash_maps_internals.hash_to_index",
+      "notes": "Plain functions over a bucket list instead of Boot.dev's HashMap class, so no classes dependency. __hash__/__eq__ for user classes belongs to B11 dunder_methods. Average-case O(1) reasoning carries pending concept:complexity_big_o."
+    },
+    "p_vs_np": {
+      "topics": [
+        "p_vs_np.verify_vs_solve"
+      ],
+      "entry_topic": "p_vs_np.verify_vs_solve",
+      "notes": "One topic: Boot.dev only, introduced. Exponential running time itself belongs to B14 complexity_big_o (pending)."
+    }
+  },
+  "topics": [
+    {
+      "id": "linked_lists.nodes_and_traversal",
+      "title": "Nodes and links: walking a linked list",
+      "concept": "linked_lists",
+      "summary": "Link Node objects by their next attribute and walk the chain with a current pointer to print, count or search it, stopping at None.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "none_type.check_for_none",
+        "mutability_aliasing.names_refer_to_objects",
+        "return_values.early_return",
+        "constructors.init_sets_attributes"
+      ],
+      "knowledge_points": [
+        {
+          "title": "A node holds a value and a link to the next node",
+          "worked_example": "class Node:\n    def __init__(self, val):\n        self.val = val\n        self.next = None\n\na = Node('a')\nb = Node('b')\nc = Node('c')\na.next = b\nb.next = c\nprint(a.next.next.val)  # c\nprint(c.next)           # None\nEach node stores its value and a reference to the next node; the last node's next is None.",
+          "practice": "Predict what chains of .next and .val print for a hand-built list; draw the boxes-and-arrows picture for given code.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects",
+            "none_type.check_for_none",
+            "constructors.init_sets_attributes"
+          ]
+        },
+        {
+          "title": "Walk the list with a current pointer",
+          "worked_example": "current = a\nwhile current is not None:\n    print(current.val)\n    current = current.next\n# a\n# b\n# c\nStart at the head, use the node, then step to current.next; the loop ends when current becomes None. (Node and a, b, c as in KP1.)",
+          "practice": "Predict the printed values for a traversal; reorder the lines of a traversal loop.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Count and search while walking",
+          "worked_example": "def length(head):\n    count = 0\n    current = head\n    while current is not None:\n        count += 1\n        current = current.next\n    return count\n\ndef contains(head, target):\n    current = head\n    while current is not None:\n        if current.val == target:\n            return True\n        current = current.next\n    return False\n\nprint(length(a), contains(a, 'b'), contains(a, 'z'))  # 3 True False\nSame walk, different work at each node; return True as soon as a match is found, False only after the whole chain.",
+          "practice": "Write sum_values(head) and index_of(head, target); predict results on an empty list (head is None).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return",
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Traversal bugs: no step, lost head, missed last node",
+          "worked_example": "current = a\nwhile current.next is not None:\n    print(current.val)\n    current = current.next\n# a\n# b   <- c is never printed\nTesting current.next stops one node early; forgetting current = current.next loops forever; moving the head variable itself loses the start of the list.",
+          "practice": "Find and fix the bug in three broken traversal loops; predict how many values each prints.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.5
+        },
+        {
+          "topic": "none_type.check_for_none",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "linked_lists.add_head_and_tail",
+      "title": "Building a linked list: adding at the head and the tail",
+      "concept": "linked_lists",
+      "summary": "Grow a LinkedList by adding nodes at the head or the tail, keep a tail pointer, and handle the empty list.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "linked_lists.nodes_and_traversal"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Add at the head: the new node points at the old head",
+          "worked_example": "# Node class as defined earlier\nhead = None\nfor val in ['a', 'b', 'c']:\n    node = Node(val)\n    node.next = head\n    head = node\nprint(head.val, head.next.val, head.next.next.val)  # c b a\nLink the new node first, then move head to it; items added at the head come out in reverse order.",
+          "practice": "Predict the order after a series of head insertions; fix code that moves head before linking.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal"
+          ]
+        },
+        {
+          "title": "Add at the tail by walking to the last node",
+          "worked_example": "# Node class as defined earlier\ndef add_to_tail(head, val):\n    node = Node(val)\n    if head is None:\n        return node\n    current = head\n    while current.next is not None:\n        current = current.next\n    current.next = node\n    return head\n\nhead = None\nfor val in ['a', 'b', 'c']:\n    head = add_to_tail(head, val)\nprint(head.val, head.next.next.val)  # a c\nHere stopping at current.next is None is what we want: we need the last node, not None. An empty list needs its own case.",
+          "practice": "Fill in the loop condition that stops on the last node; predict results starting from an empty list.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal",
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "A LinkedList class that remembers its tail",
+          "worked_example": "# Node as defined in nodes_and_traversal\nclass LinkedList:\n    def __init__(self):\n        self.head = None\n        self.tail = None\n    def add_to_tail(self, val):\n        node = Node(val)\n        if self.head is None:\n            self.head = node\n            self.tail = node\n            return\n        self.tail.next = node\n        self.tail = node\n    def to_list(self):\n        out = []\n        current = self.head\n        while current is not None:\n            out.append(current.val)\n            current = current.next\n        return out\n\nitems = LinkedList()\nfor val in ['a', 'b', 'c']:\n    items.add_to_tail(val)\nprint(items.to_list(), items.tail.val)  # ['a', 'b', 'c'] c\nStoring tail makes adding at the end one step instead of a walk; when the list is empty, head and tail both become the new node. to_list is the walk from nodes_and_traversal.",
+          "practice": "Write add_to_head(self, val) for the class, keeping tail correct when the list was empty; predict to_list() after mixed adds.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal"
+          ]
+        },
+        {
+          "title": "Keeping head and tail in sync",
+          "worked_example": "    def add_to_tail(self, val):   # inside class LinkedList\n        node = Node(val)\n        if self.head is None:\n            self.head = node\n            return\n        self.tail.next = node\n        self.tail = node\n\nitems = LinkedList()\nitems.add_to_tail('a')\nitems.add_to_tail('b')  # AttributeError: 'NoneType' object has no attribute 'next' ...\nThis add_to_tail forgot to set tail for the first node, so tail is still None on the second add. Every method must leave both head and tail correct.",
+          "practice": "Spot which method leaves head or tail wrong in buggy versions; trace head and tail through a sequence of adds.",
+          "formats": [
+            "fix_the_bug",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "linked_lists.nodes_and_traversal",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "linked_lists.remove_nodes",
+      "title": "Removing nodes from a linked list",
+      "concept": "linked_lists",
+      "summary": "Remove the head node, remove the first node with a given value by relinking its neighbour, and keep head and tail right at the ends.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "linked_lists.add_head_and_tail"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Remove from the head",
+          "worked_example": "# Node and LinkedList (with add_to_tail and to_list) as defined earlier\nitems = LinkedList()\nfor val in ['a', 'b', 'c']:\n    items.add_to_tail(val)\nold = items.head\nitems.head = old.next\nprint(old.val, items.to_list())  # a ['b', 'c']\nMoving head one step forward drops the first node; save it first if you need its value.",
+          "practice": "Predict the list after removing from the head twice; write remove_from_head that returns the removed value.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "linked_lists.add_head_and_tail"
+          ]
+        },
+        {
+          "title": "Remove from an empty or one-node list",
+          "worked_example": "# a new method inside class LinkedList:\n    def remove_from_head(self):\n        if self.head is None:\n            return None\n        old = self.head\n        self.head = old.next\n        if self.head is None:\n            self.tail = None\n        return old.val\n\nitems = LinkedList()\nitems.add_to_tail('a')\nprint(items.remove_from_head(), items.tail)  # a None\nprint(items.remove_from_head())             # None\nRemoving the only node must clear tail too; removing from an empty list returns None instead of crashing.",
+          "practice": "Trace head and tail through removals down to empty; fix a version that leaves tail pointing at a removed node.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "Remove a value from the middle: link around it",
+          "worked_example": "# Node and LinkedList as defined earlier; items holds 'a' -> 'b' -> 'c'\ndef remove_value(items, target):\n    prev = None\n    current = items.head\n    while current is not None:\n        if current.val == target:\n            if prev is None:\n                items.head = current.next\n            else:\n                prev.next = current.next\n            return True\n        prev = current\n        current = current.next\n    return False\n\nprint(remove_value(items, 'b'), items.to_list())  # True ['a', 'c']\nKeep a prev pointer one step behind; prev.next = current.next skips the removed node. Removing the head (prev is None) is a separate case.",
+          "practice": "Fill in the relinking line; predict the list after removing the first, middle and a missing value.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal",
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "Removing the last node must move tail",
+          "worked_example": "print(remove_value(items, 'c'), items.to_list(), items.tail.val)  # True ['a'] c\nAfter removing 'c' the list is right but tail still points at the removed node, so the next add_to_tail would attach to it. Fix: if current is items.tail: items.tail = prev.",
+          "practice": "Find the bug that leaves tail stale; write the fixed remove_value and test it on all three positions.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "linked_lists.add_head_and_tail"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "linked_lists.add_head_and_tail",
+          "weight": 0.5
+        },
+        {
+          "topic": "linked_lists.nodes_and_traversal",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "linked_lists.reverse_in_place",
+      "title": "Reversing a linked list in place",
+      "concept": "linked_lists",
+      "summary": "Reverse a linked list by turning every next pointer around with prev, current and nxt pointers, tracing each step and avoiding losing the rest of the chain.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "linked_lists.add_head_and_tail"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Turn one arrow around without losing the rest",
+          "worked_example": "# Node class as defined earlier\na = Node('a')\nb = Node('b')\na.next = b\nnxt = a.next     # remember b first\na.next = None    # a now points backwards (to nothing)\nb.next = a\nprint(b.val, b.next.val, a.next)  # b a None\nSave the next node before overwriting next, or the rest of the list is unreachable.",
+          "practice": "Predict the links after short pointer-assignment sequences; spot the line order that loses a node.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal"
+          ]
+        },
+        {
+          "title": "The three-pointer loop",
+          "worked_example": "# Node and LinkedList as defined earlier; items holds 1 -> 2 -> 3\ndef reverse(head):\n    prev = None\n    current = head\n    while current is not None:\n        nxt = current.next\n        current.next = prev\n        prev = current\n        current = nxt\n    return prev\n\nitems.head = reverse(items.head)\nprint(items.to_list())  # [3, 2, 1]\nEach pass flips one arrow and moves all three pointers one step; when current is None, prev is the new head.",
+          "practice": "Fill in a trace table of prev, current and nxt for a 3-node list; reorder the four loop lines.",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal",
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Bugs: wrong order, forgotten new head",
+          "worked_example": "# items holds 1 -> 2 -> 3 again; buggy version\ndef reverse(head):\n    prev = None\n    current = head\n    while current is not None:\n        current.next = prev\n        prev = current\n        current = current.next\n    return prev\n\nitems.head = reverse(items.head)\nprint(items.to_list())  # [1]\ncurrent.next was overwritten before it was saved, so the loop stops after one node. Also: the caller must store the returned head (and the old head becomes the tail).",
+          "practice": "Fix three broken reverse functions; predict what each buggy version leaves in the list.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "linked_lists.add_head_and_tail"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "linked_lists.nodes_and_traversal",
+          "weight": 0.7
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "linked_lists.compare_with_python_list",
+      "title": "Linked lists vs Python lists: which operations are cheap",
+      "concept": "linked_lists",
+      "summary": "Count the steps each operation takes on a linked list and on a Python list, build a queue from a linked list with head and tail, and choose the right structure.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "linked_lists.remove_nodes",
+        "stacks_queues.queue_with_deque",
+        "complexity_big_o.cost_of_builtin_operations"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Getting item i means walking i steps",
+          "worked_example": "# Node and LinkedList (with add_to_tail and to_list) as defined earlier\ndef get(items, i):\n    current = items.head\n    for _ in range(i):\n        current = current.next\n    return current.val\n\nitems = LinkedList()\nfor val in 'abcde':\n    items.add_to_tail(val)\nprint(get(items, 3))  # d, after 3 steps\nA Python list jumps straight to index i; a linked list has no index, so reaching item i takes i steps.",
+          "practice": "Count the steps needed to reach given positions; choose which operations get slower as the list grows.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal"
+          ]
+        },
+        {
+          "title": "Adding at the front: one step vs shifting everything",
+          "worked_example": "nums = [2, 3, 4]\nnums.insert(0, 1)\nprint(nums)  # [1, 2, 3, 4]\ninsert(0, x) moves every existing item one place right (n moves); a linked list's add_to_head relinks one node no matter how long the list is.",
+          "practice": "Count moves for insert(0, x) on lists of given lengths versus the linked-list version; multiple choice on which is cheaper for given operations.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "A queue built from a linked list",
+          "worked_example": "# LinkedList with add_to_tail and remove_from_head from the previous topics\nq = LinkedList()\nfor name in ['ana', 'bo', 'cy']:\n    q.add_to_tail(name)\nprint(q.remove_from_head(), q.to_list())  # ana ['bo', 'cy']\nJoin at the tail, leave from the head: both are one step, which is how deque stays fast at both ends.",
+          "practice": "Trace a linked-list queue through joins and serves; write a stack using add_to_head and remove_from_head.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "stacks_queues.queue_with_deque",
+            "linked_lists.remove_nodes"
+          ]
+        },
+        {
+          "title": "Choose the structure for the job",
+          "worked_example": "Many reads by position: Python list. Many adds/removes at the front: deque (or a linked list). Many adds/removes at both ends plus occasional scans: deque. In everyday Python you use list and deque; you write a linked list to understand them.",
+          "practice": "For each described workload, choose list, deque or a hand-written linked list and justify with the step counts.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "stacks_queues.queue_with_deque"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "linked_lists.remove_nodes",
+          "weight": 0.3
+        },
+        {
+          "topic": "stacks_queues.queue_with_deque",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "trees.binary_tree_nodes",
+      "title": "Binary trees: nodes, children and tree words",
+      "concept": "trees",
+      "summary": "Build a binary tree from TreeNode objects with left and right children, name its parts (root, leaf, parent, subtree, depth) and follow paths to a node.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "linked_lists.nodes_and_traversal"
+      ],
+      "knowledge_points": [
+        {
+          "title": "A node with a left and a right child",
+          "worked_example": "class TreeNode:\n    def __init__(self, val, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\nroot = TreeNode(5, TreeNode(3), TreeNode(8, None, TreeNode(9)))\nprint(root.left.val, root.right.right.val)  # 3 9\nprint(root.left.left)                      # None\nLike a linked-list node, but with two links; a missing child is None.",
+          "practice": "Predict values reached by chains of .left/.right; write the constructor call for a drawn tree.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "linked_lists.nodes_and_traversal"
+          ]
+        },
+        {
+          "title": "Tree words: root, parent, child, leaf, subtree, depth",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\nnode = root.left\nprint(node.left is None and node.right is None)  # False: 3 has children 1 and 4\nleaf = root.left.right\nprint(leaf.left is None and leaf.right is None)  # True: 4 is a leaf\nRoot 5 has depth 0; 3 and 8 are its children (depth 1); 1, 4 and 9 are leaves. Each child is the root of its own subtree.",
+          "practice": "Name the root, leaves and parents in drawn trees; give the depth of named nodes; test whether a node is a leaf.",
+          "formats": [
+            "multiple_choice",
+            "short_answer",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "Following a path, and falling off the tree",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\nnode = root\nfor step in 'LR':\n    if step == 'L':\n        node = node.left\n    else:\n        node = node.right\nprint(node.val)  # 4\nprint(root.right.left.val)  # AttributeError: 'NoneType' object has no attribute 'val'\nEach step moves one level down. Asking a None child for .val is the classic tree crash; check for None before going further.",
+          "practice": "Predict where a path of L/R steps ends or whether it crashes; fix a path-follower that does not check for None.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none",
+            "for_loops.loop_over_characters"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "linked_lists.nodes_and_traversal",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "trees.recursive_tree_functions",
+      "title": "Recursive functions on trees: count, sum, max and height",
+      "concept": "trees",
+      "summary": "Write tree functions with an empty-tree base case and two recursive calls: count nodes, add values, find the greatest value, count leaves and measure height.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "trees.binary_tree_nodes",
+        "recursion.multiple_recursive_calls",
+        "recursion.recursion_bugs",
+        "builtin_functions.sum_max_min"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Count nodes: empty tree is the base case",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef count(node):\n    if node is None:\n        return 0\n    return 1 + count(node.left) + count(node.right)\n\nprint(count(root))  # 6\nA tree is either empty (None) or a node plus two smaller trees, so the function calls itself on both children and adds itself.",
+          "practice": "Write total(node) summing all values; predict count() on small drawn trees.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "recursion.multiple_recursive_calls",
+            "trees.binary_tree_nodes"
+          ]
+        },
+        {
+          "title": "Greatest value: combine results with max",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef greatest(node):\n    if node is None:\n        return float('-inf')\n    return max(node.val, greatest(node.left), greatest(node.right))\n\nprint(greatest(root))  # 9\nThe empty-tree answer must not win the max, so it is minus infinity, not 0 (a tree of negative numbers would break 0).",
+          "practice": "Write smallest(node); fix a greatest() that returns 0 for an empty tree and test it on negative values.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "recursion.multiple_recursive_calls"
+          ]
+        },
+        {
+          "title": "Height: the longest path down",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef height(node):\n    if node is None:\n        return -1\n    return 1 + max(height(node.left), height(node.right))\n\nprint(height(root), height(root.right.right))  # 2 0\nHeight counts edges on the longest root-to-leaf path: a single node has height 0, the empty tree -1. Some books count nodes instead; check which convention a question uses.",
+          "practice": "Predict heights of drawn trees, including a one-sided chain; trace the calls for a 3-node tree.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "recursion.trace_recursive_calls"
+          ]
+        },
+        {
+          "title": "Two base cases: counting leaves",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef leaves(node):\n    if node is None:\n        return 0\n    if node.left is None and node.right is None:\n        return 1\n    return leaves(node.left) + leaves(node.right)\n\nprint(leaves(root))  # 3\nEmpty trees contribute nothing; a leaf contributes 1; any other node asks its children.",
+          "practice": "Write a function counting nodes with exactly one child; fix a leaves() whose missing None check crashes.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "recursion.recursion_bugs"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "recursion.multiple_recursive_calls",
+          "weight": 0.6
+        },
+        {
+          "topic": "trees.binary_tree_nodes",
+          "weight": 0.5
+        },
+        {
+          "topic": "recursion.recursion_bugs",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "trees.traversal_orders",
+      "title": "Visiting every node: preorder, inorder and postorder",
+      "concept": "trees",
+      "summary": "List a tree's values in preorder, inorder and postorder by placing the node before, between or after its subtrees, and pick the order a task needs.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "trees.recursive_tree_functions",
+        "recursion.recursion_on_sequences"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Preorder: the node first",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef preorder(node):\n    if node is None:\n        return []\n    return [node.val] + preorder(node.left) + preorder(node.right)\n\nprint(preorder(root))  # [5, 3, 1, 4, 8, 9]\nVisit the node, then everything on its left, then everything on its right.",
+          "practice": "Write the preorder list for drawn trees; predict the output of preorder().",
+          "formats": [
+            "predict_output",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions",
+            "recursion.recursion_on_sequences"
+          ]
+        },
+        {
+          "title": "Inorder and postorder: move the node",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef inorder(node):\n    if node is None:\n        return []\n    return inorder(node.left) + [node.val] + inorder(node.right)\n\ndef postorder(node):\n    if node is None:\n        return []\n    return postorder(node.left) + postorder(node.right) + [node.val]\n\nprint(inorder(root))    # [1, 3, 4, 5, 8, 9]\nprint(postorder(root))  # [1, 4, 3, 9, 8, 5]\nOnly the position of [node.val] changes: between the subtrees (inorder) or after both (postorder).",
+          "practice": "Give all three orders for drawn trees; fill in the return line for a named order.",
+          "formats": [
+            "short_answer",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions"
+          ]
+        },
+        {
+          "title": "Reconstruct facts from an order",
+          "worked_example": "In preorder the first value is always the root; in postorder the last value is. Given preorder [7, 2, 9] of a 3-node tree, 7 is the root.",
+          "practice": "Identify the root and leaves from given traversal lists; decide which order produced a given list.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "trees.binary_tree_nodes"
+          ]
+        },
+        {
+          "title": "Choosing the order for a job",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef print_outline(node, depth=0):\n    if node is None:\n        return\n    print('  ' * depth + str(node.val))\n    print_outline(node.left, depth + 1)\n    print_outline(node.right, depth + 1)\n\nprint_outline(root)\n# 5\n#   3\n#     1\n#     4\n#   8\n#     9\nPrinting an outline or copying a tree needs parents first (preorder); freeing or totalling folder sizes needs children first (postorder).",
+          "practice": "Match tasks to traversal orders; write an outline printer that also shows depth numbers.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "trees.recursive_tree_functions",
+          "weight": 0.6
+        },
+        {
+          "topic": "recursion.recursion_on_sequences",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "trees.general_trees",
+      "title": "Trees with any number of children: org charts and folders",
+      "concept": "trees",
+      "summary": "Represent a tree whose nodes hold a list of children (an org chart, a folder tree) and write recursive functions that loop over the children.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "trees.recursive_tree_functions",
+        "lists.loop_over_items",
+        "nested_data_structures.navigate_deep_data"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A node with a list of children",
+          "worked_example": "class Employee:\n    def __init__(self, name, reports):\n        self.name = name\n        self.reports = reports\n\nboss = Employee('Ada', [Employee('Bo', [Employee('Cy', [])]), Employee('Di', [])])\nprint(boss.reports[0].name, boss.reports[1].name)  # Bo Di\nInstead of left and right, each node keeps a list; a leaf has an empty list.",
+          "practice": "Predict names reached through .reports indexes; build a small org chart from a description.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "trees.binary_tree_nodes"
+          ]
+        },
+        {
+          "title": "Recursion with a loop over children",
+          "worked_example": "def count_staff(e):\n    total = 1\n    for r in e.reports:\n        total += count_staff(r)\n    return total\n\nprint(count_staff(boss))  # 4\nNo explicit None check is needed: a leaf's empty list means the loop does nothing and the function returns 1.",
+          "practice": "Write a function returning everyone under a manager (Helsinki's 'bosses and subordinates'); predict counts for subtrees.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "A tree made of nested dicts",
+          "worked_example": "folders = {'docs': {'cv.txt': 3, 'notes': {'a.txt': 1}}, 'pic.png': 5}\n\ndef total_size(item):\n    if isinstance(item, int):\n        return item\n    total = 0\n    for child in item.values():\n        total += total_size(child)\n    return total\n\nprint(total_size(folders))  # 9\nFiles are leaves (sizes); folders are dicts of children. isinstance(item, int) tells which kind of node you have; copy it as given.",
+          "practice": "Write a function counting files in a nested-dict folder tree; trace total_size on a 2-level example.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.navigate_deep_data"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "trees.recursive_tree_functions",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "trees.bst_search_and_insert",
+      "title": "Binary search trees: searching and inserting",
+      "concept": "trees",
+      "summary": "Use the BST ordering rule to recognise valid search trees, find a value by going left or right, insert new values recursively, and find the minimum and maximum.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "trees.recursive_tree_functions",
+        "return_values.early_return",
+        "binary_search.iterative_binary_search"
+      ],
+      "knowledge_points": [
+        {
+          "title": "The BST rule: smaller left, larger right",
+          "worked_example": "In a binary search tree every value in a node's left subtree is smaller than the node and every value in its right subtree is larger. 5 with left child 3 and right child 8 is valid; 5 with a 6 anywhere under its left child is not.",
+          "practice": "Decide whether drawn trees are valid BSTs, including the trap where a grandchild breaks the rule; place a value in the right spot.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "trees.binary_tree_nodes",
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Search: one comparison per level",
+          "worked_example": "root = TreeNode(5, TreeNode(3, TreeNode(1), TreeNode(4)), TreeNode(8, None, TreeNode(9)))\n\ndef exists(node, target):\n    while node is not None:\n        if target == node.val:\n            return True\n        if target < node.val:\n            node = node.left\n        else:\n            node = node.right\n    return False\n\nprint(exists(root, 4), exists(root, 7))  # True False\nEach comparison throws away a whole subtree, like binary search on a sorted list.",
+          "practice": "Trace the nodes visited when searching for given values; write a recursive version of exists().",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return",
+            "trees.binary_tree_nodes"
+          ]
+        },
+        {
+          "title": "Insert: walk down and attach a new leaf",
+          "worked_example": "def insert(node, val):\n    if node is None:\n        return TreeNode(val)\n    if val < node.val:\n        node.left = insert(node.left, val)\n    else:\n        node.right = insert(node.right, val)\n    return node\n\nroot = None\nfor v in [5, 3, 8, 4]:\n    root = insert(root, v)\nprint(root.left.right.val)  # 4\ninsert returns the (possibly new) subtree root, and the parent stores it back with node.left = ...; forgetting to store it, or to return node, loses the insert.",
+          "practice": "Draw the tree built by inserting a sequence; fix an insert that forgets return node.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions",
+            "recursion.recursion_bugs"
+          ]
+        },
+        {
+          "title": "Minimum and maximum: keep going left or right",
+          "worked_example": "# TreeNode, insert, inorder and height as defined earlier\ndef get_min(node):\n    while node.left is not None:\n        node = node.left\n    return node.val\n\nroot = None\nfor v in [5, 3, 8, 1, 9]:\n    root = insert(root, v)\nprint(get_min(root))  # 1\nThe smallest value is the leftmost node; the largest is the rightmost. No comparisons needed.",
+          "practice": "Write get_max; predict min and max for trees built from given sequences.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "trees.recursive_tree_functions",
+          "weight": 0.4
+        },
+        {
+          "topic": "trees.binary_tree_nodes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "trees.bst_delete_and_sorted_order",
+      "title": "Binary search trees: sorted order and deleting",
+      "concept": "trees",
+      "summary": "Get a BST's values in sorted order with inorder traversal, and delete a value in each of the three cases: a leaf, one child, two children.",
+      "minutes": 20,
+      "core": false,
+      "prerequisites": [
+        "trees.bst_search_and_insert",
+        "trees.traversal_orders"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Inorder traversal of a BST is sorted",
+          "worked_example": "root = None\nfor v in [5, 3, 8, 1, 4, 9]:\n    root = insert(root, v)\nprint(inorder(root))  # [1, 3, 4, 5, 8, 9]\nLeft subtree (smaller) first, then the node, then the right subtree (larger): sorted order falls out of the rule.",
+          "practice": "Predict inorder output for trees built from sequences; use it to check whether a tree is a valid BST.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "trees.traversal_orders"
+          ]
+        },
+        {
+          "title": "Delete a leaf or a node with one child",
+          "worked_example": "# TreeNode, insert and inorder as defined earlier\ndef delete(node, val):\n    if node is None:\n        return None\n    if val < node.val:\n        node.left = delete(node.left, val)\n    elif val > node.val:\n        node.right = delete(node.right, val)\n    else:\n        if node.left is None:\n            return node.right\n        if node.right is None:\n            return node.left\n    return node\n\nroot = None\nfor v in [5, 3, 8, 9]:\n    root = insert(root, v)\nroot = delete(root, 8)\nprint(inorder(root))  # [3, 5, 9]\nA leaf is replaced by None; a node with one child is replaced by that child. The parent reattaches whatever comes back.",
+          "practice": "Draw the tree after deleting given leaves and one-child nodes; fill in the two replacement lines.",
+          "formats": [
+            "short_answer",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "trees.bst_search_and_insert"
+          ]
+        },
+        {
+          "title": "Delete a node with two children: borrow the successor",
+          "worked_example": "# delete() as in KP2, with these lines added after the one-child cases:\n        succ = node.right\n        while succ.left is not None:\n            succ = succ.left\n        node.val = succ.val\n        node.right = delete(node.right, succ.val)\n\n# tree built from 5, 3, 8, 7, 9\nroot = delete(root, 5)\nprint(root.val, inorder(root))  # 7 [3, 7, 8, 9]\nCopy in the smallest value of the right subtree (the next value in sorted order), then delete that value from the right subtree, which is an easy case.",
+          "practice": "Name the successor of given nodes; draw the tree after deleting a two-child node; check the result with inorder.",
+          "formats": [
+            "short_answer",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "trees.bst_search_and_insert"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "trees.bst_search_and_insert",
+          "weight": 0.6
+        },
+        {
+          "topic": "trees.traversal_orders",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "balanced_trees.why_balance",
+      "title": "Why trees need balancing",
+      "concept": "balanced_trees",
+      "summary": "See that inserting sorted data turns a BST into a chain, compare the height of balanced and unbalanced trees, and check whether a tree is height-balanced.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "trees.bst_search_and_insert",
+        "trees.recursive_tree_functions"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Sorted input builds a chain",
+          "worked_example": "root = None\nfor v in [1, 2, 3, 4, 5]:\n    root = insert(root, v)\nprint(height(root))  # 4\n\nroot = None\nfor v in [3, 1, 4, 2, 5]:\n    root = insert(root, v)\nprint(height(root))  # 2\nSame five values, different insert order: in sorted order every node goes right, so the tree is just a linked list.",
+          "practice": "Predict the height after inserting given sequences; choose which insert order gives the tallest tree.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "trees.bst_search_and_insert",
+            "trees.recursive_tree_functions"
+          ]
+        },
+        {
+          "title": "Height decides the search cost",
+          "worked_example": "levels = 0\nnodes = 1\nwhile nodes < 1_000_000:\n    levels += 1\n    nodes = 2 ** (levels + 1) - 1\nprint(levels)  # 19\nA full tree of height h holds 2**(h+1) - 1 nodes, so a million values fit in height 19: about 20 comparisons per search, versus up to a million in a chain.",
+          "practice": "Compute the most comparisons a search needs in balanced and chain-shaped trees of given sizes.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions"
+          ]
+        },
+        {
+          "title": "Checking balance at every node",
+          "worked_example": "# TreeNode, insert, inorder and height as defined earlier\ndef is_balanced(node):\n    if node is None:\n        return True\n    if abs(height(node.left) - height(node.right)) > 1:\n        return False\n    return is_balanced(node.left) and is_balanced(node.right)\n\nroot = None\nfor v in [2, 1, 3, 4, 5]:\n    root = insert(root, v)\nprint(is_balanced(root))  # False\nA tree is height-balanced when, at every node, the two subtree heights differ by at most 1. The root alone looking fine is not enough.",
+          "practice": "Decide which drawn trees are balanced; fix an is_balanced that only checks the root.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "trees.bst_search_and_insert",
+          "weight": 0.4
+        },
+        {
+          "topic": "trees.recursive_tree_functions",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "balanced_trees.red_black_rules",
+      "title": "Red-black trees: the colouring rules",
+      "concept": "balanced_trees",
+      "summary": "State and check the red-black rules (black root, no red node with a red child, the same number of black nodes on every path down) and explain why they keep the tree short.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "balanced_trees.why_balance"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Every node is red or black",
+          "worked_example": "RED, BLACK = 'red', 'black'\n\nclass RBNode:\n    def __init__(self, val, color, left=None, right=None):\n        self.val = val\n        self.color = color\n        self.left = left\n        self.right = right\n\nroot = RBNode(5, BLACK, RBNode(3, RED), RBNode(8, RED))\nprint(root.color, root.left.color)  # black red\nA red-black tree is a BST whose nodes carry a colour; the colours are only bookkeeping that limits how lopsided the tree may get.",
+          "practice": "Read colours off code-built trees; mark which drawn trees are valid BSTs before looking at colours.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "balanced_trees.why_balance"
+          ]
+        },
+        {
+          "title": "Rule check: black root and no red-red",
+          "worked_example": "# RED, BLACK and RBNode as in KP1\ndef red_red(node):\n    if node is None:\n        return False\n    for child in (node.left, node.right):\n        if node.color == RED and child is not None and child.color == RED:\n            return True\n    return red_red(node.left) or red_red(node.right)\n\nbad = RBNode(5, BLACK, RBNode(3, RED, RBNode(1, RED)))\nprint(red_red(bad))  # True\nRules: the root is black, and a red node never has a red child.",
+          "practice": "Find the rule each drawn tree breaks; fill in the condition in red_red().",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions"
+          ]
+        },
+        {
+          "title": "Equal black height on every path",
+          "worked_example": "# RED, BLACK and RBNode as in KP1\ndef black_height(node):\n    if node is None:\n        return 1\n    left = black_height(node.left)\n    right = black_height(node.right)\n    if left != right or left == 0:\n        return 0\n    return left + (1 if node.color == BLACK else 0)\n\nok = RBNode(5, BLACK, RBNode(3, RED), RBNode(8, RED))\nbad = RBNode(5, BLACK, RBNode(3, BLACK), None)\nprint(black_height(ok), black_height(bad))  # 2 0\nEvery path from a node down to an empty child must pass the same number of black nodes (empty children count as black). Here 0 signals a broken tree.",
+          "practice": "Count black nodes on each path of drawn trees; decide whether a tree passes the rule.",
+          "formats": [
+            "numeric",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "trees.recursive_tree_functions"
+          ]
+        },
+        {
+          "title": "Why the rules keep the tree short",
+          "worked_example": "With no two reds in a row and equal blacks on every path, the longest path (alternating black and red) is at most twice the shortest (all black). So height stays about 2 * log2(n): roughly 40 levels for a million values instead of a million.",
+          "practice": "Give the longest possible path for a given black height; compare worst-case heights of a plain BST and a red-black tree.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "balanced_trees.why_balance"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "trees.recursive_tree_functions",
+          "weight": 0.3
+        },
+        {
+          "topic": "balanced_trees.why_balance",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "balanced_trees.rotations_and_insert_fixup",
+      "title": "Rotations and fixing a red-black tree after insert",
+      "concept": "balanced_trees",
+      "summary": "Rotate a subtree left or right while keeping BST order, and trace how a red-black insert recolours or rotates to restore the rules.",
+      "minutes": 20,
+      "core": false,
+      "prerequisites": [
+        "balanced_trees.red_black_rules",
+        "trees.bst_delete_and_sorted_order"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Rotate left: the right child moves up",
+          "worked_example": "# TreeNode, insert, inorder and height as defined earlier\ndef rotate_left(x):\n    y = x.right\n    x.right = y.left\n    y.left = x\n    return y\n\nroot = None\nfor v in [1, 2, 3]:\n    root = insert(root, v)\nroot = rotate_left(root)\nprint(root.val, root.left.val, root.right.val)  # 2 1 3\ny's old left subtree moves across to become x's right subtree; the parent must store the returned new root.",
+          "practice": "Draw the tree after a left rotation at a named node; reorder the three relinking lines.",
+          "formats": [
+            "short_answer",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "trees.bst_search_and_insert"
+          ]
+        },
+        {
+          "title": "Rotate right is the mirror image",
+          "worked_example": "# TreeNode, insert, inorder and height as defined earlier\ndef rotate_right(y):\n    x = y.left\n    y.left = x.right\n    x.right = y\n    return x\n\nroot = None\nfor v in [3, 2, 1]:\n    root = insert(root, v)\nroot = rotate_right(root)\nprint(inorder(root), height(root))  # [1, 2, 3] 1\nA rotation changes the shape and height but never the inorder (sorted) order.",
+          "practice": "Write rotate_right from rotate_left; check with inorder that a rotation kept BST order.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "trees.bst_delete_and_sorted_order"
+          ]
+        },
+        {
+          "title": "Insert red, then fix: recolour when the uncle is red",
+          "worked_example": "New nodes are inserted red (keeps black heights equal). If the parent is also red and the uncle (parent's sibling) is red: make parent and uncle black, grandparent red, and repeat the check from the grandparent. Finally colour the root black.",
+          "practice": "Trace colours after inserts that trigger recolouring; say which rule was broken before each fix.",
+          "formats": [
+            "trace_table",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "balanced_trees.red_black_rules"
+          ]
+        },
+        {
+          "title": "Rotate when the uncle is black",
+          "worked_example": "Insert 1, 2, 3 into an empty red-black tree: 3's parent 2 is red and its uncle is empty (black), so rotate left at 1 and swap colours: 2 becomes the black root with red children 1 and 3. A zig-zag case needs two rotations.",
+          "practice": "Trace inserting short sequences, naming each fix (recolour, single rotation, double rotation) and the resulting tree.",
+          "formats": [
+            "trace_table",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "balanced_trees.red_black_rules"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "balanced_trees.red_black_rules",
+          "weight": 0.5
+        },
+        {
+          "topic": "trees.bst_search_and_insert",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "tries.insert_and_search",
+      "title": "Tries: storing words letter by letter",
+      "concept": "tries",
+      "summary": "Store words in a trie made of nested dicts with an end-of-word marker, and check whether a word or a prefix is present.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "nested_data_structures.navigate_deep_data",
+        "dictionaries.membership_and_get",
+        "for_loops.loop_over_characters",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Insert one word as a path of nested dicts",
+          "worked_example": "def insert(trie, word):\n    node = trie\n    for ch in word:\n        if ch not in node:\n            node[ch] = {}\n        node = node[ch]\n    node['*'] = True\n\ntrie = {}\ninsert(trie, 'cat')\nprint(trie)  # {'c': {'a': {'t': {'*': True}}}}\nEach letter is a key leading to the next level; '*' marks that a whole word ends here.",
+          "practice": "Predict the nested dict after inserting a word; fill in the line that steps one level down.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.navigate_deep_data",
+            "for_loops.loop_over_characters"
+          ]
+        },
+        {
+          "title": "Words share their prefixes",
+          "worked_example": "# insert(trie, word) as defined earlier\ntrie = {}\nfor w in ['cat', 'car', 'cow']:\n    insert(trie, w)\nprint(list(trie['c'].keys()))       # ['a', 'o']\nprint(list(trie['c']['a'].keys()))  # ['t', 'r']\n'cat' and 'car' share the 'c' and 'a' levels; only the last letters branch. Shared prefixes are stored once.",
+          "practice": "Count the letter nodes a trie needs for a word list; draw the trie for three words.",
+          "formats": [
+            "numeric",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        },
+        {
+          "title": "Does the trie contain a whole word?",
+          "worked_example": "# insert(trie, word) as defined earlier\ndef exists(trie, word):\n    node = trie\n    for ch in word:\n        if ch not in node:\n            return False\n        node = node[ch]\n    return '*' in node\n\ntrie = {}\ninsert(trie, 'cat')\nprint(exists(trie, 'cat'), exists(trie, 'ca'), exists(trie, 'dog'))  # True False False\nA missing letter means no; reaching the end of the word is not enough: 'ca' is only a prefix unless '*' is there.",
+          "practice": "Predict exists() for words, prefixes and missing words; fix a version that returns True at the end without checking '*'.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return",
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Prefix check: the same walk without the marker",
+          "worked_example": "# insert(trie, word) as defined earlier\ndef has_prefix(trie, prefix):\n    node = trie\n    for ch in prefix:\n        if ch not in node:\n            return False\n        node = node[ch]\n    return True\n\ntrie = {}\nfor w in ['cat', 'car']:\n    insert(trie, w)\nprint(has_prefix(trie, 'ca'), has_prefix(trie, 'co'))  # True False\nChecking a prefix costs one step per letter, however many words are stored.",
+          "practice": "Write has_prefix; choose between exists and has_prefix for described search-box features.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.navigate_deep_data",
+          "weight": 0.5
+        },
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.5
+        },
+        {
+          "topic": "for_loops.loop_over_characters",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "tries.prefix_search_and_matching",
+      "title": "Trie searches: autocomplete, common prefix and finding words in text",
+      "concept": "tries",
+      "summary": "Collect every word below a trie node recursively, use it for autocomplete, find the longest common prefix, and find which stored words appear inside a text.",
+      "minutes": 20,
+      "core": false,
+      "prerequisites": [
+        "tries.insert_and_search",
+        "recursion.base_and_recursive_case",
+        "dictionaries.loop_keys_values_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Collect all words below a node",
+          "worked_example": "# insert(trie, word) as defined earlier\ndef collect(node, prefix, words):\n    for key, child in node.items():\n        if key == '*':\n            words.append(prefix)\n        else:\n            collect(child, prefix + key, words)\n    return words\n\ntrie = {}\nfor w in ['car', 'cat', 'do']:\n    insert(trie, w)\nprint(sorted(collect(trie, '', [])))  # ['car', 'cat', 'do']\nPass down the letters so far; whenever '*' appears, the prefix is a complete word.",
+          "practice": "Trace collect() on a small trie; fix a version that adds the key instead of the prefix.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case",
+            "dictionaries.loop_keys_values_items"
+          ]
+        },
+        {
+          "title": "Autocomplete: walk to the prefix, then collect",
+          "worked_example": "# insert and collect as above\ndef complete(trie, prefix):\n    node = trie\n    for ch in prefix:\n        if ch not in node:\n            return []\n        node = node[ch]\n    return sorted(collect(node, prefix, []))\n\ntrie = {}\nfor w in ['car', 'cart', 'cat', 'dog']:\n    insert(trie, w)\nprint(complete(trie, 'car'))  # ['car', 'cart']\nReuse the prefix walk from the previous topic, then start collecting from that node with the prefix as the starting text.",
+          "practice": "Write complete(); predict suggestions for prefixes that are words, prefixes only, and missing.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tries.insert_and_search"
+          ]
+        },
+        {
+          "title": "Longest common prefix",
+          "worked_example": "# insert(trie, word) as defined earlier\ndef common_prefix(trie):\n    node = trie\n    prefix = ''\n    while len(node) == 1 and '*' not in node:\n        ch = list(node.keys())[0]\n        prefix += ch\n        node = node[ch]\n    return prefix\n\ntrie = {}\nfor w in ['flower', 'flow', 'flight']:\n    insert(trie, w)\nprint(common_prefix(trie))  # fl\nKeep walking while there is exactly one way down and no word has ended yet.",
+          "practice": "Predict the common prefix of word lists, including one where a word is a prefix of another; fix a version that ignores '*'.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        },
+        {
+          "title": "Find stored words inside a text",
+          "worked_example": "# insert(trie, word) as defined earlier\ndef find_words(trie, text):\n    found = set()\n    for start in range(len(text)):\n        node = trie\n        for end in range(start, len(text)):\n            if text[end] not in node:\n                break\n            node = node[text[end]]\n            if '*' in node:\n                found.add(text[start:end + 1])\n    return found\n\ntrie = {}\nfor w in ['cat', 'at', 'dog']:\n    insert(trie, w)\nprint(sorted(find_words(trie, 'concatenate')))  # ['at', 'cat']\nFrom every starting position walk the trie as far as the text allows; each '*' passed is a match. One walk checks every word at once.",
+          "practice": "Trace the walks for a short text; write a version that returns match positions.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop",
+            "tries.insert_and_search"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tries.insert_and_search",
+          "weight": 0.7
+        },
+        {
+          "topic": "recursion.base_and_recursive_case",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "graphs.adjacency_list",
+      "title": "Graphs: vertices, edges and adjacency lists",
+      "concept": "graphs",
+      "summary": "Represent an undirected graph as a dict mapping each vertex to a set of neighbours, add edges in both directions, and answer neighbour, degree and edge questions.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "dictionaries.add_update_delete",
+        "sets.add_remove",
+        "dictionaries.membership_and_get"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Vertices, edges and neighbours",
+          "worked_example": "graph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\nprint(sorted(graph['D']))  # ['B', 'C', 'E']\nprint(len(graph['A']))     # 2\nEach key is a vertex; its set holds the vertices it shares an edge with. The degree of a vertex is the size of its set. Sets print in no fixed order, so sort to display.",
+          "practice": "List neighbours and degrees from a drawn graph and from its dict; draw the graph for a given dict.",
+          "formats": [
+            "short_answer",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership",
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Add an edge in both directions",
+          "worked_example": "def add_edge(graph, u, v):\n    if u not in graph:\n        graph[u] = set()\n    if v not in graph:\n        graph[v] = set()\n    graph[u].add(v)\n    graph[v].add(u)\n\nfriends = {}\nadd_edge(friends, 'ana', 'bo')\nprint(friends)  # {'ana': {'bo'}, 'bo': {'ana'}}\nAn undirected edge belongs to both ends; forgetting graph[v].add(u) gives a graph where bo does not know ana.",
+          "practice": "Fix an add_edge that only stores one direction; predict the dict after several add_edge calls.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete",
+            "sets.add_remove"
+          ]
+        },
+        {
+          "title": "Build a graph from a list of pairs",
+          "worked_example": "def add_edge(graph, u, v):\n    graph.setdefault(u, set()).add(v)\n    graph.setdefault(v, set()).add(u)\n\nroads = [('A', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'D')]\ngraph = {}\nfor u, v in roads:\n    add_edge(graph, u, v)\nprint(sorted(graph['C']), 'B' in graph['D'])  # ['A', 'B', 'D'] False\nsetdefault(key, set()) returns the existing set or stores and returns a new one. 'B' in graph['D'] asks whether an edge exists.",
+          "practice": "Write edge_exists(graph, u, v); build a graph from given pairs and answer neighbour questions.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops",
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Counting edges, and what makes a tree",
+          "worked_example": "graph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\nedges = 0\nfor v in graph:\n    edges += len(graph[v])\nprint(edges // 2)  # 5\nEvery undirected edge is stored twice, so halve the degree total. A connected graph with one edge fewer than its vertices and no cycles is a tree.",
+          "practice": "Count edges from degrees; classify drawn graphs as tree, has a cycle, or disconnected.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sets.add_remove",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.add_update_delete",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "graphs.matrix_directed_weighted",
+      "title": "Adjacency matrices, directed and weighted graphs",
+      "concept": "graphs",
+      "summary": "Store a graph as an adjacency matrix, model one-way edges and edge weights, and choose between a matrix, a dict of sets and a dict of dicts.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "graphs.adjacency_list",
+        "nested_data_structures.grid_index_and_loop",
+        "nested_data_structures.dict_of_lists_and_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An adjacency matrix",
+          "worked_example": "n = 4\nmatrix = [[False] * n for _ in range(n)]\n\ndef add_edge(u, v):\n    matrix[u][v] = True\n    matrix[v][u] = True\n\nadd_edge(0, 1)\nadd_edge(1, 3)\nprint(matrix[3][1], matrix[0][3])  # True False\nVertices are numbered 0..n-1 and matrix[u][v] says whether the edge exists: one lookup, but n * n cells even for few edges.",
+          "practice": "Fill in a matrix for a drawn graph; predict lookups; fix a matrix built with [[False] * n] * n.",
+          "formats": [
+            "trace_table",
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Directed graphs: edges go one way",
+          "worked_example": "follows = {'ana': {'bo'}, 'bo': set(), 'cy': {'ana', 'bo'}}\nprint('bo' in follows['ana'], 'ana' in follows['bo'])  # True False\nfor p in follows:\n    if 'bo' in follows[p]:\n        print(p, 'follows bo')\n# ana follows bo\n# cy follows bo\nStore only u -> v. Out-neighbours are a lookup; in-neighbours need a scan of every vertex.",
+          "practice": "Answer follows/followed-by questions from a dict; write in_degree(graph, v).",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "graphs.adjacency_list",
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Weighted graphs: a dict of dicts",
+          "worked_example": "roads = {'A': {'B': 5, 'C': 2}, 'B': {'A': 5}, 'C': {'A': 2}}\nprint(roads['A']['C'])  # 2\nroute = ['B', 'A', 'C']\ntotal = 0\nfor i in range(len(route) - 1):\n    total += roads[route[i]][route[i + 1]]\nprint(total)  # 7\nThe inner dict maps each neighbour to the edge's weight (distance, cost, time).",
+          "practice": "Compute the length of given routes; fix a route total that runs off the end of the route.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.dict_of_lists_and_dicts"
+          ]
+        },
+        {
+          "title": "Choosing a representation",
+          "worked_example": "Dict of sets: compact when each vertex has few neighbours (most real graphs); matrix: instant edge checks when the graph is small or dense; dict of dicts: when edges carry weights.",
+          "practice": "Pick a representation for described graphs (road map, chess board moves, social network) and say how many entries each would store.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "graphs.adjacency_list"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphs.adjacency_list",
+          "weight": 0.4
+        },
+        {
+          "topic": "nested_data_structures.grid_index_and_loop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "graph_algorithms.depth_first_search",
+      "title": "Depth-first search: exploring as deep as possible",
+      "concept": "graph_algorithms",
+      "summary": "Visit every vertex reachable from a start vertex with recursive and stack-based depth-first search, using a visited set so cycles do not loop forever.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "graphs.adjacency_list",
+        "recursion.base_and_recursive_case",
+        "stacks_queues.list_as_stack"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Recursive DFS with a visited set",
+          "worked_example": "graph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\n\ndef dfs(graph, v, visited, order):\n    visited.add(v)\n    order.append(v)\n    for n in sorted(graph[v]):\n        if n not in visited:\n            dfs(graph, n, visited, order)\n    return order\n\nprint(dfs(graph, 'A', set(), []))  # ['A', 'B', 'D', 'C', 'E']\nGo to the first unvisited neighbour and keep going; back up only when stuck. sorted() makes the order predictable, since sets have none.",
+          "practice": "Predict the DFS visiting order on drawn graphs; trace the visited set step by step.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case",
+            "graphs.adjacency_list"
+          ]
+        },
+        {
+          "title": "Without visited, a cycle never ends",
+          "worked_example": "graph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\n\ndef dfs_bad(graph, v, order):\n    order.append(v)\n    for n in sorted(graph[v]):\n        dfs_bad(graph, n, order)\n\ndfs_bad(graph, 'A', [])  # RecursionError: maximum recursion depth exceeded\nA -> B -> A -> B ... : every edge in an undirected graph is a two-step cycle, so the visited check is not optional.",
+          "practice": "Fix DFS functions that forget to mark or check visited; predict which versions terminate.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "recursion.base_and_recursive_case",
+            "sets.add_remove"
+          ]
+        },
+        {
+          "title": "DFS with an explicit stack",
+          "worked_example": "graph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\n\ndef dfs_stack(graph, start):\n    visited = set()\n    order = []\n    stack = [start]\n    while stack:\n        v = stack.pop()\n        if v in visited:\n            continue\n        visited.add(v)\n        order.append(v)\n        for n in sorted(graph[v], reverse=True):\n            stack.append(n)\n    return order\n\nprint(dfs_stack(graph, 'A'))  # ['A', 'B', 'D', 'C', 'E']\nThe stack replaces the call stack; pushing neighbours in reverse makes the smallest pop first, matching the recursive order.",
+          "practice": "Trace the stack contents through a DFS; reorder the lines of the loop.",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "stacks_queues.list_as_stack"
+          ]
+        },
+        {
+          "title": "Is there a path from A to B?",
+          "worked_example": "graph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\ngraph['F'] = {'G'}\ngraph['G'] = {'F'}\n\ndef reachable(graph, start, goal, visited):\n    if start == goal:\n        return True\n    visited.add(start)\n    for n in graph[start]:\n        if n not in visited and reachable(graph, n, goal, visited):\n            return True\n    return False\n\nprint(reachable(graph, 'A', 'E', set()), reachable(graph, 'A', 'G', set()))  # True False\nStop as soon as the goal is found; a False answer means DFS ran out of places to go.",
+          "practice": "Write reachable for a directed graph; predict answers for pairs in a graph with two separate parts.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphs.adjacency_list",
+          "weight": 0.5
+        },
+        {
+          "topic": "recursion.base_and_recursive_case",
+          "weight": 0.4
+        },
+        {
+          "topic": "stacks_queues.list_as_stack",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "graph_algorithms.breadth_first_search",
+      "title": "Breadth-first search: exploring level by level",
+      "concept": "graph_algorithms",
+      "summary": "Visit vertices in order of distance from the start with a deque, mark them visited when they are queued, and record each vertex's distance in edges.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "graph_algorithms.depth_first_search",
+        "stacks_queues.queue_with_deque",
+        "sets.add_remove"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "BFS with a queue",
+          "worked_example": "from collections import deque\ngraph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\n\ndef bfs(graph, start):\n    visited = {start}\n    order = []\n    queue = deque([start])\n    while queue:\n        v = queue.popleft()\n        order.append(v)\n        for n in sorted(graph[v]):\n            if n not in visited:\n                visited.add(n)\n                queue.append(n)\n    return order\n\nprint(bfs(graph, 'A'))  # ['A', 'B', 'C', 'D', 'E']\nAll neighbours of A come before any of their neighbours: first in, first out gives level-by-level order.",
+          "practice": "Predict BFS order on drawn graphs; trace the queue and visited set.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "stacks_queues.queue_with_deque",
+            "graphs.adjacency_list"
+          ]
+        },
+        {
+          "title": "Mark visited when queuing, not when leaving",
+          "worked_example": "If visited is only updated when a vertex leaves the queue, D is queued twice (once from B, once from C) and is processed twice. Mark it as soon as it is queued.",
+          "practice": "Fix a BFS that marks too late; count how many times each vertex is queued in the buggy version.",
+          "formats": [
+            "fix_the_bug",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "sets.add_remove"
+          ]
+        },
+        {
+          "title": "Distances: how many edges away",
+          "worked_example": "from collections import deque\ngraph = {'A': {'B', 'C'}, 'B': {'A', 'D'}, 'C': {'A', 'D'}, 'D': {'B', 'C', 'E'}, 'E': {'D'}}\n\ndef distances(graph, start):\n    dist = {start: 0}\n    queue = deque([start])\n    while queue:\n        v = queue.popleft()\n        for n in graph[v]:\n            if n not in dist:\n                dist[n] = dist[v] + 1\n                queue.append(n)\n    return dist\n\nprint(distances(graph, 'A')['E'])  # 3\nThe dist dict doubles as the visited set; a vertex's distance is one more than the vertex that found it.",
+          "practice": "Fill in the distance line; predict distances from different start vertices; find all vertices within 2 steps.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "BFS or DFS?",
+          "worked_example": "Both visit everything reachable. BFS finds the fewest-edges route and explores near vertices first; DFS goes deep first and is simpler to write recursively.",
+          "practice": "Given visiting orders, decide which search produced them; pick a search for described tasks (degrees of separation, maze escape, check connectivity).",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "graph_algorithms.depth_first_search"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "stacks_queues.queue_with_deque",
+          "weight": 0.5
+        },
+        {
+          "topic": "graphs.adjacency_list",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "graph_algorithms.shortest_path_bfs",
+      "title": "Shortest paths with BFS",
+      "concept": "graph_algorithms",
+      "summary": "Record which vertex discovered each vertex during BFS, rebuild the fewest-edges path from the goal back to the start, handle unreachable goals, and treat a grid maze as a graph.",
+      "minutes": 20,
+      "core": false,
+      "prerequisites": [
+        "graph_algorithms.breadth_first_search",
+        "list_slicing.slice_lists",
+        "nested_data_structures.grid_index_and_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Remember who found each vertex",
+          "worked_example": "# deque and graph as in breadth_first_search KP1\ndef parents(graph, start):\n    parent = {start: None}\n    queue = deque([start])\n    while queue:\n        v = queue.popleft()\n        for n in sorted(graph[v]):\n            if n not in parent:\n                parent[n] = v\n                queue.append(n)\n    return parent\n\nprint(parents(graph, 'A'))  # {'A': None, 'B': 'A', 'C': 'A', 'D': 'B', 'E': 'D'}\nparent[n] = v records the edge BFS used to reach n first, which is on a shortest route.",
+          "practice": "Predict the parent dict for a BFS; fill in the line that records a parent.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "graph_algorithms.breadth_first_search"
+          ]
+        },
+        {
+          "title": "Walk back from the goal and reverse",
+          "worked_example": "parent = {'A': None, 'B': 'A', 'C': 'A', 'D': 'B', 'E': 'D'}\npath = []\nv = 'E'\nwhile v is not None:\n    path.append(v)\n    v = parent[v]\nprint(path[::-1])  # ['A', 'B', 'D', 'E']\nFollowing parents gives the route backwards; reverse it at the end.",
+          "practice": "Rebuild paths from given parent dicts; fix a version that forgets to reverse or stops one vertex early.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists",
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "No path at all",
+          "worked_example": "parent = {'A': None, 'B': 'A'}\ngoal = 'Z'\nif goal not in parent:\n    print(None)  # None\nIf BFS never reached the goal it has no parent entry; return None rather than crashing with KeyError.",
+          "practice": "Write shortest_path(graph, start, goal) returning a list or None; test it on a disconnected graph.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "A maze grid is a graph",
+          "worked_example": "from collections import deque\nmaze = ['..#', '#..', '...']\n\ndef neighbours(r, c):\n    result = []\n    for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n        nr, nc = r + dr, c + dc\n        if 0 <= nr < len(maze) and 0 <= nc < len(maze[0]) and maze[nr][nc] == '.':\n            result.append((nr, nc))\n    return result\n\ndist = {(0, 0): 0}\nqueue = deque([(0, 0)])\nwhile queue:\n    r, c = queue.popleft()\n    for n in neighbours(r, c):\n        if n not in dist:\n            dist[n] = dist[(r, c)] + 1\n            queue.append(n)\nprint(dist[(2, 2)])  # 4\nOpen cells are vertices and steps to adjacent open cells are edges, computed on the fly instead of stored.",
+          "practice": "Find the fewest steps through small mazes; fix a neighbours check that lets the search leave the grid.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop",
+            "comparison_operators.ranges_and_float_equality"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graph_algorithms.breadth_first_search",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "graph_algorithms.connected_components",
+      "title": "Connected parts: components and islands",
+      "concept": "graph_algorithms",
+      "summary": "Count and label the separate pieces of a graph by starting a new search from every unvisited vertex, and count islands in a grid the same way.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "graph_algorithms.depth_first_search",
+        "nested_data_structures.grid_index_and_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A fresh search for every unvisited vertex",
+          "worked_example": "def dfs(graph, v, visited):\n    visited.add(v)\n    for n in graph[v]:\n        if n not in visited:\n            dfs(graph, n, visited)\n\ngraph = {'A': {'B'}, 'B': {'A'}, 'C': set(), 'D': {'E'}, 'E': {'D'}}\nvisited = set()\ncomponents = 0\nfor v in graph:\n    if v not in visited:\n        components += 1\n        dfs(graph, v, visited)\nprint(components)  # 3\nEach search marks one whole piece; the outer loop starts a new piece only at a vertex no search has reached. A lone vertex is a piece too.",
+          "practice": "Count components in drawn graphs; predict the count when edges are added or removed.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "graph_algorithms.depth_first_search"
+          ]
+        },
+        {
+          "title": "Label which piece each vertex is in",
+          "worked_example": "# graph as in KP1\ndef dfs(graph, v, label, comp):\n    comp[v] = label\n    for n in graph[v]:\n        if n not in comp:\n            dfs(graph, n, label, comp)\n\ncomp = {}\nlabel = 0\nfor v in graph:\n    if v not in comp:\n        dfs(graph, v, label, comp)\n        label += 1\nprint(comp)  # {'A': 0, 'B': 0, 'C': 1, 'D': 2, 'E': 2}\nprint(comp['A'] == comp['E'])  # False: no path\nOnce labelled, 'are u and v connected?' is a single comparison instead of a new search.",
+          "practice": "Write a function returning the list of components as sets; answer connectivity questions from a label dict.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "Counting islands in a grid",
+          "worked_example": "grid = ['##..',\n        '#..#',\n        '...#']\nseen = set()\n\ndef sink(r, c):\n    if not (0 <= r < len(grid) and 0 <= c < len(grid[0])):\n        return\n    if grid[r][c] != '#' or (r, c) in seen:\n        return\n    seen.add((r, c))\n    for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n        sink(r + dr, c + dc)\n\nislands = 0\nfor r in range(len(grid)):\n    for c in range(len(grid[0])):\n        if grid[r][c] == '#' and (r, c) not in seen:\n            islands += 1\n            sink(r, c)\nprint(islands)  # 2\nLand cells are vertices joined to land above, below, left and right; the same outer-loop pattern counts the pieces.",
+          "practice": "Count islands in small grids by hand; fix a version that also joins diagonal cells or leaves the grid.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop",
+            "nested_loops.loop_inside_loop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graph_algorithms.depth_first_search",
+          "weight": 0.7
+        },
+        {
+          "topic": "nested_data_structures.grid_index_and_loop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "graph_algorithms.pagerank_iteration",
+      "title": "Ranking pages by links: a simple PageRank",
+      "concept": "graph_algorithms",
+      "summary": "Compute a simplified PageRank on a directed link graph by repeatedly sharing each page's rank among its out-links, with a damping factor, until the ranks settle.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "graphs.matrix_directed_weighted",
+        "dictionaries.loop_keys_values_items",
+        "loop_patterns.accumulate_sum",
+        "dict_comprehensions.build_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One round: every page shares its rank",
+          "worked_example": "links = {'A': ['B', 'C'], 'B': ['C'], 'C': ['A']}\nrank = {p: 1 / 3 for p in links}\nnew = {p: 0 for p in links}\nfor page, outs in links.items():\n    for target in outs:\n        new[target] += rank[page] / len(outs)\nprint({p: round(r, 3) for p, r in new.items()})  # {'A': 0.333, 'B': 0.167, 'C': 0.5}\nA splits its 1/3 between B and C; B gives all of its 1/3 to C; C gives its 1/3 to A. Ranks still add up to 1.",
+          "practice": "Compute one round of rank sharing by hand for small link graphs; fill in the sharing line.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items",
+            "graphs.matrix_directed_weighted",
+            "dict_comprehensions.build_dicts"
+          ]
+        },
+        {
+          "title": "Repeat until the ranks settle",
+          "worked_example": "links = {'A': ['B', 'C'], 'B': ['C'], 'C': ['A']}\nrank = {p: 1 / 3 for p in links}\nfor _ in range(50):\n    new = {p: 0 for p in links}\n    for page, outs in links.items():\n        for target in outs:\n            new[target] += rank[page] / len(outs)\n    rank = new\nprint({p: round(r, 2) for p, r in rank.items()})  # {'A': 0.4, 'B': 0.2, 'C': 0.4}\nEach round moves rank along the links; after enough rounds the numbers stop changing. Pages that many ranked pages link to end up highest.",
+          "practice": "Predict which page ends highest for given link graphs; fix a loop that updates rank in place during a round.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Damping: a random jump keeps every page in play",
+          "worked_example": "links = {'A': ['B'], 'B': ['A'], 'C': ['A']}\nd = 0.85\nn = len(links)\nrank = {p: 1 / n for p in links}\nfor _ in range(50):\n    new = {p: (1 - d) / n for p in links}\n    for page, outs in links.items():\n        for target in outs:\n            new[target] += d * rank[page] / len(outs)\n    rank = new\nprint({p: round(r, 2) for p, r in rank.items()})  # {'A': 0.49, 'B': 0.46, 'C': 0.05}\nEach page keeps a small base share (1 - d) / n, as if a surfer sometimes jumps to a random page, so ranks do not drain into closed loops; C gets only the base share because nothing links to it.",
+          "practice": "Compute the base share for given n and d; predict the effect of removing a link on the final order.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.5
+        },
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "hash_maps_internals.hash_to_index",
+      "title": "How a dict finds a key: hashing to an index",
+      "concept": "hash_maps_internals",
+      "summary": "Explain why a list index is instant but searching is not, turn a key into a list index with a hash function and %, store and fetch pairs in a bucket list, and predict how Python's hash() treats keys.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "dictionaries.valid_keys_and_tuple_keys",
+        "unicode_encoding.ord_and_chr",
+        "lists.change_items",
+        "complexity_big_o.cost_of_builtin_operations"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Index access is one step; searching is many",
+          "worked_example": "pairs = [('ana', 31), ('bo', 27), ('cy', 40)]\nfor name, age in pairs:\n    if name == 'cy':\n        print(age)  # 40, after checking 3 pairs\nages = [31, 27, 40]\nprint(ages[2])  # 40, in one step\nA list stores items side by side, so position i is found by arithmetic. Finding a key means checking items one by one, unless the key can be turned into a position.",
+          "practice": "Count how many comparisons a search makes in lists of given sizes; choose which lookups take the same time for any size.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index",
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "A hash function turns a key into an index",
+          "worked_example": "def key_to_index(key, size):\n    total = 0\n    for ch in key:\n        total += ord(ch)\n    return total % size\n\nprint(key_to_index('abc', 8))  # 6\nprint(key_to_index('bo', 8))   # 1\nAdd up the character codes (97 + 98 + 99 = 294), then % size keeps the result between 0 and size - 1. The same key always gives the same index.",
+          "practice": "Compute indexes for short keys and table sizes; fill in the line that keeps the index in range.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.ord_and_chr",
+            "arithmetic_operators.modulo_patterns"
+          ]
+        },
+        {
+          "title": "Store and fetch in a bucket list",
+          "worked_example": "# key_to_index(key, size) as defined earlier\nbuckets = [None] * 8\n\ndef put(key, value):\n    buckets[key_to_index(key, len(buckets))] = (key, value)\n\ndef get(key):\n    item = buckets[key_to_index(key, len(buckets))]\n    if item is None or item[0] != key:\n        return None\n    return item[1]\n\nput('bo', 27)\nprint(get('bo'), buckets[1], get('cy'))  # 27 ('bo', 27) None\nStore the key with the value, so get can check it found the right key; a real dict raises KeyError where this returns None.",
+          "practice": "Trace the bucket list through several puts; predict get() results and errors.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.change_items"
+          ]
+        },
+        {
+          "title": "Python's hash(): equal keys must hash equal",
+          "worked_example": "print(hash(1) == hash(1.0) == hash(True))  # True\nd = {1: 'one'}\nd[True] = 'yes'\nprint(d)  # {1: 'yes'}\nprint(hash([1, 2]))  # TypeError: unhashable type: 'list'\n1, 1.0 and True compare equal, so they hash the same and count as one key. A list can change after being stored, so it has no hash. String hashes change between program runs but not within one.",
+          "practice": "Predict dicts after inserting equal-but-different-type keys; choose which values can be keys and why.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.valid_keys_and_tuple_keys"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.3
+        },
+        {
+          "topic": "unicode_encoding.ord_and_chr",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.valid_keys_and_tuple_keys",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "hash_maps_internals.collisions",
+      "title": "Collisions: when two keys want the same slot",
+      "concept": "hash_maps_internals",
+      "summary": "Recognise collisions, see how naive storing overwrites data, and handle them with chaining (a list per bucket) and with linear probing.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "hash_maps_internals.hash_to_index",
+        "tuples.lists_of_tuples",
+        "list_methods.append_build"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two keys, one index",
+          "worked_example": "# key_to_index(key, size) as defined earlier\nprint(key_to_index('abc', 8), key_to_index('cab', 8))  # 6 6\nDifferent keys can produce the same index (here, the same letters). With more keys than slots, a collision is guaranteed.",
+          "practice": "Find colliding pairs among given keys; predict what a one-item-per-slot table holds after colliding puts.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "hash_maps_internals.hash_to_index"
+          ]
+        },
+        {
+          "title": "Chaining: each bucket holds a list of pairs",
+          "worked_example": "# key_to_index(key, size) as defined earlier\nbuckets = [[] for _ in range(8)]\n\ndef put(key, value):\n    bucket = buckets[key_to_index(key, len(buckets))]\n    for i in range(len(bucket)):\n        if bucket[i][0] == key:\n            bucket[i] = (key, value)\n            return\n    bucket.append((key, value))\n\nput('abc', 1)\nput('cab', 2)\nput('abc', 3)\nprint(buckets[6])  # [('abc', 3), ('cab', 2)]\nSearch the bucket for the key: replace it if present (keys stay unique), otherwise append. Use [[] for _ in range(8)], not [[]] * 8, which shares one list.",
+          "practice": "Trace buckets through puts with collisions and updates; write get() for the chained table.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "Linear probing: try the next slot",
+          "worked_example": "# key_to_index(key, size) as defined earlier\nslots = [None] * 8\n\ndef put(key, value):\n    i = key_to_index(key, len(slots))\n    while slots[i] is not None and slots[i][0] != key:\n        i = (i + 1) % len(slots)\n    slots[i] = (key, value)\n\nput('abc', 1)\nput('cab', 2)\nprint(slots[6], slots[7])  # ('abc', 1) ('cab', 2)\nIf the slot is taken by another key, step to the next one, wrapping around with %. get() must follow the same steps until it finds the key or an empty slot.",
+          "practice": "Trace slot indexes for colliding puts including wrap-around; write the matching get().",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition",
+            "arithmetic_operators.modulo_patterns"
+          ]
+        },
+        {
+          "title": "Bad hash functions cause many collisions",
+          "worked_example": "def bad_index(key, size):\n    return len(key) % size\n\nfor k in ['ana', 'bob', 'cyd']:\n    print(k, bad_index(k, 8))\n# ana 3\n# bob 3\n# cyd 3\nIf many keys land in one bucket, every lookup searches a long list and the table is no faster than a list of pairs. Good hashes spread keys evenly.",
+          "practice": "Compare collision counts of two hash functions on a key list; choose which hash function is better for given data.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "hash_maps_internals.hash_to_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "hash_maps_internals.hash_to_index",
+          "weight": 0.7
+        },
+        {
+          "topic": "tuples.lists_of_tuples",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "hash_maps_internals.load_factor_and_resize",
+      "title": "Load factor and resizing a hash table",
+      "concept": "hash_maps_internals",
+      "summary": "Compute a table's load factor, grow the table and re-insert every key when it gets too full, and explain why dict lookups stay fast on average.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "hash_maps_internals.collisions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Load factor: how full is the table?",
+          "worked_example": "count = 6\nsize = 8\nprint(count / size)  # 0.75\nLoad factor = stored keys / slots. As it rises, collisions and probe chains grow; probing tables are full at 1.0.",
+          "practice": "Compute load factors; decide when a table with a 0.7 limit must grow.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "Resize: a bigger table and re-insert everything",
+          "worked_example": "# key_to_index(key, size) as defined earlier\nold = [[('abc', 1), ('cab', 2)], [('b', 5)]]\nnew = [[] for _ in range(8)]\nfor bucket in old:\n    for key, value in bucket:\n        new[key_to_index(key, len(new))].append((key, value))\nprint(new[6], new[2])  # [('abc', 1), ('cab', 2)] [('b', 5)]\nEvery key's index depends on the table size, so each pair must be hashed again into the new table.",
+          "practice": "Trace where keys land after resizing from 4 to 8 slots; write resize() for a chained table.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "hash_maps_internals.collisions"
+          ]
+        },
+        {
+          "title": "Bug: copying buckets to the same positions",
+          "worked_example": "# key_to_index(key, size) as defined earlier\nnew = [[] for _ in range(8)]\nnew[0] = [('b', 5)]  # copied from old slot 0 of a size-2 table\nprint(key_to_index('b', 8))  # 2: get('b') looks in slot 2 and finds nothing\nCopying without rehashing leaves keys where lookups no longer look, so they appear to vanish.",
+          "practice": "Find the bug in a broken resize; predict which keys a lookup can still find afterwards.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "hash_maps_internals.hash_to_index"
+          ]
+        },
+        {
+          "title": "Why lookups stay fast on average",
+          "worked_example": "size, moves = 1, 0\nfor n in range(1, 1025):\n    if n > size:\n        moves += size\n        size *= 2\nprint(size, moves)  # 1024 1023\nDoubling when full means 1024 inserts cause only 1023 extra moves in total, about one per insert. With a low load factor most buckets hold 0 or 1 keys, so lookups take a few steps however big the dict is.",
+          "practice": "Count total rehash moves for given doubling schedules; choose the typical cost of dict lookup vs list search.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "hash_maps_internals.collisions",
+          "weight": 0.6
+        },
+        {
+          "topic": "hash_maps_internals.hash_to_index",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "p_vs_np.verify_vs_solve",
+      "title": "P vs NP: checking an answer vs finding one",
+      "concept": "p_vs_np",
+      "summary": "Contrast brute-force solving (trying all 2**n subsets) with fast checking of a proposed answer, define P and NP in those terms, and recognise NP-complete problems and what to do about them in practice.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "itertools_module.combinations_and_product",
+        "return_values.boolean_functions",
+        "arithmetic_operators.exponents",
+        "complexity_big_o.complexity_classes"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Brute force: try every subset",
+          "worked_example": "from itertools import combinations\nnums = [3, 9, 8, 4]\ntarget = 12\nfor r in range(len(nums) + 1):\n    for combo in combinations(nums, r):\n        if sum(combo) == target:\n            print(combo)\n# (3, 9)\n# (8, 4)\nSubset sum: does some group of numbers add up to the target? Trying every group works, but there are 2**n groups.",
+          "practice": "Count the subsets to try for given n; predict brute-force output for small lists.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "itertools_module.combinations_and_product"
+          ]
+        },
+        {
+          "title": "Polynomial vs exponential growth",
+          "worked_example": "for n in [10, 20, 40]:\n    print(n, n ** 2, 2 ** n)\n# 10 100 1024\n# 20 400 1048576\n# 40 1600 1099511627776\nn**2 steps stays manageable; 2**n doubles with every extra item. Problems solvable in polynomial steps (n, n**2, n**3...) form the class P.",
+          "practice": "Compute step counts and classify running times as polynomial or exponential; estimate the largest n solvable in a time budget.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        },
+        {
+          "title": "Checking a proposed answer is fast",
+          "worked_example": "def check(nums, chosen, target):\n    for x in chosen:\n        if x not in nums:\n            return False\n    return sum(chosen) == target\n\nprint(check([3, 9, 8, 4], [8, 4], 12))  # True\nprint(check([3, 9, 8, 4], [3, 8], 12))  # False\nVerifying takes about n steps even though finding took 2**n. NP is the class of problems whose proposed answers can be checked in polynomial time; every problem in P is also in NP.",
+          "practice": "Write a checker for a described puzzle (sudoku row, graph colouring); classify given problems as 'fast to solve', 'fast to check' or neither.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions"
+          ]
+        },
+        {
+          "title": "The open question and NP-complete problems",
+          "worked_example": "P vs NP asks whether every fast-to-check problem is also fast to solve; nobody knows. NP-complete problems (subset sum, travelling salesperson, scheduling) are the hardest in NP: a fast method for one would solve them all. In practice: exact search for small inputs, heuristics or approximations for large ones.",
+          "practice": "True/false and multiple choice on P, NP and NP-complete statements; choose a sensible approach for described problem sizes.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.exponents"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "itertools_module.combinations_and_product",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    }
+  ]
+}

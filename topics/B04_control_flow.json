@@ -1,0 +1,2710 @@
+{
+  "batch": "B04",
+  "title": "Control flow",
+  "concept_map": {
+    "conditionals": {
+      "topics": [
+        "conditionals.if_statement",
+        "conditionals.if_else",
+        "conditionals.elif_chains",
+        "conditionals.compound_conditions",
+        "conditionals.truthiness_in_if",
+        "conditionals.branch_on_input"
+      ],
+      "entry_topic": "conditionals.if_statement",
+      "notes": "Encompasses B02 logical_operators and_or_not/combine_conditions, booleans.truthiness, none_type.check_for_none and arithmetic_operators.modulo_patterns as B02 requested. pass is introduced in if_statement KP4. Case-insensitive comparison of answers (.lower()) is left to B03 string_methods; the in operator for membership tests is B03/B06. try/except around int(input()) is B09 exceptions."
+    },
+    "nested_conditionals": {
+      "topics": [
+        "nested_conditionals.if_inside_if",
+        "nested_conditionals.flatten_nesting"
+      ],
+      "entry_topic": "nested_conditionals.if_inside_if",
+      "notes": "flatten_nesting doubles as the 'guard clause' idea; early return as a guard is B05 return_values."
+    },
+    "conditional_expressions": {
+      "topics": [
+        "conditional_expressions.value_if_else"
+      ],
+      "entry_topic": "conditional_expressions.value_if_else",
+      "notes": "One topic: only Helsinki teaches it, but it is core because B07 comprehensions and B08 lambdas use it."
+    },
+    "match_statement": {
+      "topics": [
+        "match_statement.match_literals",
+        "match_statement.capture_and_guards"
+      ],
+      "entry_topic": "match_statement.match_literals",
+      "notes": "Non-core (3 courses, introduced only). Only literal, |, _, capture and guard patterns are taught here; sequence patterns (case [x, y]) belong with B06 lists/unpacking, mapping patterns with B07 dictionaries, class patterns with the OOP batch. Python 3.10+ only. Reconciliation: every snippet was run with Python 3.13; all outputs were correct. Subject assignments and output comments were added to the fragments that lacked them, and the exact SyntaxError for a non-final capture case was quoted."
+    },
+    "while_loops": {
+      "topics": [
+        "while_loops.repeat_while_true",
+        "while_loops.infinite_and_off_by_one",
+        "while_loops.loop_until_condition",
+        "while_loops.sentinel_input",
+        "while_loops.input_validation"
+      ],
+      "entry_topic": "while_loops.repeat_while_true",
+      "notes": "Validation that survives non-numeric input (try/except ValueError) is B09 exceptions. Random secret numbers (random.randint) are B13 random_module; guessing-game examples use a fixed secret. while True + break lives in break_continue.while_true_loops."
+    },
+    "for_loops": {
+      "topics": [
+        "for_loops.repeat_n_times",
+        "for_loops.using_the_loop_variable",
+        "for_loops.loop_over_characters",
+        "for_loops.if_inside_loop",
+        "for_loops.for_vs_while"
+      ],
+      "entry_topic": "for_loops.repeat_n_times",
+      "notes": "Without lists (B06) for loops iterate over range and strings only. for_loops.loop_over_characters has pending_prerequisites concept:strings because B03 runs in parallel; if B03 also wrote a 'traverse a string' topic the stitching pass should merge them (one should own it). Looping over lists, enumerate and zip are B06; looping over dict items is B07; looping over file lines is B10."
+    },
+    "range_function": {
+      "topics": [
+        "range_function.start_stop",
+        "range_function.step_and_countdown"
+      ],
+      "entry_topic": "range_function.start_stop",
+      "notes": "range(n) itself is introduced in for_loops.repeat_n_times; this concept owns start/stop/step. list(range(...)), len(range) and membership in a range are B06."
+    },
+    "break_continue": {
+      "topics": [
+        "break_continue.break_out_early",
+        "break_continue.while_true_loops",
+        "break_continue.continue_skip",
+        "break_continue.loop_else"
+      ],
+      "entry_topic": "break_continue.break_out_early",
+      "notes": "loop_else is non-core (taught by no course but a real Python feature). Breaking out of nested loops via a function return is B05 return_values."
+    },
+    "nested_loops": {
+      "topics": [
+        "nested_loops.loop_inside_loop",
+        "nested_loops.inner_depends_on_outer",
+        "nested_loops.grids_and_patterns"
+      ],
+      "entry_topic": "nested_loops.loop_inside_loop",
+      "notes": "grids_and_patterns is non-core because it depends on print_output.sep_and_end (non-core). Nested loops over 2D lists are B07 nested_data_structures; string repetition '#' * n as an alternative to the inner loop is B03 and could encompass grids_and_patterns. Reconciliation: grids_and_patterns is core now that print_output.sep_and_end is core."
+    },
+    "loop_patterns": {
+      "topics": [
+        "loop_patterns.accumulate_sum",
+        "loop_patterns.count_matches",
+        "loop_patterns.max_min_tracking",
+        "loop_patterns.search_flag",
+        "loop_patterns.fencepost"
+      ],
+      "entry_topic": "loop_patterns.accumulate_sum",
+      "notes": "Built-ins sum(), max(), min(), any(), all() that replace these loops are B05 builtin_functions, which should encompass the matching pattern topics. Counting with dictionaries is B07. Guess-and-check / exhaustive enumeration is its own concept (guess_and_check) in a later batch."
+    },
+    "iteration": {
+      "topics": [
+        "iteration.iter_and_next"
+      ],
+      "entry_topic": "iteration.iter_and_next",
+      "notes": "One non-core topic. Custom iterators (__iter__/__next__) are B11 dunder_methods; generators and generator expressions are B08 generators; itertools is B07; enumerate/zip are B06. Reconciliation: iter_and_next promoted to core (generators build on it)."
+    }
+  },
+  "topics": [
+    {
+      "id": "conditionals.if_statement",
+      "title": "Running code only when a condition is true: if",
+      "concept": "conditionals",
+      "summary": "Write an if statement whose indented block runs only when its condition is True, and fix missing-colon and indentation errors.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "comparison_operators.compare_numbers",
+        "running_scripts.statements_run_in_order"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "if runs its block only when the condition is True",
+          "worked_example": "temp = 30\nif temp > 25:\n    print('Hot')\nprint('Done')\n# Hot\n# Done\nWith temp = 20 only Done is printed: the block is skipped when the condition is False.",
+          "practice": "Predict the output of a short if program for two or three different starting values.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Indentation decides what is inside the block",
+          "worked_example": "x = 5\nif x > 10:\n    print('big')\n    print('really big')\nprint('end')\n# end\nBoth indented lines are skipped together; the unindented line always runs.",
+          "practice": "Predict output where some lines are indented and some are not; reorder lines (Parsons) so only the right ones are conditional.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Missing colons and missing indentation are errors",
+          "worked_example": "if x > 10\n    print('big')    # SyntaxError at the missing colon\nif x > 10:\nprint('big')        # IndentationError: an indented block was expected\nEvery if line ends with a colon and is followed by at least one indented line.",
+          "practice": "Find and fix the syntax or indentation error in short if programs.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Conditions stored in variables, and pass for an empty block",
+          "worked_example": "rain_mm = 3\nis_raining = rain_mm > 0\nif is_raining:\n    print('Take an umbrella')\nif rain_mm > 50:\n    pass  # handle storms later\npass is a statement that does nothing; a block cannot be empty.",
+          "practice": "Predict output when the condition is a Boolean variable; fix an if with an empty block.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_numbers",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "conditionals.if_else",
+      "title": "Choosing between two paths: if / else",
+      "concept": "conditionals",
+      "summary": "Use else to run exactly one of two blocks, including the classic even/odd test with %.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "conditionals.if_statement",
+        "arithmetic_operators.modulo_patterns"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "else runs when the condition is False",
+          "worked_example": "age = 15\nif age >= 18:\n    print('adult')\nelse:\n    print('minor')\n# minor\nExactly one of the two blocks runs, never both and never neither.",
+          "practice": "Predict which branch runs for several inputs; fill in the missing condition or else line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "Even or odd with %",
+          "worked_example": "n = 7\nif n % 2 == 0:\n    print('even')\nelse:\n    print('odd')\n# odd\nn % 2 is 0 exactly for even numbers.",
+          "practice": "Write if/else programs that classify numbers by divisibility (even/odd, multiple of 5 or not).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.modulo_patterns"
+          ]
+        },
+        {
+          "title": "Both branches can set the same variable",
+          "worked_example": "hours = 45\nrate = 10\nif hours > 40:\n    pay = 40 * rate + (hours - 40) * rate * 1.5\nelse:\n    pay = hours * rate\nprint(pay)  # 475.0\nWhichever branch runs, pay is defined afterwards.",
+          "practice": "Trace which branch runs and the final value of the variable; write an if/else that sets a shipping cost.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "else takes no condition and must line up with its if",
+          "worked_example": "if x > 0:\n    print('positive')\nelse x <= 0:      # SyntaxError: else has no condition\n    print('not positive')\nWrite plain else: at the same indentation as the if.",
+          "practice": "Fix if/else programs with a condition on else, a misaligned else, or a missing colon.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.if_statement",
+          "weight": 0.8
+        },
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "conditionals.elif_chains",
+      "title": "More than two choices: elif chains",
+      "concept": "conditionals",
+      "summary": "Write if/elif/else chains, predict which single branch runs, order the tests correctly, and tell a chain apart from separate ifs.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "conditionals.if_else",
+        "comparison_operators.ranges_and_float_equality"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "elif adds more choices",
+          "worked_example": "score = 83\nif score >= 90:\n    print('A')\nelif score >= 80:\n    print('B')\nelif score >= 70:\n    print('C')\nelse:\n    print('F')\n# B",
+          "practice": "Predict the grade printed for several scores; write a chain that classifies a temperature into three bands.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "The first true branch wins; the rest are skipped",
+          "worked_example": "score = 95\n# same chain as above prints only A\n95 >= 80 is also True, but once a branch runs the rest of the chain is skipped.",
+          "practice": "Predict output for values that satisfy several conditions in the chain.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Order matters: test the narrowest condition first",
+          "worked_example": "if score >= 70:\n    print('C')\nelif score >= 90:\n    print('A')\n# score 95 prints C: the A branch can never be reached.\nPut >= 90 before >= 70, or use explicit ranges like 70 <= score < 80.",
+          "practice": "Find and fix chains whose order makes a branch unreachable.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.ranges_and_float_equality"
+          ]
+        },
+        {
+          "title": "Separate ifs vs one elif chain",
+          "worked_example": "x = 15\nif x > 10:\n    print('big')\nif x > 5:\n    print('medium')\n# big\n# medium\nSeparate ifs are each tested; with elif only 'big' would print.",
+          "practice": "Predict output for the same tests written as separate ifs and as an elif chain; choose which form a task needs.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.8
+        },
+        {
+          "topic": "comparison_operators.ranges_and_float_equality",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "conditionals.compound_conditions",
+      "title": "Combining conditions in an if",
+      "concept": "conditionals",
+      "summary": "Use and, or, not and chained comparisons in if conditions, and avoid the `x == 1 or 2` bug.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "conditionals.elif_chains",
+        "logical_operators.combine_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "and: both tests must pass",
+          "worked_example": "age = 16\nif age >= 13 and age <= 19:\n    print('teen')\n# same as: if 13 <= age <= 19:\nOne compound test replaces two nested checks.",
+          "practice": "Predict output for ages on and around the boundaries; write a range check both ways.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "or: any one alternative is enough",
+          "worked_example": "day = 7\nif day == 6 or day == 7:\n    print('weekend')\nelse:\n    print('weekday')\n# weekend",
+          "practice": "Write conditions that accept any of several values; predict output for inputs on both sides.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "The `x == 1 or 2` bug",
+          "worked_example": "choice = 5\nif choice == 1 or 2:\n    print('valid')   # prints valid!\n2 on its own is truthy, so the condition is always True. Write choice == 1 or choice == 2.",
+          "practice": "Predict what buggy or-conditions do; fix them.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "logical_operators.combine_conditions"
+          ]
+        },
+        {
+          "title": "not and the 'outside the range' test",
+          "worked_example": "x = 120\nif not (0 <= x <= 100):\n    print('out of range')\n# same as: if x < 0 or x > 100:",
+          "practice": "Write the condition for 'outside a range' with not and with or; pick equivalent conditions from a list.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "logical_operators.and_or_not",
+          "weight": 0.5
+        },
+        {
+          "topic": "logical_operators.combine_conditions",
+          "weight": 0.4
+        },
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "conditionals.truthiness_in_if",
+      "title": "Using truthiness and None in if",
+      "concept": "conditionals",
+      "summary": "Write if conditions that rely on truthy/falsy values (if count:, if name:) and know when an explicit is None test is needed instead.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "conditionals.if_else",
+        "booleans.truthiness",
+        "none_type.check_for_none"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "if on a number: zero counts as false",
+          "worked_example": "count = 0\nif count:\n    print('you have items')\nelse:\n    print('empty')\n# empty",
+          "practice": "Predict the branch taken for 0, negative and positive values; rewrite if count != 0: in the short form.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        },
+        {
+          "title": "if on text: the empty string counts as false",
+          "worked_example": "name = ''\nif name:\n    print('Hello', name)\nelse:\n    print('Hello, stranger')\n# Hello, stranger",
+          "practice": "Predict output for '', ' ' and 'Ana'; write an if that uses a default when a name is empty.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        },
+        {
+          "title": "When 0 is a real value, test is None instead",
+          "worked_example": "result = 0\nif not result:\n    print('not computed')   # wrong: 0 is a valid result\nif result is None:\n    print('not computed')   # right: only None means missing",
+          "practice": "Find and fix conditions that treat 0 or '' as missing; choose between truthiness and is None for described situations.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "booleans.truthiness",
+          "weight": 0.6
+        },
+        {
+          "topic": "none_type.check_for_none",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "conditionals.branch_on_input",
+      "title": "Branching on what the user types",
+      "concept": "conditionals",
+      "summary": "Write small programs that read input and branch on it, including menus, and fix the forgotten-int() and exact-text-match bugs.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "conditionals.elif_chains",
+        "user_input.read_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Read a number, then branch",
+          "worked_example": "age = int(input('Age? '))\nif age >= 18:\n    print('You can vote')\nelse:\n    print('Not yet')",
+          "practice": "Predict output for given typed inputs; write a program that reads a number and prints one of two messages.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "user_input.read_numbers"
+          ]
+        },
+        {
+          "title": "Comparing typed text is exact",
+          "worked_example": "answer = input('Continue? (y/n) ')\nif answer == 'y':\n    print('Continuing')\nelse:\n    print('Stopping')\nTyping Y or ' y' takes the else branch: the comparison is exact and case-sensitive.",
+          "practice": "Predict which branch runs for inputs differing in case or spacing.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "user_input.read_text"
+          ]
+        },
+        {
+          "title": "Forgetting int(): comparing text with a number",
+          "worked_example": "n = input('n? ')\nif n > 10:          # TypeError: str and int cannot be compared with >\n    print('big')\nif n == 10: is never True either, because '10' == 10 is False. Convert first: n = int(input('n? ')).",
+          "practice": "Fix input programs that compare raw input with numbers; predict whether they crash or take a wrong branch.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Menu programs with a catch-all else",
+          "worked_example": "choice = int(input('1) Start  2) Help  3) Quit: '))\nif choice == 1:\n    print('Starting')\nelif choice == 2:\n    print('Help')\nelif choice == 3:\n    print('Bye')\nelse:\n    print('Unknown option')",
+          "practice": "Write a menu program for a given spec; predict output for valid and invalid choices.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "user_input.read_numbers",
+          "weight": 0.5
+        },
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.5
+        },
+        {
+          "topic": "user_input.read_text",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "nested_conditionals.if_inside_if",
+      "title": "if statements inside if statements",
+      "concept": "nested_conditionals",
+      "summary": "Trace and write nested if/else statements, using indentation to tell which else belongs to which if.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "conditionals.elif_chains"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The inner if is only checked when the outer one is true",
+          "worked_example": "has_ticket = True\nage = 15\nif has_ticket:\n    if age >= 18:\n        print('Enter')\n    else:\n        print('Need an adult')\nelse:\n    print('Buy a ticket')\n# Need an adult",
+          "practice": "Predict output for every combination of the two inputs; fill a trace table of which tests are evaluated.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Indentation decides which if an else belongs to",
+          "worked_example": "if x > 0:\n    if x > 10:\n        print('big')\nelse:\n    print('not positive')\n# x = 5 prints nothing; x = -1 prints 'not positive'.\nIndent else under the inner if and it pairs with x > 10 instead: then x = 5 prints 'not positive'.",
+          "practice": "Predict output for two programs that differ only in the indentation of else.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "Tracing a decision tree",
+          "worked_example": "if a > 0:\n    if b > 0:\n        print('both positive')\n    else:\n        print('only a')\nelif b > 0:\n    print('only b')\nelse:\n    print('neither')",
+          "practice": "Trace three-level decision trees (adventure-game style choices) for given inputs; write one from a flowchart.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.4
+        },
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "nested_conditionals.flatten_nesting",
+      "title": "Flattening nested ifs with and and elif",
+      "concept": "nested_conditionals",
+      "summary": "Rewrite nested ifs as a single compound condition or an elif chain, and recognise when nesting is the clearer choice.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "nested_conditionals.if_inside_if",
+        "conditionals.compound_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Nested ifs with no else become one and",
+          "worked_example": "if age >= 18:\n    if has_id:\n        print('Enter')\n# same as\nif age >= 18 and has_id:\n    print('Enter')",
+          "practice": "Rewrite nested ifs as one condition; choose which rewrites are equivalent.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.compound_conditions"
+          ]
+        },
+        {
+          "title": "An if alone inside else becomes elif",
+          "worked_example": "if n > 0:\n    print('positive')\nelse:\n    if n < 0:\n        print('negative')\n    else:\n        print('zero')\n# same as if / elif n < 0 / else",
+          "practice": "Flatten else-if nesting into an elif chain; predict output of both versions to check they agree.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "Keep nesting when several branches share one outer test",
+          "worked_example": "if logged_in:\n    if is_admin:\n        print('Admin panel')\n    else:\n        print('Dashboard')\nelse:\n    print('Please log in')\nFlattening this repeats logged_in in every test, so the nested form is clearer.",
+          "practice": "Decide which of several programs should stay nested; spot a flattening that changed behaviour.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_conditionals.if_inside_if",
+          "weight": 0.5
+        },
+        {
+          "topic": "conditionals.compound_conditions",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "conditional_expressions.value_if_else",
+      "title": "One-line choices: value if condition else other",
+      "concept": "conditional_expressions",
+      "summary": "Write and read conditional expressions (a if cond else b), convert between them and if/else statements, and use them inside larger expressions.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Pick one of two values in a single expression",
+          "worked_example": "n = 7\nlabel = 'even' if n % 2 == 0 else 'odd'\nprint(label)  # odd\nThe condition sits in the middle; the value before if is used when it is True.",
+          "practice": "Predict the value of conditional expressions; fill in the missing part.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Converting between if/else and a conditional expression",
+          "worked_example": "if temp > 25:\n    advice = 'shorts'\nelse:\n    advice = 'jeans'\n# same as\nadvice = 'shorts' if temp > 25 else 'jeans'",
+          "practice": "Rewrite if/else assignments as one line and back.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Using it inside other expressions",
+          "worked_example": "n = 1\nprint(n, 'item' if n == 1 else 'items')  # 1 item\nprice = 20\ntotal = price + (5 if n > 3 else 0)   # 20\nWithout the parentheses the whole sum would be inside the choice.",
+          "practice": "Predict output where the expression is an argument or part of arithmetic, with and without parentheses.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "expressions.evaluate_expressions"
+          ]
+        },
+        {
+          "title": "else is required, and long chains hurt readability",
+          "worked_example": "fee = 10 if age >= 18         # SyntaxError: the else part is missing\nsize = 'S' if n < 5 else 'M' if n < 10 else 'L'  # legal but hard to read\nPrefer an if/elif statement for three or more choices.",
+          "practice": "Fix conditional expressions with a missing else; choose whether a task suits a conditional expression or a statement.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "match_statement.match_literals",
+      "title": "Choosing by value with match and case",
+      "concept": "match_statement",
+      "summary": "Write match statements with literal cases, | alternatives and a _ catch-all, and rewrite an elif chain on one variable as a match.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "conditionals.elif_chains"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "match compares one value against cases",
+          "worked_example": "command = 'go'\nmatch command:\n    case 'go':\n        print('Moving')\n    case 'stop':\n        print('Stopping')\n# Moving\nThe first case whose value equals the subject runs (Python 3.10+).",
+          "practice": "Predict output for several subject values, including one that matches no case (nothing prints).",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "case _ catches everything else",
+          "worked_example": "code = 404\nmatch code:\n    case 200:\n        print('OK')\n    case 404:\n        print('Not found')\n    case _:\n        print('Other')\n# Not found\n_ matches any value, like a final else; it must come last.",
+          "practice": "Add a catch-all case; predict output for unmatched values.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Several values in one case with |",
+          "worked_example": "answer = 'yes'\nmatch answer:\n    case 'y' | 'yes':\n        print('OK')\n    case 'n' | 'no':\n        print('Cancelled')\n    case _:\n        print('Please answer y or n')\n# OK",
+          "practice": "Combine cases using |; predict which case handles each input.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Only one case runs: rewriting an elif chain as match",
+          "worked_example": "if day == 6 or day == 7: ... elif day == 1: ... else: ...\n# becomes case 6 | 7: / case 1: / case _:\nThere is no fall-through: after a case runs, the match is finished.",
+          "practice": "Convert elif chains to match (and back); spot which elif chains cannot be converted because they test ranges.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "match_statement.capture_and_guards",
+      "title": "match with capture patterns and guards",
+      "concept": "match_statement",
+      "summary": "Capture the matched value in a name, add if guards to cases, and avoid the bare-name trap that matches everything.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "match_statement.match_literals",
+        "conditionals.compound_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A bare name captures the value",
+          "worked_example": "match n:\n    case 0:\n        print('zero')\n    case other:\n        print('got', other)\n# n = 5 prints: got 5\nA name in a case matches anything and binds the value to that name.",
+          "practice": "Predict output and the value bound to the capture name.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "match_statement.match_literals"
+          ]
+        },
+        {
+          "title": "Guards: case x if condition",
+          "worked_example": "n = -3\nmatch n:\n    case 0:\n        print('zero')\n    case x if x < 0:\n        print('negative')\n    case _:\n        print('positive')\n# negative\nThe case applies only when the pattern matches and the guard is True.",
+          "practice": "Write guarded cases for a classification task; predict which case runs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.compound_conditions"
+          ]
+        },
+        {
+          "title": "The constant trap: a bare name never compares",
+          "worked_example": "colour = 'green'\nRED = 'red'\nmatch colour:\n    case 'blue':\n        print('cold')\n    case RED:\n        print('warm')   # runs for 'green' too!\ncase RED captures instead of comparing; use the literal 'red'. A capture case that is not last is rejected: SyntaxError: name capture 'RED' makes remaining patterns unreachable.",
+          "practice": "Predict surprising output from bare-name cases; fix them with literals.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "match_statement.match_literals",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "while_loops.repeat_while_true",
+      "title": "Repeating with while",
+      "concept": "while_loops",
+      "summary": "Write a while loop with a counter, trace it iteration by iteration, and recognise loops that run zero times.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "conditionals.if_statement",
+        "variables.update_with_own_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "while repeats its block while the condition is True",
+          "worked_example": "n = 1\nwhile n <= 3:\n    print(n)\n    n += 1\nprint('done')\n# 1\n# 2\n# 3\n# done",
+          "practice": "Predict the output of counter loops; write a loop that prints a given sequence.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "Tracing a loop with a table",
+          "worked_example": "i = 0\ntotal = 0\nwhile i < 3:\n    total += i\n    i += 1\n# i: 0 1 2 3   total: 0 0 1 3\nWrite one row per check of the condition.",
+          "practice": "Fill in trace tables for short while loops.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "The condition is checked before every pass, so a loop can run zero times",
+          "worked_example": "n = 10\nwhile n < 5:\n    print(n)\n    n += 1\nprint('after')\n# after",
+          "practice": "Predict how many times loops run, including zero.",
+          "formats": [
+            "numeric",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "Counting down",
+          "worked_example": "n = 3\nwhile n > 0:\n    print(n)\n    n -= 1\nprint('Liftoff!')",
+          "practice": "Write countdown loops for given ranges; reorder lines into a working countdown.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "while_loops.infinite_and_off_by_one",
+      "title": "Infinite loops and off-by-one errors",
+      "concept": "while_loops",
+      "summary": "Diagnose while loops that never stop or run one time too many or too few, and fix them.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "while_loops.repeat_while_true"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "No update means the loop never ends",
+          "worked_example": "n = 1\nwhile n <= 3:\n    print(n)\n# prints 1 forever: n never changes. Stop the program with the Stop button, then add n += 1.",
+          "practice": "Fix loops with a missing update; predict whether a loop terminates.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Updates in the wrong direction or inside an if",
+          "worked_example": "n = 1\nwhile n <= 3:\n    if n % 2 == 1:\n        print(n)\n        n += 1\n# stops changing at n = 2: the update only runs on odd n.",
+          "practice": "Find the reason each loop never ends and fix it.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Off by one: < vs <= and where the counter starts",
+          "worked_example": "i = 0\nwhile i <= 5:\n    print('*')\n    i += 1\n# 6 stars, not 5: 0..5 is six values. Use i < 5, or start at 1.",
+          "practice": "Count how many times loops run; choose the condition that runs exactly n times.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Stepping past an != target",
+          "worked_example": "n = 1\nwhile n != 10:\n    n += 2\n# 1, 3, 5, 7, 9, 11, ... never equals 10. Use n < 10 when stepping by more than 1.",
+          "practice": "Decide which loops terminate; fix != conditions that can be skipped over.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "while_loops.loop_until_condition",
+      "title": "Looping until something happens",
+      "concept": "while_loops",
+      "summary": "Write while loops whose number of passes is not known in advance: grow or shrink a value until a target, and take numbers apart digit by digit.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "while_loops.repeat_while_true",
+        "arithmetic_operators.modulo_patterns"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Loop until a target, counting the passes",
+          "worked_example": "balance = 100\nyears = 0\nwhile balance < 200:\n    balance *= 1.1\n    years += 1\nprint(years)  # 8",
+          "practice": "Predict or compute the number of passes for growth problems; write such a loop.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "Halving until small",
+          "worked_example": "n = 100\nsteps = 0\nwhile n > 1:\n    n //= 2\n    steps += 1\nprint(steps)  # 6",
+          "practice": "Trace halving and doubling loops; give the final values.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        },
+        {
+          "title": "Digit loops with % 10 and // 10",
+          "worked_example": "n = 4096\ntotal = 0\nwhile n > 0:\n    total += n % 10\n    n //= 10\nprint(total)  # 19\n% 10 takes the last digit, // 10 removes it.",
+          "practice": "Write loops that sum, count or reverse the digits of a number.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.modulo_patterns"
+          ]
+        },
+        {
+          "title": "After the loop, the variable holds the value that stopped it",
+          "worked_example": "n = 1\nwhile n < 50:\n    n *= 3\nprint(n)  # 81, the first value that is not < 50",
+          "practice": "Predict the variable's value after the loop ends.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.3
+        },
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "while_loops.sentinel_input",
+      "title": "Reading input until a stop value",
+      "concept": "while_loops",
+      "summary": "Write sentinel loops that keep reading input until a special value, using a priming read so the stop value is never processed.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "while_loops.loop_until_condition",
+        "user_input.read_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Keep reading until the user types 0",
+          "worked_example": "total = 0\nn = int(input('Number (0 to stop): '))\nwhile n != 0:\n    total += n\n    n = int(input('Number (0 to stop): '))\nprint('Total:', total)",
+          "practice": "Predict the output for a given sequence of typed inputs; write a sentinel loop that counts entries.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "user_input.read_numbers"
+          ]
+        },
+        {
+          "title": "Why read once before the loop",
+          "worked_example": "n = 0\nwhile n != 0:          # never runs: n starts at the sentinel\n    ...\nThe priming read gets a real value to test; the read at the end of the body gets the next one.",
+          "practice": "Fix sentinel loops that never run, that add the sentinel to the total, or that skip the first value.",
+          "formats": [
+            "fix_the_bug",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Text sentinels",
+          "worked_example": "cmd = input('> ')\nwhile cmd != 'quit':\n    print('You said', cmd)\n    cmd = input('> ')\nprint('Bye')",
+          "practice": "Write echo-style loops ending on a word; predict output for typed sequences.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "user_input.read_text"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "user_input.read_numbers",
+          "weight": 0.5
+        },
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "while_loops.input_validation",
+      "title": "Asking again until the input is valid",
+      "concept": "while_loops",
+      "summary": "Re-prompt until the user enters an acceptable value and build a guess-the-number loop.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "while_loops.sentinel_input",
+        "conditionals.compound_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Re-prompt while the value is out of range",
+          "worked_example": "n = int(input('Pick 1-10: '))\nwhile n < 1 or n > 10:\n    print('Try again')\n    n = int(input('Pick 1-10: '))\nprint('You picked', n)",
+          "practice": "Predict output for a sequence of typed inputs; write a validation loop for a given range.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.compound_conditions"
+          ]
+        },
+        {
+          "title": "Write the 'invalid' condition by negating the valid one",
+          "worked_example": "valid: 1 <= n <= 10\nloop while: not (1 <= n <= 10)   # same as n < 1 or n > 10\nA common bug is n < 1 and n > 10, which is never True.",
+          "practice": "Choose or write the loop condition for described valid inputs; fix and-instead-of-or bugs.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "A guessing-game loop",
+          "worked_example": "secret = 7\nguess = int(input('Guess: '))\nwhile guess != secret:\n    if guess < secret:\n        print('Higher')\n    else:\n        print('Lower')\n    guess = int(input('Guess: '))\nprint('Correct!')",
+          "practice": "Write the loop from a spec; predict output for a sequence of guesses; extend it to count guesses.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "while_loops.sentinel_input",
+          "weight": 0.6
+        },
+        {
+          "topic": "conditionals.compound_conditions",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "cs50p",
+        "helsinki_mooc",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "for_loops.repeat_n_times",
+      "title": "Repeating a block n times with for",
+      "concept": "for_loops",
+      "summary": "Use for i in range(n) to repeat a block a fixed number of times and know which values the loop variable takes.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "conditionals.if_statement",
+        "variables.reassign_and_trace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Repeat a block n times",
+          "worked_example": "for i in range(3):\n    print('Hip hip hooray!')\n# printed 3 times\nThe indented block is the loop body, as with if.",
+          "practice": "Write a loop that prints a line a given number of times; count how many lines a loop prints.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "The loop variable takes 0, 1, ..., n - 1",
+          "worked_example": "for i in range(4):\n    print(i)\n# 0\n# 1\n# 2\n# 3\nrange(4) starts at 0 and stops before 4.",
+          "practice": "Predict the values printed; give the last value of the loop variable.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "What repeats and what runs once",
+          "worked_example": "for i in range(2):\n    print('in loop', i)\nprint('after loop')\n# in loop 0\n# in loop 1\n# after loop",
+          "practice": "Predict output when lines are indented differently; reorder lines (Parsons) for a target output.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "Name the loop variable, or use _ when it is unused",
+          "worked_example": "for _ in range(3):\n    print('beep')\n_ signals that the value is not needed; use a meaningful name like i or row when it is.",
+          "practice": "Choose a suitable loop-variable name; identify loops where the variable is unused.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "for_loops.using_the_loop_variable",
+      "title": "Computing with the loop variable",
+      "concept": "for_loops",
+      "summary": "Use the loop variable inside the body to compute values, number output from 1, and predict its value during and after the loop.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "for_loops.repeat_n_times",
+        "variables.update_with_own_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Compute something from i on each pass",
+          "worked_example": "for i in range(5):\n    print(i, i * i)\n# 0 0, 1 1, 2 4, 3 9, 4 16 (one pair per line)",
+          "practice": "Predict output of loops that compute from i; write a loop that prints a table of values.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "for_loops.repeat_n_times"
+          ]
+        },
+        {
+          "title": "Numbering from 1 with i + 1",
+          "worked_example": "for i in range(3):\n    print('Lap', i + 1)\n# Lap 1, Lap 2, Lap 3",
+          "practice": "Write loops whose output is numbered from 1; fix loops that start numbering at 0.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Changing i inside the body does not change the next pass",
+          "worked_example": "for i in range(3):\n    print(i)\n    i = 10\n# 0 1 2: each pass takes the next value from range, ignoring the assignment.",
+          "practice": "Predict output of loops that reassign the loop variable.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "After the loop, i keeps its last value",
+          "worked_example": "for i in range(3):\n    pass\nprint(i)  # 2\nIf the range is empty the body never runs and i is never assigned.",
+          "practice": "Predict the loop variable's value after loops, including empty ones (NameError).",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "for_loops.repeat_n_times",
+          "weight": 0.8
+        },
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "for_loops.loop_over_characters",
+      "title": "Looping over the characters of a string",
+      "concept": "for_loops",
+      "summary": "Use for ch in text to visit each character of a string, and count or report characters that match a test.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable",
+        "strings.length_and_membership"
+      ],
+      "knowledge_points": [
+        {
+          "title": "for visits each character in order",
+          "worked_example": "for ch in 'cat':\n    print(ch)\n# c\n# a\n# t\nA string is a sequence, so for can walk through it like a range.",
+          "practice": "Predict output for short words, including spaces and punctuation, which are characters too.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.using_the_loop_variable"
+          ]
+        },
+        {
+          "title": "Count characters that pass a test",
+          "worked_example": "count = 0\nfor ch in 'banana':\n    if ch == 'a':\n        count += 1\nprint(count)  # 3",
+          "practice": "Write loops that count a given character; trace the counter.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "for ch in text vs for i in range(n)",
+          "worked_example": "for ch in 'hey':\n    print(ch)     # h e y\nfor i in range(3):\n    print(i)      # 0 1 2\nIterating a string gives characters; iterating a range gives numbers.",
+          "practice": "Choose which loop produces a target output; fix a loop that iterates over the wrong thing.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.length_and_membership"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.4
+        },
+        {
+          "topic": "strings.length_and_membership",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "for_loops.if_inside_loop",
+      "title": "Making a decision on every pass",
+      "concept": "for_loops",
+      "summary": "Put if/elif/else inside a for loop to treat each value differently, up to FizzBuzz.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable",
+        "conditionals.elif_chains"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An if inside the loop runs on every pass",
+          "worked_example": "for i in range(6):\n    if i % 2 == 0:\n        print(i, 'even')\n# 0 even, 2 even, 4 even",
+          "practice": "Predict output of loops with an if in the body; write a loop that prints only multiples of 3.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else",
+            "for_loops.using_the_loop_variable"
+          ]
+        },
+        {
+          "title": "Several branches per pass",
+          "worked_example": "for i in range(3):\n    t = 15 + 10 * i   # 15, 25, 35\n    if t < 20:\n        print(t, 'cold')\n    elif t < 30:\n        print(t, 'mild')\n    else:\n        print(t, 'hot')",
+          "practice": "Trace which branch runs on each pass; fill a trace table.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "FizzBuzz: order the tests carefully",
+          "worked_example": "for i in range(15):\n    n = i + 1\n    if n % 15 == 0:\n        print('FizzBuzz')\n    elif n % 3 == 0:\n        print('Fizz')\n    elif n % 5 == 0:\n        print('Buzz')\n    else:\n        print(n)\nTesting % 3 first would print Fizz for 15.",
+          "practice": "Write FizzBuzz-style programs from a spec; fix versions with the tests in the wrong order.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains",
+            "arithmetic_operators.modulo_patterns"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.5
+        },
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.6
+        },
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "for_loops.for_vs_while",
+      "title": "Choosing between for and while",
+      "concept": "for_loops",
+      "summary": "Convert counting loops between for and while, and choose for when the number of passes is known and while when it is not.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable",
+        "while_loops.loop_until_condition"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The same counting loop written two ways",
+          "worked_example": "for i in range(3):\n    print(i)\n# same output as\ni = 0\nwhile i < 3:\n    print(i)\n    i += 1",
+          "practice": "Convert loops between for and while; reorder lines into an equivalent while loop.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Known count: for. Unknown count: while.",
+          "worked_example": "Print 10 rows -> for row in range(10)\nKeep doubling until over 1000 -> while n <= 1000",
+          "practice": "Pick the more natural loop for described tasks.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A for loop cannot forget its update",
+          "worked_example": "i = 0\nwhile i < 5:\n    print(i)\n# infinite: the update is missing\nfor i in range(5): print(i)  -- range advances i for you.",
+          "practice": "Fix buggy while counters by rewriting them as for loops.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.3
+        },
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "helsinki_mooc",
+        "py4e",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "range_function.start_stop",
+      "title": "range(start, stop): choosing where to start and stop",
+      "concept": "range_function",
+      "summary": "Use range(start, stop) to loop over any run of whole numbers, remembering that stop is excluded.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "range(start, stop) begins at start",
+          "worked_example": "for i in range(2, 5):\n    print(i)\n# 2\n# 3\n# 4",
+          "practice": "Predict the numbers produced by range(start, stop).",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.using_the_loop_variable"
+          ]
+        },
+        {
+          "title": "Stop is excluded: 1 to n inclusive is range(1, n + 1)",
+          "worked_example": "n = 5\nfor i in range(1, n + 1):\n    print(i)\n# 1 2 3 4 5\nrange(1, n) would stop at 4.",
+          "practice": "Fix off-by-one ranges; fill in the arguments that include a given last number.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "How many numbers: stop - start, or none",
+          "worked_example": "range(3, 8)  -> 5 numbers\nrange(5, 5)  -> no numbers, the body never runs\nrange(7, 2)  -> no numbers",
+          "practice": "Give how many times loops run for given ranges, including empty ones.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Choosing arguments for a spec",
+          "worked_example": "'the years 2000 to 2010 inclusive'  ->  range(2000, 2011)",
+          "practice": "Write the range for described number runs.",
+          "formats": [
+            "fill_in_blank",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "range_function.step_and_countdown",
+      "title": "Stepping and counting down with range",
+      "concept": "range_function",
+      "summary": "Use the third argument of range to skip values or count down, and predict when a range is empty or invalid.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "range_function.start_stop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A step skips values",
+          "worked_example": "for i in range(0, 10, 2):\n    print(i)\n# 0 2 4 6 8",
+          "practice": "Predict output for ranges with a step; write a range for every 5th number.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Counting down with a negative step",
+          "worked_example": "for i in range(5, 0, -1):\n    print(i)\n# 5 4 3 2 1 (stop 0 is still excluded)",
+          "practice": "Write countdown ranges that include or exclude 0; fix a countdown that misses its last number.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Steps that skip over stop, and the wrong-sign empty range",
+          "worked_example": "range(1, 10, 3)   -> 1 4 7\nrange(0, 5, -1)   -> nothing: counting down from 0 never reaches 5\nrange(5, 0)       -> nothing: the default step is +1",
+          "practice": "Predict the values (or emptiness) of tricky ranges.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Arguments must be whole numbers, and step cannot be 0",
+          "worked_example": "range(0, 2.5)      # TypeError: a float is not an integer\nrange(0, 10, 0)    # ValueError: step must not be zero\nConvert with int() when the bound comes from a calculation.",
+          "practice": "Decide which range calls raise errors; fix them.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "range_function.start_stop",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "break_continue.break_out_early",
+      "title": "Leaving a loop early with break",
+      "concept": "break_continue",
+      "summary": "Use break to stop a loop as soon as a result is found, in both for and while loops.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "for_loops.if_inside_loop",
+        "while_loops.repeat_while_true",
+        "range_function.start_stop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "break leaves the loop immediately",
+          "worked_example": "for i in range(10):\n    if i == 3:\n        break\n    print(i)\nprint('done')\n# 0 1 2 done",
+          "practice": "Predict output of loops containing break.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Search and stop at the first match",
+          "worked_example": "n = 91\nfor d in range(2, n):\n    if n % d == 0:\n        print('first divisor:', d)\n        break\n# first divisor: 7",
+          "practice": "Write loops that stop at the first value meeting a condition.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop",
+            "arithmetic_operators.modulo_patterns"
+          ]
+        },
+        {
+          "title": "break in a while loop, and code after break never runs",
+          "worked_example": "n = 1\nwhile n < 100:\n    n *= 2\n    if n > 20:\n        break\n        print('unreachable')\nprint(n)  # 32",
+          "practice": "Predict the final value and output of while loops with break; spot unreachable lines.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "for_loops.if_inside_loop",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "break_continue.while_true_loops",
+      "title": "while True loops with break",
+      "concept": "break_continue",
+      "summary": "Write 'loop forever, break when done' loops for input handling, and avoid forgetting the break.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "break_continue.break_out_early",
+        "while_loops.sentinel_input"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "while True with a break inside",
+          "worked_example": "while True:\n    cmd = input('> ')\n    if cmd == 'quit':\n        break\n    print('You said', cmd)\nprint('Bye')\nOnly one input() call is needed, unlike the priming-read version.",
+          "practice": "Predict output for typed sequences; rewrite a priming-read sentinel loop as while True.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.sentinel_input"
+          ]
+        },
+        {
+          "title": "Validating input with while True",
+          "worked_example": "while True:\n    n = int(input('Pick 1-10: '))\n    if 1 <= n <= 10:\n        break\n    print('Try again')\nprint('You picked', n)",
+          "practice": "Write validation loops in this style for described valid inputs.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        },
+        {
+          "title": "A while True with no reachable break never ends",
+          "worked_example": "while True:\n    n = int(input('n: '))\n    if n == 0:\n        print('stopping')   # but no break, so it keeps asking\nAdd break after the message.",
+          "practice": "Fix while True loops whose break is missing or can never be reached.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "while_loops.sentinel_input",
+          "weight": 0.4
+        },
+        {
+          "topic": "break_continue.break_out_early",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "py4e",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "break_continue.continue_skip",
+      "title": "Skipping the rest of a pass with continue",
+      "concept": "break_continue",
+      "summary": "Use continue to skip to the next pass of a loop, tell it apart from break and pass, and avoid skipping a while loop's update.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "break_continue.break_out_early"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "continue jumps to the next pass",
+          "worked_example": "for i in range(6):\n    if i % 3 == 0:\n        continue\n    print(i)\n# 1 2 4 5",
+          "practice": "Predict output of loops with continue; write a loop that skips given values.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        },
+        {
+          "title": "continue vs break vs pass",
+          "worked_example": "Same loop with break instead: prints nothing (stops at i = 0).\nWith pass instead: prints 0 to 5 (pass does nothing, the print still runs).",
+          "practice": "Predict output of the same loop using continue, break or pass.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "continue in a while loop can skip the update",
+          "worked_example": "i = 0\nwhile i < 5:\n    if i == 2:\n        continue   # i stays 2 forever\n    print(i)\n    i += 1\nFix: update i before the continue.",
+          "practice": "Find and fix while loops that hang because continue skips the update.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "break_continue.break_out_early",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "break_continue.loop_else",
+      "title": "The else clause on loops",
+      "concept": "break_continue",
+      "summary": "Predict when a for/else or while/else block runs (only when the loop ends without break) and use it for search-and-report tasks.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "break_continue.break_out_early"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "else after a loop runs only if no break happened",
+          "worked_example": "n = 13\nfor d in range(2, n):\n    if n % d == 0:\n        print('not prime')\n        break\nelse:\n    print('prime')\n# prime",
+          "practice": "Predict output for several values of n.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        },
+        {
+          "title": "while/else works the same way",
+          "worked_example": "n = 1\nwhile n < 10:\n    if n == 5:\n        break\n    n += 2\nelse:\n    print('no break')\n# n goes 1, 3, 5: break, so nothing is printed",
+          "practice": "Trace while/else loops and say whether the else runs.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Misreading: else is not 'if the loop never ran'",
+          "worked_example": "for i in range(0):\n    print(i)\nelse:\n    print('finished')\n# finished: an empty loop ends without break, so else runs.",
+          "practice": "Choose the correct meaning of loop else; predict output for empty loops.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "break_continue.break_out_early",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "nested_loops.loop_inside_loop",
+      "title": "A loop inside a loop",
+      "concept": "nested_loops",
+      "summary": "Trace nested for loops, count their total passes, and place code so it runs once per inner or per outer pass.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable",
+        "range_function.start_stop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The inner loop runs completely for each outer pass",
+          "worked_example": "for i in range(2):\n    for j in range(3):\n        print(i, j)\n# 0 0, 0 1, 0 2, 1 0, 1 1, 1 2",
+          "practice": "Predict the sequence of (i, j) pairs; fill a trace table.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "for_loops.using_the_loop_variable"
+          ]
+        },
+        {
+          "title": "Total passes = outer count x inner count",
+          "worked_example": "for row in range(4):\n    for col in range(5):\n        print('*')\n# 20 stars",
+          "practice": "Give the number of times the innermost line runs.",
+          "formats": [
+            "numeric"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A multiplication table",
+          "worked_example": "for a in range(1, 4):\n    for b in range(1, 4):\n        print(a, 'x', b, '=', a * b)",
+          "practice": "Write nested loops that print all combinations for given ranges.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Code between the loops runs once per outer pass",
+          "worked_example": "for i in range(2):\n    print('row', i)\n    for j in range(2):\n        print('  cell', j)\nprint('done')",
+          "practice": "Predict output where lines sit at different indentation levels; reorder lines (Parsons) for a target output.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.5
+        },
+        {
+          "topic": "range_function.start_stop",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "nested_loops.inner_depends_on_outer",
+      "title": "Inner loops that depend on the outer variable",
+      "concept": "nested_loops",
+      "summary": "Write nested loops whose inner range uses the outer variable (triangles, each pair once), and handle break and resets inside nested loops.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "nested_loops.loop_inside_loop",
+        "break_continue.break_out_early"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Inner range grows with the outer variable",
+          "worked_example": "for i in range(1, 4):\n    for j in range(i):\n        print(i, j)\n# 1 0 | 2 0, 2 1 | 3 0, 3 1, 3 2  (6 lines)",
+          "practice": "Predict output and count passes for triangle-shaped loops.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        },
+        {
+          "title": "Every pair once: start j at i + 1",
+          "worked_example": "for i in range(4):\n    for j in range(i + 1, 4):\n        print(i, j)\n# 6 pairs, no (2, 2) and no (1, 0) repeats",
+          "practice": "Write loops that list each unordered pair once; fix versions that repeat pairs or pair a value with itself.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "break only leaves the innermost loop",
+          "worked_example": "for i in range(3):\n    for j in range(3):\n        if j == 1:\n            break\n        print(i, j)\n# 0 0, 1 0, 2 0: the outer loop keeps going",
+          "practice": "Predict output of nested loops containing break.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        },
+        {
+          "title": "Reset per-row variables inside the outer loop",
+          "worked_example": "for row in range(1, 4):\n    total = 0          # reset for every row\n    for col in range(1, 4):\n        total += row * col\n    print(row, total)\n# 1 6, 2 12, 3 18. Putting total = 0 above the outer loop gives 6, 18, 36.",
+          "practice": "Fix nested loops with the reset in the wrong place; predict output of both versions.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_loops.loop_inside_loop",
+          "weight": 0.8
+        },
+        {
+          "topic": "break_continue.break_out_early",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "nested_loops.grids_and_patterns",
+      "title": "Printing grids and pyramids",
+      "concept": "nested_loops",
+      "summary": "Use nested loops with print(..., end='') to draw rectangles, staircases and right-aligned pyramids of characters.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "nested_loops.loop_inside_loop",
+        "print_output.sep_and_end"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One row with end='' then print()",
+          "worked_example": "for j in range(5):\n    print('#', end='')\nprint()\n# #####",
+          "practice": "Predict a row's output; fix a row that prints one character per line.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "print_output.sep_and_end"
+          ]
+        },
+        {
+          "title": "A rectangle: rows of rows",
+          "worked_example": "for i in range(3):\n    for j in range(4):\n        print('#', end='')\n    print()\n# three rows of ####",
+          "practice": "Write a grid of given width and height; place the print() at the right indentation.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        },
+        {
+          "title": "A staircase: row width depends on the row number",
+          "worked_example": "for i in range(1, 4):\n    for j in range(i):\n        print('#', end='')\n    print()\n# #\n# ##\n# ###",
+          "practice": "Write left-aligned staircases and upside-down staircases.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A right-aligned pyramid: spaces, then hashes",
+          "worked_example": "n = 3\nfor i in range(1, n + 1):\n    for j in range(n - i):\n        print(' ', end='')\n    for j in range(i):\n        print('#', end='')\n    print()",
+          "practice": "Write right-aligned pyramids of height n; predict the output for n = 4.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.sep_and_end",
+          "weight": 0.6
+        },
+        {
+          "topic": "nested_loops.loop_inside_loop",
+          "weight": 0.7
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "loop_patterns.accumulate_sum",
+      "title": "Running totals: the accumulator pattern",
+      "concept": "loop_patterns",
+      "summary": "Build a sum or product in a loop by initialising before the loop and updating inside it, including totals of typed numbers.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable",
+        "range_function.start_stop",
+        "user_input.read_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Start at 0 before the loop, add inside it",
+          "worked_example": "total = 0\nfor i in range(1, 6):\n    total += i\nprint(total)  # 15",
+          "practice": "Predict totals; write loops that sum given ranges of numbers.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "Bugs: resetting inside the loop, printing inside the loop",
+          "worked_example": "for i in range(1, 6):\n    total = 0      # reset every pass: ends at 5\n    total += i\nprint(total)\nInitialise once, before the loop; print once, after it.",
+          "practice": "Fix accumulators that reset, print every pass, or are never initialised (NameError).",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "Products start at 1",
+          "worked_example": "n = 5\nproduct = 1\nfor i in range(1, n + 1):\n    product *= i\nprint(product)  # 120\nStarting at 0 would make every product 0.",
+          "practice": "Write factorial and power loops; predict results.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Totalling typed numbers",
+          "worked_example": "total = 0\nfor _ in range(3):\n    total += int(input('Number: '))\nprint('Sum:', total)",
+          "practice": "Predict output for typed inputs; write a program that averages a fixed number of inputs.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "user_input.read_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.8
+        },
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "loop_patterns.count_matches",
+      "title": "Counting and averaging in a loop",
+      "concept": "loop_patterns",
+      "summary": "Count how many values meet a condition, combine a count with a total to compute an average, and guard against dividing by zero.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "loop_patterns.accumulate_sum",
+        "for_loops.if_inside_loop",
+        "while_loops.sentinel_input"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Add 1 to a counter when the condition holds",
+          "worked_example": "count = 0\nfor n in range(1, 31):\n    if n % 7 == 0:\n        count += 1\nprint(count)  # 4",
+          "practice": "Write counting loops for given conditions; predict counts.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Count and total together give an average",
+          "worked_example": "total = 0\ncount = 0\nn = int(input('Score (-1 to stop): '))\nwhile n != -1:\n    total += n\n    count += 1\n    n = int(input('Score (-1 to stop): '))\nprint(total / count)",
+          "practice": "Write sentinel loops that compute an average; predict results for typed inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "while_loops.sentinel_input",
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Guard the average when nothing was counted",
+          "worked_example": "if count > 0:\n    print(total / count)\nelse:\n    print('No scores')\nIf the first input is the sentinel, count is 0 and total / count raises ZeroDivisionError.",
+          "practice": "Fix average programs that crash on empty input.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.7
+        },
+        {
+          "topic": "for_loops.if_inside_loop",
+          "weight": 0.5
+        },
+        {
+          "topic": "while_loops.sentinel_input",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "loop_patterns.max_min_tracking",
+      "title": "Finding the largest and smallest so far",
+      "concept": "loop_patterns",
+      "summary": "Track the maximum or minimum of a sequence of values, initialising correctly (first value or None) and remembering where it occurred.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "loop_patterns.count_matches",
+        "none_type.check_for_none"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Compare each value with the best so far",
+          "worked_example": "largest = int(input('Number: '))\nfor _ in range(4):\n    n = int(input('Number: '))\n    if n > largest:\n        largest = n\nprint('Largest:', largest)",
+          "practice": "Trace the best-so-far variable for given inputs; write the minimum version.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Bug: starting at 0",
+          "worked_example": "largest = 0\n# inputs -5, -2, -9 -> prints 0, which was never typed\nStart from the first real value instead.",
+          "practice": "Find inputs that break a 0-initialised max; fix the program.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Starting from None when there may be no first value",
+          "worked_example": "smallest = None\nn = int(input('n (0 stops): '))\nwhile n != 0:\n    if smallest is None or n < smallest:\n        smallest = n\n    n = int(input('n (0 stops): '))\nprint(smallest)",
+          "practice": "Predict results including the no-input case; reorder the condition so it never compares with None.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none",
+            "while_loops.sentinel_input"
+          ]
+        },
+        {
+          "title": "Remember where the best value occurred",
+          "worked_example": "best_day = 0\nbest_temp = -100\nfor day in range(1, 4):\n    t = int(input('Temp: '))\n    if t > best_temp:\n        best_temp = t\n        best_day = day\nprint('Hottest day:', best_day)",
+          "practice": "Write loops that report the position of the max or min; decide what happens on ties with > vs >=.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.count_matches",
+          "weight": 0.3
+        },
+        {
+          "topic": "none_type.check_for_none",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "loop_patterns.search_flag",
+      "title": "Flags: did any or all values pass?",
+      "concept": "loop_patterns",
+      "summary": "Use a Boolean flag to answer 'is there any...?' and 'are all...?' questions over a loop, stopping early with break where possible.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "loop_patterns.count_matches",
+        "break_continue.break_out_early"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Any: start False, set True on a match",
+          "worked_example": "found = False\nfor n in range(10, 20):\n    if n % 7 == 0:\n        found = True\nprint(found)  # True (14)",
+          "practice": "Write 'is there any...' loops; predict the flag's final value.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "All: start True, set False on a failure",
+          "worked_example": "n = 29\nis_prime = True\nfor d in range(2, n):\n    if n % d == 0:\n        is_prime = False\nprint(is_prime)  # True",
+          "practice": "Write 'are all...' checks; trace the flag.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Stop early with break once the answer is known",
+          "worked_example": "for d in range(2, n):\n    if n % d == 0:\n        is_prime = False\n        break\nOnce one divisor is found, checking the rest cannot change the answer.",
+          "practice": "Add break to flag loops; count how many passes are saved.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        },
+        {
+          "title": "Bug: resetting the flag in an else",
+          "worked_example": "for n in range(10, 20):\n    if n % 7 == 0:\n        found = True\n    else:\n        found = False   # later values overwrite the match\nRemove the else: only a match should change the flag.",
+          "practice": "Fix flag loops that reset the flag or initialise it inside the loop.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "break_continue.break_out_early",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.count_matches",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "loop_patterns.fencepost",
+      "title": "Fencepost problems: n items, n - 1 gaps",
+      "concept": "loop_patterns",
+      "summary": "Print or count items with separators between them (never after the last), recognising fencepost off-by-one errors.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "for_loops.if_inside_loop",
+        "range_function.start_stop",
+        "print_output.sep_and_end"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "n posts need n - 1 rails",
+          "worked_example": "A 10 m fence with a post every 2 m needs 6 posts and 5 rails.\nfor i in range(1, 4): print(i, end='-')  -> 1-2-3-  (one separator too many)",
+          "practice": "Count posts and gaps for described fences and timelines.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Print the first item, then 'separator + item' for the rest",
+          "worked_example": "print(1, end='')\nfor i in range(2, 4):\n    print('-', i, sep='', end='')\nprint()\n# 1-2-3",
+          "practice": "Write separator loops in this style; reorder lines (Parsons) into one.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "print_output.sep_and_end"
+          ]
+        },
+        {
+          "title": "Or: separator before every item except the first",
+          "worked_example": "for i in range(1, 4):\n    if i > 1:\n        print('-', end='')\n    print(i, end='')\nprint()\n# 1-2-3",
+          "practice": "Fix loops that print a trailing or leading separator.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.sep_and_end",
+          "weight": 0.5
+        },
+        {
+          "topic": "for_loops.if_inside_loop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "iteration.iter_and_next",
+      "title": "What a for loop really does: iter() and next()",
+      "concept": "iteration",
+      "summary": "Get an iterator from an iterable with iter(), step through it with next(), recognise StopIteration, and see that iterators are used up while ranges can be looped again.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "for_loops.using_the_loop_variable",
+        "range_function.start_stop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "iter() gives an iterator; next() takes the next value",
+          "worked_example": "it = iter(range(3))\nprint(next(it))  # 0\nprint(next(it))  # 1\nprint(next(it))  # 2",
+          "practice": "Predict the values returned by successive next() calls.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "for_loops.using_the_loop_variable"
+          ]
+        },
+        {
+          "title": "An exhausted iterator raises StopIteration",
+          "worked_example": "it = iter(range(2))\nnext(it); next(it)\nnext(it)  # StopIteration",
+          "practice": "Predict which call raises StopIteration.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "A for loop calls iter() once and next() until StopIteration",
+          "worked_example": "for x in range(2): print(x)\n# behaves like: it = iter(range(2)); x = next(it) ... until StopIteration ends the loop quietly.",
+          "practice": "Order the steps a for loop performs (Parsons); choose which objects can be iterated.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Iterators are one-shot; a range can be looped again",
+          "worked_example": "it = iter(range(3))\nfor x in it: print(x)   # 0 1 2\nfor x in it: print(x)   # nothing: already used up\nr = range(3)  # looping over r twice prints 0 1 2 both times",
+          "practice": "Predict output of looping twice over an iterator vs a range.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "for_loops.using_the_loop_variable",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    }
+  ]
+}

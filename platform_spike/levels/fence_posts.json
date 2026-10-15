@@ -1,0 +1,48 @@
+{
+  "format": 1,
+  "id": "fence_posts",
+  "title": "Fence posts",
+  "brief": "Build a fence: four posts, each three gems tall, with two empty cells between posts. Start with the plan: a loop that calls build_post() and next_post(). Then teach the robot each name.",
+  "starter_code": "",
+  "world": {
+    "width": 13,
+    "height": 4,
+    "start": [
+      0,
+      3,
+      "E"
+    ],
+    "bag": "infinite"
+  },
+  "goal": {
+    "no_error": true,
+    "gems_exactly": {
+      "0,1": 1,
+      "0,2": 1,
+      "0,3": 1,
+      "3,1": 1,
+      "3,2": 1,
+      "3,3": 1,
+      "6,1": 1,
+      "6,2": 1,
+      "6,3": 1,
+      "9,1": 1,
+      "9,2": 1,
+      "9,3": 1
+    }
+  },
+  "constraints": {
+    "required": [
+      "def",
+      "for"
+    ],
+    "max_lines": 22,
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "decomposition.top_down_design",
+    "for_loops.repeat_n_times"
+  ]
+}

@@ -1,0 +1,3270 @@
+{
+  "batch": "B19",
+  "title": "Graphics, GUIs, games and fun libraries",
+  "concept_map": {
+    "graphics_canvas": {
+      "topics": [
+        "graphics_canvas.screen_coordinates",
+        "graphics_canvas.draw_with_loops_and_helpers",
+        "graphics_canvas.colors_and_random_colors",
+        "graphics_canvas.animation_loop"
+      ],
+      "entry_topic": "graphics_canvas.screen_coordinates",
+      "notes": "Library-independent graphics skills (coordinates, bounding boxes, loops of shapes, colours, animation and wall bouncing), all checkable as plain arithmetic so they run on any platform. Library APIs live in lib_stanford_graphics, lib_turtle, lib_tkinter and lib_pygame. Colours own RGB/hex conversion (B13 deferred random colours here). Collisions between objects are collision_detection."
+    },
+    "lib_turtle": {
+      "topics": [
+        "lib_turtle.move_and_turn",
+        "lib_turtle.shapes_pen_and_color",
+        "lib_turtle.key_and_click_events",
+        "lib_turtle.many_turtles_and_subclasses",
+        "lib_turtle.smooth_animation_and_snake"
+      ],
+      "entry_topic": "lib_turtle.move_and_turn",
+      "notes": "100 Days of Code Days 18-23. turtle is in the standard library (no pip). Turtle snippets were not run on screen; positions and headings were checked with turtle.TNavigator (the turtle's movement maths without a window), which also lets a platform grade 'predict the final position' items headlessly. Collisions in turtle games (distance() < n, wall and paddle checks) are collision_detection; scoreboards and game state are game_development. Snake-body and anti-reverse KPs run as plain lists."
+    },
+    "lib_stanford_graphics": {
+      "topics": [
+        "lib_stanford_graphics.canvas_create_shapes",
+        "lib_stanford_graphics.move_and_click"
+      ],
+      "entry_topic": "lib_stanford_graphics.canvas_create_shapes",
+      "notes": "Code in Place's graphics.Canvas (a browser-side library). Snippets were not run here (library not installable); method names follow the Code in Place handout (create_rectangle/oval/line/text, move, moveto, get_left_x, get_top_y, get_canvas_width, get_last_click). Point-in-rectangle hit tests for clicks are collision_detection.rectangles_and_responses."
+    },
+    "lib_tkinter": {
+      "topics": [
+        "lib_tkinter.window_and_widgets",
+        "lib_tkinter.buttons_and_commands",
+        "lib_tkinter.layout_managers",
+        "lib_tkinter.timers_with_after"
+      ],
+      "entry_topic": "lib_tkinter.window_and_widgets",
+      "notes": "100 Days of Code Days 27-31. tkinter is standard library but opens a window, so snippets were not run (only the mm:ss formatting KP was). The *args/**kwargs material of Day 27 is B08 args_kwargs. Data persistence in the Password Manager / Flash Card apps (json, pandas) is B10/B18. Images on a Tk Canvas (PhotoImage) were left out; Pillow images are lib_pillow."
+    },
+    "event_driven_programming": {
+      "topics": [
+        "event_driven_programming.callbacks_and_registration",
+        "event_driven_programming.event_loop_dispatch",
+        "event_driven_programming.handler_arguments_and_state"
+      ],
+      "entry_topic": "event_driven_programming.callbacks_and_registration",
+      "notes": "Library-independent and fully runnable: events are simulated with dicts of handlers and a list as the event queue. The library bindings (turtle onkey/onclick, tkinter command=/bind/after, pygame.event.get) are taught in lib_turtle, lib_tkinter and lib_pygame, which depend on these topics. Web request handlers (Flask routes, B16/B17) are the same idea and could encompass callbacks_and_registration in a stitch."
+    },
+    "game_development": {
+      "topics": [
+        "game_development.board_state_and_turns",
+        "game_development.grid_movement_and_rules",
+        "game_development.game_objects_as_classes",
+        "game_development.lives_levels_and_game_over"
+      ],
+      "entry_topic": "game_development.board_state_and_turns",
+      "notes": "Project-shaped: Snake, Pong, Turtle Crossing, Breakout, Space Invaders, Asteroids and Helsinki's own game are best delivered as multisteps built on these topics plus game_loop, collision_detection and a library (lib_turtle or lib_pygame). These four topics teach the reusable pieces in plain Python so they can be graded headlessly. Text games with random (guessing games) are B13 random_module.random_games."
+    },
+    "lib_pygame": {
+      "topics": [
+        "lib_pygame.window_and_drawing",
+        "lib_pygame.events_and_keys",
+        "lib_pygame.clock_sprites_and_groups"
+      ],
+      "entry_topic": "lib_pygame.window_and_drawing",
+      "notes": "Helsinki Part 13-14 and Boot.dev Asteroids. pygame was not installed, so snippets were not run; API names follow the pygame 2 docs. The library-independent ideas (game loop, dt, vectors, collisions) live in game_loop and collision_detection, so these topics only add the pygame calls. Sound, fonts (pygame.font) and Rect methods beyond colliderect were left out."
+    },
+    "game_loop": {
+      "topics": [
+        "game_loop.input_update_draw",
+        "game_loop.frame_rate_and_delta_time"
+      ],
+      "entry_topic": "game_loop.input_update_draw",
+      "notes": "Library-independent; loops are simulated with lists of events and dt values so they run headlessly. pygame's Clock and event queue are taught in lib_pygame, which game_loop does not require. Turtle's tracer/update version is lib_turtle.smooth_animation_and_snake."
+    },
+    "collision_detection": {
+      "topics": [
+        "collision_detection.vectors_and_movement",
+        "collision_detection.circle_collisions",
+        "collision_detection.rectangles_and_responses"
+      ],
+      "entry_topic": "collision_detection.vectors_and_movement",
+      "notes": "Pure maths, runnable without a library. Trig (sin, cos, radians), which B13 math_module left to the games batch, is vectors_and_movement KP4. Wall bouncing is graphics_canvas.animation_loop; snake self-collision is lib_turtle.smooth_animation_and_snake KP4."
+    },
+    "lib_pillow": {
+      "topics": [
+        "lib_pillow.open_resize_save",
+        "lib_pillow.pixel_data",
+        "lib_pillow.combine_images"
+      ],
+      "entry_topic": "lib_pillow.open_resize_save",
+      "notes": "CS50P Week 6 (P-Shirt), MIT PS5 and 100 Days image projects. Pillow was not installed, so API snippets were not run; arithmetic KPs were. Pixel arithmetic itself is image_processing (runnable on nested lists). The B10 handoff (binary images with PIL) is open_resize_save, which lists file_io.encodings_and_binary as a prerequisite."
+    },
+    "image_processing": {
+      "topics": [
+        "image_processing.pixels_as_tuples",
+        "image_processing.filters_and_transforms",
+        "image_processing.hidden_messages_in_bits"
+      ],
+      "entry_topic": "image_processing.pixels_as_tuples",
+      "notes": "Pixel arithmetic on nested lists, independent of Pillow so it runs and grades headlessly; lib_pillow.pixel_data connects it to real image files. NumPy image arrays (100 Days Day 77) are B18 lib_numpy."
+    },
+    "lib_cowsay": {
+      "covered_by": [
+        "lib_pyfiglet.fun_output_libraries"
+      ],
+      "notes": "Introduced only, as CS50P's first pip-install demo; one KP (KP1) in the shared fun-output topic. Installing packages is B13 third_party_packages."
+    },
+    "lib_emoji": {
+      "covered_by": [
+        "lib_pyfiglet.fun_output_libraries"
+      ],
+      "notes": "One KP (KP2) in the shared fun-output topic (CS50P 'Emojize')."
+    },
+    "lib_pyfiglet": {
+      "topics": [
+        "lib_pyfiglet.fun_output_libraries"
+      ],
+      "entry_topic": "lib_pyfiglet.fun_output_libraries",
+      "notes": "One shared topic for the three CS50P 'fun output' libraries (cowsay, emoji, pyfiglet), one KP each plus the argv font-choice KP; owned here because pyfiglet carries the most skill. None was installed, so output was described from the docs, not run."
+    },
+    "lib_inflect": {
+      "topics": [
+        "lib_inflect.plurals_and_lists"
+      ],
+      "entry_topic": "lib_inflect.plurals_and_lists",
+      "notes": "CS50P 'Adieu, Adieu' and 'Seasons of Love'. Not installed; outputs follow the inflect docs."
+    },
+    "lib_tabulate": {
+      "topics": [
+        "lib_tabulate.print_tables"
+      ],
+      "entry_topic": "lib_tabulate.print_tables",
+      "notes": "CS50P 'Pizza Py'. Not installed; the sample table follows tabulate's documented 'simple' format. PrettyTable (100 Days) is B13 third_party_packages.learn_from_docs."
+    },
+    "lib_fpdf": {
+      "topics": [
+        "lib_fpdf.create_pdf"
+      ],
+      "entry_topic": "lib_fpdf.create_pdf",
+      "notes": "CS50P 'CS50 Shirtificate'. Uses fpdf2's current cell(text=...) spelling (older versions used txt=). Not installed; only the centring arithmetic was run."
+    },
+    "lib_validators": {
+      "topics": [
+        "lib_validators.validate_with_library"
+      ],
+      "entry_topic": "lib_validators.validate_with_library",
+      "notes": "CS50P 'Response Validation' (validators or validator-collection). Regex validation itself is B13 regular_expressions.anchors_and_validation, which this topic depends on. validator-collection's raising style (validators.email raises on failure; checkers.is_email returns bool) was not given a KP."
+    }
+  },
+  "topics": [
+    {
+      "id": "graphics_canvas.screen_coordinates",
+      "title": "Screen coordinates: where a shape goes",
+      "concept": "graphics_canvas",
+      "summary": "Locate points on a canvas whose origin is the top-left corner with y growing downwards, describe a shape by its bounding box, centre a shape, and convert from centre-origin (turtle/maths) coordinates.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "expressions.translate_formulas",
+        "tuples.create_and_index",
+        "return_values.multiple_return_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The origin is the top-left corner and y grows downwards",
+          "worked_example": "WIDTH, HEIGHT = 400, 300\nprint(WIDTH - 1, HEIGHT - 1)  # 399 299: the bottom-right pixel\nprint(200 > 50)  # True: (10, 200) is LOWER on screen than (10, 50)\nOn a canvas, x counts pixels from the left edge and y counts pixels down from the top edge.",
+          "practice": "Given points on a 400x300 canvas, say which is higher, lower, further left; give the coordinates of each corner and of the centre.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "A rectangle or oval is a bounding box (x1, y1, x2, y2)",
+          "worked_example": "x, y, size = 50, 20, 30\nbox = (x, y, x + size, y + size)\nprint(box)  # (50, 20, 80, 50)\n(x1, y1) is the top-left corner and (x2, y2) the bottom-right; an oval is drawn inside its box.",
+          "practice": "Write the box for a square or rectangle given its top-left corner and size; read width and height back from a box.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Centring a shape on the canvas",
+          "worked_example": "WIDTH, HEIGHT = 400, 300\nsize = 30\nleft = (WIDTH - size) // 2\ntop = (HEIGHT - size) // 2\nprint(left, top)  # 185 135\nSubtract the shape's size from the canvas size and halve it; centring the top-left corner itself (200, 150) is the common bug.",
+          "practice": "Compute the top-left corner that centres a shape; spot the bug that puts the corner, not the shape, in the middle.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "expressions.translate_formulas"
+          ]
+        },
+        {
+          "title": "Converting centre-origin, y-up coordinates to the screen",
+          "worked_example": "WIDTH, HEIGHT = 400, 300\n\ndef to_screen(x, y):\n    return x + WIDTH // 2, HEIGHT // 2 - y\n\nprint(to_screen(0, 0))     # (200, 150)\nprint(to_screen(100, 50))  # (300, 100)\nTurtle graphics and maths put (0, 0) in the middle with y going up; screens flip y.",
+          "practice": "Convert points both ways; predict where a point with negative y appears.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.multiple_return_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "expressions.translate_formulas",
+          "weight": 0.3
+        },
+        {
+          "topic": "tuples.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "graphics_canvas.draw_with_loops_and_helpers",
+      "title": "Rows and grids of shapes with loops and helper functions",
+      "concept": "graphics_canvas",
+      "summary": "Compute the positions of evenly spaced shapes with a loop or nested loop, wrap a shape in a helper function with parameters, and work out how many shapes fit.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "graphics_canvas.screen_coordinates",
+        "nested_loops.loop_inside_loop",
+        "parameters_arguments.several_parameters"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A row of shapes: x = i * (size + gap)",
+          "worked_example": "size, gap = 40, 10\nfor i in range(4):\n    x = i * (size + gap)\n    print(x)\n# 0\n# 50\n# 100\n# 150\nIn a real program each x goes into canvas.create_rectangle(x, y, x + size, y + size, ...).",
+          "practice": "Predict the x of the n-th shape; fill in the formula for a given spacing.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        },
+        {
+          "title": "A grid: the outer loop picks the row, the inner loop the column",
+          "worked_example": "size = 50\nfor row in range(2):\n    for col in range(2):\n        print(row, col, (col * size, row * size))\n# 0 0 (0, 0)\n# 0 1 (50, 0)\n# 1 0 (0, 50)\n# 1 1 (50, 50)\nx comes from the column and y from the row; swapping them draws the grid sideways.",
+          "practice": "Predict the top-left corner of a given cell; fix code that uses row for x.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        },
+        {
+          "title": "A helper function with parameters draws one shape anywhere",
+          "worked_example": "def square_box(x, y, size):\n    return (x, y, x + size, y + size)\n\nfor i in range(3):\n    print(square_box(i * 60, 10, 50))\n# (0, 10, 50, 60)\n# (60, 10, 110, 60)\n# (120, 10, 170, 60)\nWith a canvas, the helper calls canvas.create_rectangle(*its box*); the loop only decides where.",
+          "practice": "Write a helper for a centred circle's box (cx - r, cy - r, cx + r, cy + r); call it in a loop.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.several_parameters"
+          ]
+        },
+        {
+          "title": "How many shapes fit, and the last one off the edge",
+          "worked_example": "WIDTH, size, gap = 400, 40, 10\nn = (WIDTH + gap) // (size + gap)\nprint(n)  # 8\nlast_x2 = (n - 1) * (size + gap) + size\nprint(last_x2 <= WIDTH)  # True\nThe last shape needs no gap after it, hence WIDTH + gap; check x2 <= WIDTH before drawing.",
+          "practice": "Compute how many shapes fit for given sizes; predict whether the last one is cut off.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_loops.loop_inside_loop",
+          "weight": 0.5
+        },
+        {
+          "topic": "graphics_canvas.screen_coordinates",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "graphics_canvas.colors_and_random_colors",
+      "title": "Colours: names, RGB tuples, hex codes and random colours",
+      "concept": "graphics_canvas",
+      "summary": "Describe colours as names, RGB tuples and #RRGGBB strings, convert between RGB and hex, and pick random colours safely.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "random_module.choice_shuffle_sample",
+        "string_formatting.fstring_basics",
+        "tuples.create_and_index",
+        "builtin_functions.sum_max_min"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Colour names and a random pick",
+          "worked_example": "import random\nCOLORS = ['red', 'orange', 'green', 'blue']\ncolor = random.choice(COLORS)\nprint(color in COLORS)  # True\nGraphics libraries accept common colour names as strings; random.choice picks one per shape.",
+          "practice": "Predict which values a random colour expression can produce.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "random_module.choice_shuffle_sample"
+          ]
+        },
+        {
+          "title": "RGB tuples: three numbers from 0 to 255",
+          "worked_example": "RED = (255, 0, 0)\nYELLOW = (255, 255, 0)  # red + green light\nprint(YELLOW[1])  # 255\nprint(max((0, 0, 0)), min((255, 255, 255)))  # 0 255: black, white\nEach number is the amount of red, green and blue light; (0, 0, 0) is black, (255, 255, 255) white.",
+          "practice": "Match tuples to colour names (black, white, grey, yellow); write the tuple for a described colour.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Hex codes #RRGGBB",
+          "worked_example": "r, g, b = 255, 165, 0\nprint(f'#{r:02x}{g:02x}{b:02x}')  # #ffa500\nprint(int('a5', 16))  # 165\n:02x writes a number as two hex digits; int(text, 16) reads them back.",
+          "practice": "Convert RGB to hex and hex to RGB; find the bug when :x without 02 gives a 5-character code.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Random RGB colours and keeping values in range",
+          "worked_example": "import random\nrandom.seed(1)\ncolor = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))\nprint(color)  # (68, 32, 130)\nbrighter = min(255, color[0] + 200)\nprint(brighter)  # 255\nrandint includes 255; when you adjust a channel, clamp it with min/max so it stays 0-255.",
+          "practice": "Write a random-colour helper; clamp adjusted channels; predict a seeded colour.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "random_module.random_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "random_module.choice_shuffle_sample",
+          "weight": 0.3
+        },
+        {
+          "topic": "random_module.random_numbers",
+          "weight": 0.3
+        },
+        {
+          "topic": "tuples.create_and_index",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "graphics_canvas.animation_loop",
+      "title": "Animation: move a little, pause, repeat",
+      "concept": "graphics_canvas",
+      "summary": "Animate a shape by changing its position by a velocity each frame, stop at an edge, and bounce off walls by reversing the velocity.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "graphics_canvas.screen_coordinates",
+        "while_loops.repeat_while_true",
+        "conditionals.compound_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A frame is a small move followed by a short pause",
+          "worked_example": "import time\nx = 0\nfor frame in range(3):\n    x += 10\n    print(x)  # the real program redraws here\n    time.sleep(0.05)\n# 10\n# 20\n# 30\nMany tiny moves with pauses look like motion; without the pause it finishes before you see it.",
+          "practice": "Predict the position after n frames; choose what happens when the sleep is removed.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        },
+        {
+          "title": "Velocity on both axes: dx and dy",
+          "worked_example": "x, y, dx, dy = 0, 100, 5, -2\nfor frame in range(4):\n    x += dx\n    y += dy\nprint(x, y)  # 20 92\ndy < 0 moves up the screen because y grows downwards.",
+          "practice": "Trace x and y over frames in a trace table; choose dx, dy for a given direction.",
+          "formats": [
+            "trace_table",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Stop when the shape reaches the edge",
+          "worked_example": "WIDTH, size = 100, 20\nx = 0\nwhile x + size < WIDTH:\n    x += 15\nprint(x)  # 90: past the edge!\nTest the right edge x + size, and check before moving (or clamp) so the shape never ends past WIDTH.",
+          "practice": "Predict where the loop stops; fix the condition or clamp so the shape ends exactly at the edge.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Bounce: reverse the velocity at a wall",
+          "worked_example": "WIDTH, size = 100, 20\nx, dx = 60, 10\nfor frame in range(5):\n    x += dx\n    if x <= 0 or x + size >= WIDTH:\n        dx = -dx\n    print(x, dx)\n# 70 10\n# 80 -10\n# 70 -10\n# 60 -10\n# 50 -10\nFlipping the sign of dx sends the shape back; the top and bottom walls flip dy the same way.",
+          "practice": "Trace a bouncing shape; write the condition for the floor and ceiling.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.compound_conditions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.compound_conditions",
+          "weight": 0.4
+        },
+        {
+          "topic": "while_loops.repeat_while_true",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "lib_stanford_graphics.canvas_create_shapes",
+      "title": "Drawing on the Code in Place Canvas",
+      "concept": "lib_stanford_graphics",
+      "summary": "Create a Canvas and draw rectangles, ovals, lines and text with create_* calls that take corner coordinates.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "graphics_canvas.draw_with_loops_and_helpers",
+        "graphics_canvas.colors_and_random_colors",
+        "modules_imports.from_import_and_alias"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Make a canvas and draw a rectangle from two corners",
+          "worked_example": "from graphics import Canvas\ncanvas = Canvas(400, 300)\ncanvas.create_rectangle(50, 20, 80, 50, 'blue')\nThe four numbers are x1, y1, x2, y2, not x, y, width, height: this square is 30 pixels wide.",
+          "practice": "Give the call that draws a described rectangle; fix a call that passes width and height as x2, y2.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.draw_with_loops_and_helpers"
+          ]
+        },
+        {
+          "title": "Ovals and circles fill their bounding box",
+          "worked_example": "cx, cy, r = 200, 150, 25\ncanvas.create_oval(cx - r, cy - r, cx + r, cy + r, 'red')\nTo draw a circle around a centre, step r left/up for the first corner and r right/down for the second.",
+          "practice": "Write the create_oval call for a circle with a given centre and radius; predict the circle's centre from a call.",
+          "formats": [
+            "write_code",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        },
+        {
+          "title": "Lines, text and colours inside loops",
+          "worked_example": "import random\nfor i in range(5):\n    color = random.choice(['red', 'green', 'blue'])\n    canvas.create_line(0, i * 20, 400, i * 20, color)\ncanvas.create_text(10, 10, text='Score: 0')\nA line is two endpoints; text needs a position and a text= keyword. Loops and random colours work as in plain Python.",
+          "practice": "Predict the endpoints of each line a loop draws; write a loop that draws a flag's stripes.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.colors_and_random_colors"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphics_canvas.draw_with_loops_and_helpers",
+          "weight": 0.6
+        },
+        {
+          "topic": "graphics_canvas.colors_and_random_colors",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "lib_stanford_graphics.move_and_click",
+      "title": "Moving shapes and reading clicks on the Canvas",
+      "concept": "lib_stanford_graphics",
+      "summary": "Keep the id a create_* call returns, move the shape with move/moveto, read its position back, and react to mouse clicks in an animation loop.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_stanford_graphics.canvas_create_shapes",
+        "graphics_canvas.animation_loop",
+        "none_type.check_for_none"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "create_* returns an id; move is relative, moveto is absolute",
+          "worked_example": "ball = canvas.create_oval(0, 0, 20, 20, 'red')\ncanvas.move(ball, 10, 5)     # now at (10, 5)\ncanvas.move(ball, 10, 5)     # now at (20, 10)\ncanvas.moveto(ball, 100, 0)  # now at (100, 0)\nKeep the id in a variable: it is the only way to change that shape later.",
+          "practice": "Predict the top-left corner after a sequence of move/moveto calls.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.animation_loop"
+          ]
+        },
+        {
+          "title": "Reading the position back to bounce",
+          "worked_example": "dx = 10\nwhile True:\n    canvas.move(ball, dx, 0)\n    if canvas.get_left_x(ball) + 20 >= canvas.get_canvas_width():\n        dx = -dx\n    time.sleep(0.05)\nget_left_x / get_top_y report where the shape is now, so the bounce test needs no separate x variable.",
+          "practice": "Complete the bounce condition for the left wall and the floor; trace positions for a few frames.",
+          "formats": [
+            "fill_in_blank",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.animation_loop"
+          ]
+        },
+        {
+          "title": "Clicks: get_last_click returns (x, y) or None",
+          "worked_example": "while True:\n    click = canvas.get_last_click()\n    if click is not None:\n        x, y = click\n        canvas.create_oval(x - 5, y - 5, x + 5, y + 5, 'black')\n    time.sleep(0.05)\nNo click since the last check gives None; unpacking None would raise TypeError, so test first.",
+          "practice": "Fix a loop that unpacks the click without checking for None; predict the dot's box for a click at (40, 60).",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphics_canvas.animation_loop",
+          "weight": 0.6
+        },
+        {
+          "topic": "lib_stanford_graphics.canvas_create_shapes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "event_driven_programming.callbacks_and_registration",
+      "title": "Callbacks: register a function now, run it later",
+      "concept": "event_driven_programming",
+      "summary": "Register handler functions for named events in a dictionary, fire events to call them, and avoid passing a function's result instead of the function.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "higher_order_functions.pass_function_as_argument",
+        "list_methods.append_build",
+        "higher_order_functions.dispatch_tables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Registering does not run the handler",
+          "worked_example": "handlers = {}\n\ndef on(event, handler):\n    handlers[event] = handler\n\ndef jump():\n    print('jump!')\n\non('space', jump)\nprint('registered')\nhandlers['space']()\n# registered\n# jump!\non() only stores the function; it runs when the event is fired. GUI libraries' onkey, command= and bind work this way.",
+          "practice": "Predict the order of printed lines when handlers are registered and later fired.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.pass_function_as_argument"
+          ]
+        },
+        {
+          "title": "Pass the function, not its result",
+          "worked_example": "on('space', jump())\n# jump!   <- printed immediately, while registering\nhandlers['space']()\n# TypeError: 'NoneType' object is not callable\njump() runs straight away and returns None, so None is what gets stored.",
+          "practice": "Find the bug in a registration line; predict what is printed and when.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.pass_function_as_argument"
+          ]
+        },
+        {
+          "title": "Firing an event safely: ignore events nobody handles",
+          "worked_example": "def fire(event):\n    if event in handlers:\n        handlers[event]()\n\nfire('space')  # jump!\nfire('x')      # nothing happens\nReal event systems silently ignore keys that have no handler.",
+          "practice": "Write fire(); predict output for a sequence of handled and unhandled events.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Several handlers for one event",
+          "worked_example": "def beep():\n    print('beep')\ndef add_point():\n    print('score +1')\n\nlisteners = {'click': []}\nlisteners['click'].append(beep)\nlisteners['click'].append(add_point)\nfor handler in listeners['click']:\n    handler()\n# beep\n# score +1\nKeeping a list per event lets several parts of a program react; they run in the order they were added.",
+          "practice": "Predict the output order; add a handler so a given output appears.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "higher_order_functions.pass_function_as_argument",
+          "weight": 0.6
+        },
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.2
+        },
+        {
+          "topic": "higher_order_functions.dispatch_tables",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "event_driven_programming.event_loop_dispatch",
+      "title": "The event loop: waiting for events and dispatching them",
+      "concept": "event_driven_programming",
+      "summary": "Explain how an event-driven program differs from a top-to-bottom one, trace an event loop that dispatches a queue of events to handlers that share state, and see why a slow handler freezes everything.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "event_driven_programming.callbacks_and_registration",
+        "break_continue.while_true_loops",
+        "scope.global_variables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The program waits; events decide what runs next",
+          "worked_example": "events = ['right', 'right', 'left']\nx = 0\nfor event in events:   # stands in for the library's loop\n    if event == 'right':\n        x += 10\n    elif event == 'left':\n        x -= 10\nprint(x)  # 10\nA console program asks questions in its own order; a GUI or game runs a loop that waits for the user's next event (mainloop(), the game loop).",
+          "practice": "Predict the final state for an event sequence; choose which programs are event-driven.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        },
+        {
+          "title": "Dispatching through a handler table until a quit event",
+          "worked_example": "def move():\n    print('move')\ndef stop():\n    global running\n    running = False\n\nhandlers = {'w': move, 'q': stop}\nqueue = ['w', 'x', 'w', 'q', 'w']\nrunning = True\nfor event in queue:\n    if event in handlers:\n        handlers[event]()\n    if not running:\n        break\n# move\n# move\nThe last 'w' is never handled: 'q' ended the loop first.",
+          "practice": "Trace which handlers run for an event queue; fill in the dispatch line.",
+          "formats": [
+            "trace_table",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.callbacks_and_registration",
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "Handlers share state between events",
+          "worked_example": "score = 0\ndef hit():\n    global score\n    score += 1\n\nhandlers = {'click': hit}\nfor event in ['click', 'key', 'click']:\n    if event in handlers:\n        handlers[event]()\nprint(score)  # 2\nA handler cannot return a value to the loop, so it records results in shared state (a global or, better, an object's attribute).",
+          "practice": "Predict the shared state after events; fix a handler that forgets global and raises UnboundLocalError.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "A slow handler freezes the whole program",
+          "worked_example": "def on_click():\n    time.sleep(5)   # nothing else can run for 5 seconds\n    print('done')\nOnly one handler runs at a time; while it sleeps or loops, the event loop cannot redraw or react. Use the library's timer (after(), ontimer) instead.",
+          "practice": "Choose which handler makes the window stop responding; reorder code to use a timer instead of a sleeping loop.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.callbacks_and_registration"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "event_driven_programming.callbacks_and_registration",
+          "weight": 0.7
+        },
+        {
+          "topic": "scope.global_variables",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "event_driven_programming.handler_arguments_and_state",
+      "title": "Event data: handlers that receive arguments",
+      "concept": "event_driven_programming",
+      "summary": "Write handlers whose parameters match what the library passes (coordinates or an event object), pass extra data with lambda without the late-binding trap, and use bound methods as handlers.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "event_driven_programming.event_loop_dispatch",
+        "lambda_functions.write_lambda",
+        "closures.function_factories",
+        "classes.define_methods"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The library decides the arguments",
+          "worked_example": "def on_click(x, y):\n    print('clicked at', x, y)\n\nclick_handler = on_click\nclick_handler(30, 40)  # clicked at 30 40\n\ndef bad_click():\n    print('hi')\nclick_handler = bad_click\nclick_handler(30, 40)\n# TypeError: bad_click() takes 0 positional arguments but 2 were given\nTurtle's onclick passes (x, y); tkinter's bind passes one event object; turtle's onkey passes nothing. Match the signature.",
+          "practice": "Choose the right signature for a given registration; read the TypeError and fix the handler.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.event_loop_dispatch"
+          ]
+        },
+        {
+          "title": "Event objects carry details as attributes",
+          "worked_example": "class Event:\n    def __init__(self, kind, x, y):\n        self.kind, self.x, self.y = kind, x, y\n\ndef on_event(event):\n    if event.kind == 'click':\n        print(event.x + event.y)\n\non_event(Event('click', 3, 4))  # 7\ntkinter and pygame hand over one object; read event.x, event.key, event.pos from it.",
+          "practice": "Predict what a handler prints for given event objects.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Passing extra data with lambda, and the loop trap",
+          "worked_example": "def choose(n):\n    print('chose', n)\n\nbuttons = []\nfor n in range(3):\n    buttons.append(lambda: choose(n))\nbuttons[0]()  # chose 2  (!)\n\nbuttons = []\nfor n in range(3):\n    buttons.append(lambda n=n: choose(n))\nbuttons[0]()  # chose 0\nA handler takes no arguments, so lambda wraps the call; n=n freezes the current value for each button.",
+          "practice": "Predict which value each handler uses; fix a loop of button callbacks.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lambda_functions.write_lambda",
+            "closures.function_factories"
+          ]
+        },
+        {
+          "title": "A bound method is a ready-made handler",
+          "worked_example": "class Paddle:\n    def __init__(self):\n        self.y = 0\n    def up(self):\n        self.y += 20\n\nleft = Paddle()\nhandlers = {'w': left.up}\nhandlers['w']()\nhandlers['w']()\nprint(left.y)  # 40\nleft.up remembers its object, so onkey(left.up, 'w') moves that paddle and keeps state on it instead of in globals.",
+          "practice": "Predict object state after events; register the right paddle's method for the arrow keys.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lambda_functions.write_lambda",
+          "weight": 0.4
+        },
+        {
+          "topic": "closures.function_factories",
+          "weight": 0.2
+        },
+        {
+          "topic": "event_driven_programming.event_loop_dispatch",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "lib_turtle.move_and_turn",
+      "title": "Turtle graphics: moving and turning",
+      "concept": "lib_turtle",
+      "summary": "Create a Turtle, move it with forward/backward/goto, turn it with left/right/setheading, and predict its final position and heading on a centre-origin, y-up plane.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.from_import_and_alias",
+        "objects_methods.types_and_methods",
+        "graphics_canvas.screen_coordinates"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A turtle starts at (0, 0) facing east",
+          "worked_example": "from turtle import Turtle, Screen\ntim = Turtle()\ntim.forward(100)\nprint(tim.position())  # (100.00,0.00)\n(0, 0) is the centre of the window and the turtle draws a line as it moves.",
+          "practice": "Predict the position after one or two forward/backward calls.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "modules_imports.from_import_and_alias"
+          ]
+        },
+        {
+          "title": "left turns anticlockwise, right clockwise; y goes up",
+          "worked_example": "tim.forward(100)\ntim.left(90)\ntim.forward(50)\nprint(tim.position(), tim.heading())  # (100.00,50.00) 90.0\nHeading 0 is east, 90 north, 180 west, 270 south. Unlike a canvas, positive y is UP.",
+          "practice": "Trace position and heading through a sequence of moves; predict the final position.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        },
+        {
+          "title": "Jumping with goto and setheading",
+          "worked_example": "tim.goto(50, -20)\ntim.setheading(180)\ntim.forward(10)\nprint(tim.xcor(), tim.ycor())  # 40.0 -20.0\ngoto ignores the heading; setheading sets an absolute direction, unlike left/right which turn relative to the current one.",
+          "practice": "Predict coordinates after mixed goto/setheading/forward calls; choose setheading vs left for a task.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "Diagonal moves give float positions",
+          "worked_example": "tim.left(45)\ntim.forward(100)\nprint(round(tim.xcor(), 2), round(tim.ycor(), 2))  # 70.71 70.71\nPositions are floats; round before comparing, e.g. tim.xcor() > 230 rather than == 230.",
+          "practice": "Predict rounded coordinates after a 45-degree move; fix a check that uses == on a float position.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphics_canvas.screen_coordinates",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_turtle.shapes_pen_and_color",
+      "title": "Turtle drawings: polygons, pen up/down and colours",
+      "concept": "lib_turtle",
+      "summary": "Draw regular polygons and patterns with loops, lift the pen to move without drawing, set colours (including RGB with colormode(255)) and lay out a grid of dots.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_turtle.move_and_turn",
+        "for_loops.repeat_n_times",
+        "graphics_canvas.colors_and_random_colors"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Polygons: n sides, turn 360 / n",
+          "worked_example": "for _ in range(3):\n    tim.forward(50)\n    tim.left(120)\nprint(round(tim.xcor()), round(tim.ycor()), tim.heading())  # 0 0 0.0\nThe turns of any closed shape add up to 360, so a triangle turns 120 and the turtle ends where it began.",
+          "practice": "Give the turn angle for an n-sided shape; predict the final heading; write a loop drawing shapes with 3 to 10 sides.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "for_loops.repeat_n_times"
+          ]
+        },
+        {
+          "title": "penup and pendown: moving without drawing",
+          "worked_example": "for _ in range(10):\n    tim.pendown()\n    tim.forward(10)\n    tim.penup()\n    tim.forward(10)\n# a dashed line of 10 dashes; the turtle ends at (200, 0)\nWith the pen up the turtle still moves; only the line is skipped.",
+          "practice": "Predict the number of dashes and the final position; reorder lines to draw a dotted line.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lib_turtle.move_and_turn"
+          ]
+        },
+        {
+          "title": "Colours: names, and RGB tuples after colormode(255)",
+          "worked_example": "screen = Screen()\nscreen.colormode(255)\ntim.color((255, 165, 0))\ntim.pensize(5)\ntim.speed('fastest')\nWithout colormode(255) turtle expects RGB values from 0 to 1 and raises an error for (255, 165, 0).",
+          "practice": "Fix a program that passes 0-255 tuples without colormode; write a random walk that picks a random colour and heading (0, 90, 180 or 270) each step.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.colors_and_random_colors"
+          ]
+        },
+        {
+          "title": "A grid of dots (the Hirst painting)",
+          "worked_example": "tim.penup()\nfor row in range(3):\n    tim.goto(-100, -100 + row * 50)\n    for col in range(5):\n        tim.dot(20, 'red')\n        tim.forward(50)\ngoto starts each row at the left; dot() draws without the pen. After the loops the turtle is at (150, 0).",
+          "practice": "Predict the final position; change the loops to make a 10 x 10 grid.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "for_loops.repeat_n_times"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_turtle.move_and_turn",
+          "weight": 0.8
+        },
+        {
+          "topic": "for_loops.repeat_n_times",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_turtle.key_and_click_events",
+      "title": "Turtle events: keys, clicks and pop-up prompts",
+      "concept": "lib_turtle",
+      "summary": "Make a turtle program respond to keys with listen()/onkey, to clicks with onclick handlers that take (x, y), and ask the user for input with textinput.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_turtle.move_and_turn",
+        "event_driven_programming.handler_arguments_and_state"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "listen, onkey, and keeping the window open",
+          "worked_example": "def move_forward():\n    tim.forward(10)\n\nscreen.listen()\nscreen.onkey(move_forward, 'w')\nscreen.exitonclick()\nlisten() gives the window keyboard focus; exitonclick() (or mainloop()) keeps the program running so events can arrive.",
+          "practice": "Reorder the lines of an Etch-A-Sketch program; fix onkey(move_forward(), 'w').",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.handler_arguments_and_state"
+          ]
+        },
+        {
+          "title": "Key handlers that turn and clear",
+          "worked_example": "def turn_left():\n    tim.setheading(tim.heading() + 10)\n\ndef clear():\n    tim.clear()\n    tim.penup()\n    tim.home()\n    tim.pendown()\n\nscreen.onkey(turn_left, 'a')\nscreen.onkey(clear, 'c')\nEach key gets its own small function; key names include 'Up', 'Left', 'space'.",
+          "practice": "Predict the heading after pressing keys in a given order.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_turtle.move_and_turn"
+          ]
+        },
+        {
+          "title": "Click handlers receive the coordinates",
+          "worked_example": "def jump_to(x, y):\n    tim.goto(x, y)\n\nscreen.onclick(jump_to)\nonclick calls jump_to(x, y) with the click position in turtle coordinates; a handler with no parameters raises TypeError on the first click.",
+          "practice": "Write a click handler that stamps a dot where the user clicks; read the error from a wrong signature.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.handler_arguments_and_state"
+          ]
+        },
+        {
+          "title": "Asking the user: textinput returns a string or None",
+          "worked_example": "bet = screen.textinput('Make your bet', 'Which turtle will win? Enter a colour:')\nif bet is not None:\n    bet = bet.lower()\nCancel gives None, so check before calling string methods; numinput returns a float.",
+          "practice": "Predict the value of bet for typed input and for Cancel; fix code that crashes on Cancel.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_turtle.move_and_turn"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "event_driven_programming.handler_arguments_and_state",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_turtle.move_and_turn",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_turtle.many_turtles_and_subclasses",
+      "title": "Many turtles: lists of turtles and Turtle subclasses",
+      "concept": "lib_turtle",
+      "summary": "Keep several Turtle objects in a list, each with its own state, and build game pieces (ball, paddle, car) as subclasses of Turtle with their own attributes and methods.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "lib_turtle.shapes_pen_and_color",
+        "classes.objects_in_collections",
+        "inheritance.super_init"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A list of turtles: each keeps its own position",
+          "worked_example": "colors = ['red', 'blue', 'green']\nracers = []\nfor i in range(len(colors)):\n    t = Turtle(shape='turtle')\n    t.color(colors[i])\n    t.penup()\n    t.goto(-230, -50 + i * 50)\n    racers.append(t)\nThe same method call moves only the turtle it is called on.",
+          "practice": "Predict each turtle's starting y; fix a race where all turtles were placed at the same spot.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.objects_in_collections"
+          ]
+        },
+        {
+          "title": "Running the race: a loop over all turtles until one finishes",
+          "worked_example": "racing = True\nwhile racing:\n    for t in racers:\n        t.forward(random.randint(0, 10))\n        if t.xcor() > 230:\n            racing = False\n            winner = t.pencolor()\nThe loop stops after the pass in which some turtle crosses x = 230.",
+          "practice": "Given seeded steps, trace positions and name the winner.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.objects_in_collections"
+          ]
+        },
+        {
+          "title": "A Turtle subclass sets itself up in __init__",
+          "worked_example": "class Ball(Turtle):\n    def __init__(self):\n        super().__init__()\n        self.shape('circle')\n        self.penup()\n        self.x_move = 10\n        self.y_move = 10\nBall is-a Turtle with extra attributes; without super().__init__() the turtle parts are never set up and the first turtle method fails with AttributeError.",
+          "practice": "Fix a subclass that forgets super().__init__(); fill in the constructor for a Paddle placed at a given x.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "inheritance.super_init"
+          ]
+        },
+        {
+          "title": "Methods that move and bounce the piece",
+          "worked_example": "    def move(self):\n        self.goto(self.xcor() + self.x_move, self.ycor() + self.y_move)\n\n    def bounce_y(self):\n        self.y_move *= -1\n(Inside the Ball class from KP3.) The game calls ball.move() every frame and ball.bounce_y() at the top and bottom walls.",
+          "practice": "Trace a ball's position over several move()/bounce_y() calls.",
+          "formats": [
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "inheritance.super_init"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.super_init",
+          "weight": 0.5
+        },
+        {
+          "topic": "classes.objects_in_collections",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_turtle.shapes_pen_and_color",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_turtle.smooth_animation_and_snake",
+      "title": "Smooth turtle animation: tracer, update and the snake body",
+      "concept": "lib_turtle",
+      "summary": "Animate several turtles smoothly with tracer(0) and update(), make snake segments follow the head by moving from the tail forward, and stop the snake reversing into itself.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "lib_turtle.many_turtles_and_subclasses",
+        "graphics_canvas.animation_loop",
+        "range_function.step_and_countdown"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "tracer(0) and update(): draw once per frame",
+          "worked_example": "screen.tracer(0)\nwhile game_is_on:\n    snake.move()\n    screen.update()\n    time.sleep(0.1)\nWith tracer(0) turtle stops redrawing after every step; update() shows the whole frame at once, so pieces move together.",
+          "practice": "Reorder a frame's lines; choose what goes wrong without update() after tracer(0) (nothing appears to move).",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.animation_loop"
+          ]
+        },
+        {
+          "title": "Segments follow the head: copy positions from the tail forward",
+          "worked_example": "segments = [[40, 0], [20, 0], [0, 0]]  # head first\nfor i in range(len(segments) - 1, 0, -1):\n    segments[i] = segments[i - 1][:]\nsegments[0][0] += 20   # the head moves on\nprint(segments)  # [[60, 0], [40, 0], [20, 0]]\nEach segment takes the old place of the one in front. With turtles: segments[i].goto(segments[i - 1].position()).",
+          "practice": "Predict positions after a move; fix a loop that runs from the head backwards and stacks every segment on one spot.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "range_function.step_and_countdown"
+          ]
+        },
+        {
+          "title": "No reversing into yourself",
+          "worked_example": "UP, DOWN = 90, 270\nheading = DOWN\ndef up():\n    global heading\n    if heading != DOWN:\n        heading = UP\nup()\nprint(heading)  # 270: ignored\nA snake moving down may not turn straight up; each key handler checks the opposite direction first.",
+          "practice": "Write the left/right handlers; predict the heading after a sequence of key presses.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lib_turtle.many_turtles_and_subclasses"
+          ]
+        },
+        {
+          "title": "Growing and hitting your own tail",
+          "worked_example": "segments = [[60, 0], [40, 0], [20, 0]]\nsegments.append(segments[-1][:])  # grow: copy the tail\nhead = segments[0]\nprint(head in segments[1:])  # False: no self-collision\nSlicing off the head (segments[1:]) lets the self-collision check skip it; with turtles, compare head.distance(seg) < 10.",
+          "practice": "Predict whether a given body collides with its head; fix a check that includes the head and always ends the game.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_turtle.many_turtles_and_subclasses"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphics_canvas.animation_loop",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_turtle.many_turtles_and_subclasses",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_tkinter.window_and_widgets",
+      "title": "A Tkinter window with labels and entries",
+      "concept": "lib_tkinter",
+      "summary": "Create a Tk window, add Label and Entry widgets with keyword options, show them with pack(), change them with config(), and read entry text with get().",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "modules_imports.import_module",
+        "parameters_arguments.keyword_arguments",
+        "objects_methods.types_and_methods"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A window, a label and mainloop",
+          "worked_example": "import tkinter\nwindow = tkinter.Tk()\nwindow.title('Converter')\nlabel = tkinter.Label(text='Hello', font=('Arial', 24))\nlabel.pack()\nwindow.mainloop()\nA widget appears only after pack() (or grid/place); mainloop() waits for events, so lines after it run only when the window closes.",
+          "practice": "Choose why a label does not appear; reorder lines into a working window program.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "Changing a widget after it is made",
+          "worked_example": "label.config(text='Goodbye')\nlabel['text'] = 'Goodbye'   # same effect\nOptions passed as keywords at creation can be changed later with config(...).",
+          "practice": "Fill in the call that changes a label's text or font.",
+          "formats": [
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        },
+        {
+          "title": "Entry widgets: get() always returns a string",
+          "worked_example": "entry = tkinter.Entry(width=10)\nentry.pack()\nentry.insert(0, '10')\nmiles = entry.get()          # '10'\nkm = float(miles) * 1.609\nConvert before doing arithmetic; entry.delete(0, tkinter.END) clears the box.",
+          "practice": "Fix code that multiplies entry.get() directly; predict the type and value read from an entry.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.types_and_methods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "parameters_arguments.keyword_arguments",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_tkinter.buttons_and_commands",
+      "title": "Buttons that do something: command= callbacks and message boxes",
+      "concept": "lib_tkinter",
+      "summary": "Attach callbacks to buttons with command=, read inputs and update labels inside them, pass arguments with lambda, and ask yes/no questions with messagebox.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_tkinter.window_and_widgets",
+        "event_driven_programming.handler_arguments_and_state",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "command= takes the function, not a call",
+          "worked_example": "def calculate():\n    print('clicked')\n\nbutton = tkinter.Button(text='Calculate', command=calculate)\nbutton.pack()\ncommand=calculate() would run once at start-up and attach None.",
+          "practice": "Fix a button that runs at start-up and never again.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.handler_arguments_and_state"
+          ]
+        },
+        {
+          "title": "A callback reads, converts and writes back",
+          "worked_example": "def calculate():\n    km = float(entry.get()) * 1.609\n    result.config(text=str(round(km, 2)))\nWith '10' in the entry, the result label shows 16.09.",
+          "practice": "Predict the label's text for given entry values; write the callback for another unit conversion.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Passing arguments with lambda",
+          "worked_example": "def add(n):\n    total.set(total.get() + n)\n\ntkinter.Button(text='+5', command=lambda: add(5)).pack()\nA command takes no arguments, so wrap the call in a lambda (an IntVar holds the total).",
+          "practice": "Choose the correct command for a button that adds 1; fix a loop of buttons that all add the last value.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.handler_arguments_and_state"
+          ]
+        },
+        {
+          "title": "Message boxes: showinfo and askokcancel",
+          "worked_example": "from tkinter import messagebox\nif len(website) == 0:\n    messagebox.showinfo(title='Oops', message='Please fill in every field.')\nelif messagebox.askokcancel(title=website, message='Save these details?'):\n    save()\naskokcancel returns True for OK and False for Cancel, so it can be the condition directly.",
+          "practice": "Predict whether save() runs for given inputs and button choices.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lib_tkinter.window_and_widgets"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "event_driven_programming.handler_arguments_and_state",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_tkinter.window_and_widgets",
+          "weight": 0.6
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_tkinter.layout_managers",
+      "title": "Laying out widgets: pack, grid and place",
+      "concept": "lib_tkinter",
+      "summary": "Arrange widgets with pack, with grid rows and columns (including columnspan and sticky), or with exact place coordinates, and avoid mixing pack and grid in one container.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_tkinter.window_and_widgets",
+        "nested_data_structures.grid_index_and_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "pack stacks; place puts a widget at exact coordinates",
+          "worked_example": "title.pack()            # top, centred\nok.pack(side='left')\nlogo.place(x=0, y=0)     # top-left corner\npack is quick but coarse; place uses canvas-style pixels from the top-left.",
+          "practice": "Predict where widgets end up for a sequence of pack/place calls.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_tkinter.window_and_widgets"
+          ]
+        },
+        {
+          "title": "grid: row and column numbers",
+          "worked_example": "tkinter.Label(text='Miles').grid(row=0, column=2)\nentry.grid(row=0, column=1)\ntkinter.Label(text='is equal to').grid(row=1, column=0)\nLike a list of lists: row first, column second; empty rows and columns take no space.",
+          "practice": "Given a sketch of a form, write the row/column for each widget.",
+          "formats": [
+            "fill_in_blank",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Spanning columns and stretching with sticky",
+          "worked_example": "website_entry.grid(row=1, column=1, columnspan=2, sticky='EW')\nwindow.config(padx=50, pady=50)\ncolumnspan lets one widget cover several columns; sticky='EW' stretches it from west to east.",
+          "practice": "Fix a layout where a long entry pushes a button out of line.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_tkinter.window_and_widgets"
+          ]
+        },
+        {
+          "title": "Do not mix pack and grid in the same window",
+          "worked_example": "label.pack()\nbutton.grid(row=1, column=0)\n# _tkinter.TclError: cannot use geometry manager grid inside . which already has slaves managed by pack\nPick one manager per container (window or frame).",
+          "practice": "Choose which programs raise TclError; fix one by switching to a single manager.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_tkinter.window_and_widgets"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_tkinter.window_and_widgets",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_tkinter.timers_with_after",
+      "title": "Timers in Tkinter: after() and the Canvas widget",
+      "concept": "lib_tkinter",
+      "summary": "Build a countdown with window.after instead of sleep, format seconds as mm:ss, update canvas text with itemconfig and cancel a running timer.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_tkinter.buttons_and_commands",
+        "event_driven_programming.event_loop_dispatch",
+        "string_formatting.width_and_alignment"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "after(ms, function, *args) schedules a call and returns at once",
+          "worked_example": "def count_down(count):\n    print(count)\n    if count > 0:\n        window.after(1000, count_down, count - 1)\n\ncount_down(3)   # prints 3, 2, 1, 0 a second apart\nEach call schedules the next one; meanwhile mainloop keeps the window responsive (sleep would freeze it).",
+          "practice": "Predict what is printed and when; choose why time.sleep in a callback freezes the window.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.event_loop_dispatch"
+          ]
+        },
+        {
+          "title": "Showing seconds as mm:ss",
+          "worked_example": "count = 125\nminutes = count // 60\nseconds = count % 60\nprint(f'{minutes}:{seconds:02d}')  # 2:05\n:02d pads with a zero so 5 seconds shows as 05.",
+          "practice": "Convert second counts to mm:ss; fix the display 2:5.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_formatting.width_and_alignment"
+          ]
+        },
+        {
+          "title": "Canvas text that updates: create_text and itemconfig",
+          "worked_example": "canvas = tkinter.Canvas(width=200, height=224)\ntimer_text = canvas.create_text(100, 130, text='00:00', font=('Courier', 35))\ncanvas.pack()\ncanvas.itemconfig(timer_text, text='04:59')\ncreate_text returns an id; itemconfig changes that item. Note tkinter's create_text centres text on (x, y).",
+          "practice": "Fill in the itemconfig call inside count_down.",
+          "formats": [
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_tkinter.buttons_and_commands"
+          ]
+        },
+        {
+          "title": "Cancelling: keep the id from after()",
+          "worked_example": "timer = None\ndef count_down(count):\n    global timer\n    timer = window.after(1000, count_down, count - 1)\n\ndef reset():\n    window.after_cancel(timer)\nafter() returns an id; after_cancel(id) stops the pending call, so the countdown chain ends.",
+          "practice": "Fix a reset button that does not stop the timer; trace what happens if reset is pressed twice.",
+          "formats": [
+            "fix_the_bug",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lib_tkinter.buttons_and_commands"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.width_and_alignment",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_tkinter.buttons_and_commands",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "game_development.board_state_and_turns",
+      "title": "Board games in text: state, moves and turns",
+      "concept": "game_development",
+      "summary": "Represent a board game as a list of lists, check and make moves, detect a win or a draw, and alternate players in a loop (tic-tac-toe).",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "nested_data_structures.rows_columns_diagonals",
+        "return_values.boolean_functions",
+        "while_loops.loop_until_condition",
+        "list_comprehensions.map_each_item"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The board is a grid; a move writes one cell",
+          "worked_example": "board = [[' '] * 3 for _ in range(3)]\nboard[1][2] = 'X'\nfor row in board:\n    print('|'.join(row))\n#  | | \n#  | |X\n#  | | \nBuild rows separately (not [[' '] * 3] * 3) so changing one cell changes one cell.",
+          "practice": "Predict the printed board after moves; fix a board built with * that puts X in every row.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.rows_columns_diagonals",
+            "list_comprehensions.map_each_item"
+          ]
+        },
+        {
+          "title": "A move is legal when it is on the board and the cell is empty",
+          "worked_example": "def legal(board, r, c):\n    return 0 <= r < 3 and 0 <= c < 3 and board[r][c] == ' '\n\nboard = [['X', ' ', ' '], [' '] * 3, [' '] * 3]\nprint(legal(board, 0, 0), legal(board, 0, 1), legal(board, 3, 0))  # False True False\nCheck the range first: and stops early, so board[3][0] is never read.",
+          "practice": "Predict legality for several moves; fix a check that reads the cell before testing the range (IndexError).",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions"
+          ]
+        },
+        {
+          "title": "Win check: three equal, non-empty cells in a line",
+          "worked_example": "def winner(b):\n    lines = b + [[b[0][c], b[1][c], b[2][c]] for c in range(3)]\n    lines += [[b[0][0], b[1][1], b[2][2]], [b[0][2], b[1][1], b[2][0]]]\n    for line in lines:\n        if line[0] != ' ' and line.count(line[0]) == 3:\n            return line[0]\n    return None\n\nprint(winner([['O', 'X', ' '], [' ', 'X', 'O'], [' ', 'X', ' ']]))  # X\nCollect rows, columns and both diagonals, then test each line the same way. An empty line of ' ' must not count.",
+          "practice": "Predict the winner for given boards; fix a check that reports ' ' as the winner.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.rows_columns_diagonals"
+          ]
+        },
+        {
+          "title": "Taking turns until someone wins or the board is full",
+          "worked_example": "player = 'X'\nmoves = [(0, 0), (1, 1), (0, 1), (2, 2), (0, 2)]\nboard = [[' '] * 3 for _ in range(3)]\nfor r, c in moves:\n    board[r][c] = player\n    if winner(board):\n        print(player, 'wins')\n        break\n    player = 'O' if player == 'X' else 'X'\n# X wins\nSwitch players only after checking for a win; a draw is a full board (no ' ' left) with no winner.",
+          "practice": "Trace the board and current player over a move list; write the draw check.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.loop_until_condition"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.rows_columns_diagonals",
+          "weight": 0.6
+        },
+        {
+          "topic": "return_values.boolean_functions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "game_development.grid_movement_and_rules",
+      "title": "Moving on a grid map: walls, boxes and goals",
+      "concept": "game_development",
+      "summary": "Find a player on a map stored as a grid, move by a direction vector, refuse moves into walls, push boxes, and test the win condition (Helsinki's robot-and-boxes game).",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "game_development.board_state_and_turns",
+        "dictionaries.create_and_look_up",
+        "unpacking.unpack_sequences"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Finding the player on the map",
+          "worked_example": "level = ['#####',\n         '#R b#',\n         '#####']\nfor r in range(len(level)):\n    if 'R' in level[r]:\n        pos = (r, level[r].index('R'))\nprint(pos)  # (1, 1)\nThe map is a list of rows; the player's position is (row, column).",
+          "practice": "Predict the position found for small maps.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "game_development.board_state_and_turns"
+          ]
+        },
+        {
+          "title": "Directions as (dr, dc) pairs, and walls that block",
+          "worked_example": "DIRS = {'up': (-1, 0), 'down': (1, 0), 'left': (0, -1), 'right': (0, 1)}\ngrid = [list(row) for row in level]\nr, c = 1, 1\ndr, dc = DIRS['left']\nif grid[r + dr][c + dc] != '#':\n    r, c = r + dr, c + dc\nprint(r, c)  # 1 1: a wall is in the way\nUp is row - 1 because rows count downwards; moves only happen when the target cell is not a wall.",
+          "practice": "Predict the position after a sequence of moves on a given map.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up",
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "Pushing a box: look two cells ahead",
+          "worked_example": "grid = [list('#R b #')]\nr, c, dc = 0, 1, 1\nif grid[r][c + dc] == ' ':\n    c += dc\nprint(c)  # 2\nif grid[r][c + dc] == 'b' and grid[r][c + 2 * dc] == ' ':\n    grid[r][c + 2 * dc], grid[r][c + dc] = 'b', ' '\n    c += dc\nprint(''.join(grid[0]), c)  # #R  b# 3\nA box moves only if the cell beyond it is free; then the player steps into the box's old cell. (The R in the grid is not redrawn here.)",
+          "practice": "Predict whether a push succeeds for given rows; fix a push that lets a box go through a wall.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "game_development.board_state_and_turns"
+          ]
+        },
+        {
+          "title": "Winning: every goal is covered",
+          "worked_example": "goals = [(1, 3), (2, 2)]\nboxes = [(2, 2), (1, 3)]\nwon = True\nfor g in goals:\n    if g not in boxes:\n        won = False\nprint(won)  # True\nKeeping goals and boxes as lists of positions makes the rule a simple flag loop; counting empty goal cells on the map works too.",
+          "practice": "Write the win check; predict it for several box positions.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "game_development.board_state_and_turns"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "game_development.board_state_and_turns",
+          "weight": 0.5
+        },
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.create_and_look_up",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "game_development.game_objects_as_classes",
+      "title": "Organising a real-time game into classes",
+      "concept": "game_development",
+      "summary": "Model each game thing as a class with state and an update method, let a game object own and update a list of them, and spawn and remove objects over time.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "object_oriented_design.collaborating_objects",
+        "graphics_canvas.animation_loop",
+        "list_methods.remove_while_looping",
+        "builtin_functions.sum_max_min"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A game object holds its state and updates itself",
+          "worked_example": "class Ball:\n    def __init__(self, x, y):\n        self.x, self.y = x, y\n        self.dx, self.dy = 3, -2\n\n    def update(self):\n        self.x += self.dx\n        self.y += self.dy\n\nb = Ball(0, 0)\nfor _ in range(3):\n    b.update()\nprint(b.x, b.y)  # 9 -6\nDrawing code then only reads b.x, b.y; snake, paddle, car and asteroid are all built this way.",
+          "practice": "Trace an object's attributes over several updates; add a bounce method.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "object_oriented_design.collaborating_objects"
+          ]
+        },
+        {
+          "title": "A Scoreboard object keeps score and high score",
+          "worked_example": "class Scoreboard:\n    def __init__(self):\n        self.score = 0\n        self.high_score = 0\n\n    def point(self):\n        self.score += 1\n\n    def reset(self):\n        self.high_score = max(self.high_score, self.score)\n        self.score = 0\n\ns = Scoreboard()\ns.point(); s.point(); s.reset(); s.point()\nprint(s.score, s.high_score)  # 1 2\nSplitting score-keeping from movement means each class has one job.",
+          "practice": "Predict score and high score after a sequence of calls; fix a reset that loses the high score.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "object_oriented_design.collaborating_objects"
+          ]
+        },
+        {
+          "title": "One loop updates every object",
+          "worked_example": "balls = [Ball(0, 0), Ball(10, 10)]\nfor frame in range(2):\n    for ball in balls:\n        ball.update()\nfor b in balls:\n    print(b.x, b.y)\n# 6 -4\n# 16 6\nThe game loop does not care what each object is, only that it has update() (and draw()).",
+          "practice": "Predict positions of several objects after n frames.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "object_oriented_design.collaborating_objects"
+          ]
+        },
+        {
+          "title": "Spawning every n frames and removing objects that leave the screen",
+          "worked_example": "cars = []\nfor frame in range(1, 13):\n    if frame % 6 == 0:\n        cars.append(Ball(0, 0))\n    alive = []\n    for car in cars:\n        car.update()\n        if car.x < 20:\n            alive.append(car)\n    cars = alive\nprint(len(cars))  # 1\nBuild a new list of survivors rather than removing from the list you are looping over.",
+          "practice": "Count objects alive after n frames; fix code that removes cars while iterating over the same list.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_while_looping"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "object_oriented_design.collaborating_objects",
+          "weight": 0.6
+        },
+        {
+          "topic": "list_methods.remove_while_looping",
+          "weight": 0.3
+        },
+        {
+          "topic": "graphics_canvas.animation_loop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "helsinki_mooc",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "game_development.lives_levels_and_game_over",
+      "title": "Game state: lives, levels, game over and high scores",
+      "concept": "game_development",
+      "summary": "Track whether the game is playing or over, lose lives, raise the difficulty level by level, and keep a high score in a file between runs.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "game_development.game_objects_as_classes",
+        "file_io.handle_missing_file",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A state flag and lives",
+          "worked_example": "lives = 3\nstate = 'playing'\nfor hit in [True, False, True, True]:\n    if state == 'playing' and hit:\n        lives -= 1\n        if lives == 0:\n            state = 'game over'\nprint(lives, state)  # 0 game over\nEach frame first checks the state; once it is 'game over' the update code no longer runs.",
+          "practice": "Trace lives and state over a sequence of hits.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "game_development.game_objects_as_classes"
+          ]
+        },
+        {
+          "title": "Levels: making the game faster",
+          "worked_example": "move_speed = 0.1\nfor level in range(2, 5):\n    move_speed *= 0.9\nprint(round(move_speed, 4))  # 0.0729\nMultiplying the pause by 0.9 each level speeds the game up without ever reaching zero; adding a fixed step to a car's speed is the other common choice.",
+          "practice": "Compute the speed at a given level; compare multiplying with adding a step.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Remembering the high score in a file",
+          "worked_example": "try:\n    with open('high_score.txt') as f:\n        high = int(f.read())\nexcept FileNotFoundError:\n    high = 0\nscore = 12\nif score > high:\n    with open('high_score.txt', 'w') as f:\n        f.write(str(score))\nThe first run has no file, so start from 0; write only when the record is beaten.",
+          "practice": "Predict the file contents after several games; fix a version that writes an int.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "file_io.handle_missing_file"
+          ]
+        },
+        {
+          "title": "Restart by resetting state, not by making new objects",
+          "worked_example": "class Snake:\n    def __init__(self):\n        self.reset()\n\n    def reset(self):\n        self.body = [(0, 0), (-20, 0), (-40, 0)]\n        self.heading = 0\n\ns = Snake()\ns.body.append((-60, 0))\ns.reset()\nprint(len(s.body))  # 3\nPutting the starting values in reset() and calling it from __init__ keeps both in step; forgetting one attribute in reset is a classic bug.",
+          "practice": "Find the attribute a reset forgets; predict state after reset.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "game_development.game_objects_as_classes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "game_development.game_objects_as_classes",
+          "weight": 0.5
+        },
+        {
+          "topic": "file_io.handle_missing_file",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "game_loop.input_update_draw",
+      "title": "The game loop: input, update, draw, repeat",
+      "concept": "game_loop",
+      "summary": "Structure a real-time game as a loop that handles input, updates state, draws, and waits each frame, schedule things every n frames, and end the loop cleanly.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "graphics_canvas.animation_loop",
+        "event_driven_programming.event_loop_dispatch",
+        "game_development.game_objects_as_classes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Four steps every frame",
+          "worked_example": "running = True\nwhile running:\n    handle_events()   # 1. input\n    update()          # 2. move things, check collisions\n    draw()            # 3. clear and redraw\n    clock.tick(60)    # 4. wait for the next frame\nEvery real-time game, in any library, is this loop; turtle's update()/sleep and pygame's flip()/tick are steps 3-4.",
+          "practice": "Reorder a scrambled game loop; say which step a given line belongs to.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.animation_loop"
+          ]
+        },
+        {
+          "title": "Update changes numbers; draw only shows them",
+          "worked_example": "x = 0\nshown = []\nfor frame in range(3):\n    shown.append(x)   # draw BEFORE update: one frame behind\n    x += 10\nprint(shown)  # [0, 10, 20]\nDrawing before updating shows last frame's state; keep game rules in update so draw can be swapped (text, turtle, pygame).",
+          "practice": "Predict what is shown each frame for both orders; move a rule out of draw into update.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "game_development.game_objects_as_classes"
+          ]
+        },
+        {
+          "title": "Doing something every n frames",
+          "worked_example": "spawned = []\nfor frame in range(1, 61):\n    if frame % 20 == 0:\n        spawned.append(frame)\nprint(spawned)  # [20, 40, 60]\nAt 60 frames per second, frame % 60 == 0 means once a second.",
+          "practice": "Count how many times an action happens in n frames; choose the modulus for a given rate.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.animation_loop"
+          ]
+        },
+        {
+          "title": "Ending the loop: a quit event or game over",
+          "worked_example": "events = [[], ['space'], ['quit'], ['space']]\nframes = 0\nrunning = True\nwhile running:\n    for e in events[frames]:\n        if e == 'quit':\n            running = False\n    frames += 1\nprint(frames)  # 3\nThe frame in which 'quit' arrives still finishes; then the while condition ends the loop.",
+          "practice": "Predict how many frames run; fix a loop that only checks for quit after a sleep that never ends.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.event_loop_dispatch"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphics_canvas.animation_loop",
+          "weight": 0.5
+        },
+        {
+          "topic": "event_driven_programming.event_loop_dispatch",
+          "weight": 0.3
+        },
+        {
+          "topic": "game_development.game_objects_as_classes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "game_loop.frame_rate_and_delta_time",
+      "title": "Frame rate and delta time",
+      "concept": "game_loop",
+      "summary": "Relate frames per second to milliseconds per frame, move objects by speed * dt so speed does not depend on the frame rate, and run timers and cooldowns with dt.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "game_loop.input_update_draw",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "FPS and the time per frame",
+          "worked_example": "fps = 60\nprint(round(1000 / fps, 1))  # 16.7 milliseconds per frame\n# pygame: dt = clock.tick(60) / 1000  -> about 0.0167 seconds\nclock.tick(60) waits so the loop runs at most 60 times a second and returns the milliseconds since the last call.",
+          "practice": "Convert between fps and ms per frame; compute dt in seconds from tick's value.",
+          "formats": [
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "game_loop.input_update_draw"
+          ]
+        },
+        {
+          "title": "Per-frame speed depends on the machine; speed * dt does not",
+          "worked_example": "speed = 300               # pixels per second\nx = 0.0\nfor dt in [0.02, 0.02, 0.01, 0.05]:\n    x += speed * dt\nprint(round(x, 1))  # 30.0: 0.1 s at 300 px/s\nx += 5 every frame moves twice as fast at 120 fps as at 60; scaling by dt ties movement to real time.",
+          "practice": "Compute positions from a list of dt values; choose which program runs at the same speed on a faster computer.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Cooldown timers count down by dt",
+          "worked_example": "COOLDOWN = 0.3\ntimer = 0.0\nshots = 0\nfor frame in range(30):      # space held for 30 frames at dt = 0.02\n    timer -= 0.02\n    if timer <= 0:\n        shots += 1\n        timer = COOLDOWN\nprint(shots)  # 2\nHolding the fire key would otherwise shoot every frame (Asteroids' shot cooldown).",
+          "practice": "Count shots for given cooldowns and durations; fix a timer that is never reset.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "game_loop.input_update_draw"
+          ]
+        },
+        {
+          "title": "Spawning on a timer: accumulate, then subtract",
+          "worked_example": "SPAWN_RATE = 0.8\ntimer = 0.0\nspawned = 0\nfor frame in range(100):     # 2 seconds at dt = 0.02\n    timer += 0.02\n    if timer > SPAWN_RATE:\n        timer -= SPAWN_RATE\n        spawned += 1\nprint(spawned)  # 2\nSubtracting the rate (rather than setting timer = 0) keeps the leftover time, so spawns stay evenly spaced.",
+          "practice": "Predict the spawn count for a duration; trace timer values around a spawn.",
+          "formats": [
+            "numeric",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "game_loop.input_update_draw"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "game_loop.input_update_draw",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "collision_detection.vectors_and_movement",
+      "title": "Vectors: position, velocity and direction",
+      "concept": "collision_detection",
+      "summary": "Treat positions and velocities as 2D vectors, add and scale them (as pygame.Vector2 does), measure distance, and turn an angle into a direction with sin and cos.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "game_loop.frame_rate_and_delta_time",
+        "math_module.functions_and_constants",
+        "dunder_methods.operator_overloading"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Position plus velocity, component by component",
+          "worked_example": "pos = (100, 50)\nvel = (3, -4)\npos = (pos[0] + vel[0], pos[1] + vel[1])\nprint(pos)  # (103, 46)\nA vector is just an (x, y) pair; moving means adding the velocity to the position.",
+          "practice": "Add and subtract vectors; find the velocity that moves between two points in one step.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "game_loop.frame_rate_and_delta_time"
+          ]
+        },
+        {
+          "title": "A vector class with + and *: what pygame.Vector2 gives you",
+          "worked_example": "class Vec:\n    def __init__(self, x, y):\n        self.x, self.y = x, y\n    def __add__(self, o):\n        return Vec(self.x + o.x, self.y + o.y)\n    def __mul__(self, k):\n        return Vec(self.x * k, self.y * k)\n\npos = Vec(0, 0) + Vec(200, 100) * 0.5\nprint(pos.x, pos.y)  # 100.0 50.0\npygame.Vector2 works the same: position += velocity * dt.",
+          "practice": "Predict results of vector expressions; write position += velocity * dt with a given dt.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dunder_methods.operator_overloading"
+          ]
+        },
+        {
+          "title": "Length and distance",
+          "worked_example": "import math\nprint(math.hypot(3, 4))              # 5.0  length of (3, 4)\nprint(math.dist((1, 1), (4, 5)))     # 5.0  distance between points\nDistance is the length of the difference vector; turtle's t.distance(other) and Vector2.distance_to compute the same thing.",
+          "practice": "Compute distances between points; normalise a vector by dividing by its length.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "math_module.functions_and_constants"
+          ]
+        },
+        {
+          "title": "From an angle to a direction: cos and sin",
+          "worked_example": "import math\nangle = math.radians(90)\nprint(round(math.cos(angle), 3), round(math.sin(angle), 3))  # 0.0 1.0\nspeed = 10\nvx, vy = speed * math.cos(angle), speed * math.sin(angle)\nTrig functions take radians. On a screen y grows downwards, so 'up' needs a negative vy; Vector2(0, 1).rotate(angle) does this in pygame.",
+          "practice": "Predict the direction vector for 0, 90, 180 degrees; fix code that passes degrees to math.cos.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "math_module.functions_and_constants"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "math_module.functions_and_constants",
+          "weight": 0.4
+        },
+        {
+          "topic": "dunder_methods.operator_overloading",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "collision_detection.circle_collisions",
+      "title": "Circle collisions: distance against radii",
+      "concept": "collision_detection",
+      "summary": "Decide whether two circles touch by comparing their centre distance with the sum of their radii, use the same test for turtle's distance() checks, and check every pair of objects without repeats.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "collision_detection.vectors_and_movement",
+        "return_values.boolean_functions",
+        "nested_loops.inner_depends_on_outer"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two circles collide when distance <= r1 + r2",
+          "worked_example": "import math\ndef collides(c1, r1, c2, r2):\n    return math.dist(c1, c2) <= r1 + r2\n\nprint(collides((0, 0), 10, (15, 0), 5))  # True: just touching\nprint(collides((0, 0), 10, (16, 0), 5))  # False\nAsteroids gives every object a radius and uses exactly this test.",
+          "practice": "Predict collisions for pairs of circles; fill in the condition.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "collision_detection.vectors_and_movement",
+            "return_values.boolean_functions"
+          ]
+        },
+        {
+          "title": "The turtle-game version: distance below a threshold",
+          "worked_example": "head, food = (100, 40), (110, 48)\nimport math\nif math.dist(head, food) < 15:\n    print('eat!')  # eat!\nsnake.head.distance(food) < 15 in 100 Days' Snake is a circle test where the threshold is the two radii added together.",
+          "practice": "Choose a sensible threshold from object sizes; predict which foods get eaten.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "collision_detection.vectors_and_movement"
+          ]
+        },
+        {
+          "title": "Skipping the square root",
+          "worked_example": "dx, dy = 12, 9\nr_sum = 15\nprint(dx * dx + dy * dy <= r_sum * r_sum)  # True  (225 <= 225)\nComparing squared distance with the squared radius sum gives the same answer without sqrt.",
+          "practice": "Rewrite a distance test without sqrt; fix a version that squares only one side.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "collision_detection.vectors_and_movement"
+          ]
+        },
+        {
+          "title": "Checking every pair once",
+          "worked_example": "import math\nballs = [(0, 0), (8, 0), (30, 0)]\nhits = []\nfor i in range(len(balls)):\n    for j in range(i + 1, len(balls)):\n        if math.dist(balls[i], balls[j]) <= 10:\n            hits.append((i, j))\nprint(hits)  # [(0, 1)]\nStarting j at i + 1 skips comparing an object with itself and reporting each pair twice.",
+          "practice": "Count pairs checked for n objects; fix a loop that reports every object colliding with itself.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_loops.inner_depends_on_outer"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "collision_detection.vectors_and_movement",
+          "weight": 0.5
+        },
+        {
+          "topic": "return_values.boolean_functions",
+          "weight": 0.3
+        },
+        {
+          "topic": "nested_loops.inner_depends_on_outer",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "collision_detection.rectangles_and_responses",
+      "title": "Rectangle collisions and what happens after a hit",
+      "concept": "collision_detection",
+      "summary": "Test whether a point is inside a rectangle and whether two rectangles overlap, bounce without sticking, and remove hit objects safely.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "collision_detection.circle_collisions",
+        "conditionals.compound_conditions",
+        "list_methods.remove_while_looping"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Is a point inside a rectangle? (clicks on buttons)",
+          "worked_example": "def inside(px, py, left, top, w, h):\n    return left <= px <= left + w and top <= py <= top + h\n\nprint(inside(30, 40, 20, 20, 50, 30))  # True\nprint(inside(80, 40, 20, 20, 50, 30))  # False\nFour comparisons, one per edge; chained comparisons keep it readable.",
+          "practice": "Predict hits for several clicks; fix a test that mixes up width and right edge.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "conditionals.compound_conditions"
+          ]
+        },
+        {
+          "title": "Two rectangles overlap unless one is entirely to one side",
+          "worked_example": "def overlap(a, b):  # (left, top, right, bottom)\n    return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]\n\nprint(overlap((0, 0, 10, 10), (5, 5, 15, 15)))   # True\nprint(overlap((0, 0, 10, 10), (10, 0, 20, 10)))  # False: edges only touch\npygame.Rect.colliderect does the same test; < vs <= decides whether touching edges count.",
+          "practice": "Predict overlap for pairs of boxes; choose < or <= for a given rule.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.compound_conditions"
+          ]
+        },
+        {
+          "title": "Bouncing without sticking",
+          "worked_example": "ball_y, dy = 95, 4\npaddle_top = 98\nfor frame in range(3):\n    ball_y += dy\n    if ball_y >= paddle_top and dy > 0:\n        dy = -dy\n    print(ball_y, dy)\n# 99 -4\n# 95 -4\n# 91 -4\nWithout 'and dy > 0' the ball, still overlapping next frame, flips back and jitters inside the paddle.",
+          "practice": "Trace a bounce; fix the sticky-paddle bug.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "collision_detection.circle_collisions"
+          ]
+        },
+        {
+          "title": "Removing what was hit",
+          "worked_example": "bricks = [(0, 0), (20, 0), (40, 0)]\nhit = [(20, 0)]\nsurvivors = []\nfor b in bricks:\n    if b not in hit:\n        survivors.append(b)\nbricks = survivors\nprint(bricks)  # [(0, 0), (40, 0)]\nCollect hits during the check and remove afterwards (or build a survivor list): removing while looping skips objects.",
+          "practice": "Fix a breakout loop that removes bricks inside the for loop; predict the remaining objects.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_while_looping"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "conditionals.compound_conditions",
+          "weight": 0.4
+        },
+        {
+          "topic": "list_methods.remove_while_looping",
+          "weight": 0.3
+        },
+        {
+          "topic": "collision_detection.circle_collisions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "100_days_of_code",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "lib_pygame.window_and_drawing",
+      "title": "pygame: opening a window and drawing",
+      "concept": "lib_pygame",
+      "summary": "Initialise pygame, open a window, fill it, draw rectangles and circles, blit images, and show the frame with display.flip().",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.find_and_install",
+        "graphics_canvas.colors_and_random_colors",
+        "game_loop.input_update_draw"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A window that shows a frame",
+          "worked_example": "import pygame\npygame.init()\nscreen = pygame.display.set_mode((640, 480))\nscreen.fill((0, 0, 0))\npygame.display.flip()\nSize is one tuple; nothing appears until flip() copies the finished frame to the window.",
+          "practice": "Reorder the setup lines; choose why a program shows a blank window (no flip).",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": "Rectangles are (x, y, width, height); circles take a centre",
+          "worked_example": "pygame.draw.rect(screen, (255, 0, 0), (50, 20, 30, 30))\npygame.draw.circle(screen, (0, 0, 255), (200, 150), 25)\nUnlike Canvas corners, pygame rectangles give width and height; circles are centre and radius.",
+          "practice": "Convert between corner boxes and (x, y, w, h); write the call for a described shape.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.colors_and_random_colors"
+          ]
+        },
+        {
+          "title": "Images: load once, blit every frame",
+          "worked_example": "robot = pygame.image.load('robot.png')\nx = 640 - robot.get_width()\ny = 480 - robot.get_height()\nscreen.blit(robot, (x, y))   # bottom-right corner\nblit draws the image with its top-left corner at (x, y); load outside the loop, not every frame.",
+          "practice": "Compute positions to place an image in a corner or the centre; fix a loop that reloads the image each frame.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.colors_and_random_colors"
+          ]
+        },
+        {
+          "title": "Each frame: fill, draw, flip",
+          "worked_example": "while True:\n    # (events: next topic)\n    screen.fill((0, 0, 0))\n    screen.blit(robot, (x, y))\n    pygame.display.flip()\n    x += 1\nFilling first erases the previous frame; drawing before fill hides everything, and skipping fill leaves a trail.",
+          "practice": "Predict what appears for different orders of fill/blit/flip.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "game_loop.input_update_draw"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "game_loop.input_update_draw",
+          "weight": 0.4
+        },
+        {
+          "topic": "graphics_canvas.colors_and_random_colors",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "lib_pygame.events_and_keys",
+      "title": "pygame events: quitting, keys and the mouse",
+      "concept": "lib_pygame",
+      "summary": "Read pygame's event queue each frame to handle QUIT, single key presses, keys held down and mouse clicks.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_pygame.window_and_drawing",
+        "event_driven_programming.handler_arguments_and_state"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The event loop inside the game loop, and QUIT",
+          "worked_example": "for event in pygame.event.get():\n    if event.type == pygame.QUIT:\n        exit()\nWithout reading events every frame the window stops responding and cannot be closed.",
+          "practice": "Fill in the QUIT check; choose why a window freezes.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.handler_arguments_and_state"
+          ]
+        },
+        {
+          "title": "KEYDOWN: one move per press",
+          "worked_example": "if event.type == pygame.KEYDOWN:\n    if event.key == pygame.K_LEFT:\n        x -= 10\n    if event.key == pygame.K_RIGHT:\n        x += 10\nA held key produces one KEYDOWN, so the robot moves once per press.",
+          "practice": "Predict x for a sequence of key events; add WASD keys for a second player.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_pygame.window_and_drawing"
+          ]
+        },
+        {
+          "title": "Held keys: flags or key.get_pressed()",
+          "worked_example": "keys = pygame.key.get_pressed()\nif keys[pygame.K_LEFT]:\n    x -= 2   # every frame the key is down\nFor smooth movement check key state each frame (or set a flag on KEYDOWN and clear it on KEYUP).",
+          "practice": "Predict x after n frames with a key held; choose KEYDOWN vs get_pressed for a task.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pygame.window_and_drawing"
+          ]
+        },
+        {
+          "title": "Mouse events carry a position",
+          "worked_example": "if event.type == pygame.MOUSEBUTTONDOWN:\n    mx, my = event.pos\n    x = mx - robot.get_width() / 2\n    y = my - robot.get_height() / 2\nevent.pos is (x, y); subtracting half the image size centres the robot on the click.",
+          "practice": "Compute where an image is drawn for a given click; write a MOUSEMOTION handler that follows the mouse.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "event_driven_programming.handler_arguments_and_state"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "event_driven_programming.handler_arguments_and_state",
+          "weight": 0.4
+        },
+        {
+          "topic": "lib_pygame.window_and_drawing",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "lib_pygame.clock_sprites_and_groups",
+      "title": "pygame structure: Clock, sprites and groups",
+      "concept": "lib_pygame",
+      "summary": "Get dt from pygame.time.Clock, write game objects as pygame.sprite.Sprite subclasses, update and draw them through groups, and remove them with kill().",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "lib_pygame.events_and_keys",
+        "game_loop.frame_rate_and_delta_time",
+        "inheritance.super_init"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Clock.tick gives dt",
+          "worked_example": "clock = pygame.time.Clock()\ndt = 0\nwhile True:\n    ...\n    pygame.display.flip()\n    dt = clock.tick(60) / 1000\ntick(60) caps the loop at 60 fps and returns milliseconds since the last tick; divide by 1000 for seconds.",
+          "practice": "Fill in the dt line; predict dt for a given tick value.",
+          "formats": [
+            "fill_in_blank",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "game_loop.frame_rate_and_delta_time"
+          ]
+        },
+        {
+          "title": "Game objects as Sprite subclasses",
+          "worked_example": "class Player(pygame.sprite.Sprite):\n    def __init__(self, x, y):\n        super().__init__()\n        self.position = pygame.Vector2(x, y)\n\n    def update(self, dt):\n        self.position += pygame.Vector2(0, -1) * 200 * dt\nSprite provides group membership; you add position, update and draw.",
+          "practice": "Fix a subclass missing super().__init__(); predict position after an update with a given dt.",
+          "formats": [
+            "fix_the_bug",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "inheritance.super_init"
+          ]
+        },
+        {
+          "title": "Groups update and draw many objects at once",
+          "worked_example": "updatable = pygame.sprite.Group()\ndrawable = pygame.sprite.Group()\nplayer = Player(320, 240)\nupdatable.add(player)\ndrawable.add(player)\n\nupdatable.update(dt)          # calls update(dt) on each member\nfor obj in drawable:\n    obj.draw(screen)\nAn object can be in several groups; Asteroids sets Player.containers = (updatable, drawable) so new objects add themselves.",
+          "practice": "Predict which objects are updated or drawn given group memberships.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pygame.events_and_keys"
+          ]
+        },
+        {
+          "title": "kill() removes a sprite from every group",
+          "worked_example": "for asteroid in asteroids:\n    for shot in shots:\n        if asteroid.collides_with(shot):\n            shot.kill()\n            asteroid.kill()\nkill() is safe here because groups handle removal; the object simply stops being updated and drawn.",
+          "practice": "Predict group sizes after collisions; choose kill() vs list.remove for sprites.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pygame.events_and_keys"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "game_loop.frame_rate_and_delta_time",
+          "weight": 0.4
+        },
+        {
+          "topic": "inheritance.super_init",
+          "weight": 0.3
+        },
+        {
+          "topic": "lib_pygame.events_and_keys",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "image_processing.pixels_as_tuples",
+      "title": "Images as grids of RGB pixels",
+      "concept": "image_processing",
+      "summary": "Treat an image as a grid of (r, g, b) tuples and compute new images: greyscale, negative and brightness changes clamped to 0-255.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "nested_data_structures.grid_index_and_loop",
+        "graphics_canvas.colors_and_random_colors",
+        "list_methods.append_build",
+        "unpacking.unpack_in_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A pixel is an (r, g, b) tuple at image[y][x]",
+          "worked_example": "image = [[(255, 0, 0), (0, 0, 0)],\n         [(0, 255, 0), (255, 255, 255)]]\nheight, width = len(image), len(image[0])\nprint(width, height, image[1][0])  # 2 2 (0, 255, 0)\nRows are y (top to bottom), positions in a row are x.",
+          "practice": "Read pixels by (x, y); give width and height of a grid.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Greyscale: average the three channels",
+          "worked_example": "def grey(p):\n    v = (p[0] + p[1] + p[2]) // 3\n    return (v, v, v)\n\nprint(grey((200, 100, 30)))  # (110, 110, 110)\nEqual channels make grey; weighted averages (0.299r + 0.587g + 0.114b) look more natural.",
+          "practice": "Compute grey values for pixels; write the weighted version with round().",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.colors_and_random_colors"
+          ]
+        },
+        {
+          "title": "A filter builds a new grid pixel by pixel",
+          "worked_example": "image = [[(255, 0, 0), (0, 0, 0)], [(0, 255, 0), (255, 255, 255)]]\nnegative = []\nfor row in image:\n    new_row = []\n    for r, g, b in row:\n        new_row.append((255 - r, 255 - g, 255 - b))\n    negative.append(new_row)\nprint(negative[0])  # [(0, 255, 255), (255, 255, 255)]\nTuples cannot be changed, so build new pixels; the loop shape is the same for every per-pixel filter.",
+          "practice": "Predict the result of a filter on a small grid; reorder the lines of a filter.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build",
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "Clamping: keep channels between 0 and 255",
+          "worked_example": "def clamp(v):\n    return min(255, max(0, v))\n\ndef brighten(p, amount):\n    r, g, b = p\n    return (clamp(r + amount), clamp(g + amount), clamp(b + amount))\n\nprint(brighten((250, 100, 3), 10))   # (255, 110, 13)\nprint(brighten((250, 100, 3), -10))  # (240, 90, 0)\nValues outside 0-255 are invalid colours (Pillow raises or wraps them).",
+          "practice": "Predict clamped pixels; fix a brightness filter that produces 265.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.colors_and_random_colors"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.grid_index_and_loop",
+          "weight": 0.6
+        },
+        {
+          "topic": "graphics_canvas.colors_and_random_colors",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "image_processing.filters_and_transforms",
+      "title": "Colour-matrix filters, flips and blurs",
+      "concept": "image_processing",
+      "summary": "Apply a 3x3 colour matrix to every pixel (as in colour-blindness simulation), flip and rotate images with slicing and transposing, and blur by averaging neighbours with edge handling.",
+      "minutes": 19,
+      "core": false,
+      "prerequisites": [
+        "image_processing.pixels_as_tuples",
+        "nested_data_structures.rows_columns_diagonals",
+        "list_slicing.slice_lists",
+        "list_comprehensions.nested_comprehensions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A colour matrix mixes the channels",
+          "worked_example": "M = [[0.567, 0.433, 0],\n     [0.558, 0.442, 0],\n     [0, 0.242, 0.758]]\nr, g, b = 200, 100, 50\nnew = []\nfor i in range(3):\n    new.append(round(M[i][0] * r + M[i][1] * g + M[i][2] * b))\nprint(new)  # [157, 156, 62]\nEach new channel is a weighted sum of the old r, g, b (MIT's colour-blindness filters).",
+          "practice": "Compute one filtered pixel by hand; write the per-pixel function.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "image_processing.pixels_as_tuples"
+          ]
+        },
+        {
+          "title": "Flips with slicing",
+          "worked_example": "image = [[1, 2, 3],\n         [4, 5, 6]]\nmirror = [row[::-1] for row in image]\nupside_down = image[::-1]\nprint(mirror)       # [[3, 2, 1], [6, 5, 4]]\nprint(upside_down)  # [[4, 5, 6], [1, 2, 3]]\nNumbers stand in for pixels; reversing each row mirrors left-right, reversing the list of rows flips top-bottom.",
+          "practice": "Predict flipped grids; choose the expression for a given flip.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "Rotating a quarter turn: transpose, then mirror",
+          "worked_example": "image = [[1, 2, 3],\n         [4, 5, 6]]\nturned = []\nfor c in range(len(image[0])):\n    col = [row[c] for row in image]\n    turned.append(col[::-1])\nprint(turned)  # [[4, 1], [5, 2], [6, 3]]\nEach column, read bottom to top, becomes a row: a clockwise quarter turn, and width and height swap.",
+          "practice": "Predict the rotated grid; fix a version that rotates the wrong way.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.rows_columns_diagonals",
+            "list_comprehensions.nested_comprehensions"
+          ]
+        },
+        {
+          "title": "Blur: average a pixel with its neighbours",
+          "worked_example": "grid = [[0, 0, 0],\n        [0, 90, 0],\n        [0, 0, 0]]\ndef blur_at(g, y, x):\n    vals = [g[j][i] for j in range(y - 1, y + 2) for i in range(x - 1, x + 2)\n            if 0 <= j < len(g) and 0 <= i < len(g[0])]\n    return sum(vals) // len(vals)\nprint(blur_at(grid, 1, 1), blur_at(grid, 0, 0))  # 10 22\nEdge pixels have fewer neighbours, so divide by how many were actually inside the image.",
+          "practice": "Compute blurred values at centre, edge and corner; fix a blur that crashes or wraps at the edges.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "image_processing.pixels_as_tuples",
+            "list_comprehensions.nested_comprehensions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "image_processing.pixels_as_tuples",
+          "weight": 0.6
+        },
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.2
+        },
+        {
+          "topic": "nested_data_structures.rows_columns_diagonals",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "image_processing.hidden_messages_in_bits",
+      "title": "Hiding messages in the lowest bits of pixels",
+      "concept": "image_processing",
+      "summary": "Read and set the least significant bit of a channel, reveal a hidden black-and-white image, and hide and recover text one bit per pixel (steganography).",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "image_processing.pixels_as_tuples",
+        "binary_bitwise.decimal_to_binary_loop",
+        "unicode_encoding.ord_and_chr",
+        "list_comprehensions.filter_with_if"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The lowest bit barely changes a colour",
+          "worked_example": "v = 182\nprint(v % 2)            # 0: the lowest bit\nprint(v - v % 2 + 1)    # 183: lowest bit set to 1\nChanging the last bit changes the value by at most 1, which no eye can see.",
+          "practice": "Read the lowest bit of several values; set it to 0 or 1.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "binary_bitwise.decimal_to_binary_loop"
+          ]
+        },
+        {
+          "title": "Revealing a hidden black-and-white image",
+          "worked_example": "row = [182, 37, 200, 91]\nrevealed = [255 if v % 2 else 0 for v in row]\nprint(revealed)  # [0, 255, 0, 255]\nScale each lowest bit up to full black or white and the hidden picture appears (MIT problem set 5).",
+          "practice": "Reveal small grids; fix a version that keeps the original values.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "image_processing.pixels_as_tuples",
+            "list_comprehensions.filter_with_if"
+          ]
+        },
+        {
+          "title": "Hiding text: one bit per pixel",
+          "worked_example": "bits = format(ord('H'), '08b')\nprint(bits)  # 01001000\npixels = [100, 101, 102, 103, 104, 105, 106, 107]\nhidden = []\nfor i in range(8):\n    hidden.append(pixels[i] - pixels[i] % 2 + int(bits[i]))\nprint(hidden)  # [100, 101, 102, 102, 105, 104, 106, 106]\nEach pixel's lowest bit now holds one bit of the letter; no value moved by more than 1.",
+          "practice": "Hide a letter in given pixels; predict the changed values.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.ord_and_chr"
+          ]
+        },
+        {
+          "title": "Recovering the text",
+          "worked_example": "hidden = [100, 101, 102, 102, 105, 104, 106, 106]\nbits = ''\nfor p in hidden:\n    bits += str(p % 2)\nprint(bits, chr(int(bits, 2)))  # 01001000 H\nRead 8 lowest bits, turn them into a number with int(bits, 2), then a character with chr.",
+          "practice": "Decode letters from pixel lists; fix a decoder that reads the bits in the wrong order.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.ord_and_chr",
+            "binary_bitwise.decimal_to_binary_loop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "image_processing.pixels_as_tuples",
+          "weight": 0.4
+        },
+        {
+          "topic": "binary_bitwise.decimal_to_binary_loop",
+          "weight": 0.4
+        },
+        {
+          "topic": "unicode_encoding.ord_and_chr",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lib_pillow.open_resize_save",
+      "title": "Opening, resizing and saving images with Pillow",
+      "concept": "lib_pillow",
+      "summary": "Open an image file with Pillow, read its size, mode and format, make resized, rotated and cropped copies, and save in another format.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.find_and_install",
+        "graphics_canvas.screen_coordinates",
+        "file_io.encodings_and_binary"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Open and inspect",
+          "worked_example": "from PIL import Image\nimg = Image.open('cat.jpg')\nprint(img.size, img.mode, img.format)  # e.g. (640, 480) RGB JPEG\nwidth, height = img.size\nsize is (width, height); install with pip install pillow but import PIL.",
+          "practice": "Predict values read from size; choose the correct import line.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": "Most methods return a new image",
+          "worked_example": "small = img.resize((320, 240))\nturned = img.rotate(90)\nface = img.crop((100, 50, 300, 250))   # (left, top, right, bottom)\nimg itself is unchanged; img.resize(...) on its own line does nothing useful. crop uses a bounding box like a canvas.",
+          "practice": "Fix code that discards the result of resize; give the crop box for a described region.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        },
+        {
+          "title": "Keeping the aspect ratio",
+          "worked_example": "w, h = 640, 480\nnew_w = 200\nnew_h = round(h * new_w / w)\nprint(new_w, new_h)  # 200 150\nScale both sides by the same factor; img.thumbnail((200, 200)) does this in place.",
+          "practice": "Compute new sizes that keep the ratio.",
+          "formats": [
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "graphics_canvas.screen_coordinates"
+          ]
+        },
+        {
+          "title": "Saving: the extension picks the format",
+          "worked_example": "img.save('cat.png')\nlogo = Image.open('logo.png')       # mode RGBA\nlogo.convert('RGB').save('logo.jpg')\nJPEG has no transparency: saving an RGBA image as .jpg raises OSError: cannot write mode RGBA as JPEG.",
+          "practice": "Fix the OSError; check that input and output extensions match (CS50 P-Shirt).",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "file_io.encodings_and_binary"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "graphics_canvas.screen_coordinates",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "lib_pillow.pixel_data",
+      "title": "Reading and writing pixels with Pillow",
+      "concept": "lib_pillow",
+      "summary": "Read pixels with getpixel and getdata, create images with Image.new, write pixels with putpixel and putdata, and run a per-pixel filter on a real image.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pillow.open_resize_save",
+        "image_processing.pixels_as_tuples"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "getpixel((x, y)) and putpixel",
+          "worked_example": "img = Image.new('RGB', (4, 3), (255, 255, 255))\nimg.putpixel((3, 0), (255, 0, 0))\nprint(img.getpixel((3, 0)))  # (255, 0, 0)\nPillow takes (x, y), the opposite order from grid[y][x].",
+          "practice": "Translate grid indexes to getpixel coordinates; fix a swapped (y, x).",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "image_processing.pixels_as_tuples"
+          ]
+        },
+        {
+          "title": "Mode decides what a pixel is",
+          "worked_example": "grey = img.convert('L')\nprint(grey.getpixel((3, 0)))  # 76: one number, not a tuple\n'RGB' pixels are 3-tuples, 'RGBA' 4-tuples, 'L' single brightness values.",
+          "practice": "Predict the type of getpixel's result for each mode.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pillow.open_resize_save"
+          ]
+        },
+        {
+          "title": "getdata: all pixels as one flat list",
+          "worked_example": "width = 4\nx, y = 1, 2\nprint(y * width + x)  # 9: index of pixel (1, 2) in list(img.getdata())\nPixels come row by row, so pixel (x, y) is at index y * width + x.",
+          "practice": "Compute flat indexes; split a flat list back into rows.",
+          "formats": [
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "image_processing.pixels_as_tuples"
+          ]
+        },
+        {
+          "title": "A filter on a real image",
+          "worked_example": "pixels = list(img.getdata())\nnew_pixels = []\nfor r, g, b in pixels:\n    new_pixels.append((255 - r, 255 - g, 255 - b))\nout = Image.new('RGB', img.size)\nout.putdata(new_pixels)\nout.save('negative.png')\nRead, transform each tuple, write into a new image of the same size and mode.",
+          "practice": "Reorder the lines of a filter program; adapt it to a greyscale filter.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "image_processing.pixels_as_tuples"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "image_processing.pixels_as_tuples",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_pillow.open_resize_save",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pillow.combine_images",
+      "title": "Combining images: paste, fit, text and animated GIFs",
+      "concept": "lib_pillow",
+      "summary": "Paste one image onto another with a transparency mask, fit a photo to an exact size, draw text such as a watermark, and save several frames as an animated GIF.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_pillow.open_resize_save",
+        "list_slicing.slice_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "paste changes the image in place; the mask keeps transparency",
+          "worked_example": "photo = Image.open('before.jpg')\nshirt = Image.open('shirt.png')       # RGBA with transparent areas\nphoto.paste(shirt, (0, 0), shirt)\nphoto.save('after.jpg')\nUnlike resize, paste returns None and modifies photo; the third argument uses shirt's alpha as a mask.",
+          "practice": "Fix x = photo.paste(...); choose what happens without the mask (black boxes around the shirt).",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pillow.open_resize_save"
+          ]
+        },
+        {
+          "title": "ImageOps.fit crops and resizes to an exact size",
+          "worked_example": "from PIL import ImageOps\nphoto = ImageOps.fit(photo, shirt.size)\nfit keeps the aspect ratio by cropping the edges, unlike resize which stretches.",
+          "practice": "Choose fit vs resize for a task; predict the output size.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pillow.open_resize_save"
+          ]
+        },
+        {
+          "title": "Drawing text: a watermark in the corner",
+          "worked_example": "from PIL import ImageDraw\ndraw = ImageDraw.Draw(img)\nw, h = img.size\ndraw.text((w - 120, h - 30), '(c) Ana', fill=(255, 255, 255))\nThe position is the text's top-left corner, so subtract room for the text from the width and height.",
+          "practice": "Compute the position for text in a given corner.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_pillow.open_resize_save"
+          ]
+        },
+        {
+          "title": "Animated GIFs from a list of frames",
+          "worked_example": "frames = [Image.open('cat1.gif'), Image.open('cat2.gif')]\nframes[0].save('cat.gif', save_all=True, append_images=frames[1:], duration=200, loop=0)\nThe first frame saves the rest with it: frames[1:] avoids repeating frame 0; loop=0 repeats forever.",
+          "practice": "Fill in append_images; predict the number of frames and total duration.",
+          "formats": [
+            "fill_in_blank",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pillow.open_resize_save",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_pyfiglet.fun_output_libraries",
+      "title": "Fun output libraries: cowsay, emoji and pyfiglet",
+      "concept": "lib_pyfiglet",
+      "summary": "Install and use three small libraries from their docs: cowsay's talking animals, emoji's :codes:, and pyfiglet's ASCII-art fonts chosen from the command line.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.learn_from_docs",
+        "command_line_args.validate_arguments",
+        "random_module.choice_shuffle_sample"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "cowsay: a function that prints for you",
+          "worked_example": "import cowsay\ncowsay.cow('Hello, world')\ncowsay.trex('Hello, world')\nEach character is a function that prints the art itself (it returns None, so print(cowsay.cow(...)) adds a stray None).",
+          "practice": "Predict what print(cowsay.cow('hi')) shows at the end; choose the call for a given character.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "emoji: codes in, emoji out",
+          "worked_example": "import emoji\nprint(emoji.emojize(':thumbs_up: Done'))                  # 👍 Done\nprint(emoji.emojize(':thumbsup:', language='alias'))      # 👍\nprint(emoji.emojize(':not_a_code:'))                     # :not_a_code:\nUnknown codes are left unchanged rather than raising an error; language='alias' accepts GitHub-style short names.",
+          "practice": "Predict emojize output for known, alias and unknown codes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "pyfiglet: render text in a font",
+          "worked_example": "from pyfiglet import Figlet\nfiglet = Figlet()\nfiglet.setFont(font='slant')\nprint(figlet.renderText('Hi'))\nrenderText returns a multi-line string; getFonts() lists the font names.",
+          "practice": "Fill in the lines that render text in a named font.",
+          "formats": [
+            "fill_in_blank",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "Choosing the font from the command line",
+          "worked_example": "fonts = figlet.getFonts()\nif len(sys.argv) == 1:\n    font = random.choice(fonts)\nelif len(sys.argv) == 3 and sys.argv[1] in ('-f', '--font') and sys.argv[2] in fonts:\n    font = sys.argv[2]\nelse:\n    sys.exit('Invalid usage')\nNo arguments means a random font; otherwise the flag and the font name must both be valid (CS50P 'Frank, Ian and Glen's Letters').",
+          "practice": "Predict the outcome for several argv lists; fix a check that accepts an unknown font.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "command_line_args.validate_arguments"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "third_party_packages.learn_from_docs",
+          "weight": 0.5
+        },
+        {
+          "topic": "command_line_args.validate_arguments",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_inflect.plurals_and_lists",
+      "title": "Natural-sounding text with inflect",
+      "concept": "lib_inflect",
+      "summary": "Use inflect to pluralise words, choose a or an, join a list into an English phrase, and spell numbers out in words.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.learn_from_docs",
+        "string_methods.join_pieces"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Plurals and a/an",
+          "worked_example": "import inflect\np = inflect.engine()\nprint(p.plural('goose'))       # geese\nprint(p.plural('cat', 1))      # cat\nprint(p.a('apple'))            # an apple\nPassing a count gives the singular for 1; an engine object holds all the methods.",
+          "practice": "Predict plural/a results; write a message like '3 geese' that is correct for any count.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "Joining a list the English way",
+          "worked_example": "names = ['Liesl', 'Friedrich', 'Louisa']\nprint(p.join(names))           # Liesl, Friedrich, and Louisa\nprint(', '.join(names))        # Liesl, Friedrich, Louisa\nstr.join cannot add the final 'and'; p.join handles 1, 2 and many items (CS50P 'Adieu, Adieu').",
+          "practice": "Predict p.join for lists of 1, 2 and 3 names.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.join_pieces"
+          ]
+        },
+        {
+          "title": "Numbers in words",
+          "worked_example": "print(p.number_to_words(525600))\n# five hundred and twenty-five thousand, six hundred\nprint(p.number_to_words(525600, andword=''))\n# five hundred twenty-five thousand, six hundred\nOptions adjust the style; capitalize() the result for the start of a sentence (CS50P 'Seasons of Love').",
+          "practice": "Choose the call that produces a required phrasing.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "third_party_packages.learn_from_docs",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_tabulate.print_tables",
+      "title": "Printing tables with tabulate",
+      "concept": "lib_tabulate",
+      "summary": "Turn a list of rows (or rows read from a CSV file) into an aligned text table with headers and a chosen table format.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.learn_from_docs",
+        "csv_files.read_with_csv_reader"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Rows and headers",
+          "worked_example": "from tabulate import tabulate\nrows = [['Cheese', 13.5], ['Pepperoni', 15.0]]\nprint(tabulate(rows, headers=['Pizza', 'Price']))\n# Pizza        Price\n# ---------  -------\n# Cheese        13.5\n# Pepperoni     15\nColumns are sized to fit; numbers are right-aligned on the decimal point.",
+          "practice": "Predict the header line and column order; fill in the headers argument.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "Table formats with tablefmt",
+          "worked_example": "print(tabulate(rows, headers=['Pizza', 'Price'], tablefmt='grid'))\n'grid' draws +---+ borders; 'github' gives a Markdown table.",
+          "practice": "Match tablefmt values to sample outputs.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "Straight from a CSV file",
+          "worked_example": "import csv\nwith open('sicilian.csv') as f:\n    rows = list(csv.reader(f))\nprint(tabulate(rows[1:], headers=rows[0], tablefmt='grid'))\nThe first CSV row is the header (headers='firstrow' does the same); a DictReader's rows work with headers='keys'.",
+          "practice": "Fix a table that prints the header row as data; complete a CS50P 'Pizza Py' program.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "csv_files.read_with_csv_reader"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "csv_files.read_with_csv_reader",
+          "weight": 0.4
+        },
+        {
+          "topic": "third_party_packages.learn_from_docs",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_fpdf.create_pdf",
+      "title": "Making a PDF with fpdf2",
+      "concept": "lib_fpdf",
+      "summary": "Create a PDF page with fpdf2: add a page, set a font, write centred text cells, place an image, and add a header by overriding a method in a subclass.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.learn_from_docs",
+        "inheritance.override_methods",
+        "parameters_arguments.keyword_arguments"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Page, font, text, output",
+          "worked_example": "from fpdf import FPDF\npdf = FPDF()\npdf.add_page()\npdf.set_font('helvetica', size=24)\npdf.cell(text='Hello')\npdf.output('hello.pdf')\nNothing is written until output(); text before add_page() raises an error.",
+          "practice": "Reorder the lines into a working program.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "third_party_packages.learn_from_docs"
+          ]
+        },
+        {
+          "title": "Measuring in millimetres and centring",
+          "worked_example": "page_w = 210          # A4 width in mm\nimg_w = 190\nx = (page_w - img_w) / 2\nprint(x)  # 10.0\n# pdf.image('shirt.png', x=x, y=70, w=img_w)\n# pdf.cell(0, 10, 'CS50 Shirtificate', align='C')\nPositions are millimetres from the top-left; a cell of width 0 spans the page, and align='C' centres its text.",
+          "practice": "Compute x to centre an image of a given width; choose the cell call that centres text.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "parameters_arguments.keyword_arguments"
+          ]
+        },
+        {
+          "title": "A subclass with a header on every page",
+          "worked_example": "class PDF(FPDF):\n    def header(self):\n        self.set_font('helvetica', size=30)\n        self.cell(0, 40, 'CS50 Shirtificate', align='C')\n\npdf = PDF()\npdf.add_page()   # header() runs automatically\nFPDF calls header() for each new page; overriding it customises every page (the course's reason for using inheritance here).",
+          "practice": "Predict how many times header runs for 3 pages; fix a header that was given the wrong method name.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.override_methods",
+          "weight": 0.3
+        },
+        {
+          "topic": "parameters_arguments.keyword_arguments",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_validators.validate_with_library",
+      "title": "Validating emails and URLs with a library",
+      "concept": "lib_validators",
+      "summary": "Check emails and URLs with the validators package, test its falsy failure result correctly, and decide when a library beats a hand-written regex.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "third_party_packages.learn_from_docs",
+        "regular_expressions.anchors_and_validation",
+        "booleans.truthiness"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "validators.email returns True or a failure object",
+          "worked_example": "import validators\nprint(validators.email('malan@harvard.edu'))     # True\nresult = validators.email('malan@@harvard')\nprint(bool(result))                              # False\nOn failure you get a ValidationError object (ValidationFailure in older versions), not False; it is falsy, so use it in an if.",
+          "practice": "Predict bool() of results for valid and invalid addresses.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        },
+        {
+          "title": "Test truthiness, not == False",
+          "worked_example": "if validators.email(s):\n    print('Valid')\nelse:\n    print('Invalid')\n# Bug: if validators.email(s) == False: ... never fires, because the failure object is not equal to False\nWrite if result: / if not result: rather than comparing with True or False.",
+          "practice": "Fix the == False bug; predict the output of the buggy version for an invalid email.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "booleans.truthiness"
+          ]
+        },
+        {
+          "title": "Library or regex?",
+          "worked_example": "import re\nsimple = re.fullmatch(r'[^@ ]+@[^@ ]+\\.[a-z]+', 'a@b.co')\nprint(bool(simple))   # True\nprint(bool(re.fullmatch(r'[^@ ]+@[^@ ]+\\.[a-z]+', 'a@b..co')))  # True: accepted, though invalid\nHand-written patterns miss cases a maintained library already handles; validators.url and validators.domain work the same way.",
+          "practice": "Choose between a regex and a library for given requirements; find an input the simple regex wrongly accepts.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "regular_expressions.anchors_and_validation"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "regular_expressions.anchors_and_validation",
+          "weight": 0.3
+        },
+        {
+          "topic": "booleans.truthiness",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    }
+  ]
+}

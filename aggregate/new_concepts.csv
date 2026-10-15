@@ -1,0 +1,113 @@
+concept,label,category,courses
+lib_pillow,Pillow (PIL),modules_libs,100_days_of_code cs50p mit_6100l
+authentication,"Web authentication (hashing, salting, login sessions)",data_web,100_days_of_code bootdev
+binary_bitwise,Binary numbers & bitwise operations,fundamentals,bootdev mit_6100l
+environment_variables,Environment variables & secrets,data_web,100_days_of_code bootdev
+event_driven_programming,"Event-driven programming (event listeners, callbacks)",data_web,100_days_of_code helsinki_mooc
+sql_joins,SQL joins,data_web,bootdev py4e
+ai_agents,AI agents (agentic loop),data_web,bootdev
+authorization,Authorization,data_web,bootdev
+balanced_trees,Balanced trees (red-black),algorithms,bootdev
+caching,Caching,data_web,bootdev
+cdn,CDNs,data_web,bootdev
+clean_code,Clean code / maintainability,oop,bootdev
+cli_applications,Building CLI applications,environment,bootdev
+collections_module,"collections module (namedtuple, deque, defaultdict, Counter, ...)",modules_libs,codecademy
+collision_detection,Vectors & collision detection,data_web,bootdev
+computer_architecture,"Computer hardware architecture (CPU, memory, storage)",fundamentals,py4e
+concurrency,"Concurrency (channels, mutexes)",languages,bootdev
+conditional_expressions,Conditional (ternary) expressions,control_flow,helsinki_mooc
+containers,Containers,environment,bootdev
+currying,Currying,functions,bootdev
+data_modeling,"Relational data modeling (primary/foreign/logical keys, many-to-many)",data_web,py4e
+database_indexes,Database indexes & performance,data_web,bootdev
+database_normalization,Database normalization,data_web,bootdev
+db_migrations,Database migrations,data_web,bootdev
+deployment,Deploying web applications,data_web,100_days_of_code
+dns,DNS,data_web,bootdev
+function_calling,LLM function/tool calling,data_web,bootdev
+game_loop,Game loop,data_web,bootdev
+garbage_collection,"Garbage collection (refcount, mark & sweep)",languages,bootdev
+generics,Generics,languages,bootdev
+git_branching,Git branching,environment,bootdev
+git_internals,"Git internals (objects, plumbing)",environment,bootdev
+git_merge_rebase,"Git merge, rebase & reset",environment,bootdev
+git_remotes,Git remotes,environment,bootdev
+graphs,Graphs (data structure),algorithms,bootdev
+http_clients,HTTP clients,data_web,bootdev
+http_servers,HTTP servers,data_web,bootdev
+https_tls,HTTPS / TLS,data_web,bootdev
+image_processing,"Image processing (pixels, filters, steganography)",data_web,mit_6100l
+injection_attacks,Injection attacks,data_web,bootdev
+interfaces,Interfaces,oop,bootdev
+itertools_module,itertools module,modules_libs,codecademy
+job_search,Job search,career,bootdev
+lang_c,C language,languages,bootdev
+lang_go,Go language,languages,bootdev
+lib_bootstrap,Bootstrap CSS framework,modules_libs,100_days_of_code
+lib_cowsay,cowsay,modules_libs,cs50p
+lib_elementtree,xml.etree.ElementTree,modules_libs,py4e
+lib_emoji,emoji,modules_libs,cs50p
+lib_fpdf,fpdf2,modules_libs,cs50p
+lib_inflect,inflect,modules_libs,cs50p
+lib_jinja,Jinja templating,modules_libs,100_days_of_code
+lib_json,json module,modules_libs,py4e
+lib_openai,OpenAI Python SDK,modules_libs,bootdev
+lib_plotly,Plotly,modules_libs,100_days_of_code
+lib_pyautogui,PyAutoGUI,modules_libs,100_days_of_code
+lib_pyfiglet,pyfiglet,modules_libs,cs50p
+lib_pytest,pytest,errors_testing,cs50p
+lib_scikit_learn,scikit-learn,modules_libs,100_days_of_code
+lib_scipy,SciPy,modules_libs,100_days_of_code
+lib_seaborn,Seaborn,modules_libs,100_days_of_code
+lib_socket,socket module,modules_libs,py4e
+lib_sqlalchemy,SQLAlchemy ORM,modules_libs,100_days_of_code
+lib_stanford_graphics,Stanford CS106A graphics library (Canvas),modules_libs,code_in_place
+lib_tabulate,tabulate,modules_libs,cs50p
+lib_urllib,urllib,modules_libs,py4e
+lib_validators,validators / validator-collection,modules_libs,cs50p
+lib_wtforms,WTForms / Flask-WTF,modules_libs,100_days_of_code
+linear_regression,Linear / multivariable regression,data_web,100_days_of_code
+linux_filesystem,Linux filesystem navigation,environment,bootdev
+linux_permissions,File permissions & users (root/sudo),environment,bootdev
+linux_processes,Processes,environment,bootdev
+llm_apis,LLM APIs & prompting,data_web,bootdev
+main_guard,"if __name__ == ""__main__""",modules_libs,cs50p
+markdown,Markdown parsing,data_web,bootdev
+mathematical_induction,Inductive reasoning / mathematical induction for recursion,algorithms,mit_6100l
+newton_raphson,Newton-Raphson root approximation,algorithms,mit_6100l
+object_storage,Object storage,data_web,bootdev
+p_vs_np,P vs NP,algorithms,bootdev
+pointers_memory,Pointers & memory addresses,languages,bootdev
+portfolio_project,Portfolio / personal project,career,bootdev
+pseudocode,Pseudocode,functions,cs50p
+pub_sub_messaging,Pub/sub messaging,data_web,bootdev
+pure_functions,Pure functions,functions,bootdev
+rest_api_design,Designing RESTful APIs,data_web,100_days_of_code
+scheduling_cron,Scheduled / cron jobs (cloud scheduling),data_web,100_days_of_code
+serialization,Serialization,files_io,bootdev
+shell_io_redirection,"Shell I/O: stdin/stdout, redirection, pipes",environment,bootdev
+stack_heap_memory,"Stack vs heap, manual allocation",languages,bootdev
+static_site_generation,Static site generation,data_web,bootdev
+statistics_hypothesis_testing,"Statistics & hypothesis testing (t-tests, distributions)",data_web,100_days_of_code
+statistics_module,statistics module,modules_libs,cs50p
+subprocess_module,subprocess / running external programs,modules_libs,bootdev
+sum_types,Sum types,functions,bootdev
+system_package_managers,"System package managers (apt, brew)",environment,bootdev
+tool_aws,"AWS (S3, CloudFront)",data_web,bootdev
+tool_curl,cURL,environment,bootdev
+tool_d3js,D3.js (browser visualization),data_web,py4e
+tool_docker,Docker,environment,bootdev
+tool_geocoding_api,Geocoding API (GeoJSON),data_web,py4e
+tool_github,GitHub,environment,bootdev
+tool_jupyter,Jupyter / Google Colab notebooks,environment,100_days_of_code
+tool_mypy,mypy,environment,cs50p
+tool_postgresql,PostgreSQL,data_web,bootdev
+tool_rabbitmq,RabbitMQ,data_web,bootdev
+tool_sqlc,sqlc,data_web,bootdev
+tool_sqlite_browser,DB Browser for SQLite,environment,py4e
+tries,Tries,algorithms,bootdev
+ui_ux_design,UI/UX & web design principles,data_web,100_days_of_code
+web_security,Web security,data_web,bootdev
+web_services,Web services / service-oriented architecture,data_web,py4e
+webhooks,Webhooks,data_web,bootdev

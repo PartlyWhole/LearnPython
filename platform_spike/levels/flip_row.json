@@ -1,0 +1,144 @@
+{
+  "format": 1,
+  "id": "flip_row",
+  "title": "Flip the row",
+  "brief": "Flip every cell of the 7-cell row east of the dock: pick up the gem where there is one, put one where there isn't. Your bag holds 7 gems. Other rows start with other patterns.",
+  "starter_code": "",
+  "world": {
+    "width": 8,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "1,0": 1,
+      "2,0": 1,
+      "4,0": 1,
+      "7,0": 1
+    },
+    "bag": 7,
+    "goal": {
+      "gems_exactly": {
+        "3,0": 1,
+        "5,0": 1,
+        "6,0": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "name": "all empty",
+      "width": 8,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 7,
+      "goal": {
+        "gems_exactly": {
+          "1,0": 1,
+          "2,0": 1,
+          "3,0": 1,
+          "4,0": 1,
+          "5,0": 1,
+          "6,0": 1,
+          "7,0": 1
+        }
+      }
+    },
+    {
+      "name": "all full",
+      "width": 8,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 1,
+        "2,0": 1,
+        "3,0": 1,
+        "4,0": 1,
+        "5,0": 1,
+        "6,0": 1,
+        "7,0": 1
+      },
+      "bag": 7,
+      "goal": {
+        "gems_exactly": {}
+      }
+    },
+    {
+      "name": "every other cell",
+      "width": 8,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "2,0": 1,
+        "4,0": 1,
+        "6,0": 1
+      },
+      "bag": 7,
+      "goal": {
+        "gems_exactly": {
+          "1,0": 1,
+          "3,0": 1,
+          "5,0": 1,
+          "7,0": 1
+        }
+      }
+    },
+    {
+      "name": "both ends",
+      "width": 8,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 1,
+        "7,0": 1
+      },
+      "bag": 7,
+      "goal": {
+        "gems_exactly": {
+          "2,0": 1,
+          "3,0": 1,
+          "4,0": 1,
+          "5,0": 1,
+          "6,0": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ],
+    "banned": [
+      "while"
+    ],
+    "required": [
+      "for",
+      "if"
+    ]
+  },
+  "topics": [
+    "conditionals.if_else",
+    "for_loops.if_inside_loop"
+  ]
+}

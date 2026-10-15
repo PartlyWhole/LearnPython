@@ -1,0 +1,122 @@
+{
+ "python": "3.12.13",
+ "cases": {
+  "collect_row": {
+   "digest": "7971ec0fe21fa8c3",
+   "events": 22,
+   "error": null,
+   "final": {
+    "x": 5,
+    "y": 0,
+    "dir": "E",
+    "bag": 6,
+    "gems_left": 0,
+    "gems": {}
+   },
+   "output": ""
+  },
+  "wall_error": {
+   "digest": "b4d8a1e363e3094c",
+   "events": 6,
+   "error": {
+    "type": "WorldError",
+    "message": "There's a wall in front of you.",
+    "line": 7,
+    "kind": "wall"
+   },
+   "final": {
+    "x": 0,
+    "y": 3,
+    "dir": "S",
+    "bag": 3,
+    "gems_left": 3,
+    "gems": {
+     "2,0": 2,
+     "5,0": 1
+    }
+   },
+   "output": ""
+  },
+  "runaway_api_loop": {
+   "digest": "cd5f28bc3e32f888",
+   "events": 10000,
+   "error": {
+    "type": "WorldError",
+    "message": "Your program took more than 10000 steps. Is a loop running forever?",
+    "line": 2,
+    "kind": "step_limit"
+   },
+   "final": {
+    "x": 0,
+    "y": 0,
+    "dir": "E",
+    "bag": 3,
+    "gems_left": 3,
+    "gems": {
+     "2,0": 2,
+     "5,0": 1
+    }
+   },
+   "output": ""
+  },
+  "seeded_random": {
+   "digest": "80e80f8c62216f50",
+   "events": 50,
+   "error": null,
+   "final": {
+    "x": 0,
+    "y": 0,
+    "dir": "E",
+    "bag": 3,
+    "gems_left": 3,
+    "gems": {
+     "2,0": 2,
+     "5,0": 1
+    }
+   },
+   "output": "25\n"
+  },
+  "build_with_put": {
+   "digest": "30e1888287dd0b5f",
+   "events": 6,
+   "error": {
+    "type": "WorldError",
+    "message": "Your bag is empty, so there's no gem to put down.",
+    "line": 4,
+    "kind": "empty_bag"
+   },
+   "final": {
+    "x": 3,
+    "y": 0,
+    "dir": "E",
+    "bag": 0,
+    "gems_left": 6,
+    "gems": {
+     "0,0": 1,
+     "1,0": 1,
+     "2,0": 3,
+     "5,0": 1
+    }
+   },
+   "output": ""
+  },
+  "scan_list": {
+   "digest": "e10581d0bcc31b39",
+   "events": 6,
+   "error": null,
+   "final": {
+    "x": 5,
+    "y": 0,
+    "dir": "E",
+    "bag": 3,
+    "gems_left": 3,
+    "gems": {
+     "2,0": 2,
+     "5,0": 1
+    }
+   },
+   "output": ""
+  }
+ },
+ "turn_left_100k_seconds": 0.068
+}

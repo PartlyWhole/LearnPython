@@ -1,0 +1,109 @@
+{
+  "format": 1,
+  "id": "fencepost",
+  "title": "The last cell",
+  "concept": "Loop, then handle the last cell once more (the fencepost)",
+  "topics": [
+    "loop_patterns.fencepost"
+  ],
+  "watch": {
+    "world": {
+      "width": 5,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 1,
+        "1,0": 1,
+        "2,0": 1,
+        "3,0": 1,
+        "4,0": 1
+      }
+    },
+    "steps": [
+      {
+        "say": "Pick up the gem on every cell, the last one included.",
+        "focus": "world"
+      },
+      {
+        "say": "Pick, then move, while the way is clear.",
+        "code": "while front_is_clear():\n    pick()\n    move()\n",
+        "focus": "editor:1"
+      },
+      {
+        "say": "Which cell still has its gem at the end?",
+        "predict": {
+          "cell": true,
+          "answer": [
+            4,
+            0
+          ]
+        }
+      },
+      {
+        "say": "Run it. On the last cell the way isn't clear, so the loop ends before `pick()`.",
+        "run": true
+      },
+      {
+        "say": "5 cells, but only 4 moves: the loop runs 4 times.",
+        "focus": "cell:4,0"
+      },
+      {
+        "say": "Handle the last cell once more, after the loop.",
+        "code": "while front_is_clear():\n    pick()\n    move()\npick()\n",
+        "focus": "editor:4"
+      },
+      {
+        "say": "Run it. Loop, then once more: every cell is done.",
+        "run": true
+      }
+    ]
+  },
+  "guided": {
+    "level": "gem_line",
+    "steps": [
+      {
+        "say": "Run the starter to see which cell it misses. Then add `put()` after the loop, not indented.",
+        "done_when": [
+          {
+            "calls": "put",
+            "outside": "while"
+          }
+        ],
+        "example": "while front_is_clear():\n    put()\n    move()\nput()\n"
+      },
+      {
+        "say": "Run it in every corridor.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "Loop, then the last cell."
+  },
+  "practice": [
+    "plant_to_wall"
+  ],
+  "twist": "edge_gems",
+  "recap": {
+    "say": "To do something on every cell up to a wall: loop, then do it once more.",
+    "code": "while front_is_clear():\n    ...\n    move()\n..."
+  },
+  "hints": {
+    "plant_to_wall": [
+      "Look at the 'one cell' world: that cell needs a gem too.",
+      "n cells, n − 1 moves. Put in the loop, then once more after it.",
+      "while __:\n    put()\n    __\n__\n"
+    ],
+    "edge_gems": [
+      "Look at the 'one cell' world: its first cell is also its last.",
+      "Put on the first cell, walk to the wall, then put only if the cell is still empty.",
+      "put()\nwhile __:\n    __\nif __:\n    put()\n"
+    ]
+  }
+}

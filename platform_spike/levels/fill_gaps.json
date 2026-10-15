@@ -1,0 +1,185 @@
+{
+  "format": 1,
+  "id": "fill_gaps",
+  "title": "Fill the gaps",
+  "brief": "Below the robot's dock is a column of 6 cells. Make every cell hold exactly one gem: put one only where there isn't one already. Your bag never runs out. Other columns have their gaps in other places.",
+  "starter_code": "",
+  "world": {
+    "width": 1,
+    "height": 7,
+    "start": [
+      0,
+      0,
+      "S"
+    ],
+    "gems": {
+      "0,2": 1,
+      "0,3": 1,
+      "0,5": 1
+    },
+    "bag": "infinite",
+    "goal": {
+      "gems_exactly": {
+        "0,1": 1,
+        "0,2": 1,
+        "0,3": 1,
+        "0,4": 1,
+        "0,5": 1,
+        "0,6": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "name": "all empty",
+      "width": 1,
+      "height": 7,
+      "start": [
+        0,
+        0,
+        "S"
+      ],
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,1": 1,
+          "0,2": 1,
+          "0,3": 1,
+          "0,4": 1,
+          "0,5": 1,
+          "0,6": 1
+        }
+      }
+    },
+    {
+      "name": "already full",
+      "width": 1,
+      "height": 7,
+      "start": [
+        0,
+        0,
+        "S"
+      ],
+      "gems": {
+        "0,1": 1,
+        "0,2": 1,
+        "0,3": 1,
+        "0,4": 1,
+        "0,5": 1,
+        "0,6": 1
+      },
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,1": 1,
+          "0,2": 1,
+          "0,3": 1,
+          "0,4": 1,
+          "0,5": 1,
+          "0,6": 1
+        }
+      }
+    },
+    {
+      "name": "every other cell",
+      "width": 1,
+      "height": 7,
+      "start": [
+        0,
+        0,
+        "S"
+      ],
+      "gems": {
+        "0,1": 1,
+        "0,3": 1,
+        "0,5": 1
+      },
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,1": 1,
+          "0,2": 1,
+          "0,3": 1,
+          "0,4": 1,
+          "0,5": 1,
+          "0,6": 1
+        }
+      }
+    },
+    {
+      "name": "only the first is empty",
+      "width": 1,
+      "height": 7,
+      "start": [
+        0,
+        0,
+        "S"
+      ],
+      "gems": {
+        "0,2": 1,
+        "0,3": 1,
+        "0,4": 1,
+        "0,5": 1,
+        "0,6": 1
+      },
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,1": 1,
+          "0,2": 1,
+          "0,3": 1,
+          "0,4": 1,
+          "0,5": 1,
+          "0,6": 1
+        }
+      }
+    },
+    {
+      "name": "only the last is empty",
+      "width": 1,
+      "height": 7,
+      "start": [
+        0,
+        0,
+        "S"
+      ],
+      "gems": {
+        "0,1": 1,
+        "0,2": 1,
+        "0,3": 1,
+        "0,4": 1,
+        "0,5": 1
+      },
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,1": 1,
+          "0,2": 1,
+          "0,3": 1,
+          "0,4": 1,
+          "0,5": 1,
+          "0,6": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ],
+    "banned": [
+      "while"
+    ],
+    "required": [
+      "for",
+      "if"
+    ]
+  },
+  "topics": [
+    "conditionals.if_statement",
+    "for_loops.if_inside_loop"
+  ]
+}

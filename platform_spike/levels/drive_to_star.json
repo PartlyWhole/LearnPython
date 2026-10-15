@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "id": "drive_to_star",
+  "title": "Drive",
+  "brief": "Drive to the marked cell.",
+  "starter_code": "",
+  "world": {
+    "width": 5,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ]
+  },
+  "goal": {
+    "end_at": [
+      4,
+      0
+    ]
+  },
+  "drive": {
+    "buttons": [
+      "move"
+    ]
+  },
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ]
+}

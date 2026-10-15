@@ -1,0 +1,221 @@
+{
+  "format": 1,
+  "id": "refinement",
+  "title": "From the top down",
+  "concept": "Plan a program top-down with stubs, test one piece before looping it, and record each function's start and end in a docstring",
+  "topics": [
+    "decomposition.top_down_design",
+    "docstrings.write_docstrings"
+  ],
+  "watch": {
+    "world": {
+      "width": 6,
+      "height": 5,
+      "start": [
+        0,
+        4,
+        "E"
+      ],
+      "bag": 0,
+      "blocked": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "gems": {
+        "1,4": 1,
+        "1,3": 1,
+        "3,4": 1,
+        "3,3": 1,
+        "3,2": 1,
+        "4,4": 1,
+        "5,4": 1,
+        "5,3": 1
+      }
+    },
+    "steps": [
+      {
+        "say": "Collect every crystal, then go back into the shed, facing east. Columns differ in height, and some are empty.",
+        "focus": "world"
+      },
+      {
+        "say": "Start from the top: three parts, three names. Each name is a promise, and `pass` keeps it for now. Run it: nothing breaks.",
+        "code": "def leave_shed():\n    pass\n\n\ndef harvest_all_columns():\n    pass\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
+        "focus": "editor:13",
+        "run": true
+      },
+      {
+        "say": "Keep the easiest promise first: `leave_shed()` is one `move()`.",
+        "code": "def leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    pass\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
+        "focus": "editor:2"
+      },
+      {
+        "say": "Test one column before you loop. Give `harvest_all_columns()` a temporary body: `harvest_column()`, then `move()`.",
+        "code": "def harvest_column():\n    pass\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
+        "focus": "editor:10"
+      },
+      {
+        "say": "Refine `harvest_column()`: up the column collecting, turn around, back down, face east. The docstring says where it starts and ends.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
+        "focus": "editor:12"
+      },
+      {
+        "say": "Run it. One column is harvested, and the robot ends where the docstring promised: bottom row, facing east.",
+        "run": true,
+        "focus": "cell:2,4"
+      },
+      {
+        "say": "Now swap the temporary body for a loop: harvest, then move, while the way east is clear.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    while front_is_clear():\n        harvest_column()\n        move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
+        "focus": "editor:27"
+      },
+      {
+        "say": "Where will the robot stop? Pick the cell.",
+        "predict": {
+          "cell": true,
+          "answer": [
+            5,
+            4
+          ]
+        }
+      },
+      {
+        "say": "Run it. The last column is missed: the same fencepost as before. Loop, then once more.",
+        "run": true,
+        "focus": "cell:5,4"
+      },
+      {
+        "say": "Add `harvest_column()` after the loop. Then keep the last promise: `return_home()` reuses `move_to_wall()`. Run it.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    while front_is_clear():\n        harvest_column()\n        move()\n    harvest_column()\n\n\ndef return_home():\n    turn_around()\n    move_to_wall()\n    turn_around()\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
+        "run": true,
+        "focus": "editor:30"
+      }
+    ]
+  },
+  "guided": {
+    "level": "harvest_rows",
+    "steps": [
+      {
+        "say": "Write the plan: call `harvest_cave()` then `return_home()`, each defined with `pass`.",
+        "done_when": [
+          {
+            "defines": "harvest_cave"
+          },
+          {
+            "defines": "return_home"
+          },
+          {
+            "calls": "harvest_cave",
+            "outside": "def"
+          },
+          {
+            "calls": "return_home",
+            "outside": "def"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_cave():\n    pass\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
+      },
+      {
+        "say": "Run it: nothing breaks. Then give `harvest_cave()` a temporary body: a new `harvest_icicle()` stub, then `move()`.",
+        "done_when": [
+          {
+            "defines": "harvest_icicle"
+          },
+          {
+            "calls": "harvest_icicle",
+            "inside": "def harvest_cave"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_icicle():\n    pass\n\n\ndef harvest_cave():\n    harvest_icicle()\n    move()\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
+      },
+      {
+        "say": "Refine `harvest_icicle()`: climb to the roof collecting, come back down, face east. Run it: one icicle.",
+        "done_when": [
+          {
+            "calls": "turn_left",
+            "inside": "def harvest_icicle"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_icicle():\n    turn_left()\n    while front_is_clear():\n        move()\n        if gems_here():\n            pick()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef harvest_cave():\n    harvest_icicle()\n    move()\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
+      },
+      {
+        "say": "Write its docstring: where `harvest_icicle()` starts and where it ends.",
+        "done_when": [
+          {
+            "docstring": "harvest_icicle"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_icicle():\n    \"\"\"Start: on the floor, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while front_is_clear():\n        move()\n        if gems_here():\n            pick()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef harvest_cave():\n    harvest_icicle()\n    move()\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
+      },
+      {
+        "say": "Loop it while the way east is clear. Then harvest once more after the loop: the last icicle.",
+        "done_when": [
+          {
+            "calls": "harvest_icicle",
+            "inside": "while"
+          },
+          {
+            "calls": "harvest_icicle",
+            "min": 2
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_icicle():\n    \"\"\"Start: on the floor, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while front_is_clear():\n        move()\n        if gems_here():\n            pick()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef harvest_cave():\n    while front_is_clear():\n        harvest_icicle()\n        move()\n    harvest_icicle()\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
+      },
+      {
+        "say": "Finish `return_home()`, then Run it in every cave.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ],
+        "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_icicle():\n    \"\"\"Start: on the floor, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while front_is_clear():\n        move()\n        if gems_here():\n            pick()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef harvest_cave():\n    while front_is_clear():\n        harvest_icicle()\n        move()\n    harvest_icicle()\n\n\ndef return_home():\n    turn_around()\n    move_to_wall()\n    turn_around()\n\n\nharvest_cave()\nreturn_home()\n"
+      }
+    ],
+    "done": "Every icicle harvested, and home facing east: planned from the top."
+  },
+  "practice": [
+    "build_towers",
+    "repair_columns",
+    "sweep"
+  ],
+  "twist": "tile_floor",
+  "recap": {
+    "say": "Start from the top with stubs, test one piece before you loop it, and write where each function starts and ends.",
+    "code": "def part():\n    \"\"\"Start: .... End: ....\"\"\"\n    ...\n\n\ndef all_parts():\n    while front_is_clear():\n        part()\n        move()\n    part()\n\n\nall_parts()\n..."
+  },
+  "hints": {
+    "build_towers": [
+      "Look at the 'sites at both ends' world: a site on the start cell and one on the last cell.",
+      "Refine `build_tower()` first and test it on one site. Then visit every cell: check, then move, then check the last one.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    turn_left()\n    turn_left()\n\n\ndef build_tower():\n    \"\"\"Start: on a site, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    __\n    turn_around()\n    __\n    turn_left()\n\n\ndef visit():\n    if gems_here() > 0:\n        build_tower()\n\n\nvisit()\nwhile front_is_clear():\n    __\n    __\n"
+    ],
+    "repair_columns": [
+      "Compare your result with the Goal view: every column solid up to its beam, one stone per cell.",
+      "Refine `repair_column()` and test it on the first column: climb while the way north is clear, and `put()` only where the cell is empty.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_gap():\n    if __:\n        put()\n\n\ndef repair_column():\n    \"\"\"Start: at the foot of a column, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    fill_gap()\n    while front_is_clear():\n        __\n    turn_around()\n    while front_is_clear():\n        move()\n    turn_left()\n\n\ndef next_column():\n    for i in range(__):\n        move()\n\n\nrepair_column()\nwhile front_is_clear():\n    __\n"
+    ],
+    "sweep": [
+      "Look at the 'one row' and 'one column' worlds: there may be no next row.",
+      "Plan from the top: sweep a row, then step down to the next row if there is one. The turn alternates: right, then left.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef collect():\n    while gems_here() > 0:\n        pick()\n\n\ndef sweep_row():\n    collect()\n    while front_is_clear():\n        move()\n        collect()\n\n\ndef face_down():\n    if going_east:\n        __\n    else:\n        __\n\n\ngoing_east = True\nsweep_row()\nface_down()\nwhile front_is_clear():\n    move()\n    face_down()\n    going_east = __\n    __\n    face_down()\n"
+    ],
+    "tile_floor": [
+      "Look at the 'even width' world: the pattern must carry on from the end of one row into the next.",
+      "Keep one variable for the whole floor and flip it on every step, the step down to the next row included.",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef face_next_row():\n    if going_east:\n        turn_right()\n    else:\n        turn_left()\n\n\nplace = True  # does the cell I'm standing on get a gem?\ngoing_east = True\nmore = True\nwhile more:\n    if place:\n        put()\n    if front_is_clear():\n        move()\n        place = __\n    else:\n        face_next_row()\n        if front_is_clear():\n            move()\n            place = __\n            face_next_row()\n            going_east = __\n        else:\n            more = __\n"
+    ]
+  }
+}

@@ -1,0 +1,1117 @@
+{
+  "course": {
+    "id": "code_in_place",
+    "title": "Code in Place (Stanford)",
+    "provider": "Stanford University (Chris Piech, Mehran Sahami)",
+    "url": "https://codeinplace.stanford.edu/",
+    "format": "free online, 6 weeks of lessons (video lectures + worked examples + browser IDE) with weekly small-group live sections led by volunteer section leaders, followed by an optional final project; ~7 hrs/week",
+    "audience": "absolute beginners worldwide (no prior experience); covers roughly the first half of Stanford CS106A in Python",
+    "sources": [
+      "https://codeinplace.stanford.edu/ (syllabus table embedded in the site's JS bundle: assets/default-CDCrfV2J.js; weekly titles also in assets/CourseRoutes-B09XBB48.js, retrieved 2026-10-12)",
+      "https://codeinplace.stanford.edu/cip5/certificate/3cnzhc (2025 certificate: Apr 21 - Jun 6 2025; Units: Karel the Robot, Console Programming, Graphics/Lists/Dictionaries)",
+      "https://github.com/mkrdip/codeinplace-2024 (CIP 2024 section leader materials: weekly section topics and section problems)",
+      "https://github.com/Bassamejlaoui/Stanford-Code-In-Place-2024 (student repo, CIP 2024 Karel problems)",
+      "https://medium.com/@AdamDoingTech/second-week-of-code-in-place-2024-aka-stanfords-cs106a-3b31dbc9109d",
+      "https://medium.com/@AdamDoingTech/third-and-forth-weeks-of-code-in-place-2024-aka-stanfords-cs106a-1d6c3ea06bde",
+      "https://github.com/hulyak/code_in_place (CIP 2021 weekly outline, for edition comparison)",
+      "https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1206/ (CS106A Spring 2020 lecture list, the source of CIP lesson titles)",
+      "https://engineering.stanford.edu/news/stanfords-code-place-introductory-programming-course-offers-new-model-large-scale-interactive"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Edition: the current official public syllabus (codeinplace.stanford.edu, used for the 2024/2025 runs; 2026 run starts Apr 2026) gives 6 weeks: W1 Control Flow with Karel (build: Welcome Karel), W2 The Art of Coding (Puzzle Karel), W3 Console Programs (Sandcastles), W4 Understanding Variables (Khansole Academy), W5 Graphics (Random Art), W6 Lists + Dictionaries (World's Hardest Game), then 'Beyond': Final Project. The in-app week labels differ slightly (W4 'Python Control Flow', W6 'Lists + Dicts'), and 2024 section-leader materials label W4 'Python Control Flow'. Week-level topics and the 'You Build' assignments are verified from the official site. Individual LESSON titles live behind login (Firestore) and could not be fetched; the per-lesson modules here are a reconstruction that splits each week into its lessons using the CS106A lecture titles CIP has historically reused (Intro to Karel, Control Flow, Decomposition, Intro to Python/Variables, Expressions, Control Flow Revisited, Functions Revisited/parameters, Graphics, Animation, Lists, Dictionaries) plus the 'Random' lesson referenced in the site's Khansole Academy materials. Exact lesson names/boundaries may differ; the 'Animation' lesson in W5 and the placement of parameters/return (W4 vs W5; a 2024 section placed it in W5 with graphics) are the least certain. Section problems listed in projects (e.g. Hospital Karel, Planetary Weight, High-Low, Heads Up) come from one 2024 section leader's repo and are marked '(section)'. Earlier editions differed: 2020/2021 were ~5 weeks + final project and included Images (SimpleImage), Text Processing, Files and Data Science; Images is NOT in the 2023+ syllabus, so no images module is included. No certificate grade; completion requires assignments in all three units (Karel, Console, Graphics) and attending sections."
+  },
+  "modules": [
+    {
+      "id": "code_in_place:w1_intro_karel",
+      "title": "Week 1: Intro to Karel the Robot",
+      "order": 1,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 1",
+        "Week 1 topic: Control Flow with Karel (Unit 1: Karel)",
+        "Karel's world: streets, avenues, walls, beepers",
+        "Basic commands: move(), turn_left(), put_beeper(), pick_beeper()",
+        "Writing programs in the browser IDE",
+        "Defining new functions (e.g. turn_right())",
+        "Comments"
+      ],
+      "projects": [
+        "Welcome Karel (assignment)",
+        "Hospital Karel (section)"
+      ],
+      "concepts": [
+        "karel_robot",
+        "functions",
+        "comments",
+        "ide_editor",
+        "algorithms"
+      ]
+    },
+    {
+      "id": "code_in_place:w1_control_flow",
+      "title": "Week 1: Control Flow (Karel)",
+      "order": 2,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 1",
+        "for loops (for i in range(n))",
+        "while loops with conditions",
+        "if / if-else",
+        "Karel conditions: front_is_clear(), beepers_present(), facing_east(), ...",
+        "Choosing between if, if/else, for and while",
+        "Fencepost / off-by-one ideas"
+      ],
+      "projects": [
+        "Welcome Karel (assignment)"
+      ],
+      "concepts": [
+        "for_loops",
+        "while_loops",
+        "conditionals",
+        "range_function",
+        "booleans",
+        "karel_robot",
+        "computational_thinking"
+      ]
+    },
+    {
+      "id": "code_in_place:w2_decomposition",
+      "title": "Week 2: Decomposition",
+      "order": 3,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 2",
+        "Week 2 topic: The Art of Coding (Unit 1: Karel)",
+        "Breaking problems into functions",
+        "Top-down design / stepwise refinement",
+        "Pre-conditions and post-conditions",
+        "main() and helper functions"
+      ],
+      "projects": [
+        "Puzzle Karel (assignment)",
+        "Spread Beepers (section)"
+      ],
+      "concepts": [
+        "decomposition",
+        "functions",
+        "abstraction",
+        "karel_robot",
+        "docstrings"
+      ]
+    },
+    {
+      "id": "code_in_place:w2_art_of_coding",
+      "title": "Week 2: The Art of Coding",
+      "order": 4,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 2",
+        "Writing code others can understand: naming, comments, style",
+        "Problem-solving process: understand, strategize, translate (pseudocode -> Python)",
+        "Generalizing solutions to any world size",
+        "Debugging Karel programs"
+      ],
+      "projects": [
+        "Puzzle Karel (assignment)",
+        "Midpoint Karel (reported, 2024)"
+      ],
+      "concepts": [
+        "decomposition",
+        "pep8_style",
+        "comments",
+        "debugging",
+        "algorithms"
+      ]
+    },
+    {
+      "id": "code_in_place:w3_intro_python",
+      "title": "Week 3: Intro to Python (Console Programs)",
+      "order": 5,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 3",
+        "Week 3 topic: Console Programs (Unit 2: Console)",
+        "print() and input()",
+        "Variables and assignment",
+        "Types: int, float, str",
+        "Converting input with int()/float()",
+        "Program structure: def main() / if __name__ == '__main__'"
+      ],
+      "projects": [
+        "Sandcastles (assignment)",
+        "Mars Weight / Planetary Weight (section)"
+      ],
+      "concepts": [
+        "print_output",
+        "user_input",
+        "variables",
+        "data_types",
+        "type_conversion",
+        "strings",
+        "running_scripts"
+      ]
+    },
+    {
+      "id": "code_in_place:w3_expressions",
+      "title": "Week 3: Expressions",
+      "order": 6,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 3",
+        "Arithmetic operators + - * / // % **",
+        "Operator precedence",
+        "int vs float division",
+        "String concatenation",
+        "Constants (UPPER_CASE)",
+        "math module functions"
+      ],
+      "projects": [
+        "Sandcastles (assignment)"
+      ],
+      "concepts": [
+        "expressions",
+        "arithmetic_operators",
+        "integers_floats",
+        "constants",
+        "string_concatenation",
+        "math_module",
+        "modules_imports"
+      ]
+    },
+    {
+      "id": "code_in_place:w4_control_flow_revisited",
+      "title": "Week 4: Control Flow Revisited (Python)",
+      "order": 7,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 4",
+        "Week 4 topic: Understanding Variables (Unit 2: Console); in-app label 'Python Control Flow'",
+        "Booleans and comparison operators",
+        "Logical operators and/or/not",
+        "if / elif / else",
+        "while loops and sentinel loops",
+        "for loops with range()",
+        "Counters and accumulators"
+      ],
+      "projects": [
+        "Khansole Academy (assignment)",
+        "High-Low game (section)"
+      ],
+      "concepts": [
+        "booleans",
+        "comparison_operators",
+        "logical_operators",
+        "conditionals",
+        "while_loops",
+        "for_loops",
+        "range_function",
+        "loop_patterns"
+      ]
+    },
+    {
+      "id": "code_in_place:w4_random",
+      "title": "Week 4: Random Numbers",
+      "order": 8,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 4",
+        "import random",
+        "random.randint(), random.random(), random.choice()",
+        "Seeding / pseudo-randomness",
+        "Simulations and games"
+      ],
+      "projects": [
+        "Khansole Academy (assignment)"
+      ],
+      "concepts": [
+        "random_module",
+        "modules_imports",
+        "simulation_monte_carlo"
+      ]
+    },
+    {
+      "id": "code_in_place:w4_understanding_variables",
+      "title": "Week 4: Understanding Variables (Functions Revisited)",
+      "order": 9,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 4",
+        "Functions with parameters",
+        "Return values",
+        "Variable scope: local variables, each function's own variables",
+        "Tracing function calls"
+      ],
+      "projects": [
+        "Khansole Academy (assignment)"
+      ],
+      "concepts": [
+        "parameters_arguments",
+        "return_values",
+        "scope",
+        "functions",
+        "variables"
+      ]
+    },
+    {
+      "id": "code_in_place:w5_graphics",
+      "title": "Week 5: Graphics",
+      "order": 10,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 5",
+        "Week 5 topic: Graphics (Unit 3: Graphics)",
+        "Canvas and coordinate system",
+        "create_rectangle, create_oval, create_line, create_text",
+        "Colors and random colors",
+        "Drawing with loops and helper functions with parameters"
+      ],
+      "projects": [
+        "Random Art (assignment)",
+        "Random Circles / Simple Flags (section)"
+      ],
+      "concepts": [
+        "graphics_canvas",
+        "lib_stanford_graphics",
+        "parameters_arguments",
+        "return_values",
+        "random_module",
+        "for_loops"
+      ]
+    },
+    {
+      "id": "code_in_place:w5_animation",
+      "title": "Week 5: Animation",
+      "order": 11,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 5",
+        "Animation loop: move objects, pause (time.sleep)",
+        "Object references returned by canvas.create_*",
+        "Moving and checking positions; bouncing off walls",
+        "Mouse input / clicks (get_last_click, mouse location)"
+      ],
+      "projects": [
+        "Random Art (assignment)"
+      ],
+      "concepts": [
+        "graphics_canvas",
+        "lib_stanford_graphics",
+        "while_loops",
+        "game_development",
+        "objects_methods"
+      ]
+    },
+    {
+      "id": "code_in_place:w6_lists",
+      "title": "Week 6: Lists",
+      "order": 12,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 6",
+        "Week 6 topic: Lists + Dictionaries (Unit 3: Graphics)",
+        "Creating lists, indexing, len()",
+        "append, pop, in",
+        "Looping over lists (for x in lst / for i in range(len(lst)))",
+        "Lists as parameters",
+        "Lists of graphical objects"
+      ],
+      "projects": [
+        "World's Hardest Game (assignment)",
+        "Heads Up / Index Game / List Practice (section)"
+      ],
+      "concepts": [
+        "lists",
+        "list_methods",
+        "for_loops",
+        "builtin_functions",
+        "mutability_aliasing",
+        "collections"
+      ]
+    },
+    {
+      "id": "code_in_place:w6_dictionaries",
+      "title": "Week 6: Dictionaries",
+      "order": 13,
+      "url": "https://codeinplace.stanford.edu/",
+      "topics": [
+        "Week 6",
+        "Key/value pairs",
+        "Lookup, insert, update, in",
+        "Looping over keys/items",
+        "Counting with dictionaries",
+        "Reading word data from a file (section: cswords.txt)"
+      ],
+      "projects": [
+        "World's Hardest Game (assignment)",
+        "Heads Up (section)"
+      ],
+      "concepts": [
+        "dictionaries",
+        "collections",
+        "loop_patterns",
+        "file_io"
+      ]
+    },
+    {
+      "id": "code_in_place:final_project",
+      "title": "Final Project (Beyond Code in Place)",
+      "order": 14,
+      "url": "https://codeinplace.stanford.edu/2025/showcase",
+      "topics": [
+        "Beyond (after Week 6)",
+        "Topic: Creativity",
+        "Open-ended project of the student's choosing (Karel, console, or graphics)",
+        "Shared in the public project showcase",
+        "Continue learning after Code in Place"
+      ],
+      "projects": [
+        "Final Project (optional, showcased)"
+      ],
+      "concepts": [
+        "game_development",
+        "decomposition",
+        "graphics_canvas",
+        "lists",
+        "dictionaries"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "karel_robot",
+      "label": "Karel the Robot",
+      "category": "data_web",
+      "first_module": "code_in_place:w1_intro_karel",
+      "depth": "deep",
+      "course_label": "Karel the Robot (Unit 1)"
+    },
+    {
+      "id": "functions",
+      "label": "Functions (defining & calling)",
+      "category": "functions",
+      "first_module": "code_in_place:w1_intro_karel",
+      "depth": "deep",
+      "course_label": "Defining new Karel commands / functions"
+    },
+    {
+      "id": "comments",
+      "label": "Comments",
+      "category": "environment",
+      "first_module": "code_in_place:w1_intro_karel",
+      "depth": "practiced"
+    },
+    {
+      "id": "ide_editor",
+      "label": "Browser-based IDE",
+      "category": "environment",
+      "first_module": "code_in_place:w1_intro_karel",
+      "depth": "introduced",
+      "course_label": "Code in Place online IDE"
+    },
+    {
+      "id": "algorithms",
+      "label": "Algorithmic thinking",
+      "category": "algorithms",
+      "first_module": "code_in_place:w1_intro_karel",
+      "depth": "practiced"
+    },
+    {
+      "id": "for_loops",
+      "label": "for loops",
+      "category": "control_flow",
+      "first_module": "code_in_place:w1_control_flow",
+      "depth": "deep"
+    },
+    {
+      "id": "while_loops",
+      "label": "while loops",
+      "category": "control_flow",
+      "first_module": "code_in_place:w1_control_flow",
+      "depth": "deep"
+    },
+    {
+      "id": "conditionals",
+      "label": "if / elif / else",
+      "category": "control_flow",
+      "first_module": "code_in_place:w1_control_flow",
+      "depth": "deep"
+    },
+    {
+      "id": "range_function",
+      "label": "range()",
+      "category": "control_flow",
+      "first_module": "code_in_place:w1_control_flow",
+      "depth": "practiced"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w1_control_flow",
+      "depth": "practiced",
+      "course_label": "Karel conditions; Python booleans"
+    },
+    {
+      "id": "computational_thinking",
+      "label": "Computational thinking",
+      "category": "data_web",
+      "first_module": "code_in_place:w1_control_flow",
+      "depth": "practiced"
+    },
+    {
+      "id": "decomposition",
+      "label": "Decomposition & top-down design",
+      "category": "functions",
+      "first_module": "code_in_place:w2_decomposition",
+      "depth": "deep",
+      "course_label": "Decomposition / top-down design"
+    },
+    {
+      "id": "abstraction",
+      "label": "Abstraction",
+      "category": "functions",
+      "first_module": "code_in_place:w2_decomposition",
+      "depth": "introduced"
+    },
+    {
+      "id": "docstrings",
+      "label": "Docstrings / function comments",
+      "category": "functions",
+      "first_module": "code_in_place:w2_decomposition",
+      "depth": "introduced",
+      "course_label": "Pre- and post-conditions in function comments"
+    },
+    {
+      "id": "pep8_style",
+      "label": "Style conventions",
+      "category": "environment",
+      "first_module": "code_in_place:w2_art_of_coding",
+      "depth": "practiced",
+      "course_label": "The Art of Coding"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging",
+      "category": "errors_testing",
+      "first_module": "code_in_place:w2_art_of_coding",
+      "depth": "introduced"
+    },
+    {
+      "id": "print_output",
+      "label": "print()",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "deep"
+    },
+    {
+      "id": "user_input",
+      "label": "input()",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "deep"
+    },
+    {
+      "id": "variables",
+      "label": "Variables & assignment",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "deep"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "type_conversion",
+      "label": "Type conversion",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "practiced"
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "category": "strings",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "introduced"
+    },
+    {
+      "id": "running_scripts",
+      "label": "Running programs / main()",
+      "category": "environment",
+      "first_module": "code_in_place:w3_intro_python",
+      "depth": "introduced"
+    },
+    {
+      "id": "expressions",
+      "label": "Expressions",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "practiced"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "practiced"
+    },
+    {
+      "id": "integers_floats",
+      "label": "int and float",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "practiced"
+    },
+    {
+      "id": "constants",
+      "label": "Constants",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation",
+      "category": "strings",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "introduced"
+    },
+    {
+      "id": "math_module",
+      "label": "math module",
+      "category": "modules_libs",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "introduced"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Modules & imports",
+      "category": "modules_libs",
+      "first_module": "code_in_place:w3_expressions",
+      "depth": "introduced"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w4_control_flow_revisited",
+      "depth": "practiced"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "code_in_place:w4_control_flow_revisited",
+      "depth": "practiced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns",
+      "category": "control_flow",
+      "first_module": "code_in_place:w4_control_flow_revisited",
+      "depth": "practiced"
+    },
+    {
+      "id": "random_module",
+      "label": "random module",
+      "category": "modules_libs",
+      "first_module": "code_in_place:w4_random",
+      "depth": "practiced",
+      "course_label": "Random numbers"
+    },
+    {
+      "id": "simulation_monte_carlo",
+      "label": "Simulation",
+      "category": "algorithms",
+      "first_module": "code_in_place:w4_random",
+      "depth": "introduced"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters & arguments",
+      "category": "functions",
+      "first_module": "code_in_place:w4_understanding_variables",
+      "depth": "deep"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "code_in_place:w4_understanding_variables",
+      "depth": "deep"
+    },
+    {
+      "id": "scope",
+      "label": "Variable scope",
+      "category": "functions",
+      "first_module": "code_in_place:w4_understanding_variables",
+      "depth": "practiced",
+      "course_label": "Understanding Variables"
+    },
+    {
+      "id": "graphics_canvas",
+      "label": "Graphics / canvas",
+      "category": "data_web",
+      "first_module": "code_in_place:w5_graphics",
+      "depth": "deep",
+      "course_label": "Graphics (Unit 3)"
+    },
+    {
+      "id": "lib_stanford_graphics",
+      "label": "Stanford CS106A graphics library (Canvas)",
+      "category": "modules_libs",
+      "first_module": "code_in_place:w5_graphics",
+      "depth": "deep",
+      "course_label": "from graphics import Canvas",
+      "new": true
+    },
+    {
+      "id": "game_development",
+      "label": "Game development",
+      "category": "data_web",
+      "first_module": "code_in_place:w5_animation",
+      "depth": "practiced"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Using objects & methods",
+      "category": "oop",
+      "first_module": "code_in_place:w5_animation",
+      "depth": "introduced",
+      "course_label": "canvas object methods"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "code_in_place:w6_lists",
+      "depth": "deep"
+    },
+    {
+      "id": "list_methods",
+      "label": "List methods",
+      "category": "collections",
+      "first_module": "code_in_place:w6_lists",
+      "depth": "practiced"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Built-in functions",
+      "category": "functions",
+      "first_module": "code_in_place:w6_lists",
+      "depth": "introduced",
+      "course_label": "len()"
+    },
+    {
+      "id": "mutability_aliasing",
+      "label": "Mutability / aliasing",
+      "category": "collections",
+      "first_module": "code_in_place:w6_lists",
+      "depth": "introduced",
+      "course_label": "Lists passed as parameters"
+    },
+    {
+      "id": "collections",
+      "label": "Collections",
+      "category": "collections",
+      "first_module": "code_in_place:w6_lists",
+      "depth": "introduced"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "code_in_place:w6_dictionaries",
+      "depth": "deep"
+    },
+    {
+      "id": "file_io",
+      "label": "File I/O",
+      "category": "files_io",
+      "first_module": "code_in_place:w6_dictionaries",
+      "depth": "introduced",
+      "course_label": "Reading word lists (section only)"
+    }
+  ],
+  "edges": [
+    {
+      "source": "code_in_place:w1_intro_karel",
+      "target": "code_in_place:w1_control_flow",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w1_control_flow",
+      "target": "code_in_place:w2_decomposition",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w2_decomposition",
+      "target": "code_in_place:w2_art_of_coding",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w2_art_of_coding",
+      "target": "code_in_place:w3_intro_python",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w3_intro_python",
+      "target": "code_in_place:w3_expressions",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w3_expressions",
+      "target": "code_in_place:w4_control_flow_revisited",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w4_control_flow_revisited",
+      "target": "code_in_place:w4_random",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w4_random",
+      "target": "code_in_place:w4_understanding_variables",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w4_understanding_variables",
+      "target": "code_in_place:w5_graphics",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w5_graphics",
+      "target": "code_in_place:w5_animation",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w5_animation",
+      "target": "code_in_place:w6_lists",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w6_lists",
+      "target": "code_in_place:w6_dictionaries",
+      "type": "precedes"
+    },
+    {
+      "source": "code_in_place:w6_dictionaries",
+      "target": "code_in_place:final_project",
+      "type": "precedes"
+    },
+    {
+      "source": "karel_robot",
+      "target": "functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "decomposition",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decomposition",
+      "target": "pep8_style",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "range_function",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "print_output",
+      "target": "user_input",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "user_input",
+      "target": "type_conversion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_types",
+      "target": "type_conversion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_types",
+      "target": "integers_floats",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "integers_floats",
+      "target": "arithmetic_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "arithmetic_operators",
+      "target": "expressions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "constants",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "expressions",
+      "target": "comparison_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "comparison_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "logical_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "modules_imports",
+      "target": "random_module",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "parameters_arguments",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "return_values",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "graphics_canvas",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "random_module",
+      "target": "graphics_canvas",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "graphics_canvas",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decomposition",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "dictionaries",
+      "target": "collections",
+      "type": "is_a"
+    },
+    {
+      "source": "random_module",
+      "target": "modules_imports",
+      "type": "is_a"
+    },
+    {
+      "source": "math_module",
+      "target": "modules_imports",
+      "type": "is_a"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "expressions",
+      "type": "part_of"
+    },
+    {
+      "source": "arithmetic_operators",
+      "target": "expressions",
+      "type": "part_of"
+    },
+    {
+      "source": "logical_operators",
+      "target": "expressions",
+      "type": "part_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "return_values",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "scope",
+      "target": "functions",
+      "type": "part_of"
+    },
+    {
+      "source": "constants",
+      "target": "variables",
+      "type": "part_of"
+    },
+    {
+      "source": "string_concatenation",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "graphics_canvas",
+      "target": "lib_stanford_graphics",
+      "type": "uses_tool"
+    },
+    {
+      "source": "code_in_place:w5_graphics",
+      "target": "lib_stanford_graphics",
+      "type": "uses_tool"
+    },
+    {
+      "source": "code_in_place:w5_animation",
+      "target": "lib_stanford_graphics",
+      "type": "uses_tool"
+    },
+    {
+      "source": "code_in_place:w4_random",
+      "target": "random_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "code_in_place:w3_expressions",
+      "target": "math_module",
+      "type": "uses_tool"
+    },
+    {
+      "source": "code_in_place:w1_intro_karel",
+      "target": "ide_editor",
+      "type": "uses_tool"
+    },
+    {
+      "source": "decomposition",
+      "target": "abstraction",
+      "type": "related_to"
+    },
+    {
+      "source": "karel_robot",
+      "target": "computational_thinking",
+      "type": "related_to"
+    },
+    {
+      "source": "debugging",
+      "target": "pep8_style",
+      "type": "related_to"
+    },
+    {
+      "source": "objects_methods",
+      "target": "graphics_canvas",
+      "type": "related_to"
+    },
+    {
+      "source": "mutability_aliasing",
+      "target": "lists",
+      "type": "related_to"
+    },
+    {
+      "source": "dictionaries",
+      "target": "file_io",
+      "type": "related_to"
+    }
+  ]
+}

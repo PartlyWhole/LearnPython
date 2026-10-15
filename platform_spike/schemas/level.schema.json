@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "level.schema.json",
+  "title": "Level",
+  "description": "A playable level: one visible world, optional hidden worlds that the same program must also solve, a goal, optional teaching constraints, and the topic-graph topics it practises. Mirrored by engine.validate_level; tests/test_contracts.py keeps the two in sync.",
+  "type": "object",
+  "required": [
+    "format",
+    "id",
+    "title",
+    "world",
+    "goal"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": 1,
+      "description": "Format version. Bump on any breaking change and add a migration."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brief": {
+      "type": "string",
+      "description": "What the learner is asked to do, shown before they start."
+    },
+    "starter_code": {
+      "type": "string"
+    },
+    "world": {
+      "$ref": "#/$defs/world"
+    },
+    "hidden_worlds": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/world"
+      },
+      "description": "Variants the program must also solve. They stop hard-coded move sequences (docs/decisions.md D9)."
+    },
+    "goal": {
+      "$ref": "#/$defs/goal",
+      "minProperties": 1
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_lines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "banned": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/construct"
+          },
+          "uniqueItems": true
+        },
+        "required": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/construct"
+          },
+          "uniqueItems": true,
+          "description": "Constructs the solution must use, e.g. ['def'] for 'define turn_right yourself'."
+        },
+        "hidden_commands": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "move",
+              "turn_left",
+              "front_is_clear",
+              "pick",
+              "put",
+              "gems_here",
+              "scan",
+              "coin_flip"
+            ]
+          },
+          "description": "Robot commands this level withholds (e.g. scan, so the robot 'can't count'). Calling one is a learner error of kind 'unavailable'."
+        }
+      }
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+\\.[a-z0-9_]+$"
+      },
+      "description": "Topic IDs from ../topics/all_topics.json that this level practises."
+    },
+    "drive": {
+      "description": "Drive mode (docs/lessons.md section 3): the level is played with command buttons instead of code. Each press adds that command to a program the engine runs.",
+      "type": "object",
+      "required": [
+        "buttons"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "buttons": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "move",
+              "turn_left",
+              "pick",
+              "put"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "cell": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "world": {
+      "type": "object",
+      "required": [
+        "width",
+        "height",
+        "start"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "start": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "enum": [
+                "E",
+                "N",
+                "W",
+                "S"
+              ]
+            }
+          ],
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "[x, y, direction]. x grows east, y grows south; (0, 0) is the top-left cell."
+        },
+        "blocked": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cell"
+          }
+        },
+        "gems": {
+          "$ref": "#/$defs/gem_map"
+        },
+        "max_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000,
+          "default": 10000
+        },
+        "bag": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10000
+            },
+            {
+              "const": "infinite"
+            }
+          ],
+          "default": 0,
+          "description": "Gems the robot starts with, for put(). 'infinite' never runs out."
+        },
+        "goal": {
+          "$ref": "#/$defs/goal",
+          "description": "Overrides the level goal for this world only (for example end_at when world sizes differ)."
+        }
+      }
+    },
+    "construct": {
+      "enum": [
+        "for",
+        "while",
+        "if",
+        "def",
+        "lambda",
+        "import",
+        "comprehension",
+        "compare",
+        "return"
+      ]
+    },
+    "gem_map": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[0-9]+,[0-9]+$"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "description": "Gem counts keyed by \"x,y\"."
+    },
+    "goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "all_gems_collected": {
+          "type": "boolean"
+        },
+        "gems_exactly": {
+          "$ref": "#/$defs/gem_map",
+          "description": "The final gem layout must equal this map exactly (no more, no fewer)."
+        },
+        "end_at": {
+          "$ref": "#/$defs/cell"
+        },
+        "facing": {
+          "enum": [
+            "E",
+            "N",
+            "W",
+            "S"
+          ]
+        },
+        "bag_at_least": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_error": {
+          "type": "boolean",
+          "description": "Defaults to true: a run that raises fails."
+        }
+      }
+    }
+  }
+}

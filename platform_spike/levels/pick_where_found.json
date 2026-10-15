@@ -1,0 +1,115 @@
+{
+  "format": 1,
+  "id": "pick_where_found",
+  "title": "Pick where you find one",
+  "brief": "The robot waits on the dock, just left of an 8-cell row. Step onto each cell and pick up its gem, if it has one. Other rows hide their gems in other places: some have none, some have one on every cell.",
+  "starter_code": "",
+  "world": {
+    "width": 9,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "2,0": 1,
+      "3,0": 1,
+      "5,0": 1,
+      "8,0": 1
+    }
+  },
+  "hidden_worlds": [
+    {
+      "name": "no gems",
+      "width": 9,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ]
+    },
+    {
+      "name": "gem on every cell",
+      "width": 9,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 1,
+        "2,0": 1,
+        "3,0": 1,
+        "4,0": 1,
+        "5,0": 1,
+        "6,0": 1,
+        "7,0": 1,
+        "8,0": 1
+      }
+    },
+    {
+      "name": "first cell only",
+      "width": 9,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 1
+      }
+    },
+    {
+      "name": "last cell only",
+      "width": 9,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "8,0": 1
+      }
+    },
+    {
+      "name": "other places",
+      "width": 9,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 1,
+        "4,0": 1,
+        "6,0": 1,
+        "7,0": 1
+      }
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ],
+    "banned": [
+      "while"
+    ],
+    "required": [
+      "for",
+      "if"
+    ]
+  },
+  "topics": [
+    "conditionals.if_statement",
+    "for_loops.if_inside_loop"
+  ]
+}

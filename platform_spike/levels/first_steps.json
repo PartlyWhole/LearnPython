@@ -1,0 +1,25 @@
+{
+  "format": 1,
+  "id": "first_steps",
+  "title": "First steps",
+  "brief": "The robot follows your commands one line at a time, top to bottom. Walk to the gem and pick it up.",
+  "starter_code": "move()\n",
+  "world": {
+    "width": 5,
+    "height": 3,
+    "start": [
+      0,
+      1,
+      "E"
+    ],
+    "gems": {
+      "3,1": 1
+    }
+  },
+  "goal": {
+    "all_gems_collected": true
+  },
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ]
+}

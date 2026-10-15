@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "id": "square_of_squares",
+  "title": "Square of squares",
+  "brief": "Fill four small squares, each 2 by 2, with one empty column between them. Teach the robot one square, then repeat it. You have exactly 16 gems.",
+  "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n",
+  "world": {
+    "width": 13,
+    "height": 3,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "bag": 16
+  },
+  "constraints": {
+    "required": [
+      "for",
+      "def"
+    ],
+    "max_lines": 30,
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "nested_loops.loop_inside_loop",
+    "decomposition.extract_repeated_code"
+  ],
+  "goal": {
+    "no_error": true,
+    "gems_exactly": {
+      "0,0": 1,
+      "0,1": 1,
+      "1,0": 1,
+      "1,1": 1,
+      "3,0": 1,
+      "3,1": 1,
+      "4,0": 1,
+      "4,1": 1,
+      "6,0": 1,
+      "6,1": 1,
+      "7,0": 1,
+      "7,1": 1,
+      "9,0": 1,
+      "9,1": 1,
+      "10,0": 1,
+      "10,1": 1
+    }
+  }
+}

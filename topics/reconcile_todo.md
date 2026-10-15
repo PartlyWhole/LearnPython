@@ -1,0 +1,31 @@
+# Reconciliation queue (handled after all waves)
+
+- DUPLICATE: return_values.multiple_return_values (B05) vs unpacking.return_multiple_values (B06). Keep one, make the other depend on / encompass it.
+- DUPLICATE: parameters_arguments.mutable_default_trap (B05) vs mutable default KP in mutability_aliasing.lists_in_functions (B06).
+- GAP: sum/max/min/len on lists — B05 taught built-ins without lists, B06 wrote loops by hand. Add a topic (or KP) and link lists.loop_over_items.
+- CHECK: for_loops.loop_over_characters (B04, pending concept:strings) vs any string-traversal content in B03.
+- CHECK: B04 match_statement snippets were never run (Python 3.9). Re-run with 3.13.
+- DONE: sequence/mapping match patterns -> nested_data_structures.match_structure_patterns (B07).
+- CHECK: main_guard.if_name_main pending on modules_imports (B13).
+- CHECK: file_io.handle_missing_file (B10) vs any FileNotFoundError example in B09 exceptions — keep one owner.
+- CHECK: json_data.json_pitfalls pending on concept:sets only for an error demo — swap example to drop the pending.
+- CHECK: early `import csv/json/os/copy` used as memorised lines before B13 modules_imports; B13 should encompass these.
+- CHECK: B09 left KeyError (B07), FileNotFoundError (B10) and parametrize (B08) to siblings — confirm they exist or add.
+- GAP: collection type hints (list[int], dict[str, int]) handed B05->B06/B07, written by neither.
+- CHECK: generators (B08) should encompass list_comprehensions.any_all_and_sum (generator-expression preview).
+- POLICY: promote non-core prerequisites of core topics to core (iteration.iter_and_next, print_output.sep_and_end, unpacking.star_unpacking, copying.shallow_vs_deep...), then restore links/core flags that batches avoided (B04 grids/fencepost, B08 generators, B08 unpack_in_calls re-teach).
+- CHECK: generator expressions — B07 any_all_and_sum KP4 preview vs B08 generators.generator_expressions; B08 owns.
+- GAP: functions stored in a dict / dispatch table (100 Days calculator; B10 CLI dispatch) — not written.
+- CHECK: B08 topics with 4 prerequisites added only to satisfy key-prereq rule (map_and_filter, star_args...) — trim incidental ones.
+- DONE: isinstance taught in B11 objects_methods.isinstance_checks; switch B08 recursion.nested_lists from type()==list to isinstance.
+- RESOLVE: main_guard.if_name_main + lib_pytest.write_and_run_tests pending -> modules_imports.own_modules; lib_pytest.raises_and_test_folders -> modules_imports.packages_and_import_errors; consider tool_pip.pip_install as prereq of lib_pytest / tool_mypy.
+- CHECK: math.isclose — B13 math_module.isclose_and_inf vs B14 floating_point_precision; B14 should encompass, not duplicate.
+- NOTE: memorised imports in earlier waves stay memorised (no backward prereqs); B13 practice revisits them.
+- CHECK: B15 has ~11 KPs with 15-28 line worked examples; trim to changed lines where possible. linked_lists.reverse_in_place is a cut candidate.
+- RESOLVE: B15 hash_maps_internals -> complexity_big_o.cost_of_builtin_operations; B14 simulation pending concept:random_module -> random_module.random_numbers.
+- RESOLVE: B17 rest_api_design -> apis_http.request_response_cycle; lib_flask contact-form email -> lib_smtplib.email_messages_and_templates (if B17 didn't).
+- NOTE: B16 all non-core by design (network). bs4/selenium/pyautogui snippets unrun.
+- REVIEW: B20 markdown (7) + static_site_generation (8) follow Boot.dev's guided project chapter by chapter — consider flagging as a multistep project rather than 15 topics.
+- PARTIAL: dispatch tables covered for tools in function_calling.dispatch_tool_calls; general "functions in a dict" topic still missing (B08 territory).
+- RESOLVE: llm_apis entry could take apis_http.request_response_cycle as optional prereq.
+- RESOLVE: rest_api_design.resources_and_methods pending -> apis_http.request_response_cycle; make apis_http.request_response_cycle prereq of web_development.how_web_apps_work or trim its overlapping KPs.

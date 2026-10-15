@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "id": "piles",
+  "title": "Clear the piles",
+  "brief": "Some cells hold a pile of gems. Collect every gem and finish at the far end of the corridor. Careful: a pile can be bigger than one, and the cell you start on might have one too.",
+  "starter_code": "while front_is_clear():\n    move()\n    if gems_here():\n        pick()\n",
+  "world": {
+    "width": 7,
+    "height": 1,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "gems": {
+      "1,0": 3,
+      "3,0": 1,
+      "4,0": 2,
+      "6,0": 4
+    },
+    "goal": {
+      "end_at": [
+        6,
+        0
+      ]
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 4,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 2,
+        "2,0": 5
+      },
+      "name": "pile at the start",
+      "goal": {
+        "end_at": [
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "0,0": 3
+      },
+      "name": "one cell",
+      "goal": {
+        "end_at": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "width": 6,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "name": "no piles",
+      "goal": {
+        "end_at": [
+          5,
+          0
+        ]
+      }
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "while_loops.loop_until_condition",
+    "nested_loops.loop_inside_loop"
+  ]
+}

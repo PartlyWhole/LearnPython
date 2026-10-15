@@ -1,0 +1,2056 @@
+{
+  "batch": "B03",
+  "title": "Strings",
+  "concept_map": {
+    "strings": {
+      "topics": [
+        "strings.literals_and_quotes",
+        "strings.multiline_and_raw",
+        "strings.length_and_membership"
+      ],
+      "entry_topic": "strings.literals_and_quotes",
+      "notes": "Iterating over a string with for (traversal, looping and counting characters, py4e 6 / MIT L4) belongs to B04 for_loops / loop_patterns, which run in parallel and should encompass strings.length_and_membership and string_indexing_slicing.index_characters. String equality and ordering are owned by B02 comparison_operators. \\n and \\t are B01 print_output.newlines_and_tabs (non-core, so encompassed rather than required). Regular expressions are a later batch and can use strings.multiline_and_raw for raw strings."
+    },
+    "string_concatenation": {
+      "topics": [
+        "string_concatenation.join_with_plus",
+        "string_concatenation.numbers_into_text",
+        "string_concatenation.repeat_with_star"
+      ],
+      "entry_topic": "string_concatenation.join_with_plus",
+      "notes": "Building strings inside loops (accumulating with +=) belongs to B04 loop_patterns, which should encompass join_with_plus. f-strings are the preferred alternative and live in string_formatting."
+    },
+    "string_indexing_slicing": {
+      "topics": [
+        "string_indexing_slicing.index_characters",
+        "string_indexing_slicing.negative_indices",
+        "string_indexing_slicing.slice_start_stop",
+        "string_indexing_slicing.slice_with_step",
+        "string_indexing_slicing.slice_patterns"
+      ],
+      "entry_topic": "string_indexing_slicing.index_characters",
+      "notes": "Taught before list slicing; B06 list_slicing should list these topics as prerequisites and teach only what differs for lists (slice assignment, copying). Looping over indexes with range(len(s)) is B04."
+    },
+    "string_methods": {
+      "topics": [
+        "string_methods.calling_methods_case",
+        "string_methods.strip_whitespace",
+        "string_methods.find_and_count",
+        "string_methods.replace_text",
+        "string_methods.check_content",
+        "string_methods.split_into_parts",
+        "string_methods.join_pieces",
+        "string_methods.parse_with_find_and_slice"
+      ],
+      "entry_topic": "string_methods.calling_methods_case",
+      "notes": "split() returns a list; lists themselves are B06, which should encompass split_into_parts and join_pieces. Loops over split() results and over lines of a file are B04/B10. Alignment methods (center/ljust/rjust/zfill) are covered by f-string specs in string_formatting.width_and_alignment and not given their own topic. partition(), casefold() and dir(str)/help(str) were left out; B05 builtin_functions may add method discovery."
+    },
+    "string_formatting": {
+      "topics": [
+        "string_formatting.fstring_basics",
+        "string_formatting.number_format_specs",
+        "string_formatting.width_and_alignment",
+        "string_formatting.format_method_and_percent"
+      ],
+      "entry_topic": "string_formatting.fstring_basics",
+      "notes": "f\"{x=}\" for debugging belongs to B09 debugging. print(sep=, end=) is B01 print_output.sep_and_end. Format specs for dates are B13 datetime."
+    },
+    "string_immutability": {
+      "topics": [
+        "string_immutability.build_new_strings"
+      ],
+      "entry_topic": "string_immutability.build_new_strings",
+      "notes": "One topic, as the evidence is three 'introduced' mentions. The general mutable/immutable distinction and aliasing of lists is B06 mutability_aliasing, which should encompass this topic."
+    },
+    "unicode_encoding": {
+      "topics": [
+        "unicode_encoding.ord_and_chr",
+        "unicode_encoding.text_vs_bytes"
+      ],
+      "entry_topic": "unicode_encoding.ord_and_chr",
+      "notes": "Both topics are supplemental. File encodings (open(..., encoding='utf-8')) belong to B10 file_io; bytes from the network to the web batch. A full Caesar cipher over a whole message needs a loop and belongs to B04/B05 practice."
+    }
+  },
+  "topics": [
+    {
+      "id": "strings.literals_and_quotes",
+      "title": "String values and quotes",
+      "concept": "strings",
+      "summary": "Store text in a variable as a string, put quotes inside strings, and escape quotes and backslashes.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "variables.assign_and_print",
+        "data_types.values_have_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A string is text in quotes, stored like any value",
+          "worked_example": "greeting = \"Hello\"\nempty = \"\"\nprint(greeting, type(greeting))\n# Hello <class 'str'>\n\"\" is the empty string: a string with no characters.",
+          "practice": "Predict the output of short programs that store and print strings; pick which values are strings.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "variables.assign_and_print",
+            "data_types.values_have_types"
+          ]
+        },
+        {
+          "title": "Quotes inside a string: use the other kind outside",
+          "worked_example": "print(\"It's late\")\nprint('She said \"hi\"')\n# It's late\n# She said \"hi\"",
+          "practice": "Choose the outer quotes that make a given sentence a valid string; write a print for a sentence with an apostrophe.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.hello_world"
+          ]
+        },
+        {
+          "title": "Escaping with a backslash: \\' \\\" and \\\\",
+          "worked_example": "print('It\\'s late')\nprint(\"C:\\\\temp\")\n# It's late\n# C:\\temp\nA backslash plus the next character is one escape: \\' is a quote, \\\\ is one backslash.",
+          "practice": "Predict what strings with escapes print; fill in the escape needed to print a quote or a backslash.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Bug: an apostrophe ends the string early",
+          "worked_example": "print('It's late')   # SyntaxError: the string ends after It\nFix: print(\"It's late\") or print('It\\'s late')",
+          "practice": "Find and fix the quoting error in one-line prints.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "print_output.hello_world",
+          "weight": 0.3
+        },
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "strings.multiline_and_raw",
+      "title": "Multi-line strings and raw strings",
+      "concept": "strings",
+      "summary": "Write strings that span several lines with triple quotes, and keep backslashes literal with raw strings.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "strings.literals_and_quotes",
+        "print_output.newlines_and_tabs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Triple quotes span several lines",
+          "worked_example": "poem = \"\"\"Roses are red,\nviolets are blue.\"\"\"\nprint(poem)\n# Roses are red,\n# violets are blue.\nThe line break typed in the code is part of the string.",
+          "practice": "Predict the printed lines of a triple-quoted string; write one that prints a 3-line address.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "Triple-quoted text keeps every newline and space",
+          "worked_example": "text = \"\"\"\n    hi\n\"\"\"\nprint(text)\n# (empty line)\n#     hi\n# (empty line)\nThe newline right after the opening quotes, the indentation and the final newline are all kept.",
+          "practice": "Predict how many lines (including blank ones) a triple-quoted string prints and where the spaces go.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Backslashes in Windows paths surprise you",
+          "worked_example": "print(\"C:\\new\\table\")\n# C:\n# ew<TAB>able\n\\n and \\t were read as escapes. Fix: \"C:\\\\new\\\\table\"",
+          "practice": "Spot which backslashes form escapes in a string; fix paths that print wrongly.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "Raw strings r\"...\" keep backslashes as typed",
+          "worked_example": "print(r\"C:\\new\\table\")\n# C:\\new\\table\nThe r prefix turns escapes off; useful for paths and, later, regular expressions.",
+          "practice": "Predict output with and without the r prefix; choose where a raw string avoids a bug.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "strings.literals_and_quotes",
+          "weight": 0.5
+        },
+        {
+          "topic": "print_output.newlines_and_tabs",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e"
+      ]
+    },
+    {
+      "id": "strings.length_and_membership",
+      "title": "Length of a string and the in operator",
+      "concept": "strings",
+      "summary": "Count characters with len() and test whether one string appears inside another with in and not in.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "strings.literals_and_quotes",
+        "booleans.true_and_false"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "len() counts characters",
+          "worked_example": "print(len(\"hello\"))     # 5\nprint(len(\"hi there\"))  # 8: the space counts\nprint(len(\"\"))          # 0",
+          "practice": "Predict len() of strings with spaces, punctuation and the empty string.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "Escapes count as one character",
+          "worked_example": "print(len(\"a\\nb\"))   # 3\nprint(len(\"\\\\\"))     # 1\nWhat you type is not what is stored: \\n is one character.",
+          "practice": "Predict len() for strings containing escapes and stored in variables.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "in tests for a substring",
+          "worked_example": "print(\"cat\" in \"concatenate\")   # True\nprint(\"dog\" in \"concatenate\")   # False\nprint(\"\" in \"abc\")              # True: the empty string is in every string",
+          "practice": "Predict True/False for in tests on words and sentences; write an expression that checks for '@' in an email.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "booleans.true_and_false"
+          ]
+        },
+        {
+          "title": "not in, and in is case-sensitive",
+          "worked_example": "print(\"Cat\" in \"concatenate\")   # False: C is not c\nprint(\"x\" not in \"abc\")         # True",
+          "practice": "Predict results with mixed case and not in; fix a check that misses a capitalised word.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "strings.literals_and_quotes",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "string_concatenation.join_with_plus",
+      "title": "Joining strings with +",
+      "concept": "string_concatenation",
+      "summary": "Build new strings with + and +=, adding the spaces yourself, and tell + apart from commas in print.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "strings.literals_and_quotes",
+        "data_types.types_decide_operations",
+        "variables.update_with_own_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "+ glues two strings into one",
+          "worked_example": "word = \"snow\" + \"man\"\nprint(word)   # snowman",
+          "practice": "Predict the result of joining 2-3 string literals and variables.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_types.types_decide_operations"
+          ]
+        },
+        {
+          "title": "Spaces do not appear by themselves",
+          "worked_example": "first = \"Ada\"\nlast = \"Lovelace\"\nprint(first + \" \" + last)   # Ada Lovelace\nprint(first + last)         # AdaLovelace",
+          "practice": "Fill in the missing piece so the output has correct spacing; fix a greeting with a missing space.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "Building a string step by step with +=",
+          "worked_example": "msg = \"\"\nmsg += \"ab\"\nmsg += \"cd\"\nprint(msg)   # abcd",
+          "practice": "Trace a string variable through several += steps.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "+ inside print vs commas between values",
+          "worked_example": "name = \"Ada\"\nprint(\"Hi\", name)    # Hi Ada  (print adds a space)\nprint(\"Hi\" + name)   # HiAda   (+ adds nothing)",
+          "practice": "Predict which version prints which spacing; rewrite a comma print as one concatenated string.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_types.types_decide_operations",
+          "weight": 0.3
+        },
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.3
+        },
+        {
+          "topic": "print_output.multiple_values",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "string_concatenation.numbers_into_text",
+      "title": "Putting numbers into strings with str()",
+      "concept": "string_concatenation",
+      "summary": "Fix the str + int TypeError with str(), and convert the other way when strings of digits must be added as numbers.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "string_concatenation.join_with_plus",
+        "type_conversion.numbers_and_strings"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A string plus a number is a TypeError",
+          "worked_example": "age = 30\nprint(\"Age: \" + age)\n# TypeError: can only concatenate str (not \"int\") to str",
+          "practice": "Predict which lines raise TypeError in a short program mixing strings and numbers.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_types.types_decide_operations"
+          ]
+        },
+        {
+          "title": "Convert with str() before joining",
+          "worked_example": "age = 30\nprint(\"Age: \" + str(age))   # Age: 30",
+          "practice": "Fix concatenations that mix numbers and text; fill in the conversion.",
+          "formats": [
+            "fix_the_bug",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "type_conversion.numbers_and_strings"
+          ]
+        },
+        {
+          "title": "The other direction: digits as text are joined, not added",
+          "worked_example": "a = \"3\"\nb = \"4\"\nprint(a + b)             # 34\nprint(int(a) + int(b))   # 7",
+          "practice": "Predict + on strings of digits vs converted numbers; choose the conversion that gives the sum.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Building output from a computed number",
+          "worked_example": "total = 9.456\nprint(\"Total: \" + str(round(total, 2)) + \" EUR\")\n# Total: 9.46 EUR",
+          "practice": "Write one line that builds a message from text and a rounded number.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_concatenation.join_with_plus",
+          "weight": 0.8
+        },
+        {
+          "topic": "type_conversion.numbers_and_strings",
+          "weight": 0.6
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc",
+        "py4e",
+        "100_days_of_code",
+        "code_in_place",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "string_concatenation.repeat_with_star",
+      "title": "Repeating strings with *",
+      "concept": "string_concatenation",
+      "summary": "Repeat a string with *, combine repetition with +, and avoid the type errors * gives on strings.",
+      "minutes": 13,
+      "core": true,
+      "prerequisites": [
+        "string_concatenation.join_with_plus",
+        "arithmetic_operators.basic_four",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A string times an integer repeats it",
+          "worked_example": "print(\"ab\" * 3)    # ababab\nprint(\"-\" * 20)    # a line of 20 dashes",
+          "practice": "Predict repeated strings; write an expression that makes a line of 10 '='.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        },
+        {
+          "title": "Combining * with +",
+          "worked_example": "print(\" \" * 3 + \"*\")              #    *\nprint(\"=\" * 3 + \" Menu \" + \"=\" * 3)   # === Menu ===",
+          "practice": "Predict lines built from * and +; fill in the counts that centre a title in a banner.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_concatenation.join_with_plus"
+          ]
+        },
+        {
+          "title": "Strings vs numbers, and zero repeats",
+          "worked_example": "print(\"3\" * 3)   # 333\nprint(3 * 3)     # 9\nprint(\"ab\" * 0)  # an empty line: 0 or a negative count gives the empty string \"\"",
+          "practice": "Predict * on digit strings, numbers, and zero or negative counts.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Bug: repeating by a float or a string",
+          "worked_example": "\"a\" * 2.5   # TypeError: can't multiply sequence by non-int of type 'float'\nn = \"4\"\n\"-\" * n     # TypeError; fix with \"-\" * int(n)",
+          "practice": "Find and fix repetition bugs caused by a float or an unconverted input string.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_concatenation.join_with_plus",
+          "weight": 0.4
+        },
+        {
+          "topic": "arithmetic_operators.basic_four",
+          "weight": 0.1
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "string_indexing_slicing.index_characters",
+      "title": "Getting one character by its index",
+      "concept": "string_indexing_slicing",
+      "summary": "Read a single character with s[i], counting from 0, and recognise the IndexError for a position past the end.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "strings.length_and_membership",
+        "arithmetic_operators.basic_four"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "s[0] is the first character: counting starts at 0",
+          "worked_example": "s = \"python\"\nprint(s[0])   # p\nprint(s[3])   # h",
+          "practice": "Predict the character at given indexes; write the index that picks a named letter.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "The last character is at len(s) - 1",
+          "worked_example": "s = \"python\"\nprint(len(s))         # 6\nprint(s[len(s) - 1])  # n",
+          "practice": "Predict the last index of strings of different lengths; write an expression for the last character of any string.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "strings.length_and_membership"
+          ]
+        },
+        {
+          "title": "An index past the end raises IndexError",
+          "worked_example": "s = \"python\"\nprint(s[6])\n# IndexError: string index out of range",
+          "practice": "Decide which indexes are valid for a given string; fix an off-by-one that indexes s[len(s)].",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.length_and_membership"
+          ]
+        },
+        {
+          "title": "Indexes can be variables and expressions",
+          "worked_example": "s = \"python\"\ni = 2\nprint(s[i], s[i + 1])   # t h\nThe result is itself a string of length 1.",
+          "practice": "Trace i through a few updates and predict s[i] each time.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.basic_four"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "strings.length_and_membership",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "string_indexing_slicing.negative_indices",
+      "title": "Counting from the end with negative indexes",
+      "concept": "string_indexing_slicing",
+      "summary": "Use s[-1], s[-2], ... to read characters from the end, and know where negative indexes run out.",
+      "minutes": 13,
+      "core": true,
+      "prerequisites": [
+        "string_indexing_slicing.index_characters"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "s[-1] is the last character",
+          "worked_example": "s = \"code\"\nprint(s[-1])   # e\nprint(s[-2])   # d",
+          "practice": "Predict characters at negative indexes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.index_characters"
+          ]
+        },
+        {
+          "title": "Positive and negative indexes name the same positions",
+          "worked_example": " c  o  d  e\n 0  1  2  3\n-4 -3 -2 -1\ns[-k] is s[len(s) - k].",
+          "practice": "Fill in a table of matching positive and negative indexes; convert between them.",
+          "formats": [
+            "trace_table",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.index_characters"
+          ]
+        },
+        {
+          "title": "Negative indexes also run out",
+          "worked_example": "s = \"code\"\nprint(s[-4])   # c\nprint(s[-5])   # IndexError",
+          "practice": "Decide which negative indexes are valid for a given length.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Choosing s[-1] over s[len(s) - 1]; empty strings have no last character",
+          "worked_example": "word = \"pizza\"\nprint(word[-1])   # a, shorter and clearer\nempty = \"\"\nempty[-1]         # IndexError",
+          "practice": "Rewrite len-based indexes with negative ones; predict which lines fail for an empty string.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.index_characters",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc",
+        "py4e",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "string_indexing_slicing.slice_start_stop",
+      "title": "Slicing a string: s[start:stop]",
+      "concept": "string_indexing_slicing",
+      "summary": "Take substrings with s[start:stop], including omitted bounds, negative bounds and out-of-range bounds.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "string_indexing_slicing.negative_indices"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "s[start:stop] includes start, excludes stop",
+          "worked_example": "s = \"python\"\nprint(s[1:4])   # yth: indexes 1, 2, 3",
+          "practice": "Predict slices; write the slice that extracts a named part of a word.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.index_characters"
+          ]
+        },
+        {
+          "title": "A slice has stop - start characters",
+          "worked_example": "s = \"python\"\nprint(s[0:3])        # pyt\nprint(len(s[2:5]))   # 3",
+          "practice": "Compute slice lengths; choose bounds that give exactly n characters.",
+          "formats": [
+            "numeric",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Leaving out start or stop",
+          "worked_example": "s = \"python\"\nprint(s[:3])   # pyt  (from the start)\nprint(s[3:])   # hon  (to the end)\nprint(s[:])    # python (a full copy)",
+          "practice": "Predict slices with omitted bounds; rewrite s[0:len(s)] in its shortest form.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Negative and out-of-range bounds never raise errors",
+          "worked_example": "s = \"python\"\nprint(s[-3:])    # hon\nprint(s[:-1])    # pytho\nprint(s[2:100])  # thon, no IndexError\nprint(s[4:2])    # an empty line: start after stop gives \"\"",
+          "practice": "Predict slices with negative, oversized and crossed bounds; contrast with indexing errors.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.negative_indices"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.negative_indices",
+          "weight": 0.4
+        },
+        {
+          "topic": "string_indexing_slicing.index_characters",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "string_indexing_slicing.slice_with_step",
+      "title": "Slices with a step, and reversing a string",
+      "concept": "string_indexing_slicing",
+      "summary": "Use s[start:stop:step] to take every n-th character and s[::-1] to reverse a string.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "string_indexing_slicing.slice_start_stop",
+        "comparison_operators.compare_mixed_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A step skips characters",
+          "worked_example": "s = \"abcdefgh\"\nprint(s[::2])    # aceg\nprint(s[1::2])   # bdfh",
+          "practice": "Predict stepped slices; write a slice that takes every third character.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "s[::-1] reverses a string",
+          "worked_example": "print(\"stressed\"[::-1])   # desserts",
+          "practice": "Predict reversed strings; write an expression for a variable's reverse.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Negative step with bounds: start is on the right",
+          "worked_example": "s = \"abcdef\"\nprint(s[4:1:-1])   # edc\nprint(s[1:4:-1])   # an empty line: with a negative step, start must be after stop",
+          "practice": "Predict slices with a negative step and explicit bounds.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "Palindrome check with ==",
+          "worked_example": "word = \"level\"\nprint(word == word[::-1])   # True\nprint(\"abc\" == \"abc\"[::-1])  # False",
+          "practice": "Predict palindrome checks; fix a check that compares a string with a slice that drops a character.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_mixed_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.slice_start_stop",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "string_indexing_slicing.slice_patterns",
+      "title": "Common slicing patterns",
+      "concept": "string_indexing_slicing",
+      "summary": "Take the first or last n characters, trim the ends, split a string at its middle and rebuild strings from slices.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "string_indexing_slicing.slice_start_stop",
+        "arithmetic_operators.floor_division_and_modulo",
+        "string_concatenation.join_with_plus"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "First n and last n characters",
+          "worked_example": "s = \"2026-10-12\"\nn = 2\nprint(s[:4], s[-n:])   # 2026 12\nCareful: s[-0:] is the whole string, not the empty one.",
+          "practice": "Write slices for the first/last n characters; predict the n = 0 edge case.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "Drop the first and last character",
+          "worked_example": "quoted = '\"hi\"'\nprint(quoted[1:-1])   # hi",
+          "practice": "Write the slice that strips one character from each end; predict it on 1- and 2-character strings.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "Split at the middle with //",
+          "worked_example": "s = \"abcdefg\"\nmid = len(s) // 2\nprint(s[:mid], s[mid:])   # abc defg",
+          "practice": "Predict the two halves for odd and even lengths.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.floor_division_and_modulo"
+          ]
+        },
+        {
+          "title": "Rebuild strings from slices with +",
+          "worked_example": "s = \"abcdef\"\nprint(s[2:] + s[:2])          # cdefab (rotate)\nprint(s[:3] + \"-\" + s[3:])    # abc-def (insert)",
+          "practice": "Write expressions that rotate, insert or remove characters at a position; reorder lines in a Parsons problem.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "string_concatenation.join_with_plus"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.slice_start_stop",
+          "weight": 0.8
+        },
+        {
+          "topic": "string_concatenation.join_with_plus",
+          "weight": 0.3
+        },
+        {
+          "topic": "arithmetic_operators.floor_division_and_modulo",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy",
+        "py4e"
+      ]
+    },
+    {
+      "id": "string_methods.calling_methods_case",
+      "title": "Calling string methods: changing case",
+      "concept": "string_methods",
+      "summary": "Call a method with dot syntax, change case with upper/lower/title/capitalize, store the result, and compare text ignoring case.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "strings.literals_and_quotes",
+        "comparison_operators.compare_mixed_types",
+        "variables.reassign_and_trace"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Dot syntax: value.method()",
+          "worked_example": "name = \"ada\"\nprint(name.upper())   # ADA\nprint(\"HeLLo\".lower()) # hello\nWithout the parentheses, name.upper shows <built-in method ...> instead of calling it.",
+          "practice": "Predict the result of upper() and lower(); fix a call missing its parentheses.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "title(), capitalize() and swapcase()",
+          "worked_example": "s = \"ada lovelace\"\nprint(s.title())        # Ada Lovelace\nprint(s.capitalize())   # Ada lovelace\nprint(\"Ab\".swapcase())  # aB",
+          "practice": "Match each output to the method that produced it.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Methods return a new string: store it to keep it",
+          "worked_example": "name = \"ada\"\nname.upper()\nprint(name)          # ada: the result was thrown away\nname = name.upper()\nprint(name)          # ADA",
+          "practice": "Predict output when results are or are not stored; fix the missing assignment.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Comparing text while ignoring case",
+          "worked_example": "answer = \"Yes\"\nprint(answer == \"yes\")           # False\nprint(answer.lower() == \"yes\")   # True",
+          "practice": "Predict comparisons with and without lower(); write a case-insensitive equality check.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_mixed_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_mixed_types",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "py4e",
+        "helsinki_mooc",
+        "100_days_of_code",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "string_methods.strip_whitespace",
+      "title": "Trimming with strip(), lstrip() and rstrip()",
+      "concept": "string_methods",
+      "summary": "Remove unwanted spaces, newlines or chosen characters from the ends of a string, and clean up typed answers.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "string_methods.calling_methods_case",
+        "user_input.read_text"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "strip() removes whitespace at both ends",
+          "worked_example": "clean = \"  hi there \\n\".strip()\nprint(clean == \"hi there\")   # True\nSpaces inside the text stay.",
+          "practice": "Predict strip() results on strings with leading/trailing spaces, tabs and newlines.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "lstrip() and rstrip() trim one side",
+          "worked_example": "s = \"  hi  \"\nprint(s.lstrip() == \"hi  \")   # True\nprint(s.rstrip() == \"  hi\")   # True",
+          "practice": "Choose the method that trims only the side asked for.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "strip(chars) removes any of those characters, not a word",
+          "worked_example": "print(\"...hi!!\".strip(\".!\"))       # hi\nprint(\"abcHIcba\".strip(\"abc\"))     # HI: a, b, c removed in any order",
+          "practice": "Predict strip with a character argument, including cases where it removes more than expected.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Cleaning an answer: chain strip() and lower()",
+          "worked_example": "answer = input(\"Continue? \").strip().lower()\nprint(answer == \"yes\")\n# user types \"  YES \" -> True",
+          "practice": "Write the cleanup for a typed answer; predict comparisons for messy inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "user_input.read_text",
+            "string_methods.calling_methods_case"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.calling_methods_case",
+          "weight": 0.5
+        },
+        {
+          "topic": "user_input.read_text",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "py4e",
+        "100_days_of_code",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "string_methods.find_and_count",
+      "title": "Searching inside a string: find(), index() and count()",
+      "concept": "string_methods",
+      "summary": "Locate a substring with find() or index(), handle the not-found case, and count occurrences.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "string_methods.calling_methods_case",
+        "string_indexing_slicing.negative_indices"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "find() returns the index of the first match",
+          "worked_example": "print(\"banana\".find(\"an\"))   # 1\nprint(\"banana\".find(\"x\"))    # -1: not found",
+          "practice": "Predict find() results, including not-found and matches at index 0.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.index_characters"
+          ]
+        },
+        {
+          "title": "-1 is not an error, but index() is",
+          "worked_example": "s = \"python\"\nprint(s[s.find(\"z\")])   # n: -1 silently picked the last character\ns.index(\"z\")            # ValueError: substring not found",
+          "practice": "Predict what happens when a not-found result is used as an index; choose between find and index.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.negative_indices"
+          ]
+        },
+        {
+          "title": "Search from a position, or from the right",
+          "worked_example": "print(\"banana\".find(\"an\", 2))   # 3: search starts at index 2\nprint(\"banana\".rfind(\"an\"))     # 3: last match",
+          "practice": "Predict find with a start argument and rfind; write the call that finds the second occurrence.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "count() counts non-overlapping matches",
+          "worked_example": "print(\"banana\".count(\"a\"))   # 3\nprint(\"aaaa\".count(\"aa\"))    # 2, not 3",
+          "practice": "Predict counts, including overlapping patterns and case differences.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.calling_methods_case",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_indexing_slicing.index_characters",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "string_methods.replace_text",
+      "title": "Replacing text with replace()",
+      "concept": "string_methods",
+      "summary": "Replace or remove every occurrence of a substring, limit the number of replacements, and avoid order bugs when chaining.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "string_methods.calling_methods_case"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "replace(old, new) changes every occurrence",
+          "worked_example": "print(\"a-b-c\".replace(\"-\", \" \"))   # a b c",
+          "practice": "Predict replace() results; write a call that turns spaces into underscores.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "Remove text by replacing it with \"\"",
+          "worked_example": "price = \"1,000,000\".replace(\",\", \"\")\nprint(int(price) + 1)   # 1000001",
+          "practice": "Write the cleanup that makes a string convertible with int(); predict the result.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Limit the number of replacements",
+          "worked_example": "print(\"a-b-c\".replace(\"-\", \" \", 1))   # a b-c",
+          "practice": "Predict replace with a count argument.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Case-sensitivity and chaining order",
+          "worked_example": "print(\"Cat cat\".replace(\"cat\", \"dog\"))   # Cat dog\ns = \"ab\".replace(\"a\", \"b\").replace(\"b\", \"a\")\nprint(s)   # aa: the second replace also hit the new b",
+          "practice": "Predict chained replaces; fix a swap that fails because of order.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.calling_methods_case",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "cs50p",
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "string_methods.check_content",
+      "title": "Checking what a string contains: startswith() and the is- methods",
+      "concept": "string_methods",
+      "summary": "Test a string's beginning, end and kind of characters with startswith/endswith and isdigit/isalpha/isalnum/isupper/islower/isspace.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "string_methods.calling_methods_case",
+        "strings.length_and_membership",
+        "logical_operators.and_or_not"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "startswith() and endswith()",
+          "worked_example": "f = \"report.pdf\"\nprint(f.endswith(\".pdf\"))     # True\nprint(f.startswith(\"Rep\"))    # False: case-sensitive",
+          "practice": "Predict startswith/endswith results; write a check for a file extension.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "isdigit(), isalpha(), isalnum()",
+          "worked_example": "print(\"2026\".isdigit())   # True\nprint(\"-5\".isdigit())     # False: - is not a digit\nprint(\"3.5\".isdigit())    # False\nprint(\"ab1\".isalnum())    # True",
+          "practice": "Predict is- method results on numbers, signs, decimals, spaces and the empty string.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "isupper(), islower(), isspace() and the empty string",
+          "worked_example": "print(\"A1\".isupper())   # True: only letters are checked\nprint(\"\".isspace())    # False\nprint(\"\".isdigit())    # False",
+          "practice": "Predict results on mixed and empty strings.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Combining checks with and/or",
+          "worked_example": "code = \"AB12CD\"\nprint(code.isalnum() and len(code) == 6)   # True\nprint(code.isdigit() or code.isalpha())    # False",
+          "practice": "Write one boolean expression for a validation rule; predict combined checks.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not",
+            "strings.length_and_membership"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "logical_operators.and_or_not",
+          "weight": 0.3
+        },
+        {
+          "topic": "strings.length_and_membership",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "cs50p",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "string_methods.split_into_parts",
+      "title": "Splitting a string into parts with split()",
+      "concept": "string_methods",
+      "summary": "Split text into a list of pieces on whitespace or a separator, read pieces by index, and unpack them into variables.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "string_methods.calling_methods_case",
+        "string_indexing_slicing.negative_indices",
+        "variables.swap_values"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "split() breaks on whitespace",
+          "worked_example": "words = \"the quick  fox\".split()\nprint(words)        # ['the', 'quick', 'fox']\nThe result is a list of strings; runs of spaces count as one break.",
+          "practice": "Predict split() results on sentences with extra spaces and newlines.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "split(sep) breaks on a chosen separator",
+          "worked_example": "print(\"2026-10-12\".split(\"-\"))   # ['2026', '10', '12']\nprint(\"a,,b\".split(\",\"))         # ['a', '', 'b']\nprint(\"a, b\".split(\",\"))         # ['a', ' b']: the space stays",
+          "practice": "Predict split with separators, including empty pieces and leftover spaces.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Reading pieces by index and counting them",
+          "worked_example": "parts = \"2026-10-12\".split(\"-\")\nprint(parts[0], parts[-1])   # 2026 12\nprint(len(parts))            # 3",
+          "practice": "Write the expression that picks a given field; count words in a sentence with len(split()).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.negative_indices",
+            "strings.length_and_membership"
+          ]
+        },
+        {
+          "title": "Unpacking pieces into names",
+          "worked_example": "first, last = \"Ada Lovelace\".split()\nprint(last)   # Lovelace\nfirst, last = \"Ada King Lovelace\".split()   # ValueError: too many values\nfirst, rest = \"Ada King Lovelace\".split(\" \", 1)   # maxsplit fixes it",
+          "practice": "Predict unpacking results and errors; fix an unpacking that fails on a three-word name.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.calling_methods_case",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_indexing_slicing.negative_indices",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "py4e",
+        "helsinki_mooc",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "string_methods.join_pieces",
+      "title": "Joining pieces with join()",
+      "concept": "string_methods",
+      "summary": "Join a list of strings with a separator, normalise spacing with split then join, and fix join on non-strings.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "string_methods.split_into_parts",
+        "type_conversion.numbers_and_strings"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "separator.join(pieces)",
+          "worked_example": "print(\"-\".join([\"2026\", \"10\", \"12\"]))   # 2026-10-12\nThe separator comes first: [\"a\", \"b\"].join(\"-\") is an AttributeError.",
+          "practice": "Predict join results; fix a join written the wrong way round.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "split() then join(): normalise spaces",
+          "worked_example": "messy = \"  too   many    spaces \"\nprint(\" \".join(messy.split()))   # too many spaces",
+          "practice": "Predict the result of split-then-join; write the one-liner that collapses extra spaces.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "Changing the separator",
+          "worked_example": "print(\",\".join(\"a b c\".split()))   # a,b,c\nprint(\"\".join(\"a-b-c\".split(\"-\")))   # abc",
+          "practice": "Write expressions that convert between separators.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "join needs strings",
+          "worked_example": "\"-\".join([\"a\", 1])\n# TypeError: sequence item 1: expected str instance, int found\n\"-\".join([\"a\", str(1)])   # a-1",
+          "practice": "Find and fix joins that include numbers.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.numbers_and_strings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "string_methods.parse_with_find_and_slice",
+      "title": "Extracting parts of text with find() and slicing",
+      "concept": "string_methods",
+      "summary": "Pull a field out of a line of text by finding marker characters and slicing around them.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "string_methods.find_and_count",
+        "string_indexing_slicing.slice_patterns"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Text after a marker",
+          "worked_example": "email = \"ada@example.com\"\nat = email.find(\"@\")\nprint(email[at + 1:])   # example.com",
+          "practice": "Write the slice that takes everything after a marker; predict it for several inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.find_and_count",
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "Text before a marker",
+          "worked_example": "email = \"ada@example.com\"\nprint(email[:email.find(\"@\")])   # ada",
+          "practice": "Fill in the slice bounds for the part before a marker.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "Text between two markers",
+          "worked_example": "line = \"From: <ada@x.org> sent\"\nstart = line.find(\"<\")\nend = line.find(\">\", start)\nprint(line[start + 1:end])   # ada@x.org",
+          "practice": "Reorder the lines of an extraction (Parsons); write the extraction for another pair of markers.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_methods.find_and_count"
+          ]
+        },
+        {
+          "title": "Off-by-one and missing-marker bugs",
+          "worked_example": "email = \"ada@example.com\"\nat = email.find(\"@\")\nprint(email[at:])        # @example.com: forgot + 1\nprint(\"ada\"[\"ada\".find(\"@\") + 1:])   # ada: -1 + 1 is 0, so no marker means the whole string",
+          "practice": "Predict buggy extractions and fix them.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_methods.find_and_count"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.find_and_count",
+          "weight": 0.7
+        },
+        {
+          "topic": "string_indexing_slicing.slice_start_stop",
+          "weight": 0.6
+        },
+        {
+          "topic": "string_indexing_slicing.slice_patterns",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "string_formatting.fstring_basics",
+      "title": "f-strings: putting values into text",
+      "concept": "string_formatting",
+      "summary": "Write f-strings that insert variables and expressions into text without str(), and avoid the forgotten-f and brace bugs.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "string_concatenation.numbers_into_text",
+        "expressions.evaluate_expressions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "f\"...{name}...\" inserts a value",
+          "worked_example": "name = \"Ada\"\nage = 36\nprint(f\"{name} is {age}\")   # Ada is 36\nNo str() needed: numbers are converted for you.",
+          "practice": "Predict f-string output; rewrite a + and str() concatenation as an f-string.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_concatenation.numbers_into_text"
+          ]
+        },
+        {
+          "title": "Any expression fits in the braces",
+          "worked_example": "a = 3\nb = 4\nprint(f\"{a} + {b} = {a + b}\")   # 3 + 4 = 7",
+          "practice": "Predict f-strings containing arithmetic; fill in the expression that produces a given line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "expressions.evaluate_expressions"
+          ]
+        },
+        {
+          "title": "Bug: forgetting the f",
+          "worked_example": "name = \"Ada\"\nprint(\"Hello, {name}\")    # Hello, {name}\nprint(f\"Hello, {name}\")   # Hello, Ada",
+          "practice": "Find and fix strings that print braces literally.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Literal braces: double them",
+          "worked_example": "n = 2\nprint(f\"{{n}} is {n}\")   # {n} is 2",
+          "practice": "Predict f-strings with doubled braces; write one that prints a brace next to a value.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_concatenation.numbers_into_text",
+          "weight": 0.2
+        },
+        {
+          "topic": "print_output.multiple_values",
+          "weight": 0.2
+        },
+        {
+          "topic": "variables.assign_and_print",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e",
+        "100_days_of_code",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "string_formatting.number_format_specs",
+      "title": "Formatting numbers: decimals, thousands and percentages",
+      "concept": "string_formatting",
+      "summary": "Use format specs like :.2f, :, and :.1% to show numbers with fixed decimals, thousands separators and percent signs.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "string_formatting.fstring_basics",
+        "integers_floats.rounding_and_float_surprises"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": ":.2f shows exactly two decimals",
+          "worked_example": "pi = 3.14159\nprint(f\"{pi:.2f}\")   # 3.14\nprint(f\"{2:.2f}\")    # 2.00",
+          "practice": "Predict values formatted with .0f, .1f and .2f; write the spec for a price.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Formatting is not rounding the value",
+          "worked_example": "x = 2.0\nprint(round(x, 2))   # 2.0: round keeps the float as is\nprint(f\"{x:.2f}\")    # 2.00: the text is padded\nprint(x)             # 2.0: x is unchanged",
+          "practice": "Choose between round() and a format spec for a given goal; predict both.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "integers_floats.rounding_and_float_surprises"
+          ]
+        },
+        {
+          "title": "Thousands separators with ,",
+          "worked_example": "print(f\"{1234567:,}\")      # 1,234,567\nprint(f\"{1234.5:,.2f}\")    # 1,234.50",
+          "practice": "Predict values formatted with , and ,.2f.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Percentages with %",
+          "worked_example": "part = 32\ntotal = 125\nprint(f\"{part / total:.1%}\")   # 25.6%\nThe % spec multiplies by 100 and adds the sign.",
+          "practice": "Write the f-string for a percentage with one decimal; predict .0% results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.8
+        },
+        {
+          "topic": "integers_floats.rounding_and_float_surprises",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "100_days_of_code",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "string_formatting.width_and_alignment",
+      "title": "Lining up output: width, alignment and padding",
+      "concept": "string_formatting",
+      "summary": "Give values a minimum width, align them left, right or centre, pad with a fill character or zeros, and print aligned table rows.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "string_formatting.number_format_specs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A width pads to a minimum size",
+          "worked_example": "name = \"ada\"\nprint(f\"[{name:5}]\")   # [ada  ]  strings go left\nprint(f\"[{42:5}]\")     # [   42] numbers go right",
+          "practice": "Predict padded output for strings and numbers of different lengths.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "< > ^ choose the alignment",
+          "worked_example": "name = \"ada\"\nprint(f\"[{name:>5}]\")   # [  ada]\nprint(f\"[{name:^7}]\")   # [  ada  ]",
+          "practice": "Fill in the alignment character for a target layout.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Fill characters and zero padding",
+          "worked_example": "name = \"ada\"\nprint(f\"{name:*^9}\")   # ***ada***\nprint(f\"{7:03}\")        # 007",
+          "practice": "Predict fill and zero-padded output; write the spec for a 2-digit minute.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Aligned table rows: width plus decimals",
+          "worked_example": "item = \"tea\"\nprice = 2.5\nprint(f\"{item:<8}{price:>7.2f}\")\n# tea        2.50",
+          "practice": "Write the f-string for a receipt row; predict alignment of two rows.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_formatting.number_format_specs"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.number_format_specs",
+          "weight": 0.5
+        },
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "string_formatting.format_method_and_percent",
+      "title": "Older styles: str.format() and %",
+      "concept": "string_formatting",
+      "summary": "Read and write .format() strings and recognise %-formatting, which appear in older code and documentation.",
+      "minutes": 13,
+      "core": false,
+      "prerequisites": [
+        "string_formatting.number_format_specs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "\"{} is {}\".format(...) fills placeholders in order",
+          "worked_example": "print(\"{} is {}\".format(\"Ada\", 36))   # Ada is 36",
+          "practice": "Predict .format() output; rewrite an f-string with .format().",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Numbered and named placeholders",
+          "worked_example": "print(\"{0} {1} {0}\".format(\"a\", \"b\"))     # a b a\nprint(\"{n} items\".format(n=3))          # 3 items",
+          "practice": "Predict output with reused and named placeholders.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "The same format specs work in .format()",
+          "worked_example": "print(\"{:.2f}\".format(3.14159))   # 3.14\nprint(\"{:>5}|\".format(\"ab\"))      #    ab|",
+          "practice": "Translate f-string specs to .format() and back.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_formatting.number_format_specs"
+          ]
+        },
+        {
+          "title": "Recognising %-formatting",
+          "worked_example": "print(\"%s is %d\" % (\"Ada\", 36))   # Ada is 36\nprint(\"%.2f\" % 3.14159)            # 3.14",
+          "practice": "Match %-style strings with their f-string equivalents.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.number_format_specs",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e"
+      ]
+    },
+    {
+      "id": "string_immutability.build_new_strings",
+      "title": "Strings cannot be changed: build new ones",
+      "concept": "string_immutability",
+      "summary": "Recognise that strings are immutable, build a modified copy with slicing and +, and tell reassigning a name apart from changing a string.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "string_indexing_slicing.slice_start_stop",
+        "string_concatenation.join_with_plus",
+        "string_methods.replace_text"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assigning to an index is a TypeError",
+          "worked_example": "s = \"python\"\ns[0] = \"J\"\n# TypeError: 'str' object does not support item assignment",
+          "practice": "Predict which lines fail in programs that read or assign string indexes.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.index_characters"
+          ]
+        },
+        {
+          "title": "Build a new string from slices",
+          "worked_example": "s = \"python\"\ns = \"J\" + s[1:]\nprint(s)   # Jython",
+          "practice": "Write expressions that replace the character at a given index; fix an item-assignment bug.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop",
+            "string_concatenation.join_with_plus"
+          ]
+        },
+        {
+          "title": "Reassigning a name is not changing the string",
+          "worked_example": "a = \"hi\"\nb = a\na += \"!\"\nprint(a, b)   # hi! hi\na now names a new string; b still names the old one.",
+          "practice": "Trace two names through reassignments and predict the output.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "Every method returns a new string",
+          "worked_example": "s = \"a-b\"\ns.replace(\"-\", \"+\")\ns.upper()\nprint(s)   # a-b: both results were discarded\ns = s.replace(\"-\", \"+\").upper()   # A+B",
+          "practice": "Find and fix programs where method results are not stored.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.replace_text"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.slice_start_stop",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_concatenation.join_with_plus",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_methods.replace_text",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "unicode_encoding.ord_and_chr",
+      "title": "Characters are numbers: ord() and chr()",
+      "concept": "unicode_encoding",
+      "summary": "Convert between characters and their Unicode code points, explain string ordering, and shift letters with wrap-around.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "strings.literals_and_quotes",
+        "comparison_operators.compare_mixed_types",
+        "arithmetic_operators.modulo_patterns"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "ord() gives a character's code, chr() goes back",
+          "worked_example": "print(ord(\"A\"), ord(\"a\"), ord(\" \"))   # 65 97 32\nprint(chr(66))                         # B\nord(\"ab\") is a TypeError: one character only.",
+          "practice": "Predict ord/chr results for letters, digits and spaces.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "Letters and digits have consecutive codes",
+          "worked_example": "print(chr(ord(\"a\") + 1))        # b\nprint(ord(\"z\") - ord(\"a\"))      # 25\nprint(ord(\"7\") - ord(\"0\"))      # 7",
+          "practice": "Compute a letter's position in the alphabet; predict the character n places later.",
+          "formats": [
+            "numeric",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Codes explain string ordering",
+          "worked_example": "print(\"Zoo\" < \"apple\")      # True\nprint(ord(\"Z\"), ord(\"a\"))   # 90 97: every capital comes before every lowercase letter",
+          "practice": "Predict string comparisons by comparing first-character codes.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_mixed_types"
+          ]
+        },
+        {
+          "title": "Shifting a letter with wrap-around (Caesar shift)",
+          "worked_example": "c = \"y\"\nshifted = chr((ord(c) - ord(\"a\") + 3) % 26 + ord(\"a\"))\nprint(shifted)   # b",
+          "practice": "Reorder the steps of a shift (Parsons); predict shifts that wrap past z.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "arithmetic_operators.modulo_patterns"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "arithmetic_operators.modulo_patterns",
+          "weight": 0.3
+        },
+        {
+          "topic": "comparison_operators.compare_mixed_types",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "py4e",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "unicode_encoding.text_vs_bytes",
+      "title": "Unicode text and bytes: encode() and decode()",
+      "concept": "unicode_encoding",
+      "summary": "Handle non-English characters, convert text to UTF-8 bytes and back, and recognise encoding errors and garbled text.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "unicode_encoding.ord_and_chr",
+        "strings.length_and_membership",
+        "string_methods.calling_methods_case"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A string can hold any Unicode character",
+          "worked_example": "s = \"café ☕\"\nprint(len(s))           # 6: one per character\nprint(\"\\u00e9\" == \"é\")  # True: \\u gives a character by its code",
+          "practice": "Predict len() and ord() on accented letters and symbols.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.ord_and_chr",
+            "strings.length_and_membership"
+          ]
+        },
+        {
+          "title": "encode() turns text into bytes",
+          "worked_example": "b = \"café\".encode(\"utf-8\")\nprint(b)        # b'caf\\xc3\\xa9'\nprint(len(b))   # 5: é takes two bytes in UTF-8",
+          "practice": "Predict byte lengths of encoded strings; tell a str from a bytes value by its b prefix.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "decode() turns bytes back into text",
+          "worked_example": "b = b\"caf\\xc3\\xa9\"\nprint(b.decode(\"utf-8\"))   # café",
+          "practice": "Write the round trip text -> bytes -> text.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "The wrong encoding: errors and garbled text",
+          "worked_example": "\"café\".encode(\"ascii\")           # UnicodeEncodeError\nb\"caf\\xc3\\xa9\".decode(\"latin-1\")  # 'cafÃ©': wrong codec, garbled text",
+          "practice": "Diagnose which encoding mistake produced an error or garbled output.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unicode_encoding.ord_and_chr",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc"
+      ]
+    }
+  ]
+}

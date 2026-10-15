@@ -1,0 +1,3903 @@
+{
+  "batch": "B17",
+  "title": "Databases and web apps",
+  "concept_map": {
+    "databases_sql": {
+      "topics": [
+        "databases_sql.tables_and_first_query",
+        "databases_sql.select_and_where",
+        "databases_sql.order_limit_distinct",
+        "databases_sql.like_in_null",
+        "databases_sql.insert_rows",
+        "databases_sql.update_and_delete",
+        "databases_sql.constraints",
+        "databases_sql.aggregate_functions",
+        "databases_sql.group_by_having",
+        "databases_sql.manage_tables",
+        "databases_sql.subqueries"
+      ],
+      "entry_topic": "databases_sql.tables_and_first_query",
+      "notes": "SQL is taught as its own language, run through sqlite3 in-memory databases (all snippets executed). Entry topic uses `import sqlite3` / `connect(':memory:')` / `execute` as a three-line template that lib_sqlite3.connect_execute_fetch explains immediately after. INTEGER PRIMARY KEY mechanics live in constraints; choosing keys and foreign keys belong to data_modeling. Indexes (CREATE INDEX), normalization theory, PostgreSQL, DB Browser for SQLite and migrations are out of scope per plan.json; a logical key's UNIQUE constraint is the only performance idea taught. CASE expressions, views, transactions beyond commit/rollback, window functions and UPSERT (ON CONFLICT DO UPDATE) were left out. manage_tables and subqueries are non-core."
+    },
+    "lib_sqlite3": {
+      "topics": [
+        "lib_sqlite3.connect_execute_fetch",
+        "lib_sqlite3.placeholders_and_injection",
+        "lib_sqlite3.commit_and_files",
+        "lib_sqlite3.ids_rowcount_and_errors",
+        "lib_sqlite3.rows_as_dicts",
+        "lib_sqlite3.load_file_into_database"
+      ],
+      "entry_topic": "lib_sqlite3.connect_execute_fetch",
+      "notes": "Owns the Python side: connect/execute/fetch, placeholders and SQL injection (the injection_attacks concept is out of scope, so its sqlite3-relevant part lives here), commit/with/executescript, lastrowid/rowcount/IntegrityError, sqlite3.Row, and a file-loading topic (py4e counting-email pattern). Uses `import csv`/`import json` as earlier batches did. B18 pandas.read_sql could depend on connect_execute_fetch."
+    },
+    "sql_joins": {
+      "topics": [
+        "sql_joins.inner_join",
+        "sql_joins.left_join",
+        "sql_joins.multi_table_joins"
+      ],
+      "entry_topic": "sql_joins.inner_join",
+      "notes": "inner_join is core; left_join and multi_table_joins are non-core. Self-joins, RIGHT/FULL OUTER JOIN (FULL needs SQLite 3.39+) and CROSS JOIN by name were left out; the every-combination bug covers the cross-join idea."
+    },
+    "data_modeling": {
+      "topics": [
+        "data_modeling.split_into_tables",
+        "data_modeling.primary_and_foreign_keys",
+        "data_modeling.get_or_create_id",
+        "data_modeling.many_to_many"
+      ],
+      "entry_topic": "data_modeling.split_into_tables",
+      "notes": "py4e Chapter 15 data modeling: split_into_tables (a practical 'normalization' without normal forms), keys, get_or_create_id (py4e Tracks pattern) and many_to_many. ER diagram notation is described in text (artists 1 --< albums) rather than given a topic."
+    },
+    "lib_sqlalchemy": {
+      "topics": [
+        "lib_sqlalchemy.models_and_tables",
+        "lib_sqlalchemy.session_crud",
+        "lib_sqlalchemy.relationships",
+        "lib_sqlalchemy.flask_sqlalchemy"
+      ],
+      "entry_topic": "lib_sqlalchemy.models_and_tables",
+      "notes": "SQLAlchemy 2.0 declarative style (DeclarativeBase, Mapped, mapped_column, select, Session) rather than the legacy Query API; Flask-SQLAlchemy (100 Days' actual tool) is its own topic. Not installed locally, so snippets were not run; outputs (echo SQL, ids) are described from the documented behaviour. Alembic migrations are out of scope (db_migrations)."
+    },
+    "web_development": {
+      "topics": [
+        "web_development.how_web_apps_work",
+        "web_development.html_for_python_devs"
+      ],
+      "entry_topic": "web_development.how_web_apps_work",
+      "notes": "Server-side view only. how_web_apps_work models routing as a dict of functions (runnable without Flask) and introduces 200/404/500 from the server's side; the client side of HTTP (methods, headers, status codes, requests library) is B16 apis_http, running in parallel, and the stitching pass should link B16's request/response topic as a prerequisite of how_web_apps_work or have it encompass that KP. html_css_basics is out of scope, but Flask needs a little HTML, so html_for_python_devs teaches tags, links, forms and html.escape (XSS) only; CSS and Bootstrap are not taught. Static site generation is B20. Reconciliation: how_web_apps_work now depends on B16 apis_http.request_response_cycle (owner of HTTP requests, responses, methods and status codes); KP1 and KP3 were reframed as the server side instead of re-teaching them."
+    },
+    "lib_flask": {
+      "topics": [
+        "lib_flask.first_app_and_routes",
+        "lib_flask.variable_routes",
+        "lib_flask.templates_and_static",
+        "lib_flask.forms_and_post",
+        "lib_flask.errors_and_flash"
+      ],
+      "entry_topic": "lib_flask.first_app_and_routes",
+      "notes": "Five non-core topics following 100 Days Days 54-62. Flask is not installed, so no snippet was run; Flask's test_client is taught in KP3 of first_app_and_routes so the platform can auto-grade views without a browser. Blueprints, the application factory, Flask's g and before_request were left out (no course teaches them). Sessions/login live in authentication; JSON APIs in rest_api_design; database access in lib_sqlalchemy.flask_sqlalchemy."
+    },
+    "lib_jinja": {
+      "topics": [
+        "lib_jinja.expressions_and_filters",
+        "lib_jinja.loops_and_conditions",
+        "lib_jinja.template_inheritance"
+      ],
+      "entry_topic": "lib_jinja.expressions_and_filters",
+      "notes": "Three non-core topics. Only expressions_and_filters KP1 uses jinja2.Template directly; the rest are Flask templates. Macros, custom filters and whitespace control were left out."
+    },
+    "lib_wtforms": {
+      "topics": [
+        "lib_wtforms.define_and_render_forms",
+        "lib_wtforms.validate_and_use_data"
+      ],
+      "entry_topic": "lib_wtforms.define_and_render_forms",
+      "notes": "Flask-WTF + WTForms (100 Days Days 61-62). Bootstrap-Flask's render_form (Flask-Bootstrap) is lib_bootstrap, out of scope. Not installed; error texts quoted from WTForms' standard messages."
+    },
+    "authentication": {
+      "topics": [
+        "authentication.hash_passwords",
+        "authentication.salted_slow_hashes",
+        "authentication.register_and_login",
+        "authentication.login_sessions",
+        "authentication.flask_login",
+        "authentication.api_tokens"
+      ],
+      "entry_topic": "authentication.hash_passwords",
+      "notes": "Six non-core topics. Hashing, salting and pbkdf2 use hashlib/secrets from the standard library and were run; register_and_login was run end to end with sqlite3. werkzeug, Flask-Login and JWT are described, not run. Authorization (out of scope as its own concept) appears only as the admin_only decorator KP in login_sessions. api_tokens comes after rest_api_design.write_endpoints. MFA/TOTP, OAuth sign-in and password reset flows were left out."
+    },
+    "rest_api_design": {
+      "topics": [
+        "rest_api_design.resources_and_methods",
+        "rest_api_design.json_endpoints",
+        "rest_api_design.write_endpoints"
+      ],
+      "entry_topic": "rest_api_design.resources_and_methods",
+      "notes": "Three non-core topics (100 Days Day 66). resources_and_methods carries pending concept:apis_http (B16) because it reuses HTTP methods and status codes from the client view; it re-states them only as a design table. Endpoints use sqlite3 + sqlite3.Row rather than SQLAlchemy so they need only core database topics plus Flask; the SQLAlchemy version is a practice variation. Pagination, versioning and OpenAPI were left out; API keys in DELETE are the bridge to authentication.api_tokens."
+    },
+    "deployment": {
+      "topics": [
+        "deployment.production_settings",
+        "deployment.deploy_to_a_host"
+      ],
+      "entry_topic": "deployment.production_settings",
+      "notes": "Two non-core topics (100 Days Day 71). Git/GitHub, Docker, PostgreSQL administration and HTTPS are out of scope; pushing to GitHub appears as a memorised step. Builds on B13 environment_variables.secrets_out_of_code and tool_pip.requirements_files as B13 suggested."
+    }
+  },
+  "topics": [
+    {
+      "id": "databases_sql.tables_and_first_query",
+      "title": "Databases, tables and your first SQL statements",
+      "concept": "databases_sql",
+      "summary": "Picture a table as rows and columns, create one with CREATE TABLE, add a row with INSERT and read it back with SELECT *, writing SQL inside a Python string.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "tuples.lists_of_tuples",
+        "modules_imports.import_module"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A table is rows and columns",
+          "worked_example": "title  | year\nDune   | 1965\nEmma   | 1815\nA table has named columns; each row is one record, like the tuple ('Dune', 1965). A database file holds many tables.",
+          "practice": "Read a drawn table: count rows and columns, name the column holding a value, write a row as a tuple.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "Create a table with CREATE TABLE",
+          "worked_example": "import sqlite3\ndb = sqlite3.connect(\":memory:\")\ndb.execute(\"CREATE TABLE books (title TEXT, year INTEGER)\")\nEvery column gets a name and a type (TEXT, INTEGER, REAL). The first two lines are a template that the next topic explains.",
+          "practice": "Write the CREATE TABLE statement for a described table; choose TEXT, INTEGER or REAL for each column.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Add a row with INSERT, read it with SELECT *",
+          "worked_example": "db.execute(\"INSERT INTO books VALUES ('Dune', 1965)\")\nprint(db.execute(\"SELECT * FROM books\").fetchall())\n# [('Dune', 1965)]\nSELECT * means every column; the rows come back as a list of tuples.",
+          "practice": "Predict the printed list after one or two INSERTs; write the INSERT for a given row.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "SQL inside a Python string: keywords and quotes",
+          "worked_example": "db.execute(\"insert into books values ('Emma', 1815)\")  # works: keywords ignore case\ndb.execute(\"INSERT INTO books VALUES (Emma, 1815)\")\n# sqlite3.OperationalError: no such column: Emma\nSQL text values need single quotes inside the double-quoted Python string; keywords are written in CAPITALS by convention.",
+          "practice": "Find and fix the quoting bug in INSERT statements; choose which statements run.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "modules_imports.import_module"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tuples.lists_of_tuples",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlite3.connect_execute_fetch",
+      "title": "Running SQL from Python: connect, execute and fetch",
+      "concept": "lib_sqlite3",
+      "summary": "Open a database with sqlite3.connect, run statements with execute, and get rows back with fetchall, fetchone or a for loop.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.tables_and_first_query",
+        "unpacking.unpack_in_loops",
+        "none_type.check_for_none"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "connect() opens a database, execute() runs one statement",
+          "worked_example": "import sqlite3\ndb = sqlite3.connect(\":memory:\")   # a fresh database in memory\ncur = db.execute(\"SELECT 1 + 1\")\nprint(cur.fetchall())  # [(2,)]\n\":memory:\" is thrown away when the program ends; a file name such as \"books.db\" keeps the data (see saving changes).",
+          "practice": "Predict the result of simple SELECT expressions; choose between ':memory:' and a file name for described situations.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.tables_and_first_query"
+          ]
+        },
+        {
+          "title": "fetchall() returns a list of tuples",
+          "worked_example": "db.execute(\"CREATE TABLE books (title TEXT, year INTEGER)\")\ndb.execute(\"INSERT INTO books VALUES ('Dune', 1965), ('Emma', 1815)\")\nprint(db.execute(\"SELECT title FROM books\").fetchall())\n# [('Dune',), ('Emma',)]\nEven a one-column row is a tuple, so the first title is rows[0][0].",
+          "practice": "Predict fetchall() results; write the indexing expression that gets one value out of the result.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "databases_sql.tables_and_first_query"
+          ]
+        },
+        {
+          "title": "fetchone() takes one row at a time, then None",
+          "worked_example": "cur = db.execute(\"SELECT title, year FROM books\")\nprint(cur.fetchone())  # ('Dune', 1965)\nprint(cur.fetchone())  # ('Emma', 1815)\nprint(cur.fetchone())  # None\nThe cursor remembers its place; None means no rows are left.",
+          "practice": "Trace a sequence of fetchone/fetchall calls; fix code that indexes the result without checking for None.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "Loop over the cursor and unpack each row",
+          "worked_example": "for title, year in db.execute(\"SELECT title, year FROM books\"):\n    print(title, year)\n# Dune 1965\n# Emma 1815\nA cursor can be looped over directly, one tuple per row.",
+          "practice": "Write a loop that prints rows in a format; predict the output of a loop over a query.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.4
+        },
+        {
+          "topic": "databases_sql.tables_and_first_query",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "databases_sql.select_and_where",
+      "title": "Choosing columns and rows: SELECT and WHERE",
+      "concept": "databases_sql",
+      "summary": "Select specific columns and filter rows with WHERE using comparisons on numbers and text, combined with AND, OR and NOT.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "lib_sqlite3.connect_execute_fetch",
+        "comparison_operators.compare_numbers",
+        "logical_operators.and_or_not"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Name the columns you want",
+          "worked_example": "print(db.execute(\"SELECT title FROM books\").fetchall())\n# [('Dune',), ('Emma',), ('Ubik',)]\n(books holds Dune 1965, Emma 1815, Ubik 1969) The columns come back in the order you list them.",
+          "practice": "Write SELECT statements for requested columns; predict the shape of each result.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "Filter rows with WHERE and a comparison",
+          "worked_example": "q = \"SELECT title FROM books WHERE year > 1900\"\nprint(db.execute(q).fetchall())  # [('Dune',), ('Ubik',)]\nSQL tests equality with a single = and inequality with != (or <>).",
+          "practice": "Predict which rows a WHERE clause keeps; fix a query that uses == or a wrong operator.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Compare text: exact and case-sensitive",
+          "worked_example": "q = \"SELECT * FROM books WHERE title = 'dune'\"\nprint(db.execute(q).fetchall())  # []\nText comparisons with = match the exact characters, so 'dune' finds nothing.",
+          "practice": "Predict results of text comparisons; write a WHERE clause for a named title.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Combine conditions with AND, OR and NOT",
+          "worked_example": "q = \"SELECT * FROM books WHERE year > 1900 AND title != 'Ubik'\"\nprint(db.execute(q).fetchall())  # [('Dune', 1965)]\nUse parentheses when mixing AND and OR, just as in Python.",
+          "practice": "Translate English filters into WHERE clauses; predict the rows a compound condition keeps.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlite3.connect_execute_fetch",
+          "weight": 0.5
+        },
+        {
+          "topic": "logical_operators.and_or_not",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "databases_sql.order_limit_distinct",
+      "title": "Sorting and trimming results: ORDER BY, LIMIT and DISTINCT",
+      "concept": "databases_sql",
+      "summary": "Sort query results by one or more columns in either direction, keep only the first rows, page through results and remove duplicate values.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.select_and_where"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Sort with ORDER BY",
+          "worked_example": "print(db.execute(\"SELECT * FROM books ORDER BY title\").fetchall())\n# [('Dune', 1965), ('Emma', 1815), ('Ubik', 1969)]\nWithout ORDER BY the database may return rows in any order, so sort whenever order matters.",
+          "practice": "Predict the order of rows for ORDER BY on a number or text column.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Descending order and several sort keys",
+          "worked_example": "SELECT title FROM books ORDER BY author, year DESC\n(books now also has an author column.) Rows are sorted by author first; rows with the same author are sorted newest first. DESC applies only to the column right before it.",
+          "practice": "Predict the order for two-key sorts; fix a query where DESC is on the wrong column.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Keep the first rows with LIMIT and OFFSET",
+          "worked_example": "q = \"SELECT * FROM books ORDER BY year DESC LIMIT 2\"\nprint(db.execute(q).fetchall())  # [('Ubik', 1969), ('Dune', 1965)]\nLIMIT 2 OFFSET 2 skips two rows first: page two of a two-per-page list.",
+          "practice": "Write top-n queries; compute which rows a LIMIT/OFFSET page shows.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Remove duplicates with DISTINCT",
+          "worked_example": "SELECT DISTINCT author FROM books ORDER BY author\n# [('Austen',), ('Dick',), ('Herbert',)]  (Austen wrote two of the books)\nDISTINCT keeps one copy of each distinct row.",
+          "practice": "Predict DISTINCT results; choose between DISTINCT and a plain SELECT for a question.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.select_and_where",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "databases_sql.like_in_null",
+      "title": "Patterns, lists and missing values: LIKE, IN, BETWEEN and NULL",
+      "concept": "databases_sql",
+      "summary": "Filter with text patterns, lists of values and ranges, and handle NULL (missing) values correctly with IS NULL.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.select_and_where",
+        "none_type.none_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Match text patterns with LIKE",
+          "worked_example": "SELECT title FROM books WHERE title LIKE 'D%'    # [('Dune',)]\nSELECT title FROM books WHERE title LIKE '%u%'   # Dune, Ubik, Persuasion\n(books now has title, author, year, price; Persuasion by Austen has no price yet.) % matches any run of characters and _ exactly one; in SQLite LIKE ignores case for English letters.",
+          "practice": "Write LIKE patterns for starts-with, ends-with and contains; predict which titles match.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Lists and ranges: IN and BETWEEN",
+          "worked_example": "SELECT title FROM books WHERE author IN ('Dick', 'Herbert')\nSELECT title FROM books WHERE year BETWEEN 1800 AND 1900\nBETWEEN includes both ends, like 1800 <= year <= 1900.",
+          "practice": "Rewrite chains of OR as IN; predict whether boundary values are included.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "NULL means missing and comes back as None",
+          "worked_example": "db.execute(\"INSERT INTO books VALUES ('Persuasion', 'Austen', 1817, NULL)\")\nprint(db.execute(\"SELECT price FROM books WHERE title = 'Persuasion'\").fetchone())  # (None,)\nNULL is SQL's 'no value'; Python receives it as None.",
+          "practice": "Predict how NULL values print in Python; choose NULL vs 0 vs '' for described missing data.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        },
+        {
+          "title": "= NULL never matches: use IS NULL",
+          "worked_example": "SELECT title FROM books WHERE price = NULL     # []  (always empty)\nSELECT title FROM books WHERE price IS NULL    # [('Persuasion',)]\nNothing is equal to NULL, not even NULL; IS NULL and IS NOT NULL test for it.",
+          "practice": "Fix queries that compare with = NULL or != NULL; predict results with missing values.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.select_and_where",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "databases_sql.insert_rows",
+      "title": "Adding rows with INSERT",
+      "concept": "databases_sql",
+      "summary": "Insert one or several rows, naming the columns, and know what happens to columns you leave out or when the value count is wrong.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "lib_sqlite3.connect_execute_fetch"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Name the columns you are filling",
+          "worked_example": "db.execute(\"INSERT INTO books (title, year) VALUES ('Dune', 1965)\")\nThe values match the listed columns in order, so the statement still works if columns are added to the table later.",
+          "practice": "Write INSERT statements with column lists; match values to columns.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "Several rows in one INSERT",
+          "worked_example": "db.execute(\"INSERT INTO books (title, year) VALUES ('Emma', 1815), ('Ubik', 1969)\")\nprint(db.execute(\"SELECT COUNT(*) FROM books\").fetchone())  # (3,)\nEach pair of parentheses is one row.",
+          "practice": "Predict the table after multi-row inserts; write one INSERT for three rows.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "Columns you leave out become NULL",
+          "worked_example": "db.execute(\"INSERT INTO books (title, author) VALUES ('Solaris', 'Lem')\")\nprint(db.execute(\"SELECT * FROM books WHERE title = 'Solaris'\").fetchall())\n# [('Solaris', 'Lem', None, None)]",
+          "practice": "Predict full rows after partial inserts.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "Too few values is an error",
+          "worked_example": "db.execute(\"INSERT INTO books VALUES ('X', 'Y')\")\n# sqlite3.OperationalError: table books has 4 columns but 2 values were supplied\nFix: list the columns you are filling.",
+          "practice": "Fix INSERT statements whose value count does not match; explain the error message.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.tables_and_first_query",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "databases_sql.update_and_delete",
+      "title": "Changing and removing rows: UPDATE and DELETE",
+      "concept": "databases_sql",
+      "summary": "Change values with UPDATE ... SET ... WHERE, remove rows with DELETE, and avoid the classic bug of forgetting WHERE.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.insert_rows",
+        "databases_sql.select_and_where"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "UPDATE changes the rows WHERE picks",
+          "worked_example": "cur = db.execute(\"UPDATE books SET price = 5.0 WHERE title = 'Persuasion'\")\nprint(cur.rowcount)  # 1\ncur.rowcount tells how many rows were changed.",
+          "practice": "Predict the table and rowcount after UPDATE statements; write an UPDATE for a described change.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Compute the new value from the old one",
+          "worked_example": "db.execute(\"UPDATE books SET price = price * 2 WHERE author = 'Austen'\")\n# Emma 4.0 -> 8.0, Persuasion 5.0 -> 10.0\nSET a = 1, b = 2 changes several columns at once.",
+          "practice": "Write UPDATEs that increase, discount or reset values; predict values after two updates in a row.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "DELETE removes whole rows",
+          "worked_example": "cur = db.execute(\"DELETE FROM books WHERE year < 1900\")\nprint(cur.rowcount)  # 2\nprint(db.execute(\"SELECT title FROM books\").fetchall())  # [('Dune',), ('Ubik',)]",
+          "practice": "Predict what remains after DELETE; write a DELETE for a described set of rows.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Forgetting WHERE changes every row",
+          "worked_example": "cur = db.execute(\"UPDATE books SET price = 1\")\nprint(cur.rowcount)  # 2: every book now costs 1\nRun a SELECT with the same WHERE first to see exactly which rows will change.",
+          "practice": "Spot UPDATE/DELETE statements that hit too many rows and fix them; choose the safe order of steps.",
+          "formats": [
+            "fix_the_bug",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.select_and_where",
+          "weight": 0.6
+        },
+        {
+          "topic": "databases_sql.insert_rows",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "databases_sql.constraints",
+      "title": "Rules for columns: PRIMARY KEY, NOT NULL, UNIQUE, DEFAULT and CHECK",
+      "concept": "databases_sql",
+      "summary": "Declare column rules so the database rejects bad rows, read the IntegrityError it raises, and get automatic ids from INTEGER PRIMARY KEY.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.insert_rows",
+        "strings.multiline_and_raw"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "NOT NULL and DEFAULT",
+          "worked_example": "db.execute(\"\"\"CREATE TABLE users (\n    email TEXT NOT NULL,\n    name TEXT DEFAULT 'anon')\"\"\")\ndb.execute(\"INSERT INTO users (name) VALUES ('Bo')\")\n# sqlite3.IntegrityError: NOT NULL constraint failed: users.email",
+          "practice": "Predict which inserts succeed and what values left-out columns get.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.insert_rows",
+            "strings.multiline_and_raw"
+          ]
+        },
+        {
+          "title": "UNIQUE forbids duplicates",
+          "worked_example": "email TEXT NOT NULL UNIQUE\ninserting 'a@x.com' twice:\n# sqlite3.IntegrityError: UNIQUE constraint failed: users.email",
+          "practice": "Choose which columns should be UNIQUE; predict which insert in a sequence fails.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.insert_rows"
+          ]
+        },
+        {
+          "title": "INTEGER PRIMARY KEY numbers rows for you",
+          "worked_example": "CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT NOT NULL UNIQUE, ...)\nINSERT INTO users (email) VALUES ('a@x.com'), ('b@x.com')\n# rows get id 1 and id 2\nA primary key identifies each row; it must be unique, so inserting id 1 again fails.",
+          "practice": "Predict the ids given to new rows; fix an INSERT that supplies a duplicate id.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "databases_sql.insert_rows"
+          ]
+        },
+        {
+          "title": "CHECK enforces a condition",
+          "worked_example": "age INTEGER CHECK (age >= 0)\nINSERT INTO users (email, age) VALUES ('c@x.com', -1)\n# sqlite3.IntegrityError: CHECK constraint failed: age >= 0",
+          "practice": "Write CHECK constraints for described rules; predict which rows are rejected.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.insert_rows"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.insert_rows",
+          "weight": 0.5
+        },
+        {
+          "topic": "databases_sql.tables_and_first_query",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "lib_sqlite3.placeholders_and_injection",
+      "title": "Putting Python values into SQL safely: ? placeholders",
+      "concept": "lib_sqlite3",
+      "summary": "Pass values to SQL with ? and :name placeholders instead of f-strings, avoiding quote bugs and SQL injection, and insert many rows with executemany.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.insert_rows",
+        "databases_sql.select_and_where",
+        "tuples.create_and_index",
+        "string_formatting.fstring_basics"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "? marks a value; the tuple fills it",
+          "worked_example": "title, year = \"Dune\", 1965\ndb.execute(\"INSERT INTO books VALUES (?, ?)\", (title, year))\nprint(db.execute(\"SELECT * FROM books WHERE title = ?\", (title,)).fetchall())\n# [('Dune', 1965)]\nNo quotes go around ?: sqlite3 handles them.",
+          "practice": "Rewrite queries with literal values to use placeholders; fill in the values tuple.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "One value still needs a tuple: (title,)",
+          "worked_example": "db.execute(\"SELECT * FROM books WHERE title = ?\", (title))\n# sqlite3.ProgrammingError: Incorrect number of bindings supplied.\n#   The current statement uses 1, and there are 4 supplied.\n(title) is just the string 'Dune', whose 4 characters were taken as 4 values; write (title,).",
+          "practice": "Fix calls with a missing trailing comma; predict the error message's numbers for other strings.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Why not f-strings: quotes and SQL injection",
+          "worked_example": "name = \"Ender's Game\"\ndb.execute(f\"INSERT INTO books VALUES ('{name}', 1985)\")\n# sqlite3.OperationalError: near \"s\": syntax error\nevil = \"x' OR '1'='1\"\ndb.execute(f\"SELECT * FROM books WHERE title = '{evil}'\")   # returns EVERY row\ndb.execute(\"SELECT * FROM books WHERE title = ?\", (evil,))   # [] as it should",
+          "practice": "Predict what an f-string query does with hostile input; fix injectable code by switching to placeholders.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "executemany and named placeholders",
+          "worked_example": "rows = [(\"Emma\", 1815), (\"Ubik\", 1969)]\ndb.executemany(\"INSERT INTO books VALUES (?, ?)\", rows)\ndb.execute(\"SELECT title FROM books WHERE year > :y\", {\"y\": 1900})\nPlaceholders stand for values only: a table or column name cannot be a ?.",
+          "practice": "Insert a list of tuples with executemany; convert ? placeholders to :name with a dict; spot an illegal placeholder for a table name.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.insert_rows",
+          "weight": 0.5
+        },
+        {
+          "topic": "databases_sql.select_and_where",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlite3.commit_and_files",
+      "title": "Saving changes: database files, commit and with",
+      "concept": "lib_sqlite3",
+      "summary": "Store a database in a file, make changes permanent with commit(), use with to commit or roll back a group of changes, and run setup scripts with executescript.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "lib_sqlite3.connect_execute_fetch",
+        "databases_sql.insert_rows",
+        "context_managers.with_open",
+        "exceptions.several_handlers_and_as"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A file database survives the program",
+          "worked_example": "db = sqlite3.connect(\"shop.db\")   # creates shop.db if it does not exist\n...\ndb.close()\nThe file sits next to your program; connecting again later sees the same tables.",
+          "practice": "Choose when data survives a restart (memory vs file); order the open-work-close steps.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "No commit, no change",
+          "worked_example": "db = sqlite3.connect(\"shop.db\")\ndb.execute(\"CREATE TABLE items (name TEXT)\")\ndb.execute(\"INSERT INTO items VALUES ('pen')\")\ndb.close()                       # closed without commit\ndb = sqlite3.connect(\"shop.db\")\nprint(db.execute(\"SELECT * FROM items\").fetchall())  # []\nINSERT, UPDATE and DELETE are only saved by db.commit().",
+          "practice": "Predict what a second connection sees after code with and without commit(); add the missing commit.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "databases_sql.insert_rows"
+          ]
+        },
+        {
+          "title": "with db: commit on success, roll back on error",
+          "worked_example": "try:\n    with db:\n        db.execute(\"INSERT INTO items VALUES ('cap')\")\n        db.execute(\"INSERT INTO itemz VALUES ('lid')\")  # typo\nexcept sqlite3.OperationalError as e:\n    print(\"rolled back:\", e)   # rolled back: no such table: itemz\n'cap' is not saved either: the group is all or nothing. Unlike with open(), with db does not close the connection.",
+          "practice": "Predict the table after a with block that fails half-way; choose what with db does and does not do.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "context_managers.with_open",
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "executescript runs several statements",
+          "worked_example": "db.executescript(\"\"\"\nCREATE TABLE a (x INTEGER);\nINSERT INTO a VALUES (1), (2);\n\"\"\")\ndb.execute(\"INSERT INTO a VALUES (3); INSERT INTO a VALUES (4)\")\n# sqlite3.ProgrammingError: You can only execute one statement at a time.",
+          "practice": "Choose execute or executescript for given SQL; fix code that passes two statements to execute.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "context_managers.with_open",
+          "weight": 0.2
+        },
+        {
+          "topic": "lib_sqlite3.connect_execute_fetch",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "databases_sql.aggregate_functions",
+      "title": "Summarising a table: COUNT, SUM, AVG, MIN and MAX",
+      "concept": "databases_sql",
+      "summary": "Compute counts, totals, averages and extremes over rows with aggregate functions, filter first with WHERE, and read the single result into Python.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.like_in_null"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "COUNT(*) and getting one number out",
+          "worked_example": "n = db.execute(\"SELECT COUNT(*) FROM books\").fetchone()[0]\nprint(n)  # 4\nAn aggregate turns many rows into one row; fetchone()[0] unwraps the single value.",
+          "practice": "Write COUNT queries and the Python to read the number; predict counts for small tables.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "SUM, AVG, MIN and MAX",
+          "worked_example": "SELECT SUM(price), AVG(price), MIN(year), MAX(year) FROM books\n# (20.75, 6.916666666666667, 1815, 1969)\nSeveral aggregates can share one SELECT.",
+          "practice": "Compute aggregate results by hand for a 4-row table; choose the right function for a question.",
+          "formats": [
+            "numeric",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "COUNT(column) skips NULLs",
+          "worked_example": "SELECT COUNT(*), COUNT(price) FROM books   # (4, 3)\nPersuasion's price is NULL: COUNT(*) counts rows, COUNT(price) counts known prices. SUM and AVG also ignore NULL.",
+          "practice": "Predict counts and averages on columns containing NULL.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "databases_sql.like_in_null"
+          ]
+        },
+        {
+          "title": "Filter first, then aggregate; name the result",
+          "worked_example": "SELECT COUNT(*) AS n FROM books WHERE author = 'Austen'   # (2,)\nWHERE picks the rows before they are counted; AS gives the result column a name.",
+          "practice": "Write aggregate queries over filtered rows; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.select_and_where",
+          "weight": 0.5
+        },
+        {
+          "topic": "databases_sql.like_in_null",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "databases_sql.group_by_having",
+      "title": "Counting per group: GROUP BY and HAVING",
+      "concept": "databases_sql",
+      "summary": "Compute an aggregate for each group of rows, sort groups by their totals, and filter groups with HAVING versus rows with WHERE.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.aggregate_functions",
+        "databases_sql.order_limit_distinct"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One result row per group",
+          "worked_example": "SELECT author, COUNT(*) FROM books GROUP BY author\n# [('Austen', 2), ('Dick', 1), ('Herbert', 1)]\nThe same answer as counting with a dictionary in Python, done by the database.",
+          "practice": "Predict grouped counts and sums for a small table; write GROUP BY queries for questions.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "databases_sql.aggregate_functions"
+          ]
+        },
+        {
+          "title": "Sort groups by their totals",
+          "worked_example": "SELECT author, COUNT(*) AS n FROM books\nGROUP BY author ORDER BY n DESC, author\nThe py4e 'top senders' pattern: count per email address, biggest first, then LIMIT 10.",
+          "practice": "Write top-n-per-group queries; predict the order of groups.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.order_limit_distinct"
+          ]
+        },
+        {
+          "title": "WHERE filters rows before grouping",
+          "worked_example": "SELECT author, COUNT(*) FROM books WHERE year > 1816 GROUP BY author\n# [('Austen', 1), ('Dick', 1), ('Herbert', 1)]  (Emma, 1815, was removed first)",
+          "practice": "Predict grouped results when WHERE removes rows first.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.aggregate_functions"
+          ]
+        },
+        {
+          "title": "HAVING filters groups after grouping",
+          "worked_example": "SELECT author, COUNT(*) FROM books GROUP BY author HAVING COUNT(*) > 1\n# [('Austen', 2)]\nWHERE cannot use COUNT(*); HAVING can.",
+          "practice": "Choose WHERE or HAVING for described filters; fix a query that puts an aggregate in WHERE.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "databases_sql.aggregate_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.aggregate_functions",
+          "weight": 0.8
+        },
+        {
+          "topic": "databases_sql.order_limit_distinct",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlite3.ids_rowcount_and_errors",
+      "title": "New ids, changed-row counts and database errors",
+      "concept": "lib_sqlite3",
+      "summary": "Read the id of a row you just inserted, use rowcount and fetchone() is None to detect 'not found', and catch IntegrityError to report duplicates.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "lib_sqlite3.placeholders_and_injection",
+        "databases_sql.constraints",
+        "databases_sql.update_and_delete",
+        "exceptions.several_handlers_and_as"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "lastrowid: the id of the new row",
+          "worked_example": "cur = db.execute(\"INSERT INTO users (name) VALUES (?)\", (\"ana\",))\nprint(cur.lastrowid)  # 1\ncur = db.execute(\"INSERT INTO users (name) VALUES (?)\", (\"bo\",))\nprint(cur.lastrowid)  # 2",
+          "practice": "Predict lastrowid after a series of inserts; use it to insert a related row.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "rowcount 0 means nothing matched",
+          "worked_example": "def delete_user(name):\n    cur = db.execute(\"DELETE FROM users WHERE name = ?\", (name,))\n    return cur.rowcount > 0\nprint(delete_user(\"zed\"))  # False: no such user",
+          "practice": "Write functions that report whether an update or delete found a row.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.update_and_delete"
+          ]
+        },
+        {
+          "title": "Check fetchone() for None before indexing",
+          "worked_example": "row = db.execute(\"SELECT id FROM users WHERE name = ?\", (\"zed\",)).fetchone()\nprint(row[0])\n# TypeError: 'NoneType' object is not subscriptable\nFix: if row is None: handle 'not found' first.",
+          "practice": "Fix lookups that crash when the row is missing.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.placeholders_and_injection"
+          ]
+        },
+        {
+          "title": "Catch IntegrityError to report a duplicate",
+          "worked_example": "def add_user(name):\n    try:\n        db.execute(\"INSERT INTO users (name) VALUES (?)\", (name,))\n        return True\n    except sqlite3.IntegrityError:\n        return False\nprint(add_user(\"cy\"), add_user(\"ana\"))  # True False  (name is UNIQUE)",
+          "practice": "Predict results of add_user calls; choose IntegrityError vs OperationalError for described failures.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "exceptions.several_handlers_and_as",
+            "databases_sql.constraints"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlite3.placeholders_and_injection",
+          "weight": 0.6
+        },
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "databases_sql.manage_tables",
+      "title": "Creating, changing and removing tables safely",
+      "concept": "databases_sql",
+      "summary": "Re-run setup code safely with IF NOT EXISTS, remove tables with DROP TABLE, add a column with ALTER TABLE, and list the tables in a database.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "databases_sql.constraints",
+        "lib_sqlite3.commit_and_files"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "CREATE TABLE IF NOT EXISTS",
+          "worked_example": "db.execute(\"CREATE TABLE t2 (x INTEGER)\")\ndb.execute(\"CREATE TABLE t2 (x INTEGER)\")\n# sqlite3.OperationalError: table t2 already exists\nWith a file database the second run of your program hits this; IF NOT EXISTS skips the create instead.",
+          "practice": "Fix setup code that fails on its second run.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.commit_and_files"
+          ]
+        },
+        {
+          "title": "DROP TABLE removes a table and all its rows",
+          "worked_example": "db.execute(\"DROP TABLE IF EXISTS t\")\nUseful for starting fresh in a script; there is no undo.",
+          "practice": "Choose between DELETE FROM t and DROP TABLE t for described goals.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "ALTER TABLE adds a column",
+          "worked_example": "db.execute(\"ALTER TABLE t ADD COLUMN y TEXT\")\nExisting rows get NULL (or the column's DEFAULT) in the new column.",
+          "practice": "Predict existing rows after adding a column with and without DEFAULT.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "Which tables exist?",
+          "worked_example": "print(db.execute(\"SELECT name FROM sqlite_master WHERE type = 'table'\").fetchall())\n# [('t',)]\nsqlite_master is SQLite's own table describing the database.",
+          "practice": "Write the query that lists tables; predict its output after CREATE and DROP statements.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.constraints",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "data_modeling.split_into_tables",
+      "title": "Why one big table goes wrong: splitting data into tables",
+      "concept": "data_modeling",
+      "summary": "See the update problems caused by repeating text in every row, move repeated data into its own table referenced by an id, and recognise one-to-many relationships.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "databases_sql.update_and_delete",
+        "databases_sql.constraints"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Repeated text causes trouble",
+          "worked_example": "track      | artist\nMustapha   | Queen\nBicycle    | Queen\nHello      | Adele\nRenaming Queen means updating every Queen row; one typo ('Quen') silently creates a second artist.",
+          "practice": "Find the problems (repetition, inconsistent spellings, costly updates) in a flat table.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "databases_sql.update_and_delete"
+          ]
+        },
+        {
+          "title": "Move repeated data into its own table",
+          "worked_example": "CREATE TABLE artists (id INTEGER PRIMARY KEY, name TEXT UNIQUE);\nCREATE TABLE tracks (title TEXT, artist_id INTEGER);\nQueen is stored once (id 1); every Queen track stores the number 1. The rule: never put the same string data in twice.",
+          "practice": "Split a flat table into two tables; fill in the artist_id values for given rows.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "One-to-many: the 'many' side holds the id",
+          "worked_example": "One artist has many tracks; one track has one artist.\nSo tracks gets an artist_id column, not the other way round: a single artist row cannot hold a list of track ids.",
+          "practice": "For pairs of entities (customer/order, author/book), decide the relationship and which table gets the id column.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "Model a small domain",
+          "worked_example": "Blog: users write posts; each post has one author.\nusers (id, name, email UNIQUE)\nposts (id, title, body, author_id)\nList the things (tables), their facts (columns), then the links (id columns).",
+          "practice": "Write the tables for described domains (library loans, a shop's orders).",
+          "formats": [
+            "write_code",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.constraints",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "data_modeling.primary_and_foreign_keys",
+      "title": "Primary, logical and foreign keys",
+      "concept": "data_modeling",
+      "summary": "Name the three kinds of key in a schema, declare foreign keys with REFERENCES, and have SQLite enforce them.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "data_modeling.split_into_tables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Three kinds of key",
+          "worked_example": "artists (id INTEGER PRIMARY KEY, name TEXT UNIQUE)\nalbums (id INTEGER PRIMARY KEY, title TEXT, artist_id INTEGER)\nid: primary key (the row's own number). name: logical key (how people look it up). artist_id: foreign key (points at a row in another table).",
+          "practice": "Label the columns of given schemas as primary, logical or foreign key.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "data_modeling.split_into_tables"
+          ]
+        },
+        {
+          "title": "Declare a foreign key with REFERENCES",
+          "worked_example": "CREATE TABLE albums (\n    id INTEGER PRIMARY KEY,\n    title TEXT,\n    artist_id INTEGER REFERENCES artists(id))\nThe declaration documents the link and lets the database check it.",
+          "practice": "Write CREATE TABLE statements with REFERENCES for described links.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "data_modeling.split_into_tables"
+          ]
+        },
+        {
+          "title": "Turn on checking: PRAGMA foreign_keys = ON",
+          "worked_example": "db = sqlite3.connect(\":memory:\")\ndb.execute(\"PRAGMA foreign_keys = ON\")\n... create artists (Queen = 1) and albums ...\ndb.execute(\"INSERT INTO albums VALUES ('Ghost', 99)\")\n# sqlite3.IntegrityError: FOREIGN KEY constraint failed\nSQLite only checks foreign keys when this is on; run it right after connecting.",
+          "practice": "Predict whether inserts with dangling ids succeed with and without the pragma.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "Choose keys that never change",
+          "worked_example": "Using name as the primary key: renaming an artist would break every album pointing at 'Queen'.\nAn integer id never changes, so links stay valid; keep the name UNIQUE for lookups.",
+          "practice": "Pick the best primary key for described tables and justify it.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "data_modeling.split_into_tables"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_modeling.split_into_tables",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sql_joins.inner_join",
+      "title": "Combining tables with JOIN ... ON",
+      "concept": "sql_joins",
+      "summary": "Join two tables by matching a foreign key to a primary key, qualify column names, use table aliases, and recognise the every-combination bug.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "data_modeling.primary_and_foreign_keys",
+        "databases_sql.order_limit_distinct"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "JOIN ... ON pairs up matching rows",
+          "worked_example": "SELECT albums.title, artists.name\nFROM albums JOIN artists ON albums.artist_id = artists.id\nORDER BY albums.title\n# [('25', 'Adele'), ('Innuendo', 'Queen'), ('Jazz', 'Queen')]\n(artists: 1 Queen, 2 Adele, 3 Abba; albums Jazz and Innuendo point at 1, 25 at 2.)",
+          "practice": "Predict joined rows for two small tables; write the ON condition linking a foreign key to its primary key.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "Qualify columns that exist in both tables",
+          "worked_example": "SELECT id, title FROM albums JOIN artists ON albums.artist_id = artists.id\n# sqlite3.OperationalError: ambiguous column name: id\nWrite albums.id or artists.id.",
+          "practice": "Fix ambiguous column errors; choose which table's column a query needs.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "Aliases and WHERE after the join",
+          "worked_example": "SELECT al.title, ar.name FROM albums AS al\nJOIN artists AS ar ON al.artist_id = ar.id\nWHERE ar.name = 'Queen'\n# [('Jazz', 'Queen'), ('Innuendo', 'Queen')]",
+          "practice": "Rewrite joins with short aliases; write joins that filter on a column of the other table.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.select_and_where"
+          ]
+        },
+        {
+          "title": "Forgetting ON gives every combination",
+          "worked_example": "SELECT COUNT(*) FROM albums JOIN artists   # (9,)\n3 albums x 3 artists: every pair, mostly wrong. The older form FROM albums, artists WHERE albums.artist_id = artists.id is the same as a JOIN with ON.",
+          "practice": "Compute row counts of joins without ON; fix the query; convert between the comma form and JOIN ... ON.",
+          "formats": [
+            "numeric",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.select_and_where",
+          "weight": 0.5
+        },
+        {
+          "topic": "data_modeling.primary_and_foreign_keys",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "py4e"
+      ]
+    },
+    {
+      "id": "data_modeling.get_or_create_id",
+      "title": "Inserting related rows: look up or create an id",
+      "concept": "data_modeling",
+      "summary": "Use INSERT OR IGNORE plus a SELECT to get the id for a name whether or not it exists yet, then insert child rows that point at it.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "data_modeling.primary_and_foreign_keys",
+        "lib_sqlite3.ids_rowcount_and_errors",
+        "return_values.return_a_value"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "INSERT OR IGNORE skips duplicates quietly",
+          "worked_example": "db.execute(\"INSERT OR IGNORE INTO artists (name) VALUES (?)\", (\"Queen\",))\nRun twice: one Queen row, no IntegrityError, because name is UNIQUE and the duplicate is ignored.",
+          "practice": "Predict table contents after repeated INSERT OR IGNORE; compare with a plain INSERT.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.ids_rowcount_and_errors"
+          ]
+        },
+        {
+          "title": "Then SELECT the id",
+          "worked_example": "def artist_id(name):\n    db.execute(\"INSERT OR IGNORE INTO artists (name) VALUES (?)\", (name,))\n    row = db.execute(\"SELECT id FROM artists WHERE name = ?\", (name,)).fetchone()\n    return row[0]\nprint(artist_id(\"Queen\"), artist_id(\"Adele\"), artist_id(\"Queen\"))  # 1 2 1",
+          "practice": "Predict ids returned by a sequence of calls; fill in the missing SELECT.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.return_a_value",
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "Insert the child row with the id",
+          "worked_example": "db.execute(\"INSERT INTO albums (title, artist_id) VALUES (?, ?)\",\n           (\"Jazz\", artist_id(\"Queen\")))\nThe parent row is created on first use, so the foreign key always points at a real row.",
+          "practice": "Write the insert for a child row; trace both tables after several inserts.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "Load flat records into two tables",
+          "worked_example": "for title, artist in [(\"Jazz\", \"Queen\"), (\"25\", \"Adele\"), (\"Innuendo\", \"Queen\")]:\n    db.execute(\"INSERT INTO albums (title, artist_id) VALUES (?, ?)\",\n               (title, artist_id(artist)))\n# artists: (1, 'Queen'), (2, 'Adele'); albums point at 1, 2, 1",
+          "practice": "Trace the tables built from a list of records; extend the loader to a third level (tracks).",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.ids_rowcount_and_errors"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlite3.placeholders_and_injection",
+          "weight": 0.6
+        },
+        {
+          "topic": "lib_sqlite3.ids_rowcount_and_errors",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "data_modeling.many_to_many",
+      "title": "Many-to-many relationships: junction tables",
+      "concept": "data_modeling",
+      "summary": "Model links where both sides have many partners with a junction table of two foreign keys, a composite primary key, and data stored on the connection.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "data_modeling.primary_and_foreign_keys"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Recognise many-to-many",
+          "worked_example": "A student takes many courses; a course has many students.\nNeither table can hold the link: a course_id column in students would allow only one course per student.",
+          "practice": "Classify described relationships as one-to-many or many-to-many.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "A junction table holds pairs of ids",
+          "worked_example": "CREATE TABLE enrolments (\n    student_id INTEGER REFERENCES students(id),\n    course_id INTEGER REFERENCES courses(id))\nINSERT INTO enrolments VALUES (1, 1), (1, 2), (2, 1)\nEach row is one connection: Ana (1) takes SQL (1) and Art (2).",
+          "practice": "Write the junction table for a described pair; fill in its rows from a description.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "A composite primary key blocks duplicate links",
+          "worked_example": "PRIMARY KEY (student_id, course_id)\nINSERT INTO enrolments VALUES (1, 1, 'teacher')  # again\n# sqlite3.IntegrityError: UNIQUE constraint failed: enrolments.student_id, enrolments.course_id",
+          "practice": "Predict which inserts into a junction table fail.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "Store facts about the connection",
+          "worked_example": "enrolments (student_id, course_id, role)\n(1, 1, 'student'), (1, 2, 'teacher')\nA role belongs to the pair, not to the student or the course alone.",
+          "practice": "Decide where described facts belong (student, course or enrolment).",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "data_modeling.primary_and_foreign_keys",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "sql_joins.left_join",
+      "title": "Keeping rows without a match: LEFT JOIN",
+      "concept": "sql_joins",
+      "summary": "Use LEFT JOIN to keep rows that have no partner, find those rows with IS NULL, and count correctly with COUNT(column).",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "sql_joins.inner_join",
+        "databases_sql.group_by_having"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "JOIN drops rows without a partner; LEFT JOIN keeps them",
+          "worked_example": "SELECT artists.name, albums.title FROM artists\nLEFT JOIN albums ON albums.artist_id = artists.id ORDER BY artists.name\n# [('Abba', None), ('Adele', '25'), ('Queen', 'Innuendo'), ('Queen', 'Jazz')]\nAbba has no albums: an inner JOIN would leave Abba out.",
+          "practice": "Predict the rows of JOIN vs LEFT JOIN for the same tables.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sql_joins.inner_join"
+          ]
+        },
+        {
+          "title": "Find rows with no match",
+          "worked_example": "SELECT artists.name FROM artists\nLEFT JOIN albums ON albums.artist_id = artists.id\nWHERE albums.id IS NULL\n# [('Abba',)]",
+          "practice": "Write queries for 'customers with no orders', 'books never borrowed'.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.like_in_null"
+          ]
+        },
+        {
+          "title": "Count with COUNT(column), not COUNT(*)",
+          "worked_example": "SELECT artists.name, COUNT(albums.id) FROM artists\nLEFT JOIN albums ON albums.artist_id = artists.id GROUP BY artists.name\n# Abba 0, Adele 1, Queen 2\nCOUNT(*) would give Abba 1, counting the row of NULLs.",
+          "practice": "Fix per-group counts that report 1 instead of 0.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.group_by_having"
+          ]
+        },
+        {
+          "title": "Which table goes on the left matters",
+          "worked_example": "artists LEFT JOIN albums keeps every artist.\nalbums LEFT JOIN artists keeps every album (and drops Abba).\nThe table whose rows you must keep goes first.",
+          "practice": "Choose the table order for described questions.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "sql_joins.inner_join"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sql_joins.inner_join",
+          "weight": 0.7
+        },
+        {
+          "topic": "databases_sql.group_by_having",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sql_joins.multi_table_joins",
+      "title": "Joining three tables and many-to-many data",
+      "concept": "sql_joins",
+      "summary": "Chain joins across three tables, including through a junction table, and filter and aggregate the joined rows.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "sql_joins.inner_join",
+        "data_modeling.many_to_many",
+        "databases_sql.group_by_having"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Chain one-to-many joins",
+          "worked_example": "SELECT tracks.title, albums.title, artists.name\nFROM tracks\nJOIN albums ON tracks.album_id = albums.id\nJOIN artists ON albums.artist_id = artists.id\nORDER BY tracks.title\n# [('Bicycle Race', 'Jazz', 'Queen'), ('Hello', '25', 'Adele'), ('Mustapha', 'Jazz', 'Queen')]",
+          "practice": "Write the second JOIN for a three-table chain; predict joined rows.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sql_joins.inner_join"
+          ]
+        },
+        {
+          "title": "Join through a junction table",
+          "worked_example": "SELECT students.name, courses.title, enrolments.role\nFROM enrolments\nJOIN students ON enrolments.student_id = students.id\nJOIN courses ON enrolments.course_id = courses.id\nORDER BY students.name, courses.title\n# [('Ana', 'Art', 'teacher'), ('Ana', 'SQL', 'student'), ('Bo', 'SQL', 'student')]",
+          "practice": "Order the lines of a junction-table join (Parsons); predict its rows.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "data_modeling.many_to_many"
+          ]
+        },
+        {
+          "title": "Filter the joined rows",
+          "worked_example": "... same joins ...\nWHERE students.name = 'Ana' AND enrolments.role = 'student'\n# [('Ana', 'SQL', 'student')]",
+          "practice": "Write joins that answer 'which courses does X teach'.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sql_joins.inner_join"
+          ]
+        },
+        {
+          "title": "Aggregate across a join",
+          "worked_example": "SELECT courses.title, COUNT(*) FROM enrolments\nJOIN courses ON enrolments.course_id = courses.id\nGROUP BY courses.title ORDER BY courses.title\n# [('Art', 1), ('SQL', 2)]",
+          "practice": "Write per-group counts over joined data; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.group_by_having"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sql_joins.inner_join",
+          "weight": 0.9
+        },
+        {
+          "topic": "databases_sql.group_by_having",
+          "weight": 0.3
+        },
+        {
+          "topic": "data_modeling.many_to_many",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "databases_sql.subqueries",
+      "title": "Queries inside queries: subqueries",
+      "concept": "databases_sql",
+      "summary": "Use a subquery's result as a value or a list inside WHERE, and recognise when a join gives the same answer.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "databases_sql.aggregate_functions",
+        "sql_joins.inner_join"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Compare with a computed value",
+          "worked_example": "SELECT title, year FROM books WHERE year < (SELECT AVG(year) FROM books)\n# [('Emma', 1815), ('Persuasion', 1817)]\nThe inner query runs first and becomes one number.",
+          "practice": "Predict results of single-value subqueries; write 'above average' queries.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "databases_sql.aggregate_functions"
+          ]
+        },
+        {
+          "title": "Find the row holding the maximum",
+          "worked_example": "SELECT title FROM books WHERE price = (SELECT MAX(price) FROM books)\n# [('Dune',)]\nSELECT title, MAX(price) alone does not tell you which rows tie for it.",
+          "practice": "Write queries for the most expensive / oldest item.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.aggregate_functions"
+          ]
+        },
+        {
+          "title": "IN with a list from another table",
+          "worked_example": "SELECT name FROM students\nWHERE id IN (SELECT student_id FROM enrolments WHERE role = 'teacher')\n# [('Ana',)]",
+          "practice": "Predict results of IN-subqueries; write one for a described question.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "databases_sql.like_in_null"
+          ]
+        },
+        {
+          "title": "Subquery or join?",
+          "worked_example": "The IN query above gives the same names as\nSELECT DISTINCT students.name FROM students JOIN enrolments ON ... WHERE role = 'teacher'\nUse a join when you also need columns from the other table.",
+          "practice": "Choose between a subquery and a join for given questions; rewrite one as the other.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sql_joins.inner_join"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.aggregate_functions",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "lib_sqlite3.rows_as_dicts",
+      "title": "Rows you can read by column name: sqlite3.Row",
+      "concept": "lib_sqlite3",
+      "summary": "Set row_factory to sqlite3.Row to read columns by name, convert rows to dictionaries, and turn query results into JSON-ready lists of dicts.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_sqlite3.connect_execute_fetch",
+        "nested_data_structures.list_of_dicts",
+        "json_data.json_strings",
+        "list_comprehensions.map_each_item"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "row['title'] instead of row[0]",
+          "worked_example": "db.row_factory = sqlite3.Row\nrow = db.execute(\"SELECT * FROM books\").fetchone()\nprint(row[\"title\"], row[1])  # Dune 1965\nSet row_factory once, right after connecting; index numbers still work.",
+          "practice": "Rewrite index-based row access with column names; predict printed values.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "dict(row) and row.keys()",
+          "worked_example": "print(dict(row))    # {'title': 'Dune', 'year': 1965}\nprint(row.keys())   # ['title', 'year']",
+          "practice": "Predict dict(row) for queries selecting different columns.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        },
+        {
+          "title": "A query result as a list of dicts, then JSON",
+          "worked_example": "books = [dict(r) for r in db.execute(\"SELECT * FROM books\")]\nprint(json.dumps(books))  # [{\"title\": \"Dune\", \"year\": 1965}]\nThis is the shape a web API sends back.",
+          "practice": "Write the comprehension that converts a query to a list of dicts; predict the JSON text.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts",
+            "json_data.json_strings"
+          ]
+        },
+        {
+          "title": "Unknown column names raise IndexError",
+          "worked_example": "print(row[\"Title\"])   # Dune: names ignore case\nprint(row[\"author\"])\n# IndexError: No item with that key",
+          "practice": "Fix lookups of columns the query did not select.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.connect_execute_fetch"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.3
+        },
+        {
+          "topic": "json_data.json_strings",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "lib_sqlite3.load_file_into_database",
+      "title": "From a file to a database: loading and reporting",
+      "concept": "lib_sqlite3",
+      "summary": "Read records from a CSV or text file, convert and insert them, then answer questions with SQL instead of Python loops (the py4e counting pattern).",
+      "minutes": 20,
+      "core": false,
+      "prerequisites": [
+        "csv_files.read_with_csv_reader",
+        "lib_sqlite3.placeholders_and_injection",
+        "lib_sqlite3.commit_and_files",
+        "databases_sql.group_by_having"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Read CSV rows and insert them",
+          "worked_example": "with open(\"sales.csv\") as f:\n    reader = csv.reader(f)\n    next(reader)                       # skip the header\n    rows = []\n    for item, city, amount in reader:\n        rows.append((item, city, int(amount)))\ndb.executemany(\"INSERT INTO sales VALUES (?, ?, ?)\", rows)",
+          "practice": "Order the lines of a loader (Parsons); fill in the executemany call.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "csv_files.read_with_csv_reader",
+            "lib_sqlite3.placeholders_and_injection"
+          ]
+        },
+        {
+          "title": "Convert types before inserting",
+          "worked_example": "db.execute(\"CREATE TABLE s (amount TEXT)\")\ndb.execute(\"INSERT INTO s VALUES ('10'), ('9')\")\nprint(db.execute(\"SELECT MAX(amount) FROM s\").fetchone())  # ('9',)\ncsv gives strings; stored as text, '9' beats '10'. Convert with int() and use INTEGER columns.",
+          "practice": "Predict MAX/ORDER BY on text vs numbers; fix a loader that stores numbers as text.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.placeholders_and_injection"
+          ]
+        },
+        {
+          "title": "Let SQL write the report",
+          "worked_example": "for city, total in db.execute(\"SELECT city, SUM(amount) FROM sales GROUP BY city ORDER BY city\"):\n    print(f\"{city}: {total}\")\n# Oslo: 5\n# Paris: 5",
+          "practice": "Write the query and print loop for a requested report.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.group_by_having"
+          ]
+        },
+        {
+          "title": "Count as you read: update or insert",
+          "worked_example": "row = db.execute(\"SELECT count FROM counts WHERE email = ?\", (email,)).fetchone()\nif row is None:\n    db.execute(\"INSERT INTO counts (email, count) VALUES (?, 1)\", (email,))\nelse:\n    db.execute(\"UPDATE counts SET count = count + 1 WHERE email = ?\", (email,))\nRun for each 'From:' line of a mailbox, then commit once at the end.",
+          "practice": "Trace the counts table over a short mailbox; place db.commit() correctly.",
+          "formats": [
+            "trace_table",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.commit_and_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "csv_files.read_with_csv_reader",
+          "weight": 0.5
+        },
+        {
+          "topic": "lib_sqlite3.placeholders_and_injection",
+          "weight": 0.6
+        },
+        {
+          "topic": "databases_sql.group_by_having",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e"
+      ]
+    },
+    {
+      "id": "web_development.how_web_apps_work",
+      "title": "How a web app works: requests, routes and responses",
+      "concept": "web_development",
+      "summary": "Describe what happens between a browser and a Python web server, and model routing as a dictionary that maps paths to functions returning a body and a status code.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "return_values.multiple_return_values",
+        "apis_http.request_response_cycle",
+        "higher_order_functions.dispatch_tables"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The server side of the request-response cycle",
+          "worked_example": "1. The browser sends GET /about (a request like the ones in HTTP basics)\n2. The server finds the Python function for the path /about\n3. The function builds the page\n4. The server sends a response: status code, headers and HTML\n5. The browser draws the HTML\nAs a client you read requests and responses; a web app is the program on the other end that produces them.",
+          "practice": "Order the steps of a request (Parsons); say which steps run on the server.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Routing: the path picks a function",
+          "worked_example": "def home():\n    return \"<h1>Home</h1>\", 200\ndef about():\n    return \"<h1>About us</h1>\", 200\nroutes = {\"/\": home, \"/about\": about}\nprint(routes[\"/about\"]())  # ('<h1>About us</h1>', 200)\nA web framework keeps a table like this for you.",
+          "practice": "Add a route to the table; predict what a path returns.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.dispatch_tables"
+          ]
+        },
+        {
+          "title": "Unknown paths get 404",
+          "worked_example": "def not_found():\n    return \"<h1>Page not found</h1>\", 404\ndef handle(path):\n    return routes.get(path, not_found)()\nprint(handle(\"/contact\"))  # ('<h1>Page not found</h1>', 404)\nNow your code chooses the status code that a client reads (the 2xx/4xx/5xx families from HTTP basics).",
+          "practice": "Predict handle() results; choose the status code your server should send for described situations.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "higher_order_functions.dispatch_tables",
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Front end, back end, database",
+          "worked_example": "Front end: HTML/CSS/JavaScript the browser shows.\nBack end: Python code that handles requests.\nDatabase: where the back end keeps data between requests.\nA static page is a fixed file; a dynamic page is built per request.",
+          "practice": "Assign described jobs to front end, back end or database; classify pages as static or dynamic.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "apis_http.request_response_cycle",
+          "weight": 0.2
+        },
+        {
+          "topic": "higher_order_functions.dispatch_tables",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "web_development.html_for_python_devs",
+      "title": "Just enough HTML to build pages from Python",
+      "concept": "web_development",
+      "summary": "Write the handful of HTML tags a Python web app needs (headings, paragraphs, links, lists, forms), build HTML strings in Python, and escape user text.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "string_formatting.fstring_basics",
+        "strings.multiline_and_raw",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Tags, nesting and attributes",
+          "worked_example": "<h1>My books</h1>\n<p>Read <a href=\"/about\">about me</a>.</p>\nA tag opens <p> and closes </p>; tags nest; attributes like href=\"/about\" go in the opening tag.",
+          "practice": "Fix mis-nested or unclosed tags; write the HTML for a described snippet.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Build HTML in Python",
+          "worked_example": "books = [\"Dune\", \"Emma\"]\nitems = \"\"\nfor b in books:\n    items += f\"<li>{b}</li>\"\nprint(f\"<ul>{items}</ul>\")\n# <ul><li>Dune</li><li>Emma</li></ul>",
+          "practice": "Predict the HTML a loop builds; write code that builds a list or table from data.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Forms send named fields",
+          "worked_example": "<form action=\"/add\" method=\"post\">\n  <input name=\"title\">\n  <button>Add</button>\n</form>\nSubmitting sends title=<what was typed> to /add; the server reads it by the name 'title'.",
+          "practice": "Read a form and say which path receives it, with which method and field names; fix a form whose input lacks a name.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "strings.multiline_and_raw"
+          ]
+        },
+        {
+          "title": "Escape user text before putting it in HTML",
+          "worked_example": "import html\nname = \"<script>alert('hi')</script>\"\nprint(f\"<p>Hello {html.escape(name)}</p>\")\n# <p>Hello &lt;script&gt;alert(&#x27;hi&#x27;)&lt;/script&gt;</p>\nUnescaped, the browser would run the script: an XSS attack.",
+          "practice": "Predict escaped output; spot the line that puts unescaped user input into a page.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "lib_flask.first_app_and_routes",
+      "title": "A first Flask app: routes and the development server",
+      "concept": "lib_flask",
+      "summary": "Install Flask, write an app with @app.route view functions, run the development server in debug mode, and test pages without a browser using the test client.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "web_development.how_web_apps_work",
+        "decorators.at_syntax",
+        "third_party_packages.find_and_install"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Hello, Flask",
+          "worked_example": "from flask import Flask\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef home():\n    return \"<h1>Hello</h1>\"\n$ flask --app hello run    # Running on http://127.0.0.1:5000\n(python3 -m pip install flask first.) The decorator registers home() for the path /.",
+          "practice": "Order the lines of a minimal app (Parsons); say which URL shows which text.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax",
+            "third_party_packages.find_and_install"
+          ]
+        },
+        {
+          "title": "More pages, more routes",
+          "worked_example": "@app.route(\"/about\")\ndef about():\n    return \"<p>About me</p>\"\nVisiting /contact, which has no route, gives Flask's 404 Not Found page.",
+          "practice": "Add routes for described pages; predict the response for listed paths.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "web_development.how_web_apps_work"
+          ]
+        },
+        {
+          "title": "Test a page with the test client",
+          "worked_example": "client = app.test_client()\nr = client.get(\"/about\")\nprint(r.status_code)           # 200\nprint(r.get_data(as_text=True))  # <p>About me</p>\nNo server or browser needed, so pages can be checked like any function.",
+          "practice": "Write test-client checks for a route's status and text; predict status codes for missing routes.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "web_development.how_web_apps_work"
+          ]
+        },
+        {
+          "title": "Debug mode: reload and tracebacks",
+          "worked_example": "$ flask --app hello run --debug\nThe server restarts when you save, and an exception in a view shows a traceback page instead of 500 Internal Server Error. Never turn debug on for a public site.",
+          "practice": "Match symptoms (stale page, 500 error) to causes; choose when debug mode is safe.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "web_development.how_web_apps_work"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decorators.at_syntax",
+          "weight": 0.3
+        },
+        {
+          "topic": "web_development.how_web_apps_work",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_flask.variable_routes",
+      "title": "Routes with variables: <name> and <int:id>",
+      "concept": "lib_flask",
+      "summary": "Capture parts of the URL as view-function arguments, convert them with int:, and avoid duplicate view names.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.first_app_and_routes",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "<name> becomes an argument",
+          "worked_example": "@app.route(\"/hello/<name>\")\ndef hello(name):\n    return f\"Hello {name}\"\n# GET /hello/ana  ->  Hello ana",
+          "practice": "Predict responses for URLs; write a route with one variable.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_flask.first_app_and_routes"
+          ]
+        },
+        {
+          "title": "<int:n> converts and rejects",
+          "worked_example": "@app.route(\"/square/<int:n>\")\ndef square(n):\n    return str(n * n)\n# /square/7 -> 49    /square/x -> 404 Not Found\nWithout int:, n would be the string '7'. A view must return text, hence str().",
+          "practice": "Fix views that do arithmetic on a string variable; predict responses for valid and invalid URLs.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "Several variables; unique view names",
+          "worked_example": "@app.route(\"/user/<name>/post/<int:post_id>\")\ndef show_post(name, post_id): ...\nTwo views both named home raise AssertionError: View function mapping is overwriting an existing endpoint function: home",
+          "practice": "Write routes with two variables; fix duplicate view names.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_flask.first_app_and_routes"
+          ]
+        },
+        {
+          "title": "A URL game",
+          "worked_example": "SECRET = 7\n@app.route(\"/guess/<int:n>\")\ndef guess(n):\n    if n < SECRET:\n        return \"<h1>Too low</h1>\"\n    if n > SECRET:\n        return \"<h1>Too high</h1>\"\n    return \"<h1>You found it!</h1>\"",
+          "practice": "Predict pages for a list of URLs; extend the game with a new response.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_flask.first_app_and_routes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_flask.first_app_and_routes",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_flask.templates_and_static",
+      "title": "HTML templates, static files and url_for",
+      "concept": "lib_flask",
+      "summary": "Keep HTML in a templates folder and render it with render_template, pass values into it, serve CSS and images from static, and build links with url_for.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.variable_routes",
+        "web_development.html_for_python_devs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "render_template reads templates/",
+          "worked_example": "project/\n  app.py\n  templates/index.html\nreturn render_template(\"index.html\")\nThe file must be inside templates/, or Flask raises jinja2.exceptions.TemplateNotFound: index.html",
+          "practice": "Arrange files so a template is found; fix a TemplateNotFound error.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "web_development.html_for_python_devs"
+          ]
+        },
+        {
+          "title": "Pass values to the template",
+          "worked_example": "return render_template(\"hello.html\", name=name, year=2026)\n<!-- hello.html -->\n<h1>Hi {{ name }}</h1><footer>{{ year }}</footer>\nEach keyword argument becomes a name the template can use; Jinja syntax is the next concept.",
+          "practice": "Predict rendered HTML; add the missing keyword argument.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_flask.variable_routes"
+          ]
+        },
+        {
+          "title": "Static files: CSS and images",
+          "worked_example": "static/style.css\n<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">\nFiles in static/ are served as they are, at /static/<filename>.",
+          "practice": "Choose templates/ or static/ for given files; write the url_for for an image.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "web_development.html_for_python_devs"
+          ]
+        },
+        {
+          "title": "url_for builds links from view names",
+          "worked_example": "url_for(\"hello\", name=\"ana\")   # '/hello/ana'\n<a href=\"{{ url_for('hello', name='ana') }}\">Say hi</a>\nIf the route's path changes, links built with url_for still work.",
+          "practice": "Predict the URLs url_for builds; replace hard-coded links.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_flask.variable_routes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_flask.variable_routes",
+          "weight": 0.4
+        },
+        {
+          "topic": "web_development.html_for_python_devs",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_flask.forms_and_post",
+      "title": "Handling forms: POST requests, request.form and redirects",
+      "concept": "lib_flask",
+      "summary": "Accept GET and POST on one route, read submitted fields from request.form and query strings from request.args, and redirect after a successful POST.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.templates_and_static",
+        "dictionaries.membership_and_get"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One route, two methods",
+          "worked_example": "from flask import request\n@app.route(\"/add\", methods=[\"GET\", \"POST\"])\ndef add():\n    if request.method == \"POST\":\n        return \"Saved\"\n    return render_template(\"add.html\")\nWithout methods=[...], a POST gets 405 Method Not Allowed.",
+          "practice": "Predict responses to GET and POST; fix a route that rejects POST.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_flask.templates_and_static"
+          ]
+        },
+        {
+          "title": "Read fields with request.form",
+          "worked_example": "title = request.form[\"title\"]\nnotes = request.form.get(\"notes\", \"\")\nclient.post(\"/add\", data={\"title\": \"Dune\"})   # test it\nA missing key in request.form[...] gives 400 Bad Request; .get() returns a default.",
+          "practice": "Match form field names to request.form keys; choose [ ] or .get() for required and optional fields.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Query strings with request.args",
+          "worked_example": "# GET /search?q=dune\nq = request.args.get(\"q\", \"\")\nSearch forms use method=\"get\", so their fields arrive in the URL and in request.args.",
+          "practice": "Predict request.args values for URLs; choose GET or POST for described forms.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Redirect after POST",
+          "worked_example": "from flask import redirect, url_for\nif request.method == \"POST\":\n    save(request.form[\"title\"])\n    return redirect(url_for(\"index\"))\nRefreshing a page shown straight after a POST would submit it again; the redirect makes the browser GET the list instead.",
+          "practice": "Fix views that render after POST; predict the status code (302) of a redirect.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_flask.templates_and_static"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_flask.templates_and_static",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_flask.errors_and_flash",
+      "title": "Status codes, error pages and flash messages",
+      "concept": "lib_flask",
+      "summary": "Return a chosen status code, stop with abort(404), show a custom error page, and give one-time feedback with flash messages.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.forms_and_post"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Return a status code with the body",
+          "worked_example": "@app.route(\"/books/<int:id>\")\ndef book(id):\n    if id not in BOOKS:\n        return \"No such book\", 404\n    return BOOKS[id]",
+          "practice": "Predict status codes for requests; add a status to a view.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_flask.forms_and_post"
+          ]
+        },
+        {
+          "title": "abort() and custom error pages",
+          "worked_example": "from flask import abort\nabort(404)          # stops the view right here\n@app.errorhandler(404)\ndef not_found(e):\n    return render_template(\"404.html\"), 404",
+          "practice": "Choose abort(404) vs abort(403) vs abort(400) for situations; fix an error handler that forgets the status.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_flask.forms_and_post"
+          ]
+        },
+        {
+          "title": "flash() for one-time messages",
+          "worked_example": "app.secret_key = \"dev\"   # flash needs it\nflash(\"Book saved!\")\nreturn redirect(url_for(\"index\"))\n<!-- template -->\n{% for msg in get_flashed_messages() %}<p>{{ msg }}</p>{% endfor %}\nThe message shows on the next page, once.",
+          "practice": "Order the steps of a save-then-flash flow; predict on which page a message appears.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_flask.forms_and_post"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_flask.forms_and_post",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_jinja.expressions_and_filters",
+      "title": "Jinja templates: {{ expressions }}, filters and escaping",
+      "concept": "lib_jinja",
+      "summary": "Insert values, dictionary keys and attributes into a template, transform them with filters, and know when Jinja escapes HTML for you.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.templates_and_static",
+        "dictionaries.create_and_look_up"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "{{ }} prints an expression",
+          "worked_example": "from jinja2 import Template\nprint(Template(\"Hi {{ name }}, total {{ price * 2 }}\").render(name=\"Ana\", price=3))\n# Hi Ana, total 6\nFlask's render_template does the same with a file.",
+          "practice": "Predict rendered text for templates with variables and arithmetic.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_flask.templates_and_static"
+          ]
+        },
+        {
+          "title": "Keys and attributes: post.title",
+          "worked_example": "render_template(\"post.html\", post={\"title\": \"Hi\", \"body\": \"...\"})\n<h1>{{ post.title }}</h1>   (same as {{ post['title'] }})\nThe dot works for dictionary keys and object attributes alike.",
+          "practice": "Write template expressions for nested data; predict output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Filters transform values",
+          "worked_example": "{{ name | upper }}         ANA\n{{ posts | length }}       3\n{{ price | round(2) }}     9.5\n{{ nick | default('anon') }}\nA filter takes the value on its left, like a function call.",
+          "practice": "Predict filter results; choose the filter for a described display.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_flask.templates_and_static"
+          ]
+        },
+        {
+          "title": "Escaping, |safe and silent typos",
+          "worked_example": "In Flask's .html templates, {{ comment }} with '<b>hi</b>' shows &lt;b&gt;hi&lt;/b&gt;: user text cannot inject HTML.\n{{ post.body | safe }} turns escaping off, only for HTML you trust.\n{{ nmae }} (typo) renders as nothing, with no error.",
+          "practice": "Decide where |safe is acceptable; find the typo behind a blank spot on a page.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_flask.templates_and_static"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_flask.templates_and_static",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_jinja.loops_and_conditions",
+      "title": "Jinja loops and conditions: {% for %} and {% if %}",
+      "concept": "lib_jinja",
+      "summary": "Generate repeated HTML with {% for %}, choose content with {% if %}, use loop variables and an empty-list else, and link each item to its own page.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_jinja.expressions_and_filters",
+        "nested_data_structures.list_of_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "{% for %} repeats HTML",
+          "worked_example": "<ul>\n{% for post in posts %}\n  <li>{{ post.title }}</li>\n{% endfor %}\n</ul>\nEvery {% for %} needs {% endfor %}; indentation does not matter in templates.",
+          "practice": "Predict the HTML for a list of dicts; fix a template missing endfor.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "{% if %} chooses content",
+          "worked_example": "{% if user %}\n  <p>Welcome back, {{ user.name }}</p>\n{% else %}\n  <a href=\"/login\">Log in</a>\n{% endif %}",
+          "practice": "Predict rendered output for different values; write an if/elif block.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        },
+        {
+          "title": "loop.index and an else for empty lists",
+          "worked_example": "{% for post in posts %}\n  <p>{{ loop.index }}. {{ post.title }}</p>\n{% else %}\n  <p>No posts yet.</p>\n{% endfor %}\nloop.index counts from 1; the else part shows only when posts is empty.",
+          "practice": "Predict numbered output and the empty case.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        },
+        {
+          "title": "A link per item",
+          "worked_example": "{% for post in posts %}\n  <a href=\"{{ url_for('show_post', post_id=post.id) }}\">{{ post.title }}</a>\n{% endfor %}\nOne template plus a <int:post_id> route gives every post its own page.",
+          "practice": "Write the loop that links each item; predict the hrefs generated.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_jinja.expressions_and_filters",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_jinja.template_inheritance",
+      "title": "Sharing a layout: {% extends %}, {% block %} and {% include %}",
+      "concept": "lib_jinja",
+      "summary": "Put the shared page layout in a base template, fill its blocks from child templates, and reuse snippets with include.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "lib_jinja.expressions_and_filters"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A base template with blocks",
+          "worked_example": "<!-- base.html -->\n<html><body>\n  <nav>...</nav>\n  {% block content %}{% endblock %}\n</body></html>\n<!-- about.html -->\n{% extends \"base.html\" %}\n{% block content %}<h1>About</h1>{% endblock %}",
+          "practice": "Predict the full HTML of a rendered child template.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        },
+        {
+          "title": "Several blocks and default content",
+          "worked_example": "{% block title %}My site{% endblock %} in base.html is the default;\na child that does not define block title keeps 'My site'.\n{{ super() }} inside a child block adds to the parent's content.",
+          "practice": "Predict the title and content for children that override some blocks.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        },
+        {
+          "title": "include for repeated pieces",
+          "worked_example": "{% include \"header.html\" %}\nPastes another template in place, with the same variables available.",
+          "practice": "Choose extends or include for described reuse; write the include line.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        },
+        {
+          "title": "Content outside blocks is ignored",
+          "worked_example": "{% extends \"base.html\" %}\n<p>Hello</p>     <!-- never shown -->\n{% block content %}...{% endblock %}\nIn a child template only blocks count, and extends must come first.",
+          "practice": "Find why text in a child template does not appear and fix it.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_jinja.expressions_and_filters",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_wtforms.define_and_render_forms",
+      "title": "Defining forms as classes with Flask-WTF",
+      "concept": "lib_wtforms",
+      "summary": "Describe a form as a FlaskForm subclass with typed fields and validators, set the secret key for CSRF protection, and render the fields in a template.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.forms_and_post",
+        "inheritance.define_subclass",
+        "lib_jinja.expressions_and_filters"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A form is a class of fields",
+          "worked_example": "from flask_wtf import FlaskForm\nfrom wtforms import StringField, PasswordField, SubmitField\n\nclass LoginForm(FlaskForm):\n    email = StringField(\"Email\")\n    password = PasswordField(\"Password\")\n    submit = SubmitField(\"Log in\")\n(python3 -m pip install flask-wtf)",
+          "practice": "Write the form class for described fields; choose the field type for each input.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "Validators state the rules",
+          "worked_example": "from wtforms.validators import DataRequired, Email, Length\nemail = StringField(\"Email\", validators=[DataRequired(), Email()])\npassword = PasswordField(\"Password\", validators=[DataRequired(), Length(min=8)])\nEmail() also needs: pip install email-validator.",
+          "practice": "Add validators for described rules; predict which inputs pass.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "Secret key and the CSRF token",
+          "worked_example": "app.config[\"SECRET_KEY\"] = \"change-me\"\n<form method=\"post\">\n  {{ form.csrf_token }}\n  ...\nThe hidden token proves the form came from your site; without it validation always fails.",
+          "practice": "Fix a form that never validates (missing token or key); explain what CSRF protection blocks.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_flask.forms_and_post"
+          ]
+        },
+        {
+          "title": "Render fields in the template",
+          "worked_example": "{{ form.email.label }} {{ form.email(size=30) }}\n{{ form.password.label }} {{ form.password() }}\n{{ form.submit() }}\nCalling a field outputs its <input> tag; keyword arguments become HTML attributes.",
+          "practice": "Predict the HTML for a rendered field; write the template lines for a form.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.expressions_and_filters"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.define_subclass",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_wtforms.validate_and_use_data",
+      "title": "Validating submissions and using form data",
+      "concept": "lib_wtforms",
+      "summary": "Use validate_on_submit to accept only valid POSTs, read typed values from field.data, show validation errors, and prefill forms for editing.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_wtforms.define_and_render_forms",
+        "lib_jinja.loops_and_conditions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "validate_on_submit()",
+          "worked_example": "@app.route(\"/login\", methods=[\"GET\", \"POST\"])\ndef login():\n    form = LoginForm()\n    if form.validate_on_submit():\n        return f\"Hi {form.email.data}\"\n    return render_template(\"login.html\", form=form)\nTrue only for a POST whose data passes every validator.",
+          "practice": "Predict the response for GET, invalid POST and valid POST.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_wtforms.define_and_render_forms"
+          ]
+        },
+        {
+          "title": "Show the errors",
+          "worked_example": "{% for error in form.password.errors %}\n  <span class=\"error\">{{ error }}</span>\n{% endfor %}\n# e.g. Field must be at least 8 characters long.",
+          "practice": "Write the template loop that shows a field's errors; predict which errors appear for an input.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_jinja.loops_and_conditions"
+          ]
+        },
+        {
+          "title": "Typed fields and choices",
+          "worked_example": "rating = FloatField(\"Rating\")          # form.rating.data is a float\ncoffee = SelectField(\"Coffee\", choices=[\"☕\", \"☕☕\", \"☕☕☕\"])\nURLField, IntegerField, SelectField give the right input and the right Python type.",
+          "practice": "Choose field classes for described inputs; predict the type of .data.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_wtforms.define_and_render_forms"
+          ]
+        },
+        {
+          "title": "Prefill a form to edit a record",
+          "worked_example": "form = EditForm(data={\"title\": post[\"title\"], \"body\": post[\"body\"]})\nOn GET the fields show current values; on a valid POST, copy form.title.data back into the record and save.",
+          "practice": "Order the steps of an edit view (Parsons).",
+          "formats": [
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lib_wtforms.define_and_render_forms"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_wtforms.define_and_render_forms",
+          "weight": 0.7
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlalchemy.models_and_tables",
+      "title": "SQLAlchemy models: classes that become tables",
+      "concept": "lib_sqlalchemy",
+      "summary": "Describe a table as a Python class with SQLAlchemy's declarative mapping, create the tables from the classes, and predict the SQL it generates.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "databases_sql.constraints",
+        "inheritance.define_subclass",
+        "type_hints.optional_and_union",
+        "third_party_packages.find_and_install"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An ORM maps classes to tables",
+          "worked_example": "class Book   <->  table books\nBook object  <->  one row\nbook.title   <->  the title column\nYou write Python objects; SQLAlchemy writes the SQL.",
+          "practice": "Match ORM terms to database terms; translate a CREATE TABLE into a description of the class.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "Define a model class",
+          "worked_example": "from sqlalchemy import String\nfrom sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column\nclass Base(DeclarativeBase):\n    pass\nclass Book(Base):\n    __tablename__ = \"books\"\n    id: Mapped[int] = mapped_column(primary_key=True)\n    title: Mapped[str] = mapped_column(String(250), unique=True)\n(python3 -m pip install sqlalchemy)",
+          "practice": "Write a model for a described table; fill in missing mapped_column options.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "Create the tables",
+          "worked_example": "from sqlalchemy import create_engine\nengine = create_engine(\"sqlite:///books.db\", echo=True)\nBase.metadata.create_all(engine)\n# echo=True prints the SQL: CREATE TABLE books (id INTEGER NOT NULL, title VARCHAR(250) NOT NULL, ...)\ncreate_all only creates tables that do not exist yet.",
+          "practice": "Order the setup steps; predict what a second create_all run does.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.constraints"
+          ]
+        },
+        {
+          "title": "Type hints decide NULL",
+          "worked_example": "title: Mapped[str]              -> NOT NULL\nrating: Mapped[float | None]    -> may be NULL\nreview: Mapped[str] = mapped_column(default=\"\")",
+          "practice": "Predict which columns allow NULL; write hints for described columns.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "type_hints.optional_and_union"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "databases_sql.constraints",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlalchemy.session_crud",
+      "title": "Create, read, update and delete with a SQLAlchemy session",
+      "concept": "lib_sqlalchemy",
+      "summary": "Add, query, change and delete model objects inside a Session, with select() filters and session.get(), committing to save.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_sqlalchemy.models_and_tables",
+        "lib_sqlite3.commit_and_files",
+        "databases_sql.update_and_delete"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Create: add and commit",
+          "worked_example": "from sqlalchemy.orm import Session\nwith Session(engine) as session:\n    book = Book(title=\"Dune\", rating=9.5)\n    session.add(book)\n    session.commit()\n    print(book.id)  # 1: filled in by the database",
+          "practice": "Write code that adds objects; predict the ids assigned.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.models_and_tables"
+          ]
+        },
+        {
+          "title": "Read: select(), where() and get()",
+          "worked_example": "from sqlalchemy import select\nstmt = select(Book).where(Book.rating > 8).order_by(Book.title)\nbooks = session.scalars(stmt).all()      # list of Book objects\nbook = session.get(Book, 1)               # by primary key, or None",
+          "practice": "Translate SQL SELECTs into select() statements; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "databases_sql.update_and_delete"
+          ]
+        },
+        {
+          "title": "Update: change the attribute, then commit",
+          "worked_example": "book = session.get(Book, 1)\nbook.rating = 10\nsession.commit()   # UPDATE books SET rating=10 WHERE id = 1",
+          "practice": "Write updates; say what SQL each change produces.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "databases_sql.update_and_delete"
+          ]
+        },
+        {
+          "title": "Delete, and the forgotten commit",
+          "worked_example": "session.delete(book)\nsession.commit()\nWithout commit(), the session is closed at the end of with and the change is discarded, exactly as with sqlite3.",
+          "practice": "Find the missing commit; predict the table after code with and without it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.commit_and_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlalchemy.models_and_tables",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlalchemy.relationships",
+      "title": "Related models: ForeignKey and relationship()",
+      "concept": "lib_sqlalchemy",
+      "summary": "Link models one-to-many with a ForeignKey column and relationship() on both sides, and navigate from a post to its author and back.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "lib_sqlalchemy.session_crud",
+        "data_modeling.primary_and_foreign_keys",
+        "type_hints.collection_hints"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A ForeignKey column",
+          "worked_example": "from sqlalchemy import ForeignKey\nclass Post(Base):\n    __tablename__ = \"posts\"\n    id: Mapped[int] = mapped_column(primary_key=True)\n    author_id: Mapped[int] = mapped_column(ForeignKey(\"users.id\"))\nThe argument is 'table.column', not the class name.",
+          "practice": "Fix ForeignKey strings; add the foreign key for a described link.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "data_modeling.primary_and_foreign_keys"
+          ]
+        },
+        {
+          "title": "relationship() on both sides",
+          "worked_example": "class User(Base):\n    posts: Mapped[list[\"Post\"]] = relationship(back_populates=\"author\")\nclass Post(Base):\n    author: Mapped[\"User\"] = relationship(back_populates=\"posts\")\nback_populates names the matching attribute on the other class.",
+          "practice": "Fill in matching back_populates names; say which side is a list.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.session_crud",
+            "type_hints.collection_hints"
+          ]
+        },
+        {
+          "title": "Navigate instead of joining",
+          "worked_example": "post = session.get(Post, 1)\nprint(post.author.name)        # the JOIN is written for you\nfor p in user.posts:\n    print(p.title)",
+          "practice": "Predict output of navigation code; write code listing a user's posts.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.session_crud"
+          ]
+        },
+        {
+          "title": "Create linked objects",
+          "worked_example": "post = Post(title=\"Hi\", author=user)\nsession.add(post)\nsession.commit()   # author_id is set from user.id\nThis is how a blog stores who wrote each post or comment.",
+          "practice": "Write code that creates a comment linked to a post and a user.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.session_crud"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlalchemy.session_crud",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "lib_sqlalchemy.flask_sqlalchemy",
+      "title": "Databases in a Flask app with Flask-SQLAlchemy",
+      "concept": "lib_sqlalchemy",
+      "summary": "Configure Flask-SQLAlchemy, create tables inside an app context, and query and change models from view functions.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_sqlalchemy.session_crud",
+        "lib_flask.errors_and_flash"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Set up db and models",
+          "worked_example": "from flask_sqlalchemy import SQLAlchemy\napp.config[\"SQLALCHEMY_DATABASE_URI\"] = \"sqlite:///books.db\"\ndb = SQLAlchemy(model_class=Base)\ndb.init_app(app)\nclass Book(db.Model):\n    id: Mapped[int] = mapped_column(primary_key=True)\n    ...",
+          "practice": "Order the setup lines (Parsons); fill in the database URI.",
+          "formats": [
+            "parsons",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.session_crud"
+          ]
+        },
+        {
+          "title": "create_all inside an app context",
+          "worked_example": "with app.app_context():\n    db.create_all()\nOutside the with block: RuntimeError: Working outside of application context.",
+          "practice": "Fix setup code that raises the app-context error.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.session_crud"
+          ]
+        },
+        {
+          "title": "Query from a view",
+          "worked_example": "@app.route(\"/\")\ndef index():\n    books = db.session.scalars(db.select(Book).order_by(Book.title)).all()\n    return render_template(\"index.html\", books=books)\n@app.route(\"/book/<int:id>\")\ndef book(id):\n    return render_template(\"book.html\", book=db.get_or_404(Book, id))",
+          "practice": "Write list and detail views; predict the response for a missing id.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_flask.errors_and_flash"
+          ]
+        },
+        {
+          "title": "Change data from a form",
+          "worked_example": "if request.method == \"POST\":\n    db.session.add(Book(title=request.form[\"title\"]))\n    db.session.commit()\n    return redirect(url_for(\"index\"))",
+          "practice": "Write add, edit and delete views; find the missing commit or redirect.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_flask.errors_and_flash"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlalchemy.session_crud",
+          "weight": 0.6
+        },
+        {
+          "topic": "lib_flask.forms_and_post",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "authentication.hash_passwords",
+      "title": "Never store passwords: hashing",
+      "concept": "authentication",
+      "summary": "Explain why passwords are stored as hashes, hash a password with hashlib, and check a login attempt by comparing hashes.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "unicode_encoding.text_vs_bytes",
+        "modules_imports.import_module",
+        "return_values.boolean_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Plain-text passwords leak all at once",
+          "worked_example": "users table: ana | hunter2\nOne stolen database (or one curious admin) exposes every password, and people reuse passwords elsewhere.\nA hash is one-way: easy to compute, impractical to reverse. Encryption, by contrast, can be undone with the key.",
+          "practice": "Choose what a site should store; tell hashing from encryption.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Hash with hashlib",
+          "worked_example": "import hashlib\nprint(hashlib.sha256(\"hunter2\".encode()).hexdigest())\n# f52fbd32b2b3b86ff88ef6c490628285f482af15ddcb29541f94bcf526a3f6c7\nThe same input always gives the same 64 hex characters; 'hunter3' gives a completely different hash.",
+          "practice": "Predict hash lengths and whether two hashes are equal.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes",
+            "modules_imports.import_module"
+          ]
+        },
+        {
+          "title": "Check a password by hashing the attempt",
+          "worked_example": "def check(attempt, stored_hash):\n    return hashlib.sha256(attempt.encode()).hexdigest() == stored_hash\nThe server never needs the original password, only its hash.",
+          "practice": "Write the check function; predict results for right and wrong attempts.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions"
+          ]
+        },
+        {
+          "title": "Hash bytes, not text",
+          "worked_example": "hashlib.sha256(\"hunter2\")\n# TypeError: Strings must be encoded before hashing",
+          "practice": "Fix hashing code that forgets .encode().",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unicode_encoding.text_vs_bytes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unicode_encoding.text_vs_bytes",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "authentication.salted_slow_hashes",
+      "title": "Salts and slow hashes",
+      "concept": "authentication",
+      "summary": "Add a random per-user salt so equal passwords get different hashes, store the salt with the hash, use a deliberately slow hash, and let a library handle the details.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "authentication.hash_passwords",
+        "string_methods.split_into_parts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Same password, same hash is a weakness",
+          "worked_example": "Two users with 'hunter2' have identical sha256 hashes, and attackers keep huge tables of hashes of common passwords.\nA salt is random text mixed in before hashing, different for every user:\nsalt = secrets.token_hex(8)   # e.g. '9f1c0b7e2a4d6c13'",
+          "practice": "Explain what a salt prevents; predict whether two salted hashes match.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "authentication.hash_passwords"
+          ]
+        },
+        {
+          "title": "Store the salt with the hash",
+          "worked_example": "def hash_pw(pw, salt):\n    return hashlib.sha256((salt + pw).encode()).hexdigest()\nstored = \"a1b2$\" + hash_pw(\"hunter2\", \"a1b2\")\nsalt, h = stored.split(\"$\")\nprint(hash_pw(\"hunter2\", salt) == h, hash_pw(\"hunter3\", salt) == h)  # True False",
+          "practice": "Write the check function for a 'salt$hash' string; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts"
+          ]
+        },
+        {
+          "title": "Slow on purpose: pbkdf2_hmac",
+          "worked_example": "dk = hashlib.pbkdf2_hmac(\"sha256\", b\"hunter2\", b\"a1b2\", 600_000)\nprint(len(dk))  # 32 bytes\nsha256 alone can be guessed billions of times a second; 600,000 rounds makes each guess expensive.",
+          "practice": "Choose a suitable hash for passwords vs for file checksums.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "authentication.hash_passwords"
+          ]
+        },
+        {
+          "title": "Use a library: werkzeug.security",
+          "worked_example": "from werkzeug.security import generate_password_hash, check_password_hash\nstored = generate_password_hash(\"hunter2\")   # 'scrypt:32768:8:1$<salt>$<hash>'\ncheck_password_hash(stored, \"hunter2\")        # True\nThe string records method, salt and hash; Flask installs Werkzeug for you.",
+          "practice": "Read a stored hash string and name its parts; fix code that compares generate_password_hash outputs directly.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "authentication.hash_passwords"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "authentication.hash_passwords",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "authentication.register_and_login",
+      "title": "Registering and logging in users against a database",
+      "concept": "authentication",
+      "summary": "Write register and login functions that store salted hashes in a users table, reject duplicate usernames, and give the same error for unknown user and wrong password.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "authentication.salted_slow_hashes",
+        "lib_sqlite3.ids_rowcount_and_errors"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "register(): hash, then insert",
+          "worked_example": "# hash_pw(pw, salt) as in the previous topic (pbkdf2 version)\ndef register(username, pw):\n    salt = secrets.token_hex(8)\n    try:\n        db.execute(\"INSERT INTO users (username, salt, pw_hash) VALUES (?, ?, ?)\",\n                   (username, salt, hash_pw(pw, salt)))\n        return True\n    except sqlite3.IntegrityError:   # username is UNIQUE\n        return False\nprint(register(\"ana\", \"correct horse\"), register(\"ana\", \"other\"))  # True False",
+          "practice": "Order the lines of register (Parsons); predict results of repeated registrations.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.ids_rowcount_and_errors"
+          ]
+        },
+        {
+          "title": "login(): look up, then compare",
+          "worked_example": "def login(username, pw):\n    row = db.execute(\"SELECT salt, pw_hash FROM users WHERE username = ?\", (username,)).fetchone()\n    if row is None:\n        return False\n    salt, stored = row\n    return hash_pw(pw, salt) == stored\nprint(login(\"ana\", \"correct horse\"), login(\"ana\", \"wrong\"), login(\"zed\", \"x\"))  # True False False",
+          "practice": "Predict login results; fix a login that crashes for unknown users.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "authentication.salted_slow_hashes"
+          ]
+        },
+        {
+          "title": "One message for both failures",
+          "worked_example": "Bad: 'No such user' vs 'Wrong password' tells an attacker which usernames exist.\nGood: 'Invalid username or password' in both cases.",
+          "practice": "Choose safe error messages; spot the information leak.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "authentication.salted_slow_hashes"
+          ]
+        },
+        {
+          "title": "What never to store or print",
+          "worked_example": "Never print, log or email a password, and never put it in a URL (?password=...).\nCheck rules (length >= 8) before hashing, since a hash cannot be checked afterwards.",
+          "practice": "Find the security mistakes in a short registration function.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "authentication.salted_slow_hashes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "authentication.salted_slow_hashes",
+          "weight": 0.6
+        },
+        {
+          "topic": "lib_sqlite3.placeholders_and_injection",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "authentication.login_sessions",
+      "title": "Staying logged in: sessions, login_required and admin-only pages",
+      "concept": "authentication",
+      "summary": "Remember a logged-in user with Flask's signed session cookie, protect views with your own login_required decorator, and restrict pages to admins.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "authentication.register_and_login",
+        "lib_flask.errors_and_flash",
+        "decorators.general_wrappers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The session remembers who you are",
+          "worked_example": "from flask import session\napp.secret_key = \"change-me\"\n# after a successful login:\nsession[\"user_id\"] = user_id\nEach request is separate; the browser sends back a signed cookie holding the session, and the secret key stops users from editing it.",
+          "practice": "Order the steps from login form to a remembered user; say why the secret key matters.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_flask.errors_and_flash"
+          ]
+        },
+        {
+          "title": "Read it later; logging out clears it",
+          "worked_example": "user_id = session.get(\"user_id\")     # None if not logged in\n@app.route(\"/logout\")\ndef logout():\n    session.pop(\"user_id\", None)\n    return redirect(url_for(\"index\"))",
+          "practice": "Predict session values across a login/logout sequence.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lib_flask.errors_and_flash"
+          ]
+        },
+        {
+          "title": "Your own login_required decorator",
+          "worked_example": "def login_required(view):\n    @wraps(view)\n    def wrapper(*args, **kwargs):\n        if \"user_id\" not in session:\n            return redirect(url_for(\"login\"))\n        return view(*args, **kwargs)\n    return wrapper",
+          "practice": "Fill in the decorator; predict responses for logged-in and anonymous visitors.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decorators.general_wrappers"
+          ]
+        },
+        {
+          "title": "Authorization: admin-only pages",
+          "worked_example": "def admin_only(view):\n    @wraps(view)\n    def wrapper(*args, **kwargs):\n        if session.get(\"user_id\") != 1:\n            abort(403)\n        return view(*args, **kwargs)\n    return wrapper\nAuthentication asks who you are; authorization asks what you may do.",
+          "practice": "Classify checks as authentication or authorization; choose 401/403/redirect for situations.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "decorators.general_wrappers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decorators.general_wrappers",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "authentication.flask_login",
+      "title": "User accounts with Flask-Login",
+      "concept": "authentication",
+      "summary": "Use Flask-Login's LoginManager, UserMixin, login_user, logout_user, current_user and @login_required instead of hand-written session code.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "authentication.login_sessions",
+        "lib_sqlalchemy.flask_sqlalchemy"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Set up LoginManager and the user loader",
+          "worked_example": "from flask_login import LoginManager, UserMixin\nlogin_manager = LoginManager(app)\nclass User(UserMixin, db.Model): ...\n@login_manager.user_loader\ndef load_user(user_id):\n    return db.session.get(User, int(user_id))",
+          "practice": "Order the setup steps; explain what the user loader is called with.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_sqlalchemy.flask_sqlalchemy"
+          ]
+        },
+        {
+          "title": "login_user and logout_user",
+          "worked_example": "user = db.session.scalar(db.select(User).where(User.email == form.email.data))\nif user and check_password_hash(user.password, form.password.data):\n    login_user(user)\n    return redirect(url_for(\"secrets\"))\nflash(\"Invalid email or password\")",
+          "practice": "Fill in the login view; fix one that logs users in before checking the password.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "authentication.login_sessions"
+          ]
+        },
+        {
+          "title": "@login_required and current_user",
+          "worked_example": "from flask_login import login_required, current_user\n@app.route(\"/secrets\")\n@login_required\ndef secrets():\n    return f\"Hi {current_user.name}\"\n{% if current_user.is_authenticated %}...{% endif %}",
+          "practice": "Predict pages for logged-in and anonymous users; fix decorator order (route must be outermost).",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "authentication.login_sessions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "authentication.login_sessions",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "rest_api_design.resources_and_methods",
+      "title": "Designing a REST API: resources, methods and status codes",
+      "concept": "rest_api_design",
+      "summary": "Name resources with noun URLs, map HTTP methods to create/read/update/delete, choose the status code for each outcome, and document endpoints in a table.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "web_development.how_web_apps_work",
+        "databases_sql.update_and_delete"
+      ],
+      "knowledge_points": [
+        {
+          "title": "URLs name things, not actions",
+          "worked_example": "Bad:  /getAllCafes   /deleteCafe?id=3\nGood: GET /cafes      DELETE /cafes/3\nA collection is plural (/cafes); one item adds its id (/cafes/3).",
+          "practice": "Rewrite action-style URLs as resource URLs.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "web_development.how_web_apps_work"
+          ]
+        },
+        {
+          "title": "Methods map to CRUD",
+          "worked_example": "GET /cafes        read all      (SELECT)\nPOST /cafes       create one    (INSERT)\nGET /cafes/3      read one\nPUT /cafes/3      replace one   (UPDATE all fields)\nPATCH /cafes/3    change some   (UPDATE some fields)\nDELETE /cafes/3   remove one    (DELETE)",
+          "practice": "Match operations to method + path; choose PUT or PATCH for described updates.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "databases_sql.update_and_delete",
+            "apis_http.request_response_cycle"
+          ]
+        },
+        {
+          "title": "Choosing the status code for each outcome of your API",
+          "worked_example": "200 OK  201 Created  204 No Content\n400 Bad Request (invalid input)  401 not logged in  403 not allowed  404 Not Found\nThe body explains; the code lets programs react without reading it.",
+          "practice": "Choose the status code for described outcomes.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "apis_http.request_response_cycle",
+            "web_development.how_web_apps_work"
+          ]
+        },
+        {
+          "title": "Document every endpoint",
+          "worked_example": "| Method | Path | Params | Success | Errors |\n| GET | /cafes/search | loc | 200 list | 404 |\nPlus one example request and response each (Postman can publish this).",
+          "practice": "Complete an endpoint table from a description; find the endpoint the docs forgot.",
+          "formats": [
+            "fill_in_blank",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "web_development.how_web_apps_work"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "web_development.how_web_apps_work",
+          "weight": 0.3
+        },
+        {
+          "topic": "apis_http.request_response_cycle",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "rest_api_design.json_endpoints",
+      "title": "Read endpoints that return JSON",
+      "concept": "rest_api_design",
+      "summary": "Return JSON from Flask views, filter collections with query parameters, return JSON errors with the right status, and test endpoints with the test client.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "rest_api_design.resources_and_methods",
+        "lib_flask.errors_and_flash",
+        "lib_sqlite3.rows_as_dicts",
+        "lib_sqlite3.placeholders_and_injection"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Return a dict or list, get JSON",
+          "worked_example": "@app.route(\"/cafes\")\ndef all_cafes():\n    rows = db.execute(\"SELECT * FROM cafes\").fetchall()\n    return jsonify([dict(r) for r in rows])\nA returned dict becomes JSON automatically; jsonify also handles lists.",
+          "practice": "Write a collection endpoint; predict the JSON for a small table.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.rows_as_dicts"
+          ]
+        },
+        {
+          "title": "Filter with query parameters",
+          "worked_example": "# GET /cafes/search?loc=Peckham\nloc = request.args.get(\"loc\")\nrows = db.execute(\"SELECT * FROM cafes WHERE location = ?\", (loc,)).fetchall()",
+          "practice": "Predict request.args for URLs; write a search endpoint.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lib_flask.errors_and_flash"
+          ]
+        },
+        {
+          "title": "Errors are JSON too",
+          "worked_example": "row = db.execute(\"SELECT * FROM cafes WHERE id = ?\", (cafe_id,)).fetchone()\nif row is None:\n    return {\"error\": \"Cafe not found\"}, 404\nreturn dict(row)",
+          "practice": "Fix endpoints that return an HTML error or status 200 for a missing item.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "rest_api_design.resources_and_methods"
+          ]
+        },
+        {
+          "title": "Test with the test client",
+          "worked_example": "r = app.test_client().get(\"/cafes/99\")\nprint(r.status_code, r.get_json())   # 404 {'error': 'Cafe not found'}",
+          "practice": "Write checks for status and JSON of endpoints.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_flask.errors_and_flash"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_sqlite3.rows_as_dicts",
+          "weight": 0.5
+        },
+        {
+          "topic": "rest_api_design.resources_and_methods",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "rest_api_design.write_endpoints",
+      "title": "Endpoints that change data: POST, PATCH and DELETE",
+      "concept": "rest_api_design",
+      "summary": "Create, partially update and delete records through an API, validate input with 400 responses, and protect destructive endpoints with a key.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "rest_api_design.json_endpoints",
+        "lib_sqlite3.ids_rowcount_and_errors"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "POST creates and returns 201",
+          "worked_example": "@app.route(\"/cafes\", methods=[\"POST\"])\ndef add_cafe():\n    data = request.get_json()\n    cur = db.execute(\"INSERT INTO cafes (name) VALUES (?)\", (data[\"name\"],))\n    db.commit()\n    return {\"id\": cur.lastrowid, \"name\": data[\"name\"]}, 201",
+          "practice": "Write a create endpoint; predict the response.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.ids_rowcount_and_errors"
+          ]
+        },
+        {
+          "title": "Validate input: 400 Bad Request",
+          "worked_example": "if not data or \"name\" not in data:\n    return {\"error\": \"name is required\"}, 400\nCheck before touching the database.",
+          "practice": "Add validation to endpoints; predict responses for bad bodies.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "rest_api_design.json_endpoints"
+          ]
+        },
+        {
+          "title": "PATCH changes one field; 404 if absent",
+          "worked_example": "@app.route(\"/cafes/<int:cafe_id>\", methods=[\"PATCH\"])\ndef update_price(cafe_id):\n    cur = db.execute(\"UPDATE cafes SET price = ? WHERE id = ?\",\n                     (request.args.get(\"new_price\"), cafe_id))\n    db.commit()\n    if cur.rowcount == 0:\n        return {\"error\": \"Cafe not found\"}, 404\n    return {\"success\": \"Price updated\"}",
+          "practice": "Predict responses for existing and missing ids.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lib_sqlite3.ids_rowcount_and_errors"
+          ]
+        },
+        {
+          "title": "DELETE needs permission",
+          "worked_example": "if request.args.get(\"api-key\") != API_KEY:\n    return {\"error\": \"Not allowed\"}, 403\nOnly callers who hold the key may delete; the key comes from an environment variable, not the code.",
+          "practice": "Order the checks in a delete endpoint (key, existence, delete); choose 403 vs 404.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "rest_api_design.json_endpoints"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "rest_api_design.json_endpoints",
+          "weight": 0.6
+        },
+        {
+          "topic": "lib_sqlite3.placeholders_and_injection",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "authentication.api_tokens",
+      "title": "Logging in to an API: tokens and the Authorization header",
+      "concept": "authentication",
+      "summary": "Issue random API tokens with secrets, store only their hashes, check the Authorization: Bearer header on each request, and know what signed, expiring tokens (JWTs) add.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "authentication.hash_passwords",
+        "rest_api_design.write_endpoints"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Generate an unguessable token",
+          "worked_example": "import secrets\ntoken = secrets.token_urlsafe(32)\nprint(len(token))  # 43\nUse secrets, never random, for anything security-related.",
+          "practice": "Choose secrets vs random for described uses; predict token lengths.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "authentication.hash_passwords"
+          ]
+        },
+        {
+          "title": "Store the token's hash",
+          "worked_example": "token_hash = hashlib.sha256(token.encode()).hexdigest()\nThe client keeps the token; the database keeps only the hash, so a leaked table gives no working tokens.",
+          "practice": "Write the lookup that finds the user for a presented token.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "authentication.hash_passwords"
+          ]
+        },
+        {
+          "title": "Check the Authorization header",
+          "worked_example": "auth = request.headers.get(\"Authorization\", \"\")\nif not auth.startswith(\"Bearer \"):\n    return {\"error\": \"missing token\"}, 401\ntoken = auth.removeprefix(\"Bearer \")",
+          "practice": "Predict status codes for requests with missing, wrong and valid tokens.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "rest_api_design.write_endpoints"
+          ]
+        },
+        {
+          "title": "Signed tokens that expire (JWT)",
+          "worked_example": "A JWT holds data such as {'sub': 7, 'exp': <time>} plus a signature made with the server's secret.\nThe server checks the signature and expiry instead of a database row; a refresh token gets a new one when it expires.",
+          "practice": "Choose when a token should be rejected (bad signature, expired, revoked).",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "authentication.hash_passwords"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "authentication.hash_passwords",
+          "weight": 0.3
+        },
+        {
+          "topic": "rest_api_design.write_endpoints",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "deployment.production_settings",
+      "title": "Getting an app ready for production",
+      "concept": "deployment",
+      "summary": "Run Flask behind a WSGI server such as gunicorn, read secrets and the database URL from environment variables, and list dependencies in requirements.txt.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "lib_flask.first_app_and_routes",
+        "environment_variables.secrets_out_of_code",
+        "tool_pip.requirements_files"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The development server is not for the public",
+          "worked_example": "flask run --debug       # development: one user, auto-reload, tracebacks\ngunicorn main:app       # production: many workers, no debugger\nmain:app means 'the app object in main.py'.",
+          "practice": "Choose the right command for described situations; write the gunicorn target for a file and app name.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lib_flask.first_app_and_routes"
+          ]
+        },
+        {
+          "title": "Settings from the environment",
+          "worked_example": "app.config[\"SECRET_KEY\"] = os.environ[\"FLASK_KEY\"]\napp.config[\"SQLALCHEMY_DATABASE_URI\"] = os.environ.get(\"DB_URI\", \"sqlite:///posts.db\")\nThe same code runs locally (SQLite fallback) and in production (the host's database).",
+          "practice": "Move hard-coded settings into environment variables; predict the value used with and without the variable set.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "environment_variables.secrets_out_of_code"
+          ]
+        },
+        {
+          "title": "requirements.txt lists what to install",
+          "worked_example": "flask==3.0.3\nflask-sqlalchemy==3.1.1\ngunicorn==22.0.0\nThe host runs pip install -r requirements.txt; anything missing fails at start-up.",
+          "practice": "Find the missing requirement for an app's imports.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "tool_pip.requirements_files"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "environment_variables.secrets_out_of_code",
+          "weight": 0.4
+        },
+        {
+          "topic": "tool_pip.requirements_files",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "deployment.deploy_to_a_host",
+      "title": "Deploying to a hosting service and debugging the deploy",
+      "concept": "deployment",
+      "summary": "Follow the steps to put a Flask app on a host such as Render, set its environment variables, switch to a hosted database, and fix a failed deploy from its logs.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "deployment.production_settings"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The deploy steps",
+          "worked_example": "1. Push the code to GitHub (without .env)\n2. Create a web service from the repository\n3. Build command: pip install -r requirements.txt\n4. Start command: gunicorn main:app\n5. Add environment variables\n6. Open the URL the host gives you",
+          "practice": "Order the deploy steps (Parsons); say which step fixes a described problem.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "deployment.production_settings"
+          ]
+        },
+        {
+          "title": "Secrets go in the host's settings",
+          "worked_example": "FLASK_KEY and DB_URI are typed into the host's environment page, never committed. The app reads them with os.environ exactly as it did locally.",
+          "practice": "Choose where each value lives (code, requirements.txt, host env vars).",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "deployment.production_settings"
+          ]
+        },
+        {
+          "title": "Use a hosted database",
+          "worked_example": "Many hosts wipe local files on each deploy, so a SQLite file loses its data.\nDB_URI=postgresql://user:pass@host/db  (a PostgreSQL service)\nSQLAlchemy code is unchanged; only the URL differs. Some hosts give postgres://, which SQLAlchemy needs as postgresql://.",
+          "practice": "Explain lost data after redeploy; fix a database URL.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "deployment.production_settings"
+          ]
+        },
+        {
+          "title": "Read the logs",
+          "worked_example": "==> Running 'gunicorn main:app'\nbash: gunicorn: command not found\n==> Exited with status 127\nFix: add gunicorn to requirements.txt and redeploy.",
+          "practice": "Match log lines to causes (missing package, missing env var, wrong module name).",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "deployment.production_settings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "deployment.production_settings",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code"
+      ]
+    }
+  ]
+}

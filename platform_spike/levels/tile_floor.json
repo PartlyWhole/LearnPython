@@ -1,0 +1,158 @@
+{
+  "format": 1,
+  "id": "tile_floor",
+  "title": "Tile the plaza",
+  "brief": "Lay a two-tone floor: a gem on your starting cell, then on every other cell, so that no two gems sit side by side and the pattern runs on from row to row. You can't see the floor in this level (gems_here() is switched off), so keep track of whether the next cell gets a gem in a variable. Plazas come in all shapes, including a single row and a single column.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\nplace = True  # does the cell I'm standing on get a gem?\n",
+  "world": {
+    "width": 7,
+    "height": 4,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "bag": "infinite",
+    "goal": {
+      "gems_exactly": {
+        "0,0": 1,
+        "0,2": 1,
+        "1,1": 1,
+        "1,3": 1,
+        "2,0": 1,
+        "2,2": 1,
+        "3,1": 1,
+        "3,3": 1,
+        "4,0": 1,
+        "4,2": 1,
+        "5,1": 1,
+        "5,3": 1,
+        "6,0": 1,
+        "6,2": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "name": "one cell",
+      "width": 1,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1
+        }
+      }
+    },
+    {
+      "name": "single row",
+      "width": 6,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "2,0": 1,
+          "4,0": 1
+        }
+      }
+    },
+    {
+      "name": "single column",
+      "width": 1,
+      "height": 5,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "0,2": 1,
+          "0,4": 1
+        }
+      }
+    },
+    {
+      "name": "even width",
+      "width": 8,
+      "height": 3,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "0,2": 1,
+          "1,1": 1,
+          "2,0": 1,
+          "2,2": 1,
+          "3,1": 1,
+          "4,0": 1,
+          "4,2": 1,
+          "5,1": 1,
+          "6,0": 1,
+          "6,2": 1,
+          "7,1": 1
+        }
+      }
+    },
+    {
+      "name": "odd square",
+      "width": 5,
+      "height": 5,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": "infinite",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "0,2": 1,
+          "0,4": 1,
+          "1,1": 1,
+          "1,3": 1,
+          "2,0": 1,
+          "2,2": 1,
+          "2,4": 1,
+          "3,1": 1,
+          "3,3": 1,
+          "4,0": 1,
+          "4,2": 1,
+          "4,4": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan",
+      "gems_here"
+    ]
+  },
+  "topics": [
+    "variables.reassign_and_trace",
+    "logical_operators.and_or_not",
+    "nested_loops.grids_and_patterns"
+  ]
+}

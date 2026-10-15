@@ -1,0 +1,2663 @@
+{
+  "batch": "B07",
+  "title": "Dictionaries, sets and comprehensions",
+  "concept_map": {
+    "dictionaries": {
+      "topics": [
+        "dictionaries.create_and_look_up",
+        "dictionaries.add_update_delete",
+        "dictionaries.membership_and_get",
+        "dictionaries.loop_keys_values_items",
+        "dictionaries.counting_pattern",
+        "dictionaries.grouping_into_lists",
+        "dictionaries.build_from_pairs",
+        "dictionaries.sort_by_value",
+        "dictionaries.valid_keys_and_tuple_keys",
+        "dictionaries.dicts_are_mutable"
+      ],
+      "entry_topic": "dictionaries.create_and_look_up",
+      "notes": "Ten topics: taught by 8/8 courses (deep), and B06 handed over dict(zip()), tuple keys, sorting a dict by value and dict.copy(). Mapping patterns in match (deferred by B04) are in nested_data_structures.match_structure_patterns. Hash table internals are a later batch (hash_maps_internals). Generic hints like dict[str, int] were not given a KP; B09 tool_mypy or a stitching pass may add them. Storing functions as dict values (100 Days calculator) is B08 higher_order_functions. Reading word data from files into dicts is B10 file_io; json is B10."
+    },
+    "sets": {
+      "topics": [
+        "sets.create_and_membership",
+        "sets.add_remove",
+        "sets.set_operations"
+      ],
+      "entry_topic": "sets.create_and_membership",
+      "notes": "Three core topics. Set comprehensions are dict_comprehensions.transform_dicts KP4. frozenset and the in-place operators (|=, &=) were left out (codecademy only). Big-O of set membership is a later algorithms batch."
+    },
+    "nested_data_structures": {
+      "topics": [
+        "nested_data_structures.grid_index_and_loop",
+        "nested_data_structures.rows_columns_diagonals",
+        "nested_data_structures.list_of_dicts",
+        "nested_data_structures.dict_of_lists_and_dicts",
+        "nested_data_structures.navigate_deep_data",
+        "nested_data_structures.match_structure_patterns"
+      ],
+      "entry_topic": "nested_data_structures.grid_index_and_loop",
+      "notes": "Grid topics own 2D lists; copying.shallow_vs_deep (B06, non-core) already teaches the [[0] * 3] * 3 trap and deepcopy, so it is not repeated; list_comprehensions.nested_comprehensions revisits safe grid building. match_structure_patterns adds the sequence patterns (B06 handoff) and mapping patterns (B04 handoff) in one non-core topic; it has no taught_in because none of the 8 courses teaches them. JSON parsing itself is B10 json_data, which should depend on navigate_deep_data. Recursion over nested lists/trees is B08 recursion."
+    },
+    "list_comprehensions": {
+      "topics": [
+        "list_comprehensions.map_each_item",
+        "list_comprehensions.filter_with_if",
+        "list_comprehensions.any_all_and_sum",
+        "list_comprehensions.nested_comprehensions"
+      ],
+      "entry_topic": "list_comprehensions.map_each_item",
+      "notes": "any()/all() and summing booleans (B05 handoff) are in any_all_and_sum. Its KP4 previews generator expressions only as 'brackets can go inside a call'; laziness, generator objects and yield are B08 generators, which should encompass any_all_and_sum. map()/filter() as alternatives are B08 higher_order_functions. Reconciliation: any_all_and_sum KP4 (dropping the brackets = generator expression preview) was removed; generators.generator_expressions (B08, the owner) now depends on any_all_and_sum."
+    },
+    "dict_comprehensions": {
+      "topics": [
+        "dict_comprehensions.build_dicts",
+        "dict_comprehensions.transform_dicts"
+      ],
+      "entry_topic": "dict_comprehensions.build_dicts",
+      "notes": "Two topics; transform_dicts also owns set comprehensions."
+    },
+    "stacks_queues": {
+      "topics": [
+        "stacks_queues.list_as_stack",
+        "stacks_queues.queue_with_deque"
+      ],
+      "entry_topic": "stacks_queues.list_as_stack",
+      "notes": "Non-core (bootdev DSA and codecademy only). deque is taught here, so collections_module does not repeat it. Linked-list implementations are a later batch (linked_lists); recursion's call stack is B08."
+    },
+    "collections_module": {
+      "topics": [
+        "collections_module.counter",
+        "collections_module.defaultdict",
+        "collections_module.namedtuple"
+      ],
+      "entry_topic": "collections_module.counter",
+      "notes": "Counter, defaultdict and namedtuple (B06 handoff); deque lives in stacks_queues.queue_with_deque. OrderedDict, ChainMap and UserDict/UserList were left out (plain dicts keep order since 3.7). 'from collections import X' is used as a memorised line before B13 modules_imports. dataclasses as the modern record type belong to the OOP batch (B11)."
+    },
+    "itertools_module": {
+      "topics": [
+        "itertools_module.combinations_and_product",
+        "itertools_module.chain_count_zip_longest"
+      ],
+      "entry_topic": "itertools_module.combinations_and_product",
+      "notes": "Two non-core topics. zip(strict=True) (B06 handoff) is chain_count_zip_longest KP4. groupby, accumulate, islice and cycle were left out; generator pipelines are B08 generators."
+    }
+  },
+  "topics": [
+    {
+      "id": "dictionaries.create_and_look_up",
+      "title": "Creating a dictionary and looking up values",
+      "concept": "dictionaries",
+      "summary": "Write a dict literal mapping keys to values, read a value by its key, and predict the KeyError for a missing key.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "lists.create_and_index",
+        "unpacking.unpack_in_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Dict literal and lookup by key",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nprint(ages['bo'])  # 27\nEach entry is key: value; d[key] returns the value stored under that key.",
+          "practice": "Predict the printed value for lookups in a 3-entry dict; write the lookup expression for a named key.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Values of any type, len() and the empty dict",
+          "worked_example": "menu = {'tea': 2.5, 'cake': 4.0, 'soup': 'sold out'}\nprint(len(menu))  # 3\nempty = {}\nprint(len(empty))  # 0\nlen counts key-value pairs; {} is an empty dict ready to be filled.",
+          "practice": "Predict len() of dict literals; write a dict literal from a described table.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Why a dict beats a list of pairs",
+          "worked_example": "pairs = [('ana', 31), ('bo', 27)]\nfor name, age in pairs:\n    if name == 'bo':\n        print(age)  # 27\nages = {'ana': 31, 'bo': 27}\nprint(ages['bo'])  # 27\nSame data: the list needs a search loop, the dict answers in one step.",
+          "practice": "Choose the structure that answers a lookup question in one expression; convert a short list of pairs to a dict literal.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "Missing keys raise KeyError",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nprint(ages['Ana'])  # KeyError: 'Ana'\nKeys must match exactly, including case; a missing key stops the program.",
+          "practice": "Predict whether each lookup prints a value or raises KeyError; fix a lookup with the wrong key case.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.1
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "dictionaries.add_update_delete",
+      "title": "Adding, updating and deleting entries",
+      "concept": "dictionaries",
+      "summary": "Mutate a dict: add a new key, overwrite or increment an existing one, delete with del and pop, and merge with update().",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.create_and_look_up",
+        "lists.change_items",
+        "list_methods.remove_pop_del"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assigning to a new key adds it",
+          "worked_example": "stock = {}\nstock['apple'] = 3\nstock['pear'] = 5\nprint(stock)  # {'apple': 3, 'pear': 5}\nStart from {} and assign: a key that is not there yet is created.",
+          "practice": "Predict the dict after a sequence of assignments; write code that builds a described dict from empty.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Assigning to an existing key overwrites it",
+          "worked_example": "stock = {'apple': 3}\nstock['apple'] = 10\nstock['apple'] += 1\nprint(stock)  # {'apple': 11}\nKeys are unique: assignment replaces the old value. += on a key that does not exist raises KeyError.",
+          "practice": "Predict values after mixed add, overwrite and += steps; spot the += that fails on a missing key.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.change_items"
+          ]
+        },
+        {
+          "title": "Removing entries with del and pop",
+          "worked_example": "stock = {'apple': 3, 'pear': 5}\ndel stock['pear']\nn = stock.pop('apple')\nprint(n, stock)  # 3 {}\nprint(stock.pop('kiwi', 0))  # 0\npop returns the removed value; del and pop(key) raise KeyError if absent, pop(key, default) does not.",
+          "practice": "Predict the dict and the returned value; choose del, pop or pop with a default for described tasks.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        },
+        {
+          "title": "Merging another dict with update() and |",
+          "worked_example": "stock = {'apple': 3, 'pear': 5}\nstock.update({'apple': 4, 'kiwi': 2})\nprint(stock)  # {'apple': 4, 'pear': 5, 'kiwi': 2}\nprint({'a': 1} | {'a': 9, 'b': 2})  # {'a': 9, 'b': 2}\nupdate changes the dict in place; | builds a new one. On a shared key the right-hand value wins.",
+          "practice": "Predict the merged dict when keys overlap; fill in update or | for in-place vs new-dict tasks.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.create_and_look_up",
+          "weight": 0.8
+        },
+        {
+          "topic": "lists.change_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "codecademy",
+        "bootdev",
+        "code_in_place",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "dictionaries.membership_and_get",
+      "title": "Checking for keys with in and get()",
+      "concept": "dictionaries",
+      "summary": "Avoid KeyError by testing keys with in, or by reading with get() and a default value.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.create_and_look_up",
+        "conditionals.if_else",
+        "none_type.check_for_none"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "in checks keys, not values",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nprint('ana' in ages)  # True\nprint(31 in ages)     # False\nMembership on a dict looks only at its keys.",
+          "practice": "Predict True/False for in tests on keys and values; multiple choice on what in searches.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Check before you look up",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nname = 'cy'\nif name in ages:\n    print(ages[name])\nelse:\n    print('unknown')  # unknown\nGuard the lookup with in so a missing key takes the else branch instead of crashing.",
+          "practice": "Fix code that crashes on a missing key; predict output for present and missing names.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "get() returns None for a missing key",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nprint(ages.get('bo'))  # 27\nprint(ages.get('cy'))  # None\nget never raises; it hands back None when the key is absent.",
+          "practice": "Predict get results; write an if that checks the result of get for None.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        },
+        {
+          "title": "get(key, default) supplies your own fallback",
+          "worked_example": "ages = {'ana': 31, 'bo': 27}\nprint(ages.get('cy', 0))  # 0\nprint(ages.get('bo', 0))  # 27\nprint(ages)  # {'ana': 31, 'bo': 27}\nThe default is used only when the key is missing, and get never adds the key to the dict.",
+          "practice": "Predict get with defaults; multiple choice on whether get changed the dict.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.create_and_look_up",
+          "weight": 0.6
+        },
+        {
+          "topic": "conditionals.if_else",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "code_in_place",
+        "py4e",
+        "bootdev",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "dictionaries.loop_keys_values_items",
+      "title": "Looping over keys, values and items",
+      "concept": "dictionaries",
+      "summary": "Loop over a dict's keys, its values() and its items() with unpacking, and search a dict by value.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.add_update_delete",
+        "lists.loop_over_items",
+        "unpacking.unpack_in_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A for loop over a dict gives its keys",
+          "worked_example": "prices = {'tea': 2.5, 'cake': 4.0}\nfor item in prices:\n    print(item, prices[item])\n# tea 2.5\n# cake 4.0\nKeys come out in the order they were added; use d[key] inside the loop for the value.",
+          "practice": "Predict the printed lines; write a loop that prints every key with its value.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "values() when only the values matter",
+          "worked_example": "prices = {'tea': 2.5, 'cake': 4.0}\ntotal = 0\nfor p in prices.values():\n    total += p\nprint(total)  # 6.5\nvalues() skips the keys entirely; it suits totals, maxima and counts.",
+          "practice": "Write a total or maximum over values(); predict loop output over values().",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "items() with unpacking",
+          "worked_example": "prices = {'tea': 2.5, 'cake': 4.0}\nfor item, price in prices.items():\n    print(item, 'costs', price)\n# tea costs 2.5\n# cake costs 4.0\nEach item is a (key, value) tuple; unpack it straight into two names.",
+          "practice": "Reorder the lines of an items() loop; fix a loop that unpacks a plain dict loop into two names.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "Finding keys by value needs a loop",
+          "worked_example": "ages = {'ana': 31, 'bo': 27, 'cy': 27}\nfor name, age in ages.items():\n    if age == 27:\n        print(name)\n# bo\n# cy\nLookup is fast only by key; searching by value means checking every item, and several keys may match.",
+          "practice": "Write a loop collecting all keys with a given value; predict output when no value matches.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.add_update_delete",
+          "weight": 0.2
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.5
+        },
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "py4e",
+        "mit_6100l",
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "dictionaries.counting_pattern",
+      "title": "Counting occurrences with a dictionary",
+      "concept": "dictionaries",
+      "summary": "The histogram idiom: increment a per-key count with if/else or get(key, 0), count words in text, and find the most common key.",
+      "minutes": 20,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.membership_and_get",
+        "dictionaries.loop_keys_values_items",
+        "string_methods.split_into_parts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Count with if/else",
+          "worked_example": "counts = {}\nfor ch in 'banana':\n    if ch in counts:\n        counts[ch] += 1\n    else:\n        counts[ch] = 1\nprint(counts)  # {'b': 1, 'a': 3, 'n': 2}\nFirst sighting stores 1; every later sighting adds 1.",
+          "practice": "Reorder the lines of the counting loop; predict counts for a short string or list.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get",
+            "for_loops.loop_over_characters"
+          ]
+        },
+        {
+          "title": "Count with get(key, 0)",
+          "worked_example": "counts = {}\nfor ch in 'banana':\n    counts[ch] = counts.get(ch, 0) + 1\nprint(counts)  # {'b': 1, 'a': 3, 'n': 2}\nget returns 0 for an unseen key, so one line replaces the if/else.",
+          "practice": "Rewrite an if/else counter using get; fix a counter written as counts[ch] += 1 on an empty dict.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Counting words in a line of text",
+          "worked_example": "text = 'The cat and the hat'\ncounts = {}\nfor w in text.lower().split():\n    counts[w] = counts.get(w, 0) + 1\nprint(counts['the'])  # 2\nNormalise case, split into words, then count as before.",
+          "practice": "Write a word counter for a sentence; predict counts when case differs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts",
+            "string_methods.calling_methods_case"
+          ]
+        },
+        {
+          "title": "Find the most common key",
+          "worked_example": "counts = {'b': 1, 'a': 3, 'n': 2}\nbest = None\nfor ch, n in counts.items():\n    if best is None or n > counts[best]:\n        best = ch\nprint(best)  # a\nThe max-so-far pattern, run over items(): remember the key, compare its count.",
+          "practice": "Write a function returning the most frequent word; fix a version that compares keys instead of counts.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking",
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.7
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.count_matches",
+          "weight": 0.3
+        },
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.2
+        },
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "code_in_place",
+        "codecademy",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "dictionaries.grouping_into_lists",
+      "title": "Grouping values into lists by key",
+      "concept": "dictionaries",
+      "summary": "Build a dict whose values are lists (group words by first letter, invert a dict) with an if-not-in check or setdefault().",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.counting_pattern",
+        "list_methods.append_build"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Create the list the first time, then append",
+          "worked_example": "groups = {}\nfor w in ['ant', 'bee', 'ape']:\n    first = w[0]\n    if first not in groups:\n        groups[first] = []\n    groups[first].append(w)\nprint(groups)  # {'a': ['ant', 'ape'], 'b': ['bee']}\nSame shape as counting, but the 'start' value is an empty list and the 'add' is append.",
+          "practice": "Reorder the grouping loop; predict the groups for a short word list.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.counting_pattern",
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "The overwrite bug",
+          "worked_example": "groups = {}\nfor w in ['ant', 'bee', 'ape']:\n    groups[w[0]] = [w]\nprint(groups)  # {'a': ['ape'], 'b': ['bee']}\nAssigning a fresh list each time throws away earlier members; only the last one survives.",
+          "practice": "Find and fix the line that loses earlier items; predict the buggy output.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "setdefault() does the check for you",
+          "worked_example": "groups = {}\nfor w in ['ant', 'bee', 'ape']:\n    groups.setdefault(w[0], []).append(w)\nprint(groups)  # {'a': ['ant', 'ape'], 'b': ['bee']}\nsetdefault returns the existing list, or stores and returns the default when the key is new.",
+          "practice": "Rewrite an if-not-in grouping loop with setdefault; predict what setdefault returns.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Inverting a dict: value to list of keys",
+          "worked_example": "grades = {'ana': 'A', 'bo': 'B', 'cy': 'A'}\nby_grade = {}\nfor name, g in grades.items():\n    by_grade.setdefault(g, []).append(name)\nprint(by_grade)  # {'A': ['ana', 'cy'], 'B': ['bo']}\nSeveral keys can share a value, so the inverted dict needs lists.",
+          "practice": "Write an inversion for a given dict; predict the inverted result.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.counting_pattern",
+          "weight": 0.5
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "py4e",
+        "mit_6100l",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "dictionaries.build_from_pairs",
+      "title": "Converting between dicts and pairs: dict(), zip() and items()",
+      "concept": "dictionaries",
+      "summary": "Build a dict from a list of pairs or from two lists with zip, turn a dict back into lists, and use a dict as a lookup table.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.loop_keys_values_items",
+        "dictionaries.membership_and_get",
+        "enumerate_zip.zip_parallel_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "dict() from a list of pairs",
+          "worked_example": "pairs = [('a', 1), ('b', 2)]\nd = dict(pairs)\nprint(d)  # {'a': 1, 'b': 2}\nEach 2-item tuple becomes one key-value entry.",
+          "practice": "Predict the dict built from pairs (including a repeated key, where the last wins).",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "dict(zip(keys, values)) from two lists",
+          "worked_example": "names = ['ana', 'bo']\nages = [31, 27]\nprint(dict(zip(names, ages)))  # {'ana': 31, 'bo': 27}\nzip pairs the lists position by position; dict turns the pairs into entries.",
+          "practice": "Write the one-liner for two given lists; predict the result when the lists differ in length.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "enumerate_zip.zip_parallel_lists"
+          ]
+        },
+        {
+          "title": "Back to lists: list(d), values() and items()",
+          "worked_example": "d = {'a': 1, 'b': 2}\nprint(list(d))           # ['a', 'b']\nprint(list(d.values()))  # [1, 2]\nprint(list(d.items()))   # [('a', 1), ('b', 2)]\nlist() over a dict gives keys; wrap values() or items() to get the other views as lists.",
+          "practice": "Predict each conversion; fill in the call that produces a requested list.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        },
+        {
+          "title": "A dict as a lookup table instead of an elif chain",
+          "worked_example": "day_names = {1: 'Mon', 2: 'Tue', 3: 'Wed'}\nn = 2\nprint(day_names.get(n, 'unknown'))  # Tue\nprint(day_names.get(9, 'unknown'))  # unknown\nOne table plus get replaces a ladder of if n == 1 ... elif n == 2 ... else.",
+          "practice": "Rewrite an elif chain as a dict lookup; translate a word letter by letter with a given table.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get",
+            "conditionals.elif_chains"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "enumerate_zip.zip_parallel_lists",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy",
+        "100_days_of_code",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "dictionaries.sort_by_value",
+      "title": "Sorting a dictionary by key or by value",
+      "concept": "dictionaries",
+      "summary": "Print a dict in key order, sort its items by value with flipped tuples or key=d.get, and report the top n.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.build_from_pairs",
+        "dictionaries.counting_pattern",
+        "sorting.sort_tuples_and_keys"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sorted() on a dict sorts its keys",
+          "worked_example": "counts = {'b': 1, 'a': 3, 'c': 2}\nprint(sorted(counts))          # ['a', 'b', 'c']\nprint(sorted(counts.items()))  # [('a', 3), ('b', 1), ('c', 2)]\nBoth sort by key; the dict itself is unchanged.",
+          "practice": "Predict sorted() over a dict and over its items; write a loop that prints entries in key order.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        },
+        {
+          "title": "Sort by value: flip to (value, key)",
+          "worked_example": "counts = {'b': 1, 'a': 3, 'c': 2}\nflipped = []\nfor k, v in counts.items():\n    flipped.append((v, k))\nprint(sorted(flipped, reverse=True))  # [(3, 'a'), (2, 'c'), (1, 'b')]\nTuples sort by their first item, so putting the value first sorts by value.",
+          "practice": "Reorder the flip-and-sort lines; predict the order including ties on value.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_tuples_and_keys"
+          ]
+        },
+        {
+          "title": "key=d.get sorts keys by their values",
+          "worked_example": "counts = {'b': 1, 'a': 3, 'c': 2}\nprint(sorted(counts, key=counts.get, reverse=True))  # ['a', 'c', 'b']\ncounts.get is the function that maps each key to its value; no () after it.",
+          "practice": "Predict the result; fix key=counts.get() called by mistake.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_tuples_and_keys"
+          ]
+        },
+        {
+          "title": "Top n most common",
+          "worked_example": "counts = {'the': 3, 'and': 2, 'cat': 1, 'hat': 1}\nfor word in sorted(counts, key=counts.get, reverse=True)[:2]:\n    print(word, counts[word])\n# the 3\n# and 2\nSort descending by value, slice the first n, then print.",
+          "practice": "Write a top-3 report from a counts dict; predict output for n larger than the dict.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists",
+            "dictionaries.counting_pattern"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sorting.sort_tuples_and_keys",
+          "weight": 0.6
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.counting_pattern",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "bootdev",
+        "helsinki_mooc",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "dictionaries.valid_keys_and_tuple_keys",
+      "title": "Which values can be keys: tuple keys",
+      "concept": "dictionaries",
+      "summary": "Know that keys must be immutable (a list key raises TypeError) and use tuples as keys for names and grid coordinates.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.loop_keys_values_items",
+        "dictionaries.membership_and_get",
+        "tuples.create_and_index"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Lists cannot be keys",
+          "worked_example": "d = {}\nd[(1, 2)] = 'ok'\nd[[1, 2]] = 'no'  # TypeError: unhashable type: 'list'\nKeys must be unchangeable values such as str, int and tuple; a list could change after being stored.",
+          "practice": "Predict which assignments raise TypeError; fix a dict that uses a list as a key.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index",
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "Tuple keys for two-part names",
+          "worked_example": "phone = {('Ana', 'Lee'): '555-1234'}\nprint(phone[('Ana', 'Lee')])  # 555-1234\nprint(phone['Ana', 'Lee'])    # 555-1234\nThe whole tuple is the key; the parentheses inside [ ] are optional.",
+          "practice": "Write a lookup with a tuple key; predict lookups with a partial key (KeyError).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Coordinates as keys: a sparse grid",
+          "worked_example": "board = {(0, 0): 'X', (1, 2): 'O'}\nprint(board.get((1, 2), '.'))  # O\nprint(board.get((2, 2), '.'))  # .\nStore only the filled squares; get with a default fills in the rest.",
+          "practice": "Predict board lookups; write code placing a mark at a given row and column.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        },
+        {
+          "title": "Unpacking tuple keys in a loop",
+          "worked_example": "phone = {('Ana', 'Lee'): '555-1234', ('Bo', 'Kim'): '555-9876'}\nfor (first, last), num in phone.items():\n    print(last, first, num)\n# Lee Ana 555-1234\n# Kim Bo 555-9876\nNested parentheses in the loop target unpack the key tuple and the value in one step.",
+          "practice": "Reorder the loop lines; fix a loop that unpacks into three names without parentheses.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items",
+            "unpacking.unpack_in_loops"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.membership_and_get",
+          "weight": 0.2
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.3
+        },
+        {
+          "topic": "tuples.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "codecademy",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "dictionaries.dicts_are_mutable",
+      "title": "Dicts are mutable: aliasing, copying and changing while looping",
+      "concept": "dictionaries",
+      "summary": "Predict aliasing of dicts, copy one with copy(), see a function change the caller's dict, and avoid changing a dict's size while looping over it.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.loop_keys_values_items",
+        "mutability_aliasing.lists_in_functions",
+        "copying.copy_a_list"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two names, one dict",
+          "worked_example": "a = {'x': 1}\nb = a\nb['y'] = 2\nprint(a)  # {'x': 1, 'y': 2}\nAssignment copies the reference, not the dict, exactly as with lists.",
+          "practice": "Predict both dicts after changes through an alias.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        },
+        {
+          "title": "copy() makes an independent dict",
+          "worked_example": "a = {'x': 1}\nb = a.copy()\nb['y'] = 2\nprint(a, b)  # {'x': 1} {'x': 1, 'y': 2}\ndict.copy() (or dict(a)) builds a new outer dict; inner lists would still be shared.",
+          "practice": "Fix a backup that changes with the original; predict outputs with copy vs plain assignment.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "copying.copy_a_list"
+          ]
+        },
+        {
+          "title": "Functions can change the caller's dict",
+          "worked_example": "def register(roster, name):\n    roster[name] = 0\n\nteam = {}\nregister(team, 'ana')\nprint(team)  # {'ana': 0}\nThe parameter is another name for the same dict; no return is needed for the change to show.",
+          "practice": "Predict the caller's dict after calls; choose between mutating and returning a new dict.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.lists_in_functions"
+          ]
+        },
+        {
+          "title": "Don't add or delete keys while looping over the dict",
+          "worked_example": "stock = {'apple': 0, 'pear': 5}\nfor k in stock:\n    if stock[k] == 0:\n        del stock[k]  # RuntimeError: dictionary changed size during iteration\nLoop over a copy instead: for k in stock.copy(): ... del stock[k] works. Changing values (not keys) in the loop is fine.",
+          "practice": "Fix a cleanup loop; predict which loops raise RuntimeError (adding/deleting keys vs updating values).",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_while_looping",
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.names_refer_to_objects",
+          "weight": 0.4
+        },
+        {
+          "topic": "copying.copy_a_list",
+          "weight": 0.3
+        },
+        {
+          "topic": "mutability_aliasing.lists_in_functions",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "sets.create_and_membership",
+      "title": "Sets: unique values and fast membership",
+      "concept": "sets",
+      "summary": "Create a set from a literal or a list to remove duplicates, test membership, and avoid the {} and indexing pitfalls.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.create_and_look_up",
+        "lists.membership_and_operators",
+        "sorting.sort_and_sorted"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A set keeps each value once",
+          "worked_example": "s = {3, 1, 3, 2, 1}\nprint(len(s))       # 3\nprint(sorted(s))    # [1, 2, 3]\nDuplicates are dropped; a set has no fixed order, so sort it when you need to display it in order.",
+          "practice": "Predict len() of set literals with repeats; predict sorted() of a set.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "set(list) removes duplicates",
+          "worked_example": "words = ['hi', 'yo', 'hi', 'hi']\nprint(len(set(words)))  # 2\nprint(sorted(set('banana')))  # ['a', 'b', 'n']\nConverting to a set is the quick way to count or list the distinct values.",
+          "practice": "Write an expression counting distinct items; predict the distinct letters of a word.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        },
+        {
+          "title": "Empty set is set(), not {}",
+          "worked_example": "print(type({}))     # <class 'dict'>\nprint(type(set()))  # <class 'set'>\nprint({'a'} == set('a'))  # True\n{} is an empty dict; braces only make a set when they contain values.",
+          "practice": "Fix code that starts a set with {} and then calls add; multiple choice on the type of brace expressions.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Membership yes, indexing no",
+          "worked_example": "vowels = {'a', 'e', 'i', 'o', 'u'}\nprint('e' in vowels)  # True\nprint(vowels[0])  # TypeError: 'set' object is not subscriptable\nSets answer 'is it in here?' quickly but have no positions.",
+          "practice": "Predict in tests and the indexing error; choose list or set for described tasks.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.membership_and_operators",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "sets.add_remove",
+      "title": "Adding and removing set items",
+      "concept": "sets",
+      "summary": "Grow a set with add(), remove items with remove() or discard(), and use a 'seen' set to find or drop duplicates.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "sets.create_and_membership",
+        "list_methods.append_build",
+        "conditionals.if_else"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "add() ignores values already present",
+          "worked_example": "tags = set()\ntags.add('red')\ntags.add('blue')\ntags.add('red')\nprint(len(tags))  # 2\nAdding a duplicate is not an error; it just changes nothing.",
+          "practice": "Predict the size after a sequence of adds; write a loop adding every word of a list.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        },
+        {
+          "title": "remove() vs discard()",
+          "worked_example": "tags = {'red', 'blue'}\ntags.discard('green')   # no error\ntags.remove('green')    # KeyError: 'green'\nremove insists the value is there; discard quietly does nothing if it is not.",
+          "practice": "Predict which line errors; choose remove or discard for a described task.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        },
+        {
+          "title": "A 'seen' set finds repeats",
+          "worked_example": "seen = set()\nrepeats = set()\nfor x in [4, 7, 4, 1, 7]:\n    if x in seen:\n        repeats.add(x)\n    else:\n        seen.add(x)\nprint(sorted(repeats))  # [4, 7]\nRemember what has appeared; a value already in seen is a duplicate.",
+          "practice": "Reorder the seen-set loop; write a function returning True if a list has any duplicate.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Remove duplicates but keep the order",
+          "worked_example": "seen = set()\nresult = []\nfor x in [4, 7, 4, 1, 7]:\n    if x not in seen:\n        seen.add(x)\n        result.append(x)\nprint(result)  # [4, 7, 1]\nset(lst) loses the order; a seen set plus a result list keeps first appearances in order.",
+          "practice": "Write the order-preserving dedupe; fix a version that appends before checking.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sets.create_and_membership",
+          "weight": 0.6
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "sets.set_operations",
+      "title": "Combining sets: union, intersection and difference",
+      "concept": "sets",
+      "summary": "Use |, &, - and ^ (and their method names) to combine sets, and test subsets and same-items-in-any-order.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "sets.create_and_membership",
+        "logical_operators.and_or_not"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Union | : in either",
+          "worked_example": "a = {1, 2, 3}\nb = {3, 4}\nprint(sorted(a | b))  # [1, 2, 3, 4]\nprint(sorted(a.union([4, 5])))  # [1, 2, 3, 4, 5]\n| combines both sets; the method form union() also accepts a list.",
+          "practice": "Predict unions; write the union of two given sets.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        },
+        {
+          "title": "Intersection & : in both",
+          "worked_example": "likes_ana = {'tea', 'jazz', 'chess'}\nlikes_bo = {'chess', 'tea', 'golf'}\nprint(sorted(likes_ana & likes_bo))  # ['chess', 'tea']\n& keeps only values in both, like 'and' for membership.",
+          "practice": "Predict intersections; write code that finds common items of two lists via sets.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "logical_operators.and_or_not"
+          ]
+        },
+        {
+          "title": "Difference - and symmetric difference ^",
+          "worked_example": "a = {1, 2, 3}\nb = {3, 4}\nprint(sorted(a - b))  # [1, 2]\nprint(sorted(b - a))  # [4]\nprint(sorted(a ^ b))  # [1, 2, 4]\na - b is 'in a but not b' (order matters); ^ is 'in exactly one'.",
+          "practice": "Predict differences in both directions; choose the operator for described questions.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        },
+        {
+          "title": "Subsets and order-free equality",
+          "worked_example": "need = {'eggs', 'milk'}\nhave = {'milk', 'eggs', 'jam'}\nprint(need <= have)  # True\nprint(set([1, 2, 2]) == set([2, 1]))  # True\n<= asks 'is every item of the left in the right?'; == on sets ignores order and repeats.",
+          "practice": "Predict subset and equality tests; write a check that a recipe's ingredients are all available.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sets.create_and_membership",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "bootdev",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "nested_data_structures.grid_index_and_loop",
+      "title": "Lists of lists: grids",
+      "concept": "nested_data_structures",
+      "summary": "Read and change cells of a 2D list with grid[row][col], get its size, and loop over all cells with nested loops.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_indexes",
+        "nested_loops.loop_inside_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Double indexing: row, then column",
+          "worked_example": "grid = [[1, 2, 3],\n        [4, 5, 6]]\nprint(grid[1])     # [4, 5, 6]\nprint(grid[1][0])  # 4\ngrid[r] is a whole row (a list); grid[r][c] is one cell in it.",
+          "practice": "Predict single and double indexing; write the expression for a described cell, including negative indexes.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Changing a cell and measuring the grid",
+          "worked_example": "grid = [[0, 0, 0], [0, 0, 0]]\ngrid[0][2] = 7\nprint(grid)          # [[0, 0, 7], [0, 0, 0]]\nprint(len(grid), len(grid[0]))  # 2 3\nlen(grid) is the number of rows; len(grid[0]) the number of columns.",
+          "practice": "Predict the grid after cell assignments; fix code that swaps row and column (IndexError).",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.change_items"
+          ]
+        },
+        {
+          "title": "Nested for over rows and values",
+          "worked_example": "grid = [[1, 2, 3], [4, 5, 6]]\ntotal = 0\nfor row in grid:\n    for value in row:\n        total += value\nprint(total)  # 21\nThe outer loop hands you each row list; the inner loop walks along it.",
+          "practice": "Write a grid total or count; predict how many times the inner body runs.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        },
+        {
+          "title": "Nested range loops when you need positions",
+          "worked_example": "grid = [[1, 2, 3], [4, 9, 6]]\nfor r in range(len(grid)):\n    for c in range(len(grid[r])):\n        if grid[r][c] == 9:\n            print('found at', r, c)  # found at 1 1\nIndex loops give you r and c, needed to report or change a position.",
+          "practice": "Write a search returning the (row, col) of a value; reorder the nested index loop lines.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_indexes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_loops.loop_inside_loop",
+          "weight": 0.6
+        },
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "codecademy",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "nested_data_structures.rows_columns_diagonals",
+      "title": "Working with grid rows, columns and diagonals",
+      "concept": "nested_data_structures",
+      "summary": "Compute row sums, extract a column, walk a diagonal and transpose a grid, as in tic-tac-toe and sudoku checks.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "nested_data_structures.grid_index_and_loop",
+        "list_methods.append_build",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A row is a list: sum or check it directly",
+          "worked_example": "grid = [[1, 2, 3], [4, 5, 6]]\nfor row in grid:\n    print(sum(row))\n# 6\n# 15\nBuilt-ins that work on lists work on each row.",
+          "practice": "Predict row sums and maxima; write a check that every row has the same sum.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "A column needs one item from every row",
+          "worked_example": "grid = [[1, 2, 3], [4, 5, 6]]\ncol = []\nfor row in grid:\n    col.append(row[1])\nprint(col)  # [2, 5]\nThere is no grid[:][1]; collect row[c] from each row.",
+          "practice": "Write a column extractor; fix code that uses grid[1] when it meant column 1.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Diagonals: the row and column index move together",
+          "worked_example": "board = [['X', 'O', 'O'],\n         ['O', 'X', 'O'],\n         ['O', 'O', 'X']]\ndiag = []\nfor i in range(3):\n    diag.append(board[i][i])\nprint(diag)  # ['X', 'X', 'X']\nThe main diagonal is board[i][i]; the other one is board[i][2 - i].",
+          "practice": "Fill in the index for the anti-diagonal; write a tic-tac-toe win check for diagonals.",
+          "formats": [
+            "fill_in_blank",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        },
+        {
+          "title": "Transposing: rows become columns",
+          "worked_example": "grid = [[1, 2, 3], [4, 5, 6]]\nflipped = []\nfor c in range(len(grid[0])):\n    new_row = []\n    for row in grid:\n        new_row.append(row[c])\n    flipped.append(new_row)\nprint(flipped)  # [[1, 4], [2, 5], [3, 6]]\nEach column of the old grid becomes a row of the new one; a 2x3 grid becomes 3x2.",
+          "practice": "Reorder the transpose lines; predict the shape and contents of a transposed grid.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.grid_index_and_loop",
+          "weight": 0.7
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.aggregate_builtins",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "100_days_of_code",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "nested_data_structures.list_of_dicts",
+      "title": "Lists of dictionaries as records",
+      "concept": "nested_data_structures",
+      "summary": "Store records as a list of dicts, read fields inside a loop, filter records, find the best by a field, and add a new record.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.loop_keys_values_items",
+        "dictionaries.membership_and_get",
+        "list_methods.append_build"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Index the list, then the key",
+          "worked_example": "people = [{'name': 'Ana', 'age': 31},\n          {'name': 'Bo', 'age': 27}]\nprint(people[1]['name'])  # Bo\npeople[1] is a dict; ['name'] then looks inside it.",
+          "practice": "Predict two-step lookups; write the expression for a described field of a described record.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up",
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Loop over records and read fields",
+          "worked_example": "people = [{'name': 'Ana', 'age': 31}, {'name': 'Bo', 'age': 27}]\nfor p in people:\n    if p['age'] > 30:\n        print(p['name'])  # Ana\nThe loop variable is one whole record each time.",
+          "practice": "Write a filter that prints matching names; fix a loop that writes people['age'] instead of p['age'].",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Best record by a field",
+          "worked_example": "people = [{'name': 'Ana', 'age': 31}, {'name': 'Bo', 'age': 27}]\noldest = people[0]\nfor p in people:\n    if p['age'] > oldest['age']:\n        oldest = p\nprint(oldest['name'])  # Ana\nKeep the whole best record, not just its number, so you can report any field.",
+          "practice": "Write the youngest/highest-scoring search; predict output with a tie.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        },
+        {
+          "title": "Adding a record and missing fields",
+          "worked_example": "people = [{'name': 'Ana', 'age': 31}]\npeople.append({'name': 'Cy'})\nfor p in people:\n    print(p['name'], p.get('age', '?'))\n# Ana 31\n# Cy ?\nappend a new dict; records may lack a field, so read optional fields with get.",
+          "practice": "Write code appending a record built from input values; fix a loop that crashes on a record missing a key.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build",
+            "dictionaries.membership_and_get"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.create_and_look_up",
+          "weight": 0.4
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "nested_data_structures.dict_of_lists_and_dicts",
+      "title": "Dicts holding lists and dicts",
+      "concept": "nested_data_structures",
+      "summary": "Look up and update values inside a dict of lists (gradebook) and a dict of dicts (profiles), and loop over them.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "dictionaries.loop_keys_values_items",
+        "list_methods.append_build",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A dict of lists",
+          "worked_example": "grades = {'ana': [90, 85], 'bo': [70]}\nprint(grades['ana'])     # [90, 85]\nprint(grades['ana'][1])  # 85\nprint(sum(grades['ana']) / len(grades['ana']))  # 87.5\nThe key picks a list; then index or use list built-ins on it.",
+          "practice": "Predict lookups and averages; write the average for a named student.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up",
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "Appending to an inner list",
+          "worked_example": "grades = {'ana': [90, 85], 'bo': [70]}\ngrades['bo'].append(88)\nprint(grades)  # {'ana': [90, 85], 'bo': [70, 88]}\ngrades['bo'] is the stored list itself, so append changes it in place: no reassignment needed.",
+          "practice": "Predict the dict after appends; fix grades['bo'] = 88 that replaced the list.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "A dict of dicts",
+          "worked_example": "people = {'ana': {'age': 31, 'city': 'Oslo'},\n          'bo': {'age': 27, 'city': 'Lima'}}\nprint(people['bo']['city'])  # Lima\npeople['ana']['age'] += 1\nprint(people['ana'])  # {'age': 32, 'city': 'Oslo'}\nTwo keys in a row: the outer picks the person, the inner picks the field.",
+          "practice": "Predict nested lookups and updates; write the update for a described change.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "Looping over a dict of dicts",
+          "worked_example": "people = {'ana': {'age': 31, 'city': 'Oslo'},\n          'bo': {'age': 27, 'city': 'Lima'}}\nfor name, info in people.items():\n    print(name, 'lives in', info['city'])\n# ana lives in Oslo\n# bo lives in Lima\nitems() gives each outer key with its inner dict; read fields from the inner dict.",
+          "practice": "Reorder the loop lines; write a loop that prints everyone over a given age.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.add_update_delete",
+          "weight": 0.3
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc",
+        "py4e",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "nested_data_structures.navigate_deep_data",
+      "title": "Finding your way through deeply nested data",
+      "concept": "nested_data_structures",
+      "summary": "Follow a path of keys and indexes through JSON-shaped data, loop over a list inside a dict, and tell from the error which step failed.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "nested_data_structures.list_of_dicts",
+        "nested_data_structures.dict_of_lists_and_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Read a path one step at a time",
+          "worked_example": "data = {'users': [{'name': 'Ana', 'tags': ['admin', 'dev']}]}\nprint(data['users'][0]['tags'][-1])  # dev\nRead left to right: dict, then list, then dict, then list; each step's result is what the next step indexes.",
+          "practice": "Write the access path for a described value; trace the type after each step.",
+          "formats": [
+            "fill_in_blank",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Loop over the list you reach",
+          "worked_example": "data = {'users': [{'name': 'Ana'}, {'name': 'Bo'}]}\nfor user in data['users']:\n    print(user['name'])\n# Ana\n# Bo\nNavigate to the list once, then loop over its items.",
+          "practice": "Write a loop printing a field from each item of a nested list; predict its output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.list_of_dicts"
+          ]
+        },
+        {
+          "title": "Which step went wrong?",
+          "worked_example": "data = {'users': [{'name': 'Ana'}]}\nprint(data['users']['name'])  # TypeError: list indices must be integers or slices, not str\nKeyError: a missing key; IndexError: a list too short; TypeError: you used a key on a list (or an index on the wrong type).",
+          "practice": "Match each failing path to its error; fix paths that skip a list level.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.dict_of_lists_and_dicts"
+          ]
+        },
+        {
+          "title": "Defaults at each level with get",
+          "worked_example": "data = {'meta': {'page': 2}}\nprint(data.get('meta', {}).get('page', 1))   # 2\nprint(data.get('extra', {}).get('page', 1))  # 1\nA default of {} lets the next get run safely when an optional level is missing.",
+          "practice": "Predict chained get results; rewrite a crashing path with get defaults.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_data_structures.list_of_dicts",
+          "weight": 0.5
+        },
+        {
+          "topic": "nested_data_structures.dict_of_lists_and_dicts",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "100_days_of_code",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "nested_data_structures.match_structure_patterns",
+      "title": "match on the shape of data: sequence and mapping patterns",
+      "concept": "nested_data_structures",
+      "summary": "Use case patterns that match lists by length and contents ([x, y], [first, *rest]) and dicts by keys ({'type': t}).",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "match_statement.capture_and_guards",
+        "unpacking.star_unpacking",
+        "nested_data_structures.dict_of_lists_and_dicts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Sequence patterns match length and items",
+          "worked_example": "command = 'go north'.split()\nmatch command:\n    case ['go', direction]:\n        print('going', direction)  # going north\n    case ['quit']:\n        print('bye')\nA list pattern matches only a list of exactly that length; literals must be equal, names capture.",
+          "practice": "Predict which case runs for several commands; write a case for a two-word command.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "match_statement.capture_and_guards",
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "A star collects the rest",
+          "worked_example": "command = ['drop', 'key', 'map']\nmatch command:\n    case ['drop', *items]:\n        print(items)  # ['key', 'map']\n*name matches any number of items, including none, just like star unpacking.",
+          "practice": "Predict the captured list (including empty); fix a pattern that fails because the length is fixed.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.star_unpacking"
+          ]
+        },
+        {
+          "title": "Mapping patterns match keys",
+          "worked_example": "event = {'type': 'click', 'x': 3, 'y': 4}\nmatch event:\n    case {'type': 'key', 'key': k}:\n        print('key', k)\n    case {'type': 'click', 'x': x, 'y': y}:\n        print('click at', x, y)  # click at 3 4\nA dict pattern needs the listed keys with matching values; extra keys in the data are allowed.",
+          "practice": "Predict which case runs for several events; write a mapping pattern for a described event.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.create_and_look_up"
+          ]
+        },
+        {
+          "title": "Order of cases and the fallback",
+          "worked_example": "for cmd in [['look'], ['go'], ['go', 'up', 'now']]:\n    match cmd:\n        case ['go', where]:\n            print('go', where)\n        case [verb]:\n            print('just', verb)\n        case _:\n            print('unknown')\n# just look\n# just go\n# unknown\nCases are tried top to bottom; ['go'] fails the 2-item pattern but matches [verb].",
+          "practice": "Predict outputs for a list of inputs; reorder cases so a specific pattern is not shadowed.",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "match_statement.match_literals"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "match_statement.capture_and_guards",
+          "weight": 0.5
+        },
+        {
+          "topic": "unpacking.star_unpacking",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "list_comprehensions.map_each_item",
+      "title": "List comprehensions: transforming every item",
+      "concept": "list_comprehensions",
+      "summary": "Replace a loop-and-append with [expression for item in iterable] to build a new list from each item.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "list_methods.append_build",
+        "lists.text_to_list_and_back",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "From loop-and-append to a comprehension",
+          "worked_example": "nums = [1, 2, 3]\nsquares = []\nfor n in nums:\n    squares.append(n * n)\nprint(squares)                # [1, 4, 9]\nprint([n * n for n in nums])  # [1, 4, 9]\nThe comprehension packs the loop and the append into one expression: what to keep, then the for.",
+          "practice": "Rewrite short append loops as comprehensions; fill in the expression part of a comprehension.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Any expression, any iterable",
+          "worked_example": "words = ['hi', 'there']\nprint([w.upper() for w in words])    # ['HI', 'THERE']\nprint([len(w) for w in words])       # [2, 5]\nprint([i * 10 for i in range(4)])    # [0, 10, 20, 30]\nMethod calls, functions and arithmetic all work; strings and ranges work as the source too.",
+          "practice": "Predict comprehension results over lists, strings and ranges.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.calling_methods_case",
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "A comprehension builds a new list",
+          "worked_example": "prices = [10, 20]\nwith_tax = [p * 1.5 for p in prices]\nprint(prices, with_tax)  # [10, 20] [15.0, 30.0]\nThe original list is untouched; assign the result to keep it.",
+          "practice": "Fix code that writes a comprehension but never assigns it; predict both lists afterwards.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Parsing text into numbers in one line",
+          "worked_example": "line = '3 14 15'\nnums = [int(x) for x in line.split()]\nprint(nums, sum(nums))  # [3, 14, 15] 32\nsplit gives strings; the comprehension converts each one.",
+          "practice": "Write the parse line for comma- or space-separated numbers; fix a version that sums strings.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.text_to_list_and_back",
+            "type_conversion.strings_to_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.text_to_list_and_back",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "100_days_of_code",
+        "codecademy",
+        "cs50p",
+        "py4e"
+      ]
+    },
+    {
+      "id": "list_comprehensions.filter_with_if",
+      "title": "Filtering in a comprehension, and if-else inside one",
+      "concept": "list_comprehensions",
+      "summary": "Keep only matching items with a trailing if, combine filtering with a transform, and tell it apart from an if-else expression at the front.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "list_comprehensions.map_each_item",
+        "conditional_expressions.value_if_else",
+        "for_loops.if_inside_loop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A trailing if keeps only matching items",
+          "worked_example": "nums = [4, -1, 7, -3]\nprint([n for n in nums if n > 0])  # [4, 7]\nItems whose condition is False are skipped; the result may be shorter.",
+          "practice": "Predict filtered lists; write a comprehension keeping even numbers.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Filter and transform together",
+          "worked_example": "words = ['a', 'tree', 'is', 'green']\nprint([w.upper() for w in words if len(w) > 2])  # ['TREE', 'GREEN']\nThe if decides which items survive; the front expression decides what is stored for each survivor.",
+          "practice": "Reorder the parts of a comprehension (Parsons on tokens); write one from a described loop with if and append.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.map_each_item"
+          ]
+        },
+        {
+          "title": "if-else at the front changes values, keeps every item",
+          "worked_example": "nums = [4, -1, 7]\nprint(['pos' if n > 0 else 'neg' for n in nums])  # ['pos', 'neg', 'pos']\nprint([n if n > 0 else 0 for n in nums])          # [4, 0, 7]\nA conditional expression before for picks a value for every item, so the length never changes.",
+          "practice": "Predict results and their lengths; choose between front if-else and trailing if for described tasks.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditional_expressions.value_if_else"
+          ]
+        },
+        {
+          "title": "else at the end is a syntax error",
+          "worked_example": "nums = [4, -1, 7]\nprint([n for n in nums if n > 0 else 0])  # SyntaxError: invalid syntax\nA trailing if cannot have else; move the if-else in front of for if every item should get a value.",
+          "practice": "Fix misplaced if-else comprehensions; predict which comprehensions are valid.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditional_expressions.value_if_else"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_comprehensions.map_each_item",
+          "weight": 0.7
+        },
+        {
+          "topic": "conditional_expressions.value_if_else",
+          "weight": 0.3
+        },
+        {
+          "topic": "for_loops.if_inside_loop",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "100_days_of_code",
+        "codecademy",
+        "cs50p",
+        "py4e"
+      ]
+    },
+    {
+      "id": "list_comprehensions.any_all_and_sum",
+      "title": "Comprehensions with sum(), any() and all()",
+      "concept": "list_comprehensions",
+      "summary": "Feed comprehensions to sum/max/min, answer 'any?' and 'all?' questions with any() and all(), and know their empty-list results.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "list_comprehensions.filter_with_if",
+        "loop_patterns.search_flag",
+        "lists.aggregate_builtins"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Totals, maxima and counts in one line",
+          "worked_example": "words = ['hi', 'there', 'you']\nprint(sum([len(w) for w in words]))   # 10\nprint(max([len(w) for w in words]))   # 5\nprint(sum([1 for w in words if 'h' in w]))  # 2\nBuild the list of numbers you want, then hand it to a built-in. Summing 1 for each match counts matches.",
+          "practice": "Write one-line totals and counts; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.aggregate_builtins"
+          ]
+        },
+        {
+          "title": "any() and all() replace search flags",
+          "worked_example": "nums = [4, -1, 7]\nprint(any([n < 0 for n in nums]))  # True\nprint(all([n < 0 for n in nums]))  # False\nany is True if at least one value is True; all only if every one is. They replace the found = False loop.",
+          "practice": "Rewrite a flag loop with any or all; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.search_flag"
+          ]
+        },
+        {
+          "title": "Empty lists: any is False, all is True",
+          "worked_example": "print(any([]))  # False\nprint(all([]))  # True\nprint(all([n > 0 for n in []]))  # True\n'Every one of nothing' is vacuously true; guard with a length check if an empty input should fail.",
+          "practice": "Predict any/all on empty and filtered-to-empty lists; fix a validator that accepts an empty list.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.filter_with_if"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_comprehensions.filter_with_if",
+          "weight": 0.6
+        },
+        {
+          "topic": "lists.aggregate_builtins",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.search_flag",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "list_comprehensions.nested_comprehensions",
+      "title": "Comprehensions over grids: nested and two-for comprehensions",
+      "concept": "list_comprehensions",
+      "summary": "Pull a column or row totals from a grid, build a grid safely, flatten a grid and build pairs with two for clauses.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "list_comprehensions.filter_with_if",
+        "nested_data_structures.rows_columns_diagonals",
+        "copying.shallow_vs_deep"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One comprehension over the rows",
+          "worked_example": "grid = [[1, 2, 3], [4, 5, 6]]\nprint([row[0] for row in grid])   # [1, 4]\nprint([sum(row) for row in grid])  # [6, 15]\nEach item is a row, so the expression can index or sum it.",
+          "practice": "Write comprehensions for a column and for row maxima; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.rows_columns_diagonals"
+          ]
+        },
+        {
+          "title": "Building a grid with a comprehension",
+          "worked_example": "grid = [[0] * 3 for _ in range(2)]\ngrid[0][0] = 1\nprint(grid)  # [[1, 0, 0], [0, 0, 0]]\nEach pass makes a fresh row, so changing one cell does not change the others (unlike [[0] * 3] * 2).",
+          "practice": "Write a comprehension for an h-by-w grid of a given value; fix grid code built with * on the outer list.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "nested_data_structures.grid_index_and_loop",
+            "copying.shallow_vs_deep"
+          ]
+        },
+        {
+          "title": "Two for clauses flatten a grid",
+          "worked_example": "grid = [[1, 2], [3, 4]]\nprint([x for row in grid for x in row])  # [1, 2, 3, 4]\nThe for clauses read in the same order as nested loops: outer first, inner second.",
+          "practice": "Reorder the clauses to match a given nested loop; predict flattened results.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        },
+        {
+          "title": "Pairs from two loops, with a filter",
+          "worked_example": "print([(a, b) for a in range(3) for b in range(3) if a < b])\n# [(0, 1), (0, 2), (1, 2)]\nEvery combination of a and b is tried; the if keeps the ones you want. Past two clauses, a plain loop is clearer.",
+          "practice": "Predict the pairs produced; write a comprehension for all pairs with a given sum.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.filter_with_if"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_comprehensions.filter_with_if",
+          "weight": 0.5
+        },
+        {
+          "topic": "nested_data_structures.rows_columns_diagonals",
+          "weight": 0.3
+        },
+        {
+          "topic": "nested_data_structures.grid_index_and_loop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "dict_comprehensions.build_dicts",
+      "title": "Dictionary comprehensions: building a dict in one line",
+      "concept": "dict_comprehensions",
+      "summary": "Write {key: value for item in iterable}, including from two lists with zip and with a filter, and predict what happens when keys repeat.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "list_comprehensions.filter_with_if",
+        "dictionaries.build_from_pairs"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Key and value from each item",
+          "worked_example": "words = ['kiwi', 'fig']\nprint({w: len(w) for w in words})  # {'kiwi': 4, 'fig': 3}\nLike a list comprehension, but with braces and key: value in front.",
+          "practice": "Predict dict comprehensions; rewrite an empty-dict-and-assign loop as one.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.map_each_item",
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "Keys and values from two lists",
+          "worked_example": "names = ['ana', 'bo']\nages = [31, 27]\nprint({n: a for n, a in zip(names, ages)})  # {'ana': 31, 'bo': 27}\nUnpack each zipped pair; the comprehension can then transform either side (dict(zip()) cannot).",
+          "practice": "Write a comprehension mapping names to upper-case names or doubled values; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.build_from_pairs"
+          ]
+        },
+        {
+          "title": "Filtering with a trailing if",
+          "worked_example": "nums = [1, 2, 3, 4]\nprint({n: n * n for n in nums if n % 2 == 0})  # {2: 4, 4: 16}\nOnly items passing the if get an entry.",
+          "practice": "Predict filtered dict comprehensions; fill in the condition for a described filter.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "list_comprehensions.filter_with_if"
+          ]
+        },
+        {
+          "title": "Repeated keys: the last one wins",
+          "worked_example": "words = ['ant', 'bee', 'ape']\nprint({w[0]: w for w in words})  # {'a': 'ape', 'b': 'bee'}\nEach new value for an existing key overwrites the old one; to keep all of them, group into lists instead.",
+          "practice": "Predict results with repeated keys; choose between a dict comprehension and grouping for described tasks.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_comprehensions.map_each_item",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.build_from_pairs",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "codecademy",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "dict_comprehensions.transform_dicts",
+      "title": "Transforming and filtering dicts, and set comprehensions",
+      "concept": "dict_comprehensions",
+      "summary": "Build a new dict from an existing one's items (change values, filter by value, swap keys and values) and write set comprehensions.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "dict_comprehensions.build_dicts",
+        "dictionaries.loop_keys_values_items",
+        "sets.create_and_membership"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Changing every value",
+          "worked_example": "prices = {'tea': 2, 'cake': 4}\nprint({k: v * 2 for k, v in prices.items()})  # {'tea': 4, 'cake': 8}\nLoop over items(), keep the key, transform the value.",
+          "practice": "Write a comprehension applying a discount; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        },
+        {
+          "title": "Keeping entries that pass a test",
+          "worked_example": "scores = {'ana': 72, 'bo': 45, 'cy': 90}\nprint({k: v for k, v in scores.items() if v >= 50})  # {'ana': 72, 'cy': 90}\nA new dict with only the passing entries; the original is unchanged (and safe, unlike deleting while looping).",
+          "practice": "Write a filter by value or by key; fix a loop that deletes entries while iterating by rewriting it as a comprehension.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dict_comprehensions.build_dicts"
+          ]
+        },
+        {
+          "title": "Swapping keys and values",
+          "worked_example": "code = {'a': 1, 'b': 2}\nprint({v: k for k, v in code.items()})  # {1: 'a', 2: 'b'}\nprint({v: k for k, v in {'a': 1, 'b': 1}.items()})  # {1: 'b'}\nWorks when values are unique; duplicate values collapse to one key, so use grouping into lists in that case.",
+          "practice": "Predict inversions with unique and repeated values; choose comprehension or grouping.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dict_comprehensions.build_dicts"
+          ]
+        },
+        {
+          "title": "Set comprehensions: braces without a colon",
+          "worked_example": "words = ['Hi', 'hi', 'Yo']\nprint(sorted({w.lower() for w in words}))  # ['hi', 'yo']\nprint(type({w: 1 for w in words}))  # <class 'dict'>\n{expr for ...} builds a set (duplicates dropped); {k: v for ...} builds a dict.",
+          "practice": "Predict whether each comprehension makes a set, dict or list and its contents; write a set comprehension of distinct first letters.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "sets.create_and_membership"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dict_comprehensions.build_dicts",
+          "weight": 0.7
+        },
+        {
+          "topic": "dictionaries.loop_keys_values_items",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p",
+        "codecademy",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "stacks_queues.list_as_stack",
+      "title": "Stacks: last in, first out with a list",
+      "concept": "stacks_queues",
+      "summary": "Use a list as a stack with append() and pop(), peek and test for empty safely, and solve bracket matching with a stack.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "list_methods.remove_pop_del",
+        "conditionals.truthiness_in_if",
+        "dictionaries.membership_and_get",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Push with append, pop from the end",
+          "worked_example": "stack = []\nstack.append('a')\nstack.append('b')\nstack.append('c')\nprint(stack.pop())  # c\nprint(stack)        # ['a', 'b']\nThe last item pushed is the first popped (LIFO), like a stack of plates.",
+          "practice": "Predict pop results after a sequence of pushes and pops; trace the stack contents.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        },
+        {
+          "title": "Peek and check for empty before popping",
+          "worked_example": "stack = ['a']\nprint(stack[-1])  # a  (peek, nothing removed)\nstack.pop()\nif stack:\n    print('more')\nelse:\n    print('empty')  # empty\nstack.pop()  # IndexError: pop from empty list\nstack[-1] looks without removing; test with if stack: before popping.",
+          "practice": "Fix code that pops an empty stack; predict outputs with peek vs pop.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.truthiness_in_if"
+          ]
+        },
+        {
+          "title": "Undo: popping reverses the order",
+          "worked_example": "history = []\nfor action in ['type', 'bold', 'delete']:\n    history.append(action)\nwhile history:\n    print('undo', history.pop())\n# undo delete\n# undo bold\n# undo type\nPopping everything gives the items back newest first: the basis of undo and reversing.",
+          "practice": "Predict an undo sequence; write a function reversing a string with a stack.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        },
+        {
+          "title": "Matching brackets with a stack",
+          "worked_example": "def balanced(text):\n    pairs = {')': '(', ']': '['}\n    stack = []\n    for ch in text:\n        if ch in '([':\n            stack.append(ch)\n        elif ch in pairs:\n            if not stack or stack.pop() != pairs[ch]:\n                return False\n    return not stack\n\nprint(balanced('([])'), balanced('(]'), balanced('(('))  # True False False\nPush every opener; each closer must match the most recent opener; leftovers mean unbalanced.",
+          "practice": "Trace the stack on a given string; fix a version that forgets the final empty check.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return",
+            "dictionaries.membership_and_get"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_methods.remove_pop_del",
+          "weight": 0.5
+        },
+        {
+          "topic": "conditionals.truthiness_in_if",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "stacks_queues.queue_with_deque",
+      "title": "Queues: first in, first out with deque",
+      "concept": "stacks_queues",
+      "summary": "Model a FIFO queue, see why list.pop(0) is the slow way, and use collections.deque with append(), popleft() and maxlen.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "stacks_queues.list_as_stack"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "FIFO: serve in arrival order",
+          "worked_example": "line = ['ana', 'bo']\nline.append('cy')\nprint(line.pop(0))  # ana\nprint(line)         # ['bo', 'cy']\nJoin at the back, leave from the front. pop(0) works, but every remaining item shifts down one place.",
+          "practice": "Predict who is served after a sequence of joins and serves; multiple choice on stack vs queue for described situations.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        },
+        {
+          "title": "deque: a queue built for both ends",
+          "worked_example": "from collections import deque\nq = deque(['ana', 'bo'])\nq.append('cy')\nprint(q.popleft())  # ana\nprint(q)            # deque(['bo', 'cy'])\npopleft() removes from the front without shifting, so it stays fast for long queues. Copy the import line as given.",
+          "practice": "Rewrite a list queue using deque; predict q after mixed append/popleft.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "stacks_queues.list_as_stack"
+          ]
+        },
+        {
+          "title": "Process until the queue is empty",
+          "worked_example": "from collections import deque\njobs = deque(['print', 'save'])\nwhile jobs:\n    job = jobs.popleft()\n    print('doing', job)\n    if job == 'print':\n        jobs.append('log')\n# doing print\n# doing save\n# doing log\nwhile jobs: stops when nothing is left; new work added during the loop joins the back.",
+          "practice": "Trace the queue through a processing loop; predict the order of work.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.truthiness_in_if"
+          ]
+        },
+        {
+          "title": "appendleft and maxlen: keep only the latest",
+          "worked_example": "from collections import deque\nrecent = deque(maxlen=3)\nfor page in ['a', 'b', 'c', 'd']:\n    recent.append(page)\nprint(list(recent))  # ['b', 'c', 'd']\nrecent.appendleft('z')\nprint(list(recent))  # ['z', 'b', 'c']\nWith maxlen, adding to a full deque drops an item from the other end.",
+          "practice": "Predict contents of a bounded deque; write a 'last 5 entries' history.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "stacks_queues.list_as_stack"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "stacks_queues.list_as_stack",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "collections_module.counter",
+      "title": "Counting with collections.Counter",
+      "concept": "collections_module",
+      "summary": "Count items with Counter, read counts (missing is 0), get the most common with most_common(), and add more counts.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "dictionaries.sort_by_value",
+        "dictionaries.counting_pattern"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Counter counts any iterable",
+          "worked_example": "from collections import Counter\nc = Counter('banana')\nprint(c['a'], c['n'], c['z'])  # 3 2 0\nOne call replaces the counting loop; a missing key reads as 0 instead of raising KeyError.",
+          "practice": "Predict counts including missing keys; rewrite a get(k, 0) counting loop with Counter.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.counting_pattern"
+          ]
+        },
+        {
+          "title": "most_common(n) for the top n",
+          "worked_example": "from collections import Counter\nwords = 'the cat and the hat and the bat'.split()\nprint(Counter(words).most_common(2))  # [('the', 3), ('and', 2)]\nReturns (item, count) pairs, biggest first: the sort-by-value work done for you.",
+          "practice": "Predict most_common results; write a top-3 report with unpacking.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "dictionaries.sort_by_value"
+          ]
+        },
+        {
+          "title": "Adding more counts with update() and +",
+          "worked_example": "from collections import Counter\nc = Counter(['a', 'b'])\nc.update(['a', 'c'])\nprint(c['a'])  # 2\nprint((Counter('ab') + Counter('bc'))['b'])  # 2\nupdate adds counts (unlike dict.update, which replaces values); + combines two Counters.",
+          "practice": "Predict counts after update and +; multiple choice contrasting Counter.update with dict.update.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.add_update_delete"
+          ]
+        },
+        {
+          "title": "A Counter is still a dict",
+          "worked_example": "from collections import Counter\nc = Counter('aab')\nfor ch, n in c.items():\n    print(ch, n)\n# a 2\n# b 1\nprint(len(c), 'a' in c, 'z' in c)  # 2 True False\nLoops, len and in work as on a dict; reading c['z'] gives 0 but does not add 'z'.",
+          "practice": "Predict loops and membership on a Counter; fix code that expects c['z'] to raise KeyError.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.loop_keys_values_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.counting_pattern",
+          "weight": 0.3
+        },
+        {
+          "topic": "dictionaries.sort_by_value",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "collections_module.defaultdict",
+      "title": "Automatic defaults with collections.defaultdict",
+      "concept": "collections_module",
+      "summary": "Count with defaultdict(int) and group with defaultdict(list), and know that reading a missing key creates it.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "dictionaries.grouping_into_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "defaultdict(int) for counting",
+          "worked_example": "from collections import defaultdict\ncounts = defaultdict(int)\nfor ch in 'banana':\n    counts[ch] += 1\nprint(dict(counts))  # {'b': 1, 'a': 3, 'n': 2}\nA missing key starts at int() == 0, so += just works. dict() turns it back into a plain dict for printing.",
+          "practice": "Rewrite a get(k, 0) counter with defaultdict; predict the counts.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.counting_pattern"
+          ]
+        },
+        {
+          "title": "defaultdict(list) for grouping",
+          "worked_example": "from collections import defaultdict\ngroups = defaultdict(list)\nfor w in ['ant', 'bee', 'ape']:\n    groups[w[0]].append(w)\nprint(dict(groups))  # {'a': ['ant', 'ape'], 'b': ['bee']}\nA missing key starts as a new empty list; no if-not-in or setdefault needed.",
+          "practice": "Rewrite a setdefault grouping loop; predict the groups.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "dictionaries.grouping_into_lists"
+          ]
+        },
+        {
+          "title": "Pass the type, don't call it",
+          "worked_example": "from collections import defaultdict\nok = defaultdict(list)\nbad = defaultdict(list())  # TypeError: first argument must be callable or None\ndefaultdict needs something it can call later to make each default: list, int, set, not list().",
+          "practice": "Fix broken defaultdict constructions; choose int, list or set for described tasks.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "dictionaries.grouping_into_lists"
+          ]
+        },
+        {
+          "title": "Reading a missing key adds it",
+          "worked_example": "from collections import defaultdict\nd = defaultdict(int)\nprint(d['x'])     # 0\nprint(dict(d))    # {'x': 0}\nprint('y' in d)   # False\nUnlike get, looking up creates the entry; test with in when you only want to check.",
+          "practice": "Predict the dict after lookups; fix a check that accidentally adds keys.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "dictionaries.membership_and_get"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "dictionaries.grouping_into_lists",
+          "weight": 0.4
+        },
+        {
+          "topic": "dictionaries.counting_pattern",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "collections_module.namedtuple",
+      "title": "Records with named fields: namedtuple",
+      "concept": "collections_module",
+      "summary": "Define a namedtuple type, read fields by name, use it like a tuple, and make changed copies with _replace().",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "tuples.lists_of_tuples",
+        "unpacking.unpack_sequences"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Define a record type and read fields by name",
+          "worked_example": "from collections import namedtuple\nPoint = namedtuple('Point', ['x', 'y'])\np = Point(3, 4)\nprint(p.x, p.y)  # 3 4\nprint(p)         # Point(x=3, y=4)\np.x reads better than p[0] and prints with its field names.",
+          "practice": "Predict field access and printing; write a namedtuple definition for a described record.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Still a tuple: index, unpack, compare, cannot change",
+          "worked_example": "from collections import namedtuple\nPoint = namedtuple('Point', ['x', 'y'])\np = Point(3, 4)\nx, y = p\nprint(p[0], x, p == (3, 4))  # 3 3 True\np.x = 5  # AttributeError: can't set attribute\nEverything a tuple does still works; fields are read-only.",
+          "practice": "Predict tuple operations on a namedtuple; fix code that assigns to a field.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "A list of named records",
+          "worked_example": "from collections import namedtuple\nPet = namedtuple('Pet', ['name', 'age'])\npets = [Pet('Rex', 3), Pet('Tom', 5)]\nfor pet in pets:\n    if pet.age > 4:\n        print(pet.name)  # Tom\nReplaces lists of plain tuples where you had to remember which position meant what.",
+          "practice": "Rewrite an index-based loop over tuples with field names; predict outputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "Keyword creation and _replace()",
+          "worked_example": "from collections import namedtuple\nPoint = namedtuple('Point', ['x', 'y'])\np = Point(x=1, y=2)\nq = p._replace(y=9)\nprint(p, q)  # Point(x=1, y=2) Point(x=1, y=9)\n_replace returns a new record with some fields changed; the original stays the same.",
+          "practice": "Predict both records after _replace; write code moving a point one step right.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tuples.lists_of_tuples",
+          "weight": 0.3
+        },
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "itertools_module.combinations_and_product",
+      "title": "Every combination: product, combinations and permutations",
+      "concept": "itertools_module",
+      "summary": "Replace nested loops with itertools.product, and list unordered pairs with combinations and ordered arrangements with permutations.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "nested_loops.inner_depends_on_outer",
+        "tuples.lists_of_tuples",
+        "unpacking.unpack_in_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "product() replaces nested loops",
+          "worked_example": "from itertools import product\nprint(list(product([1, 2], 'ab')))\n# [(1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]\nSame tuples, same order as a loop over 1, 2 with an inner loop over 'a', 'b'. list() shows the results.",
+          "practice": "Rewrite a two-level nested loop with product; predict the tuples.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_loops.loop_inside_loop"
+          ]
+        },
+        {
+          "title": "combinations(): unordered picks, no repeats",
+          "worked_example": "from itertools import combinations\nfor a, b in combinations(['ana', 'bo', 'cy'], 2):\n    print(a, 'vs', b)\n# ana vs bo\n# ana vs cy\n# bo vs cy\nEach pair appears once, like a loop where the inner index starts after the outer one.",
+          "practice": "Predict pairs; write a schedule of matches for a list of players.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "nested_loops.inner_depends_on_outer",
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "permutations(): order matters",
+          "worked_example": "from itertools import permutations\nprint(list(permutations('abc', 2)))\n# [('a', 'b'), ('a', 'c'), ('b', 'a'), ('b', 'c'), ('c', 'a'), ('c', 'b')]\n('a', 'b') and ('b', 'a') are different arrangements, so there are twice as many as combinations.",
+          "practice": "Predict permutations of short inputs; count them with len(list(...)).",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "Which tool for which question?",
+          "worked_example": "from itertools import combinations, permutations, product\nprint(len(list(product('HT', repeat=3))))     # 8\nprint(len(list(combinations(range(5), 2))))  # 10\nprint(len(list(permutations(range(5), 2))))  # 20\nRepeats allowed: product. Choose a group: combinations. Order a line-up: permutations.",
+          "practice": "Pick the right function for word problems and give the count.",
+          "formats": [
+            "multiple_choice",
+            "numeric"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_loops.inner_depends_on_outer",
+          "weight": 0.3
+        },
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "itertools_module.chain_count_zip_longest",
+      "title": "Joining and stretching iterables: chain, count and zip_longest",
+      "concept": "itertools_module",
+      "summary": "Loop over several lists in a row with chain, number things endlessly with count, and handle lists of different lengths with zip_longest or zip(strict=True).",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "enumerate_zip.zip_parallel_lists",
+        "iteration.iter_and_next",
+        "break_continue.break_out_early"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "chain(): one loop over several lists",
+          "worked_example": "from itertools import chain\ntotal = 0\nfor x in chain([1, 2], [3, 4]):\n    total += x\nprint(total)  # 10\nprint(list(chain([1, 2], 'ab')))  # [1, 2, 'a', 'b']\nNo new combined list is built; items come from each input in turn.",
+          "practice": "Predict chained output; rewrite two loops over two lists as one loop with chain.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "iteration.iter_and_next"
+          ]
+        },
+        {
+          "title": "count(): an endless counter",
+          "worked_example": "from itertools import count\nfor n in count(10, 5):\n    if n > 25:\n        break\n    print(n)\n# 10\n# 15\n# 20\n# 25\ncount never stops by itself; pair it with break (or zip) to end the loop.",
+          "practice": "Predict output; fix a count loop that never ends.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "break_continue.break_out_early"
+          ]
+        },
+        {
+          "title": "zip stops early; zip_longest fills the gaps",
+          "worked_example": "from itertools import zip_longest\nnames = ['ana', 'bo', 'cy']\nscores = [90, 80]\nprint(list(zip(names, scores)))  # [('ana', 90), ('bo', 80)]\nprint(list(zip_longest(names, scores, fillvalue=0)))\n# [('ana', 90), ('bo', 80), ('cy', 0)]\nPlain zip silently drops the extra item; zip_longest keeps it and pads with fillvalue (None by default).",
+          "practice": "Predict both results for uneven lists; choose which to use.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "enumerate_zip.zip_parallel_lists"
+          ]
+        },
+        {
+          "title": "zip(strict=True) refuses uneven lists",
+          "worked_example": "names = ['ana', 'bo', 'cy']\nscores = [90, 80]\nprint(list(zip(names, scores, strict=True)))\n# ValueError: zip() argument 2 is shorter than argument 1\nWhen lengths should match, strict=True turns a silent bug into an error.",
+          "practice": "Predict which calls raise ValueError; fix code that silently lost data.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "enumerate_zip.zip_parallel_lists"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "enumerate_zip.zip_parallel_lists",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    }
+  ]
+}

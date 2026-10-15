@@ -1,0 +1,1661 @@
+{
+  "batch": "B12",
+  "title": "Object-oriented design",
+  "concept_map": {
+    "inheritance": {
+      "topics": [
+        "inheritance.define_subclass",
+        "inheritance.override_methods",
+        "inheritance.super_init",
+        "inheritance.multilevel_hierarchies",
+        "inheritance.exception_hierarchies",
+        "inheritance.multiple_inheritance"
+      ],
+      "entry_topic": "inheritance.define_subclass",
+      "notes": "Class basics (class, __init__, self, attributes, methods) are B11 and enter via pending concept:classes / concept:constructors on define_subclass; encapsulation (_ and __ conventions) is B11, so multilevel_hierarchies only adds what happens to __private names in subclasses (Helsinki 'access modifiers') and has pending concept:encapsulation. isinstance is introduced here only as the is-a check (define_subclass KP4); if B11 teaches isinstance on its own, the stitching pass should make that a prerequisite. exception_hierarchies takes the B09 handoff (custom exceptions with __init__/attributes, catching a family, handler order) and encompasses raising_exceptions.custom_exceptions. multiple_inheritance (MRO, mixins, diamond super) is non-core, codecademy only. Overriding __str__/__eq__ and other dunders is B11 dunder_methods. Reconciliation: pending concept:classes/constructors resolved to classes.define_methods; isinstance now comes from objects_methods.isinstance_checks (prerequisite of define_subclass); multilevel_hierarchies depends on encapsulation.private_by_convention."
+    },
+    "polymorphism": {
+      "topics": [
+        "polymorphism.same_call_different_classes",
+        "polymorphism.parent_calls_overridden_method",
+        "polymorphism.duck_typing"
+      ],
+      "entry_topic": "polymorphism.same_call_different_classes",
+      "notes": "Operator overloading (__add__, __len__, __eq__) is B11 dunder_methods; polymorphism.same_call_different_classes KP4 only shows that built-ins already behave polymorphically. parent_calls_overridden_method is the template-method idea and is the hinge for abstract_classes. Duck typing comes last because it generalises overriding to unrelated classes."
+    },
+    "composition": {
+      "topics": [
+        "composition.objects_as_attributes",
+        "composition.shared_parts_and_aliasing",
+        "composition.has_a_vs_is_a"
+      ],
+      "entry_topic": "composition.objects_as_attributes",
+      "notes": "Only Helsinki teaches it ('objects as attributes'), but it is a core design tool, so three core topics. Aliasing of contained objects takes the B06 handoff ('aliasing of objects/attributes is the OOP batch'). has_a_vs_is_a also serves as the 'composition over inheritance' part of object_oriented_design. Linked lists and trees (objects holding objects of the same class) are B15."
+    },
+    "abstract_classes": {
+      "topics": [
+        "abstract_classes.abc_and_abstractmethod"
+      ],
+      "entry_topic": "abstract_classes.abc_and_abstractmethod",
+      "notes": "One non-core topic (codecademy introduces it). Uses 'from abc import ABC, abstractmethod' and @abstractmethod as memorised lines, as earlier batches did with imports and decorators. Abstract properties and abstract class methods were left out."
+    },
+    "interfaces": {
+      "topics": [
+        "interfaces.program_to_an_interface",
+        "interfaces.typing_protocol"
+      ],
+      "entry_topic": "interfaces.program_to_an_interface",
+      "notes": "Only Boot.dev teaches interfaces, in Go. Python's equivalents are duck-typed interfaces, ABCs and typing.Protocol; both topics are non-core. typing_protocol has empty taught_in (none of the courses teaches Protocol) and depends on tool_mypy (non-core, needs a terminal). The fake-object-for-tests idea is a KP here; mocking libraries were not given a topic. Generics (which 'interfaces comes before') are out of scope."
+    },
+    "sum_types": {
+      "topics": [
+        "sum_types.variants_as_classes",
+        "sum_types.match_class_patterns"
+      ],
+      "entry_topic": "sum_types.variants_as_classes",
+      "notes": "Boot.dev's Functional Programming 'Sum Types' chapter. Variants are plain classes because dataclasses belong to B11 (running in parallel); if B11 teaches dataclasses, the stitching pass may rewrite these examples with @dataclass (and then positional class patterns like Circle(r) work). match class patterns (deferred by B04) live in match_class_patterns, which uses keyword patterns so plain classes work. Union aliases use Shape = Circle | Rect rather than the 3.12 'type' statement. Pending concept:enums for the enum-vs-sum-type KP and concept:classes (which should provide isinstance, per the B02 note)."
+    },
+    "object_oriented_design": {
+      "topics": [
+        "object_oriented_design.find_classes_in_a_problem",
+        "object_oriented_design.refactor_procedural_to_class",
+        "object_oriented_design.collaborating_objects"
+      ],
+      "entry_topic": "object_oriented_design.find_classes_in_a_problem",
+      "notes": "Meta-skill taught as three problem-based core topics (identify classes, refactor procedural code into a class, design collaborating objects). Class basics are B11; the four pillars are owned by their concepts (encapsulation B11, inheritance/polymorphism/abstract classes here). Larger OOP projects (Coffee Machine, Quiz, Turtle Crossing, Helsinki's larger application) are project-shaped and best delivered as multisteps built on these topics. SOLID principles and UML class diagrams were not given topics."
+    },
+    "clean_code": {
+      "topics": [
+        "clean_code.spot_code_smells",
+        "clean_code.refactor_safely"
+      ],
+      "entry_topic": "clean_code.spot_code_smells",
+      "notes": "Boot.dev's OOP 'Clean Code' chapter. Two non-core problem-based topics; naming and one-job functions are already B05 (decomposition.one_job_per_function), named constants B02 and guard clauses B04 (flatten_nesting), so spot_code_smells links and encompasses those rather than re-teaching them. Linters/formatters are B01 pep8_style.linters_and_formatters. Class naming (CapWords) belongs with B11 classes."
+    }
+  },
+  "topics": [
+    {
+      "id": "inheritance.define_subclass",
+      "title": "Subclasses: classes that inherit from another class",
+      "concept": "inheritance",
+      "summary": "Define class Child(Parent), use the methods and attributes it inherits, add new methods, and check the is-a relationship with isinstance.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "decomposition.extract_repeated_code",
+        "classes.define_methods",
+        "objects_methods.isinstance_checks"
+      ],
+      "knowledge_points": [
+        {
+          "title": "A subclass gets the parent's methods",
+          "worked_example": "class Animal:\n    def __init__(self, name):\n        self.name = name\n    def describe(self):\n        return f\"{self.name} is an animal\"\n\nclass Cat(Animal):\n    pass\n\nprint(Cat(\"Tom\").describe())  # Tom is an animal\nCat has no body of its own, yet its objects have name and describe() from Animal.",
+          "practice": "Predict the output of calls on subclass objects whose methods all live in the parent.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Adding methods only the subclass has",
+          "worked_example": "class Dog(Animal):\n    def fetch(self):\n        return f\"{self.name} fetches\"\n\nprint(Dog(\"Rex\").fetch())   # Rex fetches\nAnimal(\"x\").fetch()  # AttributeError: 'Animal' object has no attribute 'fetch'\nInheritance goes one way: the parent does not get the child's methods.",
+          "practice": "Write a subclass with one extra method; predict which calls work and which raise AttributeError.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.define_methods"
+          ]
+        },
+        {
+          "title": "Move shared code into a parent instead of copying it",
+          "worked_example": "# Before: Car and Bike both define the same describe()\nclass Vehicle:\n    def __init__(self, wheels):\n        self.wheels = wheels\n    def describe(self):\n        return f\"{self.wheels} wheels\"\n\nclass Car(Vehicle): pass\nclass Bike(Vehicle): pass\nOne copy of describe() to read, test and fix.",
+          "practice": "Given two classes with duplicated methods, choose what moves into a parent class and write the class lines.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "decomposition.extract_repeated_code"
+          ]
+        },
+        {
+          "title": "is-a: a subclass object is also a parent object",
+          "worked_example": "d = Dog(\"Rex\")\nprint(isinstance(d, Dog), isinstance(d, Animal))   # True True\nprint(isinstance(Animal(\"x\"), Dog))               # False\nEvery Dog is an Animal; not every Animal is a Dog.",
+          "practice": "Predict isinstance results for objects of parent and child classes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "objects_methods.isinstance_checks"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "decomposition.extract_repeated_code",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "inheritance.override_methods",
+      "title": "Overriding methods and extending them with super()",
+      "concept": "inheritance",
+      "summary": "Replace an inherited method by defining one with the same name, predict which version runs, and extend the parent's version with super().",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "inheritance.define_subclass"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A method with the same name replaces the parent's",
+          "worked_example": "class Animal:\n    def speak(self):\n        return \"...\"\n\nclass Dog(Animal):\n    def speak(self):\n        return \"Woof\"\n\nprint(Dog().speak(), Animal().speak())   # Woof ...",
+          "practice": "Predict output for calls on parent and child objects when the child overrides a method.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "Lookup order: the object's own class first, then the parent",
+          "worked_example": "class Cat(Animal):\n    pass\n\nprint(Cat().speak())   # ...\nPython looks in Cat, finds no speak, and uses Animal's.",
+          "practice": "For a parent and two children (one overriding, one not), trace which class's method each call uses.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "Extend instead of replace: super().method()",
+          "worked_example": "class Base:\n    def greet(self):\n        return \"hi\"\n\nclass Loud(Base):\n    def greet(self):\n        return super().greet().upper() + \"!\"\n\nprint(Loud().greet())   # HI!\nsuper().greet() runs the parent's version, and the child adds to its result.",
+          "practice": "Fill in super() calls so an override reuses the parent's result; predict the output.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Two override bugs: self instead of super(), and a lost return",
+          "worked_example": "class Loud(Base):\n    def greet(self):\n        return self.greet().upper()   # calls itself forever\n# RecursionError: maximum recursion depth exceeded\n\nclass Quiet(Base):\n    def greet(self):\n        super().greet().lower()       # no return\nprint(Quiet().greet())   # None",
+          "practice": "Find and fix overrides that recurse forever or forget to return the extended value.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.define_subclass",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "inheritance.super_init",
+      "title": "Subclass constructors: super().__init__()",
+      "concept": "inheritance",
+      "summary": "Give a subclass its own __init__ that calls super().__init__() to set the parent's attributes before adding its own, and diagnose the missing-attribute bug when it does not.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "inheritance.override_methods"
+      ],
+      "knowledge_points": [
+        {
+          "title": "No __init__ in the child: the parent's is used",
+          "worked_example": "class Animal:\n    def __init__(self, name):\n        self.name = name\n\nclass Cat(Animal):\n    pass\n\nCat(\"Tom\").name   # 'Tom'\nCat()  # TypeError: Animal.__init__() missing 1 required positional argument: 'name'",
+          "practice": "Predict which constructor calls succeed and what attributes the objects have.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "A child __init__ replaces the parent's",
+          "worked_example": "class Student:\n    def __init__(self, name):\n        self.name = name\n\nclass Grad(Student):\n    def __init__(self, name, thesis):\n        self.thesis = thesis\n\nGrad(\"Ana\", \"Graphs\").name\n# AttributeError: 'Grad' object has no attribute 'name'\n__init__ is overridden like any method, so Student's never ran.",
+          "practice": "Explain the AttributeError in short programs; choose the line that is missing.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        },
+        {
+          "title": "Call super().__init__(...) and then add the new attributes",
+          "worked_example": "class Grad(Student):\n    def __init__(self, name, thesis):\n        super().__init__(name)\n        self.thesis = thesis\n\ng = Grad(\"Ana\", \"Graphs\")\nprint(g.name, g.thesis)   # Ana Graphs\nPass the parent the arguments it needs; keep the rest for the child.",
+          "practice": "Write a subclass __init__ that takes extra parameters and passes the right ones to super().__init__.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        },
+        {
+          "title": "The older spelling: Parent.__init__(self, ...)",
+          "worked_example": "class Grad(Student):\n    def __init__(self, name, thesis):\n        Student.__init__(self, name)   # same effect here\n        self.thesis = thesis\nYou will see this in older code; it needs self passed explicitly. Prefer super().",
+          "practice": "Convert Parent.__init__(self, ...) calls to super().__init__(...); spot a call that forgot self.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.override_methods",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "inheritance.multilevel_hierarchies",
+      "title": "Class hierarchies: several levels, isinstance and private names",
+      "concept": "inheritance",
+      "summary": "Trace method lookup through a chain of subclasses, check relationships with isinstance and issubclass, and use _protected rather than __private for attributes subclasses need.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "inheritance.super_init",
+        "encapsulation.private_by_convention"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Lookup walks up the chain",
+          "worked_example": "class A:\n    def who(self): return \"A\"\nclass B(A): pass\nclass C(B): pass\n\nprint(C().who())   # A\nprint(C.__mro__)\n# (<class '__main__.C'>, <class '__main__.B'>, <class '__main__.A'>, <class 'object'>)\nPython searches C, then B, then A, then object.",
+          "practice": "Trace which class supplies each method in a three-level hierarchy where some levels override.",
+          "formats": [
+            "trace_table",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        },
+        {
+          "title": "isinstance and issubclass across levels",
+          "worked_example": "print(isinstance(C(), A))       # True\nprint(issubclass(C, A), issubclass(A, C))   # True False\nprint(issubclass(bool, int))   # True: built-in types form hierarchies too",
+          "practice": "Predict isinstance/issubclass results for a drawn hierarchy.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "__private attributes are hidden from subclasses; use _protected",
+          "worked_example": "class Account:\n    def __init__(self, balance):\n        self.__balance = balance\nclass Savings(Account):\n    def show(self):\n        return self.__balance\n\nSavings(5).show()\n# AttributeError: 'Savings' object has no attribute '_Savings__balance'\nTwo underscores rename the attribute per class; one underscore (_balance) means 'internal, but subclasses may use it'.",
+          "practice": "Fix subclasses that fail on double-underscore attributes; choose _ or __ for described attributes.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "inheritance.super_init",
+            "encapsulation.private_by_convention"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.override_methods",
+          "weight": 0.4
+        },
+        {
+          "topic": "inheritance.super_init",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "inheritance.exception_hierarchies",
+      "title": "Your own exception families",
+      "concept": "inheritance",
+      "summary": "Build a base exception class with subclasses that carry extra data via super().__init__, catch a whole family by its base, and order except clauses from specific to general.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "inheritance.super_init",
+        "raising_exceptions.custom_exceptions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An exception that carries extra data",
+          "worked_example": "class InsufficientFunds(Exception):\n    def __init__(self, needed):\n        super().__init__(f\"need {needed} more\")\n        self.needed = needed\n\ntry:\n    raise InsufficientFunds(30)\nexcept InsufficientFunds as e:\n    print(e, e.needed)   # need 30 more 30",
+          "practice": "Write an exception class whose __init__ stores a value and builds the message; predict what the handler prints.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.super_init",
+            "raising_exceptions.custom_exceptions"
+          ]
+        },
+        {
+          "title": "A base class for a family of errors",
+          "worked_example": "class BankError(Exception): pass\nclass InsufficientFunds(BankError): ...\nclass AccountLocked(BankError): ...\n\ntry:\n    raise AccountLocked()\nexcept BankError:\n    print(\"bank problem\")   # catches every subclass",
+          "practice": "Draw (Parsons) a small exception hierarchy; decide which handlers catch which errors.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.custom_exceptions"
+          ]
+        },
+        {
+          "title": "Specific handlers before general ones",
+          "worked_example": "try:\n    raise InsufficientFunds(5)\nexcept Exception:\n    print(\"general\")\nexcept InsufficientFunds:\n    print(\"specific\")   # never reached\n# general\nThe first matching except wins, so put subclasses first.",
+          "practice": "Predict which handler runs; reorder except clauses so each one can be reached.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.custom_exceptions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "raising_exceptions.custom_exceptions",
+          "weight": 0.7
+        },
+        {
+          "topic": "inheritance.super_init",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "inheritance.multiple_inheritance",
+      "title": "Multiple inheritance, mixins and the MRO",
+      "concept": "inheritance",
+      "summary": "Inherit from two classes, predict which method wins using the method resolution order, write a small mixin, and follow super() through a diamond.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "inheritance.multilevel_hierarchies"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two parents: the leftmost wins",
+          "worked_example": "class Swimmer:\n    def move(self): return \"swim\"\nclass Flyer:\n    def move(self): return \"fly\"\nclass Duck(Swimmer, Flyer):\n    pass\n\nprint(Duck().move())   # swim",
+          "practice": "Predict which parent's method runs for different base-class orders.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.multilevel_hierarchies"
+          ]
+        },
+        {
+          "title": "Reading __mro__",
+          "worked_example": "print([c.__name__ for c in Duck.__mro__])\n# ['Duck', 'Swimmer', 'Flyer', 'object']\nThe MRO is the exact search order Python uses.",
+          "practice": "Write the MRO for small hierarchies, then check it against __mro__.",
+          "formats": [
+            "short_answer",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.multilevel_hierarchies"
+          ]
+        },
+        {
+          "title": "A mixin adds one ability to any class",
+          "worked_example": "class GreetMixin:\n    def greet(self):\n        return f\"Hi, I'm {self.name}\"\n\nclass Person(GreetMixin):\n    def __init__(self, name):\n        self.name = name\n\nprint(Person(\"Ana\").greet())   # Hi, I'm Ana\nA mixin has no __init__ of its own; it relies on attributes the host class sets.",
+          "practice": "Write a mixin method and add it to two unrelated classes; spot a host class missing the attribute the mixin needs.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "super() follows the MRO, not just 'the parent'",
+          "worked_example": "class Base:\n    def hello(self): print(\"Base\")\nclass L(Base):\n    def hello(self): print(\"L\"); super().hello()\nclass R(Base):\n    def hello(self): print(\"R\"); super().hello()\nclass D(L, R):\n    def hello(self): print(\"D\"); super().hello()\nD().hello()   # D L R Base (one per line)",
+          "practice": "Predict the printed order for diamond hierarchies that chain super() calls.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.multilevel_hierarchies",
+          "weight": 0.4
+        },
+        {
+          "topic": "inheritance.override_methods",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "polymorphism.same_call_different_classes",
+      "title": "Polymorphism: one call, different behaviour",
+      "concept": "polymorphism",
+      "summary": "Loop over objects of different subclasses calling the same method, and replace if/elif chains on a 'kind' value with overridden methods.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "inheritance.override_methods",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The same method call runs each object's own version",
+          "worked_example": "class Shape:\n    def area(self): return 0\nclass Square(Shape):\n    def __init__(self, side): self.side = side\n    def area(self): return self.side ** 2\nclass Circle(Shape):\n    def __init__(self, r): self.r = r\n    def area(self): return round(3.14 * self.r ** 2, 2)\n\nfor s in [Square(2), Circle(1)]:\n    print(s.area())   # 4 then 3.14",
+          "practice": "Predict the output of loops over mixed lists of objects.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Replace if/elif on a type with methods",
+          "worked_example": "# Before\ndef area(kind, size):\n    if kind == \"square\":\n        return size ** 2\n    elif kind == \"circle\":\n        return 3.14 * size ** 2\n# After: each class knows its own area, so callers just write s.area()",
+          "practice": "Refactor an if/elif function on a kind string into subclasses with an overridden method.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        },
+        {
+          "title": "Adding a new kind changes no calling code",
+          "worked_example": "class Rect(Shape):\n    def __init__(self, w, h): self.w, self.h = w, h\n    def area(self): return self.w * self.h\n\ntotal = 0\nfor s in [Square(2), Rect(2, 3)]:\n    total += s.area()\nprint(total)   # 10\nThe loop was not touched; only a class was added.",
+          "practice": "Add a new subclass so an existing loop handles it; choose which parts of a program must change.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Built-ins are polymorphic too",
+          "worked_example": "print(len(\"abc\"), len([1, 2]), len({\"a\": 1}))   # 3 2 1\nlen() and + work on many types because each type supplies its own behaviour.",
+          "practice": "Predict results of len, + and * applied to different built-in types, including the ones that raise TypeError.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "inheritance.override_methods",
+          "weight": 0.6
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "polymorphism.parent_calls_overridden_method",
+      "title": "When a parent method calls self.method()",
+      "concept": "polymorphism",
+      "summary": "Predict that self.method() inside a parent method runs the subclass's override, write subclasses that fill in such hooks, and catch the misspelled-override bug.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "polymorphism.same_call_different_classes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "self.body() runs the object's version, even from the parent",
+          "worked_example": "class Report:\n    def render(self):\n        return self.header() + \" | \" + self.body()\n    def header(self): return \"REPORT\"\n    def body(self): return \"(empty)\"\n\nclass Sales(Report):\n    def body(self): return \"sales: 42\"\n\nprint(Sales().render())   # REPORT | sales: 42",
+          "practice": "Predict the output when inherited methods call methods some subclasses override.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        },
+        {
+          "title": "Trace the calls up and down the hierarchy",
+          "worked_example": "Sales().render()\n  render  -> found in Report\n  header  -> not in Sales, found in Report\n  body    -> found in Sales\nEach self.x() lookup starts again from the object's own class.",
+          "practice": "Fill in a trace table of which class supplies each call during a method.",
+          "formats": [
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "inheritance.override_methods"
+          ]
+        },
+        {
+          "title": "Write the hook, reuse the algorithm",
+          "worked_example": "class Inventory(Report):\n    def header(self): return \"STOCK\"\n    def body(self): return \"3 items\"\n\nprint(Inventory().render())   # STOCK | 3 items\nThe parent fixes the steps; subclasses fill in the parts that differ.",
+          "practice": "Write subclasses that override only the hook methods needed for a given output.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "polymorphism.same_call_different_classes"
+          ]
+        },
+        {
+          "title": "A misspelled override fails silently",
+          "worked_example": "class Sales(Report):\n    def bdy(self): return \"sales: 42\"   # typo\n\nprint(Sales().render())   # REPORT | (empty)\nNo error: bdy is just a new method, and the parent's body still runs.",
+          "practice": "Find why a subclass's behaviour never appears and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "polymorphism.same_call_different_classes",
+          "weight": 0.5
+        },
+        {
+          "topic": "inheritance.override_methods",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "polymorphism.duck_typing",
+      "title": "Duck typing: same method names, no shared parent",
+      "concept": "polymorphism",
+      "summary": "Use objects of unrelated classes interchangeably because they have the same methods, recognise the AttributeError when one does not, and keep the method's contract consistent.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "polymorphism.same_call_different_classes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "No common parent needed",
+          "worked_example": "class Duck:\n    def speak(self): return \"Quack\"\nclass Robot:\n    def speak(self): return \"Beep\"\n\nfor thing in [Duck(), Robot()]:\n    print(thing.speak())   # Quack then Beep\nPython only checks that the method exists when it is called.",
+          "practice": "Predict output for loops over objects of unrelated classes; choose which classes a function can accept.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "polymorphism.same_call_different_classes"
+          ]
+        },
+        {
+          "title": "A missing method fails only when called",
+          "worked_example": "class Rock:\n    pass\n\nRock().speak()\n# AttributeError: 'Rock' object has no attribute 'speak'",
+          "practice": "Predict which item in a mixed list raises AttributeError and how far the loop gets first.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Same name, same contract",
+          "worked_example": "class Talker:\n    def speak(self): print(\"hello\")   # prints, returns None\n\nfor t in [Duck(), Talker()]:\n    print(\"says:\", t.speak())\n# says: Quack / hello / says: None\nInterchangeable objects must agree on arguments and return values, not just the name.",
+          "practice": "Find the class that breaks the shared contract (wrong return or parameters) and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "polymorphism.same_call_different_classes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "polymorphism.same_call_different_classes",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "composition.objects_as_attributes",
+      "title": "Composition: objects that hold other objects",
+      "concept": "composition",
+      "summary": "Store objects (and lists of objects) as attributes, reach through them with chained dots, and write methods that delegate to the parts.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "list_methods.append_build",
+        "classes.methods_change_state"
+      ],
+      "knowledge_points": [
+        {
+          "title": "An attribute can be another object",
+          "worked_example": "class Engine:\n    def start(self): return \"vroom\"\n\nclass Car:\n    def __init__(self):\n        self.engine = Engine()\n\ncar = Car()\nprint(car.engine.start())   # vroom\nRead car.engine.start() left to right: the car's engine, then its start method.",
+          "practice": "Predict the result of chained attribute and method access across two classes.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "classes.methods_change_state"
+          ]
+        },
+        {
+          "title": "A list of objects as an attribute",
+          "worked_example": "class Item:\n    def __init__(self, name, weight):\n        self.name = name\n        self.weight = weight\n\nclass Suitcase:\n    def __init__(self):\n        self.items = []\n    def add(self, item):\n        self.items.append(item)\n\ns = Suitcase()\ns.add(Item(\"book\", 2))\nprint(s.items[0].name)   # book",
+          "practice": "Write an add method that stores objects in a list attribute; predict expressions like s.items[1].weight.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Delegate: compute from the parts",
+          "worked_example": "    def total_weight(self):\n        total = 0\n        for item in self.items:\n            total += item.weight\n        return total\n\ns.add(Item(\"shoes\", 1))\nprint(s.total_weight())   # 3",
+          "practice": "Write methods that loop over contained objects (total, heaviest, names).",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Wrapping a part's method",
+          "worked_example": "class Car:\n    def __init__(self):\n        self.engine = Engine()\n    def start(self):\n        return self.engine.start()\n\nprint(Car().start())   # vroom\nCallers ask the car; only the car needs to know it has an engine.",
+          "practice": "Add delegating methods so callers no longer reach through two dots; fix a call that skips a level.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "classes.methods_change_state"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "composition.shared_parts_and_aliasing",
+      "title": "Shared parts: aliasing inside objects",
+      "concept": "composition",
+      "summary": "Predict what happens when two objects hold the same part, decide whether to create a part inside __init__ or accept it, and copy list arguments to avoid accidental sharing.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "composition.objects_as_attributes",
+        "copying.copy_a_list",
+        "objects_methods.object_references"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two containers, one object",
+          "worked_example": "book = Item(\"book\", 2)\na, b = Suitcase(), Suitcase()\na.add(book)\nb.add(book)\nbook.weight = 5\nprint(a.total_weight(), b.total_weight())   # 5 5\nBoth suitcases refer to the same Item object.",
+          "practice": "Predict values after changing an object that several containers hold.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "objects_methods.object_references"
+          ]
+        },
+        {
+          "title": "Create the part inside, or receive it?",
+          "worked_example": "class Car:\n    def __init__(self):\n        self.engine = Engine()      # each car gets its own\n\nclass Car2:\n    def __init__(self, engine):\n        self.engine = engine        # the caller decides; it may be shared\nReceiving parts lets you pass in a different (or test) part.",
+          "practice": "Choose which design fits a description; predict whether two objects share a part.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "composition.objects_as_attributes"
+          ]
+        },
+        {
+          "title": "Copy a list you are given",
+          "worked_example": "class Team:\n    def __init__(self, players):\n        self.players = players\n\nnames = [\"ana\", \"bo\"]\nt = Team(names)\nnames.append(\"cy\")\nprint(t.players)   # ['ana', 'bo', 'cy']\n# fix: self.players = list(players)",
+          "practice": "Find the aliasing bug in constructors that store a caller's list, and fix it with a copy.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "copying.copy_a_list"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "copying.copy_a_list",
+          "weight": 0.3
+        },
+        {
+          "topic": "composition.objects_as_attributes",
+          "weight": 0.4
+        },
+        {
+          "topic": "objects_methods.object_references",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "composition.has_a_vs_is_a",
+      "title": "Composition or inheritance? has-a versus is-a",
+      "concept": "composition",
+      "summary": "Decide between inheritance (is-a) and composition (has-a), recognise inheritance used only to borrow code, and refactor it into composition with delegating methods.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "composition.objects_as_attributes",
+        "inheritance.define_subclass"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Say the sentence: 'is a' or 'has a'",
+          "worked_example": "A Dog is an Animal       -> class Dog(Animal)\nA Car has an Engine      -> self.engine = Engine()\nA Library has Books      -> self.books = []",
+          "practice": "Classify described relationships as inheritance or composition.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass",
+            "composition.objects_as_attributes"
+          ]
+        },
+        {
+          "title": "Inheriting to borrow code drags in methods you do not want",
+          "worked_example": "class Stack(list):\n    def push(self, x):\n        self.append(x)\n\nst = Stack()\nst.push(1); st.push(2)\nst.insert(0, 99)     # allowed, but breaks 'last in, first out'\nprint(st)   # [99, 1, 2]",
+          "practice": "Predict what inherited methods allow; explain why the class is not really an is-a.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "inheritance.define_subclass"
+          ]
+        },
+        {
+          "title": "Refactor to composition and delegate",
+          "worked_example": "class Stack:\n    def __init__(self):\n        self._items = []\n    def push(self, x):\n        self._items.append(x)\n    def pop(self):\n        return self._items.pop()\n\nStack().insert(0, 99)\n# AttributeError: 'Stack' object has no attribute 'insert'\nOnly the methods you write are offered.",
+          "practice": "Rewrite a class that inherits from list or dict to hold one instead, exposing only the needed methods.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "composition.objects_as_attributes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "composition.objects_as_attributes",
+          "weight": 0.5
+        },
+        {
+          "topic": "inheritance.define_subclass",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "abstract_classes.abc_and_abstractmethod",
+      "title": "Abstract base classes: ABC and @abstractmethod",
+      "concept": "abstract_classes",
+      "summary": "Mark methods that every subclass must provide, first with NotImplementedError and then with ABC and @abstractmethod, and read the TypeError that stops an incomplete class being created.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "polymorphism.parent_calls_overridden_method",
+        "raising_exceptions.raise_builtin"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A placeholder that raises NotImplementedError",
+          "worked_example": "class Shape:\n    def area(self):\n        raise NotImplementedError(\"subclasses must define area\")\n\nclass Blob(Shape):\n    pass\n\nb = Blob()      # created without complaint\nb.area()        # NotImplementedError: subclasses must define area\nThe mistake shows up only when the method is called.",
+          "practice": "Predict where the error appears; write a placeholder method for a base class.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "ABC and @abstractmethod: the base class cannot be created",
+          "worked_example": "from abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self): ...\n\nShape()\n# TypeError: Can't instantiate abstract class Shape without an implementation for abstract method 'area'",
+          "practice": "Fill in the import, base class and decorator for an abstract class; predict which lines raise.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "A subclass that forgets a method fails at creation",
+          "worked_example": "class Blob(Shape):\n    pass\n\nBlob()\n# TypeError: Can't instantiate abstract class Blob without an implementation for abstract method 'area'\nThe error now comes early, when the object is made.",
+          "practice": "Fix subclasses so they can be created; decide which subclasses in a hierarchy are still abstract.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Concrete methods in an abstract class",
+          "worked_example": "class Shape(ABC):\n    @abstractmethod\n    def area(self): ...\n    def describe(self):\n        return f\"area {self.area()}\"\n\nclass Sq(Shape):\n    def __init__(self, s): self.s = s\n    def area(self): return self.s ** 2\n\nprint(Sq(3).describe())   # area 9",
+          "practice": "Write a subclass that supplies the abstract methods so inherited concrete methods work; predict outputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "polymorphism.parent_calls_overridden_method"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "polymorphism.parent_calls_overridden_method",
+          "weight": 0.4
+        },
+        {
+          "topic": "raising_exceptions.raise_builtin",
+          "weight": 0.1
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "interfaces.program_to_an_interface",
+      "title": "Interfaces: depending on methods, not classes",
+      "concept": "interfaces",
+      "summary": "Describe what a function needs from an object as a set of methods, write classes that satisfy that interface, swap implementations (including a fake for tests), and state it explicitly as an abstract class.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "polymorphism.duck_typing",
+        "abstract_classes.abc_and_abstractmethod"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An interface is the set of methods the code calls",
+          "worked_example": "def notify(sender, text):\n    sender.send(text)\n    return sender.sent_count()\n# notify needs any object with send(text) and sent_count() -> int",
+          "practice": "List the methods (with arguments and return types) a given function requires from its parameter.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "polymorphism.duck_typing"
+          ]
+        },
+        {
+          "title": "Swap implementations behind one interface",
+          "worked_example": "class EmailSender:\n    def __init__(self): self.count = 0\n    def send(self, text):\n        print(\"email:\", text); self.count += 1\n    def sent_count(self): return self.count\n\nprint(notify(EmailSender(), \"hi\"))   # email: hi / 1\nAn SmsSender with the same two methods works with no change to notify.",
+          "practice": "Write a second class that satisfies an interface; choose which classes can be passed to a function.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "polymorphism.duck_typing"
+          ]
+        },
+        {
+          "title": "A fake implementation for testing",
+          "worked_example": "class FakeSender:\n    def __init__(self): self.messages = []\n    def send(self, text): self.messages.append(text)\n    def sent_count(self): return len(self.messages)\n\nfake = FakeSender()\nassert notify(fake, \"hi\") == 1 and fake.messages == [\"hi\"]\nNothing is really sent, yet notify is fully checked.",
+          "practice": "Write a fake class that records calls, and an assert that checks the function under test.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Make the interface explicit with an abstract class",
+          "worked_example": "from abc import ABC, abstractmethod\n\nclass Sender(ABC):\n    @abstractmethod\n    def send(self, text): ...\n    @abstractmethod\n    def sent_count(self): ...\n\nclass EmailSender(Sender): ...   # now must define both",
+          "practice": "Turn an informal interface into an abstract base class; find the implementation that is missing a method.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "abstract_classes.abc_and_abstractmethod"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "polymorphism.duck_typing",
+          "weight": 0.5
+        },
+        {
+          "topic": "abstract_classes.abc_and_abstractmethod",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "interfaces.typing_protocol",
+      "title": "Structural interfaces with typing.Protocol",
+      "concept": "interfaces",
+      "summary": "Declare an interface as a typing.Protocol, let mypy check that arguments match it without inheritance, and know what Python checks (or not) at run time.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "interfaces.program_to_an_interface",
+        "tool_mypy.check_hints_with_mypy"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Declare the interface as a Protocol",
+          "worked_example": "from typing import Protocol\n\nclass Speaker(Protocol):\n    def speak(self) -> str: ...\n\ndef greet(s: Speaker) -> None:\n    print(s.speak())\nThe body ... means 'no code here: just the shape of the method'.",
+          "practice": "Write a Protocol for the methods a function uses; fill in its type hints.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "interfaces.program_to_an_interface"
+          ]
+        },
+        {
+          "title": "Matching without inheriting, checked by mypy",
+          "worked_example": "class Dog:\n    def speak(self) -> str:\n        return \"Woof\"\nclass Rock:\n    pass\n\ngreet(Dog())    # fine: Dog has speak\ngreet(Rock())\n# mypy: error: Argument 1 to \"greet\" has incompatible type \"Rock\"; expected \"Speaker\"",
+          "practice": "Predict which calls mypy accepts; fix the class mypy rejects.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "tool_mypy.check_hints_with_mypy"
+          ]
+        },
+        {
+          "title": "At run time a Protocol is only a hint",
+          "worked_example": "greet(Rock())\n# runs until s.speak(): AttributeError: 'Rock' object has no attribute 'speak'\nPython itself does not enforce the hint; mypy finds the problem before running.",
+          "practice": "Decide which mistakes are caught by mypy, which by Python at run time, and when.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "polymorphism.duck_typing"
+          ]
+        },
+        {
+          "title": "Protocol or ABC?",
+          "worked_example": "ABC: classes must inherit from it; Python refuses to create incomplete subclasses.\nProtocol: any class with the right methods fits, including ones you cannot edit; checked by mypy.",
+          "practice": "Choose Protocol or ABC for described situations (third-party classes, shared code in the base, enforcement at creation).",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "interfaces.program_to_an_interface"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "interfaces.program_to_an_interface",
+          "weight": 0.5
+        },
+        {
+          "topic": "tool_mypy.check_hints_with_mypy",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "sum_types.variants_as_classes",
+      "title": "Sum types: a value that is one of several variants",
+      "concept": "sum_types",
+      "summary": "Model data that is exactly one of a few variants, each with its own fields, as small classes joined by a | type hint, handle each variant, and use an Ok | Err result instead of None.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "type_hints.optional_and_union",
+        "enums.define_and_use",
+        "objects_methods.isinstance_checks"
+      ],
+      "knowledge_points": [
+        {
+          "title": "One class per variant, a union for the whole",
+          "worked_example": "class Circle:\n    def __init__(self, radius):\n        self.radius = radius\nclass Rect:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n\nShape = Circle | Rect\nA Shape is either a Circle (with a radius) or a Rect (with w and h), never both.",
+          "practice": "Choose the variants and fields for described data; write the classes and the union alias.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "type_hints.optional_and_union"
+          ]
+        },
+        {
+          "title": "Handle every variant",
+          "worked_example": "def area(s: Shape) -> float:\n    if isinstance(s, Circle):\n        return 3 * s.radius ** 2\n    return s.w * s.h\n\nprint(area(Circle(2)), area(Rect(2, 5)))   # 12 10",
+          "practice": "Write a function with one branch per variant; predict results for each variant.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains",
+            "objects_methods.isinstance_checks"
+          ]
+        },
+        {
+          "title": "Enum or sum type?",
+          "worked_example": "Enum: a fixed set of choices with no extra data (Colour.RED, Colour.GREEN).\nSum type: a fixed set of choices where each carries its own data (Circle(radius), Rect(w, h)).",
+          "practice": "Classify described data as an enum, a sum type or neither.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "enums.define_and_use"
+          ]
+        },
+        {
+          "title": "Ok | Err: results that explain failure",
+          "worked_example": "class Ok:\n    def __init__(self, value): self.value = value\nclass Err:\n    def __init__(self, message): self.message = message\n\ndef parse_age(text: str) -> Ok | Err:\n    if not text.isdigit():\n        return Err(f\"not a number: {text}\")\n    return Ok(int(text))\nUnlike returning None, an Err says what went wrong.",
+          "practice": "Rewrite a function that returns None on failure to return Ok or Err; predict the result for sample inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_hints.optional_and_union"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "type_hints.optional_and_union",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "sum_types.match_class_patterns",
+      "title": "Handling variants with match and class patterns",
+      "concept": "sum_types",
+      "summary": "Use case ClassName(attr=name) patterns to pick a variant and unpack its fields, reject unknown values with case _, and let mypy's assert_never report a forgotten variant.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "sum_types.variants_as_classes",
+        "match_statement.capture_and_guards",
+        "tool_mypy.check_hints_with_mypy"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "case Circle(radius=r) matches the class and binds a field",
+          "worked_example": "def area(s: Shape) -> float:\n    match s:\n        case Circle(radius=r):\n            return 3 * r ** 2\n        case Rect(w=w, h=h):\n            return w * h\n\nprint(area(Circle(1)), area(Rect(3, 4)))   # 3 12",
+          "practice": "Predict which case runs and what each name is bound to; convert an isinstance chain to match.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "match_statement.capture_and_guards",
+            "sum_types.variants_as_classes"
+          ]
+        },
+        {
+          "title": "Guards and empty class patterns",
+          "worked_example": "match Rect(2, 2):\n    case Rect(w=w, h=h) if w == h:\n        print(\"square\", w)\n    case Rect():\n        print(\"rectangle\")\n# square 2\nRect() matches any Rect without binding fields.",
+          "practice": "Write guarded cases for special forms of a variant; predict which case wins.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "match_statement.capture_and_guards"
+          ]
+        },
+        {
+          "title": "Reject anything else with case _",
+          "worked_example": "        case _:\n            raise TypeError(f\"not a shape: {s}\")\n\narea(\"square\")   # TypeError: not a shape: square\nWithout it, an unknown value falls through and the function returns None.",
+          "practice": "Find the bug where an unmatched value silently returns None; add the fallback case.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "sum_types.variants_as_classes"
+          ]
+        },
+        {
+          "title": "assert_never: mypy finds the forgotten variant",
+          "worked_example": "from typing import assert_never\nShape = Circle | Rect | Tri   # Tri was just added\n    ...\n        case _:\n            assert_never(s)\n# mypy: error: Argument 1 to \"assert_never\" has incompatible type \"Tri\"; expected \"Never\"",
+          "practice": "Read mypy errors to find which variant a match is missing, and add its case.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "tool_mypy.check_hints_with_mypy"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sum_types.variants_as_classes",
+          "weight": 0.6
+        },
+        {
+          "topic": "match_statement.capture_and_guards",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "object_oriented_design.find_classes_in_a_problem",
+      "title": "Finding the classes in a problem",
+      "concept": "object_oriented_design",
+      "summary": "Read a short problem description and pick out the classes, their attributes and their methods, then write the class skeletons.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "decomposition.top_down_design",
+        "classes.define_methods"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Nouns become classes or attributes, verbs become methods",
+          "worked_example": "\"A library lends books to members. Each book has a title and can be checked out.\"\nclasses: Library, Book, Member\nattributes: Book.title, Book.checked_out\nmethods: Book.check_out(), Library.lend(book, member)",
+          "practice": "Sort the words of a problem description into classes, attributes and methods.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "decomposition.top_down_design"
+          ]
+        },
+        {
+          "title": "Attribute or its own class?",
+          "worked_example": "A plain value (a title, a price) -> an attribute.\nSomething with several parts and its own behaviour (an address with street, city, postcode and a format() method) -> its own class, held as an attribute.",
+          "practice": "Decide for described data whether it should be an attribute or a separate class.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Write the skeleton before the details",
+          "worked_example": "class Book:\n    def __init__(self, title):\n        self.title = title\n        self.checked_out = False\n    def check_out(self):\n        pass   # fill in later\nA skeleton fixes names and responsibilities; bodies come next.",
+          "practice": "Write class skeletons (attributes and method names with pass) for a short specification.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "decomposition.top_down_design",
+            "classes.define_methods"
+          ]
+        }
+      ],
+      "encompasses": [],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "object_oriented_design.refactor_procedural_to_class",
+      "title": "From dictionaries and functions to a class",
+      "concept": "object_oriented_design",
+      "summary": "Recognise procedural code that passes the same dict or globals between functions, and refactor it into a class with attributes and methods without changing behaviour.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "object_oriented_design.find_classes_in_a_problem",
+        "scope.global_variables",
+        "unit_testing.test_function_with_asserts",
+        "classes.records_as_classes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The signal: data passed to every function",
+          "worked_example": "account = {\"owner\": \"Ana\", \"balance\": 0}\n\ndef deposit(acct, amount):\n    acct[\"balance\"] += amount\n\ndeposit(account, 50)\nprint(account[\"balance\"])   # 50\nThe same dict travels into every function: a class is waiting to be made.",
+          "practice": "Choose which programs would benefit from a class and say what its attributes would be.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "classes.records_as_classes",
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "Refactor every function that takes the dict at once",
+          "worked_example": "class Account:\n    def __init__(self, owner):\n        self.owner = owner\n        self.balance = 0\n    def deposit(self, amount):\n        self.balance += amount\n\nacct = Account(\"Ana\")\nacct.deposit(50)\nprint(acct.balance)   # 50\nThe move from records_as_classes, applied to a whole program: each dict key becomes an attribute and every function taking the dict becomes a method.",
+          "practice": "Reorder (Parsons) or write the class version of a dict-and-functions program.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "classes.records_as_classes",
+            "object_oriented_design.find_classes_in_a_problem"
+          ]
+        },
+        {
+          "title": "Globals become attributes",
+          "worked_example": "score = 0\ndef add_point():\n    global score\n    score += 1\n# becomes\nclass Game:\n    def __init__(self): self.score = 0\n    def add_point(self): self.score += 1\nTwo games can now keep separate scores.",
+          "practice": "Refactor functions that use global to methods on an object; predict state for two separate objects.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "scope.global_variables"
+          ]
+        },
+        {
+          "title": "Check the behaviour did not change",
+          "worked_example": "acct = Account(\"Ana\")\nacct.deposit(50)\nacct.deposit(20)\nassert acct.balance == 70\nRun the same checks before and after the refactor.",
+          "practice": "Write asserts that pass for both the procedural and the class version; find the refactor that broke one.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.2
+        },
+        {
+          "topic": "classes.records_as_classes",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "object_oriented_design.collaborating_objects",
+      "title": "Designing collaborating objects",
+      "concept": "object_oriented_design",
+      "summary": "Split a small program into classes that each own their data, put behaviour in the class that owns the data ('tell, don't ask'), and keep input/output separate from the logic objects.",
+      "minutes": 19,
+      "core": true,
+      "prerequisites": [
+        "object_oriented_design.find_classes_in_a_problem",
+        "composition.objects_as_attributes",
+        "decomposition.one_job_per_function"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Put the method where the data lives",
+          "worked_example": "class LunchCard:\n    def __init__(self, balance):\n        self.balance = balance\n    def pay(self, price):\n        if self.balance < price:\n            return False\n        self.balance -= price\n        return True\n\ncard = LunchCard(5)\nprint(card.pay(3), card.pay(3), card.balance)   # True False 2",
+          "practice": "Choose which class a described method belongs in; predict state after a sequence of calls.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "object_oriented_design.find_classes_in_a_problem"
+          ]
+        },
+        {
+          "title": "Tell, don't ask",
+          "worked_example": "# asking, then changing another object's data:\nif card.balance >= price:\n    card.balance -= price\n# telling the object what to do:\ncard.pay(price)\nThe rule about balances stays in one place, inside LunchCard.",
+          "practice": "Rewrite code that reaches into another object's attributes as a method call on that object.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "composition.objects_as_attributes"
+          ]
+        },
+        {
+          "title": "Logic objects do not print or ask",
+          "worked_example": "class QuizBrain:\n    def __init__(self, questions):\n        self.questions = questions\n        self.score = 0\n    def check(self, question, reply):\n        if reply == question.answer:\n            self.score += 1\n        return reply == question.answer\n# input() and print() stay in the main loop that uses QuizBrain",
+          "practice": "Move input/print calls out of a class into the calling loop; decide which class a line belongs to.",
+          "formats": [
+            "parsons",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "Wire the objects together",
+          "worked_example": "quiz = QuizBrain([Question(\"2 + 2 = 4?\", \"True\")])\nfor q in quiz.questions:\n    print(q.text, quiz.check(q, \"True\"))\nprint(\"score:\", quiz.score)\n# 2 + 2 = 4? True\n# score: 1",
+          "practice": "Assemble (Parsons) a small program from given classes; predict its output for scripted answers.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "composition.objects_as_attributes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "composition.objects_as_attributes",
+          "weight": 0.5
+        },
+        {
+          "topic": "decomposition.one_job_per_function",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "helsinki_mooc",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "clean_code.spot_code_smells",
+      "title": "Spotting code smells",
+      "concept": "clean_code",
+      "summary": "Recognise common signs of hard-to-maintain code (vague names, magic numbers, deep nesting, flag parameters, comments that repeat the code) and apply the matching fix.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "decomposition.one_job_per_function",
+        "constants.named_constants",
+        "nested_conditionals.flatten_nesting"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Vague names and magic numbers",
+          "worked_example": "def calc(x):\n    return x * 1.2\n# becomes\nVAT_RATE = 0.2\ndef price_with_vat(net):\n    return net * (1 + VAT_RATE)",
+          "practice": "Pick out the smells in short functions; choose better names and constants.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "constants.named_constants"
+          ]
+        },
+        {
+          "title": "Deep nesting -> early exits",
+          "worked_example": "def ship(order_id, paid):\n    if order_id is None:\n        return \"no order\"\n    if not paid:\n        return \"unpaid\"\n    return \"shipped\"\nGuard clauses handle the special cases first, so the main path is not buried in ifs.",
+          "practice": "Flatten nested if-pyramids into guard clauses without changing results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "nested_conditionals.flatten_nesting"
+          ]
+        },
+        {
+          "title": "Boolean flag parameters",
+          "worked_example": "report(data, True)    # True what?\n# split into two clearly named functions:\nprint_summary(data)\nprint_details(data)",
+          "practice": "Identify calls whose meaning is unclear and split the function or use keyword arguments.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "Comments should say why, not what",
+          "worked_example": "i += 1   # add one to i            (repeats the code)\ni += 1   # skip the header row       (explains why)",
+          "practice": "Classify comments as useful or noise; rewrite noise comments or replace them with a better name.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "nested_conditionals.flatten_nesting",
+          "weight": 0.3
+        },
+        {
+          "topic": "constants.named_constants",
+          "weight": 0.3
+        },
+        {
+          "topic": "decomposition.one_job_per_function",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    },
+    {
+      "id": "clean_code.refactor_safely",
+      "title": "Refactoring safely",
+      "concept": "clean_code",
+      "summary": "Improve code structure in small steps while tests show that behaviour is unchanged, remove duplication with a parameter, and know when an abstraction is not worth adding.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "clean_code.spot_code_smells",
+        "unit_testing.choose_test_cases"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Refactoring changes structure, not behaviour",
+          "worked_example": "Renaming a variable, extracting a function, replacing magic numbers: refactorings.\nFixing a bug or adding a feature: not refactorings, even if done at the same time.",
+          "practice": "Classify described edits as refactorings or behaviour changes.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "clean_code.spot_code_smells"
+          ]
+        },
+        {
+          "title": "Tests first, then small steps",
+          "worked_example": "1. Write asserts that pass now.\n2. Make one small change.\n3. Run the asserts.\n4. Repeat; if one fails, undo the last step.",
+          "practice": "Order the steps of a safe refactor (Parsons); find the step in a story where the bug crept in.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unit_testing.choose_test_cases"
+          ]
+        },
+        {
+          "title": "Merge near-duplicates with a parameter",
+          "worked_example": "def tax_food(p): return p * 1.05\ndef tax_books(p): return p * 1.05\ndef tax_tools(p): return p * 1.2\n# becomes\ndef with_tax(price, rate):\n    return price * (1 + rate)",
+          "practice": "Replace duplicated functions with one parameterised function and update the calls; tests must still pass.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "decomposition.extract_repeated_code"
+          ]
+        },
+        {
+          "title": "Do not abstract too early",
+          "worked_example": "A helper used once, a class with one method and no data, or a parameter nobody varies adds reading cost without benefit. Wait until the duplication is real.",
+          "practice": "Choose which proposed abstractions are worth making for given code.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "clean_code.spot_code_smells"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "clean_code.spot_code_smells",
+          "weight": 0.4
+        },
+        {
+          "topic": "unit_testing.choose_test_cases",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "bootdev"
+      ]
+    }
+  ]
+}

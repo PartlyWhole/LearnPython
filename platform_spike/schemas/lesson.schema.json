@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lesson.schema.json",
+  "title": "Gem Rover lesson (format 1)",
+  "description": "One concept taught in one beat: a demo the learner steps through (watch), a guided first try on a real level, practice and twist levels, a recap and hints. See docs/lessons.md section 2. tools/check_lesson.py checks what a schema can't (the demo runs, predictions match, budgets).",
+  "type": "object",
+  "required": [
+    "format",
+    "id",
+    "title",
+    "concept",
+    "topics",
+    "watch",
+    "guided",
+    "practice",
+    "recap"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concept": {
+      "type": "string",
+      "minLength": 1
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "watch": {
+      "type": "object",
+      "required": [
+        "world",
+        "steps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "world": {
+          "type": "object",
+          "description": "A world, as in level.schema.json; the engine validates it."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/watchStep"
+          }
+        }
+      }
+    },
+    "guided": {
+      "type": "object",
+      "required": [
+        "level",
+        "steps",
+        "done"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/guidedStep"
+          }
+        },
+        "done": {
+          "type": "string"
+        }
+      }
+    },
+    "practice": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "May be empty while the curriculum's new levels are still being authored."
+    },
+    "twist": {
+      "type": "string",
+      "description": "Optional for the same reason."
+    },
+    "recap": {
+      "type": "object",
+      "required": [
+        "say"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "say": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "hints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "maxItems": 3,
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "watchStep": {
+      "type": "object",
+      "required": [
+        "say"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "say": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "description": "The whole editor content after this step."
+        },
+        "world": {
+          "type": "object",
+          "description": "Switch the demo to this world from this step on."
+        },
+        "focus": {
+          "type": "string",
+          "pattern": "^(world|editor|editor:[0-9]+|cell:[0-9]+,[0-9]+|button:[a-z_]+|run|goal)$"
+        },
+        "predict": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "cell",
+                "answer"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "cell": {
+                  "const": true
+                },
+                "answer": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "choices",
+                "answer"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "choices": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "answer": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "run": {
+          "const": true
+        },
+        "code_from": {
+          "type": "string",
+          "description": "A level id: show the learner's own solved code for that level instead of `code` (which stays the fallback). The demo world in effect must be that level's world (tools/check_lesson.py checks)."
+        }
+      }
+    },
+    "guidedStep": {
+      "type": "object",
+      "required": [
+        "say",
+        "done_when"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "say": {
+          "type": "string",
+          "minLength": 1
+        },
+        "done_when": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/check"
+          }
+        },
+        "example": {
+          "type": "string"
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "has": {
+          "enum": [
+            "for",
+            "while",
+            "if",
+            "else",
+            "def"
+          ]
+        },
+        "range": {
+          "type": "integer"
+        },
+        "defines": {
+          "type": "string"
+        },
+        "body_calls": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "calls": {
+          "type": "string"
+        },
+        "inside": {
+          "type": "string"
+        },
+        "outside": {
+          "type": "string"
+        },
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        },
+        "run": {
+          "enum": [
+            "any",
+            "no_error",
+            "passed"
+          ]
+        },
+        "robot_at": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "docstring": {
+          "type": "string"
+        },
+        "not": {
+          "$ref": "#/$defs/check"
+        }
+      }
+    }
+  }
+}

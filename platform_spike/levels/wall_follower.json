@@ -1,0 +1,436 @@
+{
+  "format": 1,
+  "id": "wall_follower",
+  "title": "Hug the wall",
+  "brief": "A trail of gems runs along the top of a bumpy wall, down every dip and over every bump. Keep the wall on your right and collect the whole trail. Every wall has a different shape.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    # turn right, look, turn back, and return what you saw\n    pass\n\n\nwhile gems_here():\n    pick()\n    # take one step along the wall\n",
+  "world": {
+    "width": 11,
+    "height": 5,
+    "start": [
+      0,
+      3,
+      "E"
+    ],
+    "blocked": [
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        10,
+        4
+      ]
+    ],
+    "gems": {
+      "0,3": 1,
+      "1,3": 1,
+      "1,2": 1,
+      "1,1": 1,
+      "2,1": 1,
+      "3,1": 1,
+      "4,1": 1,
+      "4,2": 1,
+      "4,3": 1,
+      "5,3": 1,
+      "6,3": 1,
+      "6,4": 1,
+      "7,4": 1,
+      "7,3": 1,
+      "7,2": 1,
+      "8,2": 1,
+      "9,2": 1,
+      "9,3": 1
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 5,
+      "height": 2,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [],
+      "gems": {
+        "0,1": 1,
+        "1,1": 1,
+        "2,1": 1,
+        "3,1": 1
+      },
+      "name": "flat wall"
+    },
+    {
+      "width": 7,
+      "height": 4,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "gems": {
+        "0,1": 1,
+        "1,1": 1,
+        "2,1": 1,
+        "2,2": 1,
+        "2,3": 1,
+        "3,3": 1,
+        "4,3": 1,
+        "4,2": 1,
+        "4,1": 1,
+        "5,1": 1
+      },
+      "name": "deep dip"
+    },
+    {
+      "width": 4,
+      "height": 6,
+      "start": [
+        0,
+        5,
+        "E"
+      ],
+      "blocked": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "gems": {
+        "0,5": 1,
+        "0,4": 1,
+        "0,3": 1,
+        "0,2": 1,
+        "0,1": 1,
+        "1,1": 1,
+        "2,1": 1,
+        "2,2": 1,
+        "2,3": 1,
+        "2,4": 1,
+        "2,5": 1
+      },
+      "name": "tall thin bump"
+    },
+    {
+      "width": 5,
+      "height": 6,
+      "start": [
+        0,
+        4,
+        "E"
+      ],
+      "blocked": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "gems": {
+        "0,4": 1,
+        "0,3": 1,
+        "1,3": 1,
+        "1,2": 1,
+        "2,2": 1,
+        "2,1": 1,
+        "3,1": 1
+      },
+      "name": "steps up"
+    },
+    {
+      "width": 6,
+      "height": 5,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "gems": {
+        "0,1": 1,
+        "1,1": 1,
+        "2,1": 1,
+        "2,2": 1,
+        "3,2": 1,
+        "3,3": 1,
+        "4,3": 1,
+        "4,4": 1
+      },
+      "name": "steps down"
+    },
+    {
+      "width": 2,
+      "height": 3,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "gems": {
+        "0,1": 1
+      },
+      "name": "one gem"
+    },
+    {
+      "width": 5,
+      "height": 4,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "gems": {
+        "0,1": 1,
+        "1,1": 1,
+        "1,2": 1,
+        "2,2": 1,
+        "2,1": 1,
+        "3,1": 1
+      },
+      "name": "dip at the start"
+    }
+  ],
+  "goal": {
+    "all_gems_collected": true
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ],
+    "required": [
+      "return"
+    ]
+  },
+  "topics": [
+    "return_values.boolean_functions",
+    "logical_operators.and_or_not",
+    "while_loops.loop_until_condition"
+  ]
+}

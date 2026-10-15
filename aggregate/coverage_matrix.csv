@@ -1,0 +1,257 @@
+concept,label,category,course_count,100_days_of_code,bootdev,code_in_place,codecademy,cs50p,helsinki_mooc,mit_6100l,py4e
+arithmetic_operators,Arithmetic operators,fundamentals,8,practiced,practiced,practiced,practiced,practiced,practiced,introduced,practiced
+booleans,Booleans,fundamentals,8,introduced,practiced,practiced,practiced,practiced,practiced,introduced,practiced
+comparison_operators,Comparison operators,fundamentals,8,introduced,practiced,practiced,practiced,practiced,practiced,introduced,practiced
+conditionals,Conditionals,control_flow,8,practiced,deep,deep,deep,deep,deep,deep,deep
+data_types,Data types,fundamentals,8,practiced,practiced,practiced,introduced,introduced,practiced,practiced,practiced
+debugging,Debugging,errors_testing,8,practiced,practiced,introduced,introduced,introduced,practiced,practiced,practiced
+dictionaries,Dictionaries,collections,8,deep,deep,deep,deep,practiced,deep,deep,deep
+file_io,File io,files_io,8,practiced,practiced,introduced,deep,deep,deep,introduced,deep
+for_loops,For loops,control_flow,8,practiced,deep,deep,deep,deep,deep,deep,practiced
+functions,Functions,functions,8,deep,deep,deep,deep,deep,deep,deep,deep
+integers_floats,Integers floats,fundamentals,8,introduced,practiced,practiced,practiced,practiced,practiced,practiced,practiced
+lists,Lists,collections,8,practiced,deep,deep,deep,practiced,deep,deep,deep
+logical_operators,Logical operators,fundamentals,8,introduced,practiced,practiced,practiced,practiced,practiced,introduced,practiced
+loop_patterns,Loop patterns,control_flow,8,introduced,practiced,practiced,practiced,practiced,practiced,practiced,deep
+modules_imports,Modules imports,modules_libs,8,practiced,practiced,introduced,practiced,deep,practiced,introduced,introduced
+objects_methods,Objects methods,oop,8,practiced,deep,introduced,practiced,practiced,practiced,introduced,introduced
+parameters_arguments,Parameters arguments,functions,8,practiced,practiced,deep,deep,practiced,practiced,practiced,practiced
+print_output,Print output,fundamentals,8,introduced,practiced,deep,practiced,practiced,practiced,introduced,practiced
+return_values,Return values,functions,8,introduced,practiced,deep,practiced,practiced,practiced,practiced,practiced
+string_concatenation,String concatenation,strings,8,introduced,introduced,introduced,practiced,introduced,practiced,introduced,introduced
+strings,Strings,strings,8,practiced,practiced,introduced,deep,practiced,deep,practiced,deep
+variables,Variables,fundamentals,8,introduced,deep,deep,practiced,practiced,practiced,practiced,practiced
+while_loops,While loops,control_flow,8,deep,practiced,deep,practiced,deep,deep,deep,practiced
+builtin_functions,Builtin functions,functions,7,introduced,practiced,introduced,practiced,practiced,practiced,,practiced
+classes,Classes,oop,7,deep,deep,,deep,deep,deep,deep,introduced
+collections,Collections,collections,7,,practiced,introduced,deep,introduced,practiced,introduced,practiced
+comments,Comments,environment,7,introduced,introduced,practiced,introduced,introduced,introduced,,introduced
+constructors,Constructors,oop,7,introduced,practiced,,practiced,practiced,practiced,practiced,introduced
+decomposition,Decomposition,functions,7,deep,,deep,introduced,practiced,practiced,deep,introduced
+exceptions,Exceptions,errors_testing,7,practiced,practiced,,practiced,deep,practiced,deep,practiced
+ide_editor,IDE / editor (PyCharm),environment,7,introduced,practiced,introduced,,introduced,practiced,introduced,introduced
+inheritance,Inheritance,oop,7,practiced,deep,,practiced,practiced,practiced,deep,introduced
+instance_attributes,Instance attributes,oop,7,introduced,practiced,,practiced,practiced,practiced,practiced,introduced
+list_methods,List methods,collections,7,introduced,practiced,practiced,practiced,,practiced,introduced,practiced
+list_slicing,List slicing,collections,7,practiced,practiced,,practiced,introduced,practiced,introduced,practiced
+random_module,Random module,modules_libs,7,deep,,practiced,practiced,practiced,practiced,introduced,introduced
+range_function,Range function,control_flow,7,introduced,practiced,practiced,practiced,practiced,practiced,introduced,
+scope,Scope,functions,7,introduced,practiced,practiced,deep,introduced,practiced,practiced,
+sorting,Sorting,collections,7,introduced,practiced,,practiced,introduced,practiced,introduced,practiced
+string_formatting,String formatting,strings,7,introduced,practiced,,practiced,practiced,practiced,practiced,introduced
+string_methods,String methods,strings,7,practiced,practiced,,deep,practiced,practiced,practiced,deep
+third_party_packages,Third party packages,modules_libs,7,practiced,practiced,,introduced,practiced,introduced,introduced,introduced
+user_input,User input,fundamentals,7,introduced,,deep,introduced,practiced,practiced,practiced,practiced
+break_continue,break / continue,control_flow,6,,practiced,,practiced,practiced,practiced,introduced,practiced
+higher_order_functions,Higher order functions,functions,6,practiced,deep,,practiced,introduced,practiced,practiced,
+iteration,Iteration,control_flow,6,introduced,,,deep,practiced,introduced,introduced,deep
+json_data,JSON data,files_io,6,practiced,practiced,,practiced,introduced,practiced,,practiced
+list_comprehensions,List comprehensions,collections,6,practiced,,,practiced,introduced,deep,practiced,introduced
+mutability_aliasing,Mutability & aliasing,collections,6,,practiced,introduced,introduced,,practiced,deep,introduced
+nested_data_structures,Nested data structures,collections,6,practiced,,,practiced,introduced,practiced,practiced,practiced
+object_oriented_design,Object oriented design,data_web,6,deep,deep,,practiced,introduced,practiced,deep,
+raising_exceptions,Raising exceptions,errors_testing,6,introduced,practiced,,practiced,practiced,introduced,introduced,
+tuples,Tuples,collections,6,introduced,,,introduced,introduced,practiced,practiced,deep
+type_conversion,Type conversion,fundamentals,6,introduced,,practiced,,practiced,practiced,introduced,practiced
+abstraction,Abstraction,functions,5,,deep,introduced,introduced,introduced,,deep,
+algorithms,Algorithms,algorithms,5,,deep,practiced,,,practiced,introduced,introduced
+apis_http,APIs & HTTP requests,modules_libs,5,deep,deep,,,introduced,introduced,,deep
+args_kwargs,*args and **kwargs,functions,5,practiced,practiced,,deep,introduced,introduced,,
+class_attributes,Class attributes,oop,5,,introduced,,practiced,practiced,practiced,introduced,
+context_managers,Context managers,files_io,5,introduced,introduced,,deep,practiced,introduced,,
+dunder_methods,Dunder methods,oop,5,,practiced,,practiced,practiced,practiced,practiced,
+encapsulation,Encapsulation,oop,5,,deep,,practiced,practiced,practiced,introduced,
+expressions,Expressions,fundamentals,5,,,practiced,,introduced,introduced,introduced,practiced
+lambda_functions,Lambda functions,functions,5,,practiced,,practiced,introduced,practiced,practiced,
+running_scripts,Running scripts,environment,5,,practiced,introduced,,practiced,introduced,,practiced
+string_indexing_slicing,String indexing slicing,strings,5,introduced,,,practiced,,deep,introduced,practiced
+tool_pip,pip & packages,environment,5,introduced,practiced,,introduced,practiced,introduced,,
+unpacking,Unpacking,collections,5,,,,practiced,introduced,introduced,introduced,practiced
+command_line,Command line,environment,4,practiced,deep,,,introduced,,,introduced
+constants,Constants,fundamentals,4,introduced,introduced,practiced,,introduced,,,
+csv_files,CSV files,files_io,4,practiced,,,practiced,practiced,practiced,,
+datetime_module,Datetime module,modules_libs,4,practiced,,,introduced,introduced,practiced,,
+decorators,Decorators,functions,4,practiced,deep,,introduced,introduced,,,
+defensive_programming,Input validation,errors_testing,4,,,,,practiced,practiced,introduced,practiced
+dict_comprehensions,Dictionary comprehensions,collections,4,introduced,,,introduced,introduced,practiced,,
+docstrings,Docstrings,functions,4,introduced,,introduced,,introduced,,practiced,
+game_development,Game development,data_web,4,deep,deep,practiced,,,deep,,
+nested_conditionals,Nested conditionals,control_flow,4,introduced,,,,,practiced,introduced,practiced
+none_type,None,fundamentals,4,,introduced,,,,introduced,introduced,introduced
+polymorphism,Polymorphism,oop,4,,deep,,practiced,,introduced,introduced,
+python_setup,Python setup,environment,4,introduced,practiced,,,,,introduced,practiced
+recursion,Recursion,functions,4,introduced,deep,,,,deep,deep,
+regular_expressions,Regular expressions,strings,4,,practiced,,,deep,practiced,,deep
+standard_library,Standard library,modules_libs,4,,,,practiced,introduced,practiced,,introduced
+type_hints,Type hints,functions,4,introduced,practiced,,,introduced,introduced,,
+unit_testing,Unit testing,errors_testing,4,,practiced,,deep,deep,,practiced,
+assertions,Assertions,errors_testing,3,,,,practiced,practiced,,practiced,
+computational_thinking,Computational thinking,data_web,3,,,practiced,,,,introduced,introduced
+data_analysis,Data analysis,data_web,3,deep,introduced,,,,,,practiced
+data_visualization,Data visualization,data_web,3,deep,,,,,,practiced,practiced
+databases_sql,Databases sql,data_web,3,practiced,deep,,,,,,deep
+file_paths,File paths,files_io,3,introduced,practiced,,,introduced,,,
+floating_point_precision,Floating point precision,algorithms,3,,introduced,,introduced,,,deep,
+functional_programming,Functional programming,data_web,3,,deep,,introduced,,practiced,,
+generators,Generators,functions,3,,,,deep,introduced,practiced,,
+graphics_canvas,Graphics canvas,data_web,3,introduced,,deep,,,practiced,,
+html_css_basics,HTML & CSS basics,data_web,3,deep,practiced,,,,,,introduced
+lib_pillow,Pillow (PIL),modules_libs,3,practiced,,,,practiced,,practiced,
+match_statement,match statement,control_flow,3,,introduced,,introduced,introduced,,,
+math_module,math module,modules_libs,3,,,introduced,,,introduced,,introduced
+nested_loops,Nested loops,control_flow,3,,,,practiced,practiced,practiced,,
+os_sys_module,os / sys,modules_libs,3,,introduced,,,practiced,introduced,,
+repl,Interactive interpreter,environment,3,,,,,,introduced,introduced,introduced
+sets,Sets,collections,3,,practiced,,practiced,introduced,,,
+string_immutability,String immutability,strings,3,,,,introduced,,introduced,,introduced
+tool_git,Git & GitHub,environment,3,practiced,deep,,,,introduced,,
+trees,Trees,algorithms,3,,deep,,,,practiced,practiced,
+unicode_encoding,Unicode encoding,strings,3,introduced,,,,,introduced,,introduced
+authentication,"Web authentication (hashing, salting, login sessions)",data_web,2,practiced,deep,,,,,,
+automation,Automation,data_web,2,deep,introduced,,,,,,
+binary_bitwise,Binary numbers & bitwise operations,fundamentals,2,,introduced,,,,,introduced,
+binary_search,Binary search,algorithms,2,,,,,,introduced,practiced,
+closures,Closures,functions,2,introduced,deep,,,,,,
+command_line_args,Command-line arguments,modules_libs,2,,practiced,,,practiced,,,
+complexity_big_o,Big-O complexity,algorithms,2,,deep,,,,,deep,
+copying,Copying lists,collections,2,,,,,,introduced,practiced,
+enumerate_zip,enumerate / zip,collections,2,,,,introduced,introduced,,,
+environment_variables,Environment variables & secrets,data_web,2,practiced,practiced,,,,,,
+event_driven_programming,"Event-driven programming (event listeners, callbacks)",data_web,2,practiced,,,,,practiced,,
+graph_algorithms,Graph algorithms (BFS/DFS),algorithms,2,,deep,,,,,,introduced
+hash_maps_internals,Hash map internals,algorithms,2,,deep,,,,,introduced,
+karel_robot,Karel / Reeborg's World,data_web,2,introduced,,deep,,,,,
+lib_beautifulsoup,Beautiful Soup,modules_libs,2,deep,,,,,,,practiced
+lib_matplotlib,Matplotlib,modules_libs,2,practiced,,,,,,practiced,
+lib_pygame,pygame,modules_libs,2,,deep,,,,deep,,
+lib_requests,Requests,modules_libs,2,deep,,,,practiced,,,
+lib_sqlite3,Sqlite3,modules_libs,2,introduced,,,,,,,deep
+simulation_monte_carlo,Simulation,algorithms,2,,,introduced,,,,introduced,
+sorting_algorithms,Sorting algorithms,algorithms,2,,deep,,,,,deep,
+sql_joins,SQL joins,data_web,2,,practiced,,,,,,practiced
+stacks_queues,Stacks & queues,collections,2,,deep,,introduced,,,,
+web_development,Web development,data_web,2,deep,deep,,,,,,
+web_scraping,Web scraping,modules_libs,2,deep,,,,,,,practiced
+xml_parsing,XML parsing,data_web,2,,practiced,,,,,,practiced
+abstract_classes,Abstract classes,oop,1,,,,introduced,,,,
+ai_agents,AI agents (agentic loop),data_web,1,,deep,,,,,,
+authorization,Authorization,data_web,1,,practiced,,,,,,
+balanced_trees,Balanced trees (red-black),algorithms,1,,practiced,,,,,,
+bisection_method,Bisection / approximation,algorithms,1,,,,,,,deep,
+caching,Caching,data_web,1,,practiced,,,,,,
+cdn,CDNs,data_web,1,,practiced,,,,,,
+clean_code,Clean code / maintainability,oop,1,,practiced,,,,,,
+cli_applications,Building CLI applications,environment,1,,practiced,,,,,,
+collections_module,"collections module (namedtuple, deque, defaultdict, Counter, ...)",modules_libs,1,,,,deep,,,,
+collision_detection,Vectors & collision detection,data_web,1,,practiced,,,,,,
+composition,Composition (objects as attributes),oop,1,,,,,,practiced,,
+computer_architecture,"Computer hardware architecture (CPU, memory, storage)",fundamentals,1,,,,,,,,introduced
+concurrency,"Concurrency (channels, mutexes)",languages,1,,practiced,,,,,,
+conditional_expressions,Conditional (ternary) expressions,control_flow,1,,,,,,introduced,,
+containers,Containers,environment,1,,deep,,,,,,
+currying,Currying,functions,1,,practiced,,,,,,
+data_modeling,"Relational data modeling (primary/foreign/logical keys, many-to-many)",data_web,1,,,,,,,,deep
+database_indexes,Database indexes & performance,data_web,1,,introduced,,,,,,
+database_normalization,Database normalization,data_web,1,,practiced,,,,,,
+db_migrations,Database migrations,data_web,1,,practiced,,,,,,
+deployment,Deploying web applications,data_web,1,introduced,,,,,,,
+dns,DNS,data_web,1,,introduced,,,,,,
+enums,Enums,oop,1,,practiced,,,,,,
+function_calling,LLM function/tool calling,data_web,1,,deep,,,,,,
+game_loop,Game loop,data_web,1,,practiced,,,,,,
+garbage_collection,"Garbage collection (refcount, mark & sweep)",languages,1,,deep,,,,,,
+generics,Generics,languages,1,,practiced,,,,,,
+git_branching,Git branching,environment,1,,practiced,,,,,,
+git_internals,"Git internals (objects, plumbing)",environment,1,,practiced,,,,,,
+git_merge_rebase,"Git merge, rebase & reset",environment,1,,practiced,,,,,,
+git_remotes,Git remotes,environment,1,,practiced,,,,,,
+graphs,Graphs (data structure),algorithms,1,,practiced,,,,,,
+guess_and_check,Exhaustive enumeration,algorithms,1,,,,,,,deep,
+http_clients,HTTP clients,data_web,1,,deep,,,,,,
+http_servers,HTTP servers,data_web,1,,deep,,,,,,
+https_tls,HTTPS / TLS,data_web,1,,practiced,,,,,,
+image_processing,"Image processing (pixels, filters, steganography)",data_web,1,,,,,,,practiced,
+injection_attacks,Injection attacks,data_web,1,,practiced,,,,,,
+interfaces,Interfaces,oop,1,,practiced,,,,,,
+itertools_module,itertools module,modules_libs,1,,,,introduced,,,,
+job_search,Job search,career,1,,deep,,,,,,
+lang_c,C language,languages,1,,practiced,,,,,,
+lang_go,Go language,languages,1,,deep,,,,,,
+lib_bootstrap,Bootstrap CSS framework,modules_libs,1,practiced,,,,,,,
+lib_cowsay,cowsay,modules_libs,1,,,,,introduced,,,
+lib_elementtree,xml.etree.ElementTree,modules_libs,1,,,,,,,,practiced
+lib_emoji,emoji,modules_libs,1,,,,,introduced,,,
+lib_flask,Flask,modules_libs,1,deep,,,,,,,
+lib_fpdf,fpdf2,modules_libs,1,,,,,introduced,,,
+lib_inflect,inflect,modules_libs,1,,,,,introduced,,,
+lib_jinja,Jinja templating,modules_libs,1,practiced,,,,,,,
+lib_json,json module,modules_libs,1,,,,,,,,practiced
+lib_numpy,Numpy,modules_libs,1,practiced,,,,,,,
+lib_openai,OpenAI Python SDK,modules_libs,1,,practiced,,,,,,
+lib_pandas,Pandas,modules_libs,1,deep,,,,,,,
+lib_plotly,Plotly,modules_libs,1,deep,,,,,,,
+lib_pyautogui,PyAutoGUI,modules_libs,1,introduced,,,,,,,
+lib_pyfiglet,pyfiglet,modules_libs,1,,,,,introduced,,,
+lib_pytest,pytest,errors_testing,1,,,,,deep,,,
+lib_scikit_learn,scikit-learn,modules_libs,1,practiced,,,,,,,
+lib_scipy,SciPy,modules_libs,1,introduced,,,,,,,
+lib_seaborn,Seaborn,modules_libs,1,practiced,,,,,,,
+lib_selenium,Selenium,modules_libs,1,deep,,,,,,,
+lib_smtplib,Smtplib,modules_libs,1,practiced,,,,,,,
+lib_socket,socket module,modules_libs,1,,,,,,,,practiced
+lib_sqlalchemy,SQLAlchemy ORM,modules_libs,1,deep,,,,,,,
+lib_stanford_graphics,Stanford CS106A graphics library (Canvas),modules_libs,1,,,deep,,,,,
+lib_tabulate,tabulate,modules_libs,1,,,,,introduced,,,
+lib_tkinter,Tkinter GUI,modules_libs,1,deep,,,,,,,
+lib_turtle,Turtle graphics,modules_libs,1,deep,,,,,,,
+lib_urllib,urllib,modules_libs,1,,,,,,,,practiced
+lib_validators,validators / validator-collection,modules_libs,1,,,,,introduced,,,
+lib_wtforms,WTForms / Flask-WTF,modules_libs,1,practiced,,,,,,,
+linear_regression,Linear / multivariable regression,data_web,1,practiced,,,,,,,
+linear_search,Linear search,algorithms,1,,,,,,,practiced,
+linked_lists,Linked lists,algorithms,1,,deep,,,,,,
+linux_filesystem,Linux filesystem navigation,environment,1,,deep,,,,,,
+linux_permissions,File permissions & users (root/sudo),environment,1,,practiced,,,,,,
+linux_processes,Processes,environment,1,,introduced,,,,,,
+llm_apis,LLM APIs & prompting,data_web,1,,practiced,,,,,,
+main_guard,"if __name__ == ""__main__""",modules_libs,1,,,,,practiced,,,
+markdown,Markdown parsing,data_web,1,,deep,,,,,,
+mathematical_induction,Inductive reasoning / mathematical induction for recursion,algorithms,1,,,,,,,introduced,
+networking_sockets,Sockets & networking,data_web,1,,,,,,,,practiced
+newton_raphson,Newton-Raphson root approximation,algorithms,1,,,,,,,practiced,
+object_storage,Object storage,data_web,1,,deep,,,,,,
+p_vs_np,P vs NP,algorithms,1,,introduced,,,,,,
+pep8_style,Style conventions,environment,1,,,practiced,,,,,
+pointers_memory,Pointers & memory addresses,languages,1,,deep,,,,,,
+portfolio_project,Portfolio / personal project,career,1,,deep,,,,,,
+pseudocode,Pseudocode,functions,1,,,,,introduced,,,
+pub_sub_messaging,Pub/sub messaging,data_web,1,,deep,,,,,,
+pure_functions,Pure functions,functions,1,,deep,,,,,,
+rest_api_design,Designing RESTful APIs,data_web,1,practiced,,,,,,,
+scheduling_cron,Scheduled / cron jobs (cloud scheduling),data_web,1,introduced,,,,,,,
+serialization,Serialization,files_io,1,,practiced,,,,,,
+shell_io_redirection,"Shell I/O: stdin/stdout, redirection, pipes",environment,1,,practiced,,,,,,
+stack_heap_memory,"Stack vs heap, manual allocation",languages,1,,deep,,,,,,
+static_site_generation,Static site generation,data_web,1,,deep,,,,,,
+statistics_hypothesis_testing,"Statistics & hypothesis testing (t-tests, distributions)",data_web,1,introduced,,,,,,,
+statistics_module,statistics module,modules_libs,1,,,,,introduced,,,
+subprocess_module,subprocess / running external programs,modules_libs,1,,practiced,,,,,,
+sum_types,Sum types,functions,1,,practiced,,,,,,
+system_package_managers,"System package managers (apt, brew)",environment,1,,practiced,,,,,,
+tool_aws,"AWS (S3, CloudFront)",data_web,1,,practiced,,,,,,
+tool_curl,cURL,environment,1,,introduced,,,,,,
+tool_d3js,D3.js (browser visualization),data_web,1,,,,,,,,introduced
+tool_docker,Docker,environment,1,,deep,,,,,,
+tool_geocoding_api,Geocoding API (GeoJSON),data_web,1,,,,,,,,practiced
+tool_github,GitHub,environment,1,,practiced,,,,,,
+tool_jupyter,Jupyter / Google Colab notebooks,environment,1,introduced,,,,,,,
+tool_mypy,mypy,environment,1,,,,,introduced,,,
+tool_postgresql,PostgreSQL,data_web,1,,practiced,,,,,,
+tool_rabbitmq,RabbitMQ,data_web,1,,practiced,,,,,,
+tool_sqlc,sqlc,data_web,1,,practiced,,,,,,
+tool_sqlite_browser,DB Browser for SQLite,environment,1,,,,,,,,practiced
+tries,Tries,algorithms,1,,practiced,,,,,,
+ui_ux_design,UI/UX & web design principles,data_web,1,introduced,,,,,,,
+web_security,Web security,data_web,1,,deep,,,,,,
+web_services,Web services / service-oriented architecture,data_web,1,,,,,,,,introduced
+webhooks,Webhooks,data_web,1,,practiced,,,,,,

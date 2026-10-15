@@ -1,0 +1,111 @@
+{
+  "format": 1,
+  "id": "detour",
+  "title": "Detour",
+  "brief": "Walk east along the bottom lane to its far end. One cell of the lane is blocked: climb into the top lane to pass it, then come back down. In other worlds the blocked cell is somewhere else.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n",
+  "world": {
+    "width": 9,
+    "height": 2,
+    "start": [
+      0,
+      1,
+      "E"
+    ],
+    "blocked": [
+      [
+        4,
+        1
+      ]
+    ]
+  },
+  "hidden_worlds": [
+    {
+      "name": "blocked right away",
+      "width": 9,
+      "height": 2,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "blocked at the end",
+      "width": 9,
+      "height": 2,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          7,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "blocked early",
+      "width": 9,
+      "height": 2,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "blocked late",
+      "width": 9,
+      "height": 2,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          6,
+          1
+        ]
+      ]
+    }
+  ],
+  "goal": {
+    "end_at": [
+      8,
+      1
+    ],
+    "facing": "E"
+  },
+  "constraints": {
+    "hidden_commands": [
+      "scan"
+    ],
+    "banned": [
+      "while"
+    ],
+    "required": [
+      "for",
+      "if"
+    ]
+  },
+  "topics": [
+    "conditionals.if_else",
+    "functions.define_and_call"
+  ]
+}

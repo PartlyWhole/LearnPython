@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "id": "loop_the_block",
+  "title": "Loop the block",
+  "brief": "A bigger block this time. Walk around it clockwise, picking the gem on each corner, and finish where you started, facing east. 14 lines at most.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around_corner():\n    pass\n",
+  "world": {
+    "width": 5,
+    "height": 5,
+    "start": [
+      1,
+      0,
+      "E"
+    ],
+    "blocked": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "gems": {
+      "4,0": 1,
+      "4,4": 1,
+      "0,4": 1,
+      "0,0": 1
+    }
+  },
+  "goal": {
+    "all_gems_collected": true,
+    "end_at": [
+      1,
+      0
+    ],
+    "facing": "E"
+  },
+  "constraints": {
+    "required": [
+      "for",
+      "def"
+    ],
+    "max_lines": 14,
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "for_loops.repeat_n_times",
+    "decomposition.extract_repeated_code"
+  ]
+}

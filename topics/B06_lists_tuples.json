@@ -1,0 +1,2343 @@
+{
+  "batch": "B06",
+  "title": "Lists and tuples",
+  "concept_map": {
+    "lists": {
+      "topics": [
+        "lists.create_and_index",
+        "lists.change_items",
+        "lists.membership_and_operators",
+        "lists.loop_over_items",
+        "lists.aggregate_builtins",
+        "lists.loop_over_indexes",
+        "lists.text_to_list_and_back"
+      ],
+      "entry_topic": "lists.create_and_index",
+      "notes": "Looping over lists (deferred by B04) is lists.loop_over_items / loop_over_indexes; they encompass the B04 loop_patterns. split/join (B03 request) are encompassed by lists.text_to_list_and_back, which depends on list_methods.append_build. list(range()), len(range) and list('str') are in membership_and_operators KP4. sum()/min()/max() on lists are B05 builtin_functions, which should encompass lists.loop_over_items. Lists of lists / 2D grids are B07 nested_data_structures (copying.shallow_vs_deep only previews double indexing). Lists as function parameters live in mutability_aliasing.lists_in_functions. random.choice on lists is B13 random_module. Sequence patterns in match (case [x, y]) were not added; B07 or a stitching pass may add them. Reconciliation: len/sum/max/min of a list (the B05/B06 gap) is lists.aggregate_builtins; later topics that apply these built-ins to lists depend on it instead of builtin_functions.sum_max_min."
+    },
+    "list_methods": {
+      "topics": [
+        "list_methods.append_build",
+        "list_methods.insert_extend",
+        "list_methods.remove_pop_del",
+        "list_methods.index_and_count",
+        "list_methods.remove_while_looping"
+      ],
+      "entry_topic": "list_methods.append_build",
+      "notes": "sort()/reverse() are taught in sorting.sort_and_sorted. clear() is mentioned only in mutability_aliasing.lists_in_functions. Using lists as stacks/queues (pop() vs pop(0), deque) is B07 stacks_queues; building lists with comprehensions is B07 list_comprehensions, which should encompass append_build (filter KP)."
+    },
+    "list_slicing": {
+      "topics": [
+        "list_slicing.slice_lists",
+        "list_slicing.slice_assignment"
+      ],
+      "entry_topic": "list_slicing.slice_lists",
+      "notes": "Builds on B03 string slicing as B03 asked: only what differs for lists (result is a list, slice vs index, slice assignment). Copying with [:] is copying.copy_a_list. slice_assignment is non-core (py4e/Helsinki only). sys.argv[1:] is B10 command_line_args."
+    },
+    "tuples": {
+      "topics": [
+        "tuples.create_and_index",
+        "tuples.convert_and_compare",
+        "tuples.lists_of_tuples"
+      ],
+      "entry_topic": "tuples.create_and_index",
+      "notes": "Tuples as dict keys and dict.items() pairs are B07 dictionaries. Returning tuples from functions is unpacking.return_multiple_values. namedtuple is B07 collections_module."
+    },
+    "unpacking": {
+      "topics": [
+        "unpacking.unpack_sequences",
+        "unpacking.unpack_in_loops",
+        "unpacking.star_unpacking",
+        "unpacking.use_returned_tuples"
+      ],
+      "entry_topic": "unpacking.unpack_sequences",
+      "notes": "B02 variables.swap_values and B03 split_into_parts already preview unpacking; unpack_sequences encompasses them. star_unpacking is non-core and covers *rest and print(*lst) only; *args/**kwargs and ** dict unpacking are B08 args_kwargs. return_multiple_values has pending concept:return_values (B05 runs in parallel); if B05 also wrote a 'return several values' topic, the stitching pass should keep one. Reconciliation: return_multiple_values (duplicate of B05 return_values.multiple_return_values) was replaced by use_returned_tuples, which depends on it."
+    },
+    "enumerate_zip": {
+      "topics": [
+        "enumerate_zip.enumerate_index_and_item",
+        "enumerate_zip.zip_parallel_lists"
+      ],
+      "entry_topic": "enumerate_zip.enumerate_index_and_item",
+      "notes": "Only 2 courses introduce these, but they are core idioms that replace range(len(...)). dict(zip(keys, values)) is B07 dictionaries; zip(strict=True) and itertools are B07 itertools_module."
+    },
+    "mutability_aliasing": {
+      "topics": [
+        "mutability_aliasing.names_refer_to_objects",
+        "mutability_aliasing.is_vs_equals",
+        "mutability_aliasing.lists_in_functions"
+      ],
+      "entry_topic": "mutability_aliasing.names_refer_to_objects",
+      "notes": "lists_in_functions needs def/parameters, so it has pending concept:parameters_arguments (B05 runs in parallel); it includes the mutable default argument gotcha. Aliasing of objects/attributes is the OOP batch (B11). Integer/string interning is deliberately not taught; is is presented as 'only for None'."
+    },
+    "copying": {
+      "topics": [
+        "copying.copy_a_list",
+        "copying.shallow_vs_deep"
+      ],
+      "entry_topic": "copying.copy_a_list",
+      "notes": "shallow_vs_deep is non-core and previews lists of lists, which B07 nested_data_structures owns; it uses `import copy` before B13 modules_imports, as a single memorised line. Copying dicts (dict.copy) is B07."
+    },
+    "sorting": {
+      "topics": [
+        "sorting.sort_and_sorted",
+        "sorting.sort_tuples_and_keys"
+      ],
+      "entry_topic": "sorting.sort_and_sorted",
+      "notes": "key= is taught only with existing functions (len, str.lower). key=lambda and key=<own function> belong to B08 lambda_functions / higher_order_functions, which should encompass sort_tuples_and_keys. Sorting dict items by value is B07 dictionaries (py4e 'sorting a dictionary using tuples'). Sorting algorithms (bubble, merge sort) are a later algorithms batch."
+    }
+  },
+  "topics": [
+    {
+      "id": "lists.create_and_index",
+      "title": "Making a list and reading items by index",
+      "concept": "lists",
+      "summary": "Write a list literal, read items with positive and negative indexes, get its length, and recognise IndexError.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "string_indexing_slicing.negative_indices",
+        "strings.length_and_membership"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A list holds several values in order",
+          "worked_example": "scores = [70, 85, 92]\nnames = ['Ana', 'Bo']\nempty = []\nprint(scores)  # [70, 85, 92]\nSquare brackets, items separated by commas; a list can hold any type, or nothing.",
+          "practice": "Predict what print shows for short lists, including an empty list and a list mixing strings and numbers.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "strings.literals_and_quotes"
+          ]
+        },
+        {
+          "title": "Indexes start at 0; negative indexes count from the end",
+          "worked_example": "scores = [70, 85, 92]\nprint(scores[0])   # 70\nprint(scores[-1])  # 92\nExactly the same rules as indexing characters in a string.",
+          "practice": "Predict the item at given positive and negative indexes; write the index expression for 'second item' and 'last item'.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.negative_indices"
+          ]
+        },
+        {
+          "title": "len() counts the items",
+          "worked_example": "scores = [70, 85, 92]\nprint(len(scores))              # 3\nprint(scores[len(scores) - 1])  # 92\nThe last valid index is len - 1, because counting starts at 0.",
+          "practice": "Predict len() of lists of different sizes (including []); give the last valid index.",
+          "formats": [
+            "predict_output",
+            "numeric"
+          ],
+          "key_prerequisites": [
+            "strings.length_and_membership"
+          ]
+        },
+        {
+          "title": "Indexing past the end raises IndexError",
+          "worked_example": "scores = [70, 85, 92]\nprint(scores[3])\n# IndexError: list index out of range\nValid indexes for 3 items are 0, 1, 2 and -1, -2, -3.",
+          "practice": "Decide which index expressions raise IndexError; fix an off-by-one index that uses len(scores).",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.index_characters"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.negative_indices",
+          "weight": 0.3
+        },
+        {
+          "topic": "strings.length_and_membership",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "lists.change_items",
+      "title": "Changing items in a list",
+      "concept": "lists",
+      "summary": "Replace an item by assigning to its index, update it from its own value, and see why this works for lists but not strings.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "lists.create_and_index",
+        "variables.update_with_own_value",
+        "string_immutability.build_new_strings"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assign to an index to replace an item",
+          "worked_example": "colors = ['red', 'green', 'blue']\ncolors[1] = 'yellow'\nprint(colors)  # ['red', 'yellow', 'blue']\nThe list itself changes; its length stays the same.",
+          "practice": "Predict the list after one or two index assignments, including a negative index.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Update an item from its own value",
+          "worked_example": "scores = [70, 85, 92]\nscores[0] += 5\nscores[-1] = scores[-1] - 2\nprint(scores)  # [75, 85, 90]\nRead the old item, compute, write it back, just like x += 5 for a variable.",
+          "practice": "Trace a short sequence of updates; fill in the line that doubles the second item.",
+          "formats": [
+            "trace_table",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "variables.update_with_own_value"
+          ]
+        },
+        {
+          "title": "Lists are mutable, strings are not",
+          "worked_example": "word = 'cat'\n# word[0] = 'b'  -> TypeError: 'str' object does not support item assignment\nletters = ['c', 'a', 't']\nletters[0] = 'b'\nprint(letters)  # ['b', 'a', 't']\nA list can be changed in place; a string must be rebuilt.",
+          "practice": "Choose which snippets run and which raise TypeError; predict the result of the ones that run.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_immutability.build_new_strings"
+          ]
+        },
+        {
+          "title": "You cannot assign past the end",
+          "worked_example": "scores = [70, 85]\n# scores[2] = 99  -> IndexError: list assignment index out of range\nprint(len(scores))  # 2\nAssignment only replaces existing items; adding a new item needs append (next topics).",
+          "practice": "Spot the line that raises IndexError in a short program.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.6
+        },
+        {
+          "topic": "variables.update_with_own_value",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "lists.membership_and_operators",
+      "title": "Checking membership and combining lists",
+      "concept": "lists",
+      "summary": "Use in / not in, +, * and == with lists, and turn a range or a string into a list with list().",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "lists.create_and_index",
+        "conditionals.if_else",
+        "string_concatenation.repeat_with_star",
+        "range_function.start_stop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "in and not in test whether an item is present",
+          "worked_example": "fruits = ['apple', 'pear']\nprint('pear' in fruits)      # True\nprint('kiwi' not in fruits)  # True\nif 'apple' in fruits:\n    print('Have apples')\nFor a list, in matches whole items, not parts of strings: 'pe' in fruits is False.",
+          "practice": "Predict True/False for membership tests, including a partial string; write an if that warns when an item is missing.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "strings.length_and_membership",
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "+ joins lists, * repeats them",
+          "worked_example": "a = [1, 2]\nb = [3]\nprint(a + b)      # [1, 2, 3]\nprint([0] * 4)    # [0, 0, 0, 0]\nprint(a)          # [1, 2]  (unchanged)\nBoth build a new list, exactly like + and * on strings.",
+          "practice": "Predict the results of + and * on small lists; spot the error in [1, 2] + 3 (TypeError: can only concatenate list).",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_concatenation.repeat_with_star"
+          ]
+        },
+        {
+          "title": "== compares lists item by item",
+          "worked_example": "print([1, 2, 3] == [1, 2, 3])  # True\nprint([1, 2, 3] == [3, 2, 1])  # False\nprint([1, 2] != [1, 2, 0])     # True\nSame items in the same order means equal; order matters.",
+          "practice": "Predict the result of == and != on pairs of lists that differ in order, length or one item.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "list() turns a range or a string into a list",
+          "worked_example": "print(list(range(1, 5)))  # [1, 2, 3, 4]\nprint(list('hey'))        # ['h', 'e', 'y']\nprint(len(range(0, 10, 2)))  # 5\nlist() collects every value a for loop would visit.",
+          "practice": "Predict list(range(...)) for start/stop/step combinations and list() of short strings.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_concatenation.repeat_with_star",
+          "weight": 0.2
+        },
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "lists.loop_over_items",
+      "title": "Looping over the items of a list",
+      "concept": "lists",
+      "summary": "Visit every item with for item in list and apply the total, count and largest-so-far patterns to a list.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.create_and_index",
+        "for_loops.loop_over_characters",
+        "loop_patterns.max_min_tracking"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "for visits each item in order",
+          "worked_example": "pets = ['cat', 'dog', 'fish']\nfor pet in pets:\n    print('I have a', pet)\nThe loop variable holds each item in turn, as with characters of a string.",
+          "practice": "Predict the output of loops over short lists; write a loop that prints each item in upper case.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "for_loops.loop_over_characters"
+          ]
+        },
+        {
+          "title": "Total and average of a list",
+          "worked_example": "prices = [4, 10, 6]\ntotal = 0\nfor p in prices:\n    total += p\nprint(total, total / len(prices))  # 20 6.666666666666667\nThe accumulator pattern, now fed by a list instead of input().",
+          "practice": "Write a loop that totals a list; compute an average and guard against an empty list.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Count items that pass a test",
+          "worked_example": "temps = [18, 25, 31, 22, 29]\nhot = 0\nfor t in temps:\n    if t > 24:\n        hot += 1\nprint(hot)  # 3\nCounting is the accumulator with an if inside.",
+          "practice": "Trace the counter for a given list; write a loop that counts words starting with a given letter.",
+          "formats": [
+            "trace_table",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.count_matches"
+          ]
+        },
+        {
+          "title": "Largest so far, starting from the first item",
+          "worked_example": "temps = [18, 25, 31, 22]\nbest = temps[0]\nfor t in temps:\n    if t > best:\n        best = t\nprint(best)  # 31\nStarting from temps[0] avoids the 'start at 0' bug for all-negative lists.",
+          "practice": "Write the smallest-so-far version; pick the correct starting value for a list of negative numbers.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.4
+        },
+        {
+          "topic": "loop_patterns.count_matches",
+          "weight": 0.3
+        },
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.3
+        },
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "lists.aggregate_builtins",
+      "title": "len, sum, max and min on a list",
+      "concept": "lists",
+      "summary": "Summarise a list with len(), sum(), max() and min(), compute an average, guard against empty lists, and know what these built-ins do with lists of strings.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_items",
+        "builtin_functions.sum_max_min",
+        "comparison_operators.compare_mixed_types"
+      ],
+      "knowledge_points": [
+        {
+          "title": "One call instead of a loop",
+          "worked_example": "scores = [70, 85, 90]\nprint(len(scores), sum(scores), max(scores), min(scores))  # 3 245 90 70\nThe same built-ins you used with ranges and several arguments accept a whole list; each replaces an accumulator or largest-so-far loop.",
+          "practice": "Predict len/sum/max/min of given lists; rewrite accumulator and max-tracking loops as one call.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "builtin_functions.sum_max_min",
+            "loop_patterns.max_min_tracking"
+          ]
+        },
+        {
+          "title": "Average: sum divided by len",
+          "worked_example": "scores = [70, 80, 90]\nprint(sum(scores) / len(scores))  # 80.0\nThe average is always a float; round it only when you display it.",
+          "practice": "Write the average of a list; fix code that divides by a hard-coded count instead of len().",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Empty lists: sum is 0, max and min fail",
+          "worked_example": "empty = []\nprint(sum(empty), len(empty))  # 0 0\nif len(empty) > 0:\n    print(max(empty))\nelse:\n    print(\"no scores\")  # no scores\nprint(max(empty))  # ValueError: max() iterable argument is empty\nThere is no largest item of nothing (and an average would divide by zero), so check the length first.",
+          "practice": "Predict results and errors for empty lists; add a guard to an average or max function that crashes on [].",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_else"
+          ]
+        },
+        {
+          "title": "Lists of strings: max and min go by alphabet, sum fails",
+          "worked_example": "words = [\"pear\", \"apple\", \"fig\"]\nprint(max(words), min(words))  # pear apple\nsum(words)  # TypeError: unsupported operand type(s) for +: 'int' and 'str'\nmax and min use the same ordering as < on strings; sum only adds numbers.",
+          "practice": "Predict max/min of word lists (including capitals); classify calls as working or raising TypeError.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_mixed_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "builtin_functions.sum_max_min",
+          "weight": 0.5
+        },
+        {
+          "topic": "loop_patterns.max_min_tracking",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc"
+      ],
+      "notes": "Added in reconciliation: B05 builtin_functions.sum_max_min used only ranges and several arguments (lists were in parallel B06), and B06 wrote the loops by hand. Snippets run with Python 3.13."
+    },
+    {
+      "id": "lists.loop_over_indexes",
+      "title": "Looping over positions with range(len(...))",
+      "concept": "lists",
+      "summary": "Loop over indexes when you need the position: change items in place, compare neighbours, and walk two lists in step.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_items",
+        "lists.change_items",
+        "range_function.start_stop"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "for i in range(len(items)) gives each index",
+          "worked_example": "names = ['Ana', 'Bo', 'Cy']\nfor i in range(len(names)):\n    print(i, names[i])\n# 0 Ana / 1 Bo / 2 Cy\nUse this form when the position itself matters.",
+          "practice": "Predict the printed index/item pairs; fill in range(...) so the loop covers every index.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Changing every item needs the index",
+          "worked_example": "nums = [1, 2, 3]\nfor n in nums:\n    n = n * 10      # only changes the loop variable\nprint(nums)         # [1, 2, 3]\nfor i in range(len(nums)):\n    nums[i] = nums[i] * 10\nprint(nums)         # [10, 20, 30]\nAssigning to the loop variable never touches the list; assign to nums[i].",
+          "practice": "Predict the list after each kind of loop; fix a loop that tries to modify items through the loop variable.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.change_items"
+          ]
+        },
+        {
+          "title": "Comparing neighbours: stop one early",
+          "worked_example": "temps = [18, 21, 19, 25]\nfor i in range(len(temps) - 1):\n    if temps[i + 1] > temps[i]:\n        print('rise at', i + 1)\n# rise at 1 / rise at 3\ntemps[i + 1] needs i to stop at len - 2, so the range ends at len - 1.",
+          "practice": "Find the IndexError in a neighbour loop that uses range(len(temps)); write a loop that checks a list is sorted.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "range_function.start_stop"
+          ]
+        },
+        {
+          "title": "Two lists in step with one index",
+          "worked_example": "names = ['Ana', 'Bo']\nscores = [91, 78]\nfor i in range(len(names)):\n    print(names[i], scores[i])\nParallel lists share positions; enumerate and zip (later) make this tidier.",
+          "practice": "Write a loop printing matching items from two lists; predict output when one list is shorter (IndexError).",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "lists.change_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "range_function.start_stop",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "helsinki_mooc",
+        "py4e",
+        "mit_6100l",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "lists.text_to_list_and_back",
+      "title": "From text to a list and back: split, process, join",
+      "concept": "lists",
+      "summary": "Split a line of text into a list, convert or filter its items into a new list, and join the result back into text.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_items",
+        "list_methods.append_build",
+        "string_methods.join_pieces",
+        "type_conversion.strings_to_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "split() gives a list you can loop over",
+          "worked_example": "line = 'red green blue'\nfor word in line.split():\n    print(word.upper())\nEverything you know about lists applies to the result of split().",
+          "practice": "Predict output of loops over split() results, including a separator other than space.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.split_into_parts",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Turn text numbers into a list of numbers",
+          "worked_example": "line = '4 10 6'\nnums = []\nfor part in line.split():\n    nums.append(int(part))\nprint(nums)  # [4, 10, 6]\nsplit() always gives strings; convert each one before doing arithmetic.",
+          "practice": "Write code that totals the numbers in a space- or comma-separated line; fix a program that 'adds' '4' + '10'.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers",
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Process the words, then join them back",
+          "worked_example": "words = 'the cat sat'.split()\nout = []\nfor w in words:\n    out.append(w.capitalize())\nprint(' '.join(out))  # The Cat Sat\nsplit -> new list -> join is the standard way to edit text word by word.",
+          "practice": "Write split-process-join code for a given transformation (reverse each word, keep long words only).",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "string_methods.join_pieces"
+          ]
+        },
+        {
+          "title": "Joining numbers needs strings first",
+          "worked_example": "nums = [4, 10, 6]\nparts = []\nfor n in nums:\n    parts.append(str(n))\nprint(', '.join(parts))  # 4, 10, 6\n', '.join(nums) raises TypeError because join only accepts strings.",
+          "practice": "Fix a join that fails on numbers; predict the joined output for different separators.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_methods.join_pieces",
+            "type_conversion.numbers_and_strings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.5
+        },
+        {
+          "topic": "string_methods.join_pieces",
+          "weight": 0.5
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.3
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "cs50p",
+        "codecademy",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "list_methods.append_build",
+      "title": "Growing a list with append()",
+      "concept": "list_methods",
+      "summary": "Add items to the end with append, and build a new list in a loop: from a range, by filtering another list, or from user input.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_items",
+        "for_loops.if_inside_loop",
+        "while_loops.sentinel_input"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "append() adds one item to the end",
+          "worked_example": "cart = ['milk']\ncart.append('eggs')\ncart.append('tea')\nprint(cart)  # ['milk', 'eggs', 'tea']\nappend changes the list in place; you call it with a dot, like a string method.",
+          "practice": "Predict the list after several appends; predict len() afterwards.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Start empty, append in a loop",
+          "worked_example": "squares = []\nfor n in range(1, 5):\n    squares.append(n * n)\nprint(squares)  # [1, 4, 9, 16]\nThe list version of the accumulator: an empty list instead of 0.",
+          "practice": "Reorder the lines of a list-building loop; write a loop that builds the first n even numbers.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Filter: append only the items that pass",
+          "worked_example": "temps = [18, 25, 31, 22]\nhot = []\nfor t in temps:\n    if t > 24:\n        hot.append(t)\nprint(hot)  # [25, 31]\nThe original list is untouched; the answer is a new list.",
+          "practice": "Write filters (even numbers, words longer than 3); fix a filter whose empty list is created inside the loop.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "for_loops.if_inside_loop"
+          ]
+        },
+        {
+          "title": "Collect input until a stop value",
+          "worked_example": "names = []\nname = input('Name (blank to stop): ')\nwhile name != '':\n    names.append(name)\n    name = input('Name (blank to stop): ')\nprint(len(names), 'names')\nThe sentinel loop now keeps everything it reads, so you can use it afterwards.",
+          "practice": "Trace the list for a given sequence of inputs; make sure the stop value itself is not stored.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "while_loops.sentinel_input"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "for_loops.if_inside_loop",
+          "weight": 0.3
+        },
+        {
+          "topic": "while_loops.sentinel_input",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "code_in_place",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "list_methods.insert_extend",
+      "title": "insert(), extend(), and methods that return None",
+      "concept": "list_methods",
+      "summary": "Insert an item at a position, add many items with extend or +=, and avoid the bug of assigning the result of a list method.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "list_methods.append_build",
+        "lists.membership_and_operators"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "insert(i, x) puts x before position i",
+          "worked_example": "queue = ['Bo', 'Cy']\nqueue.insert(0, 'Ana')\nqueue.insert(2, 'Di')\nprint(queue)  # ['Ana', 'Bo', 'Di', 'Cy']\nItems from i onwards shift right by one.",
+          "practice": "Predict the list after inserts at the start, middle and with an index past the end (it appends).",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "extend() adds every item; append() adds one",
+          "worked_example": "a = [1, 2]\na.append([3, 4])\nprint(a)  # [1, 2, [3, 4]]\nb = [1, 2]\nb.extend([3, 4])\nprint(b)  # [1, 2, 3, 4]\nappend puts the whole list inside as a single item.",
+          "practice": "Predict the list and its len() after append vs extend; choose the call that gives a target list.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "+= extends in place; + makes a new list",
+          "worked_example": "a = [1, 2]\na += [3]\nprint(a)       # [1, 2, 3]\nc = a + [4]\nprint(a, c)    # [1, 2, 3] [1, 2, 3, 4]\na += [3] behaves like a.extend([3]).",
+          "practice": "Predict both lists after mixed +, += and extend steps.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "List methods return None",
+          "worked_example": "items = [1, 2]\nitems = items.append(3)\nprint(items)  # None\nThe list was changed, then the name was pointed at append's return value, None.",
+          "practice": "Find and fix the bug in code that assigns the result of append, extend or insert.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "none_type.none_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "helsinki_mooc",
+        "bootdev",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "list_methods.remove_pop_del",
+      "title": "Removing items: remove(), pop() and del",
+      "concept": "list_methods",
+      "summary": "Remove an item by value or by position, use the value pop returns, and avoid ValueError and IndexError.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "list_methods.append_build",
+        "lists.membership_and_operators"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "remove(x) deletes the first matching value",
+          "worked_example": "pets = ['cat', 'dog', 'cat']\npets.remove('cat')\nprint(pets)  # ['dog', 'cat']\nOnly the first match goes; the others stay.",
+          "practice": "Predict the list after remove calls on lists with duplicates.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "remove raises ValueError if the value is absent",
+          "worked_example": "pets = ['dog']\nif 'cat' in pets:\n    pets.remove('cat')\nprint(pets)  # ['dog']\n# pets.remove('cat') without the check -> ValueError: list.remove(x): x not in list\nCheck with in first when the item might be missing.",
+          "practice": "Spot which remove calls crash; guard a remove with an in test.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "pop() removes and returns an item",
+          "worked_example": "stack = ['a', 'b', 'c']\nlast = stack.pop()\nfirst = stack.pop(0)\nprint(last, first, stack)  # c a ['b']\npop() takes the last item; pop(i) takes position i. Both hand the item back.",
+          "practice": "Predict the returned values and the remaining list; pop from an empty list (IndexError).",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "del removes by position; choosing the right tool",
+          "worked_example": "nums = [10, 20, 30]\ndel nums[1]\nprint(nums)  # [10, 30]\nKnow the value: remove. Know the position and need the item: pop. Know the position only: del.",
+          "practice": "Choose remove, pop or del for described situations; write the line that deletes the last item.",
+          "formats": [
+            "multiple_choice",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.membership_and_operators",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "code_in_place",
+        "helsinki_mooc",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "list_methods.index_and_count",
+      "title": "Finding items: index() and count()",
+      "concept": "list_methods",
+      "summary": "Find where a value first appears with index, count how often it appears, and find all positions of a value.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "list_methods.remove_pop_del",
+        "lists.loop_over_indexes"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "count(x) says how many times x appears",
+          "worked_example": "votes = ['yes', 'no', 'yes', 'yes']\nprint(votes.count('yes'))  # 3\nprint(votes.count('maybe'))  # 0\ncount never fails; a missing value just counts 0.",
+          "practice": "Predict counts; replace a counting loop with one count call.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.count_matches"
+          ]
+        },
+        {
+          "title": "index(x) gives the first position",
+          "worked_example": "votes = ['yes', 'no', 'yes']\nprint(votes.index('no'))   # 1\nprint(votes.index('yes'))  # 0\nLike find() on strings, but for list items.",
+          "practice": "Predict index results on lists with repeats.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "index raises ValueError: check with in first",
+          "worked_example": "votes = ['yes', 'no']\nif 'maybe' in votes:\n    print(votes.index('maybe'))\nelse:\n    print('not found')\nUnlike str.find, list.index has no -1 result; it raises ValueError.",
+          "practice": "Fix code that crashes on a missing value; choose between index and in for a described task.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        },
+        {
+          "title": "All positions of a value need a loop",
+          "worked_example": "votes = ['yes', 'no', 'yes']\nspots = []\nfor i in range(len(votes)):\n    if votes[i] == 'yes':\n        spots.append(i)\nprint(spots)  # [0, 2]\nindex only reports the first match.",
+          "practice": "Write the loop that collects every position of a value.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_indexes"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "py4e",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "list_methods.remove_while_looping",
+      "title": "Don't remove from a list while looping over it",
+      "concept": "list_methods",
+      "summary": "Recognise the skipped-item bug of removing during a for loop and fix it by building a new list or using while.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "list_methods.remove_pop_del",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The bug: items get skipped",
+          "worked_example": "nums = [1, 2, 2, 3]\nfor n in nums:\n    if n == 2:\n        nums.remove(n)\nprint(nums)  # [1, 2, 3]\nRemoving shifts later items left, so the loop jumps over the second 2.",
+          "practice": "Predict the (wrong) result of remove-in-loop code for given lists.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        },
+        {
+          "title": "Fix 1: build a new list of the items to keep",
+          "worked_example": "nums = [1, 2, 2, 3]\nkeep = []\nfor n in nums:\n    if n != 2:\n        keep.append(n)\nnums = keep\nprint(nums)  # [1, 3]\nReading one list and writing another never skips anything.",
+          "practice": "Rewrite a buggy remove loop as a filter loop.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Fix 2: remove until the value is gone",
+          "worked_example": "nums = [1, 2, 2, 3]\nwhile 2 in nums:\n    nums.remove(2)\nprint(nums)  # [1, 3]\nEach pass removes one copy; the in test stops the loop.",
+          "practice": "Choose which snippets correctly remove all copies of a value.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "while_loops.repeat_while_true"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_methods.remove_pop_del",
+          "weight": 0.4
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "list_slicing.slice_lists",
+      "title": "Slicing lists",
+      "concept": "list_slicing",
+      "summary": "Apply string slicing to lists, tell a slice (a list) from an index (an item), and use the common first-n / rest / reversed slices.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "lists.create_and_index",
+        "string_indexing_slicing.slice_with_step"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Same slice rules, now giving a list",
+          "worked_example": "nums = [10, 20, 30, 40, 50]\nprint(nums[1:3])   # [20, 30]\nprint(nums[:2])    # [10, 20]\nprint(nums[-2:])   # [40, 50]\nstart is included, stop is excluded, exactly as for strings.",
+          "practice": "Predict slices with omitted and negative bounds.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_start_stop"
+          ]
+        },
+        {
+          "title": "A slice is a list; an index is an item",
+          "worked_example": "nums = [10, 20, 30]\nprint(nums[1])     # 20\nprint(nums[1:2])   # [20]\nnums[1:2] + 5 fails with TypeError; nums[1] + 5 works.",
+          "practice": "Decide whether each expression gives an item or a list; fix code that adds a number to a one-item slice.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Slices never raise IndexError",
+          "worked_example": "nums = [10, 20, 30]\nprint(nums[1:100])  # [20, 30]\nprint(nums[5:])     # []\nOut-of-range bounds are clipped; an index that far would crash.",
+          "practice": "Predict results of slices that go past either end, including empty results.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Everyday slices: rest, last n, every other, reversed",
+          "worked_example": "nums = [10, 20, 30, 40, 50]\nprint(nums[1:])    # [20, 30, 40, 50]\nprint(nums[::2])   # [10, 30, 50]\nprint(nums[::-1])  # [50, 40, 30, 20, 10]\nThe original list is unchanged; each slice is a new list.",
+          "practice": "Write the slice for a described part of a list (all but the first, last three, odd positions, reversed).",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_indexing_slicing.slice_with_step"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_indexing_slicing.slice_start_stop",
+          "weight": 0.4
+        },
+        {
+          "topic": "string_indexing_slicing.slice_with_step",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "list_slicing.slice_assignment",
+      "title": "Changing part of a list with a slice",
+      "concept": "list_slicing",
+      "summary": "Replace, insert and delete a range of items with slice assignment and del on a slice.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "list_slicing.slice_lists",
+        "list_methods.remove_pop_del"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Assign to a slice to replace a range",
+          "worked_example": "nums = [1, 2, 3, 4, 5]\nnums[1:3] = [20, 30]\nprint(nums)  # [1, 20, 30, 4, 5]\nUnlike reading a slice, assigning to one changes the list itself.",
+          "practice": "Predict the list after slice assignments of the same length.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "The new part can be longer or shorter",
+          "worked_example": "nums = [1, 2, 3, 4, 5]\nnums[1:4] = [0]\nprint(nums)  # [1, 0, 5]\nnums[1:1] = [7, 8]\nprint(nums)  # [1, 7, 8, 0, 5]\nAn empty slice like [1:1] inserts without replacing.",
+          "practice": "Predict lengths and contents after shrinking, growing and inserting slice assignments.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "del on a slice removes a range",
+          "worked_example": "nums = [1, 2, 3, 4, 5]\ndel nums[:2]\nprint(nums)  # [3, 4, 5]\ndel nums[:]\nprint(nums)  # []\ndel nums[:] empties the list but keeps the same list object.",
+          "practice": "Write the del statement that removes a described range; compare with remove and pop.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_pop_del"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "tuples.create_and_index",
+      "title": "Tuples: lists that cannot change",
+      "concept": "tuples",
+      "summary": "Write tuples (including the one-item tuple), read them like lists, and recognise the TypeError when trying to change one.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "lists.change_items",
+        "data_types.values_have_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A tuple is written with parentheses and read like a list",
+          "worked_example": "point = (3, 7)\nprint(point[0], point[-1])  # 3 7\nprint(len(point))           # 2\nprint(7 in point)           # True\nIndexing, len, in and slicing all work as for lists.",
+          "practice": "Predict indexing, len and in results on tuples.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "Tuples are immutable",
+          "worked_example": "point = (3, 7)\n# point[0] = 5  -> TypeError: 'tuple' object does not support item assignment\npoint = (5, 7)  # make a new tuple instead\nprint(point)\nTuples have no append or remove either.",
+          "practice": "Choose which operations work on a tuple; fix code that tries to change one.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.change_items"
+          ]
+        },
+        {
+          "title": "The comma makes the tuple",
+          "worked_example": "a = (5)\nb = (5,)\nc = 1, 2\nprint(type(a), type(b), type(c))\n# <class 'int'> <class 'tuple'> <class 'tuple'>\nA one-item tuple needs a trailing comma; parentheses alone are just grouping.",
+          "practice": "Predict the type of several literals, including (5), (5,), () and 1, 2.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "data_types.values_have_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "tuples.convert_and_compare",
+      "title": "Converting and comparing tuples",
+      "concept": "tuples",
+      "summary": "Convert between lists and tuples, and predict how tuples compare: item by item from the left.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "tuples.create_and_index",
+        "lists.membership_and_operators",
+        "comparison_operators.compare_mixed_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "tuple() and list() convert back and forth",
+          "worked_example": "t = (1, 2, 3)\nlst = list(t)\nlst.append(4)\nt = tuple(lst)\nprint(t)  # (1, 2, 3, 4)\nTo 'change' a tuple, convert to a list, change it, and convert back.",
+          "practice": "Predict the results of conversions; write code that adds an item to a tuple's contents.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators"
+          ]
+        },
+        {
+          "title": "Tuples compare item by item",
+          "worked_example": "print((1, 5) < (2, 0))    # True: 1 < 2 decides\nprint((1, 5) < (1, 9))    # True: tie, so 5 < 9 decides\nprint((2, 0) == (2, 0))   # True\nThe first position that differs decides, just like letters in a word.",
+          "practice": "Predict < and == between pairs of tuples, including ties in the first item.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_mixed_types"
+          ]
+        },
+        {
+          "title": "Comparing (hours, minutes) and other records",
+          "worked_example": "start = (9, 45)\nend = (10, 5)\nprint(start < end)  # True\nprint(('Lee', 3) < ('Li', 1))  # True: 'Lee' < 'Li'\nOrdering the fields from most to least important makes comparison do the right thing.",
+          "practice": "Choose a field order so that < means 'earlier'; predict comparisons of (name, number) tuples.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tuples.create_and_index",
+          "weight": 0.4
+        },
+        {
+          "topic": "comparison_operators.compare_mixed_types",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "tuples.lists_of_tuples",
+      "title": "Lists of tuples as simple records",
+      "concept": "tuples",
+      "summary": "Store records as tuples in a list, read fields by index in a loop, and choose between a list and a tuple for a job.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "tuples.create_and_index",
+        "list_methods.append_build"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A list of (name, score) records",
+          "worked_example": "results = [('Ana', 91), ('Bo', 78)]\nprint(results[1])     # ('Bo', 78)\nprint(results[1][0])  # Bo\nThe first index picks the record, the second picks the field.",
+          "practice": "Predict results of single and double indexing into a list of tuples.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Loop over records and read fields",
+          "worked_example": "results = [('Ana', 91), ('Bo', 78), ('Cy', 85)]\nfor r in results:\n    if r[1] >= 80:\n        print(r[0])\n# Ana / Cy\nEach r is one whole tuple.",
+          "practice": "Write loops that filter or total records by one field; find the name with the best score.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items",
+            "loop_patterns.max_min_tracking"
+          ]
+        },
+        {
+          "title": "Append new records as tuples",
+          "worked_example": "results = []\nresults.append(('Di', 66))\nresults.append(('Ed', 72))\nprint(len(results), results[0])  # 2 ('Di', 66)\nresults.append('Di', 66) is a TypeError: append takes one item, so wrap the fields in a tuple.",
+          "practice": "Fix append calls missing the inner parentheses; build a list of (word, length) tuples from a list of words.",
+          "formats": [
+            "fix_the_bug",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "List or tuple?",
+          "worked_example": "shopping = ['milk', 'eggs']   # grows and shrinks: list\nrgb = (255, 128, 0)          # fixed fields: tuple\nUse a list for a collection of similar things; a tuple for one thing with a fixed set of parts.",
+          "practice": "Choose list or tuple for described data.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tuples.create_and_index",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.4
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "mit_6100l",
+        "helsinki_mooc",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "unpacking.unpack_sequences",
+      "title": "Unpacking a tuple or list into names",
+      "concept": "unpacking",
+      "summary": "Assign the items of a tuple or list to several names at once, and understand the swap idiom and the count-mismatch ValueError.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "tuples.create_and_index",
+        "variables.swap_values",
+        "string_methods.split_into_parts"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Unpack a tuple into names",
+          "worked_example": "point = (3, 7)\nx, y = point\nprint(x, y)  # 3 7\nNames on the left are filled from the items on the right, in order.",
+          "practice": "Predict the names' values after unpacking tuples and lists.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "The counts must match",
+          "worked_example": "x, y = (1, 2, 3)\n# ValueError: too many values to unpack (expected 2)\nFewer items gives ValueError: not enough values to unpack.",
+          "practice": "Predict which unpackings raise ValueError; fix the left side to match the data.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Swapping and splitting are unpacking",
+          "worked_example": "a, b = 1, 2\na, b = b, a          # the right side is the tuple (2, 1)\nday, month = '12/10'.split('/')\nprint(a, b, day, month)  # 2 1 12 10\n1, 2 builds a tuple; the left side unpacks it.",
+          "practice": "Explain in one choice why the swap works; write one-line unpacking of a split date.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "variables.swap_values",
+            "string_methods.split_into_parts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "tuples.create_and_index",
+          "weight": 0.3
+        },
+        {
+          "topic": "variables.swap_values",
+          "weight": 0.2
+        },
+        {
+          "topic": "string_methods.split_into_parts",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "unpacking.unpack_in_loops",
+      "title": "Unpacking records in a for loop",
+      "concept": "unpacking",
+      "summary": "Write for name, score in records to name the fields of each tuple, instead of indexing r[0] and r[1].",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "unpacking.unpack_sequences",
+        "tuples.lists_of_tuples"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Two loop variables for two fields",
+          "worked_example": "results = [('Ana', 91), ('Bo', 78)]\nfor name, score in results:\n    print(name, 'scored', score)\nEach tuple is unpacked into the two names on every pass.",
+          "practice": "Predict output; rewrite an r[0]/r[1] loop with unpacking.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "tuples.lists_of_tuples"
+          ]
+        },
+        {
+          "title": "Use the named fields in a pattern",
+          "worked_example": "results = [('Ana', 91), ('Bo', 78), ('Cy', 85)]\ntotal = 0\nfor name, score in results:\n    total += score\nprint(total / len(results))  # 84.66666666666667\nUnused fields still need a name; _ is the convention for 'ignored'.",
+          "practice": "Write loops that total, filter or find the best record using unpacked names.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Mismatch inside a loop",
+          "worked_example": "points = [(1, 2), (3, 4, 5)]\nfor x, y in points:\n    print(x + y)\n# 3, then ValueError: too many values to unpack (expected 2)\nEvery record must have the same number of fields as loop variables.",
+          "practice": "Find the record that breaks a loop; fix the loop variables to match.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.6
+        },
+        {
+          "topic": "tuples.lists_of_tuples",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "unpacking.star_unpacking",
+      "title": "Collecting the rest with *",
+      "concept": "unpacking",
+      "summary": "Use a starred name to collect leftover items when unpacking, and * to spread a list into print() or into a new list.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "unpacking.unpack_sequences",
+        "list_slicing.slice_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "first, *rest",
+          "worked_example": "first, *rest = [5, 8, 2, 9]\nprint(first, rest)  # 5 [8, 2, 9]\n*init, last = [5, 8, 2, 9]\nprint(init, last)   # [5, 8, 2] 9\nThe starred name always becomes a list, possibly empty.",
+          "practice": "Predict values for starred unpacking at the start, middle and end; compare with the equivalent slices.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "Star fixes the count mismatch",
+          "worked_example": "name, *others = 'Ada King Lovelace'.split()\nprint(name, others)  # Ada ['King', 'Lovelace']\nhead, *_ = (1, 2, 3)\nprint(head)  # 1\nOnly one starred name is allowed per assignment.",
+          "practice": "Fix unpackings that raise ValueError by adding a star; spot an illegal double star.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "Spreading a list with *",
+          "worked_example": "nums = [1, 2, 3]\nprint(nums)    # [1, 2, 3]\nprint(*nums)   # 1 2 3\nprint([0, *nums, 4])  # [0, 1, 2, 3, 4]\n*nums passes the items separately, as if you had typed them.",
+          "practice": "Predict printed output with and without *; build a combined list with * inside brackets.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "print_output.multiple_values"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unpacking.unpack_sequences",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "unpacking.use_returned_tuples",
+      "title": "Using returned tuples: index, ignore and collect results",
+      "concept": "unpacking",
+      "summary": "Work with functions that return several values: index the returned tuple, ignore parts with _, collect results in a list and unpack them in a loop, and keep every return the same shape.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "return_values.multiple_return_values",
+        "unpacking.unpack_in_loops",
+        "return_values.early_return"
+      ],
+      "knowledge_points": [
+        {
+          "title": "The result is one tuple: keep it or index it",
+          "worked_example": "def divide(a, b):\n    return a // b, a % b\n\nresult = divide(17, 5)\nprint(result, result[1])  # (3, 2) 2\nreturn a, b builds one tuple; index it when you need only one part.",
+          "practice": "Predict what printing or indexing a returned tuple shows; choose between unpacking and indexing for a described need.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "return_values.multiple_return_values",
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Ignore values you do not need with _",
+          "worked_example": "def stats(a, b):\n    return a + b, a * b, a - b\n\ntotal, _, diff = stats(6, 2)\nprint(total, diff)  # 8 4\n_ is an ordinary name used by convention for 'not needed'; the number of names must still match.",
+          "practice": "Fill in unpacking lines that keep only some returned values; fix lines with the wrong number of names.",
+          "formats": [
+            "fill_in_blank",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_sequences"
+          ]
+        },
+        {
+          "title": "Collect results in a list, unpack them in a loop",
+          "worked_example": "results = []\nfor n in [7, 12]:\n    results.append(divide(n, 5))\nfor q, r in results:\n    print(q, r)\n# 1 2\n# 2 2\nEach call adds one tuple; the for loop unpacks them again (divide as in KP1).",
+          "practice": "Write a loop that stores several function results and a second loop that unpacks and prints them; predict the output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "Return a flag and a value, with the same shape every time",
+          "worked_example": "def find(items, target):\n    i = 0\n    for item in items:\n        if item == target:\n            return True, i\n        i += 1\n    return False, -1\n\nfound, pos = find([\"a\", \"b\"], \"b\")\nprint(found, pos)          # True 1\nprint(find([\"a\"], \"z\"))  # (False, -1)\nEvery return gives two values, so the caller's unpacking works whatever happens.",
+          "practice": "Fix a function whose early return gives one value while the other gives two; predict results for found and missing targets.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.multiple_return_values",
+          "weight": 0.6
+        },
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "mit_6100l"
+      ],
+      "notes": "Reconciliation: replaces unpacking.return_multiple_values, which duplicated return_values.multiple_return_values (B05 owns 'return a, b' and unpacking the result). This topic builds on it."
+    },
+    {
+      "id": "enumerate_zip.enumerate_index_and_item",
+      "title": "Index and item together with enumerate()",
+      "concept": "enumerate_zip",
+      "summary": "Replace range(len(...)) loops with enumerate to get each position and item, starting the count anywhere.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_indexes",
+        "unpacking.unpack_in_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "enumerate gives (index, item) pairs",
+          "worked_example": "names = ['Ana', 'Bo']\nfor i, name in enumerate(names):\n    print(i, name)\n# 0 Ana / 1 Bo\nEach pass unpacks one (index, item) tuple.",
+          "practice": "Predict output; rewrite a range(len(...)) loop with enumerate.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops",
+            "lists.loop_over_indexes"
+          ]
+        },
+        {
+          "title": "Numbering from 1 with start=",
+          "worked_example": "for n, task in enumerate(['wash', 'dry'], start=1):\n    print(n, task)\n# 1 wash / 2 dry\nstart changes the count only; the items are the same.",
+          "practice": "Fill in enumerate so a menu is numbered from 1; predict output for other starts.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Remember where something was",
+          "worked_example": "temps = [18, 31, 25]\nbest_i = 0\nfor i, t in enumerate(temps):\n    if t > temps[best_i]:\n        best_i = i\nprint('hottest day', best_i)  # hottest day 1\nenumerate keeps the item handy and the index available.",
+          "practice": "Write loops that report the position of the max, or of every match.",
+          "formats": [
+            "write_code",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.max_min_tracking"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.4
+        },
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "enumerate_zip.zip_parallel_lists",
+      "title": "Walking several lists together with zip()",
+      "concept": "enumerate_zip",
+      "summary": "Pair up items from two or more lists with zip, know that it stops at the shortest, and pair each item with the next one.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "lists.loop_over_indexes",
+        "unpacking.unpack_in_loops",
+        "list_slicing.slice_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "zip pairs items at the same position",
+          "worked_example": "names = ['Ana', 'Bo']\nscores = [91, 78]\nfor name, score in zip(names, scores):\n    print(name, score)\nNo index needed: zip hands over matching items together.",
+          "practice": "Rewrite a range(len(...)) parallel-list loop with zip; predict output.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_indexes",
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "zip stops at the shortest list",
+          "worked_example": "print(list(zip([1, 2, 3], ['a', 'b'])))  # [(1, 'a'), (2, 'b')]\nExtra items are silently dropped; check lengths first if that would be a bug.",
+          "practice": "Predict list(zip(...)) for unequal lengths and for three lists.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.create_and_index"
+          ]
+        },
+        {
+          "title": "Pairing each item with the next",
+          "worked_example": "temps = [18, 21, 19, 25]\nfor a, b in zip(temps, temps[1:]):\n    print(b - a)\n# 3 / -2 / 6\ntemps[1:] is the list shifted by one, so there is no off-by-one to get wrong.",
+          "practice": "Write a check that a list is in increasing order with zip; predict pair differences.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.loop_over_indexes",
+          "weight": 0.3
+        },
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "mutability_aliasing.names_refer_to_objects",
+      "title": "Two names, one list: aliasing",
+      "concept": "mutability_aliasing",
+      "summary": "Predict what happens when two names refer to the same list, and tell mutating a list apart from rebinding a name.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "lists.change_items",
+        "list_methods.insert_extend"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "b = a does not copy",
+          "worked_example": "a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)  # [1, 2, 3, 4]\nAssignment gives the same list a second name; a change through either name is seen by both.",
+          "practice": "Predict both lists after changes made through an alias.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build"
+          ]
+        },
+        {
+          "title": "Mutating vs rebinding",
+          "worked_example": "a = [1, 2]\nb = a\nb = b + [3]   # + builds a new list; b now names it\nprint(a, b)    # [1, 2] [1, 2, 3]\nappend, item assignment and remove change the shared list; = with a new value only moves one name.",
+          "practice": "Classify each line as mutating or rebinding; predict both names afterwards.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "variables.reassign_and_trace"
+          ]
+        },
+        {
+          "title": "+= on a list mutates the shared list",
+          "worked_example": "a = [1, 2]\nb = a\nb += [3]\nprint(a)  # [1, 2, 3]\nFor lists, += extends in place, so the alias sees it; b = b + [3] would not.",
+          "practice": "Predict results of += vs + with an alias present.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "Immutable values can't surprise you",
+          "worked_example": "s = 'hi'\nt = s\nt += '!'\nprint(s, t)  # hi hi!\nn = 1\nm = n\nm += 1\nprint(n, m)  # 1 2\nStrings, numbers and tuples cannot be changed, so every 'change' makes a new object.",
+          "practice": "Predict results for the same code with a list, a string and a tuple.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_immutability.build_new_strings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lists.change_items",
+          "weight": 0.3
+        },
+        {
+          "topic": "list_methods.insert_extend",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_immutability.build_new_strings",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "mutability_aliasing.is_vs_equals",
+      "title": "Same value or same object: == vs is",
+      "concept": "mutability_aliasing",
+      "summary": "Use == to compare contents and is to test whether two names refer to the same object, and know when each is right.",
+      "minutes": 14,
+      "core": true,
+      "prerequisites": [
+        "mutability_aliasing.names_refer_to_objects",
+        "none_type.check_for_none",
+        "lists.membership_and_operators"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "== compares contents, is compares identity",
+          "worked_example": "a = [1, 2]\nb = [1, 2]\nc = a\nprint(a == b, a is b)  # True False\nprint(a == c, a is c)  # True True\nb is an equal list, c is the same list.",
+          "practice": "Predict == and is for pairs of names created in different ways.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        },
+        {
+          "title": "id() shows which object a name refers to",
+          "worked_example": "a = [1, 2]\nc = a\nprint(id(a) == id(c))  # True\nprint(id(a) == id([1, 2]))  # False\nx is y means id(x) == id(y).",
+          "practice": "Predict whether two ids are equal; decide which names would see a mutation.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "Use is only for None",
+          "worked_example": "answer = None\nif answer is None:\n    print('no answer yet')\nnames = ['Ana']\nif names == ['Ana']:  # not: names is ['Ana']\n    print('match')\nComparing values with is gives unreliable results; Python even warns (SyntaxWarning) about is with a number or string literal.",
+          "practice": "Fix comparisons that wrongly use is; choose the right operator for described checks.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "none_type.check_for_none"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.names_refer_to_objects",
+          "weight": 0.5
+        },
+        {
+          "topic": "none_type.check_for_none",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "mutability_aliasing.lists_in_functions",
+      "title": "Lists passed to functions",
+      "concept": "mutability_aliasing",
+      "summary": "Predict when a function changes the caller's list, and choose between mutating it and returning a new list.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "mutability_aliasing.names_refer_to_objects",
+        "list_methods.append_build",
+        "return_values.return_a_value"
+      ],
+      "knowledge_points": [
+        {
+          "title": "The parameter is an alias for the caller's list",
+          "worked_example": "def add_bonus(scores):\n    for i in range(len(scores)):\n        scores[i] += 5\n\nmine = [70, 80]\nadd_bonus(mine)\nprint(mine)  # [75, 85]\nNo return needed: the function mutated the one shared list.",
+          "practice": "Predict the caller's list after calling functions that mutate their argument.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        },
+        {
+          "title": "Rebinding the parameter does not affect the caller",
+          "worked_example": "def reset(scores):\n    scores = []\n\nmine = [70, 80]\nreset(mine)\nprint(mine)  # [70, 80]\nscores = [] only moves the local name; scores.clear() would empty the caller's list.",
+          "practice": "Classify function bodies as changing or not changing the caller's list; fix a reset function.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.names_refer_to_objects"
+          ]
+        },
+        {
+          "title": "Returning a new list keeps the original safe",
+          "worked_example": "def with_bonus(scores):\n    result = []\n    for s in scores:\n        result.append(s + 5)\n    return result\n\nmine = [70, 80]\nprint(with_bonus(mine), mine)  # [75, 85] [70, 80]\nDecide per function: mutate in place, or return a new list and leave the input alone.",
+          "practice": "Rewrite a mutating function to return a new list; predict both lists afterwards.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_methods.append_build",
+            "return_values.return_a_value"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.names_refer_to_objects",
+          "weight": 0.5
+        },
+        {
+          "topic": "list_methods.append_build",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "code_in_place",
+        "codecademy",
+        "py4e",
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "copying.copy_a_list",
+      "title": "Making a real copy of a list",
+      "concept": "copying",
+      "summary": "Copy a list with [:], list() or .copy() so changes to the copy leave the original alone, and use a copy to loop safely while removing.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "mutability_aliasing.is_vs_equals",
+        "list_slicing.slice_lists",
+        "list_methods.remove_while_looping"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Three ways to copy",
+          "worked_example": "a = [1, 2, 3]\nb = a[:]\nc = list(a)\nd = a.copy()\nb.append(4)\nprint(a, b)  # [1, 2, 3] [1, 2, 3, 4]\nEach makes a new list with the same items.",
+          "practice": "Predict both lists after changing a copy vs an alias.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        },
+        {
+          "title": "A copy is equal but not identical",
+          "worked_example": "a = [1, 2, 3]\nb = a.copy()\nprint(a == b, a is b)  # True False\nSame contents, separate object.",
+          "practice": "Predict == and is for copies and aliases; fix a 'backup' that is really an alias.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "mutability_aliasing.is_vs_equals"
+          ]
+        },
+        {
+          "title": "Loop over a copy, change the original",
+          "worked_example": "nums = [1, 2, 2, 3]\nfor n in nums[:]:\n    if n == 2:\n        nums.remove(n)\nprint(nums)  # [1, 3]\nThe loop walks the unchanging copy, so nothing is skipped.",
+          "practice": "Fix a remove-while-looping bug by adding a copy; choose between this and building a new list.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.remove_while_looping"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "mutability_aliasing.names_refer_to_objects",
+          "weight": 0.3
+        },
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.2
+        },
+        {
+          "topic": "list_methods.remove_while_looping",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "copying.shallow_vs_deep",
+      "title": "Copies of lists of lists: shallow vs deep",
+      "concept": "copying",
+      "summary": "Recognise that copying a list of lists shares the inner lists, and use copy.deepcopy or build fresh rows when that matters.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "copying.copy_a_list"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A list can hold lists",
+          "worked_example": "grid = [[1, 2], [3, 4]]\nprint(grid[1])     # [3, 4]\nprint(grid[1][0])  # 3\nThe first index picks the inner list, the second picks inside it.",
+          "practice": "Predict single and double indexing into a small grid.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        },
+        {
+          "title": "A shallow copy shares the inner lists",
+          "worked_example": "grid = [[1, 2], [3, 4]]\ncopy1 = grid.copy()\ncopy1[0][0] = 99\nprint(grid)  # [[99, 2], [3, 4]]\nOnly the outer list was copied; both outer lists hold the same inner lists.",
+          "practice": "Predict the original after changes to a shallow copy (replacing a row vs changing inside a row).",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "copying.copy_a_list"
+          ]
+        },
+        {
+          "title": "copy.deepcopy copies all the way down",
+          "worked_example": "import copy\ngrid = [[1, 2], [3, 4]]\nsafe = copy.deepcopy(grid)\nsafe[0][0] = 99\nprint(grid)  # [[1, 2], [3, 4]]\nUse deepcopy when inner lists will be changed.",
+          "practice": "Choose shallow or deep copy for described situations; fix a backup that changes with the original.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "copying.copy_a_list"
+          ]
+        },
+        {
+          "title": "The [[0] * 3] * 3 trap",
+          "worked_example": "bad = [[0] * 3] * 3\nbad[0][0] = 1\nprint(bad)  # [[1, 0, 0], [1, 0, 0], [1, 0, 0]]\ngood = []\nfor _ in range(3):\n    good.append([0] * 3)\n* repeats references to the same inner list; build each row separately.",
+          "practice": "Predict the grid after one change; fix grid creation code.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.membership_and_operators",
+            "list_methods.append_build"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "copying.copy_a_list",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "sorting.sort_and_sorted",
+      "title": "Sorting a list: sort() and sorted()",
+      "concept": "sorting",
+      "summary": "Sort in place with list.sort() or get a new sorted list with sorted(), in either direction, and predict how strings and mixed types sort.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "list_methods.insert_extend",
+        "comparison_operators.compare_mixed_types"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "sort() changes the list; sorted() returns a new one",
+          "worked_example": "nums = [3, 1, 2]\nprint(sorted(nums), nums)  # [1, 2, 3] [3, 1, 2]\nnums.sort()\nprint(nums)                # [1, 2, 3]\nUse sorted() to keep the original order; sort() when you no longer need it.",
+          "practice": "Predict the list and the result after sort() vs sorted(); choose which one a task needs.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "Descending order and reverse()",
+          "worked_example": "nums = [3, 1, 2]\nprint(sorted(nums, reverse=True))  # [3, 2, 1]\nnums.reverse()\nprint(nums)                       # [2, 1, 3]\nreverse=True sorts high to low; reverse() only flips the current order.",
+          "practice": "Predict results of reverse=True vs reverse(); write the call for a high-score table.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": []
+        },
+        {
+          "title": "x = lst.sort() gives None",
+          "worked_example": "nums = [3, 1, 2]\nresult = nums.sort()\nprint(result)  # None\nsort() is a list method that changes in place and returns None; use sorted() for a value.",
+          "practice": "Fix code that assigns or prints the result of sort().",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "list_methods.insert_extend"
+          ]
+        },
+        {
+          "title": "How strings and mixed types sort",
+          "worked_example": "print(sorted(['bob', 'Amy', 'carl']))  # ['Amy', 'bob', 'carl']\nprint(sorted(['b', 'B', 'a']))         # ['B', 'a', 'b']\n# sorted([3, 'a']) -> TypeError: '<' not supported between instances of 'str' and 'int'\nStrings sort by character code, so every capital comes before every lower-case letter.",
+          "practice": "Predict sorted order for mixed-case words and digit strings like '10' vs '9'; spot the TypeError case.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_mixed_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_mixed_types",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "helsinki_mooc",
+        "mit_6100l",
+        "py4e"
+      ]
+    },
+    {
+      "id": "sorting.sort_tuples_and_keys",
+      "title": "Sorting records and sorting by a key",
+      "concept": "sorting",
+      "summary": "Sort lists of tuples, sort by a different field by reordering tuples, sort by len or case-insensitively with key=, and take the top n.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "sorting.sort_and_sorted",
+        "tuples.convert_and_compare",
+        "unpacking.unpack_in_loops",
+        "list_slicing.slice_lists"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Tuples sort by the first item, then the next",
+          "worked_example": "pairs = [('Bo', 78), ('Ana', 91), ('Ana', 60)]\nprint(sorted(pairs))\n# [('Ana', 60), ('Ana', 91), ('Bo', 78)]\nSorting uses tuple comparison: ties on the first item are broken by the second.",
+          "practice": "Predict the sorted order of short lists of tuples.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "tuples.convert_and_compare"
+          ]
+        },
+        {
+          "title": "Sort by another field: put it first",
+          "worked_example": "pairs = [('Bo', 78), ('Ana', 91)]\nflipped = []\nfor name, score in pairs:\n    flipped.append((score, name))\nfor score, name in sorted(flipped, reverse=True):\n    print(name, score)\nBuild (score, name) tuples so the field you sort by comes first.",
+          "practice": "Reorder lines of the flip-sort-print program; write it for a different field.",
+          "formats": [
+            "parsons",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unpacking.unpack_in_loops"
+          ]
+        },
+        {
+          "title": "key= sorts by a computed value",
+          "worked_example": "words = ['kiwi', 'Fig', 'banana']\nprint(sorted(words, key=len))        # ['Fig', 'kiwi', 'banana']\nprint(sorted(words, key=str.lower))  # ['banana', 'Fig', 'kiwi']\nkey is a function name without (): sorting compares key(item), but returns the original items.",
+          "practice": "Predict sorts with key=len and key=str.lower; fix key=len() (called by mistake).",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "sorting.sort_and_sorted"
+          ]
+        },
+        {
+          "title": "Top n: sort, then slice",
+          "worked_example": "scores = [72, 95, 88, 60, 91]\ntop3 = sorted(scores, reverse=True)[:3]\nprint(top3)  # [95, 91, 88]\nCombine a descending sort with a slice for 'best n' and 'worst n' questions.",
+          "practice": "Write one-line expressions for the top or bottom n; predict results.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "list_slicing.slice_lists"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "sorting.sort_and_sorted",
+          "weight": 0.6
+        },
+        {
+          "topic": "unpacking.unpack_in_loops",
+          "weight": 0.3
+        },
+        {
+          "topic": "tuples.convert_and_compare",
+          "weight": 0.3
+        },
+        {
+          "topic": "list_slicing.slice_lists",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "helsinki_mooc",
+        "bootdev",
+        "codecademy"
+      ]
+    }
+  ]
+}

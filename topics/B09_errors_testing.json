@@ -1,0 +1,2036 @@
+{
+  "batch": "B09",
+  "title": "Errors, debugging and testing",
+  "concept_map": {
+    "debugging": {
+      "topics": [
+        "debugging.read_tracebacks",
+        "debugging.common_error_types",
+        "debugging.print_debugging",
+        "debugging.systematic_process",
+        "debugging.use_a_debugger"
+      ],
+      "entry_topic": "debugging.read_tracebacks",
+      "notes": "Full traceback reading (deferred by B01) is read_tracebacks; f\"{x=}\" (deferred by B03) is in print_debugging. The editor debugger (deferred by B01 ide_editor) is use_a_debugger, non-core because it needs an editor with a debugger. KeyError and FileNotFoundError are not in common_error_types: dicts (B07) and files (B10) run in parallel and should show their own errors. Hand-tracing with trace tables is practised inside systematic_process rather than given its own topic. Rubber-duck debugging and logging (the logging module) were not given topics."
+    },
+    "exceptions": {
+      "topics": [
+        "exceptions.try_except_basics",
+        "exceptions.several_handlers_and_as",
+        "exceptions.else_and_finally",
+        "exceptions.propagation",
+        "exceptions.skip_bad_items"
+      ],
+      "entry_topic": "exceptions.try_except_basics",
+      "notes": "try/except on bad input (deferred by B02/B04) starts in try_except_basics; the re-ask loop is defensive_programming.get_int_helper. try/except around open() and FileNotFoundError belong to B10 file_io, and finally-for-closing-files / with to B10 context_managers, which should encompass exceptions.else_and_finally. KeyError handling and dict.get as the alternative belong to B07 dictionaries. Exceptions in Selenium/Tkinter projects are left to those library batches. Exception hierarchy is touched only via LookupError in several_handlers_and_as KP4."
+    },
+    "raising_exceptions": {
+      "topics": [
+        "raising_exceptions.raise_builtin",
+        "raising_exceptions.custom_exceptions"
+      ],
+      "entry_topic": "raising_exceptions.raise_builtin",
+      "notes": "Re-raising with a bare raise is exceptions.propagation KP4. custom_exceptions teaches 'class X(Exception): pass' as a template and has pending concept:classes; the OOP batch (inheritance) should encompass it and may add exception attributes / __init__. Raising in constructors (validating attributes) belongs to the OOP batch (constructors). raise ... from e (exception chaining) was not given a topic."
+    },
+    "defensive_programming": {
+      "topics": [
+        "defensive_programming.get_int_helper",
+        "defensive_programming.guard_before_acting",
+        "defensive_programming.clean_and_validate_text"
+      ],
+      "entry_topic": "defensive_programming.get_int_helper",
+      "notes": "Concept is titled 'Input validation'. Range-only re-prompting is B04 while_loops.input_validation; this batch adds non-numeric input. Validating with regular expressions (cs50p Week 7) belongs to the regular_expressions batch, which should encompass clean_and_validate_text. Preconditions as specs are B05 docstrings.specifications; raising on bad arguments is raising_exceptions.raise_builtin."
+    },
+    "assertions": {
+      "topics": [
+        "assertions.assert_statement"
+      ],
+      "entry_topic": "assertions.assert_statement",
+      "notes": "Only one topic: using assert to write tests is owned by unit_testing (test_function_with_asserts), since assertions 'is part of' unit_testing."
+    },
+    "unit_testing": {
+      "topics": [
+        "unit_testing.test_function_with_asserts",
+        "unit_testing.choose_test_cases",
+        "unit_testing.testable_functions",
+        "unit_testing.test_raises",
+        "unit_testing.doctests",
+        "unit_testing.unittest_module"
+      ],
+      "entry_topic": "unit_testing.test_function_with_asserts",
+      "notes": "Depends on functions.main_and_helpers as B05 suggested, not on main_guard (which waits for B13). Core topics keep tests in the same file as the code, so no import is needed; test files that import the code are lib_pytest (pending concept:modules_imports). Doctests (deferred by B05 docstrings) are unit_testing.doctests, non-core and taught by no course. unittest_module needs class syntax (pending concept:classes). Test fixtures, skipping, mocking and parametrised tests were not given topics (codecademy only); testing printed output (capsys) also left out."
+    },
+    "lib_pytest": {
+      "topics": [
+        "lib_pytest.write_and_run_tests",
+        "lib_pytest.raises_and_test_folders"
+      ],
+      "entry_topic": "lib_pytest.write_and_run_tests",
+      "notes": "Non-core: needs a terminal and an installed package. 'pip install pytest' is shown as a memorised line; installing packages is tool_pip / third_party_packages in a later batch, which could become a prerequisite. 'with pytest.raises' uses with before B10 context_managers, as a memorised form. @pytest.mark.parametrize needs decorators (B08) and was left out; a later stitching pass could add it. Reconciliation: write_and_run_tests now depends on modules_imports.own_modules and tool_pip.pip_install; raises_and_test_folders on modules_imports.packages_and_import_errors."
+    },
+    "tool_mypy": {
+      "topics": [
+        "tool_mypy.check_hints_with_mypy"
+      ],
+      "entry_topic": "tool_mypy.check_hints_with_mypy",
+      "notes": "One non-core topic (cs50p introduces it only). Uses list[str] in one example; container hints are B06/B07. Strict mode and mypy configuration were left out."
+    }
+  },
+  "topics": [
+    {
+      "id": "debugging.read_tracebacks",
+      "title": "Reading a traceback",
+      "concept": "debugging",
+      "summary": "Read a full traceback bottom-up: the error type and message, the failing line, and the chain of calls that led there.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "running_scripts.statements_run_in_order",
+        "functions.flow_of_execution"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Read the last line first: error type and message",
+          "worked_example": "print(10 / 0)\n# ZeroDivisionError: division by zero\nThe last line names the kind of error (before the colon) and what went wrong (after it).",
+          "practice": "Given short tracebacks, name the error type and say in words what went wrong.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        },
+        {
+          "title": "Tracebacks through function calls: the bottom frame is where it broke",
+          "worked_example": "def average(total, count):\n    return total / count\n\ndef report(total, count):\n    print(average(total, count))\n\nreport(10, 0)\n# Traceback lists: line 7 in <module>, line 5 in report, line 2 in average\n# ZeroDivisionError: division by zero\n\"Most recent call last\": read up from the bottom to see who called whom.",
+          "practice": "For a three-frame traceback, give the line that raised the error and the order of calls that led there.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "The line that fails is not always the line that is wrong",
+          "worked_example": "In the traceback above, line 2 divides correctly; the bad value 0 came from report(10, 0) on line 7.\nFollow the frames upward until you reach the line that supplied the bad value.",
+          "practice": "Given a traceback and the code, pick the line that should be changed to fix the bug.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "Use the hints: 'Did you mean' and the ^^^ markers",
+          "worked_example": "total = 5\nprint(totl)\n# NameError: name 'totl' is not defined. Did you mean: 'total'?\nIn Python 3.11+ ~~~ and ^^^ under the code point at the exact part of the line that failed.",
+          "practice": "Fix snippets using only the information in the error message, then predict the message for a new typo.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "running_scripts.statements_run_in_order"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "running_scripts.statements_run_in_order",
+          "weight": 0.3
+        },
+        {
+          "topic": "functions.flow_of_execution",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "cs50p",
+        "100_days_of_code",
+        "codecademy",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "debugging.common_error_types",
+      "title": "Recognising the common error types",
+      "concept": "debugging",
+      "summary": "Match SyntaxError, IndentationError, NameError, TypeError, ValueError, IndexError, ZeroDivisionError and AttributeError to the kinds of mistake that cause them.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "debugging.read_tracebacks",
+        "type_conversion.strings_to_numbers",
+        "lists.create_and_index",
+        "conditionals.if_statement"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "SyntaxError and IndentationError: the code is not valid Python",
+          "worked_example": "if True:\nprint(\"x\")\n# IndentationError: expected an indented block after 'if' statement on line 1\nThese are found before any line runs, so nothing is printed.",
+          "practice": "Decide which snippets fail before running and fix the missing colon, bracket, quote or indent.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "conditionals.if_statement"
+          ]
+        },
+        {
+          "title": "NameError: a misspelled or not-yet-assigned name",
+          "worked_example": "print(score)\nscore = 10\n# NameError: name 'score' is not defined\nNames must be assigned before the line that uses them, spelled exactly the same.",
+          "practice": "Predict whether each snippet prints or raises NameError; fix the typo or the order.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "debugging.read_tracebacks"
+          ]
+        },
+        {
+          "title": "TypeError vs ValueError: wrong kind of value vs bad value of the right kind",
+          "worked_example": "print(\"Age: \" + 30)   # TypeError: can only concatenate str (not \"int\") to str\nint(\"ten\")            # ValueError: invalid literal for int() with base 10: 'ten'\nint() accepts strings, so \"ten\" is the right type with a bad value.",
+          "practice": "Classify each failing line as TypeError or ValueError, designed so that both are plausible.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "type_conversion.strings_to_numbers"
+          ]
+        },
+        {
+          "title": "IndexError, ZeroDivisionError and AttributeError",
+          "worked_example": "nums = [1, 2, 3]\nprint(nums[3])        # IndexError: list index out of range\nname = \"ada\"\nname.push(\"x\")        # AttributeError: 'str' object has no attribute 'push'",
+          "practice": "Match eight snippets to the error each raises; fix two of them.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.create_and_index"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "debugging.read_tracebacks",
+          "weight": 0.6
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.2
+        },
+        {
+          "topic": "lists.create_and_index",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "100_days_of_code",
+        "bootdev",
+        "py4e",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "debugging.print_debugging",
+      "title": "Finding logic errors with print",
+      "concept": "debugging",
+      "summary": "Spot a logic error (the program runs but gives the wrong answer) and locate it by printing values at checkpoints, including inside a loop.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "debugging.read_tracebacks",
+        "string_formatting.fstring_basics",
+        "loop_patterns.accumulate_sum"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Logic errors: no message, just a wrong answer",
+          "worked_example": "def sum_to(n):\n    total = 0\n    for i in range(1, n):\n        total += i\n    return total\n\nprint(sum_to(3))   # 3, but 1 + 2 + 3 is 6\nNo traceback appears, so you must compare the output to what you expected.",
+          "practice": "For each snippet, say whether it has a syntax error, a runtime error or a logic error, and give the expected vs actual output.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "Print checkpoints to see what values really are",
+          "worked_example": "total = 0\nfor i in range(1, 3):\n    print(\"adding\", i)\n    total += i\nThe printed values 1, 2 show that 3 is never added: range stops before its end.",
+          "practice": "Choose where to put one print to tell two suspected causes apart; predict what it shows.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        },
+        {
+          "title": "f\"{x=}\" prints a name and its value",
+          "worked_example": "x = 4\nprint(f\"{x=}\")            # x=4\ntotal = 0\nfor n in range(1, 4):\n    total += n\n    print(f\"{n=} {total=}\")  # n=1 total=1 / n=2 total=3 / n=3 total=6",
+          "practice": "Predict the debug lines printed by a loop; write a one-line debug print for given names.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Find the first pass that goes wrong, fix it, then remove the prints",
+          "worked_example": "Print the loop variable and the accumulator each pass, compare with a hand-worked table, and stop at the first row that differs; that pass contains the bug.",
+          "practice": "Given debug output and the expected values, give the first wrong pass and fix the line responsible.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "loop_patterns.accumulate_sum"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "loop_patterns.accumulate_sum",
+          "weight": 0.4
+        },
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l",
+        "py4e",
+        "bootdev",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "debugging.systematic_process",
+      "title": "Debugging step by step: reproduce, shrink, trace, fix",
+      "concept": "debugging",
+      "summary": "Work through a bug methodically: state expected vs actual, find the smallest failing input, hand-trace to the first difference, change one thing and re-check.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "debugging.print_debugging",
+        "debugging.common_error_types",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Reproduce: write down the input, the expected and the actual result",
+          "worked_example": "def largest(nums):\n    best = 0\n    for n in nums:\n        if n > best:\n            best = n\n    return best\n\nprint(largest([3, 8, 1]))     # 8, correct\nprint(largest([-5, -2, -9]))  # 0, expected -2",
+          "practice": "From a bug report, pick the input/expected/actual triple that reproduces it.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Shrink the failing input",
+          "worked_example": "largest([-5, -2, -9]) fails; so does largest([-5]). The one-item case shows the bug is in the starting value, not in the comparison.",
+          "practice": "Choose the smallest input that still shows a given bug; explain what it rules out.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "debugging.print_debugging"
+          ]
+        },
+        {
+          "title": "Hand-trace with a table until expected and actual differ",
+          "worked_example": "n  | best (actual) | best (expected)\nstart | 0       | -5\nThe very first row differs: best should start at nums[0], not 0.",
+          "practice": "Fill in a trace table for a buggy function and mark the first row where it goes wrong.",
+          "formats": [
+            "trace_table",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Change one thing, then re-run every case you have",
+          "worked_example": "Fix: best = nums[0]. Re-run [3, 8, 1] and [-5, -2, -9]: 8 and -2. Changing several lines at once makes it impossible to tell which change mattered.",
+          "practice": "Given a list of candidate edits, choose the single minimal fix and predict the outputs of all earlier cases after it.",
+          "formats": [
+            "multiple_choice",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "debugging.print_debugging"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "debugging.print_debugging",
+          "weight": 0.5
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.3
+        },
+        {
+          "topic": "debugging.common_error_types",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "100_days_of_code",
+        "mit_6100l",
+        "py4e",
+        "code_in_place"
+      ]
+    },
+    {
+      "id": "debugging.use_a_debugger",
+      "title": "Stepping through code with a debugger",
+      "concept": "debugging",
+      "summary": "Pause a program at a breakpoint, inspect variables, and step over or into lines to watch it run.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "ide_editor.run_in_editor",
+        "debugging.print_debugging",
+        "functions.flow_of_execution"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Set a breakpoint and run in debug mode",
+          "worked_example": "1. Click left of line 4 to set a breakpoint (a red dot).\n2. Start debugging (F5 in VS Code).\nThe program pauses before line 4 runs, so variables show values from lines 1-3.",
+          "practice": "Given code and a breakpoint line, choose which variables exist and their values at the pause.",
+          "formats": [
+            "multiple_choice",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "ide_editor.run_in_editor"
+          ]
+        },
+        {
+          "title": "Step over: run one line and pause again",
+          "worked_example": "Paused at total += i with i=1, total=0; Step Over -> i=1, total=1; Step Over -> back at for, then i=2.\nThe Variables panel replaces a page of debug prints.",
+          "practice": "Fill in the Variables panel after each of four Step Over clicks.",
+          "formats": [
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "debugging.print_debugging"
+          ]
+        },
+        {
+          "title": "Step into a function call; step out to return",
+          "worked_example": "Paused at print(average(10, 4)): Step Into jumps to the first line of average; Step Out finishes it and returns to the caller with the result.",
+          "practice": "Predict which line is highlighted after a sequence of Step Over / Into / Out commands.",
+          "formats": [
+            "multiple_choice",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "functions.flow_of_execution"
+          ]
+        },
+        {
+          "title": "Continue to the next breakpoint, or pause from code with breakpoint()",
+          "worked_example": "Continue runs until the next breakpoint (e.g. the next pass of a loop).\nWriting breakpoint() on a line pauses there in Python's built-in debugger (pdb) even without an editor.",
+          "practice": "Choose the fastest command sequence to reach the 5th pass of a loop.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "ide_editor.run_in_editor"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "debugging.print_debugging",
+          "weight": 0.2
+        },
+        {
+          "topic": "functions.flow_of_execution",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "exceptions.try_except_basics",
+      "title": "Catching an error with try and except",
+      "concept": "exceptions",
+      "summary": "Wrap a risky line in try/except ValueError so bad input is handled instead of crashing the program, and know which lines run.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "debugging.common_error_types",
+        "user_input.read_numbers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "try/except keeps the program running",
+          "worked_example": "text = input(\"Age: \")\ntry:\n    age = int(text)\n    print(\"Next year:\", age + 1)\nexcept ValueError:\n    print(\"Please type a whole number\")\nprint(\"Bye\")\n# typing ten -> Please type a whole number / Bye",
+          "practice": "Predict the output for several typed answers (digits, words, decimals).",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "user_input.read_numbers"
+          ]
+        },
+        {
+          "title": "When the error happens, the rest of try is skipped",
+          "worked_example": "text = \"abc\"\ntry:\n    n = int(text)\n    print(\"converted\")\nexcept ValueError:\n    print(\"not a number\")\nprint(\"done\")\n# not a number\n# done",
+          "practice": "Trace which lines run for a good and a bad value; reorder lines of a try/except (Parsons).",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "debugging.common_error_types"
+          ]
+        },
+        {
+          "title": "except only catches the error type it names",
+          "worked_example": "try:\n    int(\"ten\")\nexcept TypeError:\n    print(\"caught\")\n# ValueError: invalid literal for int() with base 10: 'ten'  (not caught)",
+          "practice": "Decide whether each handler catches the error raised in its try; fix the wrong name.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "debugging.common_error_types"
+          ]
+        },
+        {
+          "title": "A variable assigned in a failed try does not exist afterwards",
+          "worked_example": "try:\n    n = int(\"x\")\nexcept ValueError:\n    print(\"bad number\")\nprint(n)\n# bad number\n# NameError: name 'n' is not defined",
+          "practice": "Find the line that raises NameError after a handled error; fix it by giving the variable a value in except or moving the use inside try.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "debugging.common_error_types"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "user_input.read_numbers",
+          "weight": 0.5
+        },
+        {
+          "topic": "type_conversion.strings_to_numbers",
+          "weight": 0.4
+        },
+        {
+          "topic": "debugging.common_error_types",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "py4e",
+        "helsinki_mooc",
+        "mit_6100l",
+        "codecademy",
+        "bootdev",
+        "100_days_of_code"
+      ]
+    },
+    {
+      "id": "exceptions.several_handlers_and_as",
+      "title": "Several except clauses and reading the message with as",
+      "concept": "exceptions",
+      "summary": "Handle different errors differently, group them in one handler, read the message with as e, and avoid catching everything.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "exceptions.try_except_basics",
+        "lists.loop_over_items"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "One except clause per kind of error",
+          "worked_example": "for value in [\"7\", \"x\", \"0\"]:\n    try:\n        print(10 / int(value))\n    except ValueError:\n        print(\"not a number\")\n    except ZeroDivisionError:\n        print(\"cannot divide by zero\")\n# 1.4285714285714286 / not a number / cannot divide by zero",
+          "practice": "Predict the output for a list of mixed values; add the missing handler.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics",
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "One handler for several errors: a tuple",
+          "worked_example": "try:\n    print(10 / int(\"0\"))\nexcept (ValueError, ZeroDivisionError) as e:\n    print(\"bad input:\", e)\n# bad input: division by zero",
+          "practice": "Merge two identical handlers into one; predict which inputs reach it.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "except ... as e gives you the message",
+          "worked_example": "try:\n    int(\"ten\")\nexcept ValueError as e:\n    print(\"Problem:\", e)\n# Problem: invalid literal for int() with base 10: 'ten'",
+          "practice": "Predict the printed message for several failing conversions.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "Don't catch everything: a bare except hides real bugs",
+          "worked_example": "try:\n    totl = 1\n    print(total)\nexcept:\n    print(\"something went wrong\")\n# something went wrong  (the NameError typo is hidden)\nName the errors you expect; a parent such as LookupError catches IndexError too.",
+          "practice": "Spot the handler that hides a typo and rewrite it to name the expected error.",
+          "formats": [
+            "fix_the_bug",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.8
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "mit_6100l",
+        "cs50p",
+        "helsinki_mooc",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "exceptions.else_and_finally",
+      "title": "try ... else and finally",
+      "concept": "exceptions",
+      "summary": "Use else for code that should run only when the try succeeded, and finally for code that must run either way, even after return.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "exceptions.try_except_basics",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "else runs only when nothing went wrong",
+          "worked_example": "def to_int(s):\n    try:\n        n = int(s)\n    except ValueError:\n        print(\"bad\")\n    else:\n        print(\"ok\")\n\nto_int(\"5\")   # ok\nto_int(\"x\")   # bad\nelse keeps the try block down to the risky line.",
+          "practice": "Predict output for good and bad inputs; move a line from try into else.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "finally runs in every case",
+          "worked_example": "    finally:\n        print(\"checked\", s)\nAdded to to_int above: to_int(\"5\") prints ok, checked 5; to_int(\"x\") prints bad, checked x.",
+          "practice": "Trace the order of try/except/else/finally blocks for three inputs; reorder the clauses into a valid statement.",
+          "formats": [
+            "trace_table",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "finally runs even when try returns",
+          "worked_example": "def f():\n    try:\n        return \"from try\"\n    finally:\n        print(\"finally runs\")\n\nprint(f())\n# finally runs\n# from try",
+          "practice": "Predict the output order when try or except contains return.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.7
+        },
+        {
+          "topic": "return_values.early_return",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "100_days_of_code",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "exceptions.propagation",
+      "title": "How an error travels up through function calls",
+      "concept": "exceptions",
+      "summary": "Predict where an exception goes when a function does not catch it, choose the right level to catch it, and re-raise after reporting.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "exceptions.try_except_basics",
+        "debugging.read_tracebacks",
+        "functions.main_and_helpers"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "An uncaught error leaves the function and goes to its caller",
+          "worked_example": "def parse_age(text):\n    return int(text)\n\nparse_age(\"twelve\")\n# ValueError: ... 'twelve'\nThe traceback frames are exactly the path the error travelled.",
+          "practice": "Predict which lines run after an error is raised two calls deep.",
+          "formats": [
+            "predict_output",
+            "trace_table"
+          ],
+          "key_prerequisites": [
+            "debugging.read_tracebacks"
+          ]
+        },
+        {
+          "title": "The caller can catch an error raised inside a function",
+          "worked_example": "def main():\n    try:\n        age = parse_age(\"twelve\")\n    except ValueError:\n        print(\"Please type digits\")\n\nmain()   # Please type digits",
+          "practice": "Predict output when the try is in the caller, in the helper, or missing.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics",
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Catch where you can do something useful",
+          "worked_example": "parse_age can't know whether to re-ask, skip or quit, so it lets the error out; main(), which talks to the user, catches it and re-asks.",
+          "practice": "Choose which function should hold the try/except in small programs.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Report and re-raise with a bare raise",
+          "worked_example": "def load(text):\n    try:\n        return int(text)\n    except ValueError:\n        print(\"could not read\", text)\n        raise\n\nload(\"x\")\n# could not read x\n# ValueError: invalid literal for int() with base 10: 'x'",
+          "practice": "Predict the output with and without the raise line.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.7
+        },
+        {
+          "topic": "debugging.read_tracebacks",
+          "weight": 0.4
+        },
+        {
+          "topic": "functions.flow_of_execution",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "codecademy",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "exceptions.skip_bad_items",
+      "title": "Skipping bad items in a loop",
+      "concept": "exceptions",
+      "summary": "Put try/except inside a loop to skip or count values that fail, instead of stopping at the first bad one.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "exceptions.try_except_basics",
+        "lists.loop_over_items",
+        "break_continue.continue_skip"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "try inside the loop skips just the bad item",
+          "worked_example": "values = [\"4\", \"five\", \"6\", \"\"]\ntotal = 0\nfor v in values:\n    try:\n        total += int(v)\n    except ValueError:\n        continue\nprint(total)   # 10",
+          "practice": "Predict the total for lists with different bad values.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items",
+            "break_continue.continue_skip"
+          ]
+        },
+        {
+          "title": "try outside the loop stops at the first bad item",
+          "worked_example": "total = 0\ntry:\n    for v in [\"4\", \"five\", \"6\"]:\n        total += int(v)\nexcept ValueError:\n    print(\"stopped at a bad value\")\nprint(total)   # 4",
+          "practice": "Compare inside vs outside placement; move the try to make the program skip instead of stop.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "Count the bad items as you go",
+          "worked_example": "total = 0\nbad = 0\nfor v in values:\n    try:\n        total += int(v)\n    except ValueError:\n        bad += 1\nprint(total, bad)   # 10 2",
+          "practice": "Write a loop that sums the good values and counts the bad ones.",
+          "formats": [
+            "write_code",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        },
+        {
+          "title": "Average only the good values, guarding against none",
+          "worked_example": "count = 4 - bad\nif count == 0:\n    print(\"no valid numbers\")\nelse:\n    print(total / count)   # 5.0",
+          "practice": "Write a function that averages the valid numbers in a list of strings and returns None when there are none.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "lists.loop_over_items"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.8
+        },
+        {
+          "topic": "lists.loop_over_items",
+          "weight": 0.6
+        },
+        {
+          "topic": "break_continue.continue_skip",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "helsinki_mooc",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "raising_exceptions.raise_builtin",
+      "title": "Raising an error from your own function",
+      "concept": "raising_exceptions",
+      "summary": "Use raise ValueError(...) to reject bad arguments with a clear message, and let the caller catch it.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "exceptions.several_handlers_and_as",
+        "exceptions.propagation",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "raise stops the function with an error",
+          "worked_example": "def set_volume(level):\n    if level < 0 or level > 10:\n        raise ValueError(f\"volume must be 0-10, got {level}\")\n    print(\"volume\", level)\n\nset_volume(3)    # volume 3\nset_volume(42)   # ValueError: volume must be 0-10, got 42",
+          "practice": "Predict output and errors for several calls; write the raise line for a given rule.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "The caller catches what you raise",
+          "worked_example": "try:\n    set_volume(42)\nexcept ValueError as e:\n    print(\"Error:\", e)\n# Error: volume must be 0-10, got 42",
+          "practice": "Predict the printed message; write a caller that re-asks when set_volume raises.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "exceptions.several_handlers_and_as",
+            "exceptions.propagation"
+          ]
+        },
+        {
+          "title": "Raise instead of returning None for impossible input",
+          "worked_example": "def safe_divide(a, b):\n    if b == 0:\n        return None\n    return a / b\n\nprint(safe_divide(1, 0) + 1)\n# TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'\nThe None travels on and fails far from the cause; raise ValueError(\"b must not be 0\") fails at the cause.",
+          "practice": "Choose between raising and returning a value for described situations; rewrite a None-returning guard to raise.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "Pick a fitting built-in error type",
+          "worked_example": "ValueError: right type, unacceptable value (age -3).\nTypeError: wrong type altogether.\nIndexError: a position out of range. Callers rely on the type to choose a handler.",
+          "practice": "Choose the error type to raise for six described invalid inputs.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "exceptions.several_handlers_and_as"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "return_values.early_return",
+          "weight": 0.5
+        },
+        {
+          "topic": "exceptions.several_handlers_and_as",
+          "weight": 0.4
+        },
+        {
+          "topic": "exceptions.propagation",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "bootdev",
+        "codecademy",
+        "cs50p",
+        "100_days_of_code",
+        "helsinki_mooc",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "raising_exceptions.custom_exceptions",
+      "title": "Defining your own exception types",
+      "concept": "raising_exceptions",
+      "summary": "Define a one-line exception class, raise it, catch it by name, and base it on a built-in error so existing handlers still catch it.",
+      "minutes": 15,
+      "core": false,
+      "prerequisites": [
+        "raising_exceptions.raise_builtin",
+        "classes.define_and_instantiate"
+      ],
+      "knowledge_points": [
+        {
+          "title": "Define and raise your own exception",
+          "worked_example": "class InsufficientFunds(Exception):\n    pass\n\ndef withdraw(balance, amount):\n    if amount > balance:\n        raise InsufficientFunds(f\"need {amount - balance} more\")\n    return balance - amount\nThe class line is a template: a new name, based on Exception.",
+          "practice": "Fill in the class line and raise statement for a described rule.",
+          "formats": [
+            "fill_in_blank",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "Catch it by its name",
+          "worked_example": "try:\n    withdraw(50, 80)\nexcept InsufficientFunds as e:\n    print(\"Declined:\", e)\n# Declined: need 30 more",
+          "practice": "Predict which handler runs when several custom and built-in handlers are listed.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "Base it on a built-in error so general handlers still work",
+          "worked_example": "class NegativeAmount(ValueError):\n    pass\n\ntry:\n    raise NegativeAmount(\"amount cannot be negative\")\nexcept ValueError as e:\n    print(\"caught as ValueError:\", e)",
+          "practice": "Decide whether each handler catches a custom error given its base class.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "raising_exceptions.raise_builtin",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "bootdev"
+      ],
+      "notes": "Reconciliation: depends on classes.define_and_instantiate for the class statement; class X(Exception) is still read as a template until inheritance.define_subclass."
+    },
+    {
+      "id": "defensive_programming.get_int_helper",
+      "title": "Asking again until the user types a number",
+      "concept": "defensive_programming",
+      "summary": "Write get_int(prompt): a while True loop with try/except ValueError that re-asks until int() succeeds, then add a range check.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "exceptions.try_except_basics",
+        "break_continue.while_true_loops",
+        "while_loops.input_validation",
+        "return_values.early_return"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Loop until int() succeeds",
+          "worked_example": "while True:\n    try:\n        x = int(input(\"x: \"))\n    except ValueError:\n        pass\n    else:\n        break\nprint(x)\n# x: abc / x: 5 / 5",
+          "practice": "Predict the prompts shown for a sequence of typed answers; reorder the lines (Parsons).",
+          "formats": [
+            "predict_output",
+            "parsons"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops",
+            "exceptions.try_except_basics"
+          ]
+        },
+        {
+          "title": "Wrap it in a function: return ends the loop",
+          "worked_example": "def get_int(prompt):\n    while True:\n        try:\n            return int(input(prompt))\n        except ValueError:\n            print(\"Not an integer\")\n\nn = get_int(\"n: \")\n# n: ten / Not an integer / n: 4",
+          "practice": "Write get_float(prompt) by analogy; predict output for typed answers.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "Two kinds of bad input: not a number, and out of range",
+          "worked_example": "def get_int_between(prompt, low, high):\n    while True:\n        try:\n            n = int(input(prompt))\n        except ValueError:\n            print(\"Not an integer\")\n            continue\n        if low <= n <= high:\n            return n\n        print(f\"Must be {low}-{high}\")",
+          "practice": "Predict the messages for x, 42, 7; fill in the range check.",
+          "formats": [
+            "predict_output",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "while_loops.input_validation"
+          ]
+        },
+        {
+          "title": "Bug: the risky line is outside the try",
+          "worked_example": "n = int(input(\"n: \"))\nwhile True:\n    try:\n        ...\nThe conversion runs before the try exists, so typing ten still crashes. Move int(input()) inside the try.",
+          "practice": "Find and fix the misplaced conversion or the missing re-prompt in three variants.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "exceptions.try_except_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.8
+        },
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.7
+        },
+        {
+          "topic": "while_loops.input_validation",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "helsinki_mooc",
+        "py4e"
+      ]
+    },
+    {
+      "id": "defensive_programming.guard_before_acting",
+      "title": "Guard conditions: check before you act",
+      "concept": "defensive_programming",
+      "summary": "Protect risky operations (indexing, dividing) with guard conditions in the right order, and choose between checking first and trying first.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "logical_operators.short_circuit",
+        "string_methods.check_content",
+        "return_values.early_return",
+        "exceptions.try_except_basics"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "The guardian pattern: check length before indexing",
+          "worked_example": "line = \"\"\nif len(line) > 0 and line[0] == \"#\":\n    print(\"comment\")\nand stops at the first False, so line[0] is never evaluated for an empty line.",
+          "practice": "Predict which lines run for empty and non-empty strings; add the missing guard.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "logical_operators.short_circuit"
+          ]
+        },
+        {
+          "title": "The guard must come first",
+          "worked_example": "if line[0] == \"#\" and len(line) > 0:\n    ...\n# IndexError: string index out of range  (the check runs too late)",
+          "practice": "Decide which of four conditions are safe for empty input; reorder the unsafe ones.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "logical_operators.short_circuit"
+          ]
+        },
+        {
+          "title": "Guard clauses at the top of a function",
+          "worked_example": "def average(total, count):\n    if count == 0:\n        return None\n    return total / count\n\nprint(average(10, 0), average(10, 4))   # None 2.5",
+          "practice": "Write guard clauses for division, empty strings and negative sizes.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "return_values.early_return"
+          ]
+        },
+        {
+          "title": "Look before you leap vs try it and handle the error",
+          "worked_example": "text = \"-5\"\nprint(text.isdigit())   # False, so an isdigit() check rejects a valid int\ntry: n = int(text) handles -5, \" 7 \" and \"x\" correctly.\nCheck first when the rule is simple; try when the check would repeat the conversion's own rules.",
+          "practice": "For given inputs, predict the result of an isdigit() check and of a try/int() version; choose the better style per case.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "string_methods.check_content",
+            "exceptions.try_except_basics"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "logical_operators.short_circuit",
+          "weight": 0.5
+        },
+        {
+          "topic": "return_values.early_return",
+          "weight": 0.3
+        },
+        {
+          "topic": "exceptions.try_except_basics",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "py4e",
+        "mit_6100l",
+        "helsinki_mooc"
+      ]
+    },
+    {
+      "id": "defensive_programming.clean_and_validate_text",
+      "title": "Cleaning and validating text input",
+      "concept": "defensive_programming",
+      "summary": "Normalise typed text with strip() and lower(), write an is_valid_...() check for its format, and re-ask until it passes.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "string_methods.strip_whitespace",
+        "string_methods.check_content",
+        "return_values.boolean_functions",
+        "break_continue.while_true_loops"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Clean before comparing",
+          "worked_example": "answer = \"  YES \"\nprint(answer == \"yes\")                   # False\nprint(answer.strip().lower() == \"yes\")   # True",
+          "practice": "Predict comparisons with and without cleaning; add the cleaning step to a failing check.",
+          "formats": [
+            "predict_output",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_methods.strip_whitespace"
+          ]
+        },
+        {
+          "title": "Write a validity check as a boolean function",
+          "worked_example": "def is_valid_zip(text):\n    text = text.strip()\n    return len(text) == 5 and text.isdigit()\n\nprint(is_valid_zip(\" 92037\"), is_valid_zip(\"9203a\"), is_valid_zip(\"920\"))\n# True False False",
+          "practice": "Write is_valid_...() for a PIN, a username and a yes/no answer; predict results for edge inputs.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.boolean_functions",
+            "string_methods.check_content"
+          ]
+        },
+        {
+          "title": "Re-ask until the check passes",
+          "worked_example": "while True:\n    code = input(\"ZIP: \")\n    if is_valid_zip(code):\n        break\n    print(\"5 digits, please\")",
+          "practice": "Reorder the lines of a validation loop; predict prompts for a sequence of typed answers.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "break_continue.while_true_loops"
+          ]
+        },
+        {
+          "title": "Know what your check accepts: test the edge inputs",
+          "worked_example": "\"-5\".isdigit() and \"3.5\".isdigit() are both False; \"\" fails len checks; \" 7\" needs strip().\nList the inputs a user might really type and run each through the check.",
+          "practice": "For a given validator, choose which inputs are wrongly accepted or rejected and fix it.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "string_methods.check_content"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "string_methods.strip_whitespace",
+          "weight": 0.4
+        },
+        {
+          "topic": "string_methods.check_content",
+          "weight": 0.5
+        },
+        {
+          "topic": "return_values.boolean_functions",
+          "weight": 0.5
+        },
+        {
+          "topic": "break_continue.while_true_loops",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "helsinki_mooc",
+        "cs50p"
+      ]
+    },
+    {
+      "id": "assertions.assert_statement",
+      "title": "Checking assumptions with assert",
+      "concept": "assertions",
+      "summary": "Write assert condition, message to stop the program when something you believe must be true is not, and know why assert is not for user input.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "debugging.read_tracebacks",
+        "comparison_operators.compare_numbers",
+        "string_formatting.fstring_basics"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "assert does nothing when true, raises AssertionError when false",
+          "worked_example": "x = 5\nassert x > 0\nprint(\"passed\")\nassert 2 + 2 == 5\n# passed\n# AssertionError",
+          "practice": "Predict whether each assert passes or raises.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        },
+        {
+          "title": "Add a message that shows the bad value",
+          "worked_example": "assert x > 10, f\"x is too small: {x}\"\n# AssertionError: x is too small: 5",
+          "practice": "Predict the AssertionError text; write an assert with a message for a stated rule.",
+          "formats": [
+            "predict_output",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "string_formatting.fstring_basics"
+          ]
+        },
+        {
+          "title": "Assert your own assumptions, not the user's input",
+          "worked_example": "assert total >= 0   # fine: a bug if this fails\npython -O skips every assert:\nassert 1 == 2, \"never checked\"  runs silently under -O.\nUse if + raise (or a re-ask loop) for input from users.",
+          "practice": "For each situation, choose assert or input validation.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "debugging.read_tracebacks"
+          ]
+        },
+        {
+          "title": "Bug: parentheses turn an assert into an always-true tuple",
+          "worked_example": "x = -1\nassert (x > 0, \"x must be positive\")\nprint(\"no error!\")\n# SyntaxWarning: assertion is always true, perhaps remove parentheses?\n# no error!",
+          "practice": "Find the assert that can never fail and fix it.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.compare_numbers"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "comparison_operators.compare_numbers",
+          "weight": 0.3
+        },
+        {
+          "topic": "string_formatting.fstring_basics",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "codecademy",
+        "cs50p",
+        "mit_6100l"
+      ]
+    },
+    {
+      "id": "unit_testing.test_function_with_asserts",
+      "title": "Writing a test function with assert",
+      "concept": "unit_testing",
+      "summary": "Write test_...() functions whose asserts check a function's return values, run them, and read which case failed.",
+      "minutes": 17,
+      "core": true,
+      "prerequisites": [
+        "assertions.assert_statement",
+        "functions.main_and_helpers",
+        "return_values.return_a_value",
+        "comparison_operators.ranges_and_float_equality"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A test function: call, compare, assert",
+          "worked_example": "def square(n):\n    return n * n\n\ndef test_square():\n    assert square(3) == 9\n    assert square(-2) == 4\n    assert square(0) == 0\n\ntest_square()\nprint(\"all tests passed\")",
+          "practice": "Fill in expected values in asserts; write a three-assert test for a given function.",
+          "formats": [
+            "fill_in_blank",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "assertions.assert_statement",
+            "return_values.return_a_value"
+          ]
+        },
+        {
+          "title": "A failing test points at the broken case",
+          "worked_example": "def square(n):\n    return n + n   # bug\n\ndef test_square():\n    assert square(2) == 4                          # passes by luck\n    assert square(3) == 9, f\"square(3) gave {square(3)}\"\n# AssertionError: square(3) gave 6",
+          "practice": "Predict which assert fails for a buggy implementation; explain why a single test case can pass by luck.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "assertions.assert_statement"
+          ]
+        },
+        {
+          "title": "Tests live beside the program, not inside main()",
+          "worked_example": "main() runs the program; test_square() checks it. Call the tests while developing, and keep main() free of asserts so users never see test failures.",
+          "practice": "Reorder a file into helpers, tests and main (Parsons); choose which call runs the tests.",
+          "formats": [
+            "parsons",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "functions.main_and_helpers"
+          ]
+        },
+        {
+          "title": "Compare floats with a tolerance",
+          "worked_example": "def average(a, b):\n    return (a + b) / 2\nprint(average(0.1, 0.2) == 0.15)   # False (0.15000000000000002)\nassert abs(average(0.1, 0.2) - 0.15) < 1e-9   # passes",
+          "practice": "Fix float asserts that fail by rounding error; predict which pass.",
+          "formats": [
+            "fix_the_bug",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "comparison_operators.ranges_and_float_equality"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "assertions.assert_statement",
+          "weight": 0.8
+        },
+        {
+          "topic": "return_values.return_a_value",
+          "weight": 0.4
+        },
+        {
+          "topic": "comparison_operators.ranges_and_float_equality",
+          "weight": 0.2
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy",
+        "mit_6100l",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "unit_testing.choose_test_cases",
+      "title": "Choosing test cases: typical, boundary and edge",
+      "concept": "unit_testing",
+      "summary": "Pick test inputs that find bugs: typical values with hand-worked answers, values at each boundary, edge cases like zero and empty, and one per branch.",
+      "minutes": 18,
+      "core": true,
+      "prerequisites": [
+        "unit_testing.test_function_with_asserts",
+        "conditionals.elif_chains"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Work out the expected value by hand, not by running the code",
+          "worked_example": "Expected values come from the spec: square(3) must be 9.\nCopying whatever the code prints into the assert just records the bug.",
+          "practice": "Supply expected values for a function from its description; spot a test that was copied from buggy output.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        },
+        {
+          "title": "Test at the boundaries",
+          "worked_example": "def grade(score):\n    if score >= 90:\n        return \"A\"\n    elif score > 75:   # spec: 75 and up is B\n        return \"B\"\n    return \"C\"\n\nassert grade(80) == \"B\"   # passes\nassert grade(75) == \"B\"   # AssertionError: the boundary finds the bug",
+          "practice": "List the boundary values for given rules; choose the test that exposes an off-by-one.",
+          "formats": [
+            "short_answer",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        },
+        {
+          "title": "Edge cases: zero, negative, empty, one item",
+          "worked_example": "For count_vowels(text) test \"\", \"a\", \"xyz\", \"AEIOU\" as well as a normal sentence.",
+          "practice": "Pick the edge cases for four function descriptions; write asserts for them.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        },
+        {
+          "title": "Cover every branch",
+          "worked_example": "grade has three return lines, so at least three tests: one A, one B, one C.\nA branch no test reaches can hide any bug.",
+          "practice": "Given a function with several branches, choose a minimal test set that reaches each branch.",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "conditionals.elif_chains"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.8
+        },
+        {
+          "topic": "conditionals.elif_chains",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": [
+        "mit_6100l",
+        "cs50p",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "unit_testing.testable_functions",
+      "title": "Writing functions you can test",
+      "concept": "unit_testing",
+      "summary": "Make code testable by returning results instead of printing them and taking values as parameters instead of calling input(); add a regression test for every bug fixed.",
+      "minutes": 16,
+      "core": true,
+      "prerequisites": [
+        "unit_testing.test_function_with_asserts",
+        "decomposition.one_job_per_function",
+        "return_values.none_from_functions"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "A function that prints cannot be tested with ==",
+          "worked_example": "def greet(name):\n    print(f\"Hello, {name}\")\n\nassert greet(\"Ada\") == \"Hello, Ada\"\n# Hello, Ada\n# AssertionError   (greet returned None)",
+          "practice": "Predict the result of asserting on printing functions.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "return_values.none_from_functions"
+          ]
+        },
+        {
+          "title": "Return the result; let main() print it",
+          "worked_example": "def greeting(name):\n    return f\"Hello, {name}\"\n\nassert greeting(\"Ada\") == \"Hello, Ada\"\nprint(greeting(\"Ada\"))   # Hello, Ada",
+          "practice": "Refactor a printing function to return, and write its test.",
+          "formats": [
+            "write_code",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "Take values as parameters instead of calling input() inside",
+          "worked_example": "def is_adult():\n    return int(input(\"Age: \")) >= 18   # cannot test without typing\n\ndef is_adult(age):\n    return age >= 18                     # assert is_adult(18)",
+          "practice": "Choose which version of a function can be tested automatically; move the input() call to main().",
+          "formats": [
+            "multiple_choice",
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "decomposition.one_job_per_function"
+          ]
+        },
+        {
+          "title": "Regression test: every bug fixed gets a test",
+          "worked_example": "After fixing largest() for negative lists, add assert largest([-5, -2, -9]) == -2 so the bug can never return unnoticed.",
+          "practice": "Given a bug report and fix, write the regression assert.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.7
+        },
+        {
+          "topic": "decomposition.one_job_per_function",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "bootdev"
+      ]
+    },
+    {
+      "id": "unit_testing.test_raises",
+      "title": "Testing that bad input raises an error",
+      "concept": "unit_testing",
+      "summary": "Write a test that passes only if a function raises the expected exception for invalid input.",
+      "minutes": 15,
+      "core": true,
+      "prerequisites": [
+        "unit_testing.test_function_with_asserts",
+        "raising_exceptions.raise_builtin"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "try the bad call; reaching the end means it did not raise",
+          "worked_example": "def test_set_volume_rejects_11():\n    try:\n        set_volume(11)\n    except ValueError:\n        return\n    assert False, \"expected ValueError\"\n\ntest_set_volume_rejects_11()\nprint(\"ok\")   # ok",
+          "practice": "Reorder the lines of a raises-test (Parsons); predict whether it passes for a correct and a buggy function.",
+          "formats": [
+            "parsons",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "raising_exceptions.raise_builtin"
+          ]
+        },
+        {
+          "title": "A missing raise makes the test fail",
+          "worked_example": "If set_volume forgets its range check, set_volume(11) returns 11 and the test ends with AssertionError: expected ValueError.",
+          "practice": "Predict which tests fail for three buggy versions of a validating function.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        },
+        {
+          "title": "Test both sides of the rule",
+          "worked_example": "assert set_volume(10) == 10   # the boundary is allowed\nplus a raises-test for 11 and one for -1.",
+          "practice": "Write the full test set (valid boundary, invalid on each side) for a validating function.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts",
+            "raising_exceptions.raise_builtin"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.7
+        },
+        {
+          "topic": "raising_exceptions.raise_builtin",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p",
+        "codecademy"
+      ]
+    },
+    {
+      "id": "unit_testing.doctests",
+      "title": "Examples in docstrings as tests: doctest",
+      "concept": "unit_testing",
+      "summary": "Put REPL-style examples in a docstring and run them as tests with python -m doctest.",
+      "minutes": 14,
+      "core": false,
+      "prerequisites": [
+        "docstrings.write_docstrings",
+        "unit_testing.test_function_with_asserts",
+        "running_scripts.run_from_terminal"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Write examples as >>> lines and their results",
+          "worked_example": "def square(n):\n    \"\"\"Return n squared.\n\n    >>> square(3)\n    9\n    \"\"\"\n    return n * n",
+          "practice": "Fill in the expected result lines of a docstring example.",
+          "formats": [
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "docstrings.write_docstrings"
+          ]
+        },
+        {
+          "title": "Run them: silence means they passed",
+          "worked_example": "$ python -m doctest calc.py\n(no output when every example passes)\nIf square returned n + n: Failed example: square(3) / Expected: 9 / Got: 6",
+          "practice": "Predict the doctest report for a buggy function.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "Expected output must match exactly",
+          "worked_example": ">>> greeting(\"Ada\")\n'Hello, Ada'\nA returned string is shown with quotes, as the REPL shows it; writing Hello, Ada without quotes fails.",
+          "practice": "Fix docstring examples whose expected lines would not match.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "docstrings.write_docstrings"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "docstrings.write_docstrings",
+          "weight": 0.4
+        },
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.3
+        }
+      ],
+      "taught_in": []
+    },
+    {
+      "id": "unit_testing.unittest_module",
+      "title": "The unittest module: TestCase and assert methods",
+      "concept": "unit_testing",
+      "summary": "Write tests as methods of a unittest.TestCase class using assertEqual, assertRaises and friends, and read unittest's report.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "unit_testing.test_raises",
+        "inheritance.define_subclass"
+      ],
+      "knowledge_points": [
+        {
+          "title": "A TestCase class with test_ methods",
+          "worked_example": "import unittest\n\nclass TestSquare(unittest.TestCase):\n    def test_positive(self):\n        self.assertEqual(square(3), 9)\n\nunittest.main()\n# .  Ran 1 test ... OK",
+          "practice": "Fill in the template for a new function; predict how many tests run.",
+          "formats": [
+            "fill_in_blank",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        },
+        {
+          "title": "assertRaises for expected errors",
+          "worked_example": "    def test_bad_type(self):\n        with self.assertRaises(TypeError):\n            square(\"x\")",
+          "practice": "Convert a try/except raises-test into assertRaises.",
+          "formats": [
+            "write_code"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_raises"
+          ]
+        },
+        {
+          "title": "Choosing assert methods: assertTrue, assertIn, assertAlmostEqual",
+          "worked_example": "self.assertTrue(is_even(4))\nself.assertIn(\"a\", \"cat\")\nself.assertAlmostEqual(average(0.1, 0.2), 0.15)   # tolerance built in",
+          "practice": "Choose the assert method for each check; fix a float test that uses assertEqual.",
+          "formats": [
+            "multiple_choice",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        },
+        {
+          "title": "Reading the report: dots, F and E",
+          "worked_example": "..F\nFAIL: test_zero ... AssertionError: 1 != 0\nRan 3 tests ... FAILED (failures=1)\n. = pass, F = an assert failed, E = the test itself crashed.",
+          "practice": "Interpret reports: how many passed, which failed, and whether it was a failure or an error.",
+          "formats": [
+            "multiple_choice",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.test_raises",
+          "weight": 0.5
+        },
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.6
+        }
+      ],
+      "taught_in": [
+        "codecademy"
+      ]
+    },
+    {
+      "id": "lib_pytest.write_and_run_tests",
+      "title": "Testing with pytest",
+      "concept": "lib_pytest",
+      "summary": "Put test_ functions in a test_*.py file that imports the code under test, run pytest, and read its pass/fail report.",
+      "minutes": 17,
+      "core": false,
+      "prerequisites": [
+        "unit_testing.test_function_with_asserts",
+        "running_scripts.run_from_terminal",
+        "modules_imports.own_modules",
+        "tool_pip.pip_install"
+      ],
+      "knowledge_points": [
+        {
+          "title": "A test file: import the function, write test_ functions",
+          "worked_example": "# test_calc.py\nfrom calc import square\n\ndef test_positive():\n    assert square(2) == 4\n    assert square(3) == 9\n\ndef test_zero():\n    assert square(0) == 0\nNo calls at the bottom: pytest finds and runs every test_ function.",
+          "practice": "Fill in the import line and test names; choose which files and functions pytest will collect.",
+          "formats": [
+            "fill_in_blank",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts",
+            "modules_imports.own_modules"
+          ]
+        },
+        {
+          "title": "Run pytest and read the summary",
+          "worked_example": "$ pip install pytest      (once)\n$ pytest test_calc.py\n..        [100%]\n2 passed\nEach dot is a passing test.",
+          "practice": "Predict the summary line for a file with given passing and failing tests.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal",
+            "tool_pip.pip_install"
+          ]
+        },
+        {
+          "title": "Read a failure: pytest shows the values",
+          "worked_example": "With square returning n + n:\nF.\n>       assert square(3) == 9\nE       assert 6 == 9\nE        +  where 6 = square(3)\nFAILED test_calc.py::test_positive - assert 6 == 9",
+          "practice": "From a failure report, name the failing test, the call and the actual value; fix the function.",
+          "formats": [
+            "short_answer",
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        },
+        {
+          "title": "Split cases into separate tests to see every failure",
+          "worked_example": "In one test, the first failing assert stops that test; test_zero still ran and passed. Several small tests show which cases break at once.",
+          "practice": "Split a long test function into focused tests with descriptive names.",
+          "formats": [
+            "write_code",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_function_with_asserts"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "unit_testing.test_function_with_asserts",
+          "weight": 0.8
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    },
+    {
+      "id": "lib_pytest.raises_and_test_folders",
+      "title": "pytest.raises, parametrize and organising tests",
+      "concept": "lib_pytest",
+      "summary": "Test expected exceptions with pytest.raises, run one test over many cases with @pytest.mark.parametrize, and organise test files in a tests folder that pytest discovers.",
+      "minutes": 18,
+      "core": false,
+      "prerequisites": [
+        "lib_pytest.write_and_run_tests",
+        "unit_testing.test_raises",
+        "modules_imports.packages_and_import_errors",
+        "decorators.at_syntax"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "with pytest.raises(...) checks that an error happens",
+          "worked_example": "import pytest\nfrom vol import set_volume\n\ndef test_too_loud():\n    with pytest.raises(ValueError):\n        set_volume(11)\nThe test passes only if the indented call raises ValueError.",
+          "practice": "Rewrite a try/except raises-test using pytest.raises; fill in the expected error type.",
+          "formats": [
+            "write_code",
+            "fill_in_blank"
+          ],
+          "key_prerequisites": [
+            "unit_testing.test_raises"
+          ]
+        },
+        {
+          "title": "DID NOT RAISE: the error you expected never happened",
+          "worked_example": "def test_ok():\n    with pytest.raises(ValueError):\n        set_volume(5)\n# FAILED test_vol.py::test_ok - Failed: DID NOT RAISE <class 'ValueError'>",
+          "practice": "Predict pass/fail for raises-tests against correct and buggy functions.",
+          "formats": [
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "lib_pytest.write_and_run_tests"
+          ]
+        },
+        {
+          "title": "A tests folder and running everything with plain pytest",
+          "worked_example": "project/\n  calc.py\n  tests/\n    __init__.py\n    test_calc.py\n$ pytest      # finds every test_*.py file and test_ function",
+          "practice": "Choose which files and functions pytest collects from a folder listing.",
+          "formats": [
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "lib_pytest.write_and_run_tests",
+            "modules_imports.packages_and_import_errors"
+          ]
+        },
+        {
+          "title": "One test, many cases: @pytest.mark.parametrize",
+          "worked_example": "import pytest\nfrom calc import square\n\n@pytest.mark.parametrize(\"n, expected\", [(2, 4), (3, 9), (-1, 1)])\ndef test_square(n, expected):\n    assert square(n) == expected\n# $ pytest  ->  3 passed: one test per tuple\nEach tuple fills n and expected for a separate test; a failing case is reported with its values, e.g. test_square[3-9].",
+          "practice": "Turn three near-identical test functions into one parametrized test; predict how many tests pytest reports.",
+          "formats": [
+            "write_code",
+            "predict_output"
+          ],
+          "key_prerequisites": [
+            "decorators.at_syntax",
+            "lib_pytest.write_and_run_tests"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "lib_pytest.write_and_run_tests",
+          "weight": 0.7
+        },
+        {
+          "topic": "unit_testing.test_raises",
+          "weight": 0.5
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ],
+      "notes": "Reconciliation: KP4 (parametrize) added because B09 left it to a stitching pass; pytest is not installed, so it was written from the pytest documentation and not run."
+    },
+    {
+      "id": "tool_mypy.check_hints_with_mypy",
+      "title": "Checking type hints with mypy",
+      "concept": "tool_mypy",
+      "summary": "Run mypy on a file, read its errors, and fix the mismatches it finds before the code runs, including forgotten None cases.",
+      "minutes": 16,
+      "core": false,
+      "prerequisites": [
+        "type_hints.optional_and_union",
+        "running_scripts.run_from_terminal",
+        "tool_pip.pip_install",
+        "type_hints.collection_hints"
+      ],
+      "pending_prerequisites": [],
+      "knowledge_points": [
+        {
+          "title": "Run mypy and read the result",
+          "worked_example": "$ pip install mypy      (once)\n$ mypy shapes.py\nSuccess: no issues found in 1 source file\nmypy reads the hints without running the program.",
+          "practice": "Predict whether mypy reports issues for small annotated files.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "running_scripts.run_from_terminal"
+          ]
+        },
+        {
+          "title": "Argument and return mismatches",
+          "worked_example": "def half(n: int) -> int:\n    return n / 2\nprint(double(\"ab\"))\n# error: Incompatible return value type (got \"float\", expected \"int\")  [return-value]\n# error: Argument 1 to \"double\" has incompatible type \"str\"; expected \"int\"  [arg-type]",
+          "practice": "Given mypy errors, find the line and fix either the code or the hint.",
+          "formats": [
+            "fix_the_bug",
+            "short_answer"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions"
+          ]
+        },
+        {
+          "title": "mypy catches the forgotten None case",
+          "worked_example": "def find(names: list[str], target: str) -> int | None: ...\nprint(find([\"a\"], \"a\") + 1)\n# error: Unsupported operand types for + (\"None\" and \"int\")  [operator]\nFix: check result is not None before using it.",
+          "practice": "Fix code flagged for using a possibly-None value.",
+          "formats": [
+            "fix_the_bug"
+          ],
+          "key_prerequisites": [
+            "type_hints.optional_and_union",
+            "type_hints.collection_hints"
+          ]
+        },
+        {
+          "title": "Functions without hints are not checked",
+          "worked_example": "def double(n):\n    return n * 2\nprint(double(\"ab\") + 1)\n# mypy: Success: no issues found  (but it crashes when run)\nAdd hints to the functions you want checked.",
+          "practice": "Predict mypy's verdict for annotated vs unannotated versions of the same bug.",
+          "formats": [
+            "predict_output",
+            "multiple_choice"
+          ],
+          "key_prerequisites": [
+            "type_hints.annotate_functions"
+          ]
+        }
+      ],
+      "encompasses": [
+        {
+          "topic": "type_hints.annotate_functions",
+          "weight": 0.5
+        },
+        {
+          "topic": "type_hints.optional_and_union",
+          "weight": 0.4
+        }
+      ],
+      "taught_in": [
+        "cs50p"
+      ]
+    }
+  ]
+}

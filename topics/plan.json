@@ -1,0 +1,461 @@
+{
+  "description": "Batch plan for atomizing the Python concept graph into Math Academy-sized topics. Waves run in order; batches inside a wave run in parallel. A batch may only use topic IDs from earlier waves as prerequisites; anything else goes in pending_prerequisites as concept:<id>.",
+  "waves": [
+    {
+      "wave": 1,
+      "batches": [
+        {
+          "id": "B01",
+          "slug": "environment",
+          "title": "Environment and first programs",
+          "concepts": [
+            "computer_architecture",
+            "python_setup",
+            "repl",
+            "ide_editor",
+            "running_scripts",
+            "command_line",
+            "comments",
+            "print_output",
+            "pep8_style"
+          ]
+        }
+      ]
+    },
+    {
+      "wave": 2,
+      "batches": [
+        {
+          "id": "B02",
+          "slug": "values_operators",
+          "title": "Values, types and operators",
+          "concepts": [
+            "variables",
+            "data_types",
+            "integers_floats",
+            "arithmetic_operators",
+            "expressions",
+            "constants",
+            "none_type",
+            "type_conversion",
+            "user_input",
+            "booleans",
+            "comparison_operators",
+            "logical_operators"
+          ]
+        }
+      ]
+    },
+    {
+      "wave": 3,
+      "batches": [
+        {
+          "id": "B03",
+          "slug": "strings",
+          "title": "Strings",
+          "concepts": [
+            "strings",
+            "string_concatenation",
+            "string_indexing_slicing",
+            "string_methods",
+            "string_formatting",
+            "string_immutability",
+            "unicode_encoding"
+          ]
+        },
+        {
+          "id": "B04",
+          "slug": "control_flow",
+          "title": "Control flow",
+          "concepts": [
+            "conditionals",
+            "nested_conditionals",
+            "conditional_expressions",
+            "match_statement",
+            "while_loops",
+            "for_loops",
+            "range_function",
+            "break_continue",
+            "nested_loops",
+            "loop_patterns",
+            "iteration"
+          ]
+        }
+      ]
+    },
+    {
+      "wave": 4,
+      "batches": [
+        {
+          "id": "B05",
+          "slug": "functions",
+          "title": "Functions and decomposition",
+          "concepts": [
+            "functions",
+            "parameters_arguments",
+            "return_values",
+            "scope",
+            "builtin_functions",
+            "docstrings",
+            "decomposition",
+            "abstraction",
+            "pseudocode",
+            "main_guard",
+            "type_hints",
+            "computational_thinking",
+            "karel_robot"
+          ]
+        },
+        {
+          "id": "B06",
+          "slug": "lists_tuples",
+          "title": "Lists and tuples",
+          "concepts": [
+            "lists",
+            "list_methods",
+            "list_slicing",
+            "tuples",
+            "unpacking",
+            "enumerate_zip",
+            "mutability_aliasing",
+            "copying",
+            "sorting"
+          ]
+        }
+      ]
+    },
+    {
+      "wave": 5,
+      "batches": [
+        {
+          "id": "B07",
+          "slug": "dicts_sets",
+          "title": "Dictionaries, sets and comprehensions",
+          "concepts": [
+            "dictionaries",
+            "sets",
+            "nested_data_structures",
+            "list_comprehensions",
+            "dict_comprehensions",
+            "stacks_queues",
+            "collections_module",
+            "itertools_module"
+          ]
+        },
+        {
+          "id": "B08",
+          "slug": "advanced_functions",
+          "title": "Advanced functions",
+          "concepts": [
+            "higher_order_functions",
+            "lambda_functions",
+            "closures",
+            "decorators",
+            "generators",
+            "args_kwargs",
+            "recursion",
+            "pure_functions",
+            "functional_programming",
+            "currying"
+          ]
+        },
+        {
+          "id": "B09",
+          "slug": "errors_testing",
+          "title": "Errors, debugging and testing",
+          "concepts": [
+            "debugging",
+            "exceptions",
+            "raising_exceptions",
+            "defensive_programming",
+            "assertions",
+            "unit_testing",
+            "lib_pytest",
+            "tool_mypy"
+          ]
+        },
+        {
+          "id": "B10",
+          "slug": "files",
+          "title": "Files and the command line",
+          "concepts": [
+            "file_io",
+            "file_paths",
+            "context_managers",
+            "csv_files",
+            "json_data",
+            "lib_json",
+            "serialization",
+            "os_sys_module",
+            "command_line_args",
+            "cli_applications"
+          ]
+        }
+      ]
+    },
+    {
+      "wave": 6,
+      "batches": [
+        {
+          "id": "B11",
+          "slug": "classes",
+          "title": "Classes and objects",
+          "concepts": [
+            "objects_methods",
+            "classes",
+            "instance_attributes",
+            "constructors",
+            "class_attributes",
+            "encapsulation",
+            "dunder_methods",
+            "enums"
+          ]
+        },
+        {
+          "id": "B12",
+          "slug": "oo_design",
+          "title": "Object-oriented design",
+          "concepts": [
+            "inheritance",
+            "polymorphism",
+            "composition",
+            "abstract_classes",
+            "interfaces",
+            "sum_types",
+            "object_oriented_design",
+            "clean_code"
+          ]
+        },
+        {
+          "id": "B13",
+          "slug": "modules_stdlib",
+          "title": "Modules, packages and the standard library",
+          "concepts": [
+            "modules_imports",
+            "random_module",
+            "math_module",
+            "datetime_module",
+            "statistics_module",
+            "tool_pip",
+            "third_party_packages",
+            "regular_expressions",
+            "environment_variables",
+            "subprocess_module",
+            "tool_jupyter"
+          ]
+        },
+        {
+          "id": "B14",
+          "slug": "algorithms",
+          "title": "Algorithms and numerical methods",
+          "concepts": [
+            "guess_and_check",
+            "bisection_method",
+            "newton_raphson",
+            "floating_point_precision",
+            "binary_bitwise",
+            "linear_search",
+            "binary_search",
+            "sorting_algorithms",
+            "complexity_big_o",
+            "simulation_monte_carlo",
+            "mathematical_induction"
+          ]
+        },
+        {
+          "id": "B15",
+          "slug": "data_structures",
+          "title": "Data structures",
+          "concepts": [
+            "linked_lists",
+            "trees",
+            "balanced_trees",
+            "tries",
+            "graphs",
+            "graph_algorithms",
+            "hash_maps_internals",
+            "p_vs_np"
+          ]
+        }
+      ]
+    },
+    {
+      "wave": 7,
+      "batches": [
+        {
+          "id": "B16",
+          "slug": "web_data_access",
+          "title": "Web data, networking and automation",
+          "concepts": [
+            "apis_http",
+            "lib_requests",
+            "lib_urllib",
+            "web_scraping",
+            "lib_beautifulsoup",
+            "lib_selenium",
+            "xml_parsing",
+            "lib_elementtree",
+            "web_services",
+            "networking_sockets",
+            "lib_socket",
+            "tool_geocoding_api",
+            "lib_smtplib",
+            "automation",
+            "lib_pyautogui",
+            "scheduling_cron"
+          ]
+        },
+        {
+          "id": "B17",
+          "slug": "databases_web_apps",
+          "title": "Databases and web apps",
+          "concepts": [
+            "databases_sql",
+            "lib_sqlite3",
+            "sql_joins",
+            "data_modeling",
+            "lib_sqlalchemy",
+            "web_development",
+            "lib_flask",
+            "lib_jinja",
+            "lib_wtforms",
+            "authentication",
+            "rest_api_design",
+            "deployment"
+          ]
+        },
+        {
+          "id": "B18",
+          "slug": "data_science",
+          "title": "Data analysis and visualization",
+          "concepts": [
+            "data_analysis",
+            "lib_numpy",
+            "lib_pandas",
+            "data_visualization",
+            "lib_matplotlib",
+            "lib_seaborn",
+            "lib_plotly",
+            "lib_scipy",
+            "lib_scikit_learn",
+            "linear_regression",
+            "statistics_hypothesis_testing"
+          ]
+        },
+        {
+          "id": "B19",
+          "slug": "graphics_games",
+          "title": "Graphics, GUIs, games and fun libraries",
+          "concepts": [
+            "graphics_canvas",
+            "lib_turtle",
+            "lib_stanford_graphics",
+            "lib_tkinter",
+            "event_driven_programming",
+            "game_development",
+            "lib_pygame",
+            "game_loop",
+            "collision_detection",
+            "lib_pillow",
+            "image_processing",
+            "lib_cowsay",
+            "lib_emoji",
+            "lib_pyfiglet",
+            "lib_inflect",
+            "lib_tabulate",
+            "lib_fpdf",
+            "lib_validators"
+          ]
+        },
+        {
+          "id": "B20",
+          "slug": "ai_projects",
+          "title": "LLM apps and project builds",
+          "concepts": [
+            "llm_apis",
+            "lib_openai",
+            "function_calling",
+            "ai_agents",
+            "markdown",
+            "static_site_generation"
+          ]
+        }
+      ]
+    }
+  ],
+  "umbrella": {
+    "collections": [
+      "lists",
+      "tuples",
+      "dictionaries",
+      "sets"
+    ],
+    "standard_library": [
+      "random_module",
+      "math_module",
+      "datetime_module",
+      "statistics_module",
+      "os_sys_module",
+      "collections_module",
+      "itertools_module"
+    ],
+    "algorithms": [
+      "linear_search",
+      "binary_search",
+      "sorting_algorithms",
+      "graph_algorithms"
+    ]
+  },
+  "out_of_scope": {
+    "reason": "Not Python: other languages, career, version control, OS and infrastructure tooling, front-end markup",
+    "concepts": [
+      "lang_c",
+      "lang_go",
+      "pointers_memory",
+      "stack_heap_memory",
+      "garbage_collection",
+      "concurrency",
+      "generics",
+      "job_search",
+      "portfolio_project",
+      "tool_git",
+      "tool_github",
+      "git_branching",
+      "git_internals",
+      "git_merge_rebase",
+      "git_remotes",
+      "linux_filesystem",
+      "linux_permissions",
+      "linux_processes",
+      "shell_io_redirection",
+      "system_package_managers",
+      "tool_curl",
+      "tool_docker",
+      "containers",
+      "tool_aws",
+      "tool_rabbitmq",
+      "tool_postgresql",
+      "tool_sqlc",
+      "tool_d3js",
+      "tool_sqlite_browser",
+      "cdn",
+      "dns",
+      "object_storage",
+      "pub_sub_messaging",
+      "https_tls",
+      "caching",
+      "webhooks",
+      "web_security",
+      "injection_attacks",
+      "authorization",
+      "database_indexes",
+      "database_normalization",
+      "db_migrations",
+      "http_clients",
+      "http_servers",
+      "html_css_basics",
+      "lib_bootstrap",
+      "ui_ux_design"
+    ]
+  }
+}

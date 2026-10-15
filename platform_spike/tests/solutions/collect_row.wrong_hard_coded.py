@@ -1,0 +1,8 @@
+move()
+move()
+pick()
+pick()
+move()
+move()
+move()
+pick()

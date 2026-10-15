@@ -1,0 +1,111 @@
+{
+  "format": 1,
+  "id": "build_towers",
+  "title": "Build the towers",
+  "brief": "A gem on the ground marks a building site. At every site, stack two more gems straight above it to make a tower three gems tall, then carry on to the end of the street. Write each function's job, start and end position in its docstring.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef build_tower():\n    \"\"\"Start: on a site, facing east. End: same cell, facing east.\"\"\"\n    pass\n\n\nwhile front_is_clear():\n    move()\n",
+  "world": {
+    "width": 8,
+    "height": 3,
+    "start": [
+      0,
+      2,
+      "E"
+    ],
+    "bag": "infinite",
+    "gems": {
+      "1,2": 1,
+      "4,2": 1,
+      "6,2": 1
+    },
+    "goal": {
+      "gems_exactly": {
+        "1,0": 1,
+        "1,1": 1,
+        "1,2": 1,
+        "4,0": 1,
+        "4,1": 1,
+        "4,2": 1,
+        "6,0": 1,
+        "6,1": 1,
+        "6,2": 1
+      }
+    }
+  },
+  "hidden_worlds": [
+    {
+      "width": 5,
+      "height": 3,
+      "start": [
+        0,
+        2,
+        "E"
+      ],
+      "bag": "infinite",
+      "gems": {
+        "0,2": 1,
+        "4,2": 1
+      },
+      "name": "sites at both ends",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "0,1": 1,
+          "0,2": 1,
+          "4,0": 1,
+          "4,1": 1,
+          "4,2": 1
+        }
+      }
+    },
+    {
+      "width": 4,
+      "height": 3,
+      "start": [
+        0,
+        2,
+        "E"
+      ],
+      "bag": "infinite",
+      "gems": {},
+      "name": "no sites",
+      "goal": {
+        "gems_exactly": {}
+      }
+    },
+    {
+      "width": 1,
+      "height": 3,
+      "start": [
+        0,
+        2,
+        "E"
+      ],
+      "bag": "infinite",
+      "gems": {
+        "0,2": 1
+      },
+      "name": "one cell",
+      "goal": {
+        "gems_exactly": {
+          "0,0": 1,
+          "0,1": 1,
+          "0,2": 1
+        }
+      }
+    }
+  ],
+  "goal": {
+    "no_error": true
+  },
+  "constraints": {
+    "required": [
+      "def"
+    ]
+  },
+  "topics": [
+    "docstrings.write_docstrings",
+    "decomposition.top_down_design",
+    "conditionals.if_statement"
+  ]
+}

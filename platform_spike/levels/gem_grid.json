@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "id": "gem_grid",
+  "title": "Gem grid",
+  "brief": "Put one gem on every cell of the 5 by 3 grid, row by row from the top. You have exactly 15 gems. Fill one row with a loop, then repeat the row with another loop.",
+  "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n",
+  "world": {
+    "width": 6,
+    "height": 4,
+    "start": [
+      0,
+      0,
+      "E"
+    ],
+    "bag": 15
+  },
+  "constraints": {
+    "required": [
+      "for",
+      "def"
+    ],
+    "max_lines": 19,
+    "hidden_commands": [
+      "scan"
+    ]
+  },
+  "topics": [
+    "nested_loops.loop_inside_loop",
+    "decomposition.extract_repeated_code"
+  ],
+  "goal": {
+    "no_error": true,
+    "gems_exactly": {
+      "0,0": 1,
+      "0,1": 1,
+      "0,2": 1,
+      "1,0": 1,
+      "1,1": 1,
+      "1,2": 1,
+      "2,0": 1,
+      "2,1": 1,
+      "2,2": 1,
+      "3,0": 1,
+      "3,1": 1,
+      "3,2": 1,
+      "4,0": 1,
+      "4,1": 1,
+      "4,2": 1
+    },
+    "end_at": [
+      0,
+      3
+    ]
+  }
+}

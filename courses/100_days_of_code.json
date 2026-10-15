@@ -1,0 +1,3998 @@
+{
+  "course": {
+    "id": "100_days_of_code",
+    "title": "100 Days of Code: The Complete Python Pro Bootcamp",
+    "provider": "Udemy / The App Brewery (Dr. Angela Yu)",
+    "url": "https://www.udemy.com/course/100-days-of-code/",
+    "format": "self-paced video bootcamp, 100 daily sections each ending in a project; levels: Beginner (Days 1-14), Intermediate (15-31), Intermediate+ (32-58), Advanced (59-81), Professional Portfolio (82-100)",
+    "audience": "absolute beginners through to aspiring professional developers",
+    "sources": [
+      "https://www.udemy.com/course/100-days-of-code/",
+      "https://github.com/JAdelhelm/100-days-of-code-python",
+      "https://github.com/Mikerniker/100_Days_of_Python",
+      "https://github.com/phillipai/100-days-of-code-python",
+      "https://github.com/vanquirius/100-days-of-code-python",
+      "https://github.com/toyinariyo/Python-100-Days-of-Code",
+      "https://github.com/ItayVazana1/100-Python-Projects"
+    ],
+    "retrieved": "2026-10-12",
+    "notes": "Udemy course page returned HTTP 403 to automated fetch, so day titles were reconstructed from multiple student GitHub repos that mirror the Udemy section titles; these agree closely. Numbering follows the current (2024+) edition, which inserted 'Day 70: Git, GitHub and Version Control' and moved deployment to Day 71 (Render + gunicorn + PostgreSQL, replacing Heroku); as a result the data-science block is Days 72-81 (vs 71-80 in 2021-2023 editions) and the old 'Predict Earnings using Multivariable Regression' day appears dropped, with Days 99-100 being Space Race and Fatal Force (police deaths) analyses. Older editions differ by one day from Day 70 onward. Days 41-44 (HTML/CSS) were folded in from Angela Yu's web bootcamp in later editions. Days 82-100 are Professional Portfolio projects given only as briefs (no solutions/lectures), so their concepts are inferred from the brief and typical student implementations and are lower confidence; Day 98 is 'Automate Your Life' (open-ended). Day 13 has no main project. Exact sub-lesson topic wording is paraphrased from repos and memory of the course, not copied from Udemy. Some project names (e.g. Day 35 SMS vs Telegram rain alert after Twilio changes) vary by edition."
+  },
+  "modules": [
+    {
+      "id": "100_days_of_code:day001",
+      "title": "Day 1: Working with Variables in Python to Manage Data",
+      "order": 1,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Printing",
+        "String manipulation",
+        "Input function",
+        "Python variables",
+        "Variable naming",
+        "Debugging practice"
+      ],
+      "projects": [
+        "Band Name Generator"
+      ],
+      "concepts": [
+        "print_output",
+        "strings",
+        "string_concatenation",
+        "user_input",
+        "variables",
+        "comments",
+        "debugging"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day002",
+      "title": "Day 2: Understanding Data Types and How to Manipulate Strings",
+      "order": 2,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Primitive data types",
+        "Type error, type checking and type conversion",
+        "Mathematical operations",
+        "Number manipulation and f-strings"
+      ],
+      "projects": [
+        "Tip Calculator"
+      ],
+      "concepts": [
+        "data_types",
+        "integers_floats",
+        "booleans",
+        "type_conversion",
+        "arithmetic_operators",
+        "string_formatting",
+        "string_indexing_slicing"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day003",
+      "title": "Day 3: Control Flow and Logical Operators",
+      "order": 3,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Conditional statements, if/else",
+        "Modulo",
+        "Nested if/elif/else",
+        "Multiple if statements",
+        "Logical operators"
+      ],
+      "projects": [
+        "Treasure Island"
+      ],
+      "concepts": [
+        "conditionals",
+        "nested_conditionals",
+        "comparison_operators",
+        "logical_operators",
+        "arithmetic_operators",
+        "string_methods"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day004",
+      "title": "Day 4: Randomisation and Python Lists",
+      "order": 4,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Random module",
+        "Python modules",
+        "Understanding offsets and appending items to lists",
+        "IndexErrors",
+        "Nested lists"
+      ],
+      "projects": [
+        "Rock Paper Scissors"
+      ],
+      "concepts": [
+        "random_module",
+        "modules_imports",
+        "lists",
+        "list_methods",
+        "nested_data_structures"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day005",
+      "title": "Day 5: Python Loops",
+      "order": 5,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "For loops with lists",
+        "for loops and the range() function",
+        "Highest score / sum exercises",
+        "FizzBuzz"
+      ],
+      "projects": [
+        "Password Generator"
+      ],
+      "concepts": [
+        "for_loops",
+        "range_function",
+        "loop_patterns",
+        "builtin_functions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day006",
+      "title": "Day 6: Python Functions & Karel",
+      "order": 6,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Defining and calling functions",
+        "Indentation",
+        "While loops",
+        "Reeborg's World"
+      ],
+      "projects": [
+        "Escaping the Maze (Reeborg's World)"
+      ],
+      "concepts": [
+        "functions",
+        "while_loops",
+        "karel_robot",
+        "decomposition"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day007",
+      "title": "Day 7: Hangman",
+      "order": 7,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Flow charts and program design",
+        "while not loops",
+        "Importing own modules",
+        "ASCII art"
+      ],
+      "projects": [
+        "Hangman"
+      ],
+      "concepts": [
+        "while_loops",
+        "for_loops",
+        "lists",
+        "strings",
+        "random_module",
+        "modules_imports",
+        "decomposition"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day008",
+      "title": "Day 8: Function Parameters & Caesar Cipher",
+      "order": 8,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Functions with inputs",
+        "Positional vs keyword arguments"
+      ],
+      "projects": [
+        "Caesar Cipher"
+      ],
+      "concepts": [
+        "parameters_arguments",
+        "functions",
+        "lists",
+        "string_methods",
+        "unicode_encoding"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day009",
+      "title": "Day 9: Dictionaries, Nesting and the Secret Auction",
+      "order": 9,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Python dictionaries",
+        "Nesting lists and dictionaries"
+      ],
+      "projects": [
+        "Secret Auction"
+      ],
+      "concepts": [
+        "dictionaries",
+        "nested_data_structures",
+        "for_loops"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day010",
+      "title": "Day 10: Functions with Outputs",
+      "order": 10,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Functions with outputs",
+        "Multiple return values",
+        "Docstrings",
+        "Storing functions as values in a dictionary"
+      ],
+      "projects": [
+        "Calculator"
+      ],
+      "concepts": [
+        "return_values",
+        "docstrings",
+        "higher_order_functions",
+        "dictionaries",
+        "while_loops",
+        "recursion"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day011",
+      "title": "Day 11: The Blackjack Capstone Project",
+      "order": 11,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Capstone project combining functions, loops, conditionals, lists, random"
+      ],
+      "projects": [
+        "Blackjack"
+      ],
+      "concepts": [
+        "decomposition",
+        "functions",
+        "lists",
+        "random_module",
+        "while_loops",
+        "conditionals"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day012",
+      "title": "Day 12: Scope & Number Guessing Game",
+      "order": 12,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Namespaces: local vs global scope",
+        "Block scope",
+        "Modifying global scope",
+        "Global constants"
+      ],
+      "projects": [
+        "Number Guessing Game"
+      ],
+      "concepts": [
+        "scope",
+        "constants",
+        "random_module",
+        "functions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day013",
+      "title": "Day 13: Debugging: How to Find and Fix Errors in your Code",
+      "order": 13,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Describe the problem",
+        "Reproduce the bug",
+        "Print debugging",
+        "Using a debugger",
+        "Common errors"
+      ],
+      "projects": [
+        "(debugging exercises; no main project)"
+      ],
+      "concepts": [
+        "debugging",
+        "exceptions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day014",
+      "title": "Day 14: Higher Lower Game Project",
+      "order": 14,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Beginner",
+        "Beginner-level capstone"
+      ],
+      "projects": [
+        "Higher Lower Game"
+      ],
+      "concepts": [
+        "decomposition",
+        "dictionaries",
+        "random_module",
+        "functions",
+        "while_loops"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day015",
+      "title": "Day 15: Local Development Environment Setup & the Coffee Machine",
+      "order": 15,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Installing Python locally",
+        "Installing and using PyCharm",
+        "PyCharm shortcuts and features"
+      ],
+      "projects": [
+        "Coffee Machine (procedural)"
+      ],
+      "concepts": [
+        "python_setup",
+        "ide_editor",
+        "dictionaries",
+        "nested_data_structures",
+        "functions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day016",
+      "title": "Day 16: Object Oriented Programming (OOP)",
+      "order": 16,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Why OOP",
+        "Classes and objects",
+        "Constructing objects, attributes and methods",
+        "Python packages and PyPI (PrettyTable)"
+      ],
+      "projects": [
+        "OOP Coffee Machine"
+      ],
+      "concepts": [
+        "object_oriented_design",
+        "objects_methods",
+        "classes",
+        "third_party_packages",
+        "tool_pip",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day017",
+      "title": "Day 17: The Quiz Project & The Benefits of OOP",
+      "order": 17,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Creating classes",
+        "Constructors / __init__",
+        "Attributes and methods",
+        "Open Trivia DB data"
+      ],
+      "projects": [
+        "Quiz Game"
+      ],
+      "concepts": [
+        "classes",
+        "constructors",
+        "instance_attributes",
+        "objects_methods",
+        "object_oriented_design"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day018",
+      "title": "Day 18: Turtle & the Graphical User Interface (GUI)",
+      "order": 18,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Reading documentation",
+        "Turtle graphics",
+        "Importing modules, aliasing, installing packages",
+        "Python tuples",
+        "Extracting colours with colorgram"
+      ],
+      "projects": [
+        "Hirst Painting"
+      ],
+      "concepts": [
+        "lib_turtle",
+        "graphics_canvas",
+        "modules_imports",
+        "tuples",
+        "third_party_packages",
+        "random_module"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day019",
+      "title": "Day 19: Instances, State and Higher Order Functions",
+      "order": 19,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Event listeners",
+        "Higher order functions",
+        "Multiple instances of objects",
+        "Object state"
+      ],
+      "projects": [
+        "Etch-A-Sketch",
+        "Turtle Race"
+      ],
+      "concepts": [
+        "higher_order_functions",
+        "event_driven_programming",
+        "objects_methods",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day020",
+      "title": "Day 20: Build the Snake Game Part 1: Animation & Coordinates",
+      "order": 20,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Screen setup and animation",
+        "Controlling the snake with key presses"
+      ],
+      "projects": [
+        "Snake Game (part 1)"
+      ],
+      "concepts": [
+        "game_development",
+        "lib_turtle",
+        "classes",
+        "event_driven_programming"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day021",
+      "title": "Day 21: Build the Snake Game Part 2: Inheritance & List Slicing",
+      "order": 21,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Class inheritance",
+        "Slicing lists and tuples",
+        "Collision detection, scoreboard"
+      ],
+      "projects": [
+        "Snake Game (part 2)"
+      ],
+      "concepts": [
+        "inheritance",
+        "list_slicing",
+        "game_development",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day022",
+      "title": "Day 22: Build Pong: The Famous Arcade Game",
+      "order": 22,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Paddles, ball, collisions, scoreboard"
+      ],
+      "projects": [
+        "Pong"
+      ],
+      "concepts": [
+        "game_development",
+        "classes",
+        "inheritance",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day023",
+      "title": "Day 23: The Turtle Crossing Capstone Project",
+      "order": 23,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Intermediate capstone (Turtle/OOP)"
+      ],
+      "projects": [
+        "Turtle Crossing"
+      ],
+      "concepts": [
+        "game_development",
+        "object_oriented_design",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day024",
+      "title": "Day 24: Files, Directories and Paths",
+      "order": 24,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Opening, reading and writing files",
+        "with keyword",
+        "Absolute and relative file paths",
+        "Persisting the snake high score"
+      ],
+      "projects": [
+        "Mail Merge",
+        "Snake high score"
+      ],
+      "concepts": [
+        "file_io",
+        "context_managers",
+        "file_paths",
+        "string_methods"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day025",
+      "title": "Day 25: Working with CSV Data and the Pandas Library",
+      "order": 25,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Reading CSV files",
+        "Pandas DataFrames and Series",
+        "Data from columns and rows",
+        "Creating DataFrames from scratch"
+      ],
+      "projects": [
+        "U.S. States Game",
+        "Squirrel Census analysis"
+      ],
+      "concepts": [
+        "csv_files",
+        "lib_pandas",
+        "data_analysis"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day026",
+      "title": "Day 26: List Comprehension and the NATO Alphabet",
+      "order": 26,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "List comprehensions",
+        "Conditional list comprehension",
+        "Dictionary comprehensions",
+        "Iterating over a pandas DataFrame"
+      ],
+      "projects": [
+        "NATO Alphabet"
+      ],
+      "concepts": [
+        "list_comprehensions",
+        "dict_comprehensions",
+        "lib_pandas",
+        "iteration"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day027",
+      "title": "Day 27: Tkinter, *args, **kwargs and Creating GUI Programs",
+      "order": 27,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Tkinter widgets",
+        "Default arguments",
+        "*args unlimited positional arguments",
+        "**kwargs unlimited keyword arguments",
+        "Layout managers: pack, place, grid"
+      ],
+      "projects": [
+        "Mile to Km Converter"
+      ],
+      "concepts": [
+        "lib_tkinter",
+        "args_kwargs",
+        "parameters_arguments",
+        "event_driven_programming"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day028",
+      "title": "Day 28: Tkinter, Dynamic Typing and the Pomodoro GUI Application",
+      "order": 28,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Canvas widget",
+        "Countdown mechanism with after()",
+        "Dynamic typing"
+      ],
+      "projects": [
+        "Pomodoro Timer"
+      ],
+      "concepts": [
+        "lib_tkinter",
+        "data_types",
+        "event_driven_programming"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day029",
+      "title": "Day 29: Building a Password Manager GUI App with Tkinter",
+      "order": 29,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Tkinter layout with grid",
+        "Message boxes",
+        "Saving data to file",
+        "Generating passwords"
+      ],
+      "projects": [
+        "Password Manager"
+      ],
+      "concepts": [
+        "lib_tkinter",
+        "file_io",
+        "random_module",
+        "list_comprehensions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day030",
+      "title": "Day 30: Errors, Exceptions and JSON Data: Improving the Password Manager",
+      "order": 30,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "try/except/else/finally",
+        "Raising exceptions",
+        "Writing, reading and updating JSON data",
+        "Search functionality"
+      ],
+      "projects": [
+        "Password Manager (improved)"
+      ],
+      "concepts": [
+        "exceptions",
+        "raising_exceptions",
+        "json_data",
+        "file_io"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day031",
+      "title": "Day 31: Flash Card App Capstone Project",
+      "order": 31,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate",
+        "Intermediate capstone: Tkinter + pandas + files"
+      ],
+      "projects": [
+        "Flash Card App"
+      ],
+      "concepts": [
+        "lib_tkinter",
+        "lib_pandas",
+        "csv_files",
+        "exceptions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day032",
+      "title": "Day 32: Send Email (smtplib) & Manage Dates (datetime) - Automated Birthday Wisher",
+      "order": 32,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "SMTP and smtplib",
+        "datetime module",
+        "Motivational quotes on Mondays",
+        "Running code in the cloud on a schedule (PythonAnywhere)"
+      ],
+      "projects": [
+        "Automated Birthday Wisher"
+      ],
+      "concepts": [
+        "lib_smtplib",
+        "datetime_module",
+        "scheduling_cron",
+        "automation",
+        "lib_pandas"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day033",
+      "title": "Day 33: API Endpoints & API Parameters - ISS Overhead Notifier",
+      "order": 33,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "What are APIs",
+        "API endpoints and making requests",
+        "Status codes and exceptions",
+        "JSON data",
+        "API parameters"
+      ],
+      "projects": [
+        "ISS Overhead Notifier",
+        "Kanye Quotes app"
+      ],
+      "concepts": [
+        "apis_http",
+        "lib_requests",
+        "json_data",
+        "lib_tkinter"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day034",
+      "title": "Day 34: API Practice - Creating a GUI Quiz App",
+      "order": 34,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Open Trivia DB API",
+        "Unescaping HTML entities",
+        "Python type hints"
+      ],
+      "projects": [
+        "Quizzler GUI Quiz App"
+      ],
+      "concepts": [
+        "apis_http",
+        "type_hints",
+        "lib_tkinter",
+        "classes"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day035",
+      "title": "Day 35: Keys, Authentication & Environment Variables: Send SMS",
+      "order": 35,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "API keys and authentication",
+        "Weather API",
+        "Sending SMS (Twilio)",
+        "Environment variables"
+      ],
+      "projects": [
+        "Rain Alert"
+      ],
+      "concepts": [
+        "environment_variables",
+        "apis_http",
+        "lib_requests",
+        "automation"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day036",
+      "title": "Day 36: Stock Trading News Alert Project",
+      "order": 36,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Combining multiple APIs (stock prices, news)",
+        "SMS alerts"
+      ],
+      "projects": [
+        "Stock Trading News Alert"
+      ],
+      "concepts": [
+        "apis_http",
+        "lib_requests",
+        "list_slicing",
+        "environment_variables"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day037",
+      "title": "Day 37: Habit Tracking Project: API Post Requests & Headers",
+      "order": 37,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "HTTP POST, PUT, DELETE requests",
+        "Request headers and authentication",
+        "strftime"
+      ],
+      "projects": [
+        "Habit Tracker (Pixela)"
+      ],
+      "concepts": [
+        "apis_http",
+        "lib_requests",
+        "datetime_module"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day038",
+      "title": "Day 38: Workout Tracking Using Google Sheets",
+      "order": 38,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Natural language exercise API",
+        "Sheety API to write to Google Sheets",
+        "Authentication and environment variables"
+      ],
+      "projects": [
+        "Workout Tracker"
+      ],
+      "concepts": [
+        "apis_http",
+        "lib_requests",
+        "environment_variables"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day039",
+      "title": "Day 39: Capstone Part 1: Flight Deal Finder",
+      "order": 39,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Flight search API",
+        "OOP design of an API-driven app"
+      ],
+      "projects": [
+        "Flight Deal Finder"
+      ],
+      "concepts": [
+        "apis_http",
+        "object_oriented_design",
+        "classes"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day040",
+      "title": "Day 40: Capstone Part 2: Flight Club",
+      "order": 40,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Customer acquisition via Google Sheets",
+        "Emailing flight deals"
+      ],
+      "projects": [
+        "Flight Club"
+      ],
+      "concepts": [
+        "apis_http",
+        "lib_smtplib",
+        "object_oriented_design"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day041",
+      "title": "Day 41: Introduction to HTML",
+      "order": 41,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "HTML tags, headings, paragraphs, lists, anchors, images"
+      ],
+      "projects": [
+        "Movie Ranking / Birthday Invite pages"
+      ],
+      "concepts": [
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day042",
+      "title": "Day 42: Intermediate HTML",
+      "order": 42,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "HTML boilerplate",
+        "Multi-page websites",
+        "Hosting a website"
+      ],
+      "projects": [
+        "Personal site"
+      ],
+      "concepts": [
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day043",
+      "title": "Day 43: Introduction to CSS",
+      "order": 43,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Inline, internal and external CSS",
+        "Selectors",
+        "Colours, fonts, box model"
+      ],
+      "projects": [
+        "CSS exercises"
+      ],
+      "concepts": [
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day044",
+      "title": "Day 44: Intermediate CSS",
+      "order": 44,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "CSS display, position, flexbox basics",
+        "Styling a personal site"
+      ],
+      "projects": [
+        "Motivation Meme page / personal site"
+      ],
+      "concepts": [
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day045",
+      "title": "Day 45: Web Scraping with Beautiful Soup",
+      "order": 45,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Parsing HTML with BeautifulSoup",
+        "Finding and selecting elements",
+        "Scraping a live website",
+        "Ethics of web scraping"
+      ],
+      "projects": [
+        "100 Movies that You Must Watch"
+      ],
+      "concepts": [
+        "web_scraping",
+        "lib_beautifulsoup",
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day046",
+      "title": "Day 46: Create a Spotify Playlist Using The Musical Time Machine",
+      "order": 46,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Scraping the Billboard Hot 100",
+        "Spotify API authentication (OAuth) with Spotipy"
+      ],
+      "projects": [
+        "Musical Time Machine"
+      ],
+      "concepts": [
+        "web_scraping",
+        "lib_beautifulsoup",
+        "apis_http"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day047",
+      "title": "Day 47: Create an Automated Amazon Price Tracker",
+      "order": 47,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Scraping product prices with headers",
+        "Sending email alerts"
+      ],
+      "projects": [
+        "Amazon Price Tracker"
+      ],
+      "concepts": [
+        "web_scraping",
+        "lib_beautifulsoup",
+        "lib_requests",
+        "lib_smtplib",
+        "automation"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day048",
+      "title": "Day 48: Selenium Webdriver Browser and Game Playing Bot",
+      "order": 48,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Setting up Selenium",
+        "Finding and selecting elements",
+        "XPath",
+        "Interacting with elements, typing and clicking"
+      ],
+      "projects": [
+        "Cookie Clicker Bot"
+      ],
+      "concepts": [
+        "lib_selenium",
+        "automation",
+        "web_scraping"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day049",
+      "title": "Day 49: Automating Job Applications on LinkedIn",
+      "order": 49,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Selenium login automation",
+        "Handling pop-ups and exceptions"
+      ],
+      "projects": [
+        "LinkedIn Job Application Bot"
+      ],
+      "concepts": [
+        "lib_selenium",
+        "automation",
+        "exceptions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day050",
+      "title": "Day 50: Auto Tinder Swiping Bot",
+      "order": 50,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Selenium window handles",
+        "Handling exceptions in automation"
+      ],
+      "projects": [
+        "Tinder Swiping Bot"
+      ],
+      "concepts": [
+        "lib_selenium",
+        "automation",
+        "exceptions"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day051",
+      "title": "Day 51: Internet Speed Twitter Complaint Bot",
+      "order": 51,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Selenium + speedtest + Twitter/X posting"
+      ],
+      "projects": [
+        "Internet Speed Twitter Complaint Bot"
+      ],
+      "concepts": [
+        "lib_selenium",
+        "automation",
+        "classes"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day052",
+      "title": "Day 52: Instagram Follower Bot",
+      "order": 52,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Selenium automation, scrolling modals"
+      ],
+      "projects": [
+        "Instagram Follower Bot"
+      ],
+      "concepts": [
+        "lib_selenium",
+        "automation",
+        "classes"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day053",
+      "title": "Day 53: Web Scraping Capstone - Data Entry Job Automation",
+      "order": 53,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Scrape property listings with BeautifulSoup",
+        "Fill a Google Form with Selenium"
+      ],
+      "projects": [
+        "Data Entry Job Automation"
+      ],
+      "concepts": [
+        "web_scraping",
+        "lib_beautifulsoup",
+        "lib_selenium",
+        "automation"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day054",
+      "title": "Day 54: Introduction to Web Development with Flask",
+      "order": 54,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Backend web development",
+        "Command line / terminal",
+        "Creating a Flask server",
+        "Functions as first-class objects, nested functions",
+        "Python decorators"
+      ],
+      "projects": [
+        "Hello Flask server"
+      ],
+      "concepts": [
+        "lib_flask",
+        "web_development",
+        "command_line",
+        "decorators",
+        "higher_order_functions",
+        "closures"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day055",
+      "title": "Day 55: HTML & URL Parsing in Flask and the Higher Lower Game",
+      "order": 55,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Routing and variable rules",
+        "Debug mode",
+        "Rendering HTML elements",
+        "Advanced decorators with *args/**kwargs"
+      ],
+      "projects": [
+        "Higher Lower URLs Game"
+      ],
+      "concepts": [
+        "lib_flask",
+        "decorators",
+        "args_kwargs",
+        "web_development"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day056",
+      "title": "Day 56: Rendering HTML/Static Files and Using Website Templates",
+      "order": 56,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "render_template",
+        "Serving static files",
+        "Using website templates",
+        "Chrome dev tools editing"
+      ],
+      "projects": [
+        "Name Card website"
+      ],
+      "concepts": [
+        "lib_flask",
+        "html_css_basics",
+        "web_development"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day057",
+      "title": "Day 57: Templating with Jinja in Flask Applications",
+      "order": 57,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Jinja templating",
+        "Multi-line statements",
+        "URL building",
+        "Fetching API data into templates"
+      ],
+      "projects": [
+        "Blog Capstone Part 1"
+      ],
+      "concepts": [
+        "lib_jinja",
+        "lib_flask",
+        "apis_http",
+        "lib_requests"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day058",
+      "title": "Day 58: Web Foundation Bootstrap",
+      "order": 58,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Intermediate+",
+        "Bootstrap layout and grid",
+        "Bootstrap components",
+        "Building a startup website"
+      ],
+      "projects": [
+        "Startup / TinDog website"
+      ],
+      "concepts": [
+        "lib_bootstrap",
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day059",
+      "title": "Day 59: Blog Capstone Project Part 2 - Adding Styling",
+      "order": 59,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Bootstrap templates",
+        "Jinja template inheritance / partials",
+        "Dynamically generated pages"
+      ],
+      "projects": [
+        "Blog Capstone Part 2"
+      ],
+      "concepts": [
+        "lib_bootstrap",
+        "lib_jinja",
+        "lib_flask"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day060",
+      "title": "Day 60: Make POST Requests with Flask and HTML Forms",
+      "order": 60,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "HTML forms",
+        "Handling POST requests in Flask",
+        "Sending email from a contact form"
+      ],
+      "projects": [
+        "Blog contact form"
+      ],
+      "concepts": [
+        "lib_flask",
+        "web_development",
+        "lib_smtplib",
+        "html_css_basics"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day061",
+      "title": "Day 61: Building Advanced Forms with Flask-WTForms",
+      "order": 61,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Flask-WTF",
+        "Form validation",
+        "Template inheritance",
+        "Flask-Bootstrap"
+      ],
+      "projects": [
+        "Login form"
+      ],
+      "concepts": [
+        "lib_wtforms",
+        "lib_jinja",
+        "lib_bootstrap",
+        "lib_flask"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day062",
+      "title": "Day 62: Flask, WTForms, Bootstrap, and CSV - Coffee & Wifi Project",
+      "order": 62,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Combining Flask, WTForms, Bootstrap and CSV"
+      ],
+      "projects": [
+        "Coffee & Wifi"
+      ],
+      "concepts": [
+        "lib_flask",
+        "lib_wtforms",
+        "lib_bootstrap",
+        "csv_files"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day063",
+      "title": "Day 63: Databases with SQLite and SQLAlchemy",
+      "order": 63,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "SQLite databases",
+        "SQLAlchemy ORM",
+        "CRUD operations"
+      ],
+      "projects": [
+        "Virtual Bookshelf"
+      ],
+      "concepts": [
+        "databases_sql",
+        "lib_sqlite3",
+        "lib_sqlalchemy",
+        "lib_flask"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day064",
+      "title": "Day 64: My Top 10 Movies Website",
+      "order": 64,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Flask + SQLAlchemy + WTForms",
+        "Movie database API"
+      ],
+      "projects": [
+        "Top 10 Movies"
+      ],
+      "concepts": [
+        "lib_sqlalchemy",
+        "lib_wtforms",
+        "lib_flask",
+        "apis_http"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day065",
+      "title": "Day 65: Web Design School - How to Create a Website That People Will Love",
+      "order": 65,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Colour theory",
+        "Typography",
+        "UI design",
+        "UX design"
+      ],
+      "projects": [
+        "Website design (no code)"
+      ],
+      "concepts": [
+        "ui_ux_design"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day066",
+      "title": "Day 66: Building Your Own API with RESTful Routing",
+      "order": 66,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "REST principles",
+        "GET, POST, PUT/PATCH, DELETE",
+        "API documentation with Postman"
+      ],
+      "projects": [
+        "Cafe & Wifi API"
+      ],
+      "concepts": [
+        "rest_api_design",
+        "apis_http",
+        "lib_flask",
+        "lib_sqlalchemy",
+        "json_data"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day067",
+      "title": "Day 67: Blog Capstone Project Part 3 - RESTful Routing",
+      "order": 67,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "RESTful routes for a blog",
+        "CKEditor rich text",
+        "CRUD with SQLAlchemy"
+      ],
+      "projects": [
+        "RESTful Blog"
+      ],
+      "concepts": [
+        "rest_api_design",
+        "lib_sqlalchemy",
+        "lib_wtforms",
+        "lib_flask"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day068",
+      "title": "Day 68: Authentication with Flask",
+      "order": 68,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Registering users",
+        "Encryption and hashing",
+        "Salting passwords with Werkzeug",
+        "Flask-Login",
+        "Flash messages"
+      ],
+      "projects": [
+        "Flask Auth app"
+      ],
+      "concepts": [
+        "web_authentication",
+        "lib_flask",
+        "lib_sqlalchemy"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day069",
+      "title": "Day 69: Blog Capstone Project Part 4 - Adding Users",
+      "order": 69,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "User registration and login",
+        "Relational databases (one-to-many)",
+        "Admin-only decorator",
+        "Comments, Gravatar"
+      ],
+      "projects": [
+        "Blog with Users"
+      ],
+      "concepts": [
+        "web_authentication",
+        "databases_sql",
+        "lib_sqlalchemy",
+        "decorators",
+        "lib_flask"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day070",
+      "title": "Day 70: Git, GitHub and Version Control",
+      "order": 70,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Version control",
+        "Git commands",
+        "Remote repositories",
+        "gitignore",
+        "Cloning, branching, merging",
+        "Forking and pull requests"
+      ],
+      "projects": [
+        "(version-control exercises)"
+      ],
+      "concepts": [
+        "tool_git",
+        "command_line"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day071",
+      "title": "Day 71: Deploying Your Web Application",
+      "order": 71,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Environment variables",
+        "WSGI server (gunicorn)",
+        "Hosting on Render",
+        "PostgreSQL database"
+      ],
+      "projects": [
+        "Deploy the blog"
+      ],
+      "concepts": [
+        "deployment",
+        "environment_variables",
+        "tool_git",
+        "databases_sql",
+        "lib_flask"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day072",
+      "title": "Day 72: Data Exploration with Pandas: College Major vs. Your Salary",
+      "order": 72,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Google Colab notebooks",
+        "Exploring and cleaning data with pandas",
+        "Grouping and sorting"
+      ],
+      "projects": [
+        "College Major vs Salary analysis"
+      ],
+      "concepts": [
+        "lib_pandas",
+        "data_analysis",
+        "tool_jupyter",
+        "sorting"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day073",
+      "title": "Day 73: Data Visualisation with Matplotlib: Programming Languages",
+      "order": 73,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Pivoting data",
+        "Line charts with Matplotlib",
+        "Rolling averages"
+      ],
+      "projects": [
+        "Programming Language popularity (Stack Overflow)"
+      ],
+      "concepts": [
+        "lib_matplotlib",
+        "data_visualization",
+        "lib_pandas"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day074",
+      "title": "Day 74: Aggregate & Merge Data with Pandas: Analyse the LEGO Dataset",
+      "order": 74,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        ".groupby/.agg/.merge",
+        "Scatter and bar charts",
+        "Primary/foreign keys"
+      ],
+      "projects": [
+        "LEGO dataset analysis"
+      ],
+      "concepts": [
+        "lib_pandas",
+        "lib_matplotlib",
+        "data_analysis",
+        "databases_sql"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day075",
+      "title": "Day 75: Google Trends Data: Resampling and Visualising Time Series",
+      "order": 75,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Time series data",
+        "Resampling",
+        "Datetime conversion",
+        "Locators and date formatters"
+      ],
+      "projects": [
+        "Google Trends analysis"
+      ],
+      "concepts": [
+        "lib_pandas",
+        "lib_matplotlib",
+        "datetime_module",
+        "data_visualization"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day076",
+      "title": "Day 76: Beautiful Plotly Charts & Analysing the Android App Store",
+      "order": 76,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Data cleaning",
+        "Plotly pie, donut, bar, box, scatter charts"
+      ],
+      "projects": [
+        "Android App Store analysis"
+      ],
+      "concepts": [
+        "lib_plotly",
+        "data_visualization",
+        "lib_pandas"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day077",
+      "title": "Day 77: Computation with NumPy and N-Dimensional Arrays",
+      "order": 77,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "ndarrays",
+        "Broadcasting",
+        "Linear algebra / matrix multiplication",
+        "Image manipulation"
+      ],
+      "projects": [
+        "NumPy notebook"
+      ],
+      "concepts": [
+        "lib_numpy",
+        "lib_pillow"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day078",
+      "title": "Day 78: Linear Regression and Data Visualisation with Seaborn",
+      "order": 78,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Seaborn regression and bubble charts",
+        "Linear regression with scikit-learn",
+        "Movie budget vs revenue"
+      ],
+      "projects": [
+        "Movie Budgets & Revenue"
+      ],
+      "concepts": [
+        "lib_seaborn",
+        "lib_scikit_learn",
+        "linear_regression",
+        "data_visualization"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day079",
+      "title": "Day 79: Analysing the Nobel Prize with Plotly, Matplotlib & Seaborn",
+      "order": 79,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Choropleths, sunbursts",
+        "Combined charting libraries"
+      ],
+      "projects": [
+        "Nobel Prize analysis"
+      ],
+      "concepts": [
+        "lib_plotly",
+        "lib_matplotlib",
+        "lib_seaborn",
+        "data_analysis"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day080",
+      "title": "Day 80: The Tragic Discovery of Handwashing: t-Tests & Distributions",
+      "order": 80,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Statistical significance",
+        "t-tests with SciPy",
+        "Histograms and KDE distributions"
+      ],
+      "projects": [
+        "Semmelweis Handwashing analysis"
+      ],
+      "concepts": [
+        "statistics_hypothesis_testing",
+        "lib_scipy",
+        "lib_matplotlib",
+        "lib_plotly"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day081",
+      "title": "Day 81: Capstone Project - Predict House Prices",
+      "order": 81,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Advanced",
+        "Multivariable regression",
+        "Log transformations",
+        "Residual analysis"
+      ],
+      "projects": [
+        "Boston House Price Valuation"
+      ],
+      "concepts": [
+        "linear_regression",
+        "lib_scikit_learn",
+        "lib_seaborn",
+        "lib_plotly"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day082",
+      "title": "Day 82: Professional Portfolio Project: Text to Morse Code Converter",
+      "order": 82,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project (assignment brief only)"
+      ],
+      "projects": [
+        "Text to Morse Code Converter"
+      ],
+      "concepts": [
+        "dictionaries",
+        "strings"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day083",
+      "title": "Day 83: Professional Portfolio Project: Portfolio Website",
+      "order": 83,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Portfolio Website"
+      ],
+      "concepts": [
+        "html_css_basics",
+        "lib_flask",
+        "lib_bootstrap"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day084",
+      "title": "Day 84: Professional Portfolio Project: Tic Tac Toe",
+      "order": 84,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project: text-based game"
+      ],
+      "projects": [
+        "Tic Tac Toe"
+      ],
+      "concepts": [
+        "game_development",
+        "nested_data_structures"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day085",
+      "title": "Day 85: Professional Portfolio Project: Image Watermarking Desktop App",
+      "order": 85,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Image Watermarking App"
+      ],
+      "concepts": [
+        "lib_tkinter",
+        "lib_pillow"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day086",
+      "title": "Day 86: Professional Portfolio Project: Typing Speed Test",
+      "order": 86,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Typing Speed Test"
+      ],
+      "concepts": [
+        "lib_tkinter"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day087",
+      "title": "Day 87: Professional Portfolio Project: Breakout",
+      "order": 87,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Breakout"
+      ],
+      "concepts": [
+        "game_development",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day088",
+      "title": "Day 88: Professional Portfolio Project: Cafe and Wifi Website",
+      "order": 88,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Cafe & Wifi Website"
+      ],
+      "concepts": [
+        "lib_flask",
+        "lib_sqlalchemy",
+        "web_development"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day089",
+      "title": "Day 89: Professional Portfolio Project: Todo List",
+      "order": 89,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Todo List App"
+      ],
+      "concepts": [
+        "lib_flask",
+        "web_development"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day090",
+      "title": "Day 90: Professional Portfolio Project: Disappearing Text Writing App",
+      "order": 90,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Disappearing Text Writing App"
+      ],
+      "concepts": [
+        "lib_tkinter",
+        "event_driven_programming"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day091",
+      "title": "Day 91: Professional Portfolio Project: Convert PDF to Audiobook",
+      "order": 91,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project (text-to-speech API)"
+      ],
+      "projects": [
+        "PDF to Audiobook"
+      ],
+      "concepts": [
+        "apis_http",
+        "automation"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day092",
+      "title": "Day 92: Professional Portfolio Project: Image Colour Palette Generator",
+      "order": 92,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Image Colour Palette Generator"
+      ],
+      "concepts": [
+        "lib_flask",
+        "lib_numpy",
+        "lib_pillow"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day093",
+      "title": "Day 93: Professional Portfolio Project: Custom Web Scraper",
+      "order": 93,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Custom Web Scraper"
+      ],
+      "concepts": [
+        "web_scraping",
+        "lib_beautifulsoup",
+        "lib_pandas"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day094",
+      "title": "Day 94: Professional Portfolio Project: Automate the Google Dinosaur Game",
+      "order": 94,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Google Dinosaur Game Bot"
+      ],
+      "concepts": [
+        "automation",
+        "lib_pyautogui",
+        "lib_pillow"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day095",
+      "title": "Day 95: Professional Portfolio Project: Space Invaders",
+      "order": 95,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Space Invaders"
+      ],
+      "concepts": [
+        "game_development",
+        "lib_turtle"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day096",
+      "title": "Day 96: Professional Portfolio Project: Custom API Based Website",
+      "order": 96,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project"
+      ],
+      "projects": [
+        "Custom API-based website"
+      ],
+      "concepts": [
+        "apis_http",
+        "lib_flask",
+        "web_development"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day097",
+      "title": "Day 97: Professional Portfolio Project: An Online Shop",
+      "order": 97,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project (e-commerce, payments e.g. Stripe)"
+      ],
+      "projects": [
+        "Online Shop"
+      ],
+      "concepts": [
+        "lib_flask",
+        "web_authentication",
+        "lib_sqlalchemy",
+        "web_development"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day098",
+      "title": "Day 98: Professional Portfolio Project: Automate Your Life",
+      "order": 98,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent project: custom automation"
+      ],
+      "projects": [
+        "Custom Automation"
+      ],
+      "concepts": [
+        "automation"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day099",
+      "title": "Day 99: Professional Portfolio Project: Analyse and Visualise the Space Race",
+      "order": 99,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent data science project"
+      ],
+      "projects": [
+        "Space Race analysis"
+      ],
+      "concepts": [
+        "data_analysis",
+        "data_visualization",
+        "lib_pandas",
+        "lib_plotly"
+      ]
+    },
+    {
+      "id": "100_days_of_code:day100",
+      "title": "Day 100: Professional Portfolio Project: Analyse and Visualise Deaths Involving Police in the US",
+      "order": 100,
+      "url": "https://www.udemy.com/course/100-days-of-code/",
+      "topics": [
+        "Level: Professional Portfolio",
+        "Independent data science project"
+      ],
+      "projects": [
+        "Fatal Force (police killings) analysis"
+      ],
+      "concepts": [
+        "data_analysis",
+        "data_visualization",
+        "lib_pandas",
+        "lib_plotly"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "python_setup",
+      "label": "Python setup",
+      "category": "environment",
+      "first_module": "100_days_of_code:day015",
+      "depth": "introduced"
+    },
+    {
+      "id": "ide_editor",
+      "label": "IDE / editor (PyCharm)",
+      "category": "environment",
+      "first_module": "100_days_of_code:day015",
+      "depth": "introduced",
+      "course_label": "PyCharm"
+    },
+    {
+      "id": "command_line",
+      "label": "Command line",
+      "category": "environment",
+      "first_module": "100_days_of_code:day054",
+      "depth": "practiced"
+    },
+    {
+      "id": "comments",
+      "label": "Comments",
+      "category": "environment",
+      "first_module": "100_days_of_code:day001",
+      "depth": "introduced"
+    },
+    {
+      "id": "tool_git",
+      "label": "Git & GitHub",
+      "category": "environment",
+      "first_module": "100_days_of_code:day070",
+      "depth": "practiced"
+    },
+    {
+      "id": "tool_pip",
+      "label": "pip & packages",
+      "category": "environment",
+      "first_module": "100_days_of_code:day016",
+      "depth": "introduced"
+    },
+    {
+      "id": "tool_jupyter",
+      "label": "Jupyter / Google Colab notebooks",
+      "category": "environment",
+      "first_module": "100_days_of_code:day072",
+      "depth": "introduced",
+      "course_label": "Google Colab",
+      "new": true
+    },
+    {
+      "id": "print_output",
+      "label": "Print output",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day001",
+      "depth": "introduced"
+    },
+    {
+      "id": "user_input",
+      "label": "User input",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day001",
+      "depth": "introduced"
+    },
+    {
+      "id": "variables",
+      "label": "Variables",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day001",
+      "depth": "introduced"
+    },
+    {
+      "id": "data_types",
+      "label": "Data types",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day002",
+      "depth": "practiced"
+    },
+    {
+      "id": "integers_floats",
+      "label": "Integers floats",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day002",
+      "depth": "introduced"
+    },
+    {
+      "id": "arithmetic_operators",
+      "label": "Arithmetic operators",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day002",
+      "depth": "practiced"
+    },
+    {
+      "id": "type_conversion",
+      "label": "Type conversion",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day002",
+      "depth": "introduced"
+    },
+    {
+      "id": "booleans",
+      "label": "Booleans",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day002",
+      "depth": "introduced"
+    },
+    {
+      "id": "comparison_operators",
+      "label": "Comparison operators",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day003",
+      "depth": "introduced"
+    },
+    {
+      "id": "logical_operators",
+      "label": "Logical operators",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day003",
+      "depth": "introduced"
+    },
+    {
+      "id": "constants",
+      "label": "Constants",
+      "category": "fundamentals",
+      "first_module": "100_days_of_code:day012",
+      "depth": "introduced"
+    },
+    {
+      "id": "strings",
+      "label": "Strings",
+      "category": "strings",
+      "first_module": "100_days_of_code:day001",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_indexing_slicing",
+      "label": "String indexing slicing",
+      "category": "strings",
+      "first_module": "100_days_of_code:day002",
+      "depth": "introduced"
+    },
+    {
+      "id": "string_methods",
+      "label": "String methods",
+      "category": "strings",
+      "first_module": "100_days_of_code:day003",
+      "depth": "practiced"
+    },
+    {
+      "id": "string_formatting",
+      "label": "String formatting",
+      "category": "strings",
+      "first_module": "100_days_of_code:day002",
+      "depth": "introduced"
+    },
+    {
+      "id": "string_concatenation",
+      "label": "String concatenation",
+      "category": "strings",
+      "first_module": "100_days_of_code:day001",
+      "depth": "introduced"
+    },
+    {
+      "id": "unicode_encoding",
+      "label": "Unicode encoding",
+      "category": "strings",
+      "first_module": "100_days_of_code:day008",
+      "depth": "introduced"
+    },
+    {
+      "id": "conditionals",
+      "label": "Conditionals",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day003",
+      "depth": "practiced"
+    },
+    {
+      "id": "nested_conditionals",
+      "label": "Nested conditionals",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day003",
+      "depth": "introduced"
+    },
+    {
+      "id": "while_loops",
+      "label": "While loops",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day006",
+      "depth": "deep"
+    },
+    {
+      "id": "for_loops",
+      "label": "For loops",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day005",
+      "depth": "practiced"
+    },
+    {
+      "id": "range_function",
+      "label": "Range function",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day005",
+      "depth": "introduced"
+    },
+    {
+      "id": "loop_patterns",
+      "label": "Loop patterns",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day005",
+      "depth": "introduced"
+    },
+    {
+      "id": "iteration",
+      "label": "Iteration",
+      "category": "control_flow",
+      "first_module": "100_days_of_code:day026",
+      "depth": "introduced"
+    },
+    {
+      "id": "functions",
+      "label": "Functions",
+      "category": "functions",
+      "first_module": "100_days_of_code:day006",
+      "depth": "deep"
+    },
+    {
+      "id": "parameters_arguments",
+      "label": "Parameters arguments",
+      "category": "functions",
+      "first_module": "100_days_of_code:day008",
+      "depth": "practiced"
+    },
+    {
+      "id": "return_values",
+      "label": "Return values",
+      "category": "functions",
+      "first_module": "100_days_of_code:day010",
+      "depth": "introduced"
+    },
+    {
+      "id": "scope",
+      "label": "Scope",
+      "category": "functions",
+      "first_module": "100_days_of_code:day012",
+      "depth": "introduced"
+    },
+    {
+      "id": "args_kwargs",
+      "label": "*args and **kwargs",
+      "category": "functions",
+      "first_module": "100_days_of_code:day027",
+      "depth": "practiced"
+    },
+    {
+      "id": "docstrings",
+      "label": "Docstrings",
+      "category": "functions",
+      "first_module": "100_days_of_code:day010",
+      "depth": "introduced"
+    },
+    {
+      "id": "recursion",
+      "label": "Recursion",
+      "category": "functions",
+      "first_module": "100_days_of_code:day010",
+      "depth": "introduced"
+    },
+    {
+      "id": "higher_order_functions",
+      "label": "Higher order functions",
+      "category": "functions",
+      "first_module": "100_days_of_code:day010",
+      "depth": "practiced",
+      "course_label": "Higher order functions"
+    },
+    {
+      "id": "closures",
+      "label": "Closures",
+      "category": "functions",
+      "first_module": "100_days_of_code:day054",
+      "depth": "introduced"
+    },
+    {
+      "id": "decorators",
+      "label": "Decorators",
+      "category": "functions",
+      "first_module": "100_days_of_code:day054",
+      "depth": "practiced"
+    },
+    {
+      "id": "type_hints",
+      "label": "Type hints",
+      "category": "functions",
+      "first_module": "100_days_of_code:day034",
+      "depth": "introduced"
+    },
+    {
+      "id": "builtin_functions",
+      "label": "Builtin functions",
+      "category": "functions",
+      "first_module": "100_days_of_code:day005",
+      "depth": "introduced"
+    },
+    {
+      "id": "decomposition",
+      "label": "Decomposition",
+      "category": "functions",
+      "first_module": "100_days_of_code:day006",
+      "depth": "deep"
+    },
+    {
+      "id": "lists",
+      "label": "Lists",
+      "category": "collections",
+      "first_module": "100_days_of_code:day004",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_methods",
+      "label": "List methods",
+      "category": "collections",
+      "first_module": "100_days_of_code:day004",
+      "depth": "introduced"
+    },
+    {
+      "id": "list_slicing",
+      "label": "List slicing",
+      "category": "collections",
+      "first_module": "100_days_of_code:day021",
+      "depth": "practiced"
+    },
+    {
+      "id": "list_comprehensions",
+      "label": "List comprehensions",
+      "category": "collections",
+      "first_module": "100_days_of_code:day026",
+      "depth": "practiced"
+    },
+    {
+      "id": "dict_comprehensions",
+      "label": "Dictionary comprehensions",
+      "category": "collections",
+      "first_module": "100_days_of_code:day026",
+      "depth": "introduced"
+    },
+    {
+      "id": "tuples",
+      "label": "Tuples",
+      "category": "collections",
+      "first_module": "100_days_of_code:day018",
+      "depth": "introduced"
+    },
+    {
+      "id": "dictionaries",
+      "label": "Dictionaries",
+      "category": "collections",
+      "first_module": "100_days_of_code:day009",
+      "depth": "deep"
+    },
+    {
+      "id": "nested_data_structures",
+      "label": "Nested data structures",
+      "category": "collections",
+      "first_module": "100_days_of_code:day004",
+      "depth": "practiced"
+    },
+    {
+      "id": "sorting",
+      "label": "Sorting",
+      "category": "collections",
+      "first_module": "100_days_of_code:day072",
+      "depth": "introduced"
+    },
+    {
+      "id": "file_io",
+      "label": "File io",
+      "category": "files_io",
+      "first_module": "100_days_of_code:day024",
+      "depth": "practiced"
+    },
+    {
+      "id": "context_managers",
+      "label": "Context managers",
+      "category": "files_io",
+      "first_module": "100_days_of_code:day024",
+      "depth": "introduced"
+    },
+    {
+      "id": "csv_files",
+      "label": "CSV files",
+      "category": "files_io",
+      "first_module": "100_days_of_code:day025",
+      "depth": "practiced"
+    },
+    {
+      "id": "json_data",
+      "label": "JSON data",
+      "category": "files_io",
+      "first_module": "100_days_of_code:day030",
+      "depth": "practiced"
+    },
+    {
+      "id": "file_paths",
+      "label": "File paths",
+      "category": "files_io",
+      "first_module": "100_days_of_code:day024",
+      "depth": "introduced"
+    },
+    {
+      "id": "exceptions",
+      "label": "Exceptions",
+      "category": "errors_testing",
+      "first_module": "100_days_of_code:day013",
+      "depth": "practiced"
+    },
+    {
+      "id": "raising_exceptions",
+      "label": "Raising exceptions",
+      "category": "errors_testing",
+      "first_module": "100_days_of_code:day030",
+      "depth": "introduced"
+    },
+    {
+      "id": "debugging",
+      "label": "Debugging",
+      "category": "errors_testing",
+      "first_module": "100_days_of_code:day001",
+      "depth": "practiced"
+    },
+    {
+      "id": "objects_methods",
+      "label": "Objects methods",
+      "category": "oop",
+      "first_module": "100_days_of_code:day016",
+      "depth": "practiced"
+    },
+    {
+      "id": "classes",
+      "label": "Classes",
+      "category": "oop",
+      "first_module": "100_days_of_code:day016",
+      "depth": "deep"
+    },
+    {
+      "id": "instance_attributes",
+      "label": "Instance attributes",
+      "category": "oop",
+      "first_module": "100_days_of_code:day017",
+      "depth": "introduced"
+    },
+    {
+      "id": "constructors",
+      "label": "Constructors",
+      "category": "oop",
+      "first_module": "100_days_of_code:day017",
+      "depth": "introduced"
+    },
+    {
+      "id": "inheritance",
+      "label": "Inheritance",
+      "category": "oop",
+      "first_module": "100_days_of_code:day021",
+      "depth": "practiced"
+    },
+    {
+      "id": "modules_imports",
+      "label": "Modules imports",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day004",
+      "depth": "practiced"
+    },
+    {
+      "id": "random_module",
+      "label": "Random module",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day004",
+      "depth": "deep"
+    },
+    {
+      "id": "datetime_module",
+      "label": "Datetime module",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day032",
+      "depth": "practiced"
+    },
+    {
+      "id": "third_party_packages",
+      "label": "Third party packages",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day016",
+      "depth": "practiced"
+    },
+    {
+      "id": "apis_http",
+      "label": "APIs & HTTP requests",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day033",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_requests",
+      "label": "Requests",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day033",
+      "depth": "deep"
+    },
+    {
+      "id": "web_scraping",
+      "label": "Web scraping",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day045",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_beautifulsoup",
+      "label": "Beautiful Soup",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day045",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_selenium",
+      "label": "Selenium",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day048",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_turtle",
+      "label": "Turtle graphics",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day016",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_tkinter",
+      "label": "Tkinter GUI",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day027",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_numpy",
+      "label": "Numpy",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day077",
+      "depth": "practiced"
+    },
+    {
+      "id": "lib_pandas",
+      "label": "Pandas",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day025",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_matplotlib",
+      "label": "Matplotlib",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day073",
+      "depth": "practiced"
+    },
+    {
+      "id": "lib_flask",
+      "label": "Flask",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day054",
+      "depth": "deep"
+    },
+    {
+      "id": "lib_sqlite3",
+      "label": "Sqlite3",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day063",
+      "depth": "introduced"
+    },
+    {
+      "id": "lib_smtplib",
+      "label": "Smtplib",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day032",
+      "depth": "practiced"
+    },
+    {
+      "id": "lib_sqlalchemy",
+      "label": "SQLAlchemy ORM",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day063",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "lib_jinja",
+      "label": "Jinja templating",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day057",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_wtforms",
+      "label": "WTForms / Flask-WTF",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day061",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_bootstrap",
+      "label": "Bootstrap CSS framework",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day058",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_plotly",
+      "label": "Plotly",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day076",
+      "depth": "deep",
+      "new": true
+    },
+    {
+      "id": "lib_seaborn",
+      "label": "Seaborn",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day078",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_scikit_learn",
+      "label": "scikit-learn",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day078",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_scipy",
+      "label": "SciPy",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day080",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "lib_pillow",
+      "label": "Pillow (PIL)",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day077",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "lib_pyautogui",
+      "label": "PyAutoGUI",
+      "category": "modules_libs",
+      "first_module": "100_days_of_code:day094",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "databases_sql",
+      "label": "Databases sql",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day063",
+      "depth": "practiced"
+    },
+    {
+      "id": "data_visualization",
+      "label": "Data visualization",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day073",
+      "depth": "deep"
+    },
+    {
+      "id": "data_analysis",
+      "label": "Data analysis",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day025",
+      "depth": "deep"
+    },
+    {
+      "id": "html_css_basics",
+      "label": "HTML & CSS basics",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day041",
+      "depth": "deep"
+    },
+    {
+      "id": "web_development",
+      "label": "Web development",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day054",
+      "depth": "deep"
+    },
+    {
+      "id": "object_oriented_design",
+      "label": "Object oriented design",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day016",
+      "depth": "deep"
+    },
+    {
+      "id": "game_development",
+      "label": "Game development",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day020",
+      "depth": "deep"
+    },
+    {
+      "id": "automation",
+      "label": "Automation",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day032",
+      "depth": "deep"
+    },
+    {
+      "id": "graphics_canvas",
+      "label": "Graphics canvas",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day018",
+      "depth": "introduced"
+    },
+    {
+      "id": "karel_robot",
+      "label": "Karel / Reeborg's World",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day006",
+      "depth": "introduced",
+      "course_label": "Reeborg's World"
+    },
+    {
+      "id": "web_authentication",
+      "label": "Web authentication (hashing, salting, login sessions)",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day068",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "deployment",
+      "label": "Deploying web applications",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day071",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "rest_api_design",
+      "label": "Designing RESTful APIs",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day066",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "environment_variables",
+      "label": "Environment variables & secrets",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day035",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "scheduling_cron",
+      "label": "Scheduled / cron jobs (cloud scheduling)",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day032",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "event_driven_programming",
+      "label": "Event-driven programming (event listeners, callbacks)",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day019",
+      "depth": "practiced",
+      "course_label": "Event listeners",
+      "new": true
+    },
+    {
+      "id": "ui_ux_design",
+      "label": "UI/UX & web design principles",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day065",
+      "depth": "introduced",
+      "new": true
+    },
+    {
+      "id": "linear_regression",
+      "label": "Linear / multivariable regression",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day078",
+      "depth": "practiced",
+      "new": true
+    },
+    {
+      "id": "statistics_hypothesis_testing",
+      "label": "Statistics & hypothesis testing (t-tests, distributions)",
+      "category": "data_web",
+      "first_module": "100_days_of_code:day080",
+      "depth": "introduced",
+      "new": true
+    }
+  ],
+  "edges": [
+    {
+      "source": "100_days_of_code:day001",
+      "target": "100_days_of_code:day002",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day002",
+      "target": "100_days_of_code:day003",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day003",
+      "target": "100_days_of_code:day004",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day004",
+      "target": "100_days_of_code:day005",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day005",
+      "target": "100_days_of_code:day006",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day006",
+      "target": "100_days_of_code:day007",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day007",
+      "target": "100_days_of_code:day008",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day008",
+      "target": "100_days_of_code:day009",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day009",
+      "target": "100_days_of_code:day010",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day010",
+      "target": "100_days_of_code:day011",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day011",
+      "target": "100_days_of_code:day012",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day012",
+      "target": "100_days_of_code:day013",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day013",
+      "target": "100_days_of_code:day014",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day014",
+      "target": "100_days_of_code:day015",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day015",
+      "target": "100_days_of_code:day016",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day016",
+      "target": "100_days_of_code:day017",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day017",
+      "target": "100_days_of_code:day018",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day018",
+      "target": "100_days_of_code:day019",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day019",
+      "target": "100_days_of_code:day020",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day020",
+      "target": "100_days_of_code:day021",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day021",
+      "target": "100_days_of_code:day022",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day022",
+      "target": "100_days_of_code:day023",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day023",
+      "target": "100_days_of_code:day024",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day024",
+      "target": "100_days_of_code:day025",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day025",
+      "target": "100_days_of_code:day026",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day026",
+      "target": "100_days_of_code:day027",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day027",
+      "target": "100_days_of_code:day028",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day028",
+      "target": "100_days_of_code:day029",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day029",
+      "target": "100_days_of_code:day030",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day030",
+      "target": "100_days_of_code:day031",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day031",
+      "target": "100_days_of_code:day032",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day032",
+      "target": "100_days_of_code:day033",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day033",
+      "target": "100_days_of_code:day034",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day034",
+      "target": "100_days_of_code:day035",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day035",
+      "target": "100_days_of_code:day036",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day036",
+      "target": "100_days_of_code:day037",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day037",
+      "target": "100_days_of_code:day038",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day038",
+      "target": "100_days_of_code:day039",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day039",
+      "target": "100_days_of_code:day040",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day040",
+      "target": "100_days_of_code:day041",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day041",
+      "target": "100_days_of_code:day042",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day042",
+      "target": "100_days_of_code:day043",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day043",
+      "target": "100_days_of_code:day044",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day044",
+      "target": "100_days_of_code:day045",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day045",
+      "target": "100_days_of_code:day046",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day046",
+      "target": "100_days_of_code:day047",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day047",
+      "target": "100_days_of_code:day048",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day048",
+      "target": "100_days_of_code:day049",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day049",
+      "target": "100_days_of_code:day050",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day050",
+      "target": "100_days_of_code:day051",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day051",
+      "target": "100_days_of_code:day052",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day052",
+      "target": "100_days_of_code:day053",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day053",
+      "target": "100_days_of_code:day054",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day054",
+      "target": "100_days_of_code:day055",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day055",
+      "target": "100_days_of_code:day056",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day056",
+      "target": "100_days_of_code:day057",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day057",
+      "target": "100_days_of_code:day058",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day058",
+      "target": "100_days_of_code:day059",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day059",
+      "target": "100_days_of_code:day060",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day060",
+      "target": "100_days_of_code:day061",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day061",
+      "target": "100_days_of_code:day062",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day062",
+      "target": "100_days_of_code:day063",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day063",
+      "target": "100_days_of_code:day064",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day064",
+      "target": "100_days_of_code:day065",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day065",
+      "target": "100_days_of_code:day066",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day066",
+      "target": "100_days_of_code:day067",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day067",
+      "target": "100_days_of_code:day068",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day068",
+      "target": "100_days_of_code:day069",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day069",
+      "target": "100_days_of_code:day070",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day070",
+      "target": "100_days_of_code:day071",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day071",
+      "target": "100_days_of_code:day072",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day072",
+      "target": "100_days_of_code:day073",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day073",
+      "target": "100_days_of_code:day074",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day074",
+      "target": "100_days_of_code:day075",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day075",
+      "target": "100_days_of_code:day076",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day076",
+      "target": "100_days_of_code:day077",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day077",
+      "target": "100_days_of_code:day078",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day078",
+      "target": "100_days_of_code:day079",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day079",
+      "target": "100_days_of_code:day080",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day080",
+      "target": "100_days_of_code:day081",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day081",
+      "target": "100_days_of_code:day082",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day082",
+      "target": "100_days_of_code:day083",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day083",
+      "target": "100_days_of_code:day084",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day084",
+      "target": "100_days_of_code:day085",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day085",
+      "target": "100_days_of_code:day086",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day086",
+      "target": "100_days_of_code:day087",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day087",
+      "target": "100_days_of_code:day088",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day088",
+      "target": "100_days_of_code:day089",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day089",
+      "target": "100_days_of_code:day090",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day090",
+      "target": "100_days_of_code:day091",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day091",
+      "target": "100_days_of_code:day092",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day092",
+      "target": "100_days_of_code:day093",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day093",
+      "target": "100_days_of_code:day094",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day094",
+      "target": "100_days_of_code:day095",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day095",
+      "target": "100_days_of_code:day096",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day096",
+      "target": "100_days_of_code:day097",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day097",
+      "target": "100_days_of_code:day098",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day098",
+      "target": "100_days_of_code:day099",
+      "type": "precedes"
+    },
+    {
+      "source": "100_days_of_code:day099",
+      "target": "100_days_of_code:day100",
+      "type": "precedes"
+    },
+    {
+      "source": "print_output",
+      "target": "variables",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "user_input",
+      "target": "variables",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "data_types",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_types",
+      "target": "type_conversion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_formatting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "logical_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "conditionals",
+      "target": "nested_conditionals",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "range_function",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "loop_patterns",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "parameters_arguments",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "return_values",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "nested_data_structures",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "return_values",
+      "target": "higher_order_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "constructors",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "event_driven_programming",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes",
+      "target": "game_development",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "csv_files",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "json_data",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "csv_files",
+      "target": "lib_pandas",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "parameters_arguments",
+      "target": "args_kwargs",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "file_io",
+      "target": "exceptions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "json_data",
+      "target": "apis_http",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "apis_http",
+      "target": "environment_variables",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "html_css_basics",
+      "target": "web_scraping",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "web_scraping",
+      "target": "lib_selenium",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "html_css_basics",
+      "target": "lib_flask",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "higher_order_functions",
+      "target": "decorators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "closures",
+      "target": "decorators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_flask",
+      "target": "lib_jinja",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_jinja",
+      "target": "lib_wtforms",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "html_css_basics",
+      "target": "lib_bootstrap",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "databases_sql",
+      "target": "lib_sqlalchemy",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_sqlalchemy",
+      "target": "rest_api_design",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "apis_http",
+      "target": "rest_api_design",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_sqlalchemy",
+      "target": "web_authentication",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "decorators",
+      "target": "web_authentication",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tool_git",
+      "target": "deployment",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "environment_variables",
+      "target": "deployment",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_pandas",
+      "target": "lib_matplotlib",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_matplotlib",
+      "target": "lib_plotly",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_numpy",
+      "target": "linear_regression",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_seaborn",
+      "target": "linear_regression",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "data_visualization",
+      "target": "statistics_hypothesis_testing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lib_smtplib",
+      "target": "scheduling_cron",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "type_hints",
+      "target": "classes",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "event_driven_programming",
+      "target": "higher_order_functions",
+      "type": "related_to"
+    },
+    {
+      "source": "lib_jinja",
+      "target": "web_development",
+      "type": "part_of"
+    },
+    {
+      "source": "rest_api_design",
+      "target": "web_development",
+      "type": "part_of"
+    },
+    {
+      "source": "web_authentication",
+      "target": "web_development",
+      "type": "part_of"
+    },
+    {
+      "source": "deployment",
+      "target": "web_development",
+      "type": "part_of"
+    },
+    {
+      "source": "list_slicing",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "list_methods",
+      "target": "lists",
+      "type": "part_of"
+    },
+    {
+      "source": "string_indexing_slicing",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "string_methods",
+      "target": "strings",
+      "type": "part_of"
+    },
+    {
+      "source": "constructors",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "instance_attributes",
+      "target": "classes",
+      "type": "part_of"
+    },
+    {
+      "source": "dict_comprehensions",
+      "target": "dictionaries",
+      "type": "part_of"
+    },
+    {
+      "source": "nested_conditionals",
+      "target": "conditionals",
+      "type": "part_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "part_of"
+    },
+    {
+      "source": "list_comprehensions",
+      "target": "iteration",
+      "type": "is_a"
+    },
+    {
+      "source": "inheritance",
+      "target": "object_oriented_design",
+      "type": "is_a"
+    },
+    {
+      "source": "linear_regression",
+      "target": "data_analysis",
+      "type": "is_a"
+    },
+    {
+      "source": "statistics_hypothesis_testing",
+      "target": "data_analysis",
+      "type": "is_a"
+    },
+    {
+      "source": "scheduling_cron",
+      "target": "automation",
+      "type": "is_a"
+    },
+    {
+      "source": "decorators",
+      "target": "higher_order_functions",
+      "type": "is_a"
+    },
+    {
+      "source": "closures",
+      "target": "higher_order_functions",
+      "type": "is_a"
+    },
+    {
+      "source": "web_scraping",
+      "target": "lib_beautifulsoup",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_scraping",
+      "target": "lib_selenium",
+      "type": "uses_tool"
+    },
+    {
+      "source": "automation",
+      "target": "lib_selenium",
+      "type": "uses_tool"
+    },
+    {
+      "source": "apis_http",
+      "target": "lib_requests",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_development",
+      "target": "lib_flask",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_development",
+      "target": "lib_jinja",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_development",
+      "target": "lib_wtforms",
+      "type": "uses_tool"
+    },
+    {
+      "source": "web_development",
+      "target": "lib_bootstrap",
+      "type": "uses_tool"
+    },
+    {
+      "source": "databases_sql",
+      "target": "lib_sqlalchemy",
+      "type": "uses_tool"
+    },
+    {
+      "source": "databases_sql",
+      "target": "lib_sqlite3",
+      "type": "uses_tool"
+    },
+    {
+      "source": "data_analysis",
+      "target": "lib_pandas",
+      "type": "uses_tool"
+    },
+    {
+      "source": "data_analysis",
+      "target": "tool_jupyter",
+      "type": "uses_tool"
+    },
+    {
+      "source": "data_visualization",
+      "target": "lib_matplotlib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "data_visualization",
+      "target": "lib_plotly",
+      "type": "uses_tool"
+    },
+    {
+      "source": "data_visualization",
+      "target": "lib_seaborn",
+      "type": "uses_tool"
+    },
+    {
+      "source": "linear_regression",
+      "target": "lib_scikit_learn",
+      "type": "uses_tool"
+    },
+    {
+      "source": "statistics_hypothesis_testing",
+      "target": "lib_scipy",
+      "type": "uses_tool"
+    },
+    {
+      "source": "game_development",
+      "target": "lib_turtle",
+      "type": "uses_tool"
+    },
+    {
+      "source": "graphics_canvas",
+      "target": "lib_turtle",
+      "type": "uses_tool"
+    },
+    {
+      "source": "event_driven_programming",
+      "target": "lib_tkinter",
+      "type": "uses_tool"
+    },
+    {
+      "source": "deployment",
+      "target": "tool_git",
+      "type": "uses_tool"
+    },
+    {
+      "source": "automation",
+      "target": "lib_smtplib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "automation",
+      "target": "lib_pyautogui",
+      "type": "uses_tool"
+    },
+    {
+      "source": "third_party_packages",
+      "target": "tool_pip",
+      "type": "uses_tool"
+    },
+    {
+      "source": "karel_robot",
+      "target": "functions",
+      "type": "related_to"
+    },
+    {
+      "source": "100_days_of_code:day016",
+      "target": "tool_pip",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day018",
+      "target": "lib_turtle",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day025",
+      "target": "lib_pandas",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day027",
+      "target": "lib_tkinter",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day032",
+      "target": "lib_smtplib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day033",
+      "target": "lib_requests",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day045",
+      "target": "lib_beautifulsoup",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day048",
+      "target": "lib_selenium",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day054",
+      "target": "lib_flask",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day057",
+      "target": "lib_jinja",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day058",
+      "target": "lib_bootstrap",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day061",
+      "target": "lib_wtforms",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day063",
+      "target": "lib_sqlalchemy",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day063",
+      "target": "lib_sqlite3",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day070",
+      "target": "tool_git",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day072",
+      "target": "tool_jupyter",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day073",
+      "target": "lib_matplotlib",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day076",
+      "target": "lib_plotly",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day077",
+      "target": "lib_numpy",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day078",
+      "target": "lib_seaborn",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day078",
+      "target": "lib_scikit_learn",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day080",
+      "target": "lib_scipy",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day085",
+      "target": "lib_pillow",
+      "type": "uses_tool"
+    },
+    {
+      "source": "100_days_of_code:day094",
+      "target": "lib_pyautogui",
+      "type": "uses_tool"
+    }
+  ]
+}
