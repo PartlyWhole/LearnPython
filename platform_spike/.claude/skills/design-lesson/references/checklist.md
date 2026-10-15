@@ -1,6 +1,6 @@
 # Lesson review checklist
 
-Report as `ID | pass/fail | evidence | fix`. This is adapted from G-11 for Gem Rover lessons.
+Report as `ID | pass/fail | evidence | fix`. This is adapted from G-11 for LearnPython lessons.
 Blockers are marked ●.
 
 ## A. Target

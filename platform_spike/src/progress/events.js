@@ -1,7 +1,8 @@
 // Local event log for playtests (docs/lessons.md section 10). The app has no server, so events
 // stay in this browser: the last CAP events, in storage that is wrapped like progress (a full or
 // missing store never breaks the game). Export with download() for a playtest session.
-const KEY = "gem-rover/events/v1";
+const KEY = "learnpython/events/v1";
+const LEGACY_KEY = "gem-rover/events/v1"; // the game was called Gem Rover before
 export const CAP = 500;
 
 export class EventLog {
@@ -10,7 +11,7 @@ export class EventLog {
     this.storage = storage;
     this.now = now;
     try {
-      const raw = JSON.parse(storage.get(KEY) ?? "[]");
+      const raw = JSON.parse(storage.get(KEY) ?? storage.get(LEGACY_KEY) ?? "[]");
       this.events = Array.isArray(raw) ? raw : [];
     } catch {
       this.events = [];

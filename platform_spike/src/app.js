@@ -279,7 +279,7 @@ const hints = new HintUI({
 $("export-events").onclick = () => {
   const a = document.createElement("a");
   a.href = URL.createObjectURL(events.toBlob());
-  a.download = `gem-rover-playtest-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `learnpython-playtest-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(a.href);
 };
@@ -498,7 +498,7 @@ async function init() {
   history.replaceState(null, "", `?level=${encodeURIComponent(level.id)}`);
   $("level-title").textContent = level.title;
   $("level-brief").textContent = level.brief ?? "";
-  document.title = `${level.title} · Gem Rover`;
+  document.title = `${level.title} · LearnPython`;
   showCommands(level.constraints?.hidden_commands ?? []);
   editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
   updateLevelsButton();
@@ -523,7 +523,7 @@ async function init() {
 
 // Test hook for browser automation on a local dev server only (never on a deployed host).
 if (["localhost", "127.0.0.1"].includes(location.hostname)) {
-  window.__gemRover = { editor, demo, guide, drive, hints, events, get progress() { return progress; }, get level() { return level; }, runCode,
+  window.__learnPython = { editor, demo, guide, drive, hints, events, get progress() { return progress; }, get level() { return level; }, runCode,
     setSpeed: (name) => setSpeed(SPEEDS.findIndex((s) => s.name === name)) };
 }
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "lesson.schema.json",
-  "title": "Gem Rover lesson (format 1)",
+  "title": "LearnPython lesson (format 1)",
   "description": "One concept taught in one beat: a demo the learner steps through (watch), a guided first try on a real level, practice and twist levels, a recap and hints. See docs/lessons.md section 2. tools/check_lesson.py checks what a schema can't (the demo runs, predictions match, budgets).",
   "type": "object",
   "required": [

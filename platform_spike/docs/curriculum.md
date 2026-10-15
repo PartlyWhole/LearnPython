@@ -1,6 +1,6 @@
 # Curriculum: the lesson progression
 
-This is the order in which Gem Rover teaches its concepts. A **lesson** introduces one concept and
+This is the order in which LearnPython teaches its concepts. A **lesson** introduces one concept and
 wraps a few **levels**: the learner watches a demo, tries a first exercise with step-by-step help,
 then practises on their own. How lessons are built and stored is in `docs/lessons.md`. The rules
 for designing one are in the `design-lesson` skill.

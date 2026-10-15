@@ -1,9 +1,9 @@
 ---
 name: design-lesson
-description: Design a Gem Rover lesson (lessons/<id>.json) that introduces one programming concept through the app's beat (a learner-paced demo with one prediction, a guided first try with state-based step-by-step help, practice levels, a twist, a recap) plus hints for the practice levels. Use whenever asked to teach, introduce, sequence, tutorialise or scaffold a concept (functions, for, decomposition, nested loops, if/else, while, stepwise refinement, or later topics) in platform_spike, or to write demos, guide steps, hints, captions or onboarding for it, even if the word "lesson" isn't used. Levels inside the lesson are authored with the author-level skill.
+description: Design a LearnPython lesson (lessons/<id>.json) that introduces one programming concept through the app's beat (a learner-paced demo with one prediction, a guided first try with state-based step-by-step help, practice levels, a twist, a recap) plus hints for the practice levels. Use whenever asked to teach, introduce, sequence, tutorialise or scaffold a concept (functions, for, decomposition, nested loops, if/else, while, stepwise refinement, or later topics) in platform_spike, or to write demos, guide steps, hints, captions or onboarding for it, even if the word "lesson" isn't used. Levels inside the lesson are authored with the author-level skill.
 ---
 
-# Designing a Gem Rover lesson
+# Designing a LearnPython lesson
 
 A lesson is a **teaching claim**: "a learner who watches this demo and does this guided try
 can then solve the practice level on their own". Its parts follow one beat:

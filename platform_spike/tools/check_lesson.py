@@ -1,4 +1,4 @@
-"""Check a Gem Rover lesson against the contract in docs/lessons.md section 9.
+"""Check a LearnPython lesson against the contract in docs/lessons.md section 9.
 
     python3 tools/check_lesson.py for_loops
     python3 tools/check_lesson.py path/to/lesson.json

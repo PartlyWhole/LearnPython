@@ -1,5 +1,5 @@
 <!-- Imported 2026-10-14 from guidance-design.zip (supplied by the project owner). General, not
-Gem Rover-specific: the app-specific rules derived from it live in docs/lessons.md and the
+LearnPython-specific: the app-specific rules derived from it live in docs/lessons.md and the
 design-lesson / build-guidance skills. File names below are relative to this folder. -->
 # In-Product Guidance Design — Agent Reference Set
 

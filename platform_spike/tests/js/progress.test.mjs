@@ -38,7 +38,7 @@ test("progress and drafts persist through storage", () => {
 });
 
 test("corrupted or failing storage never breaks the game", () => {
-  const p = new Progress(INDEX, memoryStorage({ "gem-rover/progress/v1": "{not json" }));
+  const p = new Progress(INDEX, memoryStorage({ "learnpython/progress/v1": "{not json" }));
   assert.equal(p.current(), "a");
   const broken = { get() { throw new Error("denied"); }, set() { throw new Error("denied"); } };
   assert.throws(() => new Progress(INDEX, broken).markSolved("a", "x"), /denied/,
@@ -46,7 +46,7 @@ test("corrupted or failing storage never breaks the game", () => {
 });
 
 test("lesson demos: remembered as done or skipped; old stores without lessons still load", () => {
-  const storage = memoryStorage({ "gem-rover/progress/v1": JSON.stringify({ solved: { a: { at: 1, code: "" } }, drafts: {} }) });
+  const storage = memoryStorage({ "learnpython/progress/v1": JSON.stringify({ solved: { a: { at: 1, code: "" } }, drafts: {} }) });
   const p = new Progress(INDEX, storage);
   assert.equal(p.isSolved("a"), true, "an existing store keeps its solves");
   assert.equal(p.lesson("loops"), null);
@@ -59,7 +59,7 @@ test("lesson demos: remembered as done or skipped; old stores without lessons st
 });
 
 test("step-by-step setting, how a level was solved, hidden guides and the one-time offer", () => {
-  const storage = memoryStorage({ "gem-rover/progress/v1": JSON.stringify({ solved: {}, drafts: {} }) });
+  const storage = memoryStorage({ "learnpython/progress/v1": JSON.stringify({ solved: {}, drafts: {} }) });
   const p = new Progress(INDEX, storage);
   assert.equal(p.setting("stepByStep"), true, "on by default, also for old stores");
   p.setSetting("stepByStep", false);
@@ -129,9 +129,19 @@ test("solving the twist alone finishes a lesson (placement); next() moves on", (
 });
 
 test("old progress keeps its solves; solved levels stay open even if the order moved them", () => {
-  const storage = memoryStorage({ "gem-rover/progress/v1": JSON.stringify({ solved: { q: { at: 1, code: "" } }, drafts: {} }) });
+  const storage = memoryStorage({ "learnpython/progress/v1": JSON.stringify({ solved: { q: { at: 1, code: "" } }, drafts: {} }) });
   const p = new Progress(ORDER, storage);
   assert.equal(p.isUnlocked("q"), true);
   assert.equal(p.isUnlocked("h"), false);
   assert.equal(p.current(), "a");
+});
+
+test("progress saved under the old Gem Rover key moves to the LearnPython key", () => {
+  const storage = memoryStorage({ "gem-rover/progress/v1": JSON.stringify({ solved: { a: { at: 1, code: "" } }, drafts: { b: "x" } }) });
+  const p = new Progress(INDEX, storage);
+  assert.equal(p.isSolved("a"), true);
+  assert.equal(p.draft("b"), "x");
+  assert.ok(JSON.parse(storage.map.get("learnpython/progress/v1")).solved.a, "copied to the new key");
+  p.markSolved("b", "y");
+  assert.equal(new Progress(INDEX, storage).isSolved("b"), true, "new progress reads from the new key");
 });

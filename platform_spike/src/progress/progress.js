@@ -4,7 +4,9 @@
 // wrapped, because browser storage can be missing, full or wiped: Safari deletes it after 7 days
 // without a visit (docs/ASSUMPTIONS_AUDIT.md A14). Progress here is a convenience, not a record.
 
-const KEY = "gem-rover/progress/v1";
+const KEY = "learnpython/progress/v1";
+// The game was called Gem Rover before; progress saved under its key moves over on first load.
+const LEGACY_KEYS = ["gem-rover/progress/v1"];
 // Fields added since the first stores (lessons, settings, guide, nudges) get defaults when an
 // older store loads, so nothing needs migrating.
 const EMPTY = () => ({
@@ -50,10 +52,16 @@ export class Progress {
   }
 
   _load() {
-    try {
-      const raw = JSON.parse(this.storage.get(KEY) ?? "null");
-      if (raw && typeof raw === "object" && raw.solved && raw.drafts) return { ...EMPTY(), ...raw };
-    } catch { /* corrupted: start fresh */ }
+    for (const key of [KEY, ...LEGACY_KEYS]) {
+      try {
+        const raw = JSON.parse(this.storage.get(key) ?? "null");
+        if (raw && typeof raw === "object" && raw.solved && raw.drafts) {
+          const data = { ...EMPTY(), ...raw };
+          if (key !== KEY) this.storage.set(KEY, JSON.stringify(data)); // migrate once
+          return data;
+        }
+      } catch { /* corrupted: try the next key, then start fresh */ }
+    }
     return EMPTY();
   }
 

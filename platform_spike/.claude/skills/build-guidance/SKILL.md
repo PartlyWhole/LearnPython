@@ -1,9 +1,9 @@
 ---
 name: build-guidance
-description: Implement or change Gem Rover's in-app guidance runtime in platform_spike, meaning the goal view, lesson loader and lesson list, demo player, guide panel with state-based steps and engine check_code, the Step-by-step help setting, drive mode (command buttons and the Your moves log), the hint ladder, progress format 2 and the local event log, following docs/lessons.md. Use whenever asked to build, wire up, fix or restyle any tutorial, onboarding, walkthrough, tooltip, hint, coach-mark or guide UI in the Gem Rover app, even if the request names only one piece ("add a Show me button", "make the guide accessible").
+description: Implement or change LearnPython's in-app guidance runtime in platform_spike, meaning the goal view, lesson loader and lesson list, demo player, guide panel with state-based steps and engine check_code, the Step-by-step help setting, drive mode (command buttons and the Your moves log), the hint ladder, progress format 2 and the local event log, following docs/lessons.md. Use whenever asked to build, wire up, fix or restyle any tutorial, onboarding, walkthrough, tooltip, hint, coach-mark or guide UI in the LearnPython app, even if the request names only one piece ("add a Show me button", "make the guide accessible").
 ---
 
-# Building Gem Rover's guidance runtime
+# Building LearnPython's guidance runtime
 
 `docs/lessons.md` is the spec: what each surface does, the lesson format, the checks, the
 setting, the hint ladder, progress format 2 and the build order (§11). This skill covers *how* to
@@ -41,7 +41,7 @@ Paths are relative to `platform_spike/`. Read `CLAUDE.md` (the invariants) and t
   world. The guide panel sits beside the editor (or below it when narrow), never on top.
 - **Inject timers and storage** (invariant 10; `Progress` already takes a storage). The guide's
   debounce and the hint chip's timing take a clock, so Node tests can drive them.
-- **Keep the test hook local.** Extend `window.__gemRover` for automation (`lesson`, `guide`,
+- **Keep the test hook local.** Extend `window.__learnPython` for automation (`lesson`, `guide`,
   `setStepByStep`), still only on localhost.
 - **No new runtime dependencies.** Plain ES modules (D12). If you need a CodeMirror feature (a
   diff preview for Show me), export it through `tools/vendor/codemirror-entry.js` and run `npm run vendor` (D15).

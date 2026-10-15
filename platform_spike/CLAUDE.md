@@ -122,5 +122,5 @@ shows all golden cases matching. Any new decision or reversal is added to `docs/
 - Regenerate the golden file to make a failing test pass without understanding why it failed.
 - Add a dependency to `engine.py`, or Pyodide-only code paths inside it.
 - Put game rules in the renderer. The renderer only reads traces.
-- Add the `window.__gemRover` test hook anywhere but `localhost` / `127.0.0.1` (it exposes the editor and progress for automation).
+- Add the `window.__learnPython` test hook anywhere but `localhost` / `127.0.0.1` (it exposes the editor and progress for automation).
 - Echo `===` separators in zsh commands (`echo ===` fails with "== not found").

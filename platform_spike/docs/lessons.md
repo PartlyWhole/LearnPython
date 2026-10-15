@@ -1,6 +1,6 @@
 # Lessons and in-app guidance: design
 
-**Status: proposed (D20), not built.** This document describes how Gem Rover teaches: lessons,
+**Status: proposed (D20), not built.** This document describes how LearnPython teaches: lessons,
 demos, guided first tries, drive mode, the goal view and hints. It is the contract that the
 `design-lesson` skill writes to and the `build-guidance` skill implements.
 
@@ -9,11 +9,11 @@ cited below as G-00 to G-12). The lesson order is in `docs/curriculum.md`.
 
 ## 1. Principles, as they apply here
 
-Gem Rover is the case where a tutorial *is* worth having. For a novice, programming is a
+LearnPython is the case where a tutorial *is* worth having. For a novice, programming is a
 genuinely new way of interacting, and the paradigm-novelty and complexity effects favour
 teaching (G-00 E3: Foldit). Even so, most of what the evidence says still holds:
 
-| Rule | What it means in Gem Rover |
+| Rule | What it means in LearnPython |
 |---|---|
 | Doing beats reading (G-00 P3) | Every guided step is something the learner types or runs in the real editor and world. Nothing is a slideshow. |
 | One concept at a time, just before use (P4) | One lesson per concept. A demo shows exactly the construct the next exercise needs. |
@@ -305,7 +305,7 @@ Hints are offered, never pushed (G-06 help ladder, G-07 adaptive help):
 
 ## 7. Progress
 
-**Built:** these fields live in the existing `gem-rover/progress/v1` store, and older stores load
+**Built:** these fields live in the existing `learnpython/progress/v1` store, and older stores load
 with defaults, so nothing migrates: `settings.stepByStep`, `solved[id].with`,
 `lessons[id].{watch, guided}`, `guide.hidden[levelId]`, `nudges.{aheadOfGuide, aheadOffer}`.
 The sketch below was the original plan.
@@ -376,13 +376,13 @@ The lesson equivalent of D19. For every lesson:
 
 ## 10. Measuring it
 
-**Built:** `src/progress/events.js` keeps the last 500 events in `gem-rover/events/v1`. Settings ›
+**Built:** `src/progress/events.js` keeps the last 500 events in `learnpython/events/v1`. Settings ›
 **Playtest log** downloads them as JSON. Events recorded: `run {level, passed}`,
 `level.solved {level, with}`, `lesson.beat_started {lesson, beat}`, `guide.step_shown`,
 `guide.show_me`, `guide.hidden`, `hint.offered {level, rung}`, `hint.opened {level, rung}`.
 
 The app has no server. Until it has one, record a capped local event log (key
-`gem-rover/events/v1`, last 500 events). Its events are `lesson.beat_started`, `guide.step_shown`,
+`learnpython/events/v1`, last 500 events). Its events are `lesson.beat_started`, `guide.step_shown`,
 `guide.show_me`, `guide.hidden`, `hint.offered`, `hint.opened`, `run` (pass/fail) and
 `level.solved {with}`. Export the log from a debug link for playtests.
 

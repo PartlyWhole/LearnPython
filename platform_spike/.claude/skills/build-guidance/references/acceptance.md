@@ -9,7 +9,7 @@ reload. Check `performance.getEntriesByType("resource")` if a change seems to be
 
 **Serving:** the user's server may already be running at `http://localhost:8000` (check the
 terminal). If you must start one yourself and it can't read `~/Desktop`, serve an rsync'd copy from the
-scratchpad (author-level skill, step 6). **Automation:** use `window.__gemRover` on localhost.
+scratchpad (author-level skill, step 6). **Automation:** use `window.__learnPython` on localhost.
 Browser automation may send keys without `keyCode`, so verify Esc/Tab with real `KeyboardEvent`s
 that carry `keyCode` before concluding something is broken (CLAUDE.md).
 
@@ -40,7 +40,7 @@ that carry `keyCode` before concluding something is broken (CLAUDE.md).
 ## D. Guide
 Use the lesson's own `example`s:
 1. Load the starter: the guide shows step 1 of n.
-2. For each k, `__gemRover.editor.setCode(example_k)`: the guide shows step k+1 (or `finished`
+2. For each k, `__learnPython.editor.setCode(example_k)`: the guide shows step k+1 (or `finished`
    after a passing run on the last step).
 3. Paste the reference solution: the guide jumps to the run step.
 4. Delete back to the starter: the guide returns to step 1.

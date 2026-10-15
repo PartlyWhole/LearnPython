@@ -1,9 +1,9 @@
 ---
 name: author-level
-description: Author a new Gem Rover level (levels/<id>.json) end to end, with its reference and targeted wrong solutions, per-world goals, hidden edge-case worlds, topic tags, index and docs entries, and tests. Use whenever asked to add, design, adapt or fix a Gem Rover level or puzzle in platform_spike, including "make a level like Stone Mason / Checkerboard / Spread Beepers", even if the word "level" isn't used.
+description: Author a new LearnPython level (levels/<id>.json) end to end, with its reference and targeted wrong solutions, per-world goals, hidden edge-case worlds, topic tags, index and docs entries, and tests. Use whenever asked to add, design, adapt or fix a LearnPython level or puzzle in platform_spike, including "make a level like Stone Mason / Checkerboard / Spread Beepers", even if the word "level" isn't used.
 ---
 
-# Authoring a Gem Rover level
+# Authoring a LearnPython level
 
 A level is a **teaching claim**: "a learner who passes this has used concept X correctly". The
 hidden worlds, constraints and wrong solutions are what make the claim true, so most of the work
@@ -185,10 +185,10 @@ a message that makes sense to a learner. Recipe that worked in the pilot:
    the desktop app; that tool reads `launch.json` from the session's primary folder). **Re-run the
    rsync after every edit**; the copy doesn't follow the source.
 2. Levels unlock in order, so unlock yours by marking its predecessor solved, then reload:
-   `localStorage.setItem("gem-rover/progress/v1", JSON.stringify({solved: {<previous_id>: {at: 1, code: ""}}, drafts: {}}))`
-3. On localhost the page exposes `window.__gemRover`: load a program with
-   `__gemRover.editor.setCode(await fetch('/tests/solutions/<id>.py').then(r => r.text()))`, then
-   click `#run`. Call `__gemRover.setSpeed("Instant")` (or tap the speed bars) to skip the replay. A pass shows a big ✓;
+   `localStorage.setItem("learnpython/progress/v1", JSON.stringify({solved: {<previous_id>: {at: 1, code: ""}}, drafts: {}}))`
+3. On localhost the page exposes `window.__learnPython`: load a program with
+   `__learnPython.editor.setCode(await fetch('/tests/solutions/<id>.py').then(r => r.text()))`, then
+   click `#run`. Call `__learnPython.setSpeed("Instant")` (or tap the speed bars) to skip the replay. A pass shows a big ✓;
    a failure lists every world with ✓/✗ (hidden worlds by name) and the message where it failed.
 
 If you can't open a browser, say so in your report and include the `show_world.py --goal` output.
