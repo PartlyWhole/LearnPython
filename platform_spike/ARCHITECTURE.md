@@ -102,7 +102,8 @@ security control.
 - **Trace player** (`render/player.js`): position, play/pause, step, seek and speed. Sensor checks
   take 40% of a step. No DOM, so it is unit-tested.
 - **Renderer** (`render/renderer.js`): an SVG grid themed by CSS variables. The robot moves and
-  turns the short way round; gems are faceted stones with an animated glow (a white-ish core plus a
+  turns the short way round, and only a single action animates (`isOneAction` in `geometry.js`): bigger jumps
+  such as a replay restarting, scrubbing or stepping back snap, so the robot never spins while it slides; gems are faceted stones with an animated glow (a white-ish core plus a
   coloured halo, built from radial gradients rather than blur filters; only opacity and scale animate;
   each gem has its own phase, plus an occasional sparkle; screen blending in dark mode). The halo is
   wider than the robot, so a gem under the robot still shows. Sensors flash the cell they look at; an error ✗ marks the edge it
@@ -178,8 +179,8 @@ security control.
   - **Under the world:** the bag and gems-left counters are icons with numbers. Replay is step and
     play icons, the slider (its position is read out as `aria-valuetext`), and one speed button with
     bars that cycles Slow, Normal, Fast and Instant (remembered).
-  - **Results:** the panel stays hidden until the first run. A pass is a big ✓ and a Next button
-    named after the next level. A failure lists each world with ✓/✗, an eye (this world) or a crossed
+  - **Results:** the panel stays hidden until the first run. A pass is a big ✓ and a "Continue" button
+    (the next level's name is in its accessible label and tooltip only). A failure lists each world with ✓/✗, an eye (this world) or a crossed
     eye plus the name (hidden world), and the engine's message only where it failed.
   - **Crashes:** the full message sits at the code line and in the results; the caption under the
     world shows only ✗ and the failing line. Icon buttons (`src/ui/icons.js`), progress dots, and one line of text at a time.

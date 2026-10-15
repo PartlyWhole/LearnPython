@@ -374,9 +374,10 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
     nextLink.className = "next-level round-button";
     if (next) {
       nextLink.href = `?level=${encodeURIComponent(next)}`;
-      nextLink.innerHTML = `<span class="label"></span>${icon("next")}`;
-      nextLink.querySelector(".label").textContent = levelMeta[next]?.title ?? next;
-      nextLink.setAttribute("aria-label", `Next level: ${levelMeta[next]?.title ?? next}`);
+      // The button just says Continue; where it goes is for screen readers and the hover tooltip.
+      nextLink.innerHTML = `<span class="label">Continue</span>${icon("next")}`;
+      nextLink.setAttribute("aria-label", `Continue to ${levelMeta[next]?.title ?? next}`);
+      nextLink.title = levelMeta[next]?.title ?? next;
     } else {
       nextLink.innerHTML = `<span class="label">Every level done</span>${icon("check")}`;
     }

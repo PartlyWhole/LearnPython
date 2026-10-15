@@ -39,3 +39,16 @@ test("describe() gives learner-facing captions", () => {
   assert.equal(describe({ action: "front_is_clear", result: false }), "front_is_clear() → False");
   assert.equal(describe({ action: "scan", result: [0, 2] }), "scan() → [0, 2]");
 });
+
+test("isOneAction: the renderer animates one move or one turn, and snaps anything bigger", async () => {
+  const { isOneAction } = await import("../../src/render/geometry.js");
+  const at = (x, y, dir) => ({ x, y, dir });
+  assert.equal(isOneAction(at(0, 0, "E"), at(1, 0, "E")), true, "a move");
+  assert.equal(isOneAction(at(1, 1, "E"), at(1, 1, "N")), true, "a left turn");
+  assert.equal(isOneAction(at(1, 1, "N"), at(1, 1, "E")), true, "a turn back (stepping backwards)");
+  assert.equal(isOneAction(at(1, 1, "N"), at(1, 1, "N")), true, "a sensor: nothing changes");
+  assert.equal(isOneAction(at(4, 2, "S"), at(0, 0, "E")), false, "replay restarting from the start");
+  assert.equal(isOneAction(at(0, 0, "E"), at(1, 0, "N")), false, "move and turn at once: the spin bug");
+  assert.equal(isOneAction(at(0, 0, "E"), at(3, 0, "E")), false, "scrubbing several cells");
+  assert.equal(isOneAction(at(0, 0, "E"), at(0, 0, "W")), false, "half a turn is two actions");
+});

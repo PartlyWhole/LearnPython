@@ -1,7 +1,7 @@
 // SVG grid renderer. It draws a world and shows frames; it never decides outcomes
 // (ARCHITECTURE.md: the renderer only reads traces). Colours come from CSS custom properties
 // (--grid-*), so the page's theme controls light and dark.
-import { DELTA_BY_DIR } from "./geometry.js";
+import { DELTA_BY_DIR, isOneAction } from "./geometry.js";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const CELL = 40;
@@ -85,6 +85,7 @@ export class GridRenderer {
     this.stopPicking();
 
     this.angle = ANGLE[world.start[2]];
+    this.at = null; // a new robot element: nothing to animate from
     this._placeRobot(world.start[0], world.start[1], world.start[2], 0);
     this._drawGems(world.gems ?? {}, world.start[0], world.start[1]);
     this.clearError();
@@ -211,6 +212,13 @@ export class GridRenderer {
   }
 
   _placeRobot(x, y, dir, durationMs) {
+    // Animate only what one action can do: one cell forward, or one turn in place. Anything else
+    // (a replay restarting from the start, scrubbing, stepping back, a new run while the robot
+    // still stands where the last one ended) snaps: one CSS transition carries both position and
+    // rotation, so animating a bigger jump makes the robot spin while it slides.
+    const prev = this.at;
+    this.at = { x, y, dir };
+    if (prev && durationMs && !isOneAction(prev, this.at)) durationMs = 0;
     // Rotate the short way round, so turning left from N to W turns 90 degrees, not 270.
     const target = ANGLE[dir];
     let delta = ((target - (this.angle % 360)) + 540) % 360 - 180;
