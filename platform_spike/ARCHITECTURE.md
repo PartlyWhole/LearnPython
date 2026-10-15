@@ -185,6 +185,15 @@ security control.
     world shows only ✗ and the failing line. Icon buttons (`src/ui/icons.js`), progress dots, and one line of text at a time.
 - **App page** (`app.html`): the editor, replay controls, Goal view, lesson demo, guide and per-world results.
 
+## Deployment
+
+GitHub Pages, from the repo "LearnPython" (`yourname.github.io/LearnPython/`). The app needs no server: Python
+runs in the browser (Pyodide from jsDelivr), every path is relative, and no special headers are needed (D6).
+`.github/workflows/pages.yml` runs both test suites, then publishes what `tools/build_site.py` assembles.
+That is only the files the app loads: reference solutions, tests, tools and docs stay out
+(`tests/test_site.py`). Pages caches files for about 10 minutes, so a deploy can take that long to reach every
+visitor. Note that in a public repo the solutions are still readable on GitHub itself.
+
 ## Not built yet
 
 Progression from topic mastery (unlock and review from the topic graph, not just order), level editor, progress store linked to
