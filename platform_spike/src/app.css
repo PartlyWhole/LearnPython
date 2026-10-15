@@ -145,8 +145,7 @@ body.drive-mode .editor-panel > :not(.drive), body.drive-mode .transport, body.d
 }
 .grid-world .robot-body.bump { animation: bump 260ms ease-out; }
 @keyframes bump { 40% { transform: translateX(5px); } }
-@media (prefers-reduced-motion: reduce) { .grid-world .target { fill: none; stroke: var(--grid-robot); stroke-width: 2.5; stroke-dasharray: 5 4; opacity: 0.9; }
-.grid-world .robot-body.bump { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .grid-world .robot-body.bump { animation: none; } }
 
 /* Hints (src/lessons/hint-ui.js): a lightbulb by the results; the hint itself is a strip. */
 .results-panel { position: relative; }
@@ -186,6 +185,7 @@ body.drive-mode .editor-panel > :not(.drive), body.drive-mode .transport, body.d
 .grid-world.gems-any .gem { opacity: 0.35; }
 .grid-world .robot.ghost .robot-body { fill: none; stroke: var(--grid-robot); stroke-width: 2.5; stroke-dasharray: 5 3.5; }
 .grid-world .robot.ghost .robot-nose, .grid-world .robot.ghost .robot-eye { fill: var(--grid-robot); opacity: 0.75; }
+.grid-world .robot.ghost .robot-glint { display: none; }
 .grid-world .cell { fill: var(--grid-cell); }
 .grid-world .wall { fill: var(--grid-wall); }
 .grid-world .border { fill: none; stroke: var(--grid-border); stroke-width: 2; }
@@ -219,9 +219,13 @@ body.drive-mode .editor-panel > :not(.drive), body.drive-mode .transport, body.d
 .grid-world .gem-glow-stop-mid { stop-color: var(--grid-gem); stop-opacity: 0.45; }
 .grid-world .gem-glow-stop-outer { stop-color: var(--grid-gem); stop-opacity: 0; }
 .grid-world .gem-count { fill: var(--surface); font: 700 10px var(--sans); text-anchor: middle; }
-.grid-world .robot-body { fill: var(--grid-robot); }
-.grid-world .robot-nose { fill: var(--grid-robot-nose); }
+/* The robot: a solid rim around a frosted, see-through centre, so a gem (or anything else) under it
+   stays visible. The nose sits outside the rim and the eye near the front, leaving the centre clear. */
+.grid-world .robot-body { fill: var(--grid-robot); fill-opacity: 0.2; stroke: var(--grid-robot); stroke-width: 3.5; }
+.grid-world .robot-glint { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; opacity: 0.55; }
+.grid-world .robot-nose { fill: var(--grid-robot); }
 .grid-world .robot-eye { fill: var(--grid-robot-nose); }
+@media (prefers-color-scheme: dark) { .grid-world .robot-body { fill-opacity: 0.16; } .grid-world .robot-glint { opacity: 0.4; } }
 .grid-world .probe { fill: var(--grid-probe); opacity: 0; }
 .grid-world .probe.on { animation: probe-flash 300ms ease-out; }
 @keyframes probe-flash { from { opacity: 1; } to { opacity: 0; } }

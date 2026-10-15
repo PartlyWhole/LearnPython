@@ -333,8 +333,8 @@ The sketch below was the original plan.
   neither, it is complete when its guided level is solved.
 - **A solved level always stays open,** so old progress keeps its solves even where the order moved levels.
 - **Where the learner goes:** `current()` is the first open, unsolved level of the first
-  unfinished item. `next()` continues within the lesson (practice leads on to the twist), then
-  moves to the next item.
+  unfinished item. `next()` (the Continue button) is the next open level in play order, solved or
+  not, so replaying an earlier level leads to the one after it, not to the furthest level reached.
 
 ## 8. Accessibility (acceptance criteria)
 

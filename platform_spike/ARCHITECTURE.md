@@ -103,7 +103,8 @@ security control.
   take 40% of a step. No DOM, so it is unit-tested.
 - **Renderer** (`render/renderer.js`): an SVG grid themed by CSS variables. The robot moves and
   turns the short way round, and only a single action animates (`isOneAction` in `geometry.js`): bigger jumps
-  such as a replay restarting, scrubbing or stepping back snap, so the robot never spins while it slides; gems are faceted stones with an animated glow (a white-ish core plus a
+  such as a replay restarting, scrubbing or stepping back snap, so the robot never spins while it slides;
+  the robot is a solid rim around a frosted, see-through centre, so a gem under it stays visible; gems are faceted stones with an animated glow (a white-ish core plus a
   coloured halo, built from radial gradients rather than blur filters; only opacity and scale animate;
   each gem has its own phase, plus an occasional sparkle; screen blending in dark mode). The halo is
   wider than the robot, so a gem under the robot still shows. Sensors flash the cell they look at; an error ✗ marks the edge it

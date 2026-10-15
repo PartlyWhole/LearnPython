@@ -99,23 +99,13 @@ export class Progress {
     return this.order.at(-1);
   }
 
-  /** After a solve: the next open, unsolved level in the same item, else in the next items; null at the end. */
+  /** Where Continue goes after solving id: the next open level in play order, solved or not.
+   *  So replaying an earlier level leads to the one after it, not to the furthest level reached.
+   *  Inside a lesson that is guided → practice → twist; then the next item. null at the end. */
   next(id) {
-    const k = this.itemOf.get(id);
-    if (k === undefined) return null;
-    const after = (list) => list.find((x) => x !== id && !this.isSolved(x) && this.isUnlocked(x));
-    // The rest of this lesson first (so practice leads on to its twist), then anything skipped in
-    // it while it is unfinished, then the next items.
-    const levels = this.items[k].levels;
-    const here = after(levels.slice(levels.indexOf(id) + 1)) ?? (this.itemComplete(k) ? null : after(levels));
-    if (here) return here;
-    for (let j = k + 1; j < this.items.length; j++) {
-      if (this.itemComplete(j)) continue;
-      const open = after(this.items[j].levels);
-      if (open) return open;
-      break;
-    }
-    return null;
+    const i = this.order.indexOf(id);
+    if (i < 0) return null;
+    return this.order.slice(i + 1).find((x) => this.isUnlocked(x)) ?? null;
   }
 
   /** help: "none" | "guided" (the step-by-step guide was on screen) | "guided+shown" (Show me used). */

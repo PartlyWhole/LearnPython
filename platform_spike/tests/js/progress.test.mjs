@@ -145,3 +145,13 @@ test("progress saved under the old Gem Rover key moves to the LearnPython key", 
   p.markSolved("b", "y");
   assert.equal(new Progress(INDEX, storage).isSolved("b"), true, "new progress reads from the new key");
 });
+
+test("Continue after replaying an earlier level goes to the level after it, not the furthest one", () => {
+  const p = new Progress(ORDER, memoryStorage());
+  for (const id of ["a", "g", "p1", "p2"]) p.markSolved(id, "");
+  assert.equal(p.next("a"), "g", "replaying the first level leads to the second");
+  assert.equal(p.next("g"), "p1", "and on through the lesson");
+  assert.equal(p.next("p1"), "p2");
+  assert.equal(p.next("p2"), "t");
+  assert.equal(p.next("z"), null, "the end");
+});

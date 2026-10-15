@@ -68,9 +68,12 @@ export class GridRenderer {
     // Robot: drawn facing east around (0, 0); positioned and rotated per frame.
     this.robot = el("g", { class: "robot" }, this.svg);
     this.robotBody = el("g", {}, this.robot);
+    // A rim with a see-through centre (styled in app.css), a glint of light on the glass, an eye near
+    // the front and a nose outside the rim, so the middle of the cell stays visible.
     el("rect", { x: -13, y: -12, width: 24, height: 24, rx: 7, class: "robot-body" }, this.robotBody);
-    el("path", { d: "M5,-7 L15,0 L5,7 Z", class: "robot-nose" }, this.robotBody);
-    el("circle", { cx: -3, cy: 0, r: 3.2, class: "robot-eye" }, this.robotBody);
+    el("path", { d: "M-8.5,-3.5 Q-8.5,-7.5 -4.5,-7.5", class: "robot-glint" }, this.robotBody);
+    el("path", { d: "M11.5,-6 L18,0 L11.5,6 Z", class: "robot-nose" }, this.robotBody);
+    el("circle", { cx: 5.5, cy: 0, r: 2.3, class: "robot-eye" }, this.robotBody);
     // Gems on the robot's own cell stay centred under it (their glow shows around the robot);
     // this layer, drawn above the robot, keeps their count visible (see _drawGems).
     this.gemsUnderRobot = el("g", { class: "gems gems-under-robot" }, this.svg);
