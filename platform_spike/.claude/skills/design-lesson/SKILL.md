@@ -51,15 +51,24 @@ things the guided try needs, and nothing more (G-07 skill chains).
 
 ## 2. Watch (the demo)
 
-The demo is a worked example the learner steps through. It is *not* a lecture.
-- **Open with the problem the concept solves.** Show the pain (seven `put()` lines) or the
-  failure (a `for` that's too short in a longer corridor) *before* the construct. The concept
-  should arrive as relief.
-- **4–8 steps**, each with one caption (25 words or fewer) and one `focus`. Stepwise refinement
-  may go to about 10 steps, because the process is the content.
-- **Exactly one `predict`**, just before the first run of the new construct. Prefer a `cell`
-  prediction (the learner clicks where the robot will end), because the contract test can check it.
-- **Run at least once.** The learner should watch the replay of the new construct.
+The demo is a worked example the learner *does*, not a lecture. **Show, don't tell.** The first
+lesson is the model. It is one step: a program, the caption "Here is a program. Run it and watch it
+instruct the robot line by line", and a coach mark on the real Run button. Pressing Run and
+watching the robot follow the code, line by line, explains "a program runs top to bottom" better
+than any sentence. It also teaches where Run is, and it makes code → robot an experience rather
+than a claim. Apply the same idea to every demo:
+- **A `run` step waits for the learner to press the real Run button** (a pulsing coach mark points
+  at it; Ctrl/⌘+Enter works). Let the run make the point: the robot stopping short, the crash,
+  the count. Don't describe what the replay will show.
+- **Open with something to run, not a sentence about the problem.** Show the pain (seven
+  `put()` lines) or the failure (a `for` that's too short) by running it. A crash may be the
+  point: mark that run step `"expect": "error"` instead of narrating the crash in a caption.
+- **Captions are one short line** (16 words or fewer; most are 3-8). Each names the one idea the
+  picture can't, such as "`for` repeats the indented line", or says "Run it".
+- **3–6 steps** (refinement up to about 10). Fewer is better if the runs carry the meaning.
+- **At most one `predict`**, just before a run, and only where guessing adds something. Prefer a
+  `cell` prediction (the learner clicks where the robot will end): the contract test can check it.
+- **Printed output shows itself** under the caption after a run, so `print()` demos need no explanation.
 - **A similar problem, not the same one.** The guided try must not be solvable by copying the
   demo. It should be the same *shape* with different details (L1.2 demos `turn_around`; the guided
   try needs `turn_right`).

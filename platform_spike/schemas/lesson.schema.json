@@ -190,11 +190,16 @@
           ]
         },
         "run": {
-          "const": true
+          "const": true,
+          "description": "The learner presses the real Run button (a coach mark points at it) to run this step's code."
         },
         "code_from": {
           "type": "string",
           "description": "A level id: show the learner's own solved code for that level instead of `code` (which stays the fallback). The demo world in effect must be that level's world (tools/check_lesson.py checks)."
+        },
+        "expect": {
+          "const": "error",
+          "description": "This run step is meant to crash (showing the crash is the point, e.g. pick() on an empty cell). check_lesson checks that it does."
         }
       }
     },

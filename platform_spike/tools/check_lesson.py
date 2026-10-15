@@ -117,8 +117,8 @@ def _check(lesson):
         return
     code, predicts, runs = "", 0, 0
     steps = lesson["watch"]["steps"]
-    if not 4 <= len(steps) <= 10:
-        warn(f"{len(steps)} demo steps (aim for 4-8; refinement up to ~10)")
+    if len(steps) > 10:
+        warn(f"{len(steps)} demo steps (show, don't tell: most demos need 3-6; refinement up to ~10)")
     for i, step in enumerate(steps, 1):
         check_budget(f"watch step {i}", step.get("say", ""), BUDGET["watch"])
         if "focus" in step and not FOCUS.match(step["focus"]):
@@ -155,10 +155,16 @@ def _check(lesson):
         if step.get("run"):
             runs += 1
             result = engine.run_program(code, world)
-            if result["error"]:
-                err(f"watch step {i}: demo run fails: {result['error']['message']}")
-    if predicts != 1:
-        warn(f"{predicts} predictions in the demo (the beat has exactly one)")
+            if step.get("expect") == "error":  # the crash IS the lesson: show it rather than describe it
+                if not result["error"]:
+                    err(f"watch step {i}: expects the run to crash, but it finishes")
+            elif result["error"]:
+                err(f"watch step {i}: demo run fails: {result['error']['message']} "
+                    "(add \"expect\": \"error\" if showing this crash is the point)")
+        elif step.get("expect"):
+            err(f"watch step {i}: `expect` only makes sense on a run step")
+    if predicts > 1:
+        warn(f"{predicts} predictions in the demo (at most one)")
     if runs == 0:
         err("the demo never runs the code")
 

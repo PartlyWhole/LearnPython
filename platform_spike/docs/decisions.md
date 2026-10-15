@@ -162,3 +162,17 @@ Before any code, Unit 0 uses drive mode: command buttons plus a "Your moves" log
 - **Instructions the picture already gives** move to `.sr-only` text, for example the dashed pick cursor instead of "click a cell".
 **Why:** A visual UI suits a visual world and young learners. It also follows G-09: people glance at guidance, they don't read it.
 **Applies to:** all UI. The older screens got a minimal pass in Oct 2026. Nothing was removed outright: the keyboard tips and command list moved behind a "?" popover, topic names into hover text, and status words into a dot (words on failure). See ARCHITECTURE.md "UI".
+
+### D22. Demos are done, not read: the learner presses Run
+**Status:** accepted (Oct 2026; the project owner's direction)
+**Decision:** A demo step with `run` waits for the learner to press the real Run button, which a
+pulsing coach mark points at. Captions shrink to one short line naming the idea, and the runs make
+the point: stopping short, a crash (`"expect": "error"`), a count, printed output. The first lesson
+is a single step: "Here is a program. Run it and watch it instruct the robot line by line."
+**Why:**
+- **The learner's own action shows it.** Pressing Run and watching the robot follow the code,
+  line by line, demonstrates what a program is, with no explanation needed (G-00 P3: do, don't read).
+- **It teaches the control used in every later level.**
+- **Cause and effect are experienced, not claimed.**
+- **No passive tour.** Next-only walkthroughs are the format the research finds people skip and forget (G-02).
+**Applies to:** all 11 demos, rewritten from 77 steps to 57, with most captions 3-8 words.

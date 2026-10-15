@@ -18,25 +18,18 @@
     },
     "steps": [
       {
-        "say": "The robot must walk to the end of the corridor.",
-        "focus": "world"
-      },
-      {
-        "say": "`for` counts. `range(5)` moves exactly 5 times.",
+        "say": "Run it: `range(5)` is 5 moves.",
         "code": "for i in range(5):\n    move()\n",
-        "focus": "editor:1"
-      },
-      {
-        "say": "Run it. This corridor needs 7 moves, so the robot stops short.",
+        "focus": "editor:1",
         "run": true
       },
       {
-        "say": "`while` checks. It repeats `move()` as long as `front_is_clear()` is True.",
+        "say": "`while` keeps moving as long as `front_is_clear()` is True.",
         "code": "while front_is_clear():\n    move()\n",
         "focus": "editor:1"
       },
       {
-        "say": "The condition is checked before every pass. Where will the robot stop?",
+        "say": "Where will the robot stop?",
         "predict": {
           "cell": true,
           "answer": [
@@ -46,11 +39,11 @@
         }
       },
       {
-        "say": "Run it. At the wall, `front_is_clear()` is False, so the loop ends.",
+        "say": "Run it.",
         "run": true
       },
       {
-        "say": "Same code in a 1-cell corridor: the condition is False at once, so `move()` never runs.",
+        "say": "A 1-cell corridor. Run it.",
         "world": {
           "width": 1,
           "height": 1,
@@ -66,7 +59,7 @@
         "run": true
       },
       {
-        "say": "A condition can be about gems too. `while gems_here():` picks until the cell is empty.",
+        "say": "`while gems_here():` repeats until the cell is empty. Run it.",
         "code": "while front_is_clear():\n    move()\nwhile gems_here():\n    pick()\n",
         "focus": "editor:3",
         "run": true

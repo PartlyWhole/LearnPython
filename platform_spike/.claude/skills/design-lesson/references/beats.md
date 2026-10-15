@@ -10,21 +10,27 @@ learner has to produce it (the worked-example effect). Mario 1-1's first Goomba:
 encounter (G-07).
 
 Rules:
-1. **Problem before construct.** Step 1 or 2 shows why the old tools hurt: repetition, a hard-coded count that
-   breaks, a crash on an empty cell. Without that, the construct is an answer to no question.
+0. **Show, don't tell.** Run steps wait for the learner to press the real Run button (coach mark).
+   The replay explains what a caption would only claim. The first lesson is just "Here is a program.
+   Run it and watch it instruct the robot line by line" plus the coach mark: that one action teaches
+   top-to-bottom execution and where Run is.
+1. **Problem before construct, by running it.** Step 1 runs the old way so the learner sees it hurt:
+   repetition, a count that stops short, a crash on an empty cell (`"expect": "error"`). Without that,
+   the construct is an answer to no question.
 2. **Code grows one idea per step.** Each step's `code` changes one thing: a line, an indent, a
    number. If a step's caption needs "and", split it.
 3. **Point at what changed.** `focus: "editor:<line>"` on the new line, or `cell:x,y` where the
    effect shows. One focus per step.
-4. **Predict, then run.** The prediction comes right before the first run of the new construct.
+4. **Predict, then run (optional).** At most one prediction, right before the learner presses Run.
    A wrong guess is fine, because the run is the feedback. Never grade it and never block on it.
 5. **Show a variation.** After the run, change one value (`7` to `3`) and run again. This separates
    the construct from this particular problem.
 6. **Captions say what and why, not how to type.** "range(7) means 7 times." Not "Now type r-a-n-g-e".
 7. **No new commands in a demo** that the guided try then needs without explanation.
 
-Good (L2.1, five steps): the robot needs 7 gems → seven `put()` lines ("That's a lot of typing")
-→ replace with `for i in range(7):` + indented `put()` → predict the count → run → change to 3 and run.
+Good (L2.1, five steps): "Run it: seven `put()` lines." (the learner runs it) → `for i in range(7):` +
+indented `put()` ("`for` repeats the indented line") → predict the count → "Run it." → "Change 7 to 3,
+then run it."
 
 Bad: "Here is a for loop" with the finished code in step 1, followed by three captions explaining the
 syntax token by token. The construct arrives before the need, and the captions teach typing.

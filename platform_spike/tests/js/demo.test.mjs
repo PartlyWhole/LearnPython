@@ -25,12 +25,21 @@ test("every step resolves to a full state; code and world carry forward", () => 
   }
 });
 
-test("while_loops switches worlds at step 7 and keeps that world after", () => {
+test("while_loops switches to the 1-cell corridor at step 5 and keeps that world after", () => {
   const steps = demoSteps(lessons.find((l) => l.id === "while_loops"));
-  assert.equal(steps[5].world.width, 8);
-  assert.equal(steps[6].world.width, 1);
-  assert.equal(steps[7].world.width, 1);
-  assert.equal(steps[7].worldChanged, false);
+  assert.equal(steps[3].world.width, 8);
+  assert.equal(steps[4].world.width, 1);
+  assert.equal(steps[5].world.width, 1);
+  assert.equal(steps[5].worldChanged, false);
+});
+
+test("show, don't tell: every demo lets the learner press Run, and its first step has code to run", () => {
+  for (const lesson of lessons) {
+    const raw = lesson.watch.steps;
+    assert.ok(raw.some((s) => s.run), `${lesson.id} has a run step`);
+    assert.ok(raw.every((s) => s.say.split(/\s+/).length <= 16), `${lesson.id}: captions stay short`);
+  }
+  assert.equal(lessons.find((l) => l.id === "from_clicks_to_code").watch.steps.length, 1, "the first demo is one run");
 });
 
 test("textChange finds the one edit between two snapshots", () => {

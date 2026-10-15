@@ -24,25 +24,19 @@
     },
     "steps": [
       {
-        "say": "Pick up every gem in the 6-cell row. Some cells are empty.",
-        "focus": "world"
-      },
-      {
-        "say": "Move, then pick, 6 times.",
+        "say": "Run it: move, then pick, 6 times.",
         "code": "for i in range(6):\n    move()\n    pick()\n",
-        "focus": "editor:3"
+        "focus": "editor",
+        "run": true,
+        "expect": "error"
       },
       {
-        "say": "This would stop on cell 1: it is empty, so `pick()` fails with \"There's no gem here.\"",
-        "focus": "cell:1,0"
-      },
-      {
-        "say": "Look first. `if gems_here():` runs the indented `pick()` only when the cell has a gem.",
+        "say": "Look first: `if gems_here():` picks only where there is a gem.",
         "code": "for i in range(6):\n    move()\n    if gems_here():\n        pick()\n",
         "focus": "editor:3"
       },
       {
-        "say": "Which cells still have gems at the end?",
+        "say": "Which cells keep their gems?",
         "predict": {
           "choices": [
             "None of them",
@@ -53,11 +47,11 @@
         }
       },
       {
-        "say": "Run it. Empty cells are skipped; every gem is picked.",
+        "say": "Run it.",
         "run": true
       },
       {
-        "say": "Same code, gems in other places. The `if` looks again on every cell.",
+        "say": "Gems in other places, same code. Run it.",
         "world": {
           "width": 7,
           "height": 1,

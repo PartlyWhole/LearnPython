@@ -31,32 +31,10 @@
     },
     "steps": [
       {
-        "say": "Your moves from Pick it up, written as a program.",
+        "say": "Here is a program. Run it and watch it instruct the robot line by line.",
         "code": "move()\nmove()\nturn_left()\nmove()\nmove()\npick()\n",
         "code_from": "drive_pick",
-        "focus": "editor"
-      },
-      {
-        "say": "Each line is one command. They run top to bottom.",
-        "focus": "editor:1"
-      },
-      {
-        "say": "Where will the robot end up?",
-        "predict": {
-          "cell": true,
-          "answer": [
-            2,
-            0
-          ]
-        }
-      },
-      {
-        "say": "Run it: the robot repeats your drive.",
         "run": true
-      },
-      {
-        "say": "From now on you type the commands yourself.",
-        "focus": "editor"
       }
     ]
   },

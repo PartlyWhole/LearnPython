@@ -163,7 +163,8 @@ function setNote(text, bad = false) {
 }
 
 async function runCode() {
-  if (busy || !level || demo.active || drive.active) return;
+  if (demo.active) return demo.runRequested(); // in a demo, Run runs the demo's step
+  if (busy || !level || drive.active) return;
   busy = true;
   syncButtons();
   await guide.idle(); // a guide check may be using the worker; it takes milliseconds
@@ -218,7 +219,8 @@ const demo = new DemoPlayer({
   reduceMotion: globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false,
   el: {
     panel: $("demo"), name: $("demo-name"), count: $("demo-count"), dots: $("demo-dots"), sr: $("demo-sr"), say: $("demo-say"),
-    predict: $("demo-predict"), feedback: $("demo-feedback"), back: $("demo-back"), next: $("demo-next"),
+    predict: $("demo-predict"), feedback: $("demo-feedback"), output: $("demo-output"), back: $("demo-back"), next: $("demo-next"),
+    run: $("run"), host: document.querySelector(".editor-panel"),
     replay: $("demo-replay"), skip: $("demo-skip"),
     focusTargets: { world: $("world"), editor: $("editor") },
   },

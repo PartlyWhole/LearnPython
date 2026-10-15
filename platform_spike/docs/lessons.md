@@ -125,6 +125,11 @@ Field rules:
   checked on its own.
 - **`watch.steps[].world`** (optional) switches the demo to another world from that step on,
   for example the same code in a longer or a 1-cell corridor. Without it, the demo stays on `watch.world`.
+- **`run: true`**: the step waits for the learner to press the real Run button (a pulsing coach
+  mark; Ctrl/⌘+Enter works). Next stays available but dims until the replay ends. Printed output
+  appears under the caption. **`"expect": "error"`** marks a run that is meant to crash, because
+  showing the crash is the point; `check_lesson.py` checks that it does crash. (Show, don't tell:
+  `design-lesson` skill §2.)
 - **`focus`** names what to highlight: `world`, `editor`, `editor:<line>`, `cell:<x>,<y>`,
   `button:<name>` (drive mode), `run`, `goal`. Only one highlight per step (G-02).
 - **`predict`** is either `{"choices": [...], "answer": "<one of them>"}` or

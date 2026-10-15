@@ -20,7 +20,11 @@ export class DemoPlayer {
   /**
    * @param {object} deps
    *   editor, renderer, player (TracePlayer), controller (RunController)
-   *   el: {panel, name, count, say, predict, feedback, back, next, replay, skip, focusTargets: {world, editor}}
+   *   el: {panel, name, count, say, predict, feedback, output, back, next, replay, skip,
+   *        run (the page's real Run button), host (the editor panel), focusTargets: {world, editor}}
+   * A step with `run` waits for the learner to press the real Run button (a coach mark points at
+   * it; Ctrl/Cmd+Enter works too): showing beats telling, and they learn where Run is. Next stays
+   * available, so the demo never blocks; it steps back while the run is waited for.
    *   setTimer, clearTimer   wrapped timers (CLAUDE.md invariant 10)
    *   reduceMotion           boolean
    *   onStart(), onExit(how) the app swaps its own level UI out and back in
@@ -71,6 +75,8 @@ export class DemoPlayer {
     this.renderer.stopPicking();
     if (!forward || st.predict) { this.pendingPredict = null; this.guess = null; }
     this.el.feedback.hidden = true;
+    if (this.el.output) this.el.output.hidden = true; // optional: a page cached from before it existed lacks it
+    this._waitForRun(null);
 
     // Keep the world as the last step left it (so "the last cell is still empty" is visible),
     // except when this step switches worlds or the learner jumped back.
@@ -96,14 +102,37 @@ export class DemoPlayer {
       this._applyFocus(st.focus);
       if (st.predict) this._showPredict(st.predict);
       else this.el.predict.hidden = true;
-      if (st.run) this._run(st, token);
+      if (st.run) this._waitForRun(st);
     };
     if (fromCode !== null && fromCode !== st.code && !this.reduceMotion) this._type(fromCode, st.code, afterCode);
     else { this.editor.setCode(st.code); afterCode(); }
   }
 
+  /** The learner pressed Run (or Ctrl/Cmd+Enter) during the demo: run this step's code. */
+  runRequested() {
+    if (!this.active || !this.waiting) return;
+    if (this.typing) this.finishTyping();
+    const st = this.waiting;
+    this.el.run.classList.remove("coach"); // Next lights up when the replay ends (replayEnded)
+    if (this.el.output) this.el.output.hidden = true;
+    this._run(st, this.token);
+  }
+
+  /** Show or clear the coach mark on Run: st is the run step to wait for, or null. */
+  _waitForRun(st) {
+    this.waiting = st;
+    this.el.host.classList.toggle("demo-run", Boolean(st));
+    this.el.run.classList.toggle("coach", Boolean(st));
+    this.el.next.classList.toggle("quiet-next", Boolean(st));
+    if (st) {
+      this.el.sr.textContent = "Press Run, or Ctrl or Command plus Enter.";
+      this.el.run.focus({ preventScroll: true });
+    }
+  }
+
   exit(how) {
     if (!this.active) return;
+    this._waitForRun(null);
     this.finishTyping({ apply: false });
     this.token++;
     this.player.pause();
@@ -122,6 +151,12 @@ export class DemoPlayer {
     const { result, world } = this.lastRun;
     const last = this.player.frames.at(-1);
     if (result.error) this.renderer.showError(last, result.error.kind);
+    if (result.output && this.el.output) { // what print() wrote: shown, not described
+      this.el.output.textContent = result.output.trimEnd();
+      this.el.output.hidden = false;
+    }
+    this.el.next.classList.remove("quiet-next");
+    if (this.waiting) this.el.next.focus({ preventScroll: true }); // done: the way on is Next
     if (this.pendingPredict) {
       const end = [result.final.x, result.final.y];
       const mark = predictionMark(this.pendingPredict, this.guess, end);

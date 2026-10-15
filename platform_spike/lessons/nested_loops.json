@@ -19,21 +19,18 @@
     },
     "steps": [
       {
-        "say": "Fill 3 rows of 4 gems, bottom row first.",
-        "focus": "world"
-      },
-      {
-        "say": "`plant_row()` fills one row. Three rows means writing the pair three times.",
+        "say": "Run it: plant a row, go up, three times.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_row():\n    for i in range(4):\n        put()\n        move()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nplant_row()\ngo_to_next_row()\nplant_row()\ngo_to_next_row()\nplant_row()\ngo_to_next_row()\n",
-        "focus": "editor:23"
+        "focus": "editor",
+        "run": true
       },
       {
-        "say": "An outer `for` repeats the row and the trip to the next one.",
+        "say": "An outer `for` repeats the pair.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_row():\n    for i in range(4):\n        put()\n        move()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    plant_row()\n    go_to_next_row()\n",
-        "focus": "editor:23"
+        "focus": "editor:1"
       },
       {
-        "say": "How many gems will the grid hold at the end?",
+        "say": "How many gems at the end?",
         "predict": {
           "choices": [
             "4",
@@ -44,14 +41,12 @@
         }
       },
       {
-        "say": "Run it: 3 passes, 4 gems each.",
-        "run": true,
-        "focus": "world"
+        "say": "Run it.",
+        "run": true
       },
       {
-        "say": "Put `plant_row`'s loop straight inside: a `for` inside a `for`. The robot moves the same.",
+        "say": "A `for` inside a `for`. Run it: the same rows.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    for i in range(4):\n        put()\n        move()\n    go_to_next_row()\n",
-        "focus": "editor:10",
         "run": true
       }
     ]

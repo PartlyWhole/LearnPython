@@ -9,9 +9,9 @@ Blockers are marked ●.
 - A3 The concept is genuinely new at this point. Don't re-teach what an earlier lesson already established.
 
 ## B. Watch
-- B1 The problem appears before the construct.
-- B2 4–8 steps (refinement: about 10). One idea and one focus per step.
-- B3 Exactly one prediction, before the first run of the new construct. It is never graded and never blocks.
+- B1 Show, don't tell: the demo opens with something to run, and the runs (stopping short, a crash with `"expect": "error"`, a count) make the point instead of captions.
+- B2 3–6 steps (refinement: about 10); captions are one short line (16 words or fewer). One idea and one focus per step.
+- B3 At most one prediction, right before a run. It is never graded and never blocks.
 - B4 The demo runs the construct at least once and shows one variation.
 - B5 ● The guided try can't be solved by copying the demo's code.
 - B6 Every step can be skipped. Nothing auto-advances.

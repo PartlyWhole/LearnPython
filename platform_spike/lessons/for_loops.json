@@ -19,21 +19,18 @@
     },
     "steps": [
       {
-        "say": "The robot needs 7 gems on its own cell.",
-        "focus": "cell:0,0"
-      },
-      {
-        "say": "Seven `put()` lines would work. That's a lot of typing.",
+        "say": "Run it: seven `put()` lines.",
         "code": "put()\nput()\nput()\nput()\nput()\nput()\nput()\n",
-        "focus": "editor"
+        "focus": "editor",
+        "run": true
       },
       {
-        "say": "`for` repeats the indented lines. `range(7)` means 7 times.",
+        "say": "`for` repeats the indented line: `range(7)` is 7 times.",
         "code": "for i in range(7):\n    put()\n",
         "focus": "editor:1"
       },
       {
-        "say": "How many gems will be on the cell?",
+        "say": "How many gems now?",
         "predict": {
           "choices": [
             "1",
@@ -44,12 +41,12 @@
         }
       },
       {
-        "say": "Run it and count.",
-        "run": true,
-        "focus": "cell:0,0"
+        "say": "Run it.",
+        "focus": "cell:0,0",
+        "run": true
       },
       {
-        "say": "Change 7 to 3: the same loop, a different count.",
+        "say": "Change 7 to 3, then run it.",
         "code": "for i in range(3):\n    put()\n",
         "focus": "editor:1",
         "run": true

@@ -19,21 +19,18 @@
     },
     "steps": [
       {
-        "say": "Build three towers, two gems tall. Start with the plan: the big steps, as names.",
-        "focus": "world"
-      },
-      {
-        "say": "The plan uses names that don't exist yet: `build_tower()` and `go_to_next_spot()`.",
+        "say": "Start with the plan: big steps as names. Run it.",
         "code": "for i in range(3):\n    build_tower()\n    go_to_next_spot()\n",
-        "focus": "editor:2"
+        "focus": "editor",
+        "run": true,
+        "expect": "error"
       },
       {
-        "say": "Run now and Python stops: `build_tower` is not defined. That's expected. A stub with `pass` defines it.",
-        "code": "def build_tower():\n    pass\n\n\ndef go_to_next_spot():\n    pass\n\n\nfor i in range(3):\n    build_tower()\n    go_to_next_spot()\n",
-        "focus": "editor:1"
+        "say": "Python doesn't know those names yet. `pass` defines each one, doing nothing for now.",
+        "code": "def build_tower():\n    pass\n\n\ndef go_to_next_spot():\n    pass\n\n\nfor i in range(3):\n    build_tower()\n    go_to_next_spot()\n"
       },
       {
-        "say": "With both stubs in place, what will a run do?",
+        "say": "What will a run do now?",
         "predict": {
           "choices": [
             "Stop with an error",
@@ -44,26 +41,17 @@
         }
       },
       {
-        "say": "Run it. No crash: the plan works, and the robot waits for its details.",
+        "say": "Run it.",
         "run": true
       },
       {
-        "say": "Teach one name: `build_tower()` stacks two gems, then comes back down facing east.",
+        "say": "Teach one name: `build_tower()`. Run it.",
         "code": "def build_tower():\n    put()\n    turn_left()\n    move()\n    put()\n    turn_left()\n    turn_left()\n    move()\n    turn_left()\n\n\ndef go_to_next_spot():\n    pass\n\n\nfor i in range(3):\n    build_tower()\n    go_to_next_spot()\n",
-        "focus": "editor:1"
+        "run": true
       },
       {
-        "say": "Run after each piece. One tower, built three times on the same cell: `go_to_next_spot()` is still empty.",
-        "run": true,
-        "focus": "cell:0,1"
-      },
-      {
-        "say": "Teach the other name: `go_to_next_spot()` moves two cells east.",
+        "say": "Teach the other: `go_to_next_spot()`. Run it.",
         "code": "def build_tower():\n    put()\n    turn_left()\n    move()\n    put()\n    turn_left()\n    turn_left()\n    move()\n    turn_left()\n\n\ndef go_to_next_spot():\n    move()\n    move()\n\n\nfor i in range(3):\n    build_tower()\n    go_to_next_spot()\n",
-        "focus": "editor:12"
-      },
-      {
-        "say": "Run it. Three towers, and the plan never changed.",
         "run": true
       }
     ]

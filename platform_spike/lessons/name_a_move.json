@@ -21,26 +21,22 @@
     },
     "steps": [
       {
-        "say": "Fetch the gem, then come back to the start.",
-        "focus": "world"
-      },
-      {
-        "say": "Two left turns face the robot the other way.",
+        "say": "Run it: fetch the gem, then come back.",
         "code": "move()\nmove()\npick()\nturn_left()\nturn_left()\nmove()\nmove()\n",
-        "focus": "editor:4"
+        "run": true
       },
       {
-        "say": "`def` names a new command. The indented lines are what it does.",
+        "say": "`def` gives the two left turns one name.",
         "code": "def turn_around():\n    turn_left()\n    turn_left()\n\nmove()\nmove()\npick()\nturn_left()\nturn_left()\nmove()\nmove()\n",
         "focus": "editor:1"
       },
       {
-        "say": "Calling `turn_around()` runs those lines.",
+        "say": "Use the name where the two lines were.",
         "code": "def turn_around():\n    turn_left()\n    turn_left()\n\nmove()\nmove()\npick()\nturn_around()\nmove()\nmove()\n",
         "focus": "editor:8"
       },
       {
-        "say": "Where will the robot end up? Pick the cell.",
+        "say": "Where will the robot end up?",
         "predict": {
           "cell": true,
           "answer": [

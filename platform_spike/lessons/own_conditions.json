@@ -32,20 +32,12 @@
     },
     "steps": [
       {
-        "say": "The robot walks east under a ledge. It should stop where the way north opens.",
-        "focus": "world"
-      },
-      {
-        "say": "A function can answer a question. `return` hands back what it found.",
+        "say": "A function can `return` an answer: True or False.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef left_is_clear():\n    turn_left()\n    clear = front_is_clear()\n    turn_right()\n    return clear\n",
         "focus": "editor:11"
       },
       {
-        "say": "`clear` holds True or False. The robot turns back before it answers.",
-        "focus": "editor:9"
-      },
-      {
-        "say": "`not` flips the answer: keep moving while the left is blocked.",
+        "say": "`not` flips it: move while the left is blocked.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef left_is_clear():\n    turn_left()\n    clear = front_is_clear()\n    turn_right()\n    return clear\n\n\nwhile not left_is_clear():\n    move()\n",
         "focus": "editor:14"
       },
@@ -60,7 +52,7 @@
         }
       },
       {
-        "say": "Run it. Each pass asks the question again before moving.",
+        "say": "Run it.",
         "run": true
       }
     ]

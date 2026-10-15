@@ -48,42 +48,33 @@
     },
     "steps": [
       {
-        "say": "Collect every crystal, then go back into the shed, facing east. Columns differ in height, and some are empty.",
-        "focus": "world"
-      },
-      {
-        "say": "Start from the top: three parts, three names. Each name is a promise, and `pass` keeps it for now. Run it: nothing breaks.",
+        "say": "Start from the top: three names, each just `pass`. Run it: nothing breaks.",
         "code": "def leave_shed():\n    pass\n\n\ndef harvest_all_columns():\n    pass\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
-        "focus": "editor:13",
+        "focus": "editor",
         "run": true
       },
       {
-        "say": "Keep the easiest promise first: `leave_shed()` is one `move()`.",
-        "code": "def leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    pass\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
-        "focus": "editor:2"
+        "say": "Fill in the easiest name first.",
+        "code": "def leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    pass\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n"
       },
       {
-        "say": "Test one column before you loop. Give `harvest_all_columns()` a temporary body: `harvest_column()`, then `move()`.",
-        "code": "def harvest_column():\n    pass\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
-        "focus": "editor:10"
+        "say": "Test one column before you loop: harvest it, then move.",
+        "code": "def harvest_column():\n    pass\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n"
       },
       {
-        "say": "Refine `harvest_column()`: up the column collecting, turn around, back down, face east. The docstring says where it starts and ends.",
-        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
-        "focus": "editor:12"
+        "say": "Refine `harvest_column()`. The docstring says where it starts and ends.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n"
       },
       {
-        "say": "Run it. One column is harvested, and the robot ends where the docstring promised: bottom row, facing east.",
-        "run": true,
-        "focus": "cell:2,4"
+        "say": "Run it: one column, ending where the docstring promised.",
+        "run": true
       },
       {
-        "say": "Now swap the temporary body for a loop: harvest, then move, while the way east is clear.",
-        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    while front_is_clear():\n        harvest_column()\n        move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
-        "focus": "editor:27"
+        "say": "Now loop it while the way east is clear.",
+        "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    while front_is_clear():\n        harvest_column()\n        move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n"
       },
       {
-        "say": "Where will the robot stop? Pick the cell.",
+        "say": "Where will the robot stop?",
         "predict": {
           "cell": true,
           "answer": [
@@ -93,15 +84,13 @@
         }
       },
       {
-        "say": "Run it. The last column is missed: the same fencepost as before. Loop, then once more.",
-        "run": true,
-        "focus": "cell:5,4"
+        "say": "Run it.",
+        "run": true
       },
       {
-        "say": "Add `harvest_column()` after the loop. Then keep the last promise: `return_home()` reuses `move_to_wall()`. Run it.",
+        "say": "Once more after the loop, then `return_home()`. Run it.",
         "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    while front_is_clear():\n        harvest_column()\n        move()\n    harvest_column()\n\n\ndef return_home():\n    turn_around()\n    move_to_wall()\n    turn_around()\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n",
-        "run": true,
-        "focus": "editor:30"
+        "run": true
       }
     ]
   },

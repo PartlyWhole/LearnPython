@@ -25,16 +25,12 @@
     },
     "steps": [
       {
-        "say": "Pick up the gem on every cell, the last one included.",
-        "focus": "world"
-      },
-      {
         "say": "Pick, then move, while the way is clear.",
         "code": "while front_is_clear():\n    pick()\n    move()\n",
         "focus": "editor:1"
       },
       {
-        "say": "Which cell still has its gem at the end?",
+        "say": "Which cell keeps its gem?",
         "predict": {
           "cell": true,
           "answer": [
@@ -44,20 +40,16 @@
         }
       },
       {
-        "say": "Run it. On the last cell the way isn't clear, so the loop ends before `pick()`.",
+        "say": "Run it.",
         "run": true
       },
       {
-        "say": "5 cells, but only 4 moves: the loop runs 4 times.",
-        "focus": "cell:4,0"
-      },
-      {
-        "say": "Handle the last cell once more, after the loop.",
+        "say": "One more `pick()` after the loop.",
         "code": "while front_is_clear():\n    pick()\n    move()\npick()\n",
         "focus": "editor:4"
       },
       {
-        "say": "Run it. Loop, then once more: every cell is done.",
+        "say": "Run it.",
         "run": true
       }
     ]
