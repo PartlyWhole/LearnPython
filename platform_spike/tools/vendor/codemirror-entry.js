@@ -10,6 +10,6 @@ export { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirro
 export {
   indentOnInput, bracketMatching, syntaxHighlighting, HighlightStyle, indentUnit,
 } from "@codemirror/language";
-export { autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
+export { autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap, acceptCompletion } from "@codemirror/autocomplete";
 export { python } from "@codemirror/lang-python";
 export { tags } from "@lezer/highlight";

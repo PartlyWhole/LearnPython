@@ -17,6 +17,7 @@ import { lessonForPractice } from "./lessons/hints.js";
 import { playOrder, lessonIds } from "./lessons/order.js";
 import { EventLog } from "./progress/events.js";
 import { applyIcons, setIcon, icon } from "./ui/icons.js";
+import { setupLayout } from "./ui/layout.js";
 
 const $ = (id) => document.getElementById(id);
 applyIcons(); // icon buttons carry their names in aria-label; the svg is decoration
@@ -523,6 +524,16 @@ async function init() {
   }
   hints.attach(lessonForPractice(lessons, level.id), level);
 }
+
+// ---------------------------------------------------------------- layout: resizable split, fullscreen panels
+setupLayout({
+  layout: document.querySelector(".layout"),
+  splitter: document.querySelector(".splitter"),
+  fullscreenButtons: [...document.querySelectorAll("[data-fullscreen]")].map((button) => (
+    { button, panel: document.querySelector(button.dataset.fullscreen) })),
+  icon,
+  onResize: () => editor.view.requestMeasure(),
+});
 
 // Test hook for browser automation on a local dev server only (never on a deployed host).
 if (["localhost", "127.0.0.1"].includes(location.hostname)) {

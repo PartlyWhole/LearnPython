@@ -92,7 +92,10 @@
         <button id="guide-offer-keep" class="quiet">Keep</button>
       </div>
     </section>
-    <div class="editor" id="editor" aria-label="Your program"></div>
+    <div class="editor-box">
+      <div class="editor" id="editor" aria-label="Your program"></div>
+      <button class="icon-button fullscreen-button" data-fullscreen=".editor-panel" aria-label="Full screen" title="Full screen"></button>
+    </div>
     <div class="actions">
       <button id="run" class="round-button run-button" data-icon="play" aria-label="Run (Ctrl or ⌘ + Enter)" title="Run (Ctrl/⌘ + Enter)" disabled></button>
       <button id="stop" class="icon-button" data-icon="stop" aria-label="Stop" title="Stop" disabled></button>
@@ -106,11 +109,13 @@
       <dl class="help-keys">
         <dt><kbd>Ctrl</kbd>/<kbd>⌘</kbd> <kbd>Enter</kbd></dt><dd>run</dd>
         <dt><kbd>Ctrl</kbd> <kbd>Space</kbd></dt><dd>suggest commands</dd>
-        <dt><kbd>Tab</kbd></dt><dd>indent</dd>
+        <dt><kbd>Tab</kbd></dt><dd>accept a suggestion, or indent</dd>
         <dt><kbd>Esc</kbd> then <kbd>Tab</kbd></dt><dd>leave the editor</dd>
       </dl>
     </div>
   </section>
+
+  <div class="splitter" role="separator" aria-orientation="vertical" aria-label="Resize the code and world panels" aria-valuemin="25" aria-valuemax="75" tabindex="0" title="Drag to resize · double-click to reset"></div>
 
   <section class="panel world-panel" aria-label="World">
     <div class="world-row">
@@ -128,6 +133,7 @@
         <span class="counter" title="In the bag"><span data-glyph="bag"></span><span id="bag">0</span></span>
         <span class="counter" title="Gems left on the floor"><span data-glyph="gem"></span><span id="left">0</span></span>
       </span>
+      <button class="icon-button fullscreen-button" data-fullscreen=".world-panel" aria-label="Full screen" title="Full screen"></button>
     </div>
     <div class="transport" role="group" aria-label="Replay">
       <button id="back" class="icon-button" data-icon="step_back" title="Step back" aria-label="Step back"></button>
@@ -139,6 +145,7 @@
   </section>
 
   <section class="panel results-panel" aria-label="Results" hidden>
+    <button class="icon-button fullscreen-button results-fullscreen" data-fullscreen=".results-panel" aria-label="Full screen" title="Full screen"></button>
     <button id="hint-offer" class="hint-offer" data-icon="bulb" aria-label="Want a hint?" title="Want a hint?" hidden></button>
     <section id="hint" class="strip hint-strip" hidden aria-label="Hint">
       <div class="strip-head">

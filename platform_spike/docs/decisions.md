@@ -102,7 +102,7 @@ lives in `docs/ASSUMPTIONS_AUDIT.md` (A-numbers) and the tests.
 
 ### D16. Editor behaviour for learners
 **Status:** accepted
-**Decision:** Tab indents (four spaces), and Esc then Tab leaves the editor (CodeMirror's tab-focus mode, verified). Completions cover only the robot API, with one-line descriptions. Enter accepts a visible completion. Replay and error marks clear on any edit.
+**Decision:** Tab accepts a visible completion (Oct 2026: Tab autocomplete, as in other code editors), otherwise indents (four spaces), and Esc then Tab leaves the editor (CodeMirror's tab-focus mode, verified). Completions cover only the robot API, with one-line descriptions. Enter accepts a visible completion. Replay and error marks clear on any edit.
 **Why:** Indenting with Tab is what learners expect in Python. The Esc-then-Tab escape keeps the editor keyboard-accessible, and the "?" commands-and-keys popover says so (it was a hint line under the editor before D21). Clearing marks on edit avoids pointing at code that no longer exists.
 **Untested:** real phones and screen readers. D8's device testing is still outstanding.
 

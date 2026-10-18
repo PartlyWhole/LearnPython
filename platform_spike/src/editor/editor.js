@@ -8,7 +8,7 @@ import {
   EditorState, StateEffect, StateField, Compartment, EditorView, keymap, lineNumbers,
   highlightActiveLineGutter, drawSelection, Decoration, WidgetType, defaultKeymap, history,
   historyKeymap, indentWithTab, indentOnInput, bracketMatching, syntaxHighlighting, HighlightStyle,
-  indentUnit, autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap, python, tags,
+  indentUnit, autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap, acceptCompletion, python, tags,
 } from "../../vendor/codemirror.js";
 import { API_DOCS } from "./api-docs.js";
 
@@ -120,9 +120,11 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
         theme,
         editable.of(EditorView.editable.of(true)),
         EditorView.contentAttributes.of({ "aria-label": "Python code", autocapitalize: "off", autocorrect: "off", spellcheck: "false" }),
-        // Tab indents (as in every code editor). Keyboard users leave the editor with Esc, then Tab.
+        // Tab accepts a visible suggestion, otherwise indents (as in every code editor).
+        // Keyboard users leave the editor with Esc, then Tab.
         keymap.of([
           { key: "Mod-Enter", run: () => { onRun(); return true; } },
+          { key: "Tab", run: acceptCompletion }, // false when no suggestion is open: falls through to indent
           ...closeBracketsKeymap, ...completionKeymap, ...historyKeymap, ...defaultKeymap, indentWithTab,
         ]),
         EditorView.updateListener.of((u) => { if (u.docChanged) onChange(); }),

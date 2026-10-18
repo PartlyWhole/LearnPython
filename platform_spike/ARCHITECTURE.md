@@ -112,7 +112,7 @@ security control.
 - **Editor** (`editor/editor.js`): CodeMirror 6 with Python highlighting, line numbers, auto-indent,
   bracket matching, undo, completions for the robot API (with descriptions) and Ctrl/⌘+Enter to run.
   Two marks driven by the replay: the current line, and the crash line with the message shown under
-  it. Any edit clears both. Tab indents; Esc then Tab leaves the editor. Colours come from the page's
+  it. Any edit clears both. Tab accepts a visible suggestion, otherwise indents; Esc then Tab leaves the editor. Colours come from the page's
   CSS variables.
 - **Levels and progress** (`lessons/index.json`, `lessons/order.js`, `progress/progress.js`): the play order is
   units of items, each a plain level or a lesson (guided → practice → twist). Items unlock in order. A lesson
@@ -173,6 +173,10 @@ security control.
     `progress.hints`, and a solve after any hint is recorded `with: "hint"`.
 - **Playtest log** (`src/progress/events.js`): the last 500 events (runs, solves, demo, guide and
   hint events) in browser storage. Settings › Playtest log downloads them as JSON.
+- **Layout** (`src/ui/layout.js`): editor | draggable divider | world. The divider drags, moves with the arrow keys
+  (Home/End for the limits) and resets on double-click; the split is kept per browser (25-75%). The top row fills
+  the window height, so the editor is as tall as the screen allows. Each panel (code, world, results) has a
+  full-screen button: the browser's Fullscreen API where available (Esc exits), else a full-window fallback.
 - **UI** (D21): minimal and visual. Since the minimal pass, the older screens follow it too:
   - **Header:** a status dot, and a levels grid icon with the solved count.
   - **Editor toolbar:** Run, Stop and Reset are icons. Commands and keys live behind a "?" popover
