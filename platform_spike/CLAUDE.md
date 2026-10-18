@@ -28,7 +28,8 @@ way. Decisions are cited below as D1 to D11.
 | `tests/` | `test_engine.py` (behaviour), `test_contracts.py` (golden traces, schemas, level index, topic tags), `test_levels.py` (every level solvable; wrong solutions fail) |
 | `tools/make_golden.py` | Regenerates the golden traces. Only for intentional behaviour changes. |
 | `app.html`, `src/app.js`, `src/app.css` | The app page and its glue code (wiring only, no game rules) |
-| `src/runtime/` | `protocol.js` (page↔worker messages), `worker.js` (Pyodide + engine), `controller.js` (worker pool, timeout, Stop) |
+| `src/runtime/` | `protocol.js` (page↔worker messages), `worker.js` (Pyodide + engine; a classic, self-contained worker), `controller.js` (worker pool, timeout, Stop), `sandbox.js` (the sandbox frame used in rooms), `validate.js` (checks on sandboxed results) |
+| `src/collab/`, `vendor/collab.js` | Shared rooms: `room.js` (Automerge doc + presence, PartlyWhole relay), `editor.js` (sync, carets), `build.js` (stamped by `build_site.py`). `vendor/collab.js` is generated (`npm run vendor:collab`) and loaded only in rooms. See `docs/collab.md` |
 | `src/editor/` | `editor.js` (CodeMirror 6 setup: Python, completions, replay and error line marks), `api-docs.js` (learner-facing API descriptions) |
 | `vendor/codemirror.js` | CodeMirror bundled into one file. **Generated: never edit it.** Rebuilt from `tools/vendor/codemirror-entry.js` with `npm run vendor` |
 | `src/render/` | `frames.js` (trace → frames, pure), `player.js` (replay timing, pure), `renderer.js` (SVG), `goal.js` (Goal view, pure), `geometry.js` |
@@ -48,6 +49,7 @@ python3.12 -m unittest discover -s tests        # stdlib only; schema checks ski
 node --test "tests/js/*.test.mjs"               # JS: frames, player, controller, API docs, goal view, demo, progress (no npm install needed)
 python3 tools/check_lesson.py <lesson id>       # one lesson's contract checks, with warnings and what was skipped
 npm install && npm run vendor                   # ONLY to change CodeMirror: add exports to tools/vendor/codemirror-entry.js first
+npm install && npm run vendor:collab            # ONLY to change Automerge (rooms): edit tools/vendor/collab-entry.js first
 python3.12 tools/make_golden.py                 # ONLY after an intended engine change; say why in the commit
 ```
 
@@ -61,6 +63,7 @@ Browser check: serve this folder over http (for example `python3 -m http.server`
 After app changes, also click through `app.html`: a passing run, a failing run, a crash, an
 infinite `while True: x += 1` (stopped at 3 s) and Stop. For editor changes, also check: typing with
 completions, Ctrl/⌘+Enter, replay and error marks clearing on edit, and Esc then Tab leaving the editor.
+For room changes, run the two-tab check in `docs/collab.md` (`?transports=tabs`, no network).
 Browser automation may send keys without `keyCode`, which CodeMirror's Esc/Tab logic needs: verify that
 case with `KeyboardEvent`s that carry `keyCode` before concluding it is broken.
 
@@ -82,7 +85,7 @@ a button, ask whether the world, an icon or the layout already says it.
 3. **Learner errors are data, never exceptions out of the engine.** `run_program` returns `error: {type, message, line}`; `WorldError` messages are written for learners. [The UI replays up to the error and points at the line.]
 4. **Every trace event carries the learner's line number.** [Line highlighting during replay; error location.]
 5. **Two stop mechanisms:** the engine's step cap, plus a wall-clock timeout in the app that terminates the worker. Keep a spare pre-warmed worker. [The cap misses `while True: x += 1`; a terminated worker costs a 3–5 s reload. D5]
-6. **Learner code is untrusted.** It can `import js` and reach `fetch` and storage. Shared programs or levels must run in a sandbox (D7). `ast` constraints are teaching aids, not security.
+6. **Learner code is untrusted.** It can `import js` and reach `fetch` and storage. Code that may be someone else's (a shared room) runs only in the sandbox (`src/runtime/sandbox.js`), and what comes back is checked (`validate.js`); room data is checked (`readDoc`, `readPeer`) and never put into HTML (D7, D23, `docs/collab.md`). `ast` constraints are teaching aids, not security.
 7. **Formats are versioned contracts.** A change to `schemas/`, the trace or `run_result` must update the schema, `validate_*` in `engine.py`, `BAD_LEVEL_EDITS` in `tests/test_contracts.py` and, if traces change, the golden file, all in one change. [Parallel work stays compatible.]
 8. **Determinism:** all randomness goes through `World.rng`, seeded per run. No `time`, no unseeded `random`, no set iteration order in results. [Golden traces and grading.]
 9. **Every learner-facing API method calls `self._spend_step()` before changing any state.** [If the step cap fired after a change, the replayed final state would disagree with the engine; `test_step_cap_changes_nothing_without_an_event` and `tests/js/frames.test.mjs` catch it.]

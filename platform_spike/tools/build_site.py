@@ -7,13 +7,25 @@ lessons/ and engine.py, plus an empty .nojekyll (GitHub Pages must not run Jekyl
 Deliberately left out: tests/ (reference and wrong solutions, fixtures), tools/, docs/, the audit
 harness (index.html, worker.js), node_modules/. .github/workflows/pages.yml runs this on every push.
 """
+import os
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FILES = ["app.html", "engine.py"]
 DIRS = ["src", "vendor", "levels", "lessons"]
+
+
+def build_id():
+    sha = os.environ.get("GITHUB_SHA")
+    if not sha:
+        try:
+            sha = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=True).stdout
+        except (OSError, subprocess.CalledProcessError):
+            sha = "local"
+    return "".join(c for c in sha.strip() if c.isalnum())[:12] or "local"
 
 
 def build(out):
@@ -29,6 +41,9 @@ def build(out):
     for name in DIRS:
         shutil.copytree(ROOT / name, out / name, ignore=shutil.ignore_patterns("__pycache__", ".DS_Store"))
     (out / ".nojekyll").write_text("")
+    # Stamp the build, so peers in a shared room on different versions are told to reload.
+    stamp = (out / "src" / "collab" / "build.js")
+    stamp.write_text(stamp.read_text().replace('export const BUILD = "dev";', f'export const BUILD = "{build_id()}";'))
     leaked = [p for p in out.rglob("*") if "solutions" in p.parts or p.suffix == ".py" and p.name != "engine.py"]
     if leaked:
         sys.exit(f"would publish files that must stay private: {leaked[:5]}")

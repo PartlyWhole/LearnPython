@@ -19,7 +19,8 @@ class PublicSite(unittest.TestCase):
             build(out)
             files = {p.relative_to(out).as_posix() for p in out.rglob("*") if p.is_file()}
             for needed in ["index.html", "app.html", "engine.py", ".nojekyll", "src/app.js",
-                           "src/runtime/worker.js", "vendor/codemirror.js", "lessons/index.json"]:
+                           "src/runtime/worker.js", "vendor/codemirror.js", "vendor/collab.js", "src/collab/room.js",
+                           "src/runtime/sandbox.js", "lessons/index.json"]:
                 self.assertIn(needed, files)
             order = load()
             for level_id in order["levels"]:
@@ -29,6 +30,11 @@ class PublicSite(unittest.TestCase):
             private = [f for f in files if re.match(r"(tests|tools|docs|node_modules)/", f) or
                        (f.endswith(".py") and f != "engine.py")]
             self.assertEqual(private, [])
+            # Stamped with the build, so peers in a room on different versions can tell.
+            stamp = (out / "src/collab/build.js").read_text()
+            self.assertNotIn('BUILD = "dev"', stamp)
+            self.assertRegex(stamp, r'export const BUILD = "[A-Za-z0-9]+";')
+            self.assertIn('"dev"', (ROOT / "src/collab/build.js").read_text())  # the source is untouched
 
 
 if __name__ == "__main__":

@@ -76,9 +76,10 @@ Also built: a level select with
 
 Learner code is untrusted. In the worker it can reach `fetch`, IndexedDB and the worker's
 URL through `import js` (tested). That is acceptable while learners only run their own code in
-their own browser. Before adding sharing (running someone else's code or code-bearing
-levels), run it in a sandboxed cross-origin iframe or worker with no credentials, or on a
-server (D7). `ast` constraints guide learners but are trivially bypassed, so they are not a
+their own browser. In a shared room (docs/collab.md, D23) the workers run in a sandboxed,
+opaque-origin iframe whose CSP allows network only to the Pyodide CDN, and what they send back
+is shape-checked (`src/runtime/validate.js`) before it is drawn. Anything else that runs someone
+else's code (community levels) must use the same sandbox (D7). `ast` constraints guide learners but are trivially bypassed, so they are not a
 security control.
 
 ## Extension points
@@ -202,6 +203,10 @@ runs in the browser (Pyodide from jsDelivr), every path is relative, and no spec
 That is only the files the app loads: reference solutions, tests, tools and docs stay out
 (`tests/test_site.py`). Pages caches files for about 10 minutes, so a deploy can take that long to reach every
 visitor. Note that in a public repo the solutions are still readable on GitHub itself.
+
+Shared rooms (docs/collab.md) are the one server dependency: PartlyWhole's Automerge relay,
+`wss://sync.partlywhole.org`, whose origin allowlist must include the site's origin
+(`partlywhole.github.io`) and localhost. Without it, rooms fail to open and everything else works.
 
 ## Not built yet
 

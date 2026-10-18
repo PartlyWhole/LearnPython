@@ -48,7 +48,7 @@ lives in `docs/ASSUMPTIONS_AUDIT.md` (A-numbers) and the tests.
 **Revisit when:** adding `input()`-style interactive programs or live mode with mid-run control.
 
 ### D7. Learner code is untrusted; sandbox anything shared
-**Status:** accepted
+**Status:** accepted; met for shared rooms by D23
 **Decision:** Running your own code in your own browser is acceptable. Running other people's code (shared solutions, community levels) requires a sandboxed cross-origin iframe or worker with no credentials, or server-side execution. `ast` constraints are teaching aids only.
 **Why:** Learner code can `import js` and reach `fetch`, IndexedDB and the worker's location (A11).
 **Evidence:** A11, A12.
@@ -176,3 +176,23 @@ is a single step: "Here is a program. Run it and watch it instruct the robot lin
 - **Cause and effect are experienced, not claimed.**
 - **No passive tour.** Next-only walkthroughs are the format the research finds people skip and forget (G-02).
 **Applies to:** all 11 demos, rewritten from 77 steps to 57, with most captions 3-8 words.
+
+### D23. Shared rooms, with partner code run in a sandbox
+**Status:** accepted (Oct 2026; the project owner's request, "just like ~/Botgineer", safely)
+**Decision:** Rooms as in Botgineer: one Automerge document per room, synced through PartlyWhole's
+relay and between tabs, with presence for carets and steps. Three differences, all for safety:
+- **In a room, the workers run in a sandboxed, opaque-origin iframe** whose CSP allows network only
+  to the Pyodide CDN (`src/runtime/sandbox.js`). This is D7's requirement, met.
+- **Each peer runs every run itself.** Only the program crosses the network, never a result.
+- **Everything received is checked**: the doc, presence and the sandbox's replies (`readDoc`,
+  `readPeer`, `validate.js`).
+**Why:** in a room you press Run on text someone else typed, and Python reaches the page through
+`import js` (A11). Without the sandbox, a partner could read your progress or post from your page.
+The relay is unauthenticated, so the link is the only key; the Share dialog says so.
+**Costs:**
+- `worker.js` became a classic worker (module workers fail in opaque origins).
+- A 5 MB lazy bundle (`vendor/collab.js`, loaded only for rooms).
+- A level change reloads the page and rejoins.
+**Revisit when:** rooms need to count for progress (then a faked passing result matters), or the
+relay gets accounts. Details: `docs/collab.md`.
+

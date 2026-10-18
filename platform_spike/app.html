@@ -14,6 +14,12 @@
   </div>
   <div class="top-right">
     <span id="runtime-status" class="status" role="status" data-state="loading" title="Starting Python…"><span class="status-dot" aria-hidden="true"></span><span class="status-text sr-only">Starting Python…</span></span>
+    <span id="room-bar" class="room-bar" hidden>
+      <span id="room-peers" class="room-peers" role="img"></span>
+      <button id="room-copy" class="icon-button" data-icon="copy" aria-label="Copy the room link" title="Copy link"></button>
+      <button id="room-leave" class="icon-button" data-icon="leave" aria-label="Leave the room" title="Leave"></button>
+    </span>
+    <button id="share" class="icon-button" data-icon="people" aria-label="Work together" title="Work together" hidden></button>
     <button id="watch-demo" class="icon-button" data-icon="replay" aria-label="Watch the demo again" title="Watch the demo again" hidden></button>
     <button id="open-settings" class="icon-button" data-icon="gear" aria-label="Settings" title="Settings"></button>
     <button id="open-levels" class="levels-button" data-icon="levels" aria-label="Levels" title="Levels"><span id="levels-count" class="levels-count"></span></button>
@@ -26,6 +32,21 @@
     <button id="close-levels" class="icon-button" data-icon="close" aria-label="Close"></button>
   </div>
   <div id="levels-list"></div>
+</dialog>
+
+<dialog id="share-dialog" aria-labelledby="share-title" class="small-dialog">
+  <div class="dialog-head">
+    <h2 id="share-title">Work together</h2>
+    <button id="close-share" class="icon-button" data-icon="close" aria-label="Close"></button>
+  </div>
+  <div class="share-body">
+    <p>Anyone with the link can see and edit this code with you, live.</p>
+    <ul class="share-facts">
+      <li>The room is kept on the PartlyWhole server, unencrypted, until 90 days after its last use.</li>
+      <li>Your name in the room is made up. Don't type anything personal.</li>
+    </ul>
+    <button id="share-start" class="round-button share-start" data-icon="people"><span class="label">Create link</span></button>
+  </div>
 </dialog>
 
 <dialog id="settings-dialog" aria-labelledby="settings-title" class="small-dialog">

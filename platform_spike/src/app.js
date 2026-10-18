@@ -1,6 +1,8 @@
 // App glue: wires the editor, run controller, trace player and renderer together.
 // Game rules live in engine.py; this file only moves data between the parts.
 import { RunController } from "./runtime/controller.js";
+import { SandboxHost, SandboxedWorker } from "./runtime/sandbox.js";
+import { validPayload } from "./runtime/validate.js";
 import { buildFrames, describe, gemsLeft } from "./render/frames.js";
 import { TracePlayer } from "./render/player.js";
 import { GridRenderer } from "./render/renderer.js";
@@ -19,11 +21,15 @@ import { EventLog } from "./progress/events.js";
 import { applyIcons, setIcon, icon } from "./ui/icons.js";
 import { setupLayout } from "./ui/layout.js";
 import { countLines } from "./ui/lines.js";
+import { Room, transportsFrom } from "./collab/room.js"; // light: Automerge loads only on Share or join
+import { sharedEditor, setPeers } from "./collab/editor.js";
 
 const $ = (id) => document.getElementById(id);
 applyIcons(); // icon buttons carry their names in aria-label; the svg is decoration
-const PARAMS = new URLSearchParams(location.search);
+const START_SEARCH = location.search; // before init tidies the address bar
+const PARAMS = new URLSearchParams(START_SEARCH);
 const REQUESTED_LEVEL = PARAMS.get("level");
+const ROOM_URL = PARAMS.get("room"); // a shared room's link (docs/collab.md)
 const TIMEOUT_MS = 3000;
 
 const ui = {
@@ -44,6 +50,13 @@ let busy = false;
 let lessons = [];      // lessons/index.json order; each attaches to its guided level
 let lesson = null;     // this level's lesson, if it has one
 let shownWorld = null; // the world on screen: the level's, or a demo's
+let room = null;       // the shared room this page is in, if any
+let levelsById = {};
+let seenRun = null;      // the last room run this page has run or skipped
+let shownRun = null;     // the room run on screen (for step sync)
+let pendingShared = null; // a partner's run that arrived while one was going
+let followSince = null;   // when a partner moved the room to another level
+const FOLLOW_MS = 8000;
 
 // ---------------------------------------------------------------- editor
 let draftTimer = null;
@@ -54,6 +67,7 @@ const editor = createEditor($("editor"), {
     if (demo?.active) return; // demo code is not the learner's draft
     guide?.codeChanged();
     updateLineCount();
+    if (room) return; // a room's code is everyone's, not this browser's draft
     draftTimer = setTimeout(() => level && !demo.active && progress?.saveDraft(level.id, editor.getCode()), 500);
   },
 });
@@ -126,14 +140,26 @@ function showFrame(frame, index, total) {
 }
 
 ui.play.onclick = () => player.toggle();
-ui.back.onclick = () => player.step(-1);
-ui.fwd.onclick = () => player.step(1);
-ui.scrub.oninput = () => { player.pause(); player.seek(Number(ui.scrub.value)); };
+ui.back.onclick = () => { player.step(-1); shareStep(); };
+ui.fwd.onclick = () => { player.step(1); shareStep(); };
+ui.scrub.oninput = () => { player.pause(); player.seek(Number(ui.scrub.value)); shareStep(); };
 ui.speed.onclick = () => { setSpeed(speedIndex + 1); progress?.setSetting("speed", speedIndex); };
 
 // ---------------------------------------------------------------- running
+// In a shared room, code may be a partner's: run it in the sandbox (src/runtime/sandbox.js).
+// `?sandbox=1` forces the sandbox outside a room too (testing). Sharing switches it on (useSandbox).
+let sandboxed = Boolean(ROOM_URL) || PARAMS.get("sandbox") === "1";
+let sandboxHost = null;
 const controller = new RunController({
-  createWorker: () => new Worker(new URL("./runtime/worker.js", import.meta.url), { type: "module" }),
+  createWorker: () => {
+    if (!sandboxed) return new Worker(new URL("./runtime/worker.js", import.meta.url)); // classic worker
+    sandboxHost ??= new SandboxHost({
+      workerUrl: new URL("./runtime/worker.js", import.meta.url),
+      engineUrl: new URL("../engine.py", import.meta.url),
+    });
+    return new SandboxedWorker(sandboxHost);
+  },
+  validate: (request, payload) => !sandboxed || validPayload(request, payload), // a sandboxed run's result is untrusted data
   timeoutMs: TIMEOUT_MS,
   onState: (state, detail) => {
     // A dot shows the state; words appear only when something is wrong (screen readers hear them all).
@@ -179,9 +205,12 @@ function setNote(text, bad = false) {
   ui.note.classList.toggle("bad", bad);
 }
 
-async function runCode() {
+/** Runs the editor's code; `shared` is a partner's run from the room ({id, source}). In a room, a
+ *  run of your own is recorded in the room so every peer runs it too (each in its own sandbox). */
+async function runCode(shared = null) {
   if (demo.active) return demo.runRequested(); // in a demo, Run runs the demo's step
-  if (busy || !level || drive.active) return;
+  if (!level || drive.active) return;
+  if (busy) { if (shared) pendingShared = shared; return; } // a partner's run waits for this one
   busy = true;
   syncButtons();
   await guide.idle(); // a guide check may be using the worker; it takes milliseconds
@@ -195,7 +224,9 @@ async function runCode() {
   setNote(controller.state === "ready" ? "" : "Waiting for Python to finish loading…");
   syncButtons();
 
-  const code = editor.getCode();
+  const code = shared ? shared.source : editor.getCode();
+  shownRun = shared ? shared.id : room ? room.startRun(code, level.id) : null;
+  if (shownRun) seenRun = shownRun;
   const out = await controller.run({ type: "check", code, level, seed: 0 });
   busy = false;
   resultsPanel.classList.remove("busy");
@@ -205,7 +236,7 @@ async function runCode() {
   if (out.status === "done") {
     lastReport = out.payload;
     const main = lastReport.worlds[0].result;
-    events.record("run", { level: level.id, passed: lastReport.passed });
+    events.record("run", { level: level.id, passed: lastReport.passed, ...(shared && { shared: true }) });
     pendingHintRun = lastReport.passed;
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
     player.load(buildFrames(level.world, main.trace));
@@ -219,12 +250,16 @@ async function runCode() {
   } else if (out.status === "stopped") {
     resultsPanel.hidden = true;
     setNote("Stopped.");
+  } else if (out.status === "failed" && out.untrusted) {
+    // Only code can do this (e.g. posting fake results via `import js`): it isn't drawn.
+    setNote("This program sent back something that isn't a robot run, so it isn't shown.", true);
   } else if (out.status === "failed") {
-    setNote(`Something went wrong running Python (${out.message}). This is a bug in the app, not your code.`, true);
+    setNote(`Something went wrong running Python (${String(out.message).slice(0, 200)}). This is a bug in the app, not your code.`, true);
   }
+  if (pendingShared) { const next = pendingShared; pendingShared = null; runCode(next); }
 }
 
-ui.run.onclick = runCode;
+ui.run.onclick = () => runCode();
 
 // ---------------------------------------------------------------- lesson demo (Watch beat)
 const resultsPanel = document.querySelector(".results-panel");
@@ -248,6 +283,7 @@ const demo = new DemoPlayer({
     document.querySelector(".editor-panel").classList.add("demo-on");
     goalFigure.hidden = true;
     $("watch-demo").hidden = true;
+    $("share").hidden = true;
     resultsPanel.hidden = true;
     ui.outputWrap.hidden = true;
     shownWorld = null;
@@ -258,6 +294,7 @@ const demo = new DemoPlayer({
     setTimeout(updateLineCount);
     goalFigure.hidden = false;
     $("watch-demo").hidden = !lesson;
+    $("share").hidden = Boolean(room);
     editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
     showLevelWorld();
     ui.results.replaceChildren();
@@ -394,6 +431,7 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
     nextLink.className = "next-level round-button";
     if (next) {
       nextLink.href = `?level=${encodeURIComponent(next)}`;
+      if (room) nextLink.onclick = (e) => { e.preventDefault(); moveRoom(next); };
       // The button just says Continue; where it goes is for screen readers and the hover tooltip.
       nextLink.innerHTML = `<span class="label">Continue</span>${icon("next")}`;
       nextLink.setAttribute("aria-label", `Continue to ${levelMeta[next]?.title ?? next}`);
@@ -443,6 +481,7 @@ function renderLevelList() {
         const row = document.createElement(unlocked ? "a" : "span");
         if (unlocked) {
           row.href = `?level=${encodeURIComponent(id)}`;
+          if (room) row.onclick = (e) => { e.preventDefault(); moveRoom(id); };
           if (id === level?.id) row.setAttribute("aria-current", "page");
         } else {
           row.className = "locked";
@@ -481,8 +520,134 @@ $("levels-dialog").addEventListener("click", (e) => { if (e.target === $("levels
 $("reset").onclick = () => {
   if (!level) return;
   editor.setCode(level.starter_code ?? "");
-  progress.saveDraft(level.id, editor.getCode());
+  if (!room) progress.saveDraft(level.id, editor.getCode());
   editor.focus();
+};
+
+// ---------------------------------------------------------------- shared room (docs/collab.md)
+// Share puts this level and code in a room on the relay; the link is the key. In a room: the code
+// is merged live, each Run is run by every peer in its own sandbox, scrubbing a replay moves
+// everyone's, and Continue or a level from the list moves the whole room. Leave goes back to
+// working alone (a reload, so the page is solo again, without the sandbox).
+const roomUi = { bar: $("room-bar"), peers: $("room-peers"), copy: $("room-copy"), leave: $("room-leave") };
+
+function shareStep() {
+  if (room && shownRun && player.frames.length) room.shareStep(shownRun, player.index);
+}
+
+/** From here on, runs go to the sandbox: a partner's code is about to arrive. */
+function useSandbox() {
+  if (sandboxed) return;
+  sandboxed = true;
+  controller.dispose();
+  controller.start().catch(() => {});
+}
+
+async function joinRoom() {
+  setNote("Joining the room…");
+  const joined = await Room.join(ROOM_URL, transportsFrom(START_SEARCH, PARAMS.get("via")));
+  setNote(joined ? "" : "That room could not be reached, so you're working alone.", !joined);
+  return joined;
+}
+
+function enterRoom() {
+  editor.setShared(sharedEditor(room));
+  room.shareLevel(level.id);
+  roomUi.bar.hidden = false;
+  $("share").hidden = true;
+  $("watch-demo").hidden = true;
+  room.subscribe(onRoomChange);
+  room.onStep((runId, index) => {
+    if (runId !== shownRun || !player.frames.length) return;
+    player.pause();
+    player.seek(index);
+  });
+  addEventListener("pagehide", () => room?.goodbye());
+  // Someone ran the code that is in the editor now: show it to the joiner too.
+  const d = room.doc();
+  if (d.run && d.run.level === level.id && d.run.source === d.code && !level.drive) runCode(d.run);
+  else seenRun = d.run?.id ?? null;
+  onRoomChange();
+}
+
+function onRoomChange() {
+  if (!room) return;
+  const d = room.doc();
+  if (!d) return;
+  if (d.level !== level.id && levelsById[d.level]) { // a partner moved the room on: follow
+    // once they're back on the new level, so one of us always holds the room (or after 8 s).
+    followSince ??= Date.now();
+    if (room.peers().some((p) => p.level === d.level) || Date.now() - followSince > FOLLOW_MS) {
+      location.href = room.link(location.pathname, d.level);
+    } else {
+      setNote("Moving on with the room…");
+      setTimeout(onRoomChange, FOLLOW_MS + 100);
+    }
+    return;
+  }
+  followSince = null;
+  if (d.run && d.run.id !== seenRun) {
+    seenRun = d.run.id;
+    if (d.run.level === level.id && d.run.by !== room.me.id && !drive.active) runCode(d.run);
+  }
+  const peers = room.peers();
+  editor.view.dispatch({ effects: setPeers.of(peers) });
+  // Who is here: a dot each, you first (ringed). Names are hover detail.
+  const dot = (p, you) => {
+    const el = document.createElement("span");
+    el.className = `peer-dot${you ? " you" : ""}`;
+    el.style.setProperty("--peer", p.color);
+    el.title = you ? `${p.name} (you)` : p.name;
+    return el;
+  };
+  roomUi.peers.replaceChildren(dot(room.me, true), ...peers.map((p) => dot(p, false)));
+  roomUi.peers.setAttribute("aria-label", `In this room: you (${room.me.name})${peers.map((p) => `, ${p.name}`).join("")}`);
+  if (room.otherBuilds().length) setNote("Someone here has an older or newer version of LearnPython. Reload to stay in step.", true);
+}
+
+/** Moves the whole room to another level, then this page follows. */
+function moveRoom(id) {
+  const target = levelsById[id];
+  if (!room || !target) return;
+  room.setLevel(id, target.starter_code ?? "");
+  setTimeout(() => { location.href = room.link(location.pathname, id); }, 400); // let it reach the others
+}
+
+$("share").onclick = () => $("share-dialog").showModal();
+$("close-share").onclick = () => $("share-dialog").close();
+$("share-dialog").addEventListener("click", (e) => { if (e.target === $("share-dialog")) $("share-dialog").close(); });
+$("share-start").onclick = async () => {
+  const button = $("share-start");
+  button.disabled = true;
+  try {
+    useSandbox();
+    room = await Room.create({ level: level.id, code: editor.getCode() }, transportsFrom(START_SEARCH, null));
+    history.replaceState(null, "", room.link(location.pathname, level.id));
+    enterRoom();
+    $("share-dialog").close();
+    copyLink();
+  } catch (err) {
+    setNote(`The room could not be created (${err.message ?? err}).`, true);
+  } finally {
+    button.disabled = false;
+  }
+};
+
+async function copyLink() {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    setIcon(roomUi.copy, "check");
+    setTimeout(() => setIcon(roomUi.copy, "copy"), 1500);
+  } catch {
+    prompt("Copy this link", location.href);
+  }
+}
+roomUi.copy.onclick = copyLink;
+roomUi.leave.onclick = async () => {
+  const r = room;
+  room = null;
+  await r?.leave();
+  location.href = `?level=${encodeURIComponent(level.id)}`;
 };
 
 // ---------------------------------------------------------------- start
@@ -504,12 +669,16 @@ async function init() {
     levels.forEach((lv) => {
       levelMeta[lv.id] = { title: lv.title, concepts: [...new Set((lv.topics ?? []).map((t) => t.split(".")[0].replace(/_/g, " ")))].join(", ") };
     });
+    levelsById = Object.fromEntries(levels.map((lv) => [lv.id, lv]));
     progress = new Progress(order, browserStorage());
     guide.progress = progress;
     hints.progress = progress;
     if (Number.isInteger(progress.setting("speed"))) setSpeed(progress.setting("speed"));
-    const wanted = REQUESTED_LEVEL && ids.includes(REQUESTED_LEVEL) && progress.isUnlocked(REQUESTED_LEVEL)
-      ? REQUESTED_LEVEL : progress.current();
+    if (ROOM_URL) room = await joinRoom();
+    const roomLevel = room?.doc()?.level;
+    const wanted = roomLevel && ids.includes(roomLevel) ? roomLevel // a room is on the level it's on
+      : REQUESTED_LEVEL && ids.includes(REQUESTED_LEVEL) && progress.isUnlocked(REQUESTED_LEVEL)
+        ? REQUESTED_LEVEL : progress.current();
     level = levels[ids.indexOf(wanted)];
     if (REQUESTED_LEVEL && REQUESTED_LEVEL !== wanted) {
       setNote(`That level is still locked, so you're on "${level.title}".`);
@@ -519,14 +688,15 @@ async function init() {
     $("level-brief").textContent = String(err.message ?? err);
     return;
   }
-  history.replaceState(null, "", `?level=${encodeURIComponent(level.id)}`);
+  history.replaceState(null, "", room ? room.link(location.pathname, level.id) : `?level=${encodeURIComponent(level.id)}`);
   $("level-title").textContent = level.title;
   $("level-brief").textContent = level.brief ?? "";
   document.title = `${level.title} · LearnPython`;
   showCommands(level.constraints?.hidden_commands ?? []);
-  editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
+  editor.setCode(room ? room.doc().code : progress.draft(level.id) ?? level.starter_code ?? "");
   updateLineCount();
   updateLevelsButton();
+  if (room) enterRoom();
   showLevelWorld();
   showGoal();
   syncButtons();
@@ -535,10 +705,11 @@ async function init() {
     drive.start(level);
     return;
   }
+  $("share").hidden = Boolean(room); // driving with buttons has no code to share
   lesson = lessonForLevel(lessons, level.id);
-  $("watch-demo").hidden = !lesson;
+  $("watch-demo").hidden = !lesson || Boolean(room);
   // The demo plays once before a lesson's guided try (skippable), and on request with ?demo=1.
-  if (lesson && (PARAMS.get("demo") === "1" || (!progress.lesson(lesson.id) && !progress.isSolved(level.id)))) {
+  if (lesson && !room && (PARAMS.get("demo") === "1" || (!progress.lesson(lesson.id) && !progress.isSolved(level.id)))) {
     demo.start(lesson); // the guide attaches when the demo ends
   } else {
     guide.attach(lesson, level);
@@ -558,7 +729,7 @@ setupLayout({
 
 // Test hook for browser automation on a local dev server only (never on a deployed host).
 if (["localhost", "127.0.0.1"].includes(location.hostname)) {
-  window.__learnPython = { editor, demo, guide, drive, hints, events, get progress() { return progress; }, get level() { return level; }, runCode,
+  window.__learnPython = { editor, demo, guide, drive, hints, events, get progress() { return progress; }, get level() { return level; }, get room() { return room; }, runCode,
     setSpeed: (name) => setSpeed(SPEEDS.findIndex((s) => s.name === name)) };
 }
 

@@ -66,9 +66,13 @@ export class RunController {
    * @param {(state: string, detail?: object) => void} [opts.onState]
    * @param {Function} [opts.setTimer] / [opts.clearTimer]  injectable timers (tests)
    */
-  constructor({ createWorker, timeoutMs = 5000, onState = () => {},
+  /** validate(request, payload): optional check on every result (in a shared room the worker
+   *  runs code that may be a partner's: src/runtime/validate.js). A result that fails it is
+   *  reported as a failed run, never handed to the page. */
+  constructor({ createWorker, timeoutMs = 5000, onState = () => {}, validate = null,
                 setTimer = (fn, ms) => setTimeout(fn, ms), clearTimer = (id) => clearTimeout(id) }) {
     this.createWorker = createWorker;
+    this.validate = validate;
     this.timeoutMs = timeoutMs;
     this.onState = onState;
     this.setTimer = setTimer;
@@ -132,7 +136,9 @@ export class RunController {
 
     this.current.timer = this.setTimer(() => this._kill("timeout"), this.timeoutMs);
     worker.request({ ...request, id: this.nextId++ }).then((msg) => {
-      if (msg.type === MSG.RESULT) this._finish({ status: "done", payload: msg.payload });
+      if (msg.type === MSG.RESULT && this.validate && !this.validate(request, msg.payload)) {
+        this._finish({ status: "failed", untrusted: true, message: "the run's result was not shaped like engine output" });
+      } else if (msg.type === MSG.RESULT) this._finish({ status: "done", payload: msg.payload });
       else if (msg.type === MSG.FAILED) this._finish({ status: "failed", message: msg.message });
       // "terminated" means _kill already settled this run
     });

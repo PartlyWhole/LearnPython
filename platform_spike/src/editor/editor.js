@@ -99,6 +99,7 @@ const highlight = HighlightStyle.define([
  */
 export function createEditor(parent, { doc = "", onRun = () => {}, onChange = () => {} } = {}) {
   const editable = new Compartment();
+  const shared = new Compartment(); // a room's extensions (src/collab/editor.js), empty alone
   const view = new EditorView({
     parent,
     state: EditorState.create({
@@ -119,6 +120,7 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
         marksField,
         theme,
         editable.of(EditorView.editable.of(true)),
+        shared.of([]),
         EditorView.contentAttributes.of({ "aria-label": "Python code", autocapitalize: "off", autocorrect: "off", spellcheck: "false" }),
         // Tab accepts a visible suggestion, otherwise indents (as in every code editor).
         // Keyboard users leave the editor with Esc, then Tab.
@@ -148,6 +150,8 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
     clearMarks: () => mark({ line: null }),
     setReadOnly: (ro) => view.dispatch({ effects: editable.reconfigure(EditorView.editable.of(!ro)) }),
     focus: () => view.focus(),
+    /** Put a room's extensions on (or [] to take them off). The text must already be the room's. */
+    setShared: (ext) => view.dispatch({ effects: shared.reconfigure(ext) }),
     /** Limit completions to the commands this level allows. */
     setCommands: (names) => { availableCommands = [...names]; },
   };

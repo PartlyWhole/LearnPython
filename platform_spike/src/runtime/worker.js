@@ -1,15 +1,35 @@
-// Module Web Worker: loads Pyodide and engine.py, then answers run/check requests.
+// Web Worker: loads Pyodide and engine.py, then answers run/check requests.
 // It holds no learner state between requests: every request goes through run_program /
 // check_level, which build a fresh world and namespace (CLAUDE.md invariant 2).
-import { loadPyodide } from "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.mjs";
-import { MSG } from "./protocol.js";
+//
+// A classic (not module) worker, and self-contained, on purpose: in a shared room the same source
+// runs as a blob worker inside a sandboxed, opaque-origin frame (src/runtime/sandbox.js), where
+// Chrome refuses module workers and the worker can't fetch from this site. There it is named
+// "sandbox" and is handed engine.py by message.
+const PYODIDE_INDEX = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+importScripts(`${PYODIDE_INDEX}pyodide.js`); // defines self.loadPyodide
 
-const ENGINE_URL = new URL("../../engine.py", import.meta.url);
+// Must equal MSG in protocol.js (tests/js/sandbox.test.mjs checks).
+const MSG = Object.freeze({
+  RUN: "run", CHECK: "check", GUIDE: "guide", READY: "ready", RESULT: "result", FAILED: "failed",
+  LOAD_FAILED: "load_failed",
+});
+const SANDBOXED = self.name === "sandbox";
+
+const engineSource = SANDBOXED
+  ? new Promise((resolve) => {
+      self.addEventListener("message", function first(event) {
+        if (event.data?.type !== "engine") return;
+        self.removeEventListener("message", first);
+        resolve(String(event.data.source));
+      });
+    })
+  : fetch(new URL("../../engine.py", self.location.href), { cache: "no-store" }).then((r) => r.text());
 
 const ready = (async () => {
   const t0 = performance.now();
-  const pyodide = await loadPyodide();
-  const source = await (await fetch(ENGINE_URL, { cache: "no-store" })).text();
+  const pyodide = await self.loadPyodide({ indexURL: PYODIDE_INDEX });
+  const source = await engineSource;
   pyodide.FS.writeFile("engine.py", source);
   pyodide.runPython("import sys; sys.path.insert(0, '.'); import engine, json");
   const run = pyodide.globals.get("engine").run_program;
@@ -30,6 +50,7 @@ const ready = (async () => {
 
 self.onmessage = async (event) => {
   const msg = event.data;
+  if (msg?.type === "engine") return; // the sandbox's hand-over of engine.py (above)
   let api;
   try {
     api = await ready;
