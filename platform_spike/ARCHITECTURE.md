@@ -177,6 +177,9 @@ security control.
   (Home/End for the limits) and resets on double-click; the split is kept per browser (25-75%). The top row fills
   the window height, so the editor is as tall as the screen allows. Each panel (code, world, results) has a
   full-screen button: the browser's Fullscreen API where available (Esc exits), else a full-window fallback.
+- **Line limits** (`max_lines`): you can run a program of any length; only the pass waits for the limit (the
+  engine's constraint check). A counter by Run (`src/ui/lines.js`, counting like the engine) shows `18/16`, red
+  when over. Results scroll into view after a run when the tall editor has pushed them below the window.
 - **UI** (D21): minimal and visual. Since the minimal pass, the older screens follow it too:
   - **Header:** a status dot, and a levels grid icon with the solved count.
   - **Editor toolbar:** Run, Stop and Reset are icons. Commands and keys live behind a "?" popover

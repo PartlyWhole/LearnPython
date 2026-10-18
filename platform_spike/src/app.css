@@ -376,3 +376,7 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .editor-panel .drive { flex: 1 1 auto !important; grid-template-rows: auto auto minmax(120px, 1fr) auto; }
 .editor-panel .drive .drive-log { max-height: none; }
 @media (max-width: 860px) { .editor-panel .drive .drive-log { max-height: 150px; } }
+
+/* Line counter for levels with max_lines: quiet when within, red when over (you can still run). */
+.line-count { font: 600 13px var(--mono); color: var(--muted); padding: 2px 8px; border-radius: 999px; background: var(--bg); }
+.line-count.over { color: var(--danger); background: var(--band-error); }

@@ -18,6 +18,7 @@ import { playOrder, lessonIds } from "./lessons/order.js";
 import { EventLog } from "./progress/events.js";
 import { applyIcons, setIcon, icon } from "./ui/icons.js";
 import { setupLayout } from "./ui/layout.js";
+import { countLines } from "./ui/lines.js";
 
 const $ = (id) => document.getElementById(id);
 applyIcons(); // icon buttons carry their names in aria-label; the svg is decoration
@@ -52,6 +53,7 @@ const editor = createEditor($("editor"), {
     clearTimeout(draftTimer);
     if (demo?.active) return; // demo code is not the learner's draft
     guide?.codeChanged();
+    updateLineCount();
     draftTimer = setTimeout(() => level && !demo.active && progress?.saveDraft(level.id, editor.getCode()), 500);
   },
 });
@@ -158,6 +160,20 @@ function syncButtons() {
   ui.stop.disabled = !busy;
 }
 
+/** On levels with a line limit: "18/16" by the Run button, red when over. You can run any length;
+ *  the level only passes within the limit (the engine checks). */
+function updateLineCount() {
+  const el = $("line-count");
+  const max = level?.constraints?.max_lines;
+  el.hidden = !max || demo?.active;
+  if (!max) return;
+  const n = countLines(editor.getCode());
+  el.textContent = `${n}/${max}`;
+  el.classList.toggle("over", n > max);
+  el.title = n > max ? `${n} lines: this level passes with ${max} or fewer` : `${n} of at most ${max} lines`;
+  el.setAttribute("aria-label", el.title);
+}
+
 function setNote(text, bad = false) {
   ui.note.textContent = text;
   ui.note.classList.toggle("bad", bad);
@@ -239,6 +255,7 @@ const demo = new DemoPlayer({
   onExit: (how) => {
     progress.markLesson(demo.lesson.id, how); // the demo's lesson: a hint can replay a practice level's lesson
     document.querySelector(".editor-panel").classList.remove("demo-on");
+    setTimeout(updateLineCount);
     goalFigure.hidden = false;
     $("watch-demo").hidden = !lesson;
     editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
@@ -397,6 +414,9 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
   }
   if (nextLink) parts.push(nextLink);
   ui.results.replaceChildren(...parts);
+  // The editor fills the window, so results can sit below it: bring them into view.
+  const r = resultsPanel.getBoundingClientRect();
+  if (r.top > window.innerHeight - 60 || r.bottom < 0) resultsPanel.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
 // ---------------------------------------------------------------- levels
@@ -505,6 +525,7 @@ async function init() {
   document.title = `${level.title} · LearnPython`;
   showCommands(level.constraints?.hidden_commands ?? []);
   editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
+  updateLineCount();
   updateLevelsButton();
   showLevelWorld();
   showGoal();
