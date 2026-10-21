@@ -5,7 +5,7 @@
     {
       "id": "look_right",
       "title": "Look to the right",
-      "ask": "Fill in `right_is_clear()`. With the wall right below, it should give back False and leave the robot where it was, facing the same way.",
+      "ask": "Fill in `right_is_clear()`. With the wall right below, it should give back `False` and leave the robot where it was, facing the same way.",
       "nudge": "After it looks, which way is the robot facing? Which way should it face?",
       "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 2, "start": [1, 0, "E"], "blocked": [[0, 1], [1, 1], [2, 1]]}, "returns": false, "goal": {"end_at": [1, 0], "facing": "E"}}}
     },

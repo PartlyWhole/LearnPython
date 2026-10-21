@@ -7,27 +7,112 @@
       "title": "Fill one row",
       "ask": "Write `fill_row()`: put a gem on every cell of the grid's top row, ending just past its east end, still facing east.",
       "nudge": "Which two things happen on every cell? Those belong inside the loop.",
-      "check": {"test": {"call": "fill_row", "world": {"width": 6, "height": 2, "start": [0, 0, "E"], "bag": 5}, "goal": {"gems_exactly": {"0,0": 1, "1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1}, "end_at": [5, 0], "facing": "E"}}}
+      "check": {
+        "test": {
+          "call": "fill_row",
+          "world": {
+            "width": 6,
+            "height": 2,
+            "start": [
+              0,
+              0,
+              "E"
+            ],
+            "bag": 5
+          },
+          "goal": {
+            "gems_exactly": {
+              "0,0": 1,
+              "1,0": 1,
+              "2,0": 1,
+              "3,0": 1,
+              "4,0": 1
+            },
+            "end_at": [
+              5,
+              0
+            ],
+            "facing": "E"
+          }
+        }
+      }
     },
     {
       "id": "back_and_down",
       "title": "Back to the start, one down",
       "ask": "Write `next_row()`: from just past the end of a row, get to the west end of the row below, facing east, ready to fill it.",
       "nudge": "Where does `fill_row()` begin? That's exactly where `next_row()` has to leave the robot.",
-      "check": {"test": {"call": "next_row", "world": {"width": 6, "height": 2, "start": [5, 0, "E"]}, "goal": {"gems_exactly": {}, "end_at": [0, 1], "facing": "E"}}}
+      "check": {
+        "test": {
+          "call": "next_row",
+          "world": {
+            "width": 6,
+            "height": 2,
+            "start": [
+              5,
+              0,
+              "E"
+            ]
+          },
+          "goal": {
+            "gems_exactly": {},
+            "end_at": [
+              0,
+              1
+            ],
+            "facing": "E"
+          }
+        }
+      }
     },
     {
       "id": "two_rows",
       "title": "Two rows, stacked",
       "ask": "Fill the top row, move to the next one and fill that too.",
       "nudge": "If the second row goes wrong, look at where the robot is when it starts it.",
-      "check": {"program": {"reach": {"put_at": [4, 1]}}}
+      "check": {
+        "program": {
+          "reach": {
+            "put_at": [
+              4,
+              1
+            ]
+          }
+        }
+      }
     },
     {
       "id": "whole_grid",
       "title": "The whole grid",
       "ask": "Repeat the pair of calls to fill every row, and finish below the grid on the west side.",
-      "check": {"program": {"goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "0,2": 1, "1,0": 1, "1,1": 1, "1,2": 1, "2,0": 1, "2,1": 1, "2,2": 1, "3,0": 1, "3,1": 1, "3,2": 1, "4,0": 1, "4,1": 1, "4,2": 1}, "end_at": [0, 3]}}}
+      "nudge": "The goal says where to finish. Where does the last call leave the robot?",
+      "check": {
+        "program": {
+          "goal": {
+            "gems_exactly": {
+              "0,0": 1,
+              "0,1": 1,
+              "0,2": 1,
+              "1,0": 1,
+              "1,1": 1,
+              "1,2": 1,
+              "2,0": 1,
+              "2,1": 1,
+              "2,2": 1,
+              "3,0": 1,
+              "3,1": 1,
+              "3,2": 1,
+              "4,0": 1,
+              "4,1": 1,
+              "4,2": 1
+            },
+            "end_at": [
+              0,
+              3
+            ]
+          }
+        }
+      }
     }
   ]
 }

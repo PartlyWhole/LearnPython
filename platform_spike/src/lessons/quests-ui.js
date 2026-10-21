@@ -36,6 +36,7 @@ export class QuestsUI {
     this.states = this.quests.map(() => null);
     this.tracker = new QuestTracker(this.quests.length);
     this.openIndex = 0;
+    this.acted = false; // reasons (red) only once the learner has run or tried something
     this.el.button.hidden = !this.quests.length;
   }
 
@@ -69,8 +70,10 @@ export class QuestsUI {
   /** Wait for a check in progress (a learner's Run waits, as for the guide). */
   idle() { return this.pending; }
 
-  /** Ask the engine which sub-quests the code completes. After each Run, and on opening. */
-  check() {
+  /** Ask the engine which sub-quests the code completes: on opening (to tick off what's
+   *  already done), and after each Run or Try it (`acted`: now say why a part isn't done). */
+  check({ acted = false } = {}) {
+    if (acted) this.acted = true;
     if (!this.isOpen || !this.quests.length) return this.pending;
     const code = this.editor.getCode();
     const level = this.level;
@@ -152,8 +155,9 @@ export class QuestsUI {
     const pic = questPicture(quest, this.level);
     if (pic) body.append(this._picture(pic));
 
-    // Not done after a check: what happened, in one line (never how to fix it).
-    if (state && !state.done && state.why && this.checkedCode === this.editor.getCode()) {
+    // Not done after the learner ran or tried it: what happened, in one line (never how to fix
+    // it). A function not written yet is said calmly at any time: it's the part to write.
+    if (state && !state.done && state.why && this.checkedCode === this.editor.getCode() && (this.acted || state.missing)) {
       const why = document.createElement("p");
       why.className = `quest-why${state.missing ? " missing" : ""}`; // not written yet: no alarm
       why.textContent = state.why;
@@ -199,10 +203,20 @@ export class QuestsUI {
     return li;
   }
 
-  /** Start → goal: the part's world as it begins, and what it should look like after. */
+  /** Start → goal: the part's world as it begins, and what it should look like after. Drawn at
+   *  a size per cell (a long corridor is long, not tiny); side by side, or one above the other
+   *  when two wouldn't fit across. */
   _picture({ world, goal, mark }) {
     const fig = document.createElement("figure");
-    fig.className = "quest-pic";
+    const both = Boolean(goal && Object.keys(goal).length);
+    const room = Math.max(220, (this.el.list.clientWidth || 320) - 44); // the part's body width
+    const span = world.width + 0.6; // the drawing keeps a small margin round the grid
+    const tall = Math.min(26, 104 / world.height);
+    const sideBySide = Math.min(tall, (room - 42) / 2 / span) - 0.4; // two pictures and an arrow
+    const stacked = !both || sideBySide < 13; // too small to read side by side: one above the other
+    const cell = stacked ? Math.max(10, Math.min(tall, (room - 10) / span)) : sideBySide;
+    fig.className = `quest-pic${both && stacked ? " stacked" : ""}`;
+    fig.style.setProperty("--pic-w", `${Math.round(cell * span + 8)}px`);
     const start = document.createElement("div");
     start.className = "quest-grid";
     const r = new GridRenderer(start);
@@ -229,7 +243,7 @@ export class QuestsUI {
 
   async _try(quest, i) {
     this.onEvent("quest.try", { level: this.level.id, quest: quest.id });
-    const payload = await this.check();
+    const payload = await this.check({ acted: true });
     const result = payload?.quests?.[i]?.result;
     if (!result) return;
     const pic = questPicture(quest, this.level);

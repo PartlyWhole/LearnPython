@@ -11,7 +11,14 @@ export function questPicture(quest, level) {
   if (!program) return null;
   const reach = program.reach ?? {};
   const mark = reach.visit ?? reach.pick_at ?? reach.put_at ?? null;
-  return { world: program.world ?? level.world, goal: program.goal ?? null, mark, own: Boolean(program.world) };
+  const world = program.world ?? level.world;
+  let goal = program.goal ?? null;
+  // "Stack several here": the count is the point, so the picture shows the stack it asks for.
+  if (!goal && reach.put_at && (reach.n ?? 1) > 1) {
+    const key = `${reach.put_at[0]},${reach.put_at[1]}`;
+    goal = { gems_exactly: { ...(world.gems ?? {}), [key]: (world.gems?.[key] ?? 0) + reach.n } };
+  }
+  return { world, goal, mark, own: Boolean(program.world) };
 }
 
 /** Can the learner "Try it": run this sub-quest's own world and watch it? (The level's own

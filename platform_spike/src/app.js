@@ -392,7 +392,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
     pendingHintRun = lastReport.passed;
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
     replayCode = code;
-    if (!shared) quests.check(); // the sub-quests panel, if open, ticks off what this code solves
+    if (!shared) quests.check({ acted: true }); // the sub-quests panel, if open, ticks off what this code solves
     resultsPanel.hidden = true; // the results come with the end of the replay (showOutcome)
     loadReplay(level.world, main);
     if (player.frames.length < 2) showOutcome(); // nothing happened: straight to the outcome
@@ -966,7 +966,7 @@ setupLayout({
 
 // Test hook for browser automation on a local dev server only (never on a deployed host).
 if (["localhost", "127.0.0.1"].includes(location.hostname)) {
-  window.__learnPython = { editor, demo, guide, drive, hints, events, get progress() { return progress; }, get level() { return level; }, get room() { return room; }, runCode,
+  window.__learnPython = { editor, demo, guide, drive, hints, quests, events, get progress() { return progress; }, get level() { return level; }, get room() { return room; }, runCode,
     setSpeed: (name) => setSpeed(SPEEDS.findIndex((s) => s.name === name)) };
 }
 

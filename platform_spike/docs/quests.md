@@ -35,9 +35,14 @@ Why this shape (the evidence behind it, in docs/lessons.md §1):
 - **The panel** sits above the editor, like the guide. It shows numbered sub-quests, one open at a time:
   - the problem in one or two sentences, with code names (`go_around_corner()`) as the only code
   - a picture: the part's world as it starts → its goal (the Goal view's drawing), or the
-    level's world with a marked cell
-  - after a check that didn't pass, one line on what happened ("Stopped on line 12: There's a
-    wall in front of you."), never how to fix it; a function not written yet is said calmly, in grey
+    level's world with a marked cell (and the stack it asks for, when a part puts several gems
+    on one cell). Drawn at a size per cell, so a long corridor stays readable: side by side when
+    both fit at a readable size, otherwise one above the other
+  - once the learner has run or tried something, one line on what happened, said against the
+    picture, never in coordinates ("The robot doesn't end on the marked cell.", "2 gems are still
+    on the floor.", "Stopped on line 12: There's a wall in front of you."), and never how to fix
+    it. Opening the panel shows no red: it only ticks off what's already done. A function not
+    written yet is said calmly, in grey, at any time
   - **Try it** (a part with a world of its own): runs just that part and replays it in the world
     panel, tagged with the sub-quest's name. It can be stepped like any run.
   - a bulb: one nudge, a way to *think* about it, still no code

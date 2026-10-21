@@ -358,7 +358,8 @@ def _goal_failures(result, goal):
         # A crash explains everything after it; listing its knock-on effects is noise (D14).
         return [f"Stopped on line {result['error']['line']}: {result['error']['message']}"]
     if goal.get("all_gems_collected") and f["gems_left"]:
-        out.append(f"{f['gems_left']} gem(s) were left behind.")
+        n = f["gems_left"]
+        out.append(f"{n} gem{'' if n == 1 else 's'} {'was' if n == 1 else 'were'} left behind.")
     if "gems_exactly" in goal and f["gems"] != goal["gems_exactly"]:
         out.append(_describe_layout_difference(f["gems"], goal["gems_exactly"]))
     if "end_at" in goal and [f["x"], f["y"]] != goal["end_at"]:
@@ -367,7 +368,8 @@ def _goal_failures(result, goal):
         names = {"E": "east", "N": "north", "W": "west", "S": "south"}
         out.append(f"The robot should finish facing {names[goal['facing']]}, not {names[f['dir']]}.")
     if "bag_at_least" in goal and f["bag"] < goal["bag_at_least"]:
-        out.append(f"The bag should hold at least {goal['bag_at_least']} gem(s), not {f['bag']}.")
+        want = goal["bag_at_least"]
+        out.append(f"The bag should hold at least {want} gem{'' if want == 1 else 's'}, not {f['bag']}.")
     return out
 
 
@@ -611,16 +613,59 @@ def _reach_failures(result, reach, start):
             cell, n = reach[key], reach.get("n", 1)
             got = sum(1 for e in result["trace"] if e["action"] == action and [e["x"], e["y"]] == list(cell))
             if got < n:
-                out.append(f"The robot {words} {got} gem(s) on the marked cell, not {n}." if got
+                out.append(f"The robot {words} {got} gem{'' if got == 1 else 's'} on the marked cell, not {n}." if got
                            else f"The robot never {words} a gem on the marked cell.")
     return out
+
+
+def _quest_failures(result, goal):
+    """Like _goal_failures, but said against the sub-quest's picture (no coordinates): a learner
+    compares their replay with the picture, not with [x, y] pairs."""
+    f = result["final"]
+    if goal.get("no_error", True) and result["error"]:
+        return _goal_failures(result, goal)[:1]  # the crash, with its line (D14)
+    out = []
+    if goal.get("all_gems_collected") and f["gems_left"]:
+        n = f["gems_left"]
+        out.append(f"{n} gem{'' if n == 1 else 's'} {'is' if n == 1 else 'are'} still on the floor.")
+    if "gems_exactly" in goal and f["gems"] != goal["gems_exactly"]:
+        want, got = goal["gems_exactly"], f["gems"]
+        short = any(got.get(k, 0) < n for k, n in want.items())
+        extra = any(n > want.get(k, 0) for k, n in got.items())
+        out.append("The gems don't match the picture: some cells have too few, others too many." if short and extra
+                   else "Some cells in the picture are still missing gems." if short
+                   else "Some cells end up with more gems than the picture shows.")
+    if "end_at" in goal and [f["x"], f["y"]] != goal["end_at"]:
+        out.append("The robot doesn't end on the marked cell.")
+    if "facing" in goal and f["dir"] != goal["facing"]:
+        names = {"E": "east", "N": "north", "W": "west", "S": "south"}
+        out.append(f"The robot ends facing {names[f['dir']]}, not {names[goal['facing']]}.")
+    if "bag_at_least" in goal and f["bag"] < goal["bag_at_least"]:
+        out += _goal_failures(result, {"no_error": False, "bag_at_least": goal["bag_at_least"]})
+    return out
+
+
+def _code_failure(code, checks):
+    """What a code-shape sub-quest is still missing, in a few words."""
+    for check, ok in zip(checks, check_code(code, checks)):
+        if ok:
+            continue
+        if "has" in check:
+            words = {"for": "for loop", "while": "while loop", "if": "if", "def": "def", **CONSTRUCT_WORDS}
+            return f"There's no {words.get(check['has'], check['has'])} in the code yet."
+        if "defines" in check:
+            return f"There's no {check['defines']}() yet."
+        if "calls" in check:
+            return f"Nothing calls {check['calls']}() yet."
+        return "Not in the code yet."
+    return None
 
 
 def _quest_one(code, level, quest, hidden):
     check = quest["check"]
     if "code" in check:
-        ok = all(check_code(code, check["code"]))
-        return {"done": ok, "why": None if ok else "Not in the code yet.", "result": None}
+        why = _code_failure(code, check["code"])
+        return {"done": why is None, "why": why, "result": None}
     if "test" in check:
         t = check["test"]
         name = t["call"]
@@ -632,7 +677,7 @@ def _quest_one(code, level, quest, hidden):
         # never drawn on) a line of theirs.
         source = defs + f"\n{QUEST_CALL_NAME} = {name}({args})\n"
         result, namespace = _execute(source, t["world"], 0, hidden)
-        failures = _goal_failures(result, t.get("goal", {}))
+        failures = _quest_failures(result, t.get("goal", {}))
         if not failures and "returns" in t:
             got = namespace.get(QUEST_CALL_NAME)
             if got != t["returns"]:
@@ -647,9 +692,9 @@ def _quest_one(code, level, quest, hidden):
         # is done. Not reached, a crash is the reason given (it explains what came after, D14).
         failures = _reach_failures(result, reach, world["start"])
         if failures and result["error"]:
-            failures = _goal_failures(result, {})
+            failures = _quest_failures(result, {})
     else:
-        failures = _goal_failures(result, p.get("goal", {}))
+        failures = _quest_failures(result, p.get("goal", {}))
         if not result["error"]:  # a crash explains everything after it (D14)
             failures += _reach_failures(result, reach, world["start"])
     return {"done": not failures, "why": failures[0] if failures else None,

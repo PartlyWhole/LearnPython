@@ -31,7 +31,7 @@ class FunctionTests(unittest.TestCase):
     def test_a_wrong_function_says_what_happened_not_how_to_fix_it(self):
         q = state("def turn_right():\n    turn_left()\n", [TURN_TEST])[0]
         self.assertFalse(q["done"])
-        self.assertIn("facing south, not north", q["why"])
+        self.assertEqual(q["why"], "The robot ends facing north, not south.")
 
     def test_a_missing_function_is_named(self):
         q = state("move()\n", [TURN_TEST])[0]
@@ -90,3 +90,24 @@ class Validation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Messages(unittest.TestCase):
+    """Sub-quest messages talk about the picture, never in coordinates."""
+
+    def test_messages_point_at_the_picture(self):
+        world = {"width": 3, "height": 1, "start": [0, 0, "E"], "gems": {"2,0": 1}}
+        def why(goal, code="move()\n"):
+            q = {"id": "q", "title": "x", "ask": "x", "check": {"program": {"world": world, "goal": goal}}}
+            return state(code, [q])[0]["why"]
+        self.assertEqual(why({"end_at": [2, 0]}), "The robot doesn't end on the marked cell.")
+        self.assertEqual(why({"all_gems_collected": True}), "1 gem is still on the floor.")
+        self.assertEqual(why({"gems_exactly": {"1,0": 1, "2,0": 1}}), "Some cells in the picture are still missing gems.")
+        self.assertEqual(why({"gems_exactly": {}}), "Some cells end up with more gems than the picture shows.")
+        self.assertEqual(why({"gems_exactly": {"1,0": 1}}), "The gems don't match the picture: some cells have too few, others too many.")
+        for text in [why({"end_at": [2, 0]}), why({"gems_exactly": {"1,0": 1}})]:
+            self.assertNotRegex(text, r"\[\d|\(\d")
+
+    def test_a_code_shape_says_what_is_missing(self):
+        q = {"id": "q", "title": "x", "ask": "x", "check": {"code": [{"has": "for"}]}}
+        self.assertEqual(state("move()\n", [q])[0]["why"], "There's no for loop in the code yet.")

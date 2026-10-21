@@ -47,3 +47,9 @@ test("every quests file names its level, and its pictures fit their worlds", () 
     }
   }
 });
+
+test("a part that stacks several gems on one cell pictures the stack", () => {
+  const q = { check: { program: { reach: { put_at: [1, 0], n: 3 } } } };
+  assert.deepEqual(questPicture(q, level).goal, { gems_exactly: { "1,0": 3 } });
+  assert.equal(questPicture({ check: { program: { reach: { put_at: [1, 0] } } } }, level).goal, null);
+});
