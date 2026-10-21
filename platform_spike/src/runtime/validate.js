@@ -16,7 +16,8 @@ const isGemMap = (m) => m && typeof m === "object" && !Array.isArray(m) &&
 function isEvent(e) {
   return e && typeof e === "object" && ACTIONS.has(e.action) && isInt(e.x) && isInt(e.y) &&
     DIRS.has(e.dir) && (e.line === null || e.line === undefined || isInt(e.line)) &&
-    (e.bag === undefined || isInt(e.bag) || e.bag === "infinite");
+    (e.bag === undefined || isInt(e.bag) || e.bag === "infinite") &&
+    (e.calls === undefined || (Array.isArray(e.calls) && e.calls.length <= 200 && e.calls.every(isInt)));
 }
 
 export function isRunResult(r) {
@@ -35,6 +36,8 @@ export function isCheckReport(c) {
   const worldOk = (w, i) => w && isText(w.world, 200) && typeof w.passed === "boolean" &&
     Array.isArray(w.failures) && w.failures.length <= CAPS.failures && w.failures.every((t) => isText(t)) &&
     (i === 0 ? isRunResult(w.result) : w.result === null || w.result === undefined || isRunResult(w.result));
+  const l = c.lines;
+  if (!(l === undefined || l === null || (l && isInt(l.max) && isInt(l.used) && typeof l.met === "boolean"))) return false;
   return c.worlds.every(worldOk) && Array.isArray(c.constraint_failures) &&
     c.constraint_failures.length <= CAPS.failures && c.constraint_failures.every((t) => isText(t));
 }

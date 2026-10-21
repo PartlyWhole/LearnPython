@@ -51,3 +51,41 @@ export function describe(event) {
     default: return `${event.action}()`;
   }
 }
+
+/**
+ * For stepping through a replay: each frame's pass over its line ("2 of 4": the 2nd of 4 times
+ * that line ran), so a loop's iterations can be told apart. nth[i] is 0 for frames with no line.
+ */
+export function lineRuns(frames) {
+  const totals = new Map();
+  const nth = frames.map((f) => {
+    const line = f.event?.line;
+    if (!line) return 0;
+    const n = (totals.get(line) ?? 0) + 1;
+    totals.set(line, n);
+    return n;
+  });
+  return { nth, total: (line) => totals.get(line) ?? 0 };
+}
+
+/** The next frame after `from` whose step ran `line`, directly or inside a call made there,
+ *  wrapping round to the start; -1 if that line never ran. (Clicking a line number.) */
+export function nextStepAt(frames, line, from) {
+  const n = frames.length;
+  for (let k = 1; k <= n; k++) {
+    const i = (from + k) % n;
+    const e = frames[i].event;
+    if (e && (e.line === line || e.calls?.includes(line))) return i;
+  }
+  return -1;
+}
+
+/** The robot's path up to and including frame `index`: its cell after every move. */
+export function pathTo(frames, index) {
+  const out = [];
+  for (const f of frames.slice(0, index + 1)) {
+    const last = out.at(-1);
+    if (!last || last[0] !== f.x || last[1] !== f.y) out.push([f.x, f.y]);
+  }
+  return out;
+}

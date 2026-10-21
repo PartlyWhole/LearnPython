@@ -21,7 +21,7 @@ way. Decisions are cited below as D1 to D11.
 | `tools/play_order.py` | Expands `lessons/index.json` into the level list (Python). `src/lessons/order.js` does the same for the app. `python3 tools/play_order.py` prints it |
 | `src/lessons/` | `order.js` (play order), `demo.js` / `guide.js` / `drive.js` / `hints.js` (demo, guide, drive-mode and hint-ladder logic, pure), `demo-ui.js` / `guide-ui.js` / `drive-ui.js` / `hint-ui.js` (their parts of the page) |
 | `src/ui/icons.js` | The icon set, `applyIcons()` for `<button data-icon>`, progress dots |
-| `tests/solutions/` | Per level: a reference `<id>.py` and at least one `<id>.wrong_*.py`. Kept under tests/ so the app never serves them |
+| `tests/solutions/` | Per level: a reference `<id>.py` (within any line limit), at least one `<id>.wrong_*.py` (must fail) and, for long-but-working attempts, `<id>.long_*.py` (must pass, without the line bonus). Kept under tests/ so the app never serves them |
 | `tools/level_goals.py` | Fills per-world goals (`gems_exactly`, `end_at`, `facing`) from the reference solution |
 | `src/progress/` | `progress.js`: solved levels (and how: none / hint / guided), drafts, unlocking, lesson, guide and hint state, settings. `events.js`: the local playtest log. Both in wrapped browser storage |
 | `cases.py` | Programs whose traces are frozen in `tests/golden_traces.json` |
@@ -111,7 +111,7 @@ a button, ask whether the world, an icon or the layout already says it.
   - write `tests/solutions/<id>.py` plus at least one `wrong_*` solution for the mistake the level targets
   - fill per-world goals with `tools/level_goals.py`
   - run the tests, then play the level and watch the replay
-  - use `constraints` as teaching levers: `required` (e.g. `def`, or `compare` / `return` so a comparison or a returning helper can't be dodged), `banned`, `max_lines`, and `hidden_commands` (e.g. hide `scan` so the robot "can't count")
+  - use `constraints` as teaching levers: `required` (e.g. `def`, or `compare` / `return` so a comparison or a returning helper can't be dodged), `banned`, and `hidden_commands`. `max_lines` is a **bonus**, never a gate (D24): add a `<id>.long_*.py` that passes without it (e.g. hide `scan` so the robot "can't count")
 - **A lesson:** follow the `design-lesson` skill; its levels come from `author-level`. **Guidance UI** (guide, demo player, drive mode, hints, goal view): the `build-guidance` skill and `docs/lessons.md`.
 - **A goal type or constraint:** update `_goal_failures` / `BANNABLE`, the level schema, and `BAD_LEVEL_EDITS`.
 

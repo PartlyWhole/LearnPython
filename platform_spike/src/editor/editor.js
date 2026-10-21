@@ -1,14 +1,16 @@
 // Code editor: CodeMirror 6 (vendored, docs/decisions.md D8 and D15) with what a learner needs
 // and nothing else: Python highlighting, line numbers, auto-indent, bracket matching, undo,
 // completions for the robot API, and two line marks the app drives during replay:
-//   showLine(n)            the line the replay is on
-//   showError(n, message)  the line that crashed, with the message under it
+//   showLine(n, {calls, pass})  the line the replay is on: a band, an arrow in the gutter (a
+//                               debugger's "you are here"), the call sites it is inside (a hollow
+//                               arrow each) and, in a loop, which pass this is ("2 of 4")
+//   showError(n, message)       the line that crashed, with the message under it
 // Any edit clears both marks, since they describe the last run, not the current code.
 import {
-  EditorState, StateEffect, StateField, Compartment, EditorView, keymap, lineNumbers,
+  EditorState, StateEffect, StateField, RangeSetBuilder, Compartment, EditorView, keymap, lineNumbers,
   highlightActiveLineGutter, drawSelection, Decoration, WidgetType, defaultKeymap, history,
   historyKeymap, indentWithTab, indentOnInput, bracketMatching, syntaxHighlighting, HighlightStyle,
-  indentUnit, autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap, acceptCompletion, python, tags,
+  indentUnit, gutter, GutterMarker, autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap, acceptCompletion, python, tags,
 } from "../../vendor/codemirror.js";
 import { API_DOCS } from "./api-docs.js";
 
@@ -27,23 +29,71 @@ class ErrorWidget extends WidgetType {
   }
 }
 
+class PassWidget extends WidgetType {
+  constructor(n, of) { super(); this.n = n; this.of = of; }
+  eq(other) { return other.n === this.n && other.of === this.of; }
+  toDOM() {
+    const el = document.createElement("span");
+    el.className = "cm-run-pass";
+    el.textContent = `${this.n} of ${this.of}`;
+    el.title = `This line is running for time ${this.n} of ${this.of}`;
+    return el;
+  }
+}
+
+class ArrowMarker extends GutterMarker {
+  constructor(kind) { super(); this.kind = kind; }
+  eq(other) { return other.kind === this.kind; }
+  toDOM() {
+    const el = document.createElement("span");
+    el.className = `cm-step-arrow ${this.kind}`;
+    el.setAttribute("aria-hidden", "true");
+    return el;
+  }
+}
+const HERE = new ArrowMarker("here"), CALL = new ArrowMarker("call"), FAIL = new ArrowMarker("fail");
+
+const NO_MARKS = { deco: Decoration.none, arrows: [] };
 const marksField = StateField.define({
-  create: () => Decoration.none,
+  create: () => NO_MARKS,
   update(marks, tr) {
     for (const e of tr.effects) if (e.is(setMarks)) return buildMarks(tr.state, e.value);
-    return tr.docChanged ? Decoration.none : marks;
+    return tr.docChanged ? NO_MARKS : marks;
   },
-  provide: (f) => EditorView.decorations.from(f),
+  provide: (f) => EditorView.decorations.from(f, (m) => m.deco),
 });
 
-function buildMarks(state, { line, kind, message }) {
-  if (!line || line < 1 || line > state.doc.lines) return Decoration.none;
+function buildMarks(state, { line, kind, message, calls = [], pass = null }) {
+  if (!line || line < 1 || line > state.doc.lines) return NO_MARKS;
+  const ok = (n) => Number.isInteger(n) && n >= 1 && n <= state.doc.lines && n !== line;
   const at = state.doc.line(line);
   const ranges = [Decoration.line({ class: kind === "error" ? "cm-run-error-line" : "cm-run-line" }).range(at.from)];
+  const arrows = [[line, kind === "error" ? FAIL : HERE]];
+  for (const c of new Set(calls.filter(ok))) {
+    ranges.push(Decoration.line({ class: "cm-call-line" }).range(state.doc.line(c).from));
+    arrows.push([c, CALL]);
+  }
   if (kind === "error" && message) {
     ranges.push(Decoration.widget({ widget: new ErrorWidget(message), block: true, side: 1 }).range(at.to));
+  } else if (pass && pass.of > 1) {
+    ranges.push(Decoration.widget({ widget: new PassWidget(pass.n, pass.of), side: 1 }).range(at.to));
   }
-  return Decoration.set(ranges, true);
+  return { deco: Decoration.set(ranges, true), arrows };
+}
+
+/** The "you are here" gutter; clicking it (or a line number) asks for that line's next step. */
+function stepGutter(onLineClick) {
+  return gutter({
+    class: "cm-step-gutter",
+    markers: (view) => {
+      const b = new RangeSetBuilder();
+      const { arrows } = view.state.field(marksField);
+      for (const [n, m] of [...arrows].sort((a, c) => a[0] - c[0])) b.add(view.state.doc.line(n).from, view.state.doc.line(n).from, m);
+      return b.finish();
+    },
+    initialSpacer: () => HERE,
+    domEventHandlers: { mousedown: (view, block) => onLineClick(view.state.doc.lineAt(block.from).number) },
+  });
 }
 
 // ---------------------------------------------------------------- completions
@@ -74,6 +124,16 @@ const theme = EditorView.theme({
   ".cm-run-line": { backgroundColor: "var(--band)" },
   ".cm-run-error-line": { backgroundColor: "var(--band-error)" },
   ".cm-run-error": { color: "var(--danger)", font: "13px var(--sans)", padding: "2px 8px 4px 24px" },
+  // Stepping: a call site the current line is inside, the pass badge, the gutter arrows.
+  ".cm-call-line": { backgroundColor: "var(--band-call)" },
+  ".cm-run-pass": { marginLeft: "12px", padding: "0 7px", borderRadius: "999px", font: "600 11px/1.6 var(--sans)",
+    color: "var(--accent)", backgroundColor: "var(--surface)", boxShadow: "inset 0 0 0 1px var(--accent)", verticalAlign: "1px" },
+  ".cm-step-gutter .cm-gutterElement": { width: "14px", padding: "0 0 0 4px", cursor: "pointer" },
+  ".cm-lineNumbers .cm-gutterElement": { cursor: "pointer" },
+  ".cm-step-arrow": { display: "inline-block", width: "0", height: "0", verticalAlign: "-1px",
+    borderTop: "5.5px solid transparent", borderBottom: "5.5px solid transparent", borderLeft: "8px solid var(--accent)" },
+  ".cm-step-arrow.call": { borderLeftColor: "var(--muted)", opacity: "0.55" },
+  ".cm-step-arrow.fail": { borderLeftColor: "var(--danger)" },
   ".cm-tooltip": { backgroundColor: "var(--surface)", color: "var(--ink)", border: "1px solid var(--line)" },
   ".cm-tooltip-autocomplete > ul > li[aria-selected]": { backgroundColor: "var(--accent)", color: "var(--accent-ink)" },
   ".cm-completionInfo": { maxWidth: "260px", font: "13px var(--sans)" },
@@ -96,8 +156,10 @@ const highlight = HighlightStyle.define([
  * @param {string} [opts.doc]
  * @param {() => void} [opts.onRun]     Ctrl/Cmd+Enter
  * @param {() => void} [opts.onChange]  any edit
+ * @param {(line: number) => boolean} [opts.onLineClick]  a click on a line number or the arrow
+ *        gutter; return true if it was used (jumped the replay to that line)
  */
-export function createEditor(parent, { doc = "", onRun = () => {}, onChange = () => {} } = {}) {
+export function createEditor(parent, { doc = "", onRun = () => {}, onChange = () => {}, onLineClick = () => false } = {}) {
   const editable = new Compartment();
   const shared = new Compartment(); // a room's extensions (src/collab/editor.js), empty alone
   const view = new EditorView({
@@ -105,7 +167,8 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
     state: EditorState.create({
       doc,
       extensions: [
-        lineNumbers(),
+        stepGutter(onLineClick),
+        lineNumbers({ domEventHandlers: { mousedown: (view, block) => onLineClick(view.state.doc.lineAt(block.from).number) } }),
         highlightActiveLineGutter(),
         history(),
         drawSelection(),
@@ -145,7 +208,7 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
     view,
     getCode: () => view.state.doc.toString(),
     setCode: (code) => view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: code } }),
-    showLine(line) { mark({ line, kind: "current" }); reveal(line); },
+    showLine(line, { calls = [], pass = null } = {}) { mark({ line, kind: "current", calls, pass }); reveal(line); },
     showError(line, message) { mark({ line, kind: "error", message }); reveal(line); },
     clearMarks: () => mark({ line: null }),
     setReadOnly: (ro) => view.dispatch({ effects: editable.reconfigure(EditorView.editable.of(!ro)) }),

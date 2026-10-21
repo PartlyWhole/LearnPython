@@ -109,11 +109,16 @@ export class Progress {
   }
 
   /** help: "none" | "guided" (the step-by-step guide was on screen) | "guided+shown" (Show me used). */
-  markSolved(id, code, when = Date.now(), help = "none") {
+  /** bonus: solved within the level's line limit. Once earned, a bonus stays. */
+  markSolved(id, code, when = Date.now(), help = "none", bonus = false) {
     if (!this.order.includes(id)) return;
-    this.data.solved[id] = { at: when, code, with: help };
+    const had = this.data.solved[id]?.bonus === true;
+    this.data.solved[id] = { at: when, code, with: help, ...((bonus || had) && { bonus: true }) };
     this._save();
   }
+
+  /** Was this level solved within its line limit (the bonus)? */
+  hasBonus(id) { return this.data.solved[id]?.bonus === true; }
 
   setting(name) { return this.data.settings[name]; }
 

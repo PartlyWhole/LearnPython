@@ -92,7 +92,7 @@ The kinds of twist that worked when the curriculum was designed:
 - **The edge case:** a corridor of length 1, a column of height 0
 
 The twist is also the placement test ("I know this": skip to here), so it must be impossible
-without the concept. Use `required` or `max_lines` if hidden worlds alone don't force it.
+without the concept. Use `required` if hidden worlds alone don't force it; `max_lines` only rewards the short version (a bonus, D24).
 
 ## Recap: one line and a pattern
 

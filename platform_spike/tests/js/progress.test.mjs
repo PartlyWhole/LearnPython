@@ -155,3 +155,14 @@ test("Continue after replaying an earlier level goes to the level after it, not 
   assert.equal(p.next("p2"), "t");
   assert.equal(p.next("z"), null, "the end");
 });
+
+test("a line bonus, once earned, stays when the level is solved again without it", () => {
+  const storage = memoryStorage();
+  const p = new Progress(INDEX, storage);
+  p.markSolved("a", "x", 1, "none", false);
+  assert.equal(p.hasBonus("a"), false);
+  p.markSolved("a", "x", 2, "none", true);
+  p.markSolved("a", "long", 3, "none", false);
+  assert.equal(p.hasBonus("a"), true);
+  assert.equal(new Progress(INDEX, storage).hasBonus("a"), true);
+});

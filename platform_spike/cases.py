@@ -42,6 +42,19 @@ total = sum(ahead)
 for _ in range(len(ahead)):
     move()
 """,
+    "nested_calls": """\
+def turn_right():
+    for _ in range(3):
+        turn_left()
+
+def step_and_turn():
+    move()
+    turn_right()
+
+step_and_turn()
+turn_left()
+step_and_turn()
+""",
 }
 
 # Cases that must NOT run inside the shared harness (handled specially by the browser test).

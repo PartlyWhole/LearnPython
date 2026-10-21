@@ -196,3 +196,31 @@ The relay is unauthenticated, so the link is the only key; the Share dialog says
 **Revisit when:** rooms need to count for progress (then a faked passing result matters), or the
 relay gets accounts. Details: `docs/collab.md`.
 
+### D24. The line limit is a bonus; replays step like a debugger
+**Status:** accepted (Oct 2026; the project owner's direction)
+**Decision:**
+- **`max_lines` no longer fails a level.** Any program that solves every world passes.
+  `check_level` reports `lines: {max, used, met}` apart from `constraint_failures`. Within the
+  limit, the learner earns a bonus: a gold star rises over the world in a ring of sparkles, the
+  check gets a gold star, and the level list shows a gold star (`progress.hasBonus`). Over the
+  limit, one quiet line names the bonus. The counter by Run shows a star, gold when within.
+  Where a loop or helper must be used, `required` or hidden worlds say so. Long-but-working
+  reference attempts are `tests/solutions/<id>.long_*.py`.
+- **Stepping through a replay is the main way to understand a run.**
+  - Trace events carry `calls`: the lines of the learner's function calls they happen inside.
+  - The editor shows a gutter arrow at the running line, hollow arrows and a faint band at the
+    call sites, and a "2 of 4" badge for which pass over a loop line this is.
+  - The world draws the path walked so far, and the transport counts steps.
+  - Keys: ← / → step, Space plays, Home / End.
+  - Clicking a line number jumps to the next step that line ran.
+  - "Run one step at a time" runs and waits at the start.
+  - After a failing run, Step back pulses three times.
+**Why:**
+- A hard limit punished working solutions. The unrolled version is still a correct program; the
+  short one deserves a reward, not the long one a failure.
+- Students who don't trace a program line by line get lost once loops and helpers nest. A replay
+  that says *where* (arrow, call sites), *which time* (pass badge), and *where it has been*
+  (trail) makes tracing the easy thing to do.
+**Costs:** a trace format addition (`calls`, optional; golden case `nested_calls`), and three
+wrong solutions renamed `long_*`.
+

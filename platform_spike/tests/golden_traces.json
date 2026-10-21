@@ -116,7 +116,24 @@
     }
    },
    "output": ""
+  },
+  "nested_calls": {
+   "digest": "88ec2f320043568b",
+   "events": 9,
+   "error": null,
+   "final": {
+    "x": 2,
+    "y": 0,
+    "dir": "S",
+    "bag": 3,
+    "gems_left": 3,
+    "gems": {
+     "2,0": 2,
+     "5,0": 1
+    }
+   },
+   "output": ""
   }
  },
- "turn_left_100k_seconds": 0.068
+ "turn_left_100k_seconds": 0.089
 }

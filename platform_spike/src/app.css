@@ -2,7 +2,7 @@
 :root {
   --bg: #f4f6f2; --surface: #ffffff; --ink: #1d2420; --muted: #5d6a62; --line: #d7ddd5;
   --accent: #2f6f4f; --accent-ink: #ffffff; --danger: #b3261e; --ok: #1f7a4a;
-  --band: rgba(47, 111, 79, 0.14); --band-error: rgba(179, 38, 30, 0.16);
+  --band: rgba(47, 111, 79, 0.14); --band-error: rgba(179, 38, 30, 0.16); --band-call: rgba(120, 120, 120, 0.09); --bonus: #e0a526;
   --grid-cell: #e8ede4; --grid-wall: #59615b; --grid-border: #b9c2b6;
   --grid-gem: #2b8fb0; --glow-core: #e6fbff; --grid-robot: #e0a526; --grid-robot-nose: #8a5a00; --grid-probe: rgba(43, 143, 176, 0.35);
   --code-keyword: #7a3e9d; --code-string: #2d6a2d; --code-number: #a05a00; --code-call: #1f5f8b; --code-def: #1f5f8b;
@@ -14,7 +14,7 @@
   :root {
     --bg: #121614; --surface: #1a201d; --ink: #e6ebe7; --muted: #9aa69f; --line: #2c3530;
     --accent: #6fc196; --accent-ink: #0d1a13; --danger: #f2877f; --ok: #6fc196;
-    --band: rgba(111, 193, 150, 0.16); --band-error: rgba(242, 135, 127, 0.18);
+    --band: rgba(111, 193, 150, 0.16); --band-error: rgba(242, 135, 127, 0.18); --band-call: rgba(200, 200, 200, 0.07); --bonus: #f2c14e;
     --grid-cell: #232b27; --grid-wall: #8b958f; --grid-border: #3a4540;
     --grid-gem: #5cc3e4; --glow-core: #f2fdff; --grid-robot: #f0b93b; --grid-robot-nose: #6b4500; --grid-probe: rgba(92, 195, 228, 0.35);
     --code-keyword: #d3a6f5; --code-string: #9fd89f; --code-number: #f2b766; --code-call: #8cc4f0; --code-def: #8cc4f0;
@@ -377,9 +377,12 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .editor-panel .drive .drive-log { max-height: none; }
 @media (max-width: 860px) { .editor-panel .drive .drive-log { max-height: 150px; } }
 
-/* Line counter for levels with max_lines: quiet when within, red when over (you can still run). */
-.line-count { font: 600 13px var(--mono); color: var(--muted); padding: 2px 8px; border-radius: 999px; background: var(--bg); }
-.line-count.over { color: var(--danger); background: var(--band-error); }
+/* Line counter for levels with max_lines: the bonus. A gold star within the limit, quiet over it
+   (any length that works solves the level). */
+.line-count { font: 600 13px var(--mono); color: var(--muted); padding: 2px 8px 2px 6px; border-radius: 999px; background: var(--bg); display: inline-flex; align-items: center; gap: 4px; }
+.line-count .icon { width: 14px; height: 14px; }
+.line-count.met { color: var(--bonus); }
+.line-count.met .icon path { fill: currentColor; }
 
 /* ------------------------------------------------ shared room (docs/collab.md) */
 .room-bar { display: inline-flex; align-items: center; gap: 2px; padding: 0 2px 0 8px; border-radius: 999px; background: var(--guide-bg); }
@@ -397,3 +400,53 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .cm-peer-selection { background: color-mix(in srgb, var(--peer) 18%, transparent); }
 @keyframes peer-name { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .cm-peer-name { animation: none; opacity: 0; } }
+
+/* ------------------------------------------------ stepping through a replay */
+.grid-world .trail { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0.32; }
+.grid-world .trail-start { fill: var(--accent); opacity: 0.45; }
+.step-count { font: 12px var(--mono); color: var(--muted); min-width: 44px; text-align: center; font-variant-numeric: tabular-nums; }
+.transport .icon-button.coach { color: var(--guide-accent); box-shadow: inset 0 0 0 2px var(--guide-accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .transport .icon-button.coach { animation: step-coach 1.4s ease-in-out 3; }
+}
+@keyframes step-coach { 50% { box-shadow: inset 0 0 0 2px var(--guide-accent), 0 0 0 6px rgba(122, 79, 208, 0.18); } }
+
+/* ------------------------------------------------ the line bonus */
+.verdict.bonus { display: inline-flex; align-items: center; gap: 6px; }
+.bonus-star .icon { width: 34px; height: 34px; }
+.bonus-star { display: inline-grid; color: var(--bonus); filter: drop-shadow(0 0 6px color-mix(in srgb, var(--bonus) 45%, transparent)); }
+.bonus-star .icon path { fill: currentColor; }
+@media (prefers-reduced-motion: no-preference) { .bonus-star { animation: bonus-pop 0.7s cubic-bezier(0.2, 1.6, 0.4, 1) both 0.35s; } }
+@keyframes bonus-pop { from { transform: scale(0) rotate(-40deg); opacity: 0; } to { transform: none; opacity: 1; } }
+.bonus-miss { display: flex; align-items: center; gap: 6px; margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+.bonus-miss .icon { width: 15px; height: 15px; color: var(--bonus); flex: none; }
+.unit .lv-status.bonus { color: var(--bonus); }
+.lv-status.bonus .icon path { fill: currentColor; }
+
+#world { position: relative; }
+.celebrate { position: absolute; inset: 0; pointer-events: none; display: grid; place-items: center; overflow: hidden; z-index: 5; }
+.celebrate > * { grid-area: 1 / 1; }
+.celebrate-star svg { width: 84px; height: 84px; fill: var(--bonus); filter: drop-shadow(0 0 18px color-mix(in srgb, var(--bonus) 60%, transparent)); }
+.celebrate-ring { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--bonus); opacity: 0; box-shadow: 0 0 24px color-mix(in srgb, var(--bonus) 50%, transparent); }
+.celebrate i { width: 14px; height: 14px; background: var(--bonus); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); opacity: 0; }
+.celebrate i:nth-child(3n) { background: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .celebrate-star { animation: star-rise 2.4s cubic-bezier(0.2, 1.3, 0.4, 1) both; }
+  .celebrate i { animation: spark 1.6s cubic-bezier(0.15, 0.7, 0.3, 1) calc(var(--d) + 120ms) both; }
+  .celebrate-ring { animation: ring 1.3s cubic-bezier(0.1, 0.6, 0.3, 1) 80ms both; }
+}
+@media (prefers-reduced-motion: reduce) { .celebrate-star { animation: star-fade 2.4s ease both; } }
+@keyframes star-rise {
+  0% { transform: scale(0.2) rotate(-60deg); opacity: 0; }
+  22% { transform: scale(1.12) rotate(6deg); opacity: 1; }
+  34% { transform: scale(1) rotate(0); }
+  75% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.9) translateY(-14px); opacity: 0; }
+}
+@keyframes spark {
+  0% { transform: translate(0, 0) scale(0); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(var(--s)) rotate(90deg); opacity: 0; }
+}
+@keyframes ring { 0% { transform: scale(0.3); opacity: 0.9; } 100% { transform: scale(3.2); opacity: 0; border-width: 0.5px; } }
+@keyframes star-fade { 0%, 100% { opacity: 0; } 15%, 75% { opacity: 1; } }

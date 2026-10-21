@@ -177,13 +177,16 @@ class World:
         self.hidden_commands = set(hidden_commands)
         self.trace = []
 
-    def _student_line(self):
+    def _student_lines(self):
+        """The learner's line making this call, and the lines of the calls it is inside
+        (outermost first): in `turn_right()` called from line 6, line 2's move has calls [6]."""
         f = sys._getframe(1)
+        lines = []
         while f is not None:
             if f.f_code.co_filename == STUDENT_FILE:
-                return f.f_lineno
+                lines.append(f.f_lineno)
             f = f.f_back
-        return None
+        return (lines[0] if lines else None), lines[:0:-1]
 
     def _spend_step(self):
         """Call FIRST in every API method, before any state changes: if the step cap is hit,
@@ -194,8 +197,11 @@ class World:
                              "step_limit")
 
     def _record(self, action, **extra):
-        self.trace.append({"line": self._student_line(), "action": action,
-                           "x": self.x, "y": self.y, "dir": self.dir, "bag": self.bag, **extra})
+        line, calls = self._student_lines()
+        event = {"line": line, "action": action, "x": self.x, "y": self.y, "dir": self.dir, "bag": self.bag, **extra}
+        if calls:
+            event["calls"] = calls
+        self.trace.append(event)
 
     def front_is_clear(self):
         self._spend_step()
@@ -339,12 +345,23 @@ def _goal_failures(result, goal):
     return out
 
 
+def count_lines(code):
+    """Lines that count toward max_lines: not blank, not only a comment (src/ui/lines.js agrees)."""
+    return sum(1 for ln in code.splitlines() if ln.strip() and not ln.strip().startswith("#"))
+
+
+def line_goal(code, constraints):
+    """The line-count bonus: {max, used, met}, or None if the level has no line limit."""
+    if "max_lines" not in constraints:
+        return None
+    used = count_lines(code)
+    return {"max": constraints["max_lines"], "used": used, "met": used <= constraints["max_lines"]}
+
+
 def check_constraints(code, constraints):
-    """Teaching constraints (line count, banned or required constructs). Not a security boundary."""
+    """Teaching constraints (banned or required constructs). Not a security boundary.
+    The line limit is not one of them: it is a bonus (`line_goal`), never a reason to fail."""
     out = []
-    lines = [ln for ln in code.splitlines() if ln.strip() and not ln.strip().startswith("#")]
-    if "max_lines" in constraints and len(lines) > constraints["max_lines"]:
-        out.append(f"Use at most {constraints['max_lines']} lines of code (you used {len(lines)}).")
     try:
         tree = ast.parse(code)
     except SyntaxError:
@@ -512,7 +529,8 @@ def check_level(code, level, seed=0):
                         "result": result if name == "main" else None})
     constraint_failures = check_constraints(code, level.get("constraints", {}))
     return {"passed": all(r["passed"] for r in reports) and not constraint_failures,
-            "worlds": reports, "constraint_failures": constraint_failures}
+            "worlds": reports, "constraint_failures": constraint_failures,
+            "lines": line_goal(code, level.get("constraints", {}))}
 
 
 def trace_digest(result):

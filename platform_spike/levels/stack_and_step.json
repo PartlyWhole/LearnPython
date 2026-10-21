@@ -2,7 +2,7 @@
   "format": 1,
   "id": "stack_and_step",
   "title": "Two stacks",
-  "brief": "Stack 12 gems on the first marked cell and 9 on the second. You have exactly 21 gems. Use loops: 8 lines at most.",
+  "brief": "Stack 12 gems on the first marked cell and 9 on the second. You have exactly 21 gems. Use loops. Bonus: 8 lines or fewer.",
   "starter_code": "move()\n",
   "world": {
     "width": 5,

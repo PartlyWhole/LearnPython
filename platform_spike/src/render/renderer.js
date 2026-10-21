@@ -85,6 +85,12 @@ export class GridRenderer {
     // The goal's end cell, drawn on the floor (under gems and robot) so the target is in the world itself.
     this.target = el("rect", { width: CELL - 10, height: CELL - 10, rx: 7, class: "target", visibility: "hidden" });
     this.svg.insertBefore(this.target, this.gemLayer);
+    // The path walked so far in a replay (showTrail): a soft line through each cell centre, on the
+    // floor, so stepping back and forth shows where the robot has been.
+    this.trail = el("polyline", { class: "trail", points: "" });
+    this.svg.insertBefore(this.trail, this.gemLayer);
+    this.trailEnd = el("circle", { r: 3.2, class: "trail-start", visibility: "hidden" });
+    this.svg.insertBefore(this.trailEnd, this.gemLayer);
     this.stopPicking();
 
     this.angle = ANGLE[world.start[2]];
@@ -143,6 +149,16 @@ export class GridRenderer {
     this.robotBody.classList.remove("bump");
     void this.robotBody.getBoundingClientRect(); // restart the CSS animation
     this.robotBody.classList.add("bump");
+  }
+
+  /** Draw the path so far: [[x, y], ...] cells in order (pathTo in frames.js); [] clears it. */
+  showTrail(cells) {
+    if (!this.trail) return;
+    const pts = cells.map(([x, y]) => `${(x + 0.5) * CELL},${(y + 0.5) * CELL}`);
+    this.trail.setAttribute("points", cells.length > 1 ? pts.join(" ") : "");
+    const start = cells.length > 1 ? cells[0] : null;
+    this.trailEnd.setAttribute("visibility", start ? "visible" : "hidden");
+    if (start) { this.trailEnd.setAttribute("cx", (start[0] + 0.5) * CELL); this.trailEnd.setAttribute("cy", (start[1] + 0.5) * CELL); }
   }
 
   /** Mark the cell the goal wants the robot to end on, or clear it with null. */

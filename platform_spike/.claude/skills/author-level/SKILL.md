@@ -109,7 +109,7 @@ finishing position is part of the lesson (postconditions, `fetch_gem`).
 |---|---|---|
 | `required: ["def"]` (or `for`, `while`, `if`) | make the target construct unavoidable | `turn_right`, `build_towers` |
 | `banned: [...]` | close a shortcut (`while` in `richest_cell` forces `max`/`.index`) | `richest_cell` |
-| `max_lines: n` | force a loop instead of copy-paste; counts non-blank, non-comment lines, **docstrings included** | `plant_row` (4) |
+| `max_lines: n` | a **bonus**, not a gate (D24): any length that works passes; within `n` the learner earns a gold star. Use `required` (or hidden worlds) to force a loop; counts non-blank, non-comment lines, **docstrings included**. Add a `<id>.long_*.py` that passes without the bonus | `plant_row` (4) |
 | `hidden_commands: ["scan"]` | keep "the robot can't count/see ahead" puzzles honest | most loop levels |
 | `hidden_commands: ["scan", "gems_here"]` | the robot can't look at the floor, so it must *remember* in a variable (or, without variables, it's a pure Karel "can't count" puzzle) | `tile_floor` |
 | `starter_code` | a scaffold, or a buggy program to fix (`gem_line`) | |

@@ -3,7 +3,7 @@
 import { RunController } from "./runtime/controller.js";
 import { SandboxHost, SandboxedWorker } from "./runtime/sandbox.js";
 import { validPayload } from "./runtime/validate.js";
-import { buildFrames, describe, gemsLeft } from "./render/frames.js";
+import { buildFrames, describe, gemsLeft, lineRuns, nextStepAt, pathTo } from "./render/frames.js";
 import { TracePlayer } from "./render/player.js";
 import { GridRenderer } from "./render/renderer.js";
 import { goalFor, goalWorld } from "./render/goal.js";
@@ -37,7 +37,7 @@ const ui = {
   note: $("run-note"), status: $("runtime-status"), results: $("results"), output: $("output"),
   outputWrap: $("output-wrap"), play: $("play"), back: $("back"), fwd: $("fwd"), scrub: $("scrub"),
   speed: $("speed"), captionLine: $("caption-line"), captionText: $("caption-text"),
-  bag: $("bag"), left: $("left"),
+  bag: $("bag"), left: $("left"), stepCount: $("step-count"), runSteps: $("run-steps"),
 };
 
 let level = null;
@@ -51,6 +51,8 @@ let lessons = [];      // lessons/index.json order; each attaches to its guided 
 let lesson = null;     // this level's lesson, if it has one
 let shownWorld = null; // the world on screen: the level's, or a demo's
 let room = null;       // the shared room this page is in, if any
+let celebrated = false; // this run's line bonus has been celebrated
+let nudged = false;     // this run's failure has pointed at Step back
 let levelsById = {};
 let seenRun = null;      // the last room run this page has run or skipped
 let shownRun = null;     // the room run on screen (for step sync)
@@ -62,6 +64,7 @@ const FOLLOW_MS = 8000;
 let draftTimer = null;
 const editor = createEditor($("editor"), {
   onRun: () => runCode(),
+  onLineClick: (line) => jumpToLine(line),
   onChange: () => { // save the learner's code for this level, at most twice a second
     clearTimeout(draftTimer);
     if (demo?.active) return; // demo code is not the learner's draft
@@ -125,8 +128,54 @@ const player = new TracePlayer({
   onEnd: () => (demo?.active ? demo.replayEnded() : showOutcome()),
 });
 
+// ---------------------------------------------------------------- stepping through a replay
+// Students who don't trace the logic line by line get lost on harder levels, so a replay reads
+// like a debugger: an arrow at the running line (hollow arrows at the calls it's inside), which
+// pass over a loop line this is ("2 of 4"), the path walked so far, a step count, ← / → keys,
+// and a click on a line number to jump to the next time that line ran.
+let runs = null, runsFor = null; // lineRuns() of the frames loaded in the player
+let replayCode = null;             // the code the loaded replay came from (null: a demo's)
+const replayLive = () => player.frames.length > 1 && replayCode !== null && replayCode === editor.getCode() && !demo?.active;
+
+function jumpToLine(line) {
+  if (!replayLive()) return false;
+  const i = nextStepAt(player.frames, line, player.index);
+  if (i < 0) { ui.captionText.textContent = `line ${line} didn't run`; return true; }
+  player.pause();
+  player.seek(i);
+  stepped();
+  return true;
+}
+
+/** The learner moved the replay by hand: drop the hint on Step back, tell the room. */
+function stepped() {
+  clearCoach();
+  shareStep();
+}
+
+function clearCoach() {
+  ui.back.classList.remove("coach");
+  ui.fwd.classList.remove("coach");
+  ui.back.title = "Step back (←)";
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.altKey || e.ctrlKey || e.metaKey || player.frames.length < 2) return;
+  if (e.target.closest?.(".cm-editor, input, textarea, select, dialog, [contenteditable], svg.grid-world")) return;
+  if (e.key === " " && e.target.closest?.("button, a")) return; // Space presses the focused button
+  const act = { ArrowLeft: () => player.step(-1), ArrowRight: () => player.step(1), " ": () => player.toggle(),
+    Home: () => { player.pause(); player.seek(0); }, End: () => player.toEnd() }[e.key];
+  if (!act) return;
+  e.preventDefault();
+  act();
+  if (e.key !== " ") stepped();
+});
+
 function showFrame(frame, index, total) {
   renderer.showFrame(frame, player.delayFor(frame));
+  renderer.showTrail(pathTo(player.frames, index));
+  if (runsFor !== player.frames) { runs = lineRuns(player.frames); runsFor = player.frames; }
+  ui.stepCount.textContent = total > 1 ? `${index}/${total - 1}` : "";
   ui.scrub.max = String(total - 1);
   ui.scrub.value = String(index);
   ui.scrub.setAttribute("aria-valuetext", `step ${index} of ${total - 1}`);
@@ -135,14 +184,16 @@ function showFrame(frame, index, total) {
   const world = demo?.active ? demo.world : shownWorld;
   ui.bag.textContent = world?.bag === "infinite" ? "∞" : String(frame.bag);
   ui.left.textContent = String(gemsLeft(frame));
-  if (frame.event?.line) editor.showLine(frame.event.line); else editor.clearMarks();
+  const line = frame.event?.line;
+  if (line) editor.showLine(line, { calls: frame.event.calls ?? [], pass: { n: runs.nth[index], of: runs.total(line) } });
+  else editor.clearMarks();
   if (index === total - 1 && lastReport && !player.playing) showOutcome();
 }
 
 ui.play.onclick = () => player.toggle();
-ui.back.onclick = () => { player.step(-1); shareStep(); };
-ui.fwd.onclick = () => { player.step(1); shareStep(); };
-ui.scrub.oninput = () => { player.pause(); player.seek(Number(ui.scrub.value)); shareStep(); };
+ui.back.onclick = () => { player.step(-1); stepped(); };
+ui.fwd.onclick = () => { player.step(1); stepped(); };
+ui.scrub.oninput = () => { player.pause(); player.seek(Number(ui.scrub.value)); stepped(); };
 ui.speed.onclick = () => { setSpeed(speedIndex + 1); progress?.setSetting("speed", speedIndex); };
 
 // ---------------------------------------------------------------- running
@@ -183,21 +234,52 @@ const controller = new RunController({
 
 function syncButtons() {
   ui.run.disabled = busy || !level || controller.state === "load_failed";
+  ui.runSteps.disabled = ui.run.disabled;
   ui.stop.disabled = !busy;
 }
 
-/** On levels with a line limit: "18/16" by the Run button, red when over. You can run any length;
- *  the level only passes within the limit (the engine checks). */
+/** On levels with a line limit: a star and "18/16" by the Run button. The limit is a bonus, not
+ *  a gate: any length that works solves the level; within the limit the star turns gold. */
 function updateLineCount() {
   const el = $("line-count");
   const max = level?.constraints?.max_lines;
   el.hidden = !max || demo?.active;
   if (!max) return;
   const n = countLines(editor.getCode());
-  el.textContent = `${n}/${max}`;
-  el.classList.toggle("over", n > max);
-  el.title = n > max ? `${n} lines: this level passes with ${max} or fewer` : `${n} of at most ${max} lines`;
+  el.innerHTML = icon("star");
+  el.append(`${n}/${max}`);
+  el.classList.toggle("met", n <= max);
+  el.title = n <= max ? `Bonus: ${n} lines, within ${max}` : `Bonus: solve it in ${max} lines or fewer (now ${n})`;
   el.setAttribute("aria-label", el.title);
+}
+
+/** The line bonus: a gold star rises over the world in a ring of sparkles, then settles. */
+function celebrate() {
+  const host = $("world");
+  host.querySelector(".celebrate")?.remove();
+  const box = document.createElement("div");
+  box.className = "celebrate";
+  box.setAttribute("aria-hidden", "true");
+  const ring = document.createElement("b");
+  ring.className = "celebrate-ring";
+  box.append(ring);
+  const N = 18;
+  for (let i = 0; i < N; i++) {
+    const spark = document.createElement("i");
+    const a = (i / N) * Math.PI * 2 + (i % 2 ? 0.17 : 0);
+    const r = i % 2 ? 85 : 130;
+    spark.style.setProperty("--dx", `${Math.cos(a) * r}px`);
+    spark.style.setProperty("--dy", `${Math.sin(a) * r}px`);
+    spark.style.setProperty("--d", `${(i % 3) * 60}ms`);
+    spark.style.setProperty("--s", String(i % 3 === 0 ? 1 : 0.65));
+    box.append(spark);
+  }
+  const star = document.createElement("span");
+  star.className = "celebrate-star";
+  star.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2.8l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.9l-5.5 2.9 1.05-6.12L3.1 9.3l6.15-.9z"/></svg>`;
+  box.append(star);
+  host.append(box);
+  setTimeout(() => box.remove(), 2600);
 }
 
 function setNote(text, bad = false) {
@@ -207,7 +289,7 @@ function setNote(text, bad = false) {
 
 /** Runs the editor's code; `shared` is a partner's run from the room ({id, source}). In a room, a
  *  run of your own is recorded in the room so every peer runs it too (each in its own sandbox). */
-async function runCode(shared = null) {
+async function runCode(shared = null, { stepping = false } = {}) {
   if (demo.active) return demo.runRequested(); // in a demo, Run runs the demo's step
   if (!level || drive.active) return;
   if (busy) { if (shared) pendingShared = shared; return; } // a partner's run waits for this one
@@ -225,6 +307,8 @@ async function runCode(shared = null) {
   syncButtons();
 
   const code = shared ? shared.source : editor.getCode();
+  clearCoach();
+  celebrated = nudged = false;
   shownRun = shared ? shared.id : room ? room.startRun(code, level.id) : null;
   if (shownRun) seenRun = shownRun;
   const out = await controller.run({ type: "check", code, level, seed: 0 });
@@ -239,10 +323,13 @@ async function runCode(shared = null) {
     events.record("run", { level: level.id, passed: lastReport.passed, ...(shared && { shared: true }) });
     pendingHintRun = lastReport.passed;
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
+    replayCode = code;
     player.load(buildFrames(level.world, main.trace));
     ui.output.textContent = main.output;
     ui.outputWrap.hidden = !main.output;
-    if (main.trace.length) player.play(); else showOutcome();
+    if (!main.trace.length) showOutcome();
+    else if (!stepping) player.play();
+    else { ui.fwd.classList.add("coach"); ui.fwd.focus(); } // one step at a time: → or the button
   } else if (out.status === "timeout") {
     resultsPanel.hidden = true;
     setNote(`Your program ran for more than ${TIMEOUT_MS / 1000} seconds without finishing, so it was stopped. ` +
@@ -260,6 +347,7 @@ async function runCode(shared = null) {
 }
 
 ui.run.onclick = () => runCode();
+ui.runSteps.onclick = () => runCode(null, { stepping: true });
 
 // ---------------------------------------------------------------- lesson demo (Watch beat)
 const resultsPanel = document.querySelector(".results-panel");
@@ -386,6 +474,12 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
     ui.captionText.textContent = failed ? `✗ ${failed}` : `✗ ${main.error.message}`;
   }
   if (pendingHintRun !== null) { hints.ran(pendingHintRun); pendingHintRun = null; }
+  // A failed run that did something: point at Step back, the way to see what led here.
+  if (!lastReport.passed && !nudged && player.frames.length > 2 && !drive.active) {
+    nudged = true;
+    ui.back.classList.add("coach");
+    ui.back.title = "Step back to see what led here (←)";
+  }
   resultsPanel.hidden = false;
   // One row per world: a mark, an eye (this world) or a crossed eye (a hidden world, named), and
   // only for failures, the engine's message. A pass is a big check and the way on.
@@ -413,17 +507,38 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
     return li;
   });
   const parts = [];
+  const lines = lastReport.lines ?? null; // the line bonus: {max, used, met}, or null
+  const bonus = lastReport.passed && lines?.met === true;
   if (lastReport.passed) {
     const verdict = document.createElement("p");
-    verdict.className = "verdict pass";
+    verdict.className = `verdict pass${bonus ? " bonus" : ""}`;
     verdict.innerHTML = `${icon("check")}<span class="sr-only">Level complete</span>`;
+    if (bonus) {
+      const star = document.createElement("span");
+      star.className = "bonus-star";
+      star.innerHTML = icon("star");
+      star.title = `Bonus: ${lines.used} lines, within ${lines.max}`;
+      const sr = document.createElement("span");
+      sr.className = "sr-only";
+      sr.textContent = `, and the bonus: ${lines.used} lines, within ${lines.max}`;
+      verdict.append(star, sr);
+    }
     parts.push(verdict);
+    if (lines && !lines.met) {
+      // Solved, and there's more to find: one quiet line naming the bonus.
+      const miss = document.createElement("p");
+      miss.className = "bonus-miss";
+      miss.innerHTML = icon("star");
+      miss.append(`Bonus: solve it in ${lines.max} lines or fewer (you used ${lines.used})`);
+      parts.push(miss);
+    }
+    if (bonus && !celebrated) { celebrated = true; celebrate(); }
   }
   let nextLink = null;
   if (lastReport.passed && progress) {
     const help = guide.help() !== "none" ? guide.help() : hints.used() ? "hint" : "none";
     if (!progress.isSolved(level.id)) events.record("level.solved", { level: level.id, with: help });
-    progress.markSolved(level.id, code, undefined, help);
+    progress.markSolved(level.id, code, undefined, help, bonus);
     guide.solved();
     updateLevelsButton();
     const next = progress.next(level.id);
@@ -488,11 +603,12 @@ function renderLevelList() {
         }
         const solved = progress.isSolved(id);
         const status = document.createElement("span");
-        status.className = `lv-status${solved ? " solved" : unlocked ? " open" : ""}`;
-        status.innerHTML = icon(solved ? "check" : unlocked ? "dot" : "lock");
+        const gold = solved && progress.hasBonus(id); // solved within the line limit: a gold star
+        status.className = `lv-status${solved ? " solved" : unlocked ? " open" : ""}${gold ? " bonus" : ""}`;
+        status.innerHTML = icon(gold ? "star" : solved ? "check" : unlocked ? "dot" : "lock");
         const state = document.createElement("span");
         state.className = "sr-only";
-        state.textContent = solved ? "solved: " : unlocked ? "" : "locked: ";
+        state.textContent = gold ? "solved with the line bonus: " : solved ? "solved: " : unlocked ? "" : "locked: ";
         const title = document.createElement("span");
         title.textContent = levelMeta[id]?.title ?? id;
         const isTwist = id === item.twist;

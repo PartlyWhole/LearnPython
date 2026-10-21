@@ -119,6 +119,7 @@
     </div>
     <div class="actions">
       <button id="run" class="round-button run-button" data-icon="play" aria-label="Run (Ctrl or ⌘ + Enter)" title="Run (Ctrl/⌘ + Enter)" disabled></button>
+      <button id="run-steps" class="icon-button" data-icon="step_fwd" aria-label="Run one step at a time" title="Run one step at a time" disabled></button>
       <button id="stop" class="icon-button" data-icon="stop" aria-label="Stop" title="Stop" disabled></button>
       <button id="reset" class="icon-button" data-icon="undo" aria-label="Reset code: go back to this level's starting code" title="Back to the starting code"></button>
       <span id="line-count" class="line-count" hidden></span>
@@ -133,6 +134,9 @@
         <dt><kbd>Ctrl</kbd> <kbd>Space</kbd></dt><dd>suggest commands</dd>
         <dt><kbd>Tab</kbd></dt><dd>accept a suggestion, or indent</dd>
         <dt><kbd>Esc</kbd> then <kbd>Tab</kbd></dt><dd>leave the editor</dd>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>step back / forward through a run</dd>
+        <dt><kbd>Space</kbd></dt><dd>play / pause the run</dd>
+        <dt>a line number</dt><dd>jump to the next time that line ran</dd>
       </dl>
     </div>
   </section>
@@ -158,9 +162,10 @@
       <button class="icon-button fullscreen-button" data-fullscreen=".world-panel" aria-label="Full screen" title="Full screen"></button>
     </div>
     <div class="transport" role="group" aria-label="Replay">
-      <button id="back" class="icon-button" data-icon="step_back" title="Step back" aria-label="Step back"></button>
+      <button id="back" class="icon-button" data-icon="step_back" title="Step back (←)" aria-label="Step back"></button>
       <button id="play" class="icon-button" data-icon="play" title="Play" aria-label="Play"></button>
-      <button id="fwd" class="icon-button" data-icon="step_fwd" title="Step forward" aria-label="Step forward"></button>
+      <button id="fwd" class="icon-button" data-icon="step_fwd" title="Step forward (→)" aria-label="Step forward"></button>
+      <span id="step-count" class="step-count" aria-hidden="true"></span>
       <input id="scrub" type="range" min="0" max="0" value="0" aria-label="Replay position">
       <button id="speed" class="speed-button" data-speed="1" aria-label="Replay speed: Normal" title="Speed: Normal"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
     </div>

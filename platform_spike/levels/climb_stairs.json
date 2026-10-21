@@ -2,7 +2,7 @@
   "format": 1,
   "id": "climb_stairs",
   "title": "Climb the stairs",
-  "brief": "A gem waits on top of a staircase of three steps. Teach the robot climb_step(), using your turn_right(), then climb all three and pick the gem. Fit it in 15 lines.",
+  "brief": "A gem waits on top of a staircase of three steps. Teach the robot climb_step(), using your turn_right(), then climb all three and pick the gem. Bonus: fit it in 15 lines.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef climb_step():\n    pass\n\n\nclimb_step()\n",
   "world": {
     "width": 5,

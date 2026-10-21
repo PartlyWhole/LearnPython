@@ -38,6 +38,14 @@
             ],
             "description": "Learner's source line that made the call; null if not called from learner code."
           },
+          "calls": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 1,
+            "description": "Lines of the learner's function calls this event happened inside, outermost first. Absent at the top level."
+          },
           "action": {
             "enum": [
               "move",

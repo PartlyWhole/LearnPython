@@ -4,6 +4,8 @@ For each level <id> in the play order (lessons/index.json, via tools/play_order.
   tests/solutions/<id>.py           reference solution: must pass every world and constraint
   tests/solutions/<id>.wrong_*.py   at least one known-wrong attempt (off-by-one, hard-coded,
                                     `if` instead of `while`, ...): each must fail
+  tests/solutions/<id>.long_*.py    a working but long attempt (unrolled, no helper): it must
+                                    pass, but miss the line bonus (max_lines is a bonus, not a gate)
 
 Solutions live under tests/, not levels/, so the app never serves them.
 """
@@ -35,6 +37,16 @@ class EveryLevel(unittest.TestCase):
                 report = check_level(path.read_text(), load(level_id))
                 failures = [f for w in report["worlds"] for f in w["failures"]] + report["constraint_failures"]
                 self.assertTrue(report["passed"], failures)
+                if report["lines"]:
+                    self.assertTrue(report["lines"]["met"], f"the reference misses the line bonus: {report['lines']}")
+
+    def test_long_solutions_pass_without_the_bonus(self):
+        for level_id in LEVEL_IDS:
+            for path in sorted(SOLUTIONS.glob(f"{level_id}.long_*.py")):
+                with self.subTest(level=level_id, long=path.name):
+                    report = check_level(path.read_text(), load(level_id))
+                    self.assertTrue(report["passed"], f"{path.name} should pass")
+                    self.assertFalse(report["lines"]["met"], f"{path.name} should miss the line bonus")
 
     def test_wrong_solutions_fail(self):
         for level_id in LEVEL_IDS:

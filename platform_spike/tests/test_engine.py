@@ -232,8 +232,14 @@ class Levels(unittest.TestCase):
         self.assertFalse(report["passed"], "but hidden worlds catch the hard-coding")
 
     def test_constraints_are_reported(self):
-        report = check_level(SOLUTION + "\n".join(["turn_left()"] * 4 + ["pass"]) + "\n", LEVEL)
-        self.assertTrue(any("at most 6 lines" in f for f in report["constraint_failures"]))
+        long = SOLUTION + "\n".join(["turn_left()"] * 4) + "\n"
+        report = check_level(long, LEVEL)
+        # Over the line limit still passes: the limit is a bonus, reported apart (never a failure).
+        self.assertTrue(report["passed"], report)
+        self.assertEqual(report["constraint_failures"], [])
+        self.assertEqual(report["lines"], {"max": LEVEL["constraints"]["max_lines"], "used": report["lines"]["used"], "met": False})
+        self.assertTrue(check_level(SOLUTION, LEVEL)["lines"]["met"])
+        self.assertIsNone(check_level(SOLUTION, dict(LEVEL, constraints={}))["lines"])
         banned = check_level(SOLUTION, dict(LEVEL, constraints={"banned": ["while"]}))
         self.assertEqual(banned["constraint_failures"], ["This level asks you not to use 'while'."])
 
@@ -245,6 +251,19 @@ class Levels(unittest.TestCase):
     def test_bad_world_is_an_authoring_error(self):
         with self.assertRaises(LevelError):
             validate_world({"width": 3, "height": 1, "start": [5, 0, "E"]})
+
+
+class CallLines(unittest.TestCase):
+    """Events inside a learner's function carry the lines of the calls they are in (outermost
+    first), so a replay can show where `turn_right()` was called from while it runs."""
+
+    def test_calls_name_the_call_sites(self):
+        code = "def turn_right():\n    for i in range(3):\n        turn_left()\n\ndef corner():\n    turn_right()\n\nmove()\ncorner()\n"
+        world = {"width": 3, "height": 3, "start": [0, 0, "E"]}
+        trace = run_program(code, world, 0)["trace"]
+        self.assertNotIn("calls", trace[0])  # move() at the top level
+        self.assertEqual([e["line"] for e in trace[1:]], [3, 3, 3])
+        self.assertEqual({tuple(e["calls"]) for e in trace[1:]}, {(9, 6)})
 
 
 if __name__ == "__main__":
