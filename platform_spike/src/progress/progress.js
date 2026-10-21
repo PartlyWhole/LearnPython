@@ -82,7 +82,7 @@ export class Progress {
   isUnlocked(id) {
     const k = this.itemOf.get(id);
     if (k === undefined) return false;
-    if (this.isSolved(id)) return true;
+    if (this.isSolved(id) || this.setting("unlockAll") === true) return true; // Settings: Unlock all levels
     if (k > 0 && !this.itemComplete(k - 1)) return false;
     const item = this.items[k];
     if (id === item.guided || id === item.twist) return true;

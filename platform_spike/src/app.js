@@ -428,7 +428,15 @@ $("export-events").onclick = () => {
   a.click();
   URL.revokeObjectURL(a.href);
 };
-$("open-settings").onclick = () => { $("setting-step").checked = progress.setting("stepByStep"); $("settings-dialog").showModal(); };
+$("open-settings").onclick = () => {
+  $("setting-step").checked = progress.setting("stepByStep");
+  $("setting-unlock").checked = progress.setting("unlockAll") === true;
+  $("settings-dialog").showModal();
+};
+$("setting-unlock").onchange = (e) => {
+  progress.setSetting("unlockAll", e.target.checked);
+  events.record("setting.unlock_all", { on: e.target.checked });
+};
 $("close-settings").onclick = () => $("settings-dialog").close();
 $("settings-dialog").addEventListener("click", (e) => { if (e.target === $("settings-dialog")) $("settings-dialog").close(); });
 // ---------------------------------------------------------------- drive mode (levels with "drive")

@@ -166,3 +166,14 @@ test("a line bonus, once earned, stays when the level is solved again without it
   assert.equal(p.hasBonus("a"), true);
   assert.equal(new Progress(INDEX, storage).hasBonus("a"), true);
 });
+
+test("the Unlock all levels setting opens every level, and turning it off locks them again", () => {
+  const p = new Progress(INDEX, memoryStorage());
+  assert.equal(p.isUnlocked("c"), false);
+  p.setSetting("unlockAll", true);
+  assert.deepEqual(["a", "b", "c"].map((id) => p.isUnlocked(id)), [true, true, true]);
+  assert.equal(p.isUnlocked("zzz"), false, "unknown ids stay closed");
+  assert.equal(p.next("a"), "b", "Continue still follows the play order");
+  p.setSetting("unlockAll", false);
+  assert.equal(p.isUnlocked("c"), false);
+});
