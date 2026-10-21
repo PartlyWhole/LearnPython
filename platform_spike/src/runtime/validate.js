@@ -13,11 +13,13 @@ const isText = (v, cap = CAPS.text) => typeof v === "string" && v.length <= cap;
 const isGemMap = (m) => m && typeof m === "object" && !Array.isArray(m) &&
   Object.entries(m).every(([k, n]) => /^\d{1,4},\d{1,4}$/.test(k) && isInt(n) && n >= 0);
 
+const isCalls = (c) => c === undefined || (Array.isArray(c) && c.length <= 200 && c.every(isInt));
+
 function isEvent(e) {
   return e && typeof e === "object" && ACTIONS.has(e.action) && isInt(e.x) && isInt(e.y) &&
     DIRS.has(e.dir) && (e.line === null || e.line === undefined || isInt(e.line)) &&
     (e.bag === undefined || isInt(e.bag) || e.bag === "infinite") &&
-    (e.calls === undefined || (Array.isArray(e.calls) && e.calls.length <= 200 && e.calls.every(isInt)));
+    isCalls(e.calls) && isCalls(e.call_ids) && (e.out === undefined || (Number.isInteger(e.out) && e.out >= 0 && e.out <= CAPS.output));
 }
 
 export function isRunResult(r) {
@@ -26,7 +28,7 @@ export function isRunResult(r) {
   const f = r.final;
   if (!f || !isInt(f.x) || !isInt(f.y) || !DIRS.has(f.dir) || !isGemMap(f.gems)) return false;
   if (r.error !== null && !(r.error && isText(r.error.message) && isText(r.error.type ?? "") &&
-      (r.error.line === null || r.error.line === undefined || isInt(r.error.line)))) return false;
+      (r.error.line === null || r.error.line === undefined || isInt(r.error.line)) && isCalls(r.error.calls))) return false;
   return isText(r.output ?? "", CAPS.output);
 }
 

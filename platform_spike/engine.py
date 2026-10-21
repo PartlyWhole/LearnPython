@@ -176,17 +176,31 @@ class World:
         self.max_steps = spec.get("max_steps", DEFAULT_MAX_STEPS)
         self.hidden_commands = set(hidden_commands)
         self.trace = []
+        self.printed = None  # run_program's print() capture, so each event can say how far it got
+        self._call_ids = {}  # id(frame) -> (call number, frame): see _student_lines
 
     def _student_lines(self):
-        """The learner's line making this call, and the lines of the calls it is inside
-        (outermost first): in `turn_right()` called from line 6, line 2's move has calls [6]."""
+        """The learner's line making this call, the lines of the calls it is inside (outermost
+        first: in `turn_right()` called from line 6, line 2's move has calls [6]), and which call
+        each one is (1, 2, ... in the order calls first made a step), so two calls in a row from
+        one line can be told apart."""
         f = sys._getframe(1)
-        lines = []
+        frames = []
         while f is not None:
             if f.f_code.co_filename == STUDENT_FILE:
-                lines.append(f.f_lineno)
+                frames.append(f)
             f = f.f_back
-        return (lines[0] if lines else None), lines[:0:-1]
+        if not frames:
+            return None, [], []
+        # frames[0] is the innermost; each call site is the line its caller (the next frame out) is on.
+        calls = [fr.f_lineno for fr in frames[:0:-1]]
+        ids = []
+        for fr in frames[-2::-1]:  # the frames of the calls themselves, outermost first
+            key = id(fr)
+            if key not in self._call_ids:
+                self._call_ids[key] = (len(self._call_ids) + 1, fr)  # keep fr alive: ids stay unique
+            ids.append(self._call_ids[key][0])
+        return frames[0].f_lineno, calls, ids
 
     def _spend_step(self):
         """Call FIRST in every API method, before any state changes: if the step cap is hit,
@@ -197,10 +211,14 @@ class World:
                              "step_limit")
 
     def _record(self, action, **extra):
-        line, calls = self._student_lines()
+        line, calls, ids = self._student_lines()
         event = {"line": line, "action": action, "x": self.x, "y": self.y, "dir": self.dir, "bag": self.bag, **extra}
         if calls:
             event["calls"] = calls
+            event["call_ids"] = ids
+        printed = self.printed.tell() if self.printed is not None else 0
+        if printed:
+            event["out"] = printed  # how much print() output there was by this step (characters)
         self.trace.append(event)
 
     def front_is_clear(self):
@@ -295,18 +313,21 @@ def run_program(code, spec, seed=0, hidden_commands=()):
     namespace = {"__name__": "__main__", **world.api()}
     error = None
     printed = io.StringIO()
+    world.printed = printed
     try:
         with contextlib.redirect_stdout(printed):
             exec(compile(code, STUDENT_FILE, "exec"), namespace)
     except SyntaxError as e:
         error = {"type": "SyntaxError", "message": e.msg, "line": e.lineno}
     except Exception as e:  # noqa: BLE001
-        tb, line = e.__traceback__, None
+        tb, lines = e.__traceback__, []
         while tb is not None:
             if tb.tb_frame.f_code.co_filename == STUDENT_FILE:
-                line = tb.tb_lineno
+                lines.append(tb.tb_lineno)
             tb = tb.tb_next
-        error = {"type": type(e).__name__, "message": str(e), "line": line}
+        error = {"type": type(e).__name__, "message": str(e), "line": lines[-1] if lines else None}
+        if len(lines) > 1:
+            error["calls"] = lines[:-1]  # the call sites it happened inside, outermost first
         if isinstance(e, WorldError):
             error["kind"] = e.kind
     gems = world.gem_map()
@@ -526,7 +547,9 @@ def check_level(code, level, seed=0):
         result = run_program(code, spec, seed, hidden)
         failures = _goal_failures(result, goal_for(level, spec))
         reports.append({"world": name, "passed": not failures, "failures": failures,
-                        "result": result if name == "main" else None})
+                        # The main world's run always; a hidden world's only when it failed, so
+                        # the learner can replay what went wrong there.
+                        "result": result if name == "main" or failures else None})
     constraint_failures = check_constraints(code, level.get("constraints", {}))
     return {"passed": all(r["passed"] for r in reports) and not constraint_failures,
             "worlds": reports, "constraint_failures": constraint_failures,

@@ -149,6 +149,7 @@
   <div class="splitter" role="separator" aria-orientation="vertical" aria-label="Resize the code and world panels" aria-valuemin="25" aria-valuemax="75" tabindex="0" title="Drag to resize · double-click to reset"></div>
 
   <section class="panel world-panel" aria-label="World">
+    <p id="world-tag" class="world-tag" hidden><span data-glyph="eye_off"></span><span class="sr-only">Replaying hidden world </span><span id="world-tag-name"></span></p>
     <div class="world-row">
       <div class="world" id="world"></div>
       <figure class="goal-view" aria-labelledby="goal-title">
@@ -171,6 +172,7 @@
       <button id="play" class="icon-button" data-icon="play" title="Play" aria-label="Play"></button>
       <button id="fwd" class="icon-button" data-icon="step_fwd" title="Step forward (→)" aria-label="Step forward"></button>
       <span id="step-count" class="step-count" aria-hidden="true"></span>
+      <span id="step-sr" class="sr-only" aria-live="polite"></span>
       <input id="scrub" type="range" min="0" max="0" value="0" aria-label="Replay position">
       <button id="speed" class="speed-button" data-speed="1" aria-label="Replay speed: Normal" title="Speed: Normal"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
     </div>

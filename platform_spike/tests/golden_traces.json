@@ -117,8 +117,25 @@
    },
    "output": ""
   },
+  "print_between_steps": {
+   "digest": "ae81f63ad72ac162",
+   "events": 3,
+   "error": null,
+   "final": {
+    "x": 3,
+    "y": 0,
+    "dir": "E",
+    "bag": 3,
+    "gems_left": 3,
+    "gems": {
+     "2,0": 2,
+     "5,0": 1
+    }
+   },
+   "output": "step 0\nstep 1\nstep 2\ndone\n"
+  },
   "nested_calls": {
-   "digest": "88ec2f320043568b",
+   "digest": "650d377adbfa68a2",
    "events": 9,
    "error": null,
    "final": {
@@ -135,5 +152,5 @@
    "output": ""
   }
  },
- "turn_left_100k_seconds": 0.089
+ "turn_left_100k_seconds": 0.103
 }

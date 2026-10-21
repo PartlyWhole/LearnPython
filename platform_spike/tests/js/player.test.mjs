@@ -62,3 +62,25 @@ test("speed is clamped and changes the step delay", () => {
   p.setSpeed(1000); assert.equal(p.stepMs, 1000 / 60);
   p.setSpeed(0); assert.equal(p.stepMs, 4000);
 });
+
+test("a very long run plays in at most MAX_PLAY_MS; short runs keep the chosen speed", async () => {
+  const { MAX_PLAY_MS } = await import("../../src/render/player.js");
+  const p = new TracePlayer({ onFrame: () => {}, stepsPerSecond: 5 });
+  const frames = (n) => Array.from({ length: n }, (_, i) => ({ index: i, event: i ? { action: "turn_left" } : null }));
+  p.load(frames(20));
+  assert.equal(p.delayFor(p.frames[1]), 200);
+  p.load(frames(10_001));
+  assert.ok(p.delayFor(p.frames[1]) * 10_000 <= MAX_PLAY_MS);
+});
+
+test("a 10,000-step run reaches its end within MAX_PLAY_MS of play, a few steps per tick", async () => {
+  const { MAX_PLAY_MS } = await import("../../src/render/player.js");
+  const clock = new FakeClock();
+  let ended = false;
+  const p = new TracePlayer({ onFrame: () => {}, onEnd: () => { ended = true; }, stepsPerSecond: 5, setTimer: clock.setTimer, clearTimer: clock.clearTimer });
+  p.load(Array.from({ length: 10_001 }, (_, i) => ({ index: i, event: i ? { action: "turn_left" } : null })));
+  p.play();
+  clock.advance(MAX_PLAY_MS + 100);
+  assert.ok(ended, `stopped at ${p.index}`);
+  assert.equal(p.index, 10_000);
+});

@@ -30,13 +30,13 @@ class ErrorWidget extends WidgetType {
 }
 
 class PassWidget extends WidgetType {
-  constructor(n, of) { super(); this.n = n; this.of = of; }
-  eq(other) { return other.n === this.n && other.of === this.of; }
+  constructor(n, of, call = false) { super(); this.n = n; this.of = of; this.call = call; }
+  eq(other) { return other.n === this.n && other.of === this.of && other.call === this.call; }
   toDOM() {
     const el = document.createElement("span");
-    el.className = "cm-run-pass";
+    el.className = `cm-run-pass${this.call ? " call" : ""}`;
     el.textContent = `${this.n} of ${this.of}`;
-    el.title = `This line is running for time ${this.n} of ${this.of}`;
+    el.title = this.call ? `Inside call ${this.n} of ${this.of} made on this line` : `This line is running for time ${this.n} of ${this.of}`;
     return el;
   }
 }
@@ -63,16 +63,22 @@ const marksField = StateField.define({
   provide: (f) => EditorView.decorations.from(f, (m) => m.deco),
 });
 
-function buildMarks(state, { line, kind, message, calls = [], pass = null }) {
+function buildMarks(state, { line, kind, message, calls = [], pass = null, callPasses = [] }) {
   if (!line || line < 1 || line > state.doc.lines) return NO_MARKS;
   const ok = (n) => Number.isInteger(n) && n >= 1 && n <= state.doc.lines && n !== line;
   const at = state.doc.line(line);
   const ranges = [Decoration.line({ class: kind === "error" ? "cm-run-error-line" : "cm-run-line" }).range(at.from)];
   const arrows = [[line, kind === "error" ? FAIL : HERE]];
-  for (const c of new Set(calls.filter(ok))) {
-    ranges.push(Decoration.line({ class: "cm-call-line" }).range(state.doc.line(c).from));
+  const seen = new Set();
+  calls.forEach((c, k) => {
+    if (!ok(c) || seen.has(c)) return;
+    seen.add(c);
+    const at = state.doc.line(c);
+    ranges.push(Decoration.line({ class: "cm-call-line" }).range(at.from));
     arrows.push([c, CALL]);
-  }
+    const p = callPasses[k];
+    if (p && p.of > 1) ranges.push(Decoration.widget({ widget: new PassWidget(p.n, p.of, true), side: 1 }).range(at.to));
+  });
   if (kind === "error" && message) {
     ranges.push(Decoration.widget({ widget: new ErrorWidget(message), block: true, side: 1 }).range(at.to));
   } else if (pass && pass.of > 1) {
@@ -128,6 +134,7 @@ const theme = EditorView.theme({
   ".cm-call-line": { backgroundColor: "var(--band-call)" },
   ".cm-run-pass": { marginLeft: "12px", padding: "0 7px", borderRadius: "999px", font: "600 11px/1.6 var(--sans)",
     color: "var(--accent)", backgroundColor: "var(--surface)", boxShadow: "inset 0 0 0 1px var(--accent)", verticalAlign: "1px" },
+  ".cm-run-pass.call": { color: "var(--muted)", boxShadow: "inset 0 0 0 1px var(--line)" },
   ".cm-step-gutter .cm-gutterElement": { width: "14px", padding: "0 0 0 4px", cursor: "pointer" },
   ".cm-lineNumbers .cm-gutterElement": { cursor: "pointer" },
   ".cm-step-arrow": { display: "inline-block", width: "0", height: "0", verticalAlign: "-1px",
@@ -208,8 +215,8 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
     view,
     getCode: () => view.state.doc.toString(),
     setCode: (code) => view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: code } }),
-    showLine(line, { calls = [], pass = null } = {}) { mark({ line, kind: "current", calls, pass }); reveal(line); },
-    showError(line, message) { mark({ line, kind: "error", message }); reveal(line); },
+    showLine(line, { calls = [], pass = null, callPasses = [] } = {}) { mark({ line, kind: "current", calls, pass, callPasses }); reveal(line); },
+    showError(line, message, { calls = [], callPasses = [] } = {}) { mark({ line, kind: "error", message, calls, callPasses }); reveal(line); },
     clearMarks: () => mark({ line: null }),
     setReadOnly: (ro) => view.dispatch({ effects: editable.reconfigure(EditorView.editable.of(!ro)) }),
     focus: () => view.focus(),

@@ -46,6 +46,20 @@
             "minItems": 1,
             "description": "Lines of the learner's function calls this event happened inside, outermost first. Absent at the top level."
           },
+          "call_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minItems": 1,
+            "description": "With calls: which call each one is (1, 2, ... in the order calls first made a step), so consecutive calls from one line can be told apart."
+          },
+          "out": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Characters of print() output written by the time of this event. Absent while there is none."
+          },
           "action": {
             "enum": [
               "move",
@@ -109,6 +123,14 @@
                 "integer",
                 "null"
               ]
+            },
+            "calls": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 1,
+              "description": "Lines of the learner's function calls the error happened inside, outermost first."
             },
             "kind": {
               "enum": [

@@ -312,7 +312,7 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 @media (prefers-reduced-motion: no-preference) { .results-panel.busy::before { animation: breathe-dot 1s ease-in-out infinite; } }
 .verdict.pass { margin: 0; color: var(--ok); line-height: 0; }
 .verdict.pass .icon { width: 44px; height: 44px; stroke-width: 2.5; }
-.world-list li { grid-template-columns: 22px auto minmax(0, 1fr); gap: 8px; align-items: center; }
+.world-list li { grid-template-columns: 22px auto minmax(0, 1fr) auto; gap: 8px; align-items: center; }
 .world-list .mark { line-height: 0; }
 .world-list .mark .icon { width: 18px; height: 18px; }
 .world-list .where { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 13px; }
@@ -450,3 +450,15 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 }
 @keyframes ring { 0% { transform: scale(0.3); opacity: 0.9; } 100% { transform: scale(3.2); opacity: 0; border-width: 0.5px; } }
 @keyframes star-fade { 0%, 100% { opacity: 0; } 15%, 75% { opacity: 1; } }
+
+/* Replaying a hidden world: a tag over the world says which; each failed world's row can replay it. */
+.world-tag { margin: 0; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 3px 10px 3px 8px; border-radius: 999px; font-size: 13px; color: var(--ink); background: var(--band-error); }
+.world-tag[hidden] { display: none; }
+.world-tag .icon { width: 15px; height: 15px; }
+.world-list .watch-world { grid-column: 4; padding: 3px; }
+.world-list li[aria-current] .watch-world { color: var(--accent); }
+.world-list .watch-world.coach { color: var(--guide-accent); box-shadow: inset 0 0 0 2px var(--guide-accent); }
+@media (prefers-reduced-motion: no-preference) { .world-list .watch-world.coach { animation: step-coach 1.4s ease-in-out 3; } }
+.results-panel .world-list { padding-right: 34px; } /* clear of the panel's full-screen button */
+.caption.stale code { color: var(--muted); } /* the replay is of code since edited */
+.caption code.start { color: var(--muted); font-family: var(--sans); }

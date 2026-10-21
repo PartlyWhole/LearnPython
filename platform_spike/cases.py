@@ -42,6 +42,12 @@ total = sum(ahead)
 for _ in range(len(ahead)):
     move()
 """,
+    "print_between_steps": """\
+for i in range(3):
+    print("step", i)
+    move()
+print("done")
+""",
     "nested_calls": """\
 def turn_right():
     for _ in range(3):

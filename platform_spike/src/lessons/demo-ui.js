@@ -179,8 +179,9 @@ export class DemoPlayer {
       const out = await this.controller.run({ type: "run", code: st.code, world: st.world, seed: 0 });
       if (token !== this.token || out.status !== "done") return;
       this.lastRun = { result: out.payload, world: st.world };
-      this.player.load(buildFrames(st.world, out.payload.trace));
-      if (out.payload.trace.length) this.player.play(); else this.replayEnded();
+      // A crash is the replay's last step (buildFrames), as in a learner's own run.
+      this.player.load(buildFrames(st.world, out.payload.trace, out.payload.error));
+      if (this.player.frames.length > 1) this.player.play(); else this.replayEnded();
     })().catch(() => {});
   }
 

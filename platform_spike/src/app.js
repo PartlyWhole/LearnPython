@@ -3,7 +3,7 @@
 import { RunController } from "./runtime/controller.js";
 import { SandboxHost, SandboxedWorker } from "./runtime/sandbox.js";
 import { validPayload } from "./runtime/validate.js";
-import { buildFrames, describe, gemsLeft, lineRuns, nextStepAt, pathTo } from "./render/frames.js";
+import { buildFrames, describe, gemsLeft, lineRuns, nextStepAt, outputAt, pathIndex } from "./render/frames.js";
 import { TracePlayer } from "./render/player.js";
 import { GridRenderer } from "./render/renderer.js";
 import { goalFor, goalWorld } from "./render/goal.js";
@@ -70,6 +70,9 @@ const editor = createEditor($("editor"), {
     if (demo?.active) return; // demo code is not the learner's draft
     guide?.codeChanged();
     updateLineCount();
+    // A replay on screen is now of older code: redraw its step without line marks (after this
+    // editor update; CodeMirror refuses a dispatch from inside one).
+    if (player?.frames.length > 1) setTimeout(() => player.frames.length > 1 && showFrame(player.frames[player.index], player.index, player.frames.length));
     if (room) return; // a room's code is everyone's, not this browser's draft
     draftTimer = setTimeout(() => level && !demo.active && progress?.saveDraft(level.id, editor.getCode()), 500);
   },
@@ -102,8 +105,8 @@ const renderer = new GridRenderer($("world"));
 const goalRenderer = new GridRenderer($("goal"));
 
 /** The Goal view: what the main world should look like at the end (hidden worlds stay hidden). */
-function showGoal() {
-  const view = goalWorld(level.world, goalFor(level, level.world));
+function showGoal(world = level.world) {
+  const view = goalWorld(world, goalFor(level, world));
   goalRenderer.setGoal(view);
   $("goal-summary").textContent = view.summary;
 }
@@ -133,14 +136,34 @@ const player = new TracePlayer({
 // like a debugger: an arrow at the running line (hollow arrows at the calls it's inside), which
 // pass over a loop line this is ("2 of 4"), the path walked so far, a step count, ← / → keys,
 // and a click on a line number to jump to the next time that line ran.
-let runs = null, runsFor = null; // lineRuns() of the frames loaded in the player
+let runs = null, path = null, runsFor = null; // lineRuns() and pathIndex() of the frames in the player
 let replayCode = null;             // the code the loaded replay came from (null: a demo's)
+let replayOutput = null;           // its print() output (shown as far as the step on screen)
+let replayWorld = "main";          // which world's run is on screen: "main" or a hidden world's name
+let handStepped = false;           // the learner has stepped this run by hand
+// The marks belong on the editor only while it still holds the code that ran.
+const marksFit = () => demo?.active || (replayCode !== null && replayCode === editor.getCode());
 const replayLive = () => player.frames.length > 1 && replayCode !== null && replayCode === editor.getCode() && !demo?.active;
+
+/** Put a run on screen to replay: its world (the level's, or a hidden one), its goal, and its
+ *  frames, with the failed step at the end if it stopped on an error. */
+function loadReplay(world, result, name = "main") {
+  replayWorld = name;
+  shownWorld = world;
+  renderer.setWorld(world);
+  renderer.markTarget(goalFor(level, world).end_at ?? null);
+  showGoal(world);
+  const tag = $("world-tag");
+  tag.hidden = name === "main";
+  $("world-tag-name").textContent = name;
+  replayOutput = result.output ?? "";
+  player.load(buildFrames(world, result.trace, result.error));
+}
 
 function jumpToLine(line) {
   if (!replayLive()) return false;
   const i = nextStepAt(player.frames, line, player.index);
-  if (i < 0) { ui.captionText.textContent = `line ${line} didn't run`; return true; }
+  if (i < 0) { ui.captionText.textContent = `line ${line}: no robot steps`; ui.captionLine.textContent = ""; return true; }
   player.pause();
   player.seek(i);
   stepped();
@@ -149,8 +172,13 @@ function jumpToLine(line) {
 
 /** The learner moved the replay by hand: drop the hint on Step back, tell the room. */
 function stepped() {
+  handStepped = true;
   clearCoach();
   shareStep();
+  // Screen readers hear steps taken by hand (not every frame of a playing replay).
+  const total = player.frames.length - 1;
+  const line = ui.captionLine.textContent;
+  $("step-sr").textContent = `Step ${player.index} of ${total}${line ? `, ${line}` : ""}: ${ui.captionText.textContent}`;
 }
 
 function clearCoach() {
@@ -173,21 +201,51 @@ document.addEventListener("keydown", (e) => {
 
 function showFrame(frame, index, total) {
   renderer.showFrame(frame, player.delayFor(frame));
-  renderer.showTrail(pathTo(player.frames, index));
-  if (runsFor !== player.frames) { runs = lineRuns(player.frames); runsFor = player.frames; }
+  if (runsFor !== player.frames) { runs = lineRuns(player.frames); path = pathIndex(player.frames); runsFor = player.frames; }
+  renderer.showTrail(path.cells.slice(0, path.counts[index]));
   ui.stepCount.textContent = total > 1 ? `${index}/${total - 1}` : "";
   ui.scrub.max = String(total - 1);
   ui.scrub.value = String(index);
   ui.scrub.setAttribute("aria-valuetext", `step ${index} of ${total - 1}`);
-  ui.captionText.textContent = frame.event ? describe(frame.event) : ""; // nothing to say before the first step
+  // Before the first step: "Start", so stepping back to the beginning is plain (nothing on a fresh world).
+  ui.captionText.textContent = frame.event ? describe(frame.event) : total > 1 ? "Start" : "";
+  ui.captionText.classList.toggle("start", !frame.event && !frame.error);
   ui.captionLine.textContent = frame.event?.line ? `line ${frame.event.line}` : "";
   const world = demo?.active ? demo.world : shownWorld;
   ui.bag.textContent = world?.bag === "infinite" ? "∞" : String(frame.bag);
   ui.left.textContent = String(gemsLeft(frame));
+  const fits = marksFit();
   const line = frame.event?.line;
-  if (line) editor.showLine(line, { calls: frame.event.calls ?? [], pass: { n: runs.nth[index], of: runs.total(line) } });
-  else editor.clearMarks();
-  if (index === total - 1 && lastReport && !player.playing) showOutcome();
+  if (frame.error) {
+    // The step that failed: marked in the world, at its line, and named in the caption.
+    const e = frame.error;
+    renderer.showError(frame, e.kind);
+    ui.captionLine.textContent = e.line ? `line ${e.line}` : "";
+    const ran = demo?.active ? editor.getCode() : replayCode; // a demo's program is in the editor
+    const failed = e.line && ran ? (ran.split("\n")[e.line - 1] ?? "").trim() : "";
+    ui.captionText.textContent = failed ? `✗ ${failed}` : `✗ ${e.message}`;
+    const calls = e.calls ?? [];
+    if (fits && e.line) editor.showError(e.line, e.message, { calls, callPasses: calls.map((c) => runs.callPass(index, c)) });
+    else editor.clearMarks();
+  } else if (line && fits) {
+    const calls = frame.event.calls ?? [];
+    editor.showLine(line, { calls, pass: { n: runs.nth[index], of: runs.total(line) }, callPasses: calls.map((c) => runs.callPass(index, c)) });
+  } else {
+    editor.clearMarks();
+  }
+  // Edited since the run: the replay is of the old code, so its line numbers would point wrong.
+  if (!fits) ui.captionLine.textContent = "";
+  ui.captionLine.parentElement.classList.toggle("stale", !fits && player.frames.length > 1);
+  if (replayOutput !== null && !demo?.active) {
+    const text = outputAt(player.frames, index, replayOutput);
+    ui.output.textContent = text;
+    ui.outputWrap.hidden = !text;
+  }
+  if (index === total - 1 && !player.playing) {
+    // Reached the end by stepping (playing to the end goes through onEnd): the same as playing.
+    if (demo?.active) { if (demo.lastRun && !demo.lastRun.shown) demo.replayEnded(); }
+    else if (lastReport) showOutcome();
+  }
 }
 
 ui.play.onclick = () => player.toggle();
@@ -308,7 +366,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
 
   const code = shared ? shared.source : editor.getCode();
   clearCoach();
-  celebrated = nudged = false;
+  celebrated = nudged = handStepped = false;
   shownRun = shared ? shared.id : room ? room.startRun(code, level.id) : null;
   if (shownRun) seenRun = shownRun;
   const out = await controller.run({ type: "check", code, level, seed: 0 });
@@ -324,10 +382,9 @@ async function runCode(shared = null, { stepping = false } = {}) {
     pendingHintRun = lastReport.passed;
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
     replayCode = code;
-    player.load(buildFrames(level.world, main.trace));
-    ui.output.textContent = main.output;
-    ui.outputWrap.hidden = !main.output;
-    if (!main.trace.length) showOutcome();
+    resultsPanel.hidden = true; // the results come with the end of the replay (showOutcome)
+    loadReplay(level.world, main);
+    if (player.frames.length < 2) showOutcome(); // nothing happened: straight to the outcome
     else if (!stepping) player.play();
     else { ui.fwd.classList.add("coach"); ui.fwd.focus(); } // one step at a time: → or the button
   } else if (out.status === "timeout") {
@@ -461,6 +518,10 @@ $("setting-step").onchange = (e) => {
 $("watch-demo").onclick = () => lesson && demo.start(lesson);
 
 function showLevelWorld() {
+  replayWorld = "main";
+  replayOutput = null;
+  $("world-tag").hidden = true;
+  if (!demo?.active) showGoal();
   shownWorld = level.world;
   renderer.setWorld(level.world);
   renderer.markTarget(goalFor(level, level.world).end_at ?? null);
@@ -469,21 +530,19 @@ function showLevelWorld() {
 ui.stop.onclick = () => controller.stop();
 
 // ---------------------------------------------------------------- results
-function showOutcome(code = drive.active ? drive.program.code : editor.getCode()) {
-  if (!lastReport) return;
-  const main = lastReport.worlds[0].result;
-  const last = player.frames.at(-1);
-  if (main.error) {
-    renderer.showError(last, main.error.kind);
-    if (main.error.line) editor.showError(main.error.line, main.error.message);
-    ui.captionLine.textContent = main.error.line ? `line ${main.error.line}` : "";
-    // The message is shown at the code line and in the results; here, just which line failed.
-    const failed = main.error.line ? (code.split("\n")[main.error.line - 1] ?? "").trim() : "";
-    ui.captionText.textContent = failed ? `✗ ${failed}` : `✗ ${main.error.message}`;
-  }
+/** The run's outcome, once per run, when its replay first reaches the end: results, the bonus,
+ *  solving. (Stepping back and forth to the end again changes nothing here.) The failed step
+ *  itself is drawn by showFrame, as the replay's last frame. */
+let outcomeFor = null;
+function showOutcome(code = drive.active ? drive.program.code : replayCode ?? editor.getCode()) {
+  if (!lastReport || outcomeFor === lastReport) return;
+  outcomeFor = lastReport;
   if (pendingHintRun !== null) { hints.ran(pendingHintRun); pendingHintRun = null; }
-  // A failed run that did something: point at Step back, the way to see what led here.
-  if (!lastReport.passed && !nudged && player.frames.length > 2 && !drive.active) {
+  // A failed run that did something, watched rather than stepped: point at Step back, the way
+  // to see what led here.
+  // (If this world passed and a hidden one failed, it's that world's replay button instead, below.)
+  const mainPassed = lastReport.worlds[0].passed;
+  if (!lastReport.passed && !mainPassed && !nudged && !handStepped && player.frames.length > 2 && !drive.active) {
     nudged = true;
     ui.back.classList.add("coach");
     ui.back.title = "Step back to see what led here (←)";
@@ -491,7 +550,7 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
   resultsPanel.hidden = false;
   // One row per world: a mark, an eye (this world) or a crossed eye (a hidden world, named), and
   // only for failures, the engine's message. A pass is a big check and the way on.
-  const items = lastReport.worlds.map((w) => {
+  const items = lastReport.worlds.map((w, i) => {
     const li = document.createElement("li");
     li.className = w.passed ? "pass" : "fail";
     const mark = document.createElement("span");
@@ -512,6 +571,23 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
     status.className = "sr-only";
     status.textContent = w.passed ? "solved" : "not yet";
     li.append(mark, where, status, why);
+    // A world that failed can be replayed and stepped through, hidden ones too; so can this world.
+    const spec = i === 0 ? level.world : level.hidden_worlds?.[i - 1];
+    if (w.result && spec && !drive.active) {
+      const watch = document.createElement("button");
+      watch.className = "icon-button watch-world";
+      watch.innerHTML = icon("replay");
+      watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay hidden world ${w.world}`);
+      watch.title = watch.getAttribute("aria-label");
+      watch.onclick = () => {
+        loadReplay(spec, w.result, w.world);
+        for (const row of ui.results.querySelectorAll(".world-list li")) row.removeAttribute("aria-current");
+        li.setAttribute("aria-current", "true");
+        player.play();
+      };
+      if (i === 0) li.setAttribute("aria-current", "true");
+      li.append(watch);
+    }
     return li;
   });
   const parts = [];
@@ -575,6 +651,12 @@ function showOutcome(code = drive.active ? drive.program.code : editor.getCode()
   }
   if (nextLink) parts.push(nextLink);
   ui.results.replaceChildren(...parts);
+  if (!lastReport.passed && mainPassed && !nudged) {
+    nudged = true;
+    const first = ui.results.querySelector(".world-list li.fail .watch-world");
+    first?.classList.add("coach");
+    first?.addEventListener("click", () => first.classList.remove("coach"), { once: true });
+  }
   // The editor fills the window, so results can sit below it: bring them into view.
   const r = resultsPanel.getBoundingClientRect();
   if (r.top > window.innerHeight - 60 || r.bottom < 0) resultsPanel.scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -656,7 +738,7 @@ $("reset").onclick = () => {
 const roomUi = { bar: $("room-bar"), peers: $("room-peers"), copy: $("room-copy"), leave: $("room-leave") };
 
 function shareStep() {
-  if (room && shownRun && player.frames.length) room.shareStep(shownRun, player.index);
+  if (room && shownRun && replayWorld === "main" && player.frames.length) room.shareStep(shownRun, player.index);
 }
 
 /** From here on, runs go to the sandbox: a partner's code is about to arrive. */
@@ -682,7 +764,7 @@ function enterRoom() {
   $("watch-demo").hidden = true;
   room.subscribe(onRoomChange);
   room.onStep((runId, index) => {
-    if (runId !== shownRun || !player.frames.length) return;
+    if (runId !== shownRun || replayWorld !== "main" || !player.frames.length) return;
     player.pause();
     player.seek(index);
   });

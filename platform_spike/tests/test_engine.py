@@ -264,6 +264,34 @@ class CallLines(unittest.TestCase):
         self.assertNotIn("calls", trace[0])  # move() at the top level
         self.assertEqual([e["line"] for e in trace[1:]], [3, 3, 3])
         self.assertEqual({tuple(e["calls"]) for e in trace[1:]}, {(9, 6)})
+        self.assertEqual({tuple(e["call_ids"]) for e in trace[1:]}, {(1, 2)})
+
+    def test_consecutive_calls_from_one_line_are_numbered_apart(self):
+        code = "def two():\n    move()\n    move()\n\nfor i in range(2):\n    two()\n"
+        trace = run_program(code, {"width": 6, "height": 1, "start": [0, 0, "E"]}, 0)["trace"]
+        self.assertEqual([e["call_ids"] for e in trace], [[1], [1], [2], [2]])
+
+
+class ReplayDetail(unittest.TestCase):
+    """What a step-through replay needs beyond the trace."""
+
+    def test_an_error_inside_a_function_names_its_call_sites(self):
+        r = run_program("def f():\n    move()\n    move()\n\nf()\n", {"width": 2, "height": 1, "start": [0, 0, "E"]})
+        self.assertEqual((r["error"]["line"], r["error"]["calls"]), (3, [5]))
+        top = run_program("move()\nmove()\n", {"width": 2, "height": 1, "start": [0, 0, "E"]})
+        self.assertNotIn("calls", top["error"])
+
+    def test_each_step_knows_how_much_had_been_printed(self):
+        r = run_program("move()\nprint('hi')\nmove()\n", {"width": 3, "height": 1, "start": [0, 0, "E"]})
+        self.assertNotIn("out", r["trace"][0])
+        self.assertEqual(r["trace"][1]["out"], len("hi\n"))
+
+    def test_a_failed_hidden_world_comes_back_to_be_replayed(self):
+        hard = "move()\nmove()\npick()\npick()\nmove()\nmove()\nmove()\npick()\n"
+        report = check_level(hard, dict(LEVEL, constraints={}))
+        for w in report["worlds"][1:]:
+            self.assertEqual(w["result"] is None, w["passed"], w["world"])
+        self.assertTrue(any(w["result"] for w in report["worlds"][1:]))
 
 
 if __name__ == "__main__":

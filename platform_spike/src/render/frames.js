@@ -12,10 +12,13 @@ export function initialGems(world) {
 }
 
 /**
- * @returns {Array<{index, x, y, dir, bag, gems, event}>} frames[0] is the start state;
+ * @returns {Array<{index, x, y, dir, bag, gems, event, error?}>} frames[0] is the start state;
  *          frames[i] (i >= 1) is the state after trace[i - 1].
+ * If the run stopped on an error, one more frame follows: the same state, with `error` and no
+ * event. It is the step that failed (a move into a wall, a NameError), so stepping shows the
+ * last good step on its own line first, then the failure on its line.
  */
-export function buildFrames(world, trace) {
+export function buildFrames(world, trace, error = null) {
   const [x0, y0, dir0] = world.start;
   let gems = initialGems(world);
   const bag0 = typeof world.bag === "number" ? world.bag : 0; // an infinite bag is shown as ∞ by the app
@@ -28,6 +31,10 @@ export function buildFrames(world, trace) {
     }
     frames.push({ index: i + 1, x: event.x, y: event.y, dir: event.dir, bag: event.bag, gems, event });
   });
+  if (error) {
+    const last = frames.at(-1);
+    frames.push({ ...last, index: frames.length, event: null, error });
+  }
   return frames;
 }
 
@@ -52,9 +59,23 @@ export function describe(event) {
   }
 }
 
+/** Which call from `line` frame f's step is inside (its call id), or null if it isn't inside
+ *  one made there. The failed step has no ids: it belongs to the call the step before it was in. */
+function callAt(frames, i, line) {
+  const e = frames[i].event ?? frames[i].error;
+  const k = e?.calls?.indexOf(line) ?? -1;
+  if (k < 0) return null;
+  if (e.call_ids) return e.call_ids[k];
+  return i > 0 ? callAt(frames, i - 1, line) ?? `step${i}` : `step${i}`;
+}
+
 /**
- * For stepping through a replay: each frame's pass over its line ("2 of 4": the 2nd of 4 times
- * that line ran), so a loop's iterations can be told apart. nth[i] is 0 for frames with no line.
+ * For stepping through a replay:
+ *   nth[i]          which pass over its own line frame i's step is ("2 of 4": the 2nd of 4
+ *                   times that line ran), so a loop's iterations can be told apart; 0 if none
+ *   total(line)     how many steps that line made
+ *   callPass(i, l)  for a call site l frame i is inside: {n, of}, the call's place among the
+ *                   calls made from l ("call 2 of 3")
  */
 export function lineRuns(frames) {
   const totals = new Map();
@@ -65,19 +86,56 @@ export function lineRuns(frames) {
     totals.set(line, n);
     return n;
   });
-  return { nth, total: (line) => totals.get(line) ?? 0 };
+  const callsFrom = new Map(); // call-site line -> its call ids, in order
+  frames.forEach((f, i) => {
+    for (const line of new Set((f.event ?? f.error)?.calls ?? [])) {
+      const id = callAt(frames, i, line);
+      const ids = callsFrom.get(line) ?? [];
+      if (ids.at(-1) !== id && !ids.includes(id)) ids.push(id);
+      callsFrom.set(line, ids);
+    }
+  });
+  const callPass = (i, line) => {
+    const ids = callsFrom.get(line) ?? [];
+    const n = ids.indexOf(callAt(frames, i, line)) + 1;
+    return n ? { n, of: ids.length } : null;
+  };
+  return { nth, total: (line) => totals.get(line) ?? 0, callPass };
 }
 
-/** The next frame after `from` whose step ran `line`, directly or inside a call made there,
- *  wrapping round to the start; -1 if that line never ran. (Clicking a line number.) */
+/**
+ * The next frame after `from` that starts something on `line`, wrapping round to the start; -1
+ * if nothing did. (Clicking a line number.) For a line's own steps, the next one; for a line
+ * that calls a function, the first step of the next call made there; the failed step counts
+ * for its line too.
+ */
 export function nextStepAt(frames, line, from) {
+  const key = (i) => {
+    const e = frames[i].event ?? frames[i].error;
+    if (!e) return null;
+    if (e.line === line) return `own${i}`;
+    const c = callAt(frames, i, line);
+    return c === null ? null : `call${c}`;
+  };
   const n = frames.length;
   for (let k = 1; k <= n; k++) {
     const i = (from + k) % n;
-    const e = frames[i].event;
-    if (e && (e.line === line || e.calls?.includes(line))) return i;
+    const here = key(i);
+    if (here !== null && (i === 0 || here !== key(i - 1))) return i;
   }
   return -1;
+}
+
+/** The whole path once, for a replay: cells (in order, each visit once) and, per frame, how
+ *  many of them it has walked. pathTo(frames, i) is cells.slice(0, counts[i]). */
+export function pathIndex(frames) {
+  const cells = [], counts = [];
+  for (const f of frames) {
+    const last = cells.at(-1);
+    if (!last || last[0] !== f.x || last[1] !== f.y) cells.push([f.x, f.y]);
+    counts.push(cells.length);
+  }
+  return { cells, counts };
 }
 
 /** The robot's path up to and including frame `index`: its cell after every move. */
@@ -88,4 +146,12 @@ export function pathTo(frames, index) {
     if (!last || last[0] !== f.x || last[1] !== f.y) out.push([f.x, f.y]);
   }
   return out;
+}
+
+/** The print() output up to frame `index`: what had been printed by that step (events carry
+ *  `out`, a count of characters as Python counts them, so code points here), all of it at the end. */
+export function outputAt(frames, index, output) {
+  if (index >= frames.length - 1) return output;
+  const n = frames[index]?.event?.out ?? 0; // absent: nothing printed yet (output only grows)
+  return Array.from(output).slice(0, n).join("");
 }

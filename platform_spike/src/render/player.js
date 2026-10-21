@@ -2,6 +2,9 @@
 // via onFrame. Timers are injectable so the player is unit-tested in Node.
 import { SENSORS } from "./frames.js";
 
+export const MAX_PLAY_MS = 30_000;
+const TICK_MS = 16;
+
 export class TracePlayer {
   /**
    * @param {object} opts
@@ -35,8 +38,11 @@ export class TracePlayer {
     this.stepMs = 1000 / Math.max(0.25, Math.min(60, stepsPerSecond));
   }
 
+  /** A long run (a loop that hit the step cap: 10,000 steps) still plays in at most MAX_PLAY_MS,
+   *  speeding up past the chosen speed, so its result doesn't wait half an hour. */
   delayFor(frame) {
-    return frame?.event && SENSORS.has(frame.event.action) ? this.stepMs * 0.4 : this.stepMs;
+    const ms = Math.min(this.stepMs, MAX_PLAY_MS / Math.max(1, this.frames.length - 1));
+    return frame?.event && SENSORS.has(frame.event.action) ? ms * 0.4 : ms;
   }
 
   play() {
@@ -76,10 +82,14 @@ export class TracePlayer {
   toEnd() { this.pause(); this.seek(this.frames.length - 1); }
 
   _schedule() {
+    // Faster than a screen refresh (a long run, see delayFor): move several steps per tick, since
+    // timers can't fire that often and the screen couldn't show it anyway.
+    const delay = this.delayFor(this.frames[this.index + 1]);
+    const per = delay < TICK_MS ? Math.ceil(TICK_MS / delay) : 1;
     this.timer = this.setTimer(() => {
       this.timer = null;
       if (!this.playing) return;
-      this.index += 1;
+      this.index = Math.min(this.frames.length - 1, this.index + per);
       this._emit();
       if (this.atEnd) {
         this.pause();
@@ -87,7 +97,7 @@ export class TracePlayer {
       } else {
         this._schedule();
       }
-    }, this.delayFor(this.frames[this.index + 1]));
+    }, per > 1 ? TICK_MS : delay);
   }
 
   _emit() {

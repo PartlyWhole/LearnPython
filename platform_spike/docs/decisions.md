@@ -223,4 +223,25 @@ relay gets accounts. Details: `docs/collab.md`.
   (trail) makes tracing the easy thing to do.
 **Costs:** a trace format addition (`calls`, optional; golden case `nested_calls`), and three
 wrong solutions renamed `long_*`.
+**Refined after a review of every stepping case (Oct 2026):**
+- **A crash is a step of its own.** `buildFrames(world, trace, error)` adds the failed step as
+  the last frame. Stepping shows the last good step on its line, then the failure on its line,
+  with the error's call sites (`error.calls`).
+- **Each call has an identity** (`call_ids`, parallel to `calls`), so two calls in a row from
+  one line can be told apart. Clicking a call line jumps to the start of the next call made
+  there, and call sites show "2 of 4" too.
+- **Output follows the step.** Events carry `out`, the number of characters printed so far.
+- **Hidden worlds that fail return their run** (`check_level`), and their row in the results
+  replays them. A tag over the world names it, and the goal view switches to it. If only a
+  hidden world failed, that row's replay button pulses instead of Step back.
+- **The outcome appears once per run**, when the replay first reaches the end, whether played
+  or stepped. Stepping back and forth no longer re-renders results, re-marks the level solved
+  or scrolls the page. In step-at-a-time mode, results wait for the end.
+- **Edited since the run:** line marks and the line tag go (they would point at the wrong
+  lines), and the caption turns muted; the world still steps.
+- **Long runs play in at most 30 s,** with several steps per tick when needed. A 10,000-step
+  runaway took over 30 minutes at Normal speed before.
+- **Demos finish when stepped to the end by hand,** not only when played there.
+- **Step 0 says "Start", and hand steps are announced** to screen readers ("Step 3 of 8,
+  line 4: move()").
 
