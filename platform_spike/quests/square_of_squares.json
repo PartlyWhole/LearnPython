@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "square_of_squares",
+  "quests": [
+    {
+      "id": "one_square",
+      "title": "One small square",
+      "ask": "Write `fill_square()`: fill the square row by row, then end on the west side just below it, facing east.",
+      "nudge": "A square is short rows stacked. After each row, where must the robot be for the next one?",
+      "check": {"test": {"call": "fill_square", "world": {"width": 3, "height": 3, "start": [0, 0, "E"], "bag": 4}, "goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "1,0": 1, "1,1": 1}, "end_at": [0, 2], "facing": "E"}}}
+    },
+    {
+      "id": "to_the_next_square",
+      "title": "Up to the next square",
+      "ask": "Write `next_square()`: from below a finished square, get to the top-left cell of the next square, past the empty column, facing east.",
+      "nudge": "Where does `fill_square()` begin? That's where `next_square()` has to leave the robot.",
+      "check": {"test": {"call": "next_square", "world": {"width": 5, "height": 3, "start": [0, 2, "E"], "gems": {"0,0": 1, "0,1": 1, "1,0": 1, "1,1": 1}}, "goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "1,0": 1, "1,1": 1}, "end_at": [3, 0], "facing": "E"}}}
+    },
+    {
+      "id": "all_squares",
+      "title": "Every square in a row",
+      "ask": "Repeat the pair of calls to fill every square, with one empty column between them.",
+      "nudge": "If a square comes out in the wrong place, look at where the call before it left the robot.",
+      "check": {"program": {"goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "1,0": 1, "1,1": 1, "3,0": 1, "3,1": 1, "4,0": 1, "4,1": 1, "6,0": 1, "6,1": 1, "7,0": 1, "7,1": 1, "9,0": 1, "9,1": 1, "10,0": 1, "10,1": 1}}}}
+    }
+  ]
+}

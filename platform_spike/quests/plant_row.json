@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "plant_row",
+  "quests": [
+    {
+      "id": "second_cell",
+      "title": "Plant the next cell too",
+      "ask": "The starter plants one cell and steps on. Make that happen again, so the next cell gets a gem as well.",
+      "nudge": "Which lines would you copy to do it again? Those are the ones a loop could repeat.",
+      "check": {"program": {"reach": {"put_at": [1, 0]}}}
+    },
+    {
+      "id": "one_loop",
+      "title": "Write it once, repeat it",
+      "ask": "Replace any copied lines with a `for` loop, so the lines that plant and step are written only once.",
+      "nudge": "If you had to plant a hundred cells, what would you want to write?",
+      "check": {"code": [{"has": "for"}]}
+    },
+    {
+      "id": "whole_row",
+      "title": "The whole row, no gaps",
+      "ask": "Plant every marked cell, one gem each, using up the bag exactly.",
+      "nudge": "How many cells are marked in the picture? What does that tell your loop?",
+      "check": {"program": {"goal": {"gems_exactly": {"0,0": 1, "1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1}}}}
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "level": "wall_follower",
+  "quests": [
+    {
+      "id": "look_right",
+      "title": "Look to the right",
+      "ask": "Fill in `right_is_clear()`. With the wall right below, it should give back False and leave the robot where it was, facing the same way.",
+      "nudge": "After it looks, which way is the robot facing? Which way should it face?",
+      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 2, "start": [1, 0, "E"], "blocked": [[0, 1], [1, 1], [2, 1]]}, "returns": false, "goal": {"end_at": [1, 0], "facing": "E"}}}
+    },
+    {
+      "id": "into_a_dip",
+      "title": "Follow the wall down",
+      "ask": "Write `step_along_wall()`, which takes one step with the wall on the right. Standing over a dip, the step should go down into it.",
+      "nudge": "If the wall drops away under your right hand, which way do you go to keep touching it?",
+      "check": {"test": {"call": "step_along_wall", "world": {"width": 3, "height": 3, "start": [1, 1, "E"], "blocked": [[0, 2], [2, 2]]}, "goal": {"end_at": [1, 2], "facing": "S"}}}
+    },
+    {
+      "id": "up_a_bump",
+      "title": "Follow the wall up",
+      "ask": "With the wall rising right in front, one `step_along_wall()` should take the robot up along it.",
+      "nudge": "What is different about this cell from the dip? What does the robot see on its right?",
+      "check": {"test": {"call": "step_along_wall", "world": {"width": 3, "height": 3, "start": [0, 1, "E"], "blocked": [[0, 2], [1, 1], [1, 2], [2, 1], [2, 2]]}, "goal": {"end_at": [0, 0], "facing": "N"}}}
+    },
+    {
+      "id": "whole_trail",
+      "title": "The whole trail",
+      "ask": "Use your step to follow the whole bumpy wall and collect every gem on the trail.",
+      "nudge": "If the robot gets lost, find the first step where it leaves the wall.",
+      "check": {"program": {"goal": {"all_gems_collected": true}}}
+    }
+  ]
+}

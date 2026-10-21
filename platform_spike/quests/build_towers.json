@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "build_towers",
+  "quests": [
+    {
+      "id": "one_tower",
+      "title": "One tower, on its own",
+      "ask": "Fill in `build_tower()`: standing on a site facing east, finish a tower three gems tall above it, and end on the site facing east.",
+      "nudge": "Where it ends is where the walk along the street carries on. Trace the robot's way up and back.",
+      "check": {"test": {"call": "build_tower", "world": {"width": 3, "height": 3, "start": [1, 2, "E"], "bag": "infinite", "gems": {"1,2": 1}}, "goal": {"end_at": [1, 2], "facing": "E", "gems_exactly": {"1,0": 1, "1,1": 1, "1,2": 1}}}}
+    },
+    {
+      "id": "only_sites",
+      "title": "Build only on sites",
+      "ask": "Walk a short street with one site in the middle. Build a tower there, and leave the empty cells empty.",
+      "nudge": "As the robot arrives on each cell, what can it ask before it builds?",
+      "check": {"program": {"world": {"width": 4, "height": 3, "start": [0, 2, "E"], "bag": "infinite", "gems": {"2,2": 1}}, "goal": {"gems_exactly": {"2,0": 1, "2,1": 1, "2,2": 1}}}}
+    },
+    {
+      "id": "both_ends",
+      "title": "Sites at both ends",
+      "ask": "Now the robot starts on a site, and there is another at the far end. Build both towers.",
+      "nudge": "The robot never moves onto its first cell. Does that cell still get looked at?",
+      "check": {"program": {"world": {"width": 3, "height": 3, "start": [0, 2, "E"], "bag": "infinite", "gems": {"0,2": 1, "2,2": 1}}, "goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "0,2": 1, "2,0": 1, "2,1": 1, "2,2": 1}}}}
+    }
+  ]
+}

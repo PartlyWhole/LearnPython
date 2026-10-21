@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "sweep",
+  "quests": [
+    {
+      "id": "second_row",
+      "title": "Down to the next row",
+      "ask": "In a room two rows tall, sweep the top row, then get onto the row below and sweep it on the way back.",
+      "nudge": "At the end of the first row, which way should the robot face to start the second?",
+      "check": {"program": {"world": {"width": 4, "height": 2, "start": [0, 0, "E"], "gems": {"1,0": 1, "3,1": 1, "0,1": 2}}, "goal": {"all_gems_collected": true}}}
+    },
+    {
+      "id": "every_row",
+      "title": "Back and forth, every row",
+      "ask": "Now a taller room. Keep zigzagging row after row until every gem is collected, and stop when there is no row left.",
+      "nudge": "At the east end the robot turns one way to go down. Which way at the west end?",
+      "check": {"program": {"world": {"width": 4, "height": 4, "start": [0, 0, "E"], "gems": {"2,1": 1, "0,2": 1, "3,3": 2}}, "goal": {"all_gems_collected": true}}}
+    },
+    {
+      "id": "thin_rooms",
+      "title": "A room one cell wide",
+      "ask": "Your sweep should also work in a room only one cell wide, collecting every gem down the column.",
+      "nudge": "Each row is a single cell here. Does your plan still move down between rows?",
+      "check": {"program": {"world": {"width": 1, "height": 4, "start": [0, 0, "E"], "gems": {"0,1": 1, "0,3": 1}}, "goal": {"all_gems_collected": true}}}
+    }
+  ]
+}

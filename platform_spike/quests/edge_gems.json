@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "level": "edge_gems",
+  "quests": [
+    {
+      "id": "short_corridor",
+      "title": "Mark both ends",
+      "ask": "In a three-cell corridor, put one gem on the first cell and one on the last, and leave the middle empty.",
+      "nudge": "Which gem can go down before the walk, and which only after it?",
+      "check": {"program": {"world": {"width": 3, "height": 1, "start": [0, 0, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 1, "2,0": 1}}}}
+    },
+    {
+      "id": "one_cell",
+      "title": "When both ends meet",
+      "ask": "In a one-cell corridor the first cell is also the last. It should end with exactly one gem.",
+      "nudge": "When the robot reaches the end, how can it tell the cell is already marked?",
+      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 1}}}}
+    }
+  ]
+}

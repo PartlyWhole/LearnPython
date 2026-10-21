@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "climb_stairs",
+  "quests": [
+    {
+      "id": "one_step",
+      "title": "Climb one step",
+      "ask": "Fill in `climb_step()`: from the foot of a step, facing east, it should leave the robot standing on top of it, facing east again.",
+      "nudge": "Where it ends is where the next step starts. Which way should it face for the next one?",
+      "check": {"test": {"call": "climb_step", "world": {"width": 3, "height": 3, "start": [0, 2, "E"], "blocked": [[1, 2], [2, 2]]}, "goal": {"end_at": [1, 1], "facing": "E"}}}
+    },
+    {
+      "id": "steps_chain",
+      "title": "Two steps in a row",
+      "ask": "Use `climb_step()` on the real stairs so the robot gets up to the marked cell on the second step.",
+      "nudge": "If the second climb goes wrong, look at where the first one leaves the robot.",
+      "check": {"program": {"reach": {"visit": [2, 1]}}}
+    },
+    {
+      "id": "to_the_top",
+      "title": "Up to the gem",
+      "ask": "Carry on to the top of the staircase and pick up the gem waiting there.",
+      "nudge": "Count the steps in the picture, not in your head.",
+      "check": {"program": {"reach": {"pick_at": [3, 0]}}}
+    }
+  ]
+}

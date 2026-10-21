@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "level": "first_steps",
+  "quests": [
+    {
+      "id": "reach_the_gem",
+      "title": "Stand on the gem",
+      "ask": "Walk the robot along its row until it is standing on the gem's cell.",
+      "nudge": "Point at each square the robot crosses. Does every square need its own line?",
+      "check": {"program": {"reach": {"visit": [3, 1]}}}
+    },
+    {
+      "id": "pick_it_up",
+      "title": "Pick up the gem",
+      "ask": "Now that the robot is standing on the gem, take it so the floor is empty.",
+      "nudge": "The robot does exactly what the lines say, in order. What comes after the walking?",
+      "check": {"program": {"reach": {"pick_at": [3, 1]}}}
+    }
+  ]
+}

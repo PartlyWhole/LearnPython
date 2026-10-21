@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "level": "stack_and_step",
+  "quests": [
+    {
+      "id": "first_stack",
+      "title": "Build the first stack",
+      "ask": "Step onto the first marked cell and stack it as high as the goal asks, with the robot staying on that cell while it stacks.",
+      "nudge": "Which line should run many times, and which should run only once?",
+      "check": {"program": {"reach": {"put_at": [1, 0], "n": 12}}}
+    },
+    {
+      "id": "both_stacks",
+      "title": "Both stacks, exact heights",
+      "ask": "Walk on to the second marked cell and build its stack too, so both piles match the goal exactly.",
+      "nudge": "The two stacks are different heights. Does your second loop know that?",
+      "check": {"program": {"goal": {"gems_exactly": {"1,0": 12, "3,0": 9}}}}
+    }
+  ]
+}

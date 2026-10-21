@@ -49,10 +49,17 @@ export function isGuideState(g) {
     g.steps.length <= 50 && g.steps.every((b) => typeof b === "boolean");
 }
 
-/** Is `payload` a believable answer to `request` ({type: run | check | guide})? */
+export function isQuestState(s) {
+  return s && typeof s === "object" && Array.isArray(s.quests) && s.quests.length <= 5 &&
+    s.quests.every((q) => q && typeof q.done === "boolean" && (q.why === null || q.why === undefined || isText(q.why)) &&
+      (q.result === null || q.result === undefined || isRunResult(q.result)));
+}
+
+/** Is `payload` a believable answer to `request` ({type: run | check | guide | quests})? */
 export function validPayload(request, payload) {
   if (request.type === "run") return isRunResult(payload);
   if (request.type === "check") return isCheckReport(payload);
   if (request.type === "guide") return isGuideState(payload);
+  if (request.type === "quests") return isQuestState(payload);
   return false;
 }

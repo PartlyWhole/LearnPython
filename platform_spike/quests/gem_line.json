@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "level": "gem_line",
+  "quests": [
+    {
+      "id": "two_cells",
+      "title": "A two-cell corridor",
+      "ask": "Fill a corridor of two cells: one gem on each, no more.",
+      "nudge": "Count the gems you need and the steps you take. Are they the same number?",
+      "check": {"program": {"world": {"width": 2, "height": 1, "start": [0, 0, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 1, "1,0": 1}}}}
+    },
+    {
+      "id": "one_cell",
+      "title": "A one-cell corridor",
+      "ask": "The shortest corridor of all: one cell, with a wall straight ahead. It should end with exactly one gem.",
+      "nudge": "Which lines still run when the robot can't take a single step?",
+      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 1}}}}
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "two_kinds",
+  "quests": [
+    {
+      "id": "one_tree",
+      "title": "A tree, back on the path",
+      "ask": "Write `plant_tree()`: plant a tree on the robot's cell, then end back on the path where the hedge starts, facing east.",
+      "nudge": "A tree grows upward. How does the robot get back down to the path afterwards?",
+      "check": {"test": {"call": "plant_tree", "world": {"width": 3, "height": 3, "start": [0, 2, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,1": 1, "0,2": 1}, "end_at": [2, 2], "facing": "E"}}}
+    },
+    {
+      "id": "one_hedge",
+      "title": "A hedge, then the gap",
+      "ask": "Write `plant_hedge()`: plant a hedge starting on the robot's cell, then end where the next tree goes, facing east.",
+      "nudge": "Look at the Goal view: is there an empty cell between a hedge and the next tree?",
+      "check": {"test": {"call": "plant_hedge", "world": {"width": 4, "height": 3, "start": [0, 2, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,2": 1, "1,2": 1}, "end_at": [3, 2], "facing": "E"}}}
+    },
+    {
+      "id": "the_path",
+      "title": "Trees and hedges to the gate",
+      "ask": "Use both names to plant the whole path, tree and hedge in turn, and finish at the gate facing east.",
+      "nudge": "Which two calls make one repeat of the pattern?",
+      "check": {"program": {"goal": {"gems_exactly": {"0,1": 1, "0,2": 1, "2,2": 1, "3,2": 1, "5,1": 1, "5,2": 1, "7,2": 1, "8,2": 1, "10,1": 1, "10,2": 1, "12,2": 1, "13,2": 1}, "end_at": [15, 2], "facing": "E"}}}
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "level": "collect_row",
+  "quests": [
+    {
+      "id": "one_pile",
+      "title": "Empty a pile of any size",
+      "ask": "In a two-cell corridor with one pile, pick up every gem in the pile. Your code shouldn't care how many there are.",
+      "nudge": "How could the robot tell that the pile is empty?",
+      "check": {"program": {"world": {"width": 2, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 3}}, "goal": {"all_gems_collected": true}}}
+    },
+    {
+      "id": "piles_anywhere",
+      "title": "Piles anywhere along the way",
+      "ask": "Now a longer corridor with piles in different places. Check every cell the robot steps onto.",
+      "nudge": "Which line runs once for every cell? That's where to look for gems.",
+      "check": {"program": {"world": {"width": 5, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 1, "3,0": 2}}, "goal": {"all_gems_collected": true}}}
+    }
+  ]
+}

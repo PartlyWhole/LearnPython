@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FILES = ["app.html", "engine.py"]
-DIRS = ["src", "vendor", "levels", "lessons"]
+DIRS = ["src", "vendor", "levels", "lessons", "quests"]
 
 
 def build_id():

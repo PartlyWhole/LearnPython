@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "fence_posts",
+  "quests": [
+    {
+      "id": "one_post",
+      "title": "One post, standing on its own",
+      "ask": "Write `build_post()`: starting at the foot of a post facing east, stack the whole post, then end back at its foot, facing east again.",
+      "nudge": "After the post is built, which way is the robot looking? The next part expects east.",
+      "check": {"test": {"call": "build_post", "world": {"width": 2, "height": 4, "start": [0, 3, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,1": 1, "0,2": 1, "0,3": 1}, "end_at": [0, 3], "facing": "E"}}}
+    },
+    {
+      "id": "to_the_next_post",
+      "title": "Walk to the next post",
+      "ask": "Write `next_post()`: from the foot of one post, walk along the ground to the foot of the next one, leaving the gap between them empty.",
+      "nudge": "Count the cells on the picture: where does the next post stand?",
+      "check": {"test": {"call": "next_post", "world": {"width": 5, "height": 4, "start": [0, 3, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {}, "end_at": [3, 3], "facing": "E"}}}
+    },
+    {
+      "id": "whole_fence",
+      "title": "The whole fence",
+      "ask": "Now the plan: use your two names to build every post of the fence.",
+      "nudge": "Look at the Goal view. How many times does the plan need to run?",
+      "check": {"program": {"goal": {"gems_exactly": {"0,1": 1, "0,2": 1, "0,3": 1, "3,1": 1, "3,2": 1, "3,3": 1, "6,1": 1, "6,2": 1, "6,3": 1, "9,1": 1, "9,2": 1, "9,3": 1}}}}
+    }
+  ]
+}

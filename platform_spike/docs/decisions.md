@@ -245,3 +245,26 @@ wrong solutions renamed `long_*`.
 - **Step 0 says "Start", and hand steps are announced** to screen readers ("Step 3 of 8,
   line 4: move()").
 
+### D25. Sub-quests: a level broken into smaller problems, on request
+**Status:** accepted (Oct 2026; the project owner's request)
+**Decision:** Every code level has 2–5 sub-quests (`quests/<id>.json`), opened only from the
+puzzle icon by Run. Each is a smaller problem with its own world and goal (start → goal
+picture) and an automatic check:
+- `test`: one of the learner's functions run alone, its definitions only, in a tiny world
+- `program`: the whole program on a smaller world, or "did it get there" on the level's own
+- `code`: the code's shape, rarely
+
+A sub-quest ticks itself off when the code solves it. Try it replays just that part. The text
+never shows code beyond names; `tools/check_quests.py` enforces it, and checks that the reference
+solution completes every part. Design and authoring rules: `docs/quests.md`.
+**Why:**
+- Novices who can write each line still can't compose a plan (Soloway). Labelled subgoals help
+  them build and transfer it (Margulieux et al.).
+- Testing one piece alone is how programmers decompose.
+- Pull-only keeps it out of the way of learners who don't need it (expertise reversal).
+**Relation to the other help:**
+- The step-by-step guide (D20) walks a *guided* level's first try.
+- Hints (hint ladder) answer a failed practice run, ending in a code skeleton.
+- Sub-quests sit between: they never show code, are on every code level, and turn the problem
+  into parts the learner still has to solve.
+

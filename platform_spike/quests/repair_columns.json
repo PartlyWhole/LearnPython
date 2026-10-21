@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "repair_columns",
+  "quests": [
+    {
+      "id": "fill_gaps",
+      "title": "Fill one column's gaps",
+      "ask": "Fill in `repair_column()`: from the foot of a column facing east, make it solid up to its beam, one stone per cell, then end back at its foot facing east.",
+      "nudge": "Some cells already hold a stone. What should the robot find out before it puts one down?",
+      "check": {"test": {"call": "repair_column", "world": {"width": 3, "height": 6, "start": [1, 5, "E"], "bag": "infinite", "blocked": [[0, 0], [1, 0], [2, 0], [0, 1], [2, 1], [0, 2], [2, 2], [0, 3], [2, 3], [0, 4], [2, 4]], "gems": {"1,5": 1, "1,3": 1}}, "goal": {"end_at": [1, 5], "facing": "E", "gems_exactly": {"1,1": 1, "1,2": 1, "1,3": 1, "1,4": 1, "1,5": 1}}}}
+    },
+    {
+      "id": "any_height",
+      "title": "A column of any height",
+      "ask": "The same `repair_column()` should work on a much shorter column too, ending at its foot facing east.",
+      "nudge": "Does your code know how tall a column is, or does it find out?",
+      "check": {"test": {"call": "repair_column", "world": {"width": 3, "height": 3, "start": [1, 2, "E"], "bag": "infinite", "blocked": [[0, 0], [1, 0], [2, 0], [0, 1], [2, 1]], "gems": {"1,2": 1}}, "goal": {"end_at": [1, 2], "facing": "E", "gems_exactly": {"1,1": 1, "1,2": 1}}}}
+    },
+    {
+      "id": "whole_street",
+      "title": "Every column down the street",
+      "ask": "On a short street with a column at each end, repair both and finish at the east end facing east.",
+      "nudge": "Count the columns and the walks between them. Which one is there one more of?",
+      "check": {"program": {"world": {"width": 5, "height": 4, "start": [0, 3, "E"], "bag": "infinite", "blocked": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [1, 1], [2, 1], [3, 1], [4, 1], [1, 2], [2, 2], [3, 2]], "gems": {"0,2": 1, "4,3": 1}}, "goal": {"gems_exactly": {"0,1": 1, "0,2": 1, "0,3": 1, "4,2": 1, "4,3": 1}, "end_at": [4, 3], "facing": "E"}}}
+    }
+  ]
+}

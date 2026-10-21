@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "midpoint",
+  "quests": [
+    {
+      "id": "odd_corridor",
+      "title": "The middle of a short corridor",
+      "ask": "In a five-cell corridor there is exactly one middle cell. Put the gem there, using what `scan()` tells you rather than counting by eye.",
+      "nudge": "How many cells does `scan()` report here? How many of them lie between you and the middle?",
+      "check": {"program": {"world": {"width": 5, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"2,0": 1}}}}
+    },
+    {
+      "id": "even_corridor",
+      "title": "Two middles: pick the left",
+      "ask": "A six-cell corridor has two middle cells. Put the gem on the left one of the two.",
+      "nudge": "Does `scan()` count the cell you're standing on? Try both corridor lengths on paper.",
+      "check": {"program": {"world": {"width": 6, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"2,0": 1}}}}
+    },
+    {
+      "id": "one_cell",
+      "title": "A corridor of one cell",
+      "ask": "Here the wall is right in front of you. The middle is the cell you're on, so the gem goes there.",
+      "nudge": "What does `scan()` give back when there's nothing ahead?",
+      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"0,0": 1}}}}
+    }
+  ]
+}

@@ -35,7 +35,9 @@ export function goalWorld(world, goal) {
   const bagAtLeast = goal.bag_at_least ?? null;
 
   const parts = [];
-  if (goal.gems_exactly) {
+  if (goal.gems_exactly && !Object.keys(gems).length) {
+    parts.push("no gems left on the floor");
+  } else if (goal.gems_exactly) {
     const cells = Object.values(gems).filter((n) => n > 0);
     const total = cells.reduce((a, n) => a + n, 0);
     parts.push(cells.length === total

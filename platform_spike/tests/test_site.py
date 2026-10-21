@@ -20,7 +20,7 @@ class PublicSite(unittest.TestCase):
             files = {p.relative_to(out).as_posix() for p in out.rglob("*") if p.is_file()}
             for needed in ["index.html", "app.html", "engine.py", ".nojekyll", "src/app.js",
                            "src/runtime/worker.js", "vendor/codemirror.js", "vendor/collab.js", "src/collab/room.js",
-                           "src/runtime/sandbox.js", "lessons/index.json"]:
+                           "src/runtime/sandbox.js", "lessons/index.json", "quests/turn_right.json"]:
                 self.assertIn(needed, files)
             order = load()
             for level_id in order["levels"]:

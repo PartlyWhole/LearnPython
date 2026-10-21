@@ -11,7 +11,7 @@ importScripts(`${PYODIDE_INDEX}pyodide.js`); // defines self.loadPyodide
 
 // Must equal MSG in protocol.js (tests/js/sandbox.test.mjs checks).
 const MSG = Object.freeze({
-  RUN: "run", CHECK: "check", GUIDE: "guide", READY: "ready", RESULT: "result", FAILED: "failed",
+  RUN: "run", CHECK: "check", GUIDE: "guide", QUESTS: "quests", READY: "ready", RESULT: "result", FAILED: "failed",
   LOAD_FAILED: "load_failed",
 });
 const SANDBOXED = self.name === "sandbox";
@@ -35,6 +35,7 @@ const ready = (async () => {
   const run = pyodide.globals.get("engine").run_program;
   const check = pyodide.globals.get("engine").check_level;
   const guide = pyodide.globals.get("engine").guide_state;
+  const quests = pyodide.globals.get("engine").quest_state;
   const dumps = pyodide.globals.get("json").dumps;
   const toPy = (obj) => pyodide.toPy(obj);
   self.postMessage({
@@ -42,7 +43,7 @@ const ready = (async () => {
     loadMs: Math.round(performance.now() - t0),
     python: pyodide.runPython("import platform; platform.python_version()"),
   });
-  return { run, check, guide, dumps, toPy };
+  return { run, check, guide, quests, dumps, toPy };
 })().catch((err) => {
   self.postMessage({ type: MSG.LOAD_FAILED, message: String(err) });
   throw err;
@@ -63,6 +64,8 @@ self.onmessage = async (event) => {
       pyResult = api.run(msg.code, api.toPy(msg.world), msg.seed ?? 0);
     } else if (msg.type === MSG.CHECK) {
       pyResult = api.check(msg.code, api.toPy(msg.level), msg.seed ?? 0);
+    } else if (msg.type === MSG.QUESTS) {
+      pyResult = api.quests(msg.code, api.toPy(msg.level), api.toPy(msg.quests));
     } else if (msg.type === MSG.GUIDE) {
       pyResult = api.guide(msg.code, api.toPy(msg.steps), msg.run ? api.toPy(msg.run) : null);
     } else {

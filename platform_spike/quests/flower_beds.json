@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "level": "flower_beds",
+  "quests": [
+    {
+      "id": "one_bed",
+      "title": "One bed, ready for the next",
+      "ask": "Write `plant_bed()`: from the bed's west corner facing east, plant the bed, then end on the path where the next bed starts, facing east.",
+      "nudge": "Where it ends is where the next call starts. Which way does the robot face after the last flower?",
+      "check": {"test": {"call": "plant_bed", "world": {"width": 6, "height": 3, "start": [0, 2, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,2": 1, "1,1": 1, "2,2": 1}, "end_at": [5, 2], "facing": "E"}}}
+    },
+    {
+      "id": "two_beds",
+      "title": "Two beds in a row",
+      "ask": "Plant the first two beds along the path, so the second one comes out the same shape as the first.",
+      "nudge": "If the second bed goes wrong, look at where the first call leaves the robot.",
+      "check": {"program": {"reach": {"put_at": [7, 2]}}}
+    },
+    {
+      "id": "to_the_gate",
+      "title": "All three beds, then the gate",
+      "ask": "Plant every bed and finish at the gate on the far east end, facing east.",
+      "check": {"program": {"goal": {"gems_exactly": {"0,2": 1, "1,1": 1, "2,2": 1, "5,2": 1, "6,1": 1, "7,2": 1, "10,2": 1, "11,1": 1, "12,2": 1}, "end_at": [15, 2], "facing": "E"}}}
+    }
+  ]
+}

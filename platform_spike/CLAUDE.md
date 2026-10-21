@@ -20,6 +20,7 @@ way. Decisions are cited below as D1 to D11.
 | `tools/build_site.py`, `../.github/workflows/pages.yml` | The public site (GitHub Pages, repo "LearnPython"): only `app.html` (also as `index.html`), `src/`, `vendor/`, `levels/`, `lessons/` and `engine.py`, never `tests/solutions/`. The workflow runs the tests, then deploys on every push to `main`. `tests/test_site.py` checks the contents |
 | `tools/play_order.py` | Expands `lessons/index.json` into the level list (Python). `src/lessons/order.js` does the same for the app. `python3 tools/play_order.py` prints it |
 | `src/lessons/` | `order.js` (play order), `demo.js` / `guide.js` / `drive.js` / `hints.js` (demo, guide, drive-mode and hint-ladder logic, pure), `demo-ui.js` / `guide-ui.js` / `drive-ui.js` / `hint-ui.js` (their parts of the page) |
+| `quests/`, `src/lessons/quests*.js`, `tools/check_quests.py` | Sub-quests (D25, `docs/quests.md`): per code level, 2–5 smaller problems with their own worlds and automatic checks (`engine.quest_state`), opened from the puzzle icon. `python3 tools/check_quests.py <id>` checks one (no answer leaks; the reference completes every part) |
 | `src/ui/icons.js` | The icon set, `applyIcons()` for `<button data-icon>`, progress dots |
 | `tests/solutions/` | Per level: a reference `<id>.py` (within any line limit), at least one `<id>.wrong_*.py` (must fail) and, for long-but-working attempts, `<id>.long_*.py` (must pass, without the line bonus). Kept under tests/ so the app never serves them |
 | `tools/level_goals.py` | Fills per-world goals (`gems_exactly`, `end_at`, `facing`) from the reference solution |
@@ -112,6 +113,7 @@ a button, ask whether the world, an icon or the layout already says it.
   - fill per-world goals with `tools/level_goals.py`
   - run the tests, then play the level and watch the replay
   - use `constraints` as teaching levers: `required` (e.g. `def`, or `compare` / `return` so a comparison or a returning helper can't be dodged), `banned`, and `hidden_commands`. `max_lines` is a **bonus**, never a gate (D24): add a `<id>.long_*.py` that passes without it (e.g. hide `scan` so the robot "can't count")
+- **Sub-quests for a level:** follow `docs/quests.md` §4, then `python3 tools/check_quests.py <id>`. Every new code level needs a `quests/<id>.json`.
 - **A lesson:** follow the `design-lesson` skill; its levels come from `author-level`. **Guidance UI** (guide, demo player, drive mode, hints, goal view): the `build-guidance` skill and `docs/lessons.md`.
 - **A goal type or constraint:** update `_goal_failures` / `BANNABLE`, the level schema, and `BAD_LEVEL_EDITS`.
 

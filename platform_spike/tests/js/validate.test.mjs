@@ -42,3 +42,14 @@ test("the controller turns a refused result into a failed run", async () => {
   assert.equal(out.untrusted, true);
   await flush();
 });
+
+test("sub-quest states: done flags, short reasons, replayable runs; forged ones refused", async () => {
+  const { isQuestState, validPayload } = await import("../../src/runtime/validate.js");
+  const run = { trace: [{ line: 2, action: "turn_left", x: 1, y: 1, dir: "N", bag: 0 }], final: { x: 1, y: 1, dir: "N", gems: {} }, error: null, output: "" };
+  const ok = { quests: [{ done: true, why: null, result: run }, { done: false, why: "There's no f() to test yet.", result: null }] };
+  assert.equal(validPayload({ type: "quests" }, ok), true);
+  for (const bad of [{}, { quests: "x" }, { quests: [{ done: "yes" }] }, { quests: Array(6).fill({ done: true }) },
+    { quests: [{ done: true, why: "x".repeat(5000) }] }, { quests: [{ done: true, result: { trace: "no" } }] }]) {
+    assert.equal(isQuestState(bad), false, JSON.stringify(bad).slice(0, 60));
+  }
+});

@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "level": "fetch_gem",
+  "quests": [
+    {
+      "id": "out_to_the_gem",
+      "title": "Out through the door",
+      "ask": "Fill in `go_to_gem()`: from the start, it should take the robot through the gap in the wall and leave it standing on the gem.",
+      "nudge": "Trace the path with your finger first. Where does the robot have to change direction?",
+      "check": {"test": {"call": "go_to_gem", "world": {"width": 6, "height": 5, "start": [1, 1, "E"], "blocked": [[3, 0], [3, 1], [3, 3], [3, 4]], "gems": {"4,2": 1}}, "goal": {"end_at": [4, 2]}}}
+    },
+    {
+      "id": "back_home",
+      "title": "Back home, facing east",
+      "ask": "Fill in `come_home()`: from the gem's cell, facing east, it should bring the robot back to its starting cell, facing east again.",
+      "nudge": "Getting there is not the end. Which way is the robot facing when it arrives?",
+      "check": {"test": {"call": "come_home", "world": {"width": 6, "height": 5, "start": [4, 2, "E"], "blocked": [[3, 0], [3, 1], [3, 3], [3, 4]]}, "goal": {"end_at": [1, 1], "facing": "E"}}}
+    }
+  ]
+}

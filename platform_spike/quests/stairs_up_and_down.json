@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "level": "stairs_up_and_down",
+  "quests": [
+    {
+      "id": "climb_one",
+      "title": "Climb one step",
+      "ask": "Write `step_up()`: facing a step, the robot ends on top of it, facing east.",
+      "nudge": "Walk it with your finger: up first, or along first?",
+      "check": {"test": {"call": "step_up", "world": {"width": 3, "height": 3, "start": [0, 2, "E"], "blocked": [[1, 2], [2, 1], [2, 2]]}, "goal": {"end_at": [1, 1], "facing": "E"}}}
+    },
+    {
+      "id": "down_one",
+      "title": "Down one step",
+      "ask": "Write `step_down()`: standing over the edge of a step, the robot ends on the step below, facing east.",
+      "nudge": "Where is the robot when it needs this, and where does the next step begin?",
+      "check": {"test": {"call": "step_down", "world": {"width": 3, "height": 3, "start": [1, 0, "E"], "blocked": [[0, 1], [0, 2], [1, 2], [2, 2]]}, "goal": {"end_at": [1, 1], "facing": "E"}}}
+    },
+    {
+      "id": "short_stairs",
+      "title": "Stairs of another height",
+      "ask": "A shorter staircase, with no walk to the foot. Climb it, go down the other side to the far wall, and pick every gem.",
+      "nudge": "How can the robot tell it has reached the top?",
+      "check": {"program": {"world": {"width": 4, "height": 3, "start": [0, 2, "E"], "blocked": [[1, 2], [2, 1], [2, 2], [3, 2]], "gems": {"1,1": 1, "2,0": 1, "3,1": 1}}, "goal": {"all_gems_collected": true}}}
+    },
+    {
+      "id": "wide_top",
+      "title": "Across a wide top",
+      "ask": "This staircase has a flat top two cells wide. Cross it and come down to the far wall, picking every gem.",
+      "nudge": "Not every step forward on the way down is a step down. How can the robot tell?",
+      "check": {"program": {"world": {"width": 6, "height": 3, "start": [0, 2, "E"], "blocked": [[2, 2], [3, 1], [3, 2], [4, 1], [4, 2], [5, 2]], "gems": {"2,1": 1, "3,0": 1, "4,0": 1, "5,1": 1}}, "goal": {"all_gems_collected": true}}}
+    }
+  ]
+}

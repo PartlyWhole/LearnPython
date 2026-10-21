@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "square_walk",
+  "quests": [
+    {
+      "id": "first_side",
+      "title": "One side of the field",
+      "ask": "Plant a gem on the starting corner, then walk along the bottom edge to the next corner.",
+      "nudge": "This is one round of your loop. What has to happen at the corner before the next side?",
+      "check": {"program": {"reach": {"put_at": [0, 4], "visit": [4, 4]}}}
+    },
+    {
+      "id": "turn_the_corner",
+      "title": "Round the corner and on",
+      "ask": "Keep going so the robot also goes up the right-hand side and plants a gem on the top-right corner.",
+      "nudge": "When does the turn happen: once at the very end, or at every corner?",
+      "check": {"program": {"reach": {"put_at": [4, 0]}}}
+    },
+    {
+      "id": "home_facing_east",
+      "title": "All the way home",
+      "ask": "Plant all four corners and finish back on the starting corner, facing east.",
+      "nudge": "Count the corners in the picture. How many rounds does that make?",
+      "check": {"program": {"goal": {"gems_exactly": {"0,4": 1, "4,4": 1, "4,0": 1, "0,0": 1}, "end_at": [0, 4], "facing": "E"}}}
+    }
+  ]
+}

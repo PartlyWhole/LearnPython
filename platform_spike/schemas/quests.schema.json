@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quests.schema.json",
+  "title": "Sub-quests for one level (quests/<level id>.json)",
+  "description": "A level broken into smaller problems the learner can solve and check one at a time (docs/quests.md). engine.validate_quests mirrors this; tools/check_quests.py checks what a schema can't.",
+  "type": "object",
+  "required": ["format", "level", "quests"],
+  "additionalProperties": false,
+  "properties": {
+    "format": {"const": 1},
+    "level": {"type": "string", "description": "The level id; the file is quests/<level>.json"},
+    "quests": {
+      "type": "array", "minItems": 2, "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "ask", "check"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "title": {"type": "string", "description": "The subgoal's name, 6 words or fewer: what this part achieves"},
+          "ask": {"type": "string", "description": "The sub-problem: what should happen, never which commands. 30 words or fewer. Inline code only for names (`turn_right()`)"},
+          "nudge": {"type": "string", "description": "Optional, behind a bulb: a way to think about it, still no code. 20 words or fewer"},
+          "check": {
+            "type": "object", "minProperties": 1, "maxProperties": 1,
+            "properties": {
+              "test": {
+                "type": "object", "required": ["call", "world"], "additionalProperties": false,
+                "description": "One of the learner's functions, run on its own (definitions only) in a small world",
+                "properties": {
+                  "call": {"type": "string"},
+                  "args": {"type": "array"},
+                  "world": {"type": "object", "description": "A world, as in a level file (engine.validate_world checks it)"},
+                  "goal": {"type": "object"},
+                  "returns": {}
+                }
+              },
+              "program": {
+                "type": "object", "additionalProperties": false,
+                "description": "The whole program, on a smaller world or the level's own",
+                "properties": {
+                  "world": {"type": "object", "description": "A world, as in a level file (engine.validate_world checks it)"},
+                  "goal": {"type": "object"},
+                  "reach": {
+                    "type": "object", "additionalProperties": false,
+                    "properties": {
+                      "visit": {"type": "array"}, "pick_at": {"type": "array"}, "put_at": {"type": "array"},
+                      "n": {"type": "integer", "minimum": 1}
+                    }
+                  }
+                }
+              },
+              "code": {"type": "array", "minItems": 1, "description": "check_code checks on the code's shape (use sparingly)"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

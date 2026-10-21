@@ -58,3 +58,9 @@ test("no_error only, and the world spec is not mutated", () => {
   goalWorld(WORLD, { gems_exactly: { "0,0": 1 } });
   assert.equal(JSON.stringify(WORLD), before);
 });
+
+test("an empty gems_exactly reads as no gems left, not '0 marked cells'", async () => {
+  const { goalWorld } = await import("../../src/render/goal.js");
+  const v = goalWorld({ width: 2, height: 1, start: [0, 0, "E"], gems: { "1,0": 1 } }, { gems_exactly: {} });
+  assert.equal(v.summary, "Goal: no gems left on the floor.");
+});

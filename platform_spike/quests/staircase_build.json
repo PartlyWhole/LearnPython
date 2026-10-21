@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "staircase_build",
+  "quests": [
+    {
+      "id": "top_step",
+      "title": "The top step",
+      "ask": "Build the first row of the staircase: its single gem, in the top-left corner.",
+      "nudge": "The first time round the outer loop, how many gems should the inner loop put?",
+      "check": {"program": {"reach": {"put_at": [0, 0]}}}
+    },
+    {
+      "id": "second_step",
+      "title": "Home, then the second step",
+      "ask": "Get back to the left side, one row down, and build the second row so it is one gem longer than the first.",
+      "nudge": "After a row, how far is it back to the left edge? Does that change from row to row?",
+      "check": {"program": {"reach": {"put_at": [1, 1]}}}
+    },
+    {
+      "id": "every_step",
+      "title": "Every step one longer",
+      "ask": "Build the whole staircase, each row one gem longer than the row above.",
+      "nudge": "Which number already changes every time round the outer loop?",
+      "check": {"program": {"goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "0,2": 1, "0,3": 1, "1,1": 1, "1,2": 1, "1,3": 1, "2,2": 1, "2,3": 1, "3,3": 1}}}}
+    }
+  ]
+}

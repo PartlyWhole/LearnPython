@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "level": "around_the_block",
+  "quests": [
+    {
+      "id": "one_corner",
+      "title": "One corner, on its own",
+      "ask": "Write `go_around_corner()`: from the middle of a side, walk to the corner, pick its gem, and end one step along the next side, facing along it.",
+      "nudge": "Where it ends is where the next call starts. Picture both calls before you write it.",
+      "check": {"test": {"call": "go_around_corner", "world": {"width": 4, "height": 4, "start": [1, 0, "E"], "blocked": [[1, 1], [2, 1], [1, 2], [2, 2]], "gems": {"3,0": 1}}, "goal": {"end_at": [3, 1], "facing": "S", "gems_exactly": {}}}}
+    },
+    {
+      "id": "corners_chain",
+      "title": "Two corners in a row",
+      "ask": "Call it twice. The second call should pick up where the first one stopped and clear the next corner too.",
+      "nudge": "If the second corner goes wrong, look at where the first call leaves the robot.",
+      "check": {"program": {"reach": {"pick_at": [3, 3]}}}
+    },
+    {
+      "id": "home",
+      "title": "All the way home",
+      "ask": "Go round the whole block and finish where you started, facing east.",
+      "check": {"program": {"goal": {"all_gems_collected": true, "end_at": [1, 0], "facing": "E"}}}
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "level": "turn_right",
+  "quests": [
+    {
+      "id": "teach_the_turn",
+      "title": "Teach a right turn",
+      "ask": "Fill in `turn_right()` so that, called on its own, the robot stays on its cell and ends up facing to its right.",
+      "nudge": "Stand up and try it: how many quarter turns to the left leave you facing right?",
+      "check": {"test": {"call": "turn_right", "world": {"width": 3, "height": 3, "start": [1, 1, "E"]}, "goal": {"end_at": [1, 1], "facing": "S"}}}
+    },
+    {
+      "id": "round_the_first_corner",
+      "title": "Round the first corner",
+      "ask": "Use your new turn to get the robot down the passage to the marked cell.",
+      "nudge": "Walk it with your finger first: where does the robot face when it reaches the wall?",
+      "check": {"program": {"reach": {"visit": [2, 2]}}}
+    },
+    {
+      "id": "reach_the_gem",
+      "title": "Bring back the gem",
+      "ask": "Carry on from the marked cell to the gem and pick it up.",
+      "check": {"program": {"reach": {"pick_at": [0, 2]}}}
+    }
+  ]
+}

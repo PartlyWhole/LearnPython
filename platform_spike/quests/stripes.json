@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "stripes",
+  "quests": [
+    {
+      "id": "one_stripe",
+      "title": "Paint one stripe",
+      "ask": "Write `fill_row()`: paint the top stripe, a gem on each of its cells, ending just past its east end, still facing east.",
+      "nudge": "Which two things happen on every cell? Those belong inside the loop.",
+      "check": {"test": {"call": "fill_row", "world": {"width": 6, "height": 2, "start": [0, 0, "E"], "bag": 5}, "goal": {"gems_exactly": {"0,0": 1, "1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1}, "end_at": [5, 0], "facing": "E"}}}
+    },
+    {
+      "id": "skip_a_row",
+      "title": "Over the gap to the next",
+      "ask": "Write `next_stripe()`: from just past the end of a stripe, get to the west end of the next stripe, facing east, leaving the row between empty.",
+      "nudge": "Where does `fill_row()` begin? That's exactly where `next_stripe()` has to leave the robot.",
+      "check": {"test": {"call": "next_stripe", "world": {"width": 6, "height": 3, "start": [5, 0, "E"]}, "goal": {"gems_exactly": {}, "end_at": [0, 2], "facing": "E"}}}
+    },
+    {
+      "id": "all_stripes",
+      "title": "All three stripes",
+      "ask": "Repeat the pair of calls to paint every stripe, with an empty row after each one.",
+      "nudge": "Look at the Goal view. How many times does the pair need to run?",
+      "check": {"program": {"goal": {"gems_exactly": {"0,0": 1, "0,2": 1, "0,4": 1, "1,0": 1, "1,2": 1, "1,4": 1, "2,0": 1, "2,2": 1, "2,4": 1, "3,0": 1, "3,2": 1, "3,4": 1, "4,0": 1, "4,2": 1, "4,4": 1}}}}
+    }
+  ]
+}

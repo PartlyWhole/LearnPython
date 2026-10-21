@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "level": "piles",
+  "quests": [
+    {
+      "id": "big_pile",
+      "title": "Empty a pile of any size",
+      "ask": "In a two-cell corridor, the far cell holds a pile. Pick up every gem in it and finish on that cell.",
+      "nudge": "How could the robot tell that the pile is empty?",
+      "check": {"program": {"world": {"width": 2, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 3}}, "goal": {"all_gems_collected": true, "end_at": [1, 0]}}}
+    },
+    {
+      "id": "pile_at_start",
+      "title": "A pile where you start",
+      "ask": "This time the robot starts on a pile. Collect it and the pile further along, and finish at the far end.",
+      "nudge": "Does your program look for gems before the robot's first step?",
+      "check": {"program": {"world": {"width": 4, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 2, "2,0": 3}}, "goal": {"all_gems_collected": true, "end_at": [3, 0]}}}
+    },
+    {
+      "id": "one_cell",
+      "title": "A corridor of one cell",
+      "ask": "A corridor with only one cell, holding a pile. There is nowhere to walk, but the pile still has to go.",
+      "nudge": "Which parts of your program run when the robot can't take a single step?",
+      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 3}}, "goal": {"all_gems_collected": true, "end_at": [0, 0]}}}
+    }
+  ]
+}

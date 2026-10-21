@@ -309,6 +309,11 @@ def run_program(code, spec, seed=0, hidden_commands=()):
     reused (warm) interpreter cannot leak state between runs (docs/decisions.md D4).
     Returns a dict matching schemas/run_result.schema.json.
     """
+    return _execute(code, spec, seed, hidden_commands)[0]
+
+
+def _execute(code, spec, seed=0, hidden_commands=()):
+    """run_program, also returning the namespace the code ran in (quest tests read a return value)."""
     world = World(spec, seed, hidden_commands)
     namespace = {"__name__": "__main__", **world.api()}
     error = None
@@ -333,7 +338,7 @@ def run_program(code, spec, seed=0, hidden_commands=()):
     gems = world.gem_map()
     return {"format": FORMAT_VERSION, "trace": world.trace, "error": error, "output": printed.getvalue(),
             "final": {"x": world.x, "y": world.y, "dir": world.dir, "bag": world.bag,
-                      "gems_left": sum(gems.values()), "gems": gems}}
+                      "gems_left": sum(gems.values()), "gems": gems}}, namespace
 
 
 def _describe_layout_difference(actual, expected):
@@ -554,6 +559,156 @@ def check_level(code, level, seed=0):
     return {"passed": all(r["passed"] for r in reports) and not constraint_failures,
             "worlds": reports, "constraint_failures": constraint_failures,
             "lines": line_goal(code, level.get("constraints", {}))}
+
+
+# ---------------------------------------------------------------------------
+# Sub-quests (quests/<id>.json, docs/quests.md): a level broken into smaller problems, each
+# checked on its own. Three kinds of check:
+#   test     one of the learner's functions on its own: only their definitions run (every other
+#            top-level line is blanked, so line numbers stay true), then one call, in a small world
+#   program  the whole program, on a smaller world (a short version of the problem) or the
+#            level's own; judged by a goal and/or `reach` (it got somewhere / picked or put there)
+#   code     the shape of the code (check_code checks): use sparingly
+# Messages say what happened, never how to fix it.
+# ---------------------------------------------------------------------------
+
+QUEST_KEEP = (ast.FunctionDef, ast.Import, ast.ImportFrom)
+QUEST_CALL_NAME = "__quest_result__"
+
+
+def definitions_only(code):
+    """The code with every top-level statement except definitions (and constant assignments,
+    docstrings, imports) replaced by blank lines, so a function can be tested on its own with
+    its real line numbers. None if the code doesn't parse."""
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return None
+    lines = code.split("\n")
+    for node in tree.body:
+        keep = isinstance(node, QUEST_KEEP) or (
+            isinstance(node, (ast.Assign, ast.AnnAssign, ast.Expr)) and isinstance(node.value, ast.Constant))
+        if not keep:
+            for i in range(node.lineno - 1, node.end_lineno):
+                lines[i] = ""
+    return "\n".join(lines)
+
+
+def _defined(code, name):
+    try:
+        return any(isinstance(n, ast.FunctionDef) and n.name == name for n in ast.parse(code).body)
+    except SyntaxError:
+        return False
+
+
+def _reach_failures(result, reach, start):
+    out = []
+    states = [tuple(start[:2])] + [(e["x"], e["y"]) for e in result["trace"]]
+    if "visit" in reach and tuple(reach["visit"]) not in states:
+        out.append("The robot never gets to the marked cell.")
+    for key, action, words in (("pick_at", "pick", "picks up"), ("put_at", "put", "puts down")):
+        if key in reach:
+            cell, n = reach[key], reach.get("n", 1)
+            got = sum(1 for e in result["trace"] if e["action"] == action and [e["x"], e["y"]] == list(cell))
+            if got < n:
+                out.append(f"The robot {words} {got} gem(s) on the marked cell, not {n}." if got
+                           else f"The robot never {words} a gem on the marked cell.")
+    return out
+
+
+def _quest_one(code, level, quest, hidden):
+    check = quest["check"]
+    if "code" in check:
+        ok = all(check_code(code, check["code"]))
+        return {"done": ok, "why": None if ok else "Not in the code yet.", "result": None}
+    if "test" in check:
+        t = check["test"]
+        name = t["call"]
+        if not _defined(code, name):
+            return {"done": False, "why": f"There's no {name}() to test yet.", "result": None, "missing": True}
+        defs = definitions_only(code)
+        args = ", ".join(repr(a) for a in t.get("args", []))
+        # The call goes on the line after the learner's last line, so it never lands on (and is
+        # never drawn on) a line of theirs.
+        source = defs + f"\n{QUEST_CALL_NAME} = {name}({args})\n"
+        result, namespace = _execute(source, t["world"], 0, hidden)
+        failures = _goal_failures(result, t.get("goal", {}))
+        if not failures and "returns" in t:
+            got = namespace.get(QUEST_CALL_NAME)
+            if got != t["returns"]:
+                failures.append(f"{name}() gave back {got!r}, not {t['returns']!r}.")
+        return {"done": not failures, "why": failures[0] if failures else None, "result": result}
+    p = check["program"]
+    world = p.get("world", level["world"])
+    result = run_program(code, world, 0, hidden)
+    reach = p.get("reach", {})
+    if reach and not p.get("goal"):
+        # "Did it get there?" is about the way, not the end: a part reached before a later crash
+        # is done. Not reached, a crash is the reason given (it explains what came after, D14).
+        failures = _reach_failures(result, reach, world["start"])
+        if failures and result["error"]:
+            failures = _goal_failures(result, {})
+    else:
+        failures = _goal_failures(result, p.get("goal", {}))
+        if not result["error"]:  # a crash explains everything after it (D14)
+            failures += _reach_failures(result, reach, world["start"])
+    return {"done": not failures, "why": failures[0] if failures else None,
+            "result": result if "world" in p else None}  # the level's own world: the page has its run
+
+
+def quest_state(code, level, quests):
+    """One {done, why, result} per sub-quest. `result` is the run behind it (a test or a smaller
+    world) for the page to replay ("Try it"), or None."""
+    hidden = level.get("constraints", {}).get("hidden_commands", [])
+    return {"quests": [_quest_one(code, level, q, hidden) for q in quests]}
+
+
+def validate_quests(doc, level):
+    """Check a quests file's shape against its level (mirrors schemas/quests.schema.json)."""
+    if not isinstance(doc, dict) or doc.get("format") != 1 or doc.get("level") != level["id"]:
+        raise LevelError(f"quests: expected format 1 for level {level['id']!r}")
+    quests = doc.get("quests")
+    if not isinstance(quests, list) or not 2 <= len(quests) <= 5:
+        raise LevelError("quests: 2 to 5 sub-quests")
+    ids = set()
+    for i, q in enumerate(quests):
+        path = f"quests[{i}]"
+        for key in ("id", "title", "ask", "check"):
+            if key not in q:
+                raise LevelError(f"{path}: missing '{key}'")
+        if set(q) - {"id", "title", "ask", "nudge", "check"}:
+            raise LevelError(f"{path}: unknown keys {sorted(set(q) - {'id', 'title', 'ask', 'nudge', 'check'})}")
+        if q["id"] in ids:
+            raise LevelError(f"{path}.id: {q['id']!r} is used twice")
+        ids.add(q["id"])
+        check = q["check"]
+        if not isinstance(check, dict) or len(check) != 1 or not set(check) <= {"test", "program", "code"}:
+            raise LevelError(f"{path}.check: exactly one of test, program, code")
+        if "test" in check:
+            t = check["test"]
+            if not isinstance(t.get("call"), str) or not t["call"].isidentifier():
+                raise LevelError(f"{path}.check.test.call: a function name")
+            validate_world(t.get("world"), f"{path}.check.test.world")
+            w = t["world"]
+            if "goal" in t:
+                validate_goal(t["goal"], f"{path}.check.test.goal", w["width"], w["height"], partial=True)
+            if "goal" not in t and "returns" not in t:
+                raise LevelError(f"{path}.check.test: needs a goal or returns")
+        elif "program" in check:
+            p = check["program"]
+            w = p.get("world", level["world"])
+            if "world" in p:
+                validate_world(p["world"], f"{path}.check.program.world")
+            if "goal" in p:
+                validate_goal(p["goal"], f"{path}.check.program.goal", w["width"], w["height"], partial=True)
+            reach = p.get("reach", {})
+            for key in ("visit", "pick_at", "put_at"):
+                if key in reach:
+                    _cell(reach[key], f"{path}.check.program.reach.{key}", w["width"], w["height"])
+            if not p.get("goal") and not reach:
+                raise LevelError(f"{path}.check.program: needs a goal or reach")
+        elif not isinstance(check["code"], list) or not check["code"]:
+            raise LevelError(f"{path}.check.code: a list of checks")
 
 
 def trace_digest(result):

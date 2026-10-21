@@ -15,6 +15,7 @@ import { DemoPlayer } from "./lessons/demo-ui.js";
 import { GuideUI } from "./lessons/guide-ui.js";
 import { DriveUI } from "./lessons/drive-ui.js";
 import { HintUI } from "./lessons/hint-ui.js";
+import { QuestsUI } from "./lessons/quests-ui.js";
 import { lessonForPractice } from "./lessons/hints.js";
 import { playOrder, lessonIds } from "./lessons/order.js";
 import { EventLog } from "./progress/events.js";
@@ -105,8 +106,8 @@ const renderer = new GridRenderer($("world"));
 const goalRenderer = new GridRenderer($("goal"));
 
 /** The Goal view: what the main world should look like at the end (hidden worlds stay hidden). */
-function showGoal(world = level.world) {
-  const view = goalWorld(world, goalFor(level, world));
+function showGoal(world = level.world, goal = goalFor(level, world)) {
+  const view = goalWorld(world, goal);
   goalRenderer.setGoal(view);
   $("goal-summary").textContent = view.summary;
 }
@@ -147,15 +148,23 @@ const replayLive = () => player.frames.length > 1 && replayCode !== null && repl
 
 /** Put a run on screen to replay: its world (the level's, or a hidden one), its goal, and its
  *  frames, with the failed step at the end if it stopped on an error. */
-function loadReplay(world, result, name = "main") {
+function loadReplay(world, result, name = "main", { goal = goalFor(level, world), kind = "hidden" } = {}) {
   replayWorld = name;
   shownWorld = world;
   renderer.setWorld(world);
-  renderer.markTarget(goalFor(level, world).end_at ?? null);
-  showGoal(world);
+  renderer.markTarget(goal.end_at ?? null);
+  showGoal(world, goal);
+  // Not the level's own world: a tag says whose (a hidden world, or a sub-quest's).
   const tag = $("world-tag");
   tag.hidden = name === "main";
-  $("world-tag-name").textContent = name;
+  tag.innerHTML = icon(kind === "quest" ? "puzzle" : "eye_off");
+  const sr = document.createElement("span");
+  sr.className = "sr-only";
+  sr.textContent = kind === "quest" ? "Trying sub-quest: " : "Replaying hidden world ";
+  const words = document.createElement("span");
+  words.textContent = name;
+  tag.append(sr, words);
+  tag.classList.toggle("quest", kind === "quest");
   replayOutput = result.output ?? "";
   player.load(buildFrames(world, result.trace, result.error));
 }
@@ -354,6 +363,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
   busy = true;
   syncButtons();
   await guide.idle(); // a guide check may be using the worker; it takes milliseconds
+  await quests.idle();
   lastReport = null;
   player.pause();
   showLevelWorld();
@@ -382,6 +392,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
     pendingHintRun = lastReport.passed;
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
     replayCode = code;
+    if (!shared) quests.check(); // the sub-quests panel, if open, ticks off what this code solves
     resultsPanel.hidden = true; // the results come with the end of the replay (showOutcome)
     loadReplay(level.world, main);
     if (player.frames.length < 2) showOutcome(); // nothing happened: straight to the outcome
@@ -429,6 +440,7 @@ const demo = new DemoPlayer({
     goalFigure.hidden = true;
     $("watch-demo").hidden = true;
     $("share").hidden = true;
+    quests.setAvailable(false);
     resultsPanel.hidden = true;
     ui.outputWrap.hidden = true;
     shownWorld = null;
@@ -440,6 +452,7 @@ const demo = new DemoPlayer({
     goalFigure.hidden = false;
     $("watch-demo").hidden = !lesson;
     $("share").hidden = Boolean(room);
+    quests.setAvailable(true);
     editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
     showLevelWorld();
     ui.results.replaceChildren();
@@ -496,6 +509,22 @@ $("setting-unlock").onchange = (e) => {
 };
 $("close-settings").onclick = () => $("settings-dialog").close();
 $("settings-dialog").addEventListener("click", (e) => { if (e.target === $("settings-dialog")) $("settings-dialog").close(); });
+// ---------------------------------------------------------------- sub-quests (docs/quests.md)
+const quests = new QuestsUI({
+  controller, editor, ...timers,
+  onEvent: (type, data) => events.record(type, data),
+  onTry: (world, result, quest, goal) => {
+    player.pause();
+    replayCode = editor.getCode();
+    loadReplay(world, result, quest.title, { goal: goal ?? {}, kind: "quest" });
+    player.play();
+  },
+  el: {
+    button: $("quests-open"), panel: $("quests"), list: $("quests-list"), dots: $("quests-dots"),
+    close: $("quests-close"), sr: $("quests-sr"),
+  },
+});
+
 // ---------------------------------------------------------------- drive mode (levels with "drive")
 const drive = new DriveUI({
   controller, renderer, player, ...timers,
@@ -906,6 +935,8 @@ async function init() {
   showLevelWorld();
   showGoal();
   syncButtons();
+  // Sub-quests are optional files: a level without one simply has no puzzle icon.
+  quests.attach(level, level.drive ? null : await fetchJson(`quests/${level.id}.json`).catch(() => null));
   if (level.drive) { // played with buttons: no editor, demo or guide
     document.body.classList.add("drive-mode");
     drive.start(level);

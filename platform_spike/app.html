@@ -118,6 +118,15 @@
         <button id="guide-offer-keep" class="quiet">Keep</button>
       </div>
     </section>
+    <section id="quests" class="strip quests" hidden aria-labelledby="quests-title">
+      <div class="strip-head">
+        <span id="quests-title" class="strip-title">Sub-quests</span>
+        <span id="quests-dots" class="dots" role="img"></span>
+        <button id="quests-close" class="icon-button" data-icon="close" aria-label="Close sub-quests" title="Close"></button>
+      </div>
+      <ol id="quests-list" class="quest-list"></ol>
+      <p id="quests-sr" class="sr-only" aria-live="polite"></p>
+    </section>
     <div class="editor-box">
       <div class="editor" id="editor" aria-label="Your program"></div>
       <button class="icon-button fullscreen-button" data-fullscreen=".editor-panel" aria-label="Full screen" title="Full screen"></button>
@@ -130,6 +139,7 @@
       <span id="line-count" class="line-count" hidden></span>
       <span id="run-note" class="note"></span>
       <button id="guide-chip" class="icon-button chip" data-icon="steps" aria-label="Show steps" title="Show steps" hidden></button>
+      <button id="quests-open" class="icon-button quests-button" data-icon="puzzle" aria-label="Sub-quests: break the challenge into parts" title="Break it into sub-quests" aria-expanded="false" aria-controls="quests" hidden></button>
       <button id="open-help" class="icon-button" data-icon="help" aria-label="Commands and keys" title="Commands and keys" aria-expanded="false" aria-controls="help-pop"></button>
     </div>
     <div id="help-pop" class="help-pop" role="dialog" aria-label="Commands and keys" hidden>
@@ -149,7 +159,7 @@
   <div class="splitter" role="separator" aria-orientation="vertical" aria-label="Resize the code and world panels" aria-valuemin="25" aria-valuemax="75" tabindex="0" title="Drag to resize · double-click to reset"></div>
 
   <section class="panel world-panel" aria-label="World">
-    <p id="world-tag" class="world-tag" hidden><span data-glyph="eye_off"></span><span class="sr-only">Replaying hidden world </span><span id="world-tag-name"></span></p>
+    <p id="world-tag" class="world-tag" hidden></p>
     <div class="world-row">
       <div class="world" id="world"></div>
       <figure class="goal-view" aria-labelledby="goal-title">
