@@ -528,3 +528,4 @@ body.in-quest #watch-demo, body.in-quest #world-tag { display: none !important; 
 .quest-note-row { display: flex; align-items: center; gap: 4px; }
 .quest-nudge-button { padding: 2px; }
 .quest-nudge-button[hidden] { display: none; }
+.world-tag.passed { background: var(--band); }

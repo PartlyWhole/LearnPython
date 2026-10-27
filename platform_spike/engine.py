@@ -899,9 +899,9 @@ def check_level(code, level, seed=0):
         if idle:
             failures = [idle]
         reports.append({"world": name, "passed": not failures, "failures": failures,
-                        # The main world's run always; a hidden world's only when it failed, so
-                        # the learner can replay what went wrong there.
-                        "result": result if name == "main" or failures else None})
+                        # Every world's run, so any of them can be watched: what went wrong in
+                        # a failed one, and how the program copes in one that passed.
+                        "result": result})
     constraint_failures = check_constraints(code, level.get("constraints", {}))
     return {"passed": all(r["passed"] for r in reports) and not constraint_failures,
             "worlds": reports, "constraint_failures": constraint_failures,

@@ -286,12 +286,11 @@ class ReplayDetail(unittest.TestCase):
         self.assertNotIn("out", r["trace"][0])
         self.assertEqual(r["trace"][1]["out"], len("hi\n"))
 
-    def test_a_failed_hidden_world_comes_back_to_be_replayed(self):
+    def test_every_world_comes_back_to_be_watched(self):
         hard = "move()\nmove()\npick()\npick()\nmove()\nmove()\nmove()\npick()\n"
         report = check_level(hard, dict(LEVEL, constraints={}))
-        for w in report["worlds"][1:]:
-            self.assertEqual(w["result"] is None, w["passed"], w["world"])
-        self.assertTrue(any(w["result"] for w in report["worlds"][1:]))
+        self.assertTrue(all(w["result"] for w in report["worlds"]), "passed or not, every world can be replayed")
+        self.assertTrue(any(w["passed"] for w in report["worlds"]) and any(not w["passed"] for w in report["worlds"]))
 
 
 class LearnerMessages(unittest.TestCase):

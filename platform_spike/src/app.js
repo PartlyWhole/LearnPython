@@ -150,7 +150,7 @@ const replayLive = () => player.frames.length > 1 && replayCode !== null && repl
 
 /** Put a run on screen to replay: its world (the level's, or a hidden one), its goal, and its
  *  frames, with the failed step at the end if it stopped on an error. */
-function loadReplay(world, result, name = "main", { goal = goalFor(level, world), kind = "hidden" } = {}) {
+function loadReplay(world, result, name = "main", { goal = goalFor(level, world), kind = "hidden", passed = false } = {}) {
   replayWorld = name;
   shownWorld = world;
   renderer.setWorld(world);
@@ -167,6 +167,7 @@ function loadReplay(world, result, name = "main", { goal = goalFor(level, world)
   words.textContent = name;
   tag.append(sr, words);
   tag.classList.toggle("quest", kind === "quest");
+  tag.classList.toggle("passed", passed); // green for a world that passed, red-tinted for one that didn't
   replayOutput = result.output ?? "";
   player.load(buildFrames(world, result.trace, result.error));
   markCurrentWorld();
@@ -751,7 +752,7 @@ function watchWorld(i) {
   const w = lastReport?.worlds[i];
   const spec = i === 0 ? level.world : level.hidden_worlds?.[i - 1];
   if (!w?.result || !spec) return;
-  loadReplay(spec, w.result, w.world);
+  loadReplay(spec, w.result, w.world, { passed: w.passed });
   player.play();
 }
 
@@ -854,8 +855,9 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
     if (w.result && spec && !drive.active) {
       // A failed world gets a labelled Watch: a hidden world is otherwise only a name and a reason.
       const watch = document.createElement("button");
-      watch.className = `icon-button watch-world${w.passed ? "" : " labelled"}`;
-      watch.innerHTML = w.passed ? icon("replay") : `${icon("play")}<span class="label">Watch</span>`;
+      // Hidden worlds get a labelled Watch, passed or not: otherwise one is only a name.
+      watch.className = `icon-button watch-world${i === 0 ? "" : " labelled"}`;
+      watch.innerHTML = i === 0 ? icon("replay") : `${icon("play")}<span class="label">Watch</span>`;
       watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay hidden world ${w.world}`);
       watch.title = watch.getAttribute("aria-label");
       watch.onclick = () => watchWorld(i);
