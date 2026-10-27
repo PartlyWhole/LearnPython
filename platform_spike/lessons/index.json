@@ -99,10 +99,7 @@
       "title": "Using data",
       "items": [
         {
-          "level": "midpoint"
-        },
-        {
-          "level": "richest_cell"
+          "lesson": "using_data"
         }
       ]
     }

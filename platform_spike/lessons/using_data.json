@@ -1,0 +1,145 @@
+{
+  "format": 1,
+  "id": "using_data",
+  "title": "Read the list",
+  "concept": "Read what scan() returns: len, ahead[0], max, index, // and range with a computed number",
+  "topics": [
+    "lists.create_and_index",
+    "builtin_functions.call_anatomy",
+    "arithmetic_operators.floor_division_and_modulo",
+    "lists.aggregate_builtins",
+    "list_methods.index_and_count"
+  ],
+  "watch": {
+    "world": {
+      "width": 5,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "gems": {
+        "1,0": 2,
+        "3,0": 4
+      }
+    },
+    "steps": [
+      {
+        "say": "`scan()` gives a list: one number for each cell ahead. Run it.",
+        "code": "print(scan())\n",
+        "focus": "editor:1",
+        "run": true
+      },
+      {
+        "say": "How many numbers will `len(ahead)` print?",
+        "code": "ahead = scan()\nprint(len(ahead))\n",
+        "focus": "editor:2",
+        "predict": {
+          "choices": [
+            "3",
+            "4",
+            "5"
+          ],
+          "answer": "4"
+        }
+      },
+      {
+        "say": "`len` counts the list: the cells ahead, not yours. Run it.",
+        "code": "ahead = scan()\nprint(len(ahead))\n",
+        "focus": "editor:2",
+        "run": true
+      },
+      {
+        "say": "`ahead[0]` is the first number: the cell in front. Counting starts at 0.",
+        "code": "ahead = scan()\nprint(ahead[0])\n",
+        "focus": "editor:2",
+        "run": true
+      },
+      {
+        "say": "`max(ahead)` is the biggest number in the list.",
+        "code": "ahead = scan()\nprint(max(ahead))\n",
+        "focus": "editor:2",
+        "run": true
+      },
+      {
+        "say": "`ahead.index(4)` is where the 4 sits in the list.",
+        "code": "ahead = scan()\nprint(ahead.index(4))\n",
+        "focus": "editor:2",
+        "run": true
+      },
+      {
+        "say": "`//` divides and drops the leftover: 7 // 2 is 3.",
+        "code": "print(7 // 2)\n",
+        "focus": "editor:1",
+        "run": true
+      },
+      {
+        "say": "`range` can take a number worked out from the list.",
+        "code": "ahead = scan()\nsteps = len(ahead) - 1\nfor _ in range(steps):\n    move()\n",
+        "focus": "editor:3",
+        "run": true
+      }
+    ]
+  },
+  "guided": {
+    "level": "midpoint",
+    "steps": [
+      {
+        "say": "Count the cells ahead of you with `len(ahead)`.",
+        "done_when": [
+          {
+            "calls": "len"
+          }
+        ],
+        "example": "ahead = scan()\nprint(len(ahead))\n"
+      },
+      {
+        "say": "Repeat `move()` in a `for` loop that runs half that many times.",
+        "done_when": [
+          {
+            "has": "for"
+          },
+          {
+            "calls": "move",
+            "inside": "for"
+          }
+        ],
+        "example": "ahead = scan()\nfor _ in range(len(ahead) // 2):\n    move()\n"
+      },
+      {
+        "say": "After the loop, not indented, `put()` the gem.",
+        "done_when": [
+          {
+            "calls": "put",
+            "after": "for"
+          }
+        ],
+        "example": "ahead = scan()\nfor _ in range(len(ahead) // 2):\n    move()\nput()\n"
+      },
+      {
+        "say": "Run it. Gem off-centre? Check the loop count: `//` keeps the whole number of a division.",
+        "done_when": [
+          {
+            "run": "passed"
+          }
+        ]
+      }
+    ],
+    "done": "The list's length told you where the middle is."
+  },
+  "practice": [
+    "richest_cell"
+  ],
+  "recap": {
+    "say": "`len` counts the list, `max` finds the biggest, `.index` finds where it sits.",
+    "code": "ahead = scan()\nspot = ahead.index(max(ahead))\nsteps = len(ahead) // 2"
+  },
+  "hints": {
+    "richest_cell": [
+      "Run the starter and read the printed list. Which number is biggest, and where does it sit?",
+      "You need the biggest number's position, not the number. Which list tool gives a position? Does position 0 mean 0 steps?",
+      "ahead = scan()\nspot = ahead.index(__)\nfor _ in range(spot + __):\n    move()\nfor _ in range(__):\n    pick()\n"
+    ]
+  }
+}

@@ -16,7 +16,7 @@ way. Decisions are cited below as D1 to D11.
 | `engine.py` | World rules, learner API, `run_program`, `check_level`, validation. **Pure Python, stdlib only.** |
 | `schemas/` | JSON Schemas for level files and run results: the contract with the JS side |
 | `levels/` | Level files `<id>.json` (44). See `docs/levels.md` |
-| `lessons/` | **The play order**, `index.json` (format 2): units of `{"level": id}` and `{"lesson": id}` items. A lesson expands to guided, practice, then twist. Plus 11 lesson files `<id>.json` (demo, guided steps, practice, hints). Checked by `tools/check_lesson.py` and `tests/test_lessons.py` |
+| `lessons/` | **The play order**, `index.json` (format 2): units of `{"level": id}` and `{"lesson": id}` items. A lesson expands to guided, practice, then twist. Plus 12 lesson files `<id>.json` (demo, guided steps, practice, hints). Checked by `tools/check_lesson.py` and `tests/test_lessons.py` |
 | `tools/build_site.py`, `../.github/workflows/pages.yml` | The public site (GitHub Pages, repo "LearnPython"): only `app.html` (also as `index.html`), `src/`, `vendor/`, `levels/`, `lessons/` and `engine.py`, never `tests/solutions/`. The workflow runs the tests, then deploys on every push to `main`. `tests/test_site.py` checks the contents |
 | `tools/play_order.py` | Expands `lessons/index.json` into the level list (Python). `src/lessons/order.js` does the same for the app. `python3 tools/play_order.py` prints it |
 | `src/lessons/` | `order.js` (play order), `demo.js` / `guide.js` / `drive.js` / `hints.js` (demo, guide, drive-mode and hint-ladder logic, pure), `demo-ui.js` / `guide-ui.js` / `drive-ui.js` / `hint-ui.js` (their parts of the page) |

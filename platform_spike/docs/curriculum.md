@@ -251,7 +251,7 @@ testing as you go, pre- and postconditions, and spotting a known pattern. The pr
 
 ## After Unit 7
 
-`midpoint` ✓ and `richest_cell` ✓ (Using data) follow, then the topic graph takes over
+The lesson `using_data` ✓ (`midpoint`, `richest_cell`) follows, then the topic graph takes over
 (`docs/decisions.md` D18).
 
 ## The play order as built (Oct 2026)
@@ -275,10 +275,9 @@ testing as you go, pre- and postconditions, and spotting a known pattern. The pr
 |  | lesson `compare` | `keep_one`, `big_piles_only`, `level_piles` ★ |
 |  | lesson `own_conditions` | `hurdles`, `wall_follower`, `stairs_up_and_down` ★ |
 | Stepwise refinement | lesson `refinement` | `harvest_rows`, `build_towers`, `repair_columns`, `sweep`, `tile_floor` ★ |
-| Using data | level | `midpoint` |
-|  | level | `richest_cell` |
+| Using data | lesson `using_data` | `midpoint` (guided), `richest_cell` (practice) |
 
-43 levels and 11 lessons. Changes from the plan above, made while authoring:
+43 levels and 12 lessons. Changes from the plan above, made while authoring:
 - **Lessons:** L0.1 and L0.2 are plain drive levels, not lessons. L1.1 is the lesson `from_clicks_to_code`: its demo shows the learner's own `drive_pick` moves as code (`code_from`), and its guided try is `first_steps`.
 - **New and changed levels:**
   - `loop_the_block` is the L2.1 twist.

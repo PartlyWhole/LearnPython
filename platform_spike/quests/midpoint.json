@@ -6,7 +6,7 @@
       "id": "odd_corridor",
       "title": "The middle of a short corridor",
       "ask": "In a five-cell corridor there is exactly one middle cell. Put the gem there.",
-      "nudge": "What does `scan()` report here? How many of those cells lie between you and the middle?",
+      "nudge": "How long is the list `scan()` gives here? How many of those cells lie between you and the middle?",
       "check": {"program": {"world": {"width": 5, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"2,0": 1}}}}
     },
     {
@@ -20,7 +20,7 @@
       "id": "one_cell",
       "title": "A corridor of one cell",
       "ask": "In a corridor one cell long, the wall is right in front of you. Put the gem on the middle cell.",
-      "nudge": "What does `scan()` give back when there's nothing ahead?",
+      "nudge": "What does `scan()` give back when there's nothing ahead? How long is that list?",
       "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"0,0": 1}}}}
     }
   ]
