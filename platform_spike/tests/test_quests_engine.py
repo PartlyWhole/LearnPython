@@ -79,7 +79,7 @@ class ProgramChecks(unittest.TestCase):
         down = "turn_left()\nturn_left()\nmove()\nturn_left()\nmove()\n"  # back one cell, then down
         self.assertTrue(state("put()\nmove()\nput()\n" + down, [quest])[0]["done"])
         q = state("put()\nmove()\nput()\nmove()\nput()\nturn_left()\nturn_left()\nmove()\nmove()\nturn_left()\nmove()\n", [quest])[0]
-        self.assertIn("don't match the picture", q["why"])  # three gems: the row is too long
+        self.assertIn("don't match the Goal view", q["why"])  # three gems: the row is too long
 
     def test_a_crash_is_the_only_reason_given(self):
         quest = {"id": "g", "title": "x", "ask": "x", "check": {"program": {"reach": {"visit": [4, 0]}}}}
@@ -126,9 +126,9 @@ class Messages(unittest.TestCase):
             return state(code, [q])[0]["why"]
         self.assertEqual(why({"end_at": [2, 0]}), "The robot doesn't end on the marked cell.")
         self.assertEqual(why({"all_gems_collected": True}), "1 gem is still on the floor.")
-        self.assertEqual(why({"gems_exactly": {"1,0": 1, "2,0": 1}}), "Some cells in the picture are still missing gems.")
-        self.assertEqual(why({"gems_exactly": {}}), "A gem the picture doesn't show is still on the floor: it should be picked up.")
-        self.assertEqual(why({"gems_exactly": {"1,0": 1}}), "The gems don't match the picture: some cells have too few, others too many.")
+        self.assertEqual(why({"gems_exactly": {"1,0": 1, "2,0": 1}}), "Some cells in the Goal view are still missing gems.")
+        self.assertEqual(why({"gems_exactly": {}}), "A gem the Goal view doesn't show is still on the floor: it should be picked up.")
+        self.assertEqual(why({"gems_exactly": {"1,0": 1}}), "The gems don't match the Goal view: some cells have too few, others too many.")
         for text in [why({"end_at": [2, 0]}), why({"gems_exactly": {"1,0": 1}})]:
             self.assertNotRegex(text, r"\[\d|\(\d")
 

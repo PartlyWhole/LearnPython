@@ -88,13 +88,13 @@
   },
   "hints": {
     "plant_to_wall": [
-      "Look at a cell that starts with old gems, and at the 'one cell' world.",
-      "Every cell needs the same few steps. The loop does them, but what about the last cell? Could a function save writing them twice?",
+      "Compare the floor with the Goal picture: which cells have too many gems? Check the last cell and the 'one cell' world too.",
+      "Every cell needs the same steps, old gems included. Does the loop reach the last cell? Could a function save writing them twice?",
       "def plant():\n    while __:\n        __\n    __\n\n\nwhile front_is_clear():\n    __\n    __\n__\n"
     ],
     "edge_gems": [
       "Look at the 'one cell' world: its first cell is also its last.",
-      "The last cell gets a gem only if it doesn't have one yet. Which word turns a True question into False?",
+      "Does the last cell already have a gem? Ask first. Which word turns a True question into False?",
       "put()\nwhile __:\n    __\nif __:\n    put()\n"
     ]
   }

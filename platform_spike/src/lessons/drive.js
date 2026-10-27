@@ -3,7 +3,7 @@
 // only keeps the program and says in words what a press did, for screen readers.
 import { describeCell } from "./demo.js";
 
-const DIR_NAMES = { E: "east", N: "north", W: "west", S: "south" };
+const DIR_NAMES = { E: "east (→)", N: "north (↑)", W: "west (←)", S: "south (↓)" };
 
 /** Keyboard shortcuts, active only while focus is inside the drive panel. */
 export const DRIVE_KEYS = Object.freeze({ ArrowUp: "move", ArrowLeft: "turn_left" });
@@ -27,7 +27,7 @@ export function describePress(frame, error) {
       ?? error.message;
   }
   const action = frame.event?.action;
-  if (action === "move") return `Moved to ${describeCell([frame.x, frame.y])}.`;
+  if (action === "move") return `Moved forward one cell, facing ${DIR_NAMES[frame.dir]}.`; // no coordinates (D27)
   if (action === "turn_left") return `Turned to face ${DIR_NAMES[frame.dir]}.`;
   if (action === "pick") return `Picked a gem. Bag: ${frame.bag}.`;
   if (action === "put") return `Put a gem down. Bag: ${frame.bag}.`;

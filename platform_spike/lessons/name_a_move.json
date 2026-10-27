@@ -67,12 +67,22 @@
         "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\nmove()\nmove()\n"
       },
       {
-        "say": "Use `turn_right()` wherever the robot must turn right.",
+        "say": "Use `turn_right()` wherever the robot must turn right. Two turns are needed.",
         "done_when": [
           {
             "calls": "turn_right",
             "outside": "def",
             "min": 2
+          }
+        ],
+        "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\nmove()\nmove()\nturn_right()\nmove()\nmove()\nturn_right()\nmove()\nmove()\n"
+      },
+      {
+        "say": "Now `pick()` up the gem.",
+        "done_when": [
+          {
+            "calls": "pick",
+            "outside": "def"
           }
         ],
         "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\nmove()\nmove()\nturn_right()\nmove()\nmove()\nturn_right()\nmove()\nmove()\npick()\n"
@@ -86,7 +96,7 @@
         ]
       }
     ],
-    "done": "Same corner as before, now with your own command."
+    "done": "Same route as 'Only left turns', now with your own `turn_right()`."
   },
   "practice": [
     "fetch_gem",
@@ -110,7 +120,7 @@
     ],
     "around_the_block": [
       "Compare your result with the Goal view: four gems picked, and the robot home facing east.",
-      "Every corner takes the same moves. Name them once with `def go_around_corner():`, then call it four times.",
+      "Name one corner as `go_around_corner()` and call it four times. Where must a call stop so the next can start?",
       "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around_corner():\n    move()\n    move()\n    __\n    __\n    __\n\n\ngo_around_corner()\n__\n__\n__\n"
     ]
   }

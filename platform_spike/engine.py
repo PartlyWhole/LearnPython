@@ -614,7 +614,7 @@ def _describe_layout_difference(actual, expected, spec=None):
             also = f", including {' and '.join(named)}" if named else ""
             parts.append(f"{len(cells)} cells {many}{also}")
     text = "; ".join(parts)
-    return text[:1].upper() + text[1:] + ". Compare the floor with the Goal picture."
+    return text[:1].upper() + text[1:] + ". Compare the floor with the Goal view."
 
 
 def _end_failure(f, goal):
@@ -624,7 +624,7 @@ def _end_failure(f, goal):
         return f"The robot should stop {_plural(abs(dx), 'cell')} further {DIR_WORDS['E' if dx > 0 else 'W']}."
     if dy and not dx:
         return f"The robot should stop {_plural(abs(dy), 'cell')} further {DIR_WORDS['S' if dy > 0 else 'N']}."
-    return "The robot should stop on the marked cell in the Goal picture."
+    return "The robot should stop on the marked cell in the Goal view."
 
 
 def _idle_reason(code, result):
@@ -743,6 +743,19 @@ def _called_in_for(tree, name):
 _STEP_KINDS = {"for": ast.For, "while": ast.While, "if": ast.If, "def": ast.FunctionDef, "return": ast.Return}
 
 
+def _range_count(node):
+    """How many times `for ... in range(n)` / `range(0, n)` goes round, or None for anything else."""
+    if not (isinstance(node, ast.For) and isinstance(node.iter, ast.Call) and isinstance(node.iter.func, ast.Name)
+            and node.iter.func.id == "range" and all(isinstance(a, ast.Constant) and isinstance(a.value, int) for a in node.iter.args)):
+        return None
+    args = [a.value for a in node.iter.args]
+    if len(args) == 1:
+        return args[0]
+    if len(args) == 2:
+        return max(0, args[1] - args[0])
+    return None
+
+
 def _context(node):
     """The name a statement gives to the code nested in it: for, while, if, or 'def <name>'."""
     if isinstance(node, ast.FunctionDef):
@@ -815,10 +828,7 @@ def _check_one(tree, code, check, run):
         hits = [(n, st) for n, st in stmts
                 if (_has_else(n) if kind == "else" else isinstance(n, _STEP_KINDS[kind]))]
         if "range" in check:
-            hits = [(n, st) for n, st in hits if isinstance(n, ast.For) and isinstance(n.iter, ast.Call)
-                    and isinstance(n.iter.func, ast.Name) and n.iter.func.id == "range"
-                    and len(n.iter.args) == 1 and isinstance(n.iter.args[0], ast.Constant)
-                    and n.iter.args[0].value == check["range"]]
+            hits = [(n, st) for n, st in hits if _range_count(n) == check["range"]]
         if "inside" in check:
             hits = [(n, st) for n, st in hits if _in_path(st, check["inside"])]
         return lo <= len(hits) <= hi
@@ -980,7 +990,7 @@ def _reach_failures(result, reach, world):
                 if action is None or count == reach.get("n", 1):
                     break
         if gems != reach["gems_then"]:
-            out.append("When the robot gets to the marked cell, the gems so far don't match the picture.")
+            out.append("When the robot gets to the marked cell, the gems so far don't match the Goal view.")
     return out
 
 
@@ -1000,10 +1010,10 @@ def _quest_failures(result, goal, world=None):
         extra = any(n > want.get(k, 0) for k, n in got.items())
         start_gems = (world or {}).get("gems", {})
         left_over = extra and all(n <= start_gems.get(k, 0) for k, n in got.items() if n > want.get(k, 0))
-        out.append("The gems don't match the picture: some cells have too few, others too many." if short and extra
-                   else "Some cells in the picture are still missing gems." if short
-                   else "A gem the picture doesn't show is still on the floor: it should be picked up." if left_over
-                   else "Some cells end up with more gems than the picture shows.")
+        out.append("The gems don't match the Goal view: some cells have too few, others too many." if short and extra
+                   else "Some cells in the Goal view are still missing gems." if short
+                   else "A gem the Goal view doesn't show is still on the floor: it should be picked up." if left_over
+                   else "Some cells end up with more gems than the Goal view shows.")
     if "end_at" in goal and [f["x"], f["y"]] != goal["end_at"]:
         out.append("The robot doesn't end on the marked cell.")
     if "facing" in goal and f["dir"] != goal["facing"]:

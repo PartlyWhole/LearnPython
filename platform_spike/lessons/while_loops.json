@@ -75,6 +75,10 @@
           {
             "calls": "gems_here",
             "inside": "while"
+          },
+          {
+            "calls": "pick",
+            "inside": "while"
           }
         ],
         "example": "while front_is_clear():\n    move()\n    if gems_here():\n        pick()\n"
@@ -90,7 +94,7 @@
         "example": "while front_is_clear():\n    move()\n    while gems_here():\n        pick()\n"
       },
       {
-        "say": "Run it in every corridor.",
+        "say": "Run it in every corridor. A gem left behind? Look where in the loop you check the cell.",
         "done_when": [
           {
             "run": "passed"
@@ -112,11 +116,11 @@
     "piles": [
       "Look at the cell the robot starts on: does it still have gems at the end?",
       "`if` picks one gem. What repeats until a cell is empty? And which cell does your loop never look at?",
-      "while __:\n    __\nwhile front_is_clear():\n    __\n    __\n"
+      "while __:\n    __\nwhile front_is_clear():\n    move()\n    while __:\n        __\n"
     ],
     "follow_trail": [
       "Look where the robot must stop in the Goal view: just past the last gem, not at the wall.",
-      "Loop on the gems, not the wall: repeat while there is a gem here.",
+      "What is true on every cell of the trail, but false on the first cell after it? Loop on that, not on the wall.",
       "while __:\n    pick()\n    __\n"
     ]
   }

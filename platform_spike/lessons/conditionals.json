@@ -36,7 +36,7 @@
         "focus": "editor:3"
       },
       {
-        "say": "Which cells keep their gems?",
+        "say": "After the run, which gems are still on the row?",
         "predict": {
           "choices": [
             "None of them",
@@ -106,6 +106,10 @@
         "say": "After `move()`, look: add `if gems_here():` inside the loop.",
         "done_when": [
           {
+            "has": "if",
+            "inside": "for"
+          },
+          {
             "calls": "gems_here",
             "inside": "for"
           }
@@ -150,13 +154,13 @@
     ],
     "flip_row": [
       "Watch a world that failed, one cell at a time. What happens on a cell that had a gem? On one that didn't?",
-      "Two separate `if`s undo each other: the second one sees the cell the first one just changed. Use `else:` so only one of them runs.",
+      "Two separate `if`s: after the first picks a gem, what does the second one see? Which keyword makes only one block run?",
       "for i in range(7):\n    move()\n    if gems_here():\n        __\n    else:\n        __\n"
     ],
     "detour": [
-      "Look at the 'blocked right away' world, and compare with the Goal view.",
-      "Each pass: step, or go around. How many cells does one trip around cross? So how many passes does the walk need?",
-      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around():\n    turn_left()\n    move()\n    turn_right()\n    __\n    turn_right()\n    move()\n    turn_left()\n\n\nfor i in range(__):\n    if front_is_clear():\n        move()\n    else:\n        __\n"
+      "Replay a world that failed and watch where the robot stops: at the wall, or short of the end?",
+      "Each pass: step, or go around. How far along the top lane must the robot go? So how many passes does the walk need?",
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around():\n    turn_left()\n    move()\n    turn_right()\n    __  # along the top lane, past the blocked cell\n    turn_right()\n    move()\n    turn_left()\n\n\nfor i in range(__):\n    if front_is_clear():\n        move()\n    else:\n        __\n"
     ]
   }
 }

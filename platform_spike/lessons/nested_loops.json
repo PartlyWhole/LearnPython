@@ -27,7 +27,7 @@
       {
         "say": "An outer `for` repeats the pair.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_row():\n    for i in range(4):\n        put()\n        move()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    plant_row()\n    go_to_next_row()\n",
-        "focus": "editor:1"
+        "focus": "editor:23"
       },
       {
         "say": "How many gems at the end?",
@@ -47,7 +47,8 @@
       {
         "say": "A `for` inside a `for`. Run it: the same rows.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    for i in range(4):\n        put()\n        move()\n    go_to_next_row()\n",
-        "run": true
+        "run": true,
+        "focus": "editor:18"
       },
       {
         "say": "`row` counts 0, 1, 2. The inner `range` can use it. Run it.",
@@ -75,6 +76,7 @@
         "done_when": [
           {
             "has": "for",
+            "range": 5,
             "inside": "def fill_row"
           },
           {
@@ -114,7 +116,7 @@
         "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(5):\n        put()\n        move()\n\n\nfor row in range(3):\n    fill_row()\n"
       },
       {
-        "say": "Define `next_row()`: back to the left, down one row. Call it inside the loop too.",
+        "say": "Define `next_row()`: back to the left, then down one row, facing east again. Call it inside the loop too.",
         "done_when": [
           {
             "defines": "next_row"
@@ -150,7 +152,7 @@
   "hints": {
     "stripes": [
       "Compare your result with the Goal view: an empty row after every stripe.",
-      "Same loop as the gem grid. Only the trip to the next stripe changes: down two rows, not one.",
+      "Same loop as the gem grid. What changes in the trip to the next stripe? How many rows down is it now?",
       "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef fill_row():\n    for i in range(__):\n        put()\n        move()\n\n\ndef next_stripe():\n    turn_around()\n    for i in range(5):\n        move()\n    turn_left()\n    for i in range(__):\n        move()\n    turn_left()\n\n\nfor stripe in range(__):\n    __\n    __\n"
     ],
     "square_of_squares": [

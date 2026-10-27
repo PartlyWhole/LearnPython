@@ -2,7 +2,7 @@
   "format": 1,
   "id": "compare",
   "title": "Compare",
-  "concept": "Compare numbers with >, <, == and != to make a condition",
+  "concept": "Compare numbers with > and < to make a condition",
   "topics": [
     "comparison_operators.compare_numbers"
   ],
@@ -113,13 +113,13 @@
   },
   "hints": {
     "big_piles_only": [
-      "Compare your result with the Goal view: which piles should stay?",
-      "Decide once per cell with `if gems_here() > 2:`, then clear that pile with a `while`.",
+      "Compare your result with the Goal view: which piles should stay? And is the cell the robot starts on right?",
+      "Decide once per cell with an `if` and a comparison, then clear the whole pile with a `while`.",
       "def take_big_pile():\n    if gems_here() > __:\n        while __:\n            pick()\n\n\ntake_big_pile()\nwhile front_is_clear():\n    move()\n    __\n"
     ],
     "level_piles": [
       "Look at the Goal view: every cell ends with 2 gems, even empty ones.",
-      "Two loops on each cell: `while gems_here() < 2:` adds, `while gems_here() > 2:` takes.",
+      "A cell can have too few or too many. What loop adds until there are enough? What loop takes until only 2 are left?",
       "def level_pile():\n    while gems_here() < __:\n        __\n    while gems_here() > __:\n        __\n\n\nlevel_pile()\nwhile front_is_clear():\n    __\n    level_pile()\n"
     ]
   }

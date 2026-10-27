@@ -30,7 +30,7 @@
         "focus": "editor:1"
       },
       {
-        "say": "How many gems now?",
+        "say": "After this loop runs, how many gems will be on the first cell?",
         "predict": {
           "choices": [
             "1",
@@ -57,7 +57,7 @@
     "level": "plant_row",
     "steps": [
       {
-        "say": "Start a loop that runs 5 times, with `put()` indented under it.",
+        "say": "Write `for i in range(5):` and indent `put()` under it.",
         "done_when": [
           {
             "has": "for",
@@ -71,11 +71,15 @@
         "example": "for i in range(5):\n    put()\nmove()\n"
       },
       {
-        "say": "Indent `move()` too. Indentation decides what repeats.",
+        "say": "Indent `move()` too, in the same loop. Indentation decides what repeats.",
         "done_when": [
           {
             "calls": "move",
             "inside": "for"
+          },
+          {
+            "has": "for",
+            "max": 1
           }
         ],
         "example": "for i in range(5):\n    put()\n    move()\n"
@@ -102,8 +106,8 @@
   },
   "hints": {
     "stack_and_step": [
-      "Compare your result with the Goal view: 12 gems, then 9.",
-      "Two stacks: two loops, one after the other. Only `put()` goes inside each loop.",
+      "Compare your result with the Goal view: which cells have gems, and how many on each?",
+      "Each stack is its own loop. Which line goes inside a loop, and which lines go between the two loops?",
       "move()\nfor i in range(__):\n    __\n__\n__\nfor i in range(__):\n    __\n"
     ],
     "square_walk": [
@@ -113,7 +117,7 @@
     ],
     "loop_the_block": [
       "Compare your result with the Goal view: this block is bigger than last time.",
-      "Four corners, one function: call `go_around_corner()` inside a `for` loop.",
+      "One call walks to a corner and steps past it. Where must it stop so the next call can start the same way?",
       "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around_corner():\n    move()\n    move()\n    move()\n    __\n    __\n    __\n\n\nfor i in range(__):\n    __\n"
     ]
   }

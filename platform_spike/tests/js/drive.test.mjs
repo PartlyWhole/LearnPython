@@ -15,8 +15,8 @@ test("presses build a program; undo drops the last line; reset clears", () => {
 });
 
 test("describePress names what changed, or the crash", () => {
-  assert.equal(describePress({ x: 2, y: 0, dir: "E", bag: 0, event: { action: "move" } }, null), "Moved to column 3, row 1.");
-  assert.equal(describePress({ x: 2, y: 0, dir: "N", bag: 0, event: { action: "turn_left" } }, null), "Turned to face north.");
+  assert.equal(describePress({ x: 2, y: 0, dir: "E", bag: 0, event: { action: "move" } }, null), "Moved forward one cell, facing east (→).");
+  assert.equal(describePress({ x: 2, y: 0, dir: "N", bag: 0, event: { action: "turn_left" } }, null), "Turned to face north (↑).");
   assert.equal(describePress({ x: 2, y: 0, dir: "N", bag: 1, event: { action: "pick" } }, null), "Picked a gem. Bag: 1.");
   assert.equal(describePress({ x: 0, y: 0, dir: "E", bag: 0, event: null }, { kind: "wall", message: "x" }), "Bumped into a wall.");
   assert.equal(describePress({}, { kind: "step_limit", message: "Too many steps." }), "Too many steps.");

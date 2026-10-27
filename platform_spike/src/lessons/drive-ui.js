@@ -104,7 +104,7 @@ export class DriveUI {
       const want = this.level.goal.gems_exactly;
       const key = `${e.x},${e.y}`;
       const wrongPut = e.action === "put" && want && (last.gems[key] ?? 0) > (want[key] ?? 0);
-      if (wrongPut) this.el.msg.textContent = "That's not a cell the Goal picture wants a gem on. Press Undo to take it back.";
+      if (wrongPut) this.el.msg.textContent = "That's not a cell the Goal view wants a gem on. Press Undo to take it back.";
     }
     this.el.sr.textContent = describePress(last, main.error);
     if (report.passed) {

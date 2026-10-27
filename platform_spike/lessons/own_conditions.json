@@ -64,6 +64,10 @@
         "say": "Fill in `right_is_clear()`: turn right, look, turn back, and `return` what you saw.",
         "done_when": [
           {
+            "calls": "turn_right",
+            "inside": "def right_is_clear"
+          },
+          {
             "calls": "front_is_clear",
             "inside": "def right_is_clear"
           },
@@ -79,8 +83,16 @@
         "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    turn_right()\n    clear = front_is_clear()\n    turn_left()\n    return clear\n\n\ndef jump():\n    pass\n\n\nwhile gems_here() == 0:\n    if front_is_clear():\n        move()\n    else:\n        jump()\npick()\n"
       },
       {
-        "say": "Fill in `jump()`: climb while the right is blocked, cross the top, come back down.",
+        "say": "Start `jump()`: face up, then climb with `move()` while the right is blocked.",
         "done_when": [
+          {
+            "calls": "turn_left",
+            "inside": "def jump"
+          },
+          {
+            "has": "while",
+            "inside": "def jump"
+          },
           {
             "calls": "right_is_clear",
             "inside": "def jump"
@@ -88,6 +100,22 @@
           {
             "calls": "move",
             "inside": "def jump"
+          }
+        ],
+        "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    turn_right()\n    clear = front_is_clear()\n    turn_left()\n    return clear\n\n\ndef jump():\n    turn_left()                   # face north\n    while not right_is_clear():   # climb until the cell to the east is free\n        move()\n\n\nwhile gems_here() == 0:\n    if front_is_clear():\n        move()\n    else:\n        jump()\npick()\n"
+      },
+      {
+        "say": "Finish `jump()`: step across the top, then go down to the track and face east.",
+        "done_when": [
+          {
+            "has": "while",
+            "inside": "def jump",
+            "min": 2
+          },
+          {
+            "calls": "move",
+            "inside": "def jump",
+            "min": 2
           }
         ],
         "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    turn_right()\n    clear = front_is_clear()\n    turn_left()\n    return clear\n\n\ndef jump():\n    turn_left()                   # face north\n    while not right_is_clear():   # climb until the cell to the east is free\n        move()\n    turn_right()                  # face east\n    move()                        # step up onto the top of the hurdle\n    while not right_is_clear():   # walk along the top until there is a way down\n        move()\n    turn_right()                  # face south\n    while front_is_clear():       # go back down to the track\n        move()\n    turn_left()                   # face east again\n\n\nwhile gems_here() == 0:\n    if front_is_clear():\n        move()\n    else:\n        jump()\npick()\n"
@@ -114,13 +142,13 @@
   "hints": {
     "wall_follower": [
       "Watch the replay: where does the robot leave the wall?",
-      "Ask `right_is_clear()` before every step. If it's True, the wall drops away: turn right first.",
+      "Before every step, ask `right_is_clear()`. What should the robot do when it is True? And when it is False?",
       "def step_along_wall():\n    if __:\n        turn_right()\n    else:\n        while not __:\n            turn_left()\n    move()\n\n\nwhile gems_here():\n    pick()\n    __\n"
     ],
     "stairs_up_and_down": [
-      "Watch the replay at the top: the top of the stairs can be wider than one step.",
-      "Three parts: walk to the stairs, climb `while not front_is_clear():`, then go down only where `right_is_clear()`.",
-      "while front_is_clear():\n    move()\nwhile not front_is_clear():\n    __\n    pick()\nwhile front_is_clear():\n    move()\n    if __:\n        __\n    pick()\n"
+      "Watch the replay: the top of the stairs can be wider than one step, so not every move on the way down goes down.",
+      "Walk to the stairs, climb while a step blocks the way, then cross and go down. How can `right_is_clear()` tell a step down?",
+      "def step_up():\n    turn_left()\n    __\n    turn_right()\n    __\n\n\ndef step_down():\n    __\n    move()\n    turn_left()\n\n\nwhile front_is_clear():\n    move()\nwhile not front_is_clear():\n    step_up()\n    pick()\nwhile front_is_clear():\n    move()\n    if __:\n        step_down()\n    pick()\n"
     ]
   }
 }

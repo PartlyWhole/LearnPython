@@ -31,7 +31,7 @@
     },
     "steps": [
       {
-        "say": "Your 'Pick it up' button presses, as a program. Run it and watch each line.",
+        "say": "Your moves from 'Pick it up', now as code. Run it and watch each line.",
         "code": "move()\nmove()\nturn_left()\nmove()\nmove()\npick()\n",
         "code_from": "drive_pick",
         "run": true
@@ -42,7 +42,7 @@
     "level": "first_steps",
     "steps": [
       {
-        "say": "Add one `move()` line for each cell between the robot and the gem.",
+        "say": "Write one `move()` for each step the robot takes to reach the gem's cell.",
         "done_when": [
           {
             "calls": "move",
@@ -62,7 +62,7 @@
         "example": "move()\nmove()\nmove()\npick()\n"
       },
       {
-        "say": "Run it.",
+        "say": "Run it. If the robot stops short or overshoots, check your number of `move()` lines.",
         "done_when": [
           {
             "run": "passed"

@@ -98,7 +98,7 @@
     "level": "harvest_rows",
     "steps": [
       {
-        "say": "Write the plan: call `harvest_cave()` then `return_home()`, each defined with `pass`.",
+        "say": "Write the plan: call `harvest_cave()` then `return_home()`, each defined with `pass`. Run it: nothing breaks.",
         "done_when": [
           {
             "defines": "harvest_cave"
@@ -118,13 +118,17 @@
         "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_cave():\n    pass\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
       },
       {
-        "say": "Run it: no error, nothing collected yet. Then give `harvest_cave()` a body: a new `harvest_icicle()` stub, then `move()`.",
+        "say": "Give `harvest_cave()` a body: a new `harvest_icicle()` stub, then `move()`.",
         "done_when": [
           {
             "defines": "harvest_icicle"
           },
           {
             "calls": "harvest_icicle",
+            "inside": "def harvest_cave"
+          },
+          {
+            "calls": "move",
             "inside": "def harvest_cave"
           }
         ],
@@ -200,7 +204,7 @@
   "hints": {
     "build_towers": [
       "Look at the 'sites at both ends' world: a site on the start cell and one on the last cell.",
-      "Refine `build_tower()` first and test it on one site. Then visit every cell: check, then move, then check the last one.",
+      "Refine `build_tower()` first and test it on one site. Then visit every cell, first and last included: what should the robot ask?",
       "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    turn_left()\n    turn_left()\n\n\ndef build_tower():\n    \"\"\"Start: on a site, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    __\n    turn_around()\n    __\n    turn_left()\n\n\ndef visit():\n    if gems_here() > 0:\n        build_tower()\n\n\nvisit()\nwhile front_is_clear():\n    __\n    __\n"
     ],
     "repair_columns": [
@@ -210,7 +214,7 @@
     ],
     "sweep": [
       "Look at the 'one row' and 'one column' worlds: there may be no next row.",
-      "Plan from the top: sweep a row, then step down to the next row if there is one. The turn alternates: right, then left.",
+      "Sweep a row, then move onto the next row if there is one. Which way do you turn at the east end? And west?",
       "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef collect():\n    while gems_here() > 0:\n        pick()\n\n\ndef sweep_row():\n    collect()\n    while front_is_clear():\n        move()\n        collect()\n\n\ndef face_down():\n    if going_east:\n        __\n    else:\n        __\n\n\ngoing_east = True\nsweep_row()\nface_down()\nwhile front_is_clear():\n    move()\n    face_down()\n    going_east = __\n    __\n    face_down()\n"
     ],
     "tile_floor": [
