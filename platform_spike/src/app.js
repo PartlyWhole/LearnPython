@@ -167,6 +167,7 @@ function loadReplay(world, result, name = "main", { goal = goalFor(level, world)
   tag.classList.toggle("quest", kind === "quest");
   replayOutput = result.output ?? "";
   player.load(buildFrames(world, result.trace, result.error));
+  markCurrentWorld();
 }
 
 function jumpToLine(line) {
@@ -550,6 +551,7 @@ function showLevelWorld() {
   replayWorld = "main";
   replayOutput = null;
   $("world-tag").hidden = true;
+  $("world-dots").hidden = true;
   if (!demo?.active) showGoal();
   shownWorld = level.world;
   renderer.setWorld(level.world);
@@ -559,6 +561,43 @@ function showLevelWorld() {
 ui.stop.onclick = () => controller.stop();
 
 // ---------------------------------------------------------------- results
+/** Replay world i of the last run (0: this world; then the hidden worlds that returned a run). */
+function watchWorld(i) {
+  const w = lastReport?.worlds[i];
+  const spec = i === 0 ? level.world : level.hidden_worlds?.[i - 1];
+  if (!w?.result || !spec) return;
+  loadReplay(spec, w.result, w.world);
+  player.play();
+}
+
+/** Over the world after a run: a dot per world, green solved, red not, the one on screen ringed.
+ *  The world on screen can look finished while another isn't; the dots say there are others. */
+function renderWorldDots() {
+  const box = $("world-dots");
+  const worlds = lastReport?.worlds ?? [];
+  box.hidden = worlds.length < 2 || drive.active;
+  if (box.hidden) return;
+  box.replaceChildren(...worlds.map((w, i) => {
+    const b = document.createElement("button");
+    b.className = `world-dot ${w.passed ? "pass" : "fail"}`;
+    b.dataset.world = w.world;
+    b.innerHTML = icon(i === 0 ? "eye" : w.passed ? "check" : "close");
+    const label = `${i === 0 ? "This world" : `Hidden world ${w.world}`}: ${w.passed ? "solved" : "not yet"}`;
+    b.setAttribute("aria-label", w.result ? `${label}. Watch it` : label);
+    b.title = label;
+    b.disabled = !w.result;
+    b.onclick = () => watchWorld(i);
+    return b;
+  }));
+}
+
+/** Ring the dot and mark the results row of the world on screen. */
+function markCurrentWorld() {
+  for (const el of document.querySelectorAll("#world-dots .world-dot, .world-list li")) {
+    if (el.dataset.world === replayWorld) el.setAttribute("aria-current", "true"); else el.removeAttribute("aria-current");
+  }
+}
+
 /** The run's outcome, once per run, when its replay first reaches the end: results, the bonus,
  *  solving. (Stepping back and forth to the end again changes nothing here.) The failed step
  *  itself is drawn by showFrame, as the replay's last frame. */
@@ -609,13 +648,8 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
       watch.innerHTML = w.passed ? icon("replay") : `${icon("play")}<span class="label">Watch</span>`;
       watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay hidden world ${w.world}`);
       watch.title = watch.getAttribute("aria-label");
-      watch.onclick = () => {
-        loadReplay(spec, w.result, w.world);
-        for (const row of ui.results.querySelectorAll(".world-list li")) row.removeAttribute("aria-current");
-        li.setAttribute("aria-current", "true");
-        player.play();
-      };
-      if (i === 0) li.setAttribute("aria-current", "true");
+      watch.onclick = () => watchWorld(i);
+      li.dataset.world = w.world;
       li.append(watch);
     }
     return li;
@@ -688,11 +722,17 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
   }
   if (nextLink) parts.push(nextLink);
   ui.results.replaceChildren(...parts);
-  if (!lastReport.passed && mainPassed && !nudged) {
+  renderWorldDots();
+  markCurrentWorld();
+  if (!lastReport.passed && mainPassed && !nudged && !drive.active) {
+    // This world looks finished, so show (don't tell) where it isn't: a moment after its replay
+    // ends, the first world that failed plays, tagged with its name.
     nudged = true;
-    const first = ui.results.querySelector(".world-list li.fail .watch-world");
-    first?.classList.add("coach");
-    first?.addEventListener("click", () => first.classList.remove("coach"), { once: true });
+    const report = lastReport;
+    const k = report.worlds.findIndex((w, i) => i > 0 && !w.passed && w.result);
+    if (k > 0) setTimeout(() => {
+      if (lastReport === report && replayWorld === "main" && !player.playing && !handStepped) watchWorld(k);
+    }, 1400);
   }
   // The editor fills the window, so results can sit below it: bring them into view.
   const r = resultsPanel.getBoundingClientRect();

@@ -159,7 +159,10 @@
   <div class="splitter" role="separator" aria-orientation="vertical" aria-label="Resize the code and world panels" aria-valuemin="25" aria-valuemax="75" tabindex="0" title="Drag to resize · double-click to reset"></div>
 
   <section class="panel world-panel" aria-label="World">
-    <p id="world-tag" class="world-tag" hidden></p>
+    <div class="world-head">
+      <p id="world-tag" class="world-tag" hidden></p>
+      <div id="world-dots" class="world-dots" role="group" aria-label="Worlds this program was tried in" hidden></div>
+    </div>
     <div class="world-row">
       <div class="world" id="world"></div>
       <figure class="goal-view" aria-labelledby="goal-title">

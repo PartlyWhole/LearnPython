@@ -503,3 +503,15 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .worlds-note { margin: 0 0 6px; font-size: 14px; color: var(--ink); }
 .world-list .watch-world.labelled { display: inline-flex; gap: 4px; padding: 3px 10px 3px 6px; border-radius: 999px; font: 600 13px var(--sans); box-shadow: inset 0 0 0 1px var(--line); }
 .world-list .watch-world.labelled .icon { width: 15px; height: 15px; }
+
+/* Which worlds a run was tried in (renderWorldDots): this one and the hidden ones. */
+.world-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.world-head:not(:has(> :not([hidden]))) { display: none; }
+.world-dots { display: inline-flex; gap: 4px; margin-left: auto; }
+.world-dots[hidden] { display: none; }
+.world-dot { width: 24px; height: 24px; border-radius: 50%; border: 0; display: grid; place-items: center; line-height: 0; padding: 0; color: var(--surface); cursor: pointer; }
+.world-dot .icon { width: 13px; height: 13px; stroke-width: 3; }
+.world-dot.pass { background: var(--ok); }
+.world-dot.fail { background: var(--danger); }
+.world-dot:disabled { cursor: default; opacity: 0.85; }
+.world-dot[aria-current] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
