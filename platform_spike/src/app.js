@@ -556,10 +556,7 @@ function enterQuest(i, { push = true } = {}) {
   run.replaceChildren(document.createTextNode(note.lead));
   if (note.code) { const c = document.createElement("code"); c.textContent = note.code; run.append(c, note.rest); }
   run.insertAdjacentHTML("afterbegin", icon("play"));
-  const earlier = quests.doneNow().slice(0, i).map((d, k) => (d ? null : k + 1)).filter(Boolean);
-  $("quest-before").hidden = !earlier.length;
-  $("quest-before").textContent = earlier.length
-    ? `Builds on part${earlier.length > 1 ? "s" : ""} ${earlier.join(" and ")}, which your code doesn't solve yet. You can still try this one.` : "";
+  updateQuestBefore(i);
   $("quest-nudge").textContent = q.nudge ?? "";
   $("quest-nudge").hidden = true;
   $("quest-nudge-button").setAttribute("aria-expanded", "false");
@@ -576,7 +573,15 @@ function enterQuest(i, { push = true } = {}) {
   setNote("");
   updateLineCount();
   quests.setCurrent(i);
-  quests.check(); // the strip's ticks, for the code as it is now
+  quests.check().then(() => questIndex === i && updateQuestBefore(i)); // the strip's ticks, for the code as it is now
+}
+
+/** "Builds on part 1, …": the earlier parts the code doesn't solve, as of the last check. */
+function updateQuestBefore(i) {
+  const earlier = quests.doneNow().slice(0, i).map((d, k) => (d ? null : k + 1)).filter(Boolean);
+  $("quest-before").hidden = !earlier.length;
+  $("quest-before").textContent = earlier.length
+    ? `Builds on part${earlier.length > 1 ? "s" : ""} ${earlier.join(" and ")}, which your code doesn't solve yet. You can still try this one.` : "";
 }
 
 /** Back to the challenge itself. */
@@ -659,6 +664,7 @@ async function runQuest({ stepping = false } = {}) {
   syncButtons();
   setNote("");
   if (questIndex !== i) return; // left the part while it ran
+  updateQuestBefore(i);
   const state = states?.[i];
   if (!state) { setNote("Something went wrong running Python. This is a bug in the app, not your code.", true); return; }
   events.record("quest.run", { level: level.id, quest: q.id, done: state.done });

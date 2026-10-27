@@ -71,6 +71,16 @@ class ProgramChecks(unittest.TestCase):
         q = state("move()\nmove()\nmove()\npick()\npick()\n", [quest])[0]
         self.assertTrue(q["done"], q["why"])
 
+    def test_the_floor_on_arrival(self):
+        # One pass of a loop: put a row, then arrive at the next row's start; the floor then is the part.
+        world = {"width": 3, "height": 2, "start": [0, 0, "E"], "bag": 9}
+        quest = {"id": "g", "title": "x", "ask": "x", "check": {"program": {"world": world,
+                 "reach": {"visit": [0, 1], "gems_then": {"0,0": 1, "1,0": 1}}}}}
+        down = "turn_left()\nturn_left()\nmove()\nturn_left()\nmove()\n"  # back one cell, then down
+        self.assertTrue(state("put()\nmove()\nput()\n" + down, [quest])[0]["done"])
+        q = state("put()\nmove()\nput()\nmove()\nput()\nturn_left()\nturn_left()\nmove()\nmove()\nturn_left()\nmove()\n", [quest])[0]
+        self.assertIn("don't match the picture", q["why"])  # three gems: the row is too long
+
     def test_a_crash_is_the_only_reason_given(self):
         quest = {"id": "g", "title": "x", "ask": "x", "check": {"program": {"reach": {"visit": [4, 0]}}}}
         q = state("pick()\n", [quest])[0]

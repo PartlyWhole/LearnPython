@@ -963,10 +963,11 @@ def _reach_failures(result, reach, world):
                 out.append(f"The robot {words} {_plural(got, 'gem')} {where}, not {n}." if got
                            else f"The robot never {words} a gem {where}.")
     if "gems_then" in reach and not out:
-        # The floor at the moment the marked put (or pick) happens: the part is the state then,
-        # not just one gem landing (a wrong row can drop a gem on the marked cell too).
-        key = "put_at" if "put_at" in reach else "pick_at"
-        action = "put" if key == "put_at" else "pick"
+        # The floor at the moment the part is reached: the marked put (or pick), or, for a visit,
+        # the robot's first arrival on the marked cell (say, the start of the next row: one whole
+        # pass of a loop). The part is the state then, not just one gem landing somewhere.
+        key = next(k for k in ("put_at", "pick_at", "visit") if k in reach)
+        action = {"put_at": "put", "pick_at": "pick", "visit": None}[key]
         gems, count = dict(world.get("gems", {})), 0
         for e in result["trace"]:
             if e["action"] in ("put", "pick"):
@@ -974,9 +975,9 @@ def _reach_failures(result, reach, world):
                 gems[k] = gems.get(k, 0) + (1 if e["action"] == "put" else -1)
                 if not gems[k]:
                     del gems[k]
-            if e["action"] == action and [e["x"], e["y"]] == list(reach[key]):
+            if (action is None or e["action"] == action) and [e["x"], e["y"]] == list(reach[key]):
                 count += 1
-                if count == reach.get("n", 1):
+                if action is None or count == reach.get("n", 1):
                     break
         if gems != reach["gems_then"]:
             out.append("When the robot gets to the marked cell, the gems so far don't match the picture.")
@@ -1141,8 +1142,8 @@ def validate_quests(doc, level):
                 if key in reach:
                     _cell(reach[key], f"{path}.check.program.reach.{key}", w["width"], w["height"])
             if "gems_then" in reach:
-                if not ("put_at" in reach or "pick_at" in reach):
-                    raise LevelError(f"{path}.check.program.reach.gems_then: goes with put_at or pick_at")
+                if not ("put_at" in reach or "pick_at" in reach or "visit" in reach):
+                    raise LevelError(f"{path}.check.program.reach.gems_then: goes with put_at, pick_at or visit")
                 _gem_map(reach["gems_then"], f"{path}.check.program.reach.gems_then", w["width"], w["height"])
             if not p.get("goal") and not reach:
                 raise LevelError(f"{path}.check.program: needs a goal or reach")
