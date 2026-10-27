@@ -603,9 +603,10 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
     // A world that failed can be replayed and stepped through, hidden ones too; so can this world.
     const spec = i === 0 ? level.world : level.hidden_worlds?.[i - 1];
     if (w.result && spec && !drive.active) {
+      // A failed world gets a labelled Watch: a hidden world is otherwise only a name and a reason.
       const watch = document.createElement("button");
-      watch.className = "icon-button watch-world";
-      watch.innerHTML = icon("replay");
+      watch.className = `icon-button watch-world${w.passed ? "" : " labelled"}`;
+      watch.innerHTML = w.passed ? icon("replay") : `${icon("play")}<span class="label">Watch</span>`;
       watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay hidden world ${w.world}`);
       watch.title = watch.getAttribute("aria-label");
       watch.onclick = () => {
@@ -671,6 +672,13 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
   const list = document.createElement("ul");
   list.className = "world-list";
   list.append(...items);
+  if (!lastReport.passed && lastReport.worlds[0].passed) {
+    // Solved the world on screen, failed one it can't see: say why the others are there at all.
+    const note = document.createElement("p");
+    note.className = "worlds-note";
+    note.textContent = "It works here. Your program is also tried in other worlds, and these need it too:";
+    parts.push(note);
+  }
   if (!lastReport.passed) parts.push(list); // on a pass the big check says it all
   for (const msg of lastReport.constraint_failures) {
     const p = document.createElement("p");
