@@ -5,14 +5,14 @@
     {
       "id": "flip_empty",
       "title": "Flip an empty row",
-      "ask": "Every cell of this row is empty. Flip them all, so each one ends with a gem.",
+      "ask": "Every cell to the robot's right is empty. Flip them all, so each one ends with a gem.",
       "nudge": "What should happen on a cell that has nothing on it?",
       "check": {"program": {"world": {"width": 8, "height": 1, "start": [0, 0, "E"], "bag": 7}, "goal": {"gems_exactly": {"1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1, "5,0": 1, "6,0": 1, "7,0": 1}}}}
     },
     {
       "id": "flip_full",
       "title": "Flip a full row",
-      "ask": "Every cell of this row holds a gem. Flip them all, so the row ends empty.",
+      "ask": "Every cell to the robot's right holds a gem. Flip them all, so the row ends empty.",
       "nudge": "After the robot picks a gem, the cell is empty. Should it then put one back?",
       "check": {"program": {"world": {"width": 8, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1, "5,0": 1, "6,0": 1, "7,0": 1}, "bag": 7}, "goal": {"gems_exactly": {}}}}
     },

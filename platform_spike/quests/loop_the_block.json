@@ -5,7 +5,7 @@
     {
       "id": "one_corner",
       "title": "One corner, on its own",
-      "ask": "Fill in `go_around_corner()`: from the start of a side, walk to the corner, pick its gem, and end one step along the next side, facing along it.",
+      "ask": "Fill in `go_around_corner()`: from one cell past a corner, walk to the next corner, pick its gem, then turn onto the next side and take one step along it.",
       "nudge": "This block is bigger than last time. How far is it to the corner now?",
       "check": {"test": {"call": "go_around_corner", "world": {"width": 5, "height": 3, "start": [1, 0, "E"], "blocked": [[1, 1], [2, 1], [3, 1], [1, 2], [2, 2], [3, 2]], "gems": {"4,0": 1}}, "goal": {"end_at": [4, 1], "facing": "S", "gems_exactly": {}}}}
     },
@@ -13,8 +13,8 @@
       "id": "corners_chain",
       "title": "Two corners in a row",
       "ask": "Use `go_around_corner()` on the real block so the robot clears the first corner and then the one below it.",
-      "nudge": "Where one call ends is where the next one starts. Is that the start of a side?",
-      "check": {"program": {"reach": {"pick_at": [4, 4]}}}
+      "nudge": "Where one call ends is where the next one starts. Is that one cell past a corner?",
+      "check": {"program": {"reach": {"pick_at": [4, 4], "gems_then": {"0,4": 1, "0,0": 1}}}}
     },
     {
       "id": "one_loop",

@@ -5,7 +5,7 @@
     {
       "id": "all_empty",
       "title": "Fill an empty column",
-      "ask": "Every cell below the dock is empty. Leave exactly one gem on each of them, and nothing on the dock.",
+      "ask": "Every cell below the robot is empty. Leave exactly one gem on each of them, and none on the robot's own cell.",
       "nudge": "Which cell is the robot on when it decides whether to put a gem?",
       "check": {"program": {"world": {"width": 1, "height": 7, "start": [0, 0, "S"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,1": 1, "0,2": 1, "0,3": 1, "0,4": 1, "0,5": 1, "0,6": 1}}}}
     },
@@ -19,7 +19,7 @@
     {
       "id": "gaps_at_ends",
       "title": "Gaps at both ends",
-      "ask": "Now the first and last cells are empty and the middle is full. End with one gem on every cell.",
+      "ask": "The first and last cells below the robot are empty and the middle ones are full. End with one gem on every cell.",
       "nudge": "Does your program treat the last cell the same way as all the others?",
       "check": {"program": {"world": {"width": 1, "height": 7, "start": [0, 0, "S"], "gems": {"0,2": 1, "0,3": 1, "0,4": 1, "0,5": 1}, "bag": "infinite"}, "goal": {"gems_exactly": {"0,1": 1, "0,2": 1, "0,3": 1, "0,4": 1, "0,5": 1, "0,6": 1}}}}
     }

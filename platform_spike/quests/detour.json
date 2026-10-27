@@ -5,22 +5,22 @@
     {
       "id": "step_over",
       "title": "Step over one blocked cell",
-      "ask": "Write `go_around()`: facing a blocked cell in the bottom lane, climb up, pass it, and come back down just beyond it, facing east again.",
+      "ask": "Write `go_around()`: facing a blocked cell in the bottom lane, climb up, pass it, and come back down just beyond it, facing right (east) again.",
       "nudge": "Trace it with your finger. Where must the robot stand, and which way must it face, when it's done?",
       "check": {"test": {"call": "go_around", "world": {"width": 4, "height": 2, "start": [0, 1, "E"], "blocked": [[1, 1]]}, "goal": {"end_at": [2, 1], "facing": "E"}}}
     },
     {
       "id": "blocked_right_away",
       "title": "A block right away",
-      "ask": "Here the very first cell ahead is blocked. Get past it and walk to the far end of the bottom lane, facing east.",
+      "ask": "The very first cell ahead is blocked, and so is a cell in the top lane. Get past and walk to the bottom lane's far end, facing right (east).",
       "nudge": "At every step the robot has two choices. Which one does it need here?",
       "check": {"program": {"world": {"width": 9, "height": 2, "start": [0, 1, "E"], "blocked": [[1, 1], [5, 0]]}, "goal": {"end_at": [8, 1], "facing": "E"}}}
     },
     {
       "id": "blocked_at_end",
       "title": "A block near the end",
-      "ask": "Now the blocked cell is just before the end. Finish on the far end of the bottom lane, facing east, without bumping the outer wall.",
-      "nudge": "A detour carries the robot across more than one column. How many rounds does the walk need then?",
+      "ask": "The blocked cell is just before the end; the top lane has a block too. Finish on the bottom lane's far end, facing right (east), without bumping the wall.",
+      "nudge": "A detour carries the robot across more than one column. Does your walk still stop at the end?",
       "check": {"program": {"world": {"width": 9, "height": 2, "start": [0, 1, "E"], "blocked": [[7, 1], [2, 0]]}, "goal": {"end_at": [8, 1], "facing": "E"}}}
     }
   ]

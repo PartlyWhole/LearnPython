@@ -12,14 +12,14 @@
     {
       "id": "turn_the_corner",
       "title": "Carry the pattern round the corner",
-      "ask": "Now two rows. The cell just below the end of the first row is a neighbour too, so the pattern must carry on there.",
+      "ask": "In a plaza two rows tall, put a gem on your starting cell and lay the chessboard: no two gems touch across or up and down.",
       "nudge": "Stepping down to the next row is a step to a new cell, just like stepping along a row.",
       "check": {"program": {"world": {"width": 4, "height": 2, "start": [0, 0, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 1, "2,0": 1, "1,1": 1, "3,1": 1}}}}
     },
     {
       "id": "odd_width",
       "title": "Rows of odd length",
-      "ask": "In a plaza with an odd number of columns, tile every row so that no two gems sit side by side, up, down or across.",
+      "ask": "In a plaza with an odd number of columns, lay the chessboard on every row: no two gems touch across or up and down.",
       "nudge": "Does each row start the same way here? Look at the cell above each row's first cell.",
       "check": {"program": {"world": {"width": 3, "height": 3, "start": [0, 0, "E"], "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 1, "2,0": 1, "1,1": 1, "0,2": 1, "2,2": 1}}}}
     }

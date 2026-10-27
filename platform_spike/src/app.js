@@ -670,7 +670,17 @@ async function runQuest({ stepping = false } = {}) {
   events.record("quest.run", { level: level.id, quest: q.id, done: state.done });
   replayCode = code;
   questOutcome = { state, index: i, shown: false };
-  const pic = questPicture(q, level);
+  let pic = questPicture(q, level);
+  if (state.case) {
+    // Another of the part's cases failed: show that world (and its goal), the one that went wrong.
+    const kind = q.check.test ? "test" : "program";
+    const extra = q.check[kind].also?.[state.case - 1] ?? {};
+    const asCase = { ...q, check: { [kind]: { ...q.check[kind], ...extra } } };
+    pic = questPicture(asCase, level);
+    renderer.setWorld(pic.world);
+    renderer.markTarget(pic.goal?.end_at ?? pic.mark ?? null);
+    showQuestGoal(asCase, pic, pic.world); // its goal and words, e.g. "gives back True"
+  }
   const world = pic?.world ?? level.world;
   replayOutput = state.result.output ?? "";
   player.load(buildFrames(world, state.result.trace, state.result.error));

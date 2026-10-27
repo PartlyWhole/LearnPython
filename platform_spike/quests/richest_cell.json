@@ -5,14 +5,14 @@
     {
       "id": "one_pile",
       "title": "Get to the only pile",
-      "ask": "There is just one pile ahead. Use `scan()` to find where it is, go there and collect all of it.",
+      "ask": "There is just one pile ahead. Go to it and collect all of it.",
       "nudge": "The first number in the list is for the cell in front of you. Which cell is that?",
       "check": {"program": {"world": {"width": 4, "height": 1, "start": [0, 0, "E"], "gems": {"2,0": 3}}, "goal": {"gems_exactly": {}}}}
     },
     {
       "id": "biggest_pile",
       "title": "Pick out the biggest pile",
-      "ask": "Now there are several piles. Collect only the biggest one and leave the others where they are.",
+      "ask": "There are several piles. Collect only the biggest one and leave the others where they are.",
       "nudge": "The first pile you meet isn't always the biggest. How could you find where the biggest number sits?",
       "check": {"program": {"world": {"width": 6, "height": 1, "start": [0, 0, "E"], "gems": {"2,0": 2, "4,0": 5, "5,0": 1}}, "goal": {"gems_exactly": {"2,0": 2, "5,0": 1}}}}
     },

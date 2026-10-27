@@ -6,7 +6,7 @@
       "id": "first_side",
       "title": "One side of the field",
       "ask": "Plant a gem on the starting corner, then walk along the bottom edge to the next corner.",
-      "nudge": "This is one round of your loop. What has to happen at the corner before the next side?",
+      "nudge": "Walk a finger along the edge. How many cells does the robot cross to reach the corner?",
       "check": {"program": {"reach": {"put_at": [0, 4], "visit": [4, 4]}}}
     },
     {

@@ -5,21 +5,21 @@
     {
       "id": "odd_corridor",
       "title": "The middle of a short corridor",
-      "ask": "In a five-cell corridor there is exactly one middle cell. Put the gem there, using what `scan()` tells you rather than counting by eye.",
-      "nudge": "How many cells does `scan()` report here? How many of them lie between you and the middle?",
+      "ask": "In a five-cell corridor there is exactly one middle cell. Put the gem there.",
+      "nudge": "What does `scan()` report here? How many of those cells lie between you and the middle?",
       "check": {"program": {"world": {"width": 5, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"2,0": 1}}}}
     },
     {
       "id": "even_corridor",
       "title": "Two middles: the nearer one",
       "ask": "An eight-cell corridor has two middle cells. Put the gem on the one nearer to you.",
-      "nudge": "Does `scan()` count the cell you're standing on? Try both corridor lengths on paper.",
+      "nudge": "Does `scan()` count the cell you're standing on? Draw the corridor and count.",
       "check": {"program": {"world": {"width": 8, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"3,0": 1}}}}
     },
     {
       "id": "one_cell",
       "title": "A corridor of one cell",
-      "ask": "Here the wall is right in front of you. The middle is the cell you're on, so the gem goes there.",
+      "ask": "In a corridor one cell long, the wall is right in front of you. Put the gem on the middle cell.",
       "nudge": "What does `scan()` give back when there's nothing ahead?",
       "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"0,0": 1}}}}
     }

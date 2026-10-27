@@ -100,6 +100,12 @@ tools/check_quests.py         python3 tools/check_quests.py <level id> | --all
 | `program` | `{world?, goal?, reach?}`: the whole program, on `world` (a smaller version of the problem) or the level's own | `goal` and/or `reach`: `visit` a cell, `pick_at` / `put_at` a cell (`n` times, default 1); with `gems_then`, the whole floor at the moment of that put/pick (or, with `visit`, the robot's first arrival there: one whole pass of a loop) must match (so a wrong program can't pass by landing one gem there). A reach reached before a later crash counts | "a short corridor first", "get to the first corner", "the first pile" |
 | `code` | nothing runs | `check_code` checks (as in lesson guides) | rarely: only when the part *is* a shape (a named plan). Prefer the others |
 
+**More cases (`also`).** A `test` or `program` part may list more cases, each merged over the main
+one (`world`, `goal`, `returns`, `args`, `reach`), and it is done only when it passes them all. One world
+can be passed by luck: a `right_is_clear()` that always gives back `False`, a pile emptied by a fixed
+number of picks. The page shows the main case. When another case fails, its world and goal replace them
+on screen for the replay, and the reason starts "Right in this world, but not in another one like it:".
+
 A crash is always the only reason given (D14). A `test` on a function that doesn't exist says
 "There's no f() to test yet." and marks it `missing` (grey, Try it disabled).
 

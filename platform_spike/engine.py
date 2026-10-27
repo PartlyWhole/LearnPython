@@ -1028,13 +1028,34 @@ def _code_failure(code, checks):
         if "defines" in check:
             return f"There's no {check['defines']}() yet."
         if "calls" in check:
+            if "inside" in check and check_code(code, [{"calls": check["calls"]}])[0]:
+                where = {"for": "a for loop", "while": "a while loop", "if": "an if"}.get(check["inside"], check["inside"])
+                return f"{check['calls']}() is called, but not from inside {where} yet."
             return f"Nothing calls {check['calls']}() yet."
         return "Not in the code yet."
     return None
 
 
 def _quest_one(code, level, quest, hidden):
+    """A part's state. A test or program part may list `also`: more cases (another world, goal or
+    return value, merged over the main one) it must pass too, so one lucky world can't pass it (a
+    right_is_clear() that always says False, a pile emptied by a fixed count). The page shows the
+    main case; if another one fails, its run comes back, with `case` saying which (1, 2...)."""
     check = quest["check"]
+    first = _quest_case(code, level, check, hidden)
+    kind = "test" if "test" in check else "program" if "program" in check else None
+    if not first["done"] or not kind:
+        return first
+    for k, extra in enumerate(check[kind].get("also", []), 1):
+        case = {kind: {**{key: v for key, v in check[kind].items() if key != "also"}, **extra}}
+        state = _quest_case(code, level, case, hidden)
+        if not state["done"]:
+            return {**state, "why": f"Right in this world, but not in another one like it: {state['why'][0].lower()}{state['why'][1:]}",
+                    "case": k}
+    return first
+
+
+def _quest_case(code, level, check, hidden):
     if "code" in check:
         why = _code_failure(code, check["code"])
         # The run on the level's world, to watch: the shape is the part, the run shows it works.
@@ -1120,6 +1141,13 @@ def validate_quests(doc, level):
         check = q["check"]
         if not isinstance(check, dict) or len(check) != 1 or not set(check) <= {"test", "program", "code"}:
             raise LevelError(f"{path}.check: exactly one of test, program, code")
+        kind = "test" if "test" in check else "program" if "program" in check else None
+        also = check[kind].get("also", []) if kind else []
+        if not isinstance(also, list) or not all(isinstance(a, dict) and a and set(a) <= {"world", "goal", "returns", "args", "reach"} for a in also):
+            raise LevelError(f"{path}.check.{kind}.also: a list of cases (world, goal, returns, args, reach)")
+        for k, a in enumerate(also):
+            if "world" in a:
+                validate_world(a["world"], f"{path}.check.{kind}.also[{k}].world")
         if "test" in check:
             t = check["test"]
             if not isinstance(t.get("call"), str) or not t["call"].isidentifier():

@@ -12,7 +12,7 @@
     {
       "id": "to_the_next_square",
       "title": "Up to the next square",
-      "ask": "Write `next_square()`: from below a finished square, get to the top-left cell of the next square, past the empty column, facing east.",
+      "ask": "Write `next_square()`: from just below a finished square's west side, get to the top-left cell of the next square, past the empty column, facing east.",
       "nudge": "Where does `fill_square()` begin? That's where `next_square()` has to leave the robot.",
       "check": {"test": {"call": "next_square", "world": {"width": 5, "height": 3, "start": [0, 2, "E"], "gems": {"0,0": 1, "0,1": 1, "1,0": 1, "1,1": 1}}, "goal": {"gems_exactly": {"0,0": 1, "0,1": 1, "1,0": 1, "1,1": 1}, "end_at": [3, 0], "facing": "E"}}}
     },

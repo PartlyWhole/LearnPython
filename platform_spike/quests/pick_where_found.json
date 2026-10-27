@@ -5,7 +5,7 @@
     {
       "id": "every_cell",
       "title": "A gem on every cell",
-      "ask": "In this row every cell holds a gem. Walk the whole row and leave none behind, the last cell included.",
+      "ask": "Here every cell after the robot's holds a gem. Walk the whole row and leave none behind, the last cell included.",
       "nudge": "Watch the replay: when the robot looks for a gem, which cell is it standing on?",
       "check": {"program": {"world": {"width": 9, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1, "5,0": 1, "6,0": 1, "7,0": 1, "8,0": 1}}, "goal": {"all_gems_collected": true}}}
     },
@@ -19,7 +19,7 @@
     {
       "id": "here_and_there",
       "title": "Gems here and there",
-      "ask": "Now gems in different places than the level's row. Collect them all with the same program.",
+      "ask": "Gems in other places than the challenge's row. Collect them all.",
       "nudge": "If your program only works for one row, what does it rely on?",
       "check": {"program": {"world": {"width": 9, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 1, "4,0": 1, "6,0": 1, "8,0": 1}}, "goal": {"all_gems_collected": true}}}
     }

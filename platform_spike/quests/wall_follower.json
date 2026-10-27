@@ -7,7 +7,7 @@
       "title": "Look to the right",
       "ask": "Fill in `right_is_clear()`. With the wall right below, it should give back `False` and leave the robot where it was, facing the same way.",
       "nudge": "After it looks, which way is the robot facing? Which way should it face?",
-      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 1, "E"], "blocked": [[0, 2], [1, 2], [2, 2]]}, "returns": false, "goal": {"end_at": [1, 1], "facing": "E"}}}
+      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 1, "E"], "blocked": [[0, 2], [1, 2], [2, 2]]}, "returns": false, "goal": {"end_at": [1, 1], "facing": "E"}, "also": [{"world": {"width": 3, "height": 3, "start": [1, 1, "E"]}, "returns": true}]}}
     },
     {
       "id": "into_a_dip",
@@ -25,10 +25,10 @@
     },
     {
       "id": "whole_trail",
-      "title": "The whole trail",
-      "ask": "Use your step to follow the whole bumpy wall and collect every gem on the trail.",
+      "title": "A bump and a dip",
+      "ask": "On this short wall, use your step to follow it and collect every gem on the trail.",
       "nudge": "If the robot gets lost, find the first step where it leaves the wall.",
-      "check": {"program": {"goal": {"all_gems_collected": true}}}
+      "check": {"program": {"world": {"width": 6, "height": 4, "start": [0, 2, "E"], "blocked": [[0, 3], [1, 3], [2, 2], [2, 3], [3, 3], [4, 3], [5, 3]], "gems": {"0,2": 1, "1,2": 1, "1,1": 1, "2,1": 1, "3,1": 1, "3,2": 1, "4,2": 1, "5,2": 1}}, "goal": {"all_gems_collected": true}}}
     }
   ]
 }

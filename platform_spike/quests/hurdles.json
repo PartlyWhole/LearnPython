@@ -7,19 +7,19 @@
       "title": "Look to the right",
       "ask": "Fill in `right_is_clear()`. Facing up with a hurdle on its right, it should give back `False`, and leave the robot on its cell, facing the same way.",
       "nudge": "After it looks, which way is the robot facing? Which way should it face?",
-      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 2, "N"], "blocked": [[2, 2]]}, "returns": false, "goal": {"end_at": [1, 2], "facing": "N"}}}
+      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 2, "N"], "blocked": [[2, 2]]}, "returns": false, "goal": {"end_at": [1, 2], "facing": "N"}, "also": [{"world": {"width": 3, "height": 3, "start": [1, 2, "N"]}, "returns": true}]}}
     },
     {
       "id": "low_hurdle",
       "title": "Over a low hurdle",
-      "ask": "Fill in `jump()`: from just before a one-cell hurdle, facing east, end on the track just past it, facing east again.",
+      "ask": "Fill in `jump()`: from just before a one-cell hurdle, facing east (→), end on the track just past it, facing east again.",
       "nudge": "Trace the robot's path with your finger: up, over, down. Where does each part stop?",
       "check": {"test": {"call": "jump", "world": {"width": 3, "height": 3, "start": [0, 2, "E"], "blocked": [[1, 2]]}, "goal": {"end_at": [2, 2], "facing": "E"}}}
     },
     {
       "id": "tall_hurdle",
       "title": "Over a hurdle of any height",
-      "ask": "The same `jump()` should clear a hurdle two cells tall and land in the same kind of place.",
+      "ask": "Fill in `jump()` so it also clears a hurdle two cells tall, ending on the track just past it, facing east (→).",
       "nudge": "How can the robot tell it has climbed high enough to go over?",
       "check": {"test": {"call": "jump", "world": {"width": 3, "height": 4, "start": [0, 3, "E"], "blocked": [[1, 3], [1, 2]]}, "goal": {"end_at": [2, 3], "facing": "E"}}}
     }

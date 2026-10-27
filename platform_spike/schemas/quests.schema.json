@@ -75,7 +75,15 @@
                   "goal": {
                     "type": "object"
                   },
-                  "returns": {}
+                  "returns": {},
+                  "also": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "minProperties": 1
+                    },
+                    "description": "More cases the part must pass too (merged over the main one: world, goal, returns, args, reach), so one lucky world can't pass it. The page shows the main case."
+                  }
                 }
               },
               "program": {
@@ -112,6 +120,14 @@
                         "description": "With put_at/pick_at: the whole floor at the moment of that put or pick (the n-th), so a wrong program can't pass by landing one gem there"
                       }
                     }
+                  },
+                  "also": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "minProperties": 1
+                    },
+                    "description": "More cases the part must pass too (merged over the main one: world, goal, returns, args, reach), so one lucky world can't pass it. The page shows the main case."
                   }
                 }
               },

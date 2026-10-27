@@ -19,7 +19,7 @@
     {
       "id": "all_stripes",
       "title": "All three stripes",
-      "ask": "Repeat the pair of calls to paint every stripe, with an empty row after each one.",
+      "ask": "Repeat the pair of calls to paint every stripe, with an empty row between them.",
       "nudge": "Look at the Goal view. How many times does the pair need to run?",
       "check": {"program": {"goal": {"gems_exactly": {"0,0": 1, "0,2": 1, "0,4": 1, "1,0": 1, "1,2": 1, "1,4": 1, "2,0": 1, "2,2": 1, "2,4": 1, "3,0": 1, "3,2": 1, "3,4": 1, "4,0": 1, "4,2": 1, "4,4": 1}}}}
     }

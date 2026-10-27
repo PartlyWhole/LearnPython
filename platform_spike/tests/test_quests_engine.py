@@ -98,6 +98,20 @@ class Validation(unittest.TestCase):
                 validate_quests(bad, LEVEL)
 
 
+class MoreCases(unittest.TestCase):
+    def test_a_part_must_pass_its_other_cases_too(self):
+        quest = {"id": "r", "title": "x", "ask": "x", "check": {"test": {
+            "call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 1, "N"], "blocked": [[2, 1]]},
+            "returns": False, "goal": {"end_at": [1, 1], "facing": "N"},
+            "also": [{"world": {"width": 3, "height": 3, "start": [1, 1, "N"]}, "returns": True}]}}}
+        looks = "def right_is_clear():\n    turn_left()\n    turn_left()\n    turn_left()\n    c = front_is_clear()\n    turn_left()\n    return c\n"
+        self.assertTrue(state(looks, [quest])[0]["done"])
+        q = state("def right_is_clear():\n    return False\n", [quest])[0]
+        self.assertFalse(q["done"])
+        self.assertEqual(q["case"], 1)
+        self.assertTrue(q["why"].startswith("Right in this world, but not in another one like it: right_is_clear() gave back False"))
+
+
 if __name__ == "__main__":
     unittest.main()
 

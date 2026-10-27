@@ -52,6 +52,7 @@ export function isGuideState(g) {
 export function isQuestState(s) {
   return s && typeof s === "object" && Array.isArray(s.quests) && s.quests.length <= 5 &&
     s.quests.every((q) => q && typeof q.done === "boolean" && (q.why === null || q.why === undefined || isText(q.why)) &&
+      (q.case === undefined || (Number.isInteger(q.case) && q.case > 0 && q.case <= 20)) &&
       (q.result === null || q.result === undefined || isRunResult(q.result)));
 }
 

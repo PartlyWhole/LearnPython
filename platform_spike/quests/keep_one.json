@@ -7,12 +7,12 @@
       "title": "Trim one pile down",
       "ask": "A corridor of one cell holding a big pile. Leave exactly one gem behind, however many were there to begin with.",
       "nudge": "Picture the pile shrinking. When should the robot stop taking?",
-      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 4}}, "goal": {"gems_exactly": {"0,0": 1}}}}
+      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 4}}, "goal": {"gems_exactly": {"0,0": 1}}, "also": [{"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 2}}}]}}
     },
     {
       "id": "trim_along",
       "title": "Every pile along the way",
-      "ask": "Now a short corridor with piles further along and an empty cell. Each pile should end with one gem, and the empty cell stays empty.",
+      "ask": "A short corridor with piles further along and empty cells. Each pile should end with one gem, and the empty cells stay empty.",
       "nudge": "Which line runs once for every cell the robot steps onto?",
       "check": {"program": {"world": {"width": 4, "height": 1, "start": [0, 0, "E"], "gems": {"1,0": 3, "3,0": 2}}, "goal": {"gems_exactly": {"1,0": 1, "3,0": 1}}}}
     },

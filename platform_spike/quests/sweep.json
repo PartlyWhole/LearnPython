@@ -12,7 +12,7 @@
     {
       "id": "every_row",
       "title": "Back and forth, every row",
-      "ask": "Now a taller room. Keep zigzagging row after row until every gem is collected, and stop when there is no row left.",
+      "ask": "A taller room. Keep zigzagging row after row until every gem is collected, and stop when there is no row left.",
       "nudge": "At the east end the robot turns one way to go down. Which way at the west end?",
       "check": {"program": {"world": {"width": 4, "height": 5, "start": [0, 0, "E"], "gems": {"2,1": 1, "0,2": 1, "3,3": 2, "1,4": 1}}, "goal": {"all_gems_collected": true}}}
     },

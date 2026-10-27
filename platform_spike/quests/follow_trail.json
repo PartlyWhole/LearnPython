@@ -12,7 +12,7 @@
     {
       "id": "longer_trail",
       "title": "A longer trail",
-      "ask": "Now a longer trail with room after it. Pick up every gem and stop on the first empty cell, well before the wall.",
+      "ask": "A longer trail with room after it. Pick up every gem and stop on the first empty cell, well before the wall.",
       "nudge": "Which steps happen once for every gem on the trail?",
       "check": {"program": {"world": {"width": 8, "height": 1, "start": [1, 0, "E"], "gems": {"1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1}}, "goal": {"all_gems_collected": true, "end_at": [5, 0]}}}
     },

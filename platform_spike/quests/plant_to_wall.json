@@ -5,7 +5,7 @@
     {
       "id": "two_cell_bed",
       "title": "A bed of two cells",
-      "ask": "A short bed with old gems in front. The cell the robot stands on and the one in front of it each end with exactly one gem.",
+      "ask": "A bed of two cells. The far one holds old gems. Both cells should end with exactly one gem.",
       "nudge": "Count the gems you need and the steps you take. Are they the same number?",
       "check": {"program": {"world": {"width": 3, "height": 2, "start": [1, 1, "N"], "bag": "infinite", "gems": {"1,0": 2}, "blocked": [[0, 0], [2, 0], [0, 1], [2, 1]]}, "goal": {"gems_exactly": {"1,0": 1, "1,1": 1}}}}
     },
@@ -19,7 +19,7 @@
     {
       "id": "bed_any_length",
       "title": "A bed of any length",
-      "ask": "Now a longer bed with old gems here and there. Every cell up to the wall ends with exactly one gem, with the same program.",
+      "ask": "A longer bed with old gems here and there. Every cell from where the robot stands up to the wall should end with exactly one gem.",
       "nudge": "If your program only fits one bed, what does it rely on?",
       "check": {"program": {"world": {"width": 3, "height": 4, "start": [1, 3, "N"], "bag": "infinite", "gems": {"1,3": 1, "1,1": 2}, "blocked": [[0, 0], [2, 0], [0, 1], [2, 1], [0, 2], [2, 2], [0, 3], [2, 3]]}, "goal": {"gems_exactly": {"1,0": 1, "1,1": 1, "1,2": 1, "1,3": 1}}}}
     }

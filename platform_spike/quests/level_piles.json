@@ -12,14 +12,14 @@
     {
       "id": "shrink_big",
       "title": "Shrink a big pile",
-      "ask": "Called on a cell with a big pile, `level_pile()` should leave exactly 2 gems there too.",
+      "ask": "`level_pile()` is called on a cell with a big pile. It should leave exactly 2 gems there too.",
       "nudge": "Too few and too many are two different problems. Does your function handle both?",
       "check": {"test": {"call": "level_pile", "world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 5}, "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 2}}}}
     },
     {
       "id": "level_corridor",
       "title": "Level a whole corridor",
-      "ask": "Now a short corridor that starts on a big pile. Every cell, the first one too, should end with exactly 2 gems.",
+      "ask": "A short corridor that starts on a big pile. Every cell, the first one too, should end with exactly 2 gems.",
       "nudge": "Does the robot ever look at the cell it starts on?",
       "check": {"program": {"world": {"width": 4, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 5, "2,0": 1}, "bag": "infinite"}, "goal": {"gems_exactly": {"0,0": 2, "1,0": 2, "2,0": 2, "3,0": 2}}}}
     }

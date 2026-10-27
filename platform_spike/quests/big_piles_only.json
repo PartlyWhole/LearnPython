@@ -12,14 +12,14 @@
     {
       "id": "small_pile_stays",
       "title": "A small pile stays",
-      "ask": "Called on a cell with the biggest small pile, `take_big_pile()` should leave every gem exactly where it is.",
+      "ask": "`take_big_pile()` is called on a cell holding the biggest pile that is not big. It must leave every gem exactly where it is.",
       "nudge": "What question does the robot ask before it takes anything?",
       "check": {"test": {"call": "take_big_pile", "world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 2}}, "goal": {"gems_exactly": {"0,0": 2}}}}
     },
     {
       "id": "whole_corridor",
       "title": "Every cell, the first too",
-      "ask": "Now a short corridor that starts on a big pile. Only the small pile should be left at the end.",
+      "ask": "A short corridor with a big pile at each end and a small pile between. Only the small pile should be left.",
       "nudge": "Does the robot ever look at the cell it starts on?",
       "check": {"program": {"world": {"width": 4, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 4, "2,0": 1, "3,0": 5}}, "goal": {"gems_exactly": {"2,0": 1}}}}
     }
