@@ -268,3 +268,17 @@ solution completes every part. Design and authoring rules: `docs/quests.md`.
 - Sub-quests sit between: they never show code, are on every code level, and turn the problem
   into parts the learner still has to solve.
 
+### D26. Sub-quests are pages of their own, sharing one program
+**Status:** accepted (Oct 2026; the project owner's direction). Supersedes D25's in-place panel.
+**Decision:** A strip of tabs (the challenge, then each part) switches between the challenge
+and its sub-quests. Each sub-quest is a page of its own, at `?quest=`, with no reload; Back works.
+The page has the part's title, problem, world, goal and Run, and a line saying which code and
+world Run uses. All of them share one program, the level's draft. A part can be opened in any
+order. A part that was solved and then broken by an edit shows as changed (amber), not undone.
+**Why:** In the panel, a part's world, start and goal sat beside the challenge's world, goal and
+results. It wasn't clear which was which. A page of its own makes the part the whole
+screen, like a level. Sharing one program is what makes the parts add up: the parts are
+pieces of one real solution (`tools/check_quests.py` requires the reference to complete them all).
+**Costs:** Run means something different inside a part, so the page always says what it runs.
+The challenge's help (guide, hints, bonus, demo) is hidden inside a part.
+

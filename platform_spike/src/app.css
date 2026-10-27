@@ -463,43 +463,51 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .caption.stale code { color: var(--muted); } /* the replay is of code since edited */
 .caption code.start { color: var(--muted); font-family: var(--sans); }
 
-/* ------------------------------------------------ sub-quests (docs/quests.md) */
+/* ------------------------------------------------ sub-quests (docs/quests.md, D26) */
+/* The strip: the challenge, then each part, as tabs. A part is a page of its own. */
 .quests-button.on { color: var(--guide-accent); background: var(--guide-bg); }
-.quest-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-.quest-head { width: 100%; display: flex; align-items: center; gap: 10px; border: 0; background: none; color: var(--ink); padding: 5px 4px; border-radius: 8px; text-align: left; font: inherit; cursor: pointer; }
-.quest-head:hover { background: var(--guide-bg); }
+.quest-strip { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; padding: 6px 8px; border-radius: 12px; background: var(--guide-bg); overflow-x: auto; }
+.quest-strip[hidden] { display: none; }
+.quest-strip-label { color: var(--guide-accent); line-height: 0; flex: none; }
+.quest-strip-label .icon { width: 18px; height: 18px; }
+.quest-tabs { display: flex; gap: 4px; align-items: center; min-width: 0; }
+.quest-tab { display: inline-flex; align-items: center; gap: 7px; border: 0; background: none; color: var(--muted); padding: 4px 10px 4px 5px; border-radius: 999px; font: 13px var(--sans); white-space: nowrap; cursor: pointer; }
+.quest-tab:hover { background: var(--surface); color: var(--ink); }
+.quest-tab[aria-current="page"] { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: inset 0 0 0 1.5px var(--guide-accent); }
+.quest-tab .quest-mark { width: 20px; height: 20px; }
+.quest-tab.challenge .quest-mark { color: var(--guide-accent); box-shadow: none; }
+.quest-tab.challenge .quest-mark .icon { width: 15px; height: 15px; }
+.quest-tab + .quest-tab:not(.challenge)::before { content: ""; }
+.quest-tab.challenge { margin-right: 6px; }
+.quest-tab.changed .quest-mark { color: var(--bonus); box-shadow: inset 0 0 0 1.5px var(--bonus); }
+.quests.checking .quest-mark, .quest-strip.checking .quest-mark { opacity: 0.6; }
 .quest-mark { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 600 12px var(--sans); color: var(--muted); box-shadow: inset 0 0 0 1.5px var(--line); line-height: 0; }
-.quest.open .quest-mark { color: var(--guide-accent); box-shadow: inset 0 0 0 1.5px var(--guide-accent); }
-.quest.done .quest-mark { background: var(--ok); color: var(--surface); box-shadow: none; }
-.quest-mark .icon { width: 14px; height: 14px; stroke-width: 3; }
-.quest-title { font-size: 14px; }
-.quest.open .quest-title { font-weight: 600; }
-.quest.done:not(.open) .quest-title { color: var(--muted); }
+.quest-tab.done .quest-mark { background: var(--ok); color: var(--surface); box-shadow: none; }
+.quest-mark .icon { width: 13px; height: 13px; stroke-width: 3; }
 @media (prefers-reduced-motion: no-preference) {
-  .quest.just-done .quest-mark { animation: quest-pop 0.6s cubic-bezier(0.2, 1.6, 0.4, 1); }
+  .quest-tab.just-done .quest-mark { animation: quest-pop 0.6s cubic-bezier(0.2, 1.6, 0.4, 1); }
 }
 @keyframes quest-pop { 0% { transform: scale(0.4); } 100% { transform: scale(1); } }
-.quest-body { display: grid; gap: 8px; padding: 2px 4px 8px 36px; }
-.quest-ask { margin: 0; font-size: 14px; line-height: 1.45; }
-.quest-ask code { font: 13px var(--mono); background: var(--bg); padding: 1px 5px; border-radius: 4px; }
-.quest-pic { margin: 0; display: flex; align-items: center; gap: 8px; }
-.quest-grid { width: var(--pic-w, 128px); max-width: 100%; line-height: 0; background: var(--surface); border-radius: 8px; padding: 4px; box-shadow: inset 0 0 0 1px var(--line); }
-.quest-grid .grid-world { width: 100%; height: auto; }
-.quest-pic.stacked { flex-direction: column; align-items: flex-start; gap: 4px; }
-.quest-pic.stacked .quest-arrow { transform: rotate(90deg); margin-left: calc(var(--pic-w) / 2 - 9px); }
-.quest-arrow { color: var(--muted); line-height: 0; }
-.quest-arrow .icon { width: 18px; height: 18px; }
-.quest-why { margin: 0; font-size: 13px; color: var(--danger); }
-.quest-actions { display: flex; align-items: center; gap: 6px; }
-.quest-try { padding: 5px 12px 5px 8px; font-size: 13px; }
-.quest-try .icon { order: 0; width: 16px; height: 16px; }
-.quest-nudge { margin: 0; font-size: 13px; color: var(--muted); font-style: italic; }
-.quests.checking .dots .dot { animation: dot-wait 1s ease-in-out infinite; }
-@keyframes dot-wait { 50% { opacity: 0.4; } }
+
+/* Inside a part: the page says so (an accent frame), and the challenge's own help steps aside. */
+body.in-quest .layout > .panel { box-shadow: inset 0 0 0 1.5px var(--guide-accent); }
+body.in-quest header.top h1 { color: var(--guide-accent); }
+body.in-quest #guide, body.in-quest #guide-chip, body.in-quest #hint-offer, body.in-quest #hint,
+body.in-quest #watch-demo, body.in-quest #world-tag { display: none !important; }
+.quest-notes { display: grid; gap: 4px; margin-top: 6px; }
+.quest-notes[hidden] { display: none; }
+.quest-note { margin: 0; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.quest-note[hidden] { display: none; }
+.quest-note .icon { width: 14px; height: 14px; flex: none; color: var(--guide-accent); }
+.quest-note code { font: 12px var(--mono); background: var(--bg); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+.quest-note.before { color: var(--bonus); }
+.quest-note.nudge-row .icon-button { padding: 2px; }
+#quest-nudge { font-style: italic; }
+.why.quest-fail { color: var(--danger); margin: 0; }
+.why.quest-fail.missing { color: var(--muted); }
 .world-tag.quest { background: var(--guide-bg); color: var(--guide-accent); }
 .quest-why.missing { color: var(--muted); }
 .quest-try:disabled { opacity: 0.45; }
-.editor-panel.quests-on #guide { display: none; } /* one kind of help at a time */
 .worlds-note { margin: 0 0 6px; font-size: 14px; color: var(--ink); }
 .world-list .watch-world.labelled { display: inline-flex; gap: 4px; padding: 3px 10px 3px 6px; border-radius: 999px; font: 600 13px var(--sans); box-shadow: inset 0 0 0 1px var(--line); }
 .world-list .watch-world.labelled .icon { width: 15px; height: 15px; }
@@ -515,3 +523,8 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .world-dot.fail { background: var(--danger); }
 .world-dot:disabled { cursor: default; opacity: 0.85; }
 .world-dot[aria-current] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.world-dots.preview .world-dot { background: var(--bg); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); cursor: help; }
+.world-dots.preview .world-dot.here { color: var(--ink); }
+.quest-note-row { display: flex; align-items: center; gap: 4px; }
+.quest-nudge-button { padding: 2px; }
+.quest-nudge-button[hidden] { display: none; }

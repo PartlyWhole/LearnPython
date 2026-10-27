@@ -53,3 +53,22 @@ test("a part that stacks several gems on one cell pictures the stack", () => {
   assert.deepEqual(questPicture(q, level).goal, { gems_exactly: { "1,0": 3 } });
   assert.equal(questPicture({ check: { program: { reach: { put_at: [1, 0] } } } }, level).goal, null);
 });
+
+test("goal words and the Run note say which world and which code each part uses", async () => {
+  const { questGoalSummary, runNote } = await import("../../src/lessons/quests.js");
+  assert.equal(questGoalSummary(R), "Goal: the robot picks up a gem on the marked cell.");
+  assert.equal(questGoalSummary({ check: { program: { reach: { put_at: [1, 0], n: 3 } } } }), "Goal: the robot puts 3 gems on the marked cell.");
+  assert.equal(questGoalSummary(T), null, "a test with a goal: the picture's own words");
+  assert.equal(questGoalSummary({ check: { test: { call: "f", world: {}, returns: false } } }), "Goal: f() gives back False.");
+  assert.deepEqual(runNote(T), { lead: "Run tests only ", code: "f()", rest: ", on its own, in this small world." });
+  assert.match(runNote(W).lead, /smaller world/);
+  assert.match(runNote(R).lead, /challenge's world/);
+});
+
+test("next goes forward to the next part not done, then back, then to the challenge", async () => {
+  const { nextQuest, questStatus } = await import("../../src/lessons/quests.js");
+  assert.equal(nextQuest([true, false, false], 0), 1);
+  assert.equal(nextQuest([false, true, true], 1), 0, "out of order: back to the one skipped");
+  assert.equal(nextQuest([true, true, true], 2), null);
+  assert.deepEqual([questStatus(true, false), questStatus(false, true), questStatus(false, false)], ["done", "changed", "todo"]);
+});

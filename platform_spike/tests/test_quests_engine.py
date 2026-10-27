@@ -57,7 +57,7 @@ class ProgramChecks(unittest.TestCase):
         self.assertTrue(state("move()\nmove()\nmove()\npick()\n", [quest])[0]["done"])
         q = state("move()\nmove()\nmove()\n", [quest])[0]
         self.assertEqual(q["why"], "The robot never picks up a gem on the marked cell.")
-        self.assertIsNone(q["result"], "the level's own world: the page already has that run")
+        self.assertEqual(len(q["result"]["trace"]), 3, "every part has a run to replay on its page")
 
     def test_a_smaller_world_with_a_goal(self):
         quest = {"id": "s", "title": "x", "ask": "x", "check": {"program": {

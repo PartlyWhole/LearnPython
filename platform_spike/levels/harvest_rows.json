@@ -2,7 +2,7 @@
   "format": 1,
   "id": "harvest_rows",
   "title": "The icicle cave",
-  "brief": "Gems hang from the cave roof in lines, like icicles, above the cells of the floor. Collect every gem, then go back to your starting cell and face east. Icicles come in every length (some cells have none), and the roof is higher in some places.",
+  "brief": "Gems hang from the cave roof in lines, like icicles, above the cells of the floor. Collect every gem, then go back to your starting cell and face east. Icicles come in every length (some cells have none), and the roof is higher in some places. Some caves are only one cell wide.",
   "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\n# Your plan goes here.\n",
   "world": {
     "width": 7,

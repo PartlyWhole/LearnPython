@@ -16,6 +16,7 @@ import { GuideUI } from "./lessons/guide-ui.js";
 import { DriveUI } from "./lessons/drive-ui.js";
 import { HintUI } from "./lessons/hint-ui.js";
 import { QuestsUI } from "./lessons/quests-ui.js";
+import { questPicture, questGoalSummary, runNote, nextQuest, textParts } from "./lessons/quests.js";
 import { lessonForPractice } from "./lessons/hints.js";
 import { playOrder, lessonIds } from "./lessons/order.js";
 import { EventLog } from "./progress/events.js";
@@ -52,6 +53,7 @@ let lessons = [];      // lessons/index.json order; each attaches to its guided 
 let lesson = null;     // this level's lesson, if it has one
 let shownWorld = null; // the world on screen: the level's, or a demo's
 let room = null;       // the shared room this page is in, if any
+let questIndex = null; // the sub-quest on screen (its own page, ?quest=), or null for the challenge
 let celebrated = false; // this run's line bonus has been celebrated
 let nudged = false;     // this run's failure has pointed at Step back
 let levelsById = {};
@@ -129,7 +131,7 @@ const player = new TracePlayer({
     ui.play.setAttribute("aria-label", playing ? "Pause" : "Play");
     ui.play.title = playing ? "Pause" : "Play";
   },
-  onEnd: () => (demo?.active ? demo.replayEnded() : showOutcome()),
+  onEnd: () => (demo?.active ? demo.replayEnded() : questIndex !== null ? showQuestOutcome() : showOutcome()),
 });
 
 // ---------------------------------------------------------------- stepping through a replay
@@ -254,6 +256,7 @@ function showFrame(frame, index, total) {
   if (index === total - 1 && !player.playing) {
     // Reached the end by stepping (playing to the end goes through onEnd): the same as playing.
     if (demo?.active) { if (demo.lastRun && !demo.lastRun.shown) demo.replayEnded(); }
+    else if (questIndex !== null) showQuestOutcome();
     else if (lastReport) showOutcome();
   }
 }
@@ -311,7 +314,7 @@ function syncButtons() {
 function updateLineCount() {
   const el = $("line-count");
   const max = level?.constraints?.max_lines;
-  el.hidden = !max || demo?.active;
+  el.hidden = !max || demo?.active || questIndex !== null; // the bonus is the challenge's, not a part's
   if (!max) return;
   const n = countLines(editor.getCode());
   el.innerHTML = icon("star");
@@ -360,6 +363,7 @@ function setNote(text, bad = false) {
 async function runCode(shared = null, { stepping = false } = {}) {
   if (demo.active) return demo.runRequested(); // in a demo, Run runs the demo's step
   if (!level || drive.active) return;
+  if (questIndex !== null) return shared ? undefined : runQuest({ stepping }); // a part runs its own check (rooms: local only)
   if (busy) { if (shared) pendingShared = shared; return; } // a partner's run waits for this one
   busy = true;
   syncButtons();
@@ -393,7 +397,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
     pendingHintRun = lastReport.passed;
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
     replayCode = code;
-    if (!shared) quests.check({ acted: true }); // the sub-quests panel, if open, ticks off what this code solves
+    if (!shared && quests.isOpen) quests.check(); // the strip, if open, ticks off what this code solves
     resultsPanel.hidden = true; // the results come with the end of the replay (showOutcome)
     loadReplay(level.world, main);
     if (player.frames.length < 2) showOutcome(); // nothing happened: straight to the outcome
@@ -511,20 +515,201 @@ $("setting-unlock").onchange = (e) => {
 $("close-settings").onclick = () => $("settings-dialog").close();
 $("settings-dialog").addEventListener("click", (e) => { if (e.target === $("settings-dialog")) $("settings-dialog").close(); });
 // ---------------------------------------------------------------- sub-quests (docs/quests.md)
+// A sub-quest is a page of its own (?quest=<id>, no reload; Back returns): its title and problem
+// in the header, its world and goal on screen, and Run runs that part. The code is the level's
+// one program, shared by the challenge and every part, so a part's code carries on.
 const quests = new QuestsUI({
   controller, editor, ...timers,
   onEvent: (type, data) => events.record(type, data),
-  onTry: (world, result, quest, goal) => {
-    player.pause();
-    replayCode = editor.getCode();
-    loadReplay(world, result, quest.title, { goal: goal ?? {}, kind: "quest" });
-    player.play();
-  },
-  el: {
-    button: $("quests-open"), panel: $("quests"), list: $("quests-list"), dots: $("quests-dots"),
-    close: $("quests-close"), sr: $("quests-sr"),
-  },
+  onEnter: (i) => (i === null ? leaveQuest() : enterQuest(i)),
+  el: { button: $("quests-open"), panel: $("quests"), tabs: $("quest-tabs"), sr: $("quests-sr") },
 });
+let questOutcome = null; // {state, index, shown} for the sub-quest run on screen
+
+function questUrl(i) {
+  const params = new URLSearchParams(location.search);
+  if (i === null) params.delete("quest"); else params.set("quest", quests.quest(i).id);
+  return `?${params}`;
+}
+
+/** Show sub-quest i as its own page. */
+function enterQuest(i, { push = true } = {}) {
+  const q = quests.quest(i);
+  if (!q || drive.active || demo.active) return;
+  if (busy) controller.stop();
+  if (push && questIndex !== i) history.pushState({ quest: q.id }, "", questUrl(i));
+  questIndex = i;
+  document.body.classList.add("in-quest");
+  events.record("quest.entered", { level: level.id, quest: q.id });
+  // Header: the part's name and problem, then which code and world Run uses, the earlier parts
+  // still to do (any order is fine; the strip shows where it fits), and the nudge.
+  $("level-title").textContent = q.title;
+  const brief = $("level-brief");
+  brief.replaceChildren(...textParts(q.ask).map((p) => {
+    const node = document.createElement(p.code ? "code" : "span");
+    node.textContent = p.text;
+    return node;
+  }));
+  const note = runNote(q);
+  const run = $("quest-run-note");
+  run.replaceChildren(document.createTextNode(note.lead));
+  if (note.code) { const c = document.createElement("code"); c.textContent = note.code; run.append(c, note.rest); }
+  run.insertAdjacentHTML("afterbegin", icon("play"));
+  const earlier = quests.doneNow().slice(0, i).map((d, k) => (d ? null : k + 1)).filter(Boolean);
+  $("quest-before").hidden = !earlier.length;
+  $("quest-before").textContent = earlier.length
+    ? `Builds on part${earlier.length > 1 ? "s" : ""} ${earlier.join(" and ")}, which your code doesn't solve yet. You can still try this one.` : "";
+  $("quest-nudge").textContent = q.nudge ?? "";
+  $("quest-nudge").hidden = true;
+  $("quest-nudge-button").setAttribute("aria-expanded", "false");
+  $("quest-nudge-button").hidden = !q.nudge;
+  $("quest-notes").hidden = false;
+  document.title = `${q.title} · ${level.title} · LearnPython`;
+  // The part's world, as it starts, and its goal.
+  showQuestWorld(q);
+  lastReport = null;
+  questOutcome = null;
+  resultsPanel.hidden = true;
+  ui.results.replaceChildren();
+  ui.outputWrap.hidden = true;
+  setNote("");
+  updateLineCount();
+  quests.setCurrent(i);
+  quests.check(); // the strip's ticks, for the code as it is now
+}
+
+/** Back to the challenge itself. */
+function leaveQuest({ push = true } = {}) {
+  if (questIndex === null) return;
+  if (busy) controller.stop();
+  if (push) history.pushState({}, "", questUrl(null));
+  questIndex = null;
+  questOutcome = null;
+  document.body.classList.remove("in-quest");
+  $("quest-notes").hidden = true;
+  $("level-title").textContent = level.title;
+  $("level-brief").textContent = level.brief ?? "";
+  document.title = `${level.title} · LearnPython`;
+  lastReport = null;
+  resultsPanel.hidden = true;
+  ui.results.replaceChildren();
+  ui.outputWrap.hidden = true;
+  showLevelWorld();
+  updateLineCount();
+  quests.setCurrent(null);
+}
+
+$("quest-nudge-button").onclick = () => {
+  const n = $("quest-nudge");
+  n.hidden = !n.hidden;
+  $("quest-nudge-button").setAttribute("aria-expanded", String(!n.hidden));
+  if (!n.hidden) events.record("quest.nudge", { level: level.id, quest: quests.quest(questIndex)?.id });
+};
+
+addEventListener("popstate", () => {
+  if (!level) return;
+  const id = new URLSearchParams(location.search).get("quest");
+  const i = quests.quests.findIndex((q) => q.id === id);
+  if (i >= 0) enterQuest(i, { push: false }); else leaveQuest({ push: false });
+});
+
+/** A sub-quest's world and goal, before it runs. */
+function showQuestWorld(q) {
+  const pic = questPicture(q, level);
+  const world = pic?.world ?? level.world;
+  replayWorld = "quest";
+  replayOutput = null;
+  shownWorld = world;
+  renderer.setWorld(world);
+  renderer.markTarget(pic?.goal?.end_at ?? pic?.mark ?? null);
+  player.load(buildFrames(world, []));
+  $("world-tag").hidden = true;
+  $("world-dots").hidden = true;
+  showQuestGoal(q, pic, world);
+}
+
+function showQuestGoal(q, pic, world) {
+  const view = goalWorld(world, pic?.goal ?? {});
+  goalRenderer.setGoal(view);
+  if (!pic?.goal && pic?.mark) goalRenderer.markTarget(pic.mark);
+  const words = questGoalSummary(q);
+  $("goal-summary").textContent = words === null ? view.summary
+    : words.startsWith("Goal") ? words : `${view.summary} ${words}`;
+}
+
+/** Run, on a sub-quest's page: that part's check, replayed in its world. */
+async function runQuest({ stepping = false } = {}) {
+  const i = questIndex;
+  const q = quests.quest(i);
+  busy = true;
+  syncButtons();
+  await guide.idle();
+  await quests.idle();
+  player.pause();
+  showQuestWorld(q);
+  resultsPanel.hidden = true;
+  ui.results.replaceChildren();
+  clearCoach();
+  handStepped = false;
+  setNote(controller.state === "ready" ? "" : "Waiting for Python to finish loading…");
+  const code = editor.getCode();
+  const states = await quests.check();
+  busy = false;
+  syncButtons();
+  setNote("");
+  if (questIndex !== i) return; // left the part while it ran
+  const state = states?.[i];
+  if (!state) { setNote("Something went wrong running Python. This is a bug in the app, not your code.", true); return; }
+  events.record("quest.run", { level: level.id, quest: q.id, done: state.done });
+  replayCode = code;
+  questOutcome = { state, index: i, shown: false };
+  const pic = questPicture(q, level);
+  const world = pic?.world ?? level.world;
+  replayOutput = state.result.output ?? "";
+  player.load(buildFrames(world, state.result.trace, state.result.error));
+  replayWorld = "quest";
+  if (player.frames.length < 2) showQuestOutcome();
+  else if (!stepping) player.play();
+  else { ui.fwd.classList.add("coach"); ui.fwd.focus(); }
+}
+
+/** A sub-quest run's result, once its replay reaches the end: a check and the way on, or what
+ *  happened. */
+function showQuestOutcome() {
+  if (!questOutcome || questOutcome.shown) return;
+  questOutcome.shown = true;
+  const { state, index } = questOutcome;
+  const parts = [];
+  if (state.done) {
+    const verdict = document.createElement("p");
+    verdict.className = "verdict pass";
+    verdict.innerHTML = `${icon("check")}<span class="sr-only">Sub-quest done</span>`;
+    parts.push(verdict);
+    const next = nextQuest(quests.doneNow(), index);
+    const go = document.createElement("button");
+    go.className = "next-level round-button";
+    if (next === null) {
+      go.innerHTML = `<span class="label">Back to the challenge</span>${icon("next")}`;
+      go.setAttribute("aria-label", `Every part done. Back to the challenge: ${level.title}`);
+      go.onclick = () => leaveQuest();
+    } else {
+      go.innerHTML = `<span class="label">Next part</span>${icon("next")}`;
+      go.setAttribute("aria-label", `Next part: ${quests.quest(next).title}`);
+      go.title = quests.quest(next).title;
+      go.onclick = () => enterQuest(next);
+    }
+    parts.push(go);
+  } else {
+    const why = document.createElement("p");
+    why.className = `why quest-fail${state.missing ? " missing" : ""}`;
+    why.textContent = state.why ?? "Not yet.";
+    parts.push(why);
+  }
+  ui.results.replaceChildren(...parts);
+  resultsPanel.hidden = false;
+  const r = resultsPanel.getBoundingClientRect();
+  if (r.top > window.innerHeight - 60 || r.bottom < 0) resultsPanel.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
 
 // ---------------------------------------------------------------- drive mode (levels with "drive")
 const drive = new DriveUI({
@@ -551,7 +736,7 @@ function showLevelWorld() {
   replayWorld = "main";
   replayOutput = null;
   $("world-tag").hidden = true;
-  $("world-dots").hidden = true;
+  if (!lastReport) previewWorldDots(); else $("world-dots").hidden = true;
   if (!demo?.active) showGoal();
   shownWorld = level.world;
   renderer.setWorld(level.world);
@@ -574,7 +759,9 @@ function watchWorld(i) {
  *  The world on screen can look finished while another isn't; the dots say there are others. */
 function renderWorldDots() {
   const box = $("world-dots");
-  const worlds = lastReport?.worlds ?? [];
+  if (!lastReport) return previewWorldDots();
+  const worlds = lastReport.worlds;
+  box.classList.remove("preview");
   box.hidden = worlds.length < 2 || drive.active;
   if (box.hidden) return;
   box.replaceChildren(...worlds.map((w, i) => {
@@ -588,6 +775,26 @@ function renderWorldDots() {
     b.disabled = !w.result;
     b.onclick = () => watchWorld(i);
     return b;
+  }));
+}
+
+/** Before a run: grey dots, one per world the program will be tried in, so the hidden worlds
+ *  are no surprise ("also tried in 3 other worlds"). */
+function previewWorldDots() {
+  const box = $("world-dots");
+  const others = level?.hidden_worlds?.length ?? 0;
+  box.hidden = !others || drive.active || questIndex !== null;
+  if (box.hidden) return;
+  box.classList.add("preview");
+  const text = `Your program is also tried in ${others} other world${others === 1 ? "" : "s"}, not shown`;
+  box.title = text;
+  box.setAttribute("aria-label", text);
+  box.replaceChildren(...Array.from({ length: others + 1 }, (_, i) => {
+    const dot = document.createElement("span");
+    dot.className = `world-dot${i === 0 ? " here" : ""}`;
+    dot.innerHTML = icon(i === 0 ? "eye" : "eye_off");
+    dot.setAttribute("aria-hidden", "true");
+    return dot;
   }));
 }
 
@@ -955,6 +1162,7 @@ async function init() {
     levelsById = Object.fromEntries(levels.map((lv) => [lv.id, lv]));
     progress = new Progress(order, browserStorage());
     guide.progress = progress;
+    quests.progress = progress;
     hints.progress = progress;
     if (Number.isInteger(progress.setting("speed"))) setSpeed(progress.setting("speed"));
     if (ROOM_URL) room = await joinRoom();
@@ -994,6 +1202,14 @@ async function init() {
   lesson = lessonForLevel(lessons, level.id);
   $("watch-demo").hidden = !lesson || Boolean(room);
   // The demo plays once before a lesson's guided try (skippable), and on request with ?demo=1.
+  const startQuest = quests.quests.findIndex((q) => q.id === PARAMS.get("quest"));
+  if (startQuest >= 0) { // a link straight into a sub-quest: no demo first
+    guide.attach(lesson, level);
+    hints.attach(lessonForPractice(lessons, level.id), level);
+    history.replaceState({}, "", questUrl(startQuest));
+    enterQuest(startQuest, { push: false });
+    return;
+  }
   if (lesson && !room && (PARAMS.get("demo") === "1" || (!progress.lesson(lesson.id) && !progress.isSolved(level.id)))) {
     demo.start(lesson); // the guide attaches when the demo ends
   } else {

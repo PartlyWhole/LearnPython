@@ -2,7 +2,7 @@
   "format": 1,
   "id": "sweep",
   "title": "Sweep the room",
-  "brief": "Gems are scattered around a rectangular room. Sweep it row by row, back and forth, and collect every one. Rooms come in all shapes, including a single row and a single column.",
+  "brief": "Gems are scattered around a rectangular room. Sweep it row by row, back and forth, and collect every one. Rooms come in all shapes, including a single row, a single column and a single cell. Don't forget the cell you start on.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef collect():\n    while gems_here() > 0:\n        pick()\n\n\ndef sweep_row():\n    collect()\n    while front_is_clear():\n        move()\n        collect()\n\n\nsweep_row()\n",
   "world": {
     "width": 5,

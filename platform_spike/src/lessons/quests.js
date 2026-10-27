@@ -49,3 +49,51 @@ export class QuestTracker {
   /** The first not done, or -1 when all are. */
   current() { return this.done.indexOf(false); }
 }
+
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+
+/** A sub-quest's goal in words, for its page's Goal view (a reach or code part has no end
+ *  picture of its own, so the words carry it). Null: the goal picture's own summary will do. */
+export function questGoalSummary(quest) {
+  const { test, program, code } = quest.check;
+  const returns = test && "returns" in test ? ` ${test.call}() gives back ${pyRepr(test.returns)}.` : "";
+  if (test && !test.goal) return `Goal:${returns}`;
+  if (test) return returns ? `${returns.trim()}` : null;
+  if (code) return "Goal: the same robot, written the way the part asks.";
+  const reach = program.reach ?? {};
+  if (program.goal) return null;
+  if (reach.visit) return "Goal: the robot gets to the marked cell (it can carry on after).";
+  if (reach.pick_at) return `Goal: the robot picks up ${reach.n > 1 ? plural(reach.n, "gem") : "a gem"} on the marked cell.`;
+  if (reach.put_at) return `Goal: the robot puts ${reach.n > 1 ? plural(reach.n, "gem") : "a gem"} on the marked cell.`;
+  return null;
+}
+
+function pyRepr(v) {
+  if (v === true) return "True";
+  if (v === false) return "False";
+  if (v === null) return "None";
+  return JSON.stringify(v);
+}
+
+/** What Run does on a sub-quest's page, in one line: which code runs, in which world. */
+export function runNote(quest) {
+  const { test, program } = quest.check;
+  if (test) return { lead: "Run tests only ", code: `${test.call}()`, rest: ", on its own, in this small world." };
+  if (program?.world) return { lead: "Run tries your whole program in this smaller world.", code: null, rest: "" };
+  return { lead: "Run tries your whole program in the challenge's world.", code: null, rest: "" };
+}
+
+/** Where "next" goes after part i is done: the next part not done after it, then any part not
+ *  done before it, then null (all done: back to the challenge). */
+export function nextQuest(done, i) {
+  for (let k = i + 1; k < done.length; k++) if (!done[k]) return k;
+  for (let k = 0; k < i; k++) if (!done[k]) return k;
+  return null;
+}
+
+/** A tab's status: "done" (the code solves it now), "changed" (solved before, not by the code
+ *  as it is now: an edit broke it), or "todo". */
+export function questStatus(doneNow, doneBefore) {
+  if (doneNow) return "done";
+  return doneBefore ? "changed" : "todo";
+}

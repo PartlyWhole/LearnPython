@@ -28,28 +28,42 @@ Why this shape (the evidence behind it, in docs/lessons.md §1):
 - **No answers** (desirable difficulty): the learner still writes every line. The sub-quest
   makes the problem smaller, not easier to copy.
 
-## 2. The learner's view
+## 2. The learner's view (D26: each part is a page of its own)
 
 - **The puzzle icon** sits by Run, on every code level that has sub-quests. It's hidden in
-  demos and drive mode.
-- **The panel** sits above the editor, like the guide. It shows numbered sub-quests, one open at a time:
-  - the problem in one or two sentences, with code names (`go_around_corner()`) as the only code
-  - a picture: the part's world as it starts → its goal (the Goal view's drawing), or the
-    level's world with a marked cell (and the stack it asks for, when a part puts several gems
-    on one cell). Drawn at a size per cell, so a long corridor stays readable: side by side when
-    both fit at a readable size, otherwise one above the other
-  - once the learner has run or tried something, one line on what happened, said against the
-    picture, never in coordinates ("The robot doesn't end on the marked cell.", "2 gems are still
-    on the floor.", "Stopped on line 12: There's a wall in front of you."), and never how to fix
-    it. Opening the panel shows no red: it only ticks off what's already done. A function not
-    written yet is said calmly, in grey, at any time
-  - **Try it** (a part with a world of its own): runs just that part and replays it in the world
-    panel, tagged with the sub-quest's name. It can be stepped like any run.
-  - a bulb: one nudge, a way to *think* about it, still no code
-- **Checks** run on opening the panel and after every Run (and on Try it). A part that is done
-  gets a green check that pops in, and the next undone part opens. An edit can undo a part;
-  it reopens.
-- Events (playtest log): `quests.opened`, `quest.done`, `quest.try`, `quest.nudge`.
+  demos and drive mode. It opens **the strip**, a row of tabs under the header: ★ the
+  challenge, then ① ② ③ for the parts. Each tab shows the part's state:
+  - green ✓: the code as it is now solves it
+  - amber number: it was solved before, but the code has changed since and doesn't any more
+  - plain number: not done yet
+- **A part is a page of its own** (`?level=<id>&quest=<quest id>`; Back and Forward work, a
+  reload stays there, nothing reloads Python). A purple frame and title say "you're in a part".
+  - The header shows the part's title and its problem, with code names (`go_around_corner()`)
+    as the only code.
+  - A line says what Run does here, so the part's world never gets mixed up with the
+    challenge's: "Run tests only `go_around_corner()`, on its own, in this small world." /
+    "Run tries your whole program in this smaller world." / "…in the challenge's world."
+  - The bulb next to it holds one nudge: a way to *think* about it, still no code.
+  - The world panel shows the part's world and the Goal view its goal: an end picture, or a
+    marked cell with the goal in words ("the robot picks up a gem on the marked cell").
+  - **Run** runs that part's check and replays it (steppable like any run). At the end, a ✓ and
+    **Next part** (the next part not done after this one, then any skipped earlier, then **Back
+    to the challenge**), or one line on what happened, said against the picture, never in
+    coordinates and never how to fix it.
+  - The challenge's own help steps aside inside a part: the step-by-step guide, hints, the
+    line-count bonus, the demo button, the hidden-world dots.
+- **One program for everything.** The editor holds the level's one program, shared by the
+  challenge and every part, so what solves part 1 is still there in part 2 and in the
+  challenge. The parts are designed as pieces of one real solution (the reference completes
+  them all), so this is what makes them add up.
+- **Any order.** Every part can be opened at any time. Opening one whose earlier parts aren't
+  solved says so ("Builds on part 1, which your code doesn't solve yet. You can still try this
+  one."), without blocking.
+- **Checks** run on opening the strip, on entering a part, and after every Run. Solved parts are
+  remembered (`progress.questsDone`), which is how an edit that breaks one shows as amber, not
+  as never done.
+- In a shared room, a part's runs stay local (they aren't sent to the room).
+- Events (playtest log): `quests.opened`, `quest.entered`, `quest.run`, `quest.done`, `quest.nudge`.
 
 ## 3. Files and checks
 
@@ -57,8 +71,8 @@ Why this shape (the evidence behind it, in docs/lessons.md §1):
 quests/<level id>.json        one file per code level (tests/test_quests.py requires them)
 schemas/quests.schema.json    the format; engine.validate_quests mirrors it
 engine.quest_state            the checks (also used by tools/check_quests.py)
-src/lessons/quests.js         pure: picture, Try-it, text parts, tracker
-src/lessons/quests-ui.js      the panel
+src/lessons/quests.js         pure: picture, goal words, Run note, next part, tab state, tracker
+src/lessons/quests-ui.js      the strip of tabs (the pages themselves: enterQuest in src/app.js)
 tools/check_quests.py         python3 tools/check_quests.py <level id> | --all
 ```
 

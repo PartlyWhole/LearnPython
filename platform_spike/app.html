@@ -11,6 +11,14 @@
   <div>
     <h1 id="level-title">Loading level…</h1>
     <p id="level-brief" class="brief"></p>
+    <div id="quest-notes" class="quest-notes" hidden>
+      <div class="quest-note-row">
+        <p id="quest-run-note" class="quest-note run"></p>
+        <button id="quest-nudge-button" class="icon-button quest-nudge-button" data-icon="bulb" aria-label="A way to think about it" title="A way to think about it" aria-expanded="false" aria-controls="quest-nudge"></button>
+      </div>
+      <p id="quest-nudge" class="quest-note nudge" hidden></p>
+      <p id="quest-before" class="quest-note before" hidden></p>
+    </div>
   </div>
   <div class="top-right">
     <span id="runtime-status" class="status" role="status" data-state="loading" title="Starting Python…"><span class="status-dot" aria-hidden="true"></span><span class="status-text sr-only">Starting Python…</span></span>
@@ -25,6 +33,12 @@
     <button id="open-levels" class="levels-button" data-icon="levels" aria-label="Levels" title="Levels"><span id="levels-count" class="levels-count"></span></button>
   </div>
 </header>
+
+<nav id="quests" class="quest-strip" aria-label="The challenge and its sub-quests" hidden>
+  <span class="quest-strip-label" aria-hidden="true" data-glyph="puzzle"></span>
+  <div id="quest-tabs" class="quest-tabs"></div>
+  <p id="quests-sr" class="sr-only" aria-live="polite"></p>
+</nav>
 
 <dialog id="levels-dialog" aria-labelledby="levels-title">
   <div class="dialog-head">
@@ -117,15 +131,6 @@
         <button id="guide-offer-off">Turn off</button>
         <button id="guide-offer-keep" class="quiet">Keep</button>
       </div>
-    </section>
-    <section id="quests" class="strip quests" hidden aria-labelledby="quests-title">
-      <div class="strip-head">
-        <span id="quests-title" class="strip-title">Sub-quests</span>
-        <span id="quests-dots" class="dots" role="img"></span>
-        <button id="quests-close" class="icon-button" data-icon="close" aria-label="Close sub-quests" title="Close"></button>
-      </div>
-      <ol id="quests-list" class="quest-list"></ol>
-      <p id="quests-sr" class="sr-only" aria-live="polite"></p>
     </section>
     <div class="editor-box">
       <div class="editor" id="editor" aria-label="Your program"></div>

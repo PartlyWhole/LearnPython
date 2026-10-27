@@ -177,3 +177,14 @@ test("the Unlock all levels setting opens every level, and turning it off locks 
   p.setSetting("unlockAll", false);
   assert.equal(p.isUnlocked("c"), false);
 });
+
+test("sub-quests solved once are remembered per level", () => {
+  const storage = memoryStorage();
+  const p = new Progress(INDEX, storage);
+  assert.deepEqual(p.questsDone("a"), []);
+  p.markQuestDone("a", "one");
+  p.markQuestDone("a", "one");
+  p.markQuestDone("zzz", "x");
+  assert.deepEqual(new Progress(INDEX, storage).questsDone("a"), ["one"]);
+  assert.deepEqual(p.questsDone("zzz"), []);
+});

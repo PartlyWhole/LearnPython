@@ -665,7 +665,8 @@ def _quest_one(code, level, quest, hidden):
     check = quest["check"]
     if "code" in check:
         why = _code_failure(code, check["code"])
-        return {"done": why is None, "why": why, "result": None}
+        # The run on the level's world, to watch: the shape is the part, the run shows it works.
+        return {"done": why is None, "why": why, "result": run_program(code, level["world"], 0, hidden)}
     if "test" in check:
         t = check["test"]
         name = t["call"]
@@ -697,13 +698,13 @@ def _quest_one(code, level, quest, hidden):
         failures = _quest_failures(result, p.get("goal", {}))
         if not result["error"]:  # a crash explains everything after it (D14)
             failures += _reach_failures(result, reach, world["start"])
-    return {"done": not failures, "why": failures[0] if failures else None,
-            "result": result if "world" in p else None}  # the level's own world: the page has its run
+    return {"done": not failures, "why": failures[0] if failures else None, "result": result}
 
 
 def quest_state(code, level, quests):
-    """One {done, why, result} per sub-quest. `result` is the run behind it (a test or a smaller
-    world) for the page to replay ("Try it"), or None."""
+    """One {done, why, result} per sub-quest. `result` is the run behind it, for the sub-quest's
+    page to replay: the test's run, the program on the part's world, or (for a code-shape part)
+    the program on the level's world."""
     hidden = level.get("constraints", {}).get("hidden_commands", [])
     return {"quests": [_quest_one(code, level, q, hidden) for q in quests]}
 

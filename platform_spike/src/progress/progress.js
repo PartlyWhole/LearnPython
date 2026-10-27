@@ -13,6 +13,7 @@ const EMPTY = () => ({
   solved: {}, drafts: {}, lessons: {},
   settings: { stepByStep: true },
   guide: { hidden: {} },
+  quests: {}, // level id -> sub-quest ids solved at least once (a later edit can break one again)
   hints: {},
   nudges: { aheadOfGuide: 0, aheadOffer: "unasked" },
 });
@@ -114,6 +115,19 @@ export class Progress {
     if (!this.order.includes(id)) return;
     const had = this.data.solved[id]?.bonus === true;
     this.data.solved[id] = { at: when, code, with: help, ...((bonus || had) && { bonus: true }) };
+    this._save();
+  }
+
+  /** Sub-quests of a level solved at least once. */
+  questsDone(levelId) { return this.data.quests?.[levelId] ?? []; }
+
+  markQuestDone(levelId, questId) {
+    if (!this.order.includes(levelId)) return;
+    this.data.quests ??= {};
+    const done = new Set(this.data.quests[levelId] ?? []);
+    if (done.has(questId)) return;
+    done.add(questId);
+    this.data.quests[levelId] = [...done];
     this._save();
   }
 
