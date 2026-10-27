@@ -27,7 +27,7 @@ SCHEMA = json.loads((ROOT / "schemas" / "lesson.schema.json").read_text())
 
 BUDGET = {"watch": 25, "guided": 20, "drive": 8, "line": 25}
 CHECK_KINDS = {"has", "defines", "calls", "run", "robot_at", "docstring", "not"}
-CHECK_KEYS = {"has", "range", "defines", "body_calls", "calls", "inside", "outside", "min", "max",
+CHECK_KEYS = {"has", "range", "defines", "body_calls", "calls", "inside", "outside", "before", "after", "min", "max",
               "run", "robot_at", "docstring", "not"}
 FOCUS = re.compile(r"^(world|editor|editor:\d+|cell:\d+,\d+|button:[a-z_]+|run|goal)$")
 errors, warnings, skipped = [], [], []

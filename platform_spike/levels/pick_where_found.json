@@ -2,7 +2,7 @@
   "format": 1,
   "id": "pick_where_found",
   "title": "Pick where you find one",
-  "brief": "The robot waits on the dock, just left of an 8-cell row. Step onto each cell and pick up its gem, if it has one. Other rows hide their gems in other places: some have none, some have one on every cell.",
+  "brief": "The robot starts at the left end of the row. Step onto each of the 8 cells after it and pick up its gem, if it has one. In other worlds the gems are in other places: some have none, some have one on every cell.",
   "starter_code": "",
   "world": {
     "width": 9,

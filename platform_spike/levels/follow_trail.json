@@ -2,7 +2,7 @@
   "format": 1,
   "id": "follow_trail",
   "title": "Follow the trail",
-  "brief": "A trail of gems starts under the robot. Pick up every gem and stop on the first empty cell after the trail, not at the wall. Trails come in different lengths.",
+  "brief": "Pick up a trail of gems that starts under the robot, and stop on the first empty cell after it, not at the wall. Use a while loop. Trails come in different lengths; in some worlds there's no trail at all, and the robot stays put.",
   "starter_code": "",
   "world": {
     "width": 10,

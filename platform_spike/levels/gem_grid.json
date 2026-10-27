@@ -2,7 +2,7 @@
   "format": 1,
   "id": "gem_grid",
   "title": "Gem grid",
-  "brief": "Put one gem on every cell of the 5 by 3 grid, row by row from the top. You have exactly 15 gems. Fill one row with a loop, then repeat the row with another loop.",
+  "brief": "Put one gem on every cell of the 5 by 3 grid, row by row from the top, then finish just below the grid on the left. You have exactly 15 gems. Fill one row with a loop, then repeat the row with another loop. Bonus: 19 lines or fewer.",
   "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n",
   "world": {
     "width": 6,
@@ -16,8 +16,7 @@
   },
   "constraints": {
     "required": [
-      "for",
-      "def"
+      "for"
     ],
     "max_lines": 19,
     "hidden_commands": [

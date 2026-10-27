@@ -2,7 +2,7 @@
   "format": 1,
   "id": "square_walk",
   "title": "Square walk",
-  "brief": "Put a gem on each corner of the field, walking around it with left turns. End where you started, facing east. One loop, 9 lines at most.",
+  "brief": "Put a gem on each corner of the field, walking around it with left turns. You have exactly 4 gems. End where you started, facing east. Use a for loop. Bonus: 9 lines or fewer.",
   "starter_code": "put()\nmove()\n",
   "world": {
     "width": 5,

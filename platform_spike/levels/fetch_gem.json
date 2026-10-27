@@ -2,7 +2,7 @@
   "format": 1,
   "id": "fetch_gem",
   "title": "Fetch and come home",
-  "brief": "A gem lies just outside your house. Go out through the door, pick it up, and come back to where you started, facing east again. Split the trip into functions with clear names.",
+  "brief": "A gem lies just past the wall. Go through the gap in the wall, pick the gem up, and come back to where you started, facing east again. Write the trip as go_to_gem() and come_home(), and call them.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_to_gem():\n    pass\n\n\ndef come_home():\n    pass\n\n\ngo_to_gem()\npick()\ncome_home()\n",
   "world": {
     "width": 6,
@@ -43,8 +43,9 @@
     "facing": "E"
   },
   "constraints": {
-    "required": [
-      "def"
+    "use_functions": [
+      "go_to_gem",
+      "come_home"
     ]
   },
   "topics": [

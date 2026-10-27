@@ -34,6 +34,8 @@ BAD_LEVEL_EDITS = {
     "wrong format": lambda lv: lv.update(format=2),
     "missing goal": lambda lv: lv.pop("goal"),
     "unknown goal": lambda lv: lv.update(goal={"win": True}),
+    "bad use_functions": lambda lv: lv.update(constraints={"use_functions": ["not a name"]}),
+    "bad loop_calls": lambda lv: lv.update(constraints={"loop_calls": [3]}),
     "bad direction": lambda lv: lv["world"].update(start=[0, 0, "X"]),
     "zero width": lambda lv: lv["world"].update(width=0),
     "zero gems": lambda lv: lv["world"].update(gems={"1,0": 0}),

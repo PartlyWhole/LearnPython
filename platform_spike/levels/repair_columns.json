@@ -2,7 +2,7 @@
   "format": 1,
   "id": "repair_columns",
   "title": "Repair the colonnade",
-  "brief": "An old colonnade has lost some of its stones. A column stands on every fourth cell of the street, starting where you are, and each one rises to the stone beam above it. Fill every gap so each column is solid up to its beam, without stacking two stones in one cell, and finish at the east end facing east. Columns differ in height, and some are already whole.",
+  "brief": "Some stones (gems) are missing from an old colonnade. Columns stand where you are and every 4 cells after, each rising to the beam. Use repair_column() to fill every gap, one gem per cell, and finish at the east end facing east. Columns differ in height; some are whole.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    turn_left()\n    turn_left()\n\n\ndef repair_column():\n    \"\"\"Start: at the foot of a column, facing east. End: same cell, facing east.\"\"\"\n    pass\n",
   "world": {
     "width": 13,
@@ -520,11 +520,11 @@
     "facing": "E"
   },
   "constraints": {
-    "required": [
-      "def"
-    ],
     "hidden_commands": [
       "scan"
+    ],
+    "use_functions": [
+      "repair_column"
     ]
   },
   "topics": [

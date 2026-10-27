@@ -2,7 +2,7 @@
   "format": 1,
   "id": "fence_posts",
   "title": "Fence posts",
-  "brief": "Build a fence: four posts, each three gems tall, with two empty cells between posts. Start with the plan: a loop that calls build_post() and next_post(). Then teach the robot each name.",
+  "brief": "Build a fence: four posts, each three gems tall, with two empty cells between posts. The first post goes where you stand. Plan first: a for loop that calls build_post() and next_post(). Then teach the robot each name. Bonus: 22 lines or fewer.",
   "starter_code": "",
   "world": {
     "width": 13,
@@ -32,9 +32,9 @@
     }
   },
   "constraints": {
-    "required": [
-      "def",
-      "for"
+    "loop_calls": [
+      "build_post",
+      "next_post"
     ],
     "max_lines": 22,
     "hidden_commands": [

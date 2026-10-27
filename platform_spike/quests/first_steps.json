@@ -6,7 +6,7 @@
       "id": "reach_the_gem",
       "title": "Stand on the gem",
       "ask": "Walk the robot along its row until it is standing on the gem's cell.",
-      "nudge": "Point at each square the robot crosses. Does every square need its own line?",
+      "nudge": "Point at each cell the robot crosses. Does every cell need its own line?",
       "check": {"program": {"reach": {"visit": [3, 1]}}}
     },
     {

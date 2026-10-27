@@ -2,7 +2,7 @@
   "format": 1,
   "id": "staircase_build",
   "title": "Staircase",
-  "brief": "Build a staircase from the top down: 1 gem in the first row, 2 in the next, then 3, then 4, each row starting at the left. One loop inside another, and the inner one grows.",
+  "brief": "Build a staircase from the top down: 1 gem in the first row, 2 in the next, then 3, then 4, each row starting at the left. You have exactly 10 gems. One loop inside another, and the inner one grows. Bonus: 14 lines or fewer.",
   "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n",
   "world": {
     "width": 5,

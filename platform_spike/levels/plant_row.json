@@ -2,7 +2,7 @@
   "format": 1,
   "id": "plant_row",
   "title": "Plant a row",
-  "brief": "Put one gem on each of the first five cells, starting where you stand. You have exactly five gems. Use a for loop instead of writing the same lines five times.",
+  "brief": "Put one gem on each of the first five cells, starting where you stand. You have exactly five gems. Use a for loop instead of writing the same lines five times. Bonus: 4 lines or fewer.",
   "starter_code": "put()\nmove()\n",
   "world": {
     "width": 8,

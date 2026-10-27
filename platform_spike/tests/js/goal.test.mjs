@@ -35,7 +35,7 @@ test("all_gems_collected: an empty floor, no robot", () => {
 test("gems_exactly: the layout, counted in words", () => {
   assert.equal(goalWorld(WORLD, { gems_exactly: { "0,0": 1, "1,0": 1 } }).summary,
                "Goal: a gem on each of 2 marked cells.");
-  assert.equal(goalWorld(WORLD, { gems_exactly: { "0,0": 3 } }).summary, "Goal: 3 gems on 1 marked cell.");
+  assert.equal(goalWorld(WORLD, { gems_exactly: { "0,0": 3 } }).summary, "Goal: 3 gems on the marked cell.");
 });
 
 test("end_at and facing: a ghost robot; facing alone has no cell to draw on", () => {
@@ -45,7 +45,7 @@ test("end_at and facing: a ghost robot; facing alone has no cell to draw on", ()
   assert.equal(v.gemsMatter, false, "the floor's gems are not part of this goal");
   assert.deepEqual(v.world.gems, {}, "a bag goal means the gems are picked up, so none are drawn");
   assert.deepEqual(goalWorld(WORLD, { end_at: [1, 1] }).world.gems, { "2,0": 2 }, "no bag goal: drawn (faded)");
-  assert.equal(v.summary, "Goal: at least 1 gem in the bag and the robot on the marked cell, facing north.");
+  assert.equal(v.summary, "Goal: at least 1 gem in the bag and the robot on the marked cell, facing north (↑).");
   assert.deepEqual(goalWorld(WORLD, { end_at: [1, 1] }).robot, { x: 1, y: 1, dir: null });
   const f = goalWorld(WORLD, { facing: "W" });
   assert.equal(f.robot, null);

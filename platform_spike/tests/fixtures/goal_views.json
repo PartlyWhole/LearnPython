@@ -153,6 +153,10 @@
     "y": 0
    },
    "goal": {
+    "end_at": [
+     3,
+     0
+    ],
     "gems_exactly": {
      "3,0": 1
     }
@@ -482,20 +486,22 @@
   },
   "keep_one": {
    "final": {
-    "bag": 6,
+    "bag": 7,
     "dir": "E",
     "gems": {
+     "0,0": 1,
      "1,0": 1,
      "2,0": 1,
      "4,0": 1,
      "5,0": 1
     },
-    "gems_left": 4,
+    "gems_left": 5,
     "x": 6,
     "y": 0
    },
    "goal": {
     "gems_exactly": {
+     "0,0": 1,
      "1,0": 1,
      "2,0": 1,
      "4,0": 1,
@@ -587,7 +593,7 @@
   },
   "piles": {
    "final": {
-    "bag": 10,
+    "bag": 12,
     "dir": "E",
     "gems": {},
     "gems_left": 0,
@@ -629,7 +635,7 @@
   },
   "plant_to_wall": {
    "final": {
-    "bag": 0,
+    "bag": 8,
     "dir": "N",
     "gems": {
      "1,0": 1,
@@ -978,6 +984,19 @@
      "6,2": 1
     },
     "no_error": true
+   }
+  },
+  "turn_corner": {
+   "final": {
+    "bag": 1,
+    "dir": "W",
+    "gems": {},
+    "gems_left": 0,
+    "x": 0,
+    "y": 0
+   },
+   "goal": {
+    "all_gems_collected": true
    }
   },
   "turn_right": {

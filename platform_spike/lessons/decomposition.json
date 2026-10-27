@@ -45,7 +45,7 @@
         "run": true
       },
       {
-        "say": "Teach one name: `build_tower()`. Run it.",
+        "say": "Teach `build_tower()`. Run it: the towers pile up, since `go_to_next_spot()` does nothing yet.",
         "code": "def build_tower():\n    put()\n    turn_left()\n    move()\n    put()\n    turn_left()\n    turn_left()\n    move()\n    turn_left()\n\n\ndef go_to_next_spot():\n    pass\n\n\nfor i in range(3):\n    build_tower()\n    go_to_next_spot()\n",
         "run": true
       },
@@ -78,20 +78,21 @@
         "example": "for i in range(4):\n    build_post()\n    next_post()\n"
       },
       {
-        "say": "Above the plan, define `build_post()`: three gems up, then back down, facing east.",
+        "say": "Above the plan, define `build_post()`: a post three gems tall from the robot's cell, ending at its foot, facing east.",
         "done_when": [
           {
             "defines": "build_post"
           },
           {
             "calls": "put",
-            "inside": "def build_post"
+            "inside": "def build_post",
+            "min": 3
           }
         ],
         "example": "def build_post():\n    put()\n    turn_left()\n    move()\n    put()\n    move()\n    put()\n    turn_left()\n    turn_left()\n    move()\n    move()\n    turn_left()\n\n\nfor i in range(4):\n    build_post()\n    next_post()\n"
       },
       {
-        "say": "Run: one post, then `next_post` is not defined. Define it. Posts are 3 cells apart.",
+        "say": "Run: one post, then Python doesn't know `next_post`. Define it. Posts are 3 cells apart.",
         "done_when": [
           {
             "defines": "next_post"
@@ -126,7 +127,7 @@
     "flower_beds": [
       "Compare your result with the Goal view: the robot waits at the gate, facing east.",
       "Make `plant_bed()` end where the next bed starts, facing east. Then the loop needs nothing else.",
-      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_bed():\n    # End: where the next bed starts, facing east.\n    put()\n    turn_left()\n    move()\n    turn_right()\n    move()\n    put()\n    move()\n    turn_right()\n    move()\n    put()\n    __\n    __\n\n\nfor i in range(__):\n    plant_bed()\n"
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef plant_bed():\n    # End: where the next bed starts, facing east.\n    put()\n    turn_left()\n    move()\n    turn_right()\n    move()\n    put()\n    move()\n    turn_right()\n    move()\n    put()\n    __\n    __\n    __\n    __\n\n\nfor i in range(__):\n    plant_bed()\n"
     ],
     "two_kinds": [
       "Compare your result with the Goal view: tree, hedge, three times, then the gate.",

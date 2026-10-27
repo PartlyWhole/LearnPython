@@ -31,7 +31,7 @@
     },
     "steps": [
       {
-        "say": "Here is a program. Run it and watch it instruct the robot line by line.",
+        "say": "Your 'Pick it up' button presses, as a program. Run it and watch each line.",
         "code": "move()\nmove()\nturn_left()\nmove()\nmove()\npick()\n",
         "code_from": "drive_pick",
         "run": true
@@ -42,7 +42,7 @@
     "level": "first_steps",
     "steps": [
       {
-        "say": "Add `move()` lines until the robot reaches the gem.",
+        "say": "Add one `move()` line for each cell between the robot and the gem.",
         "done_when": [
           {
             "calls": "move",
@@ -72,9 +72,18 @@
     ],
     "done": "Your first typed program."
   },
-  "practice": [],
+  "practice": [
+    "turn_corner"
+  ],
   "recap": {
     "say": "A program is a list of commands that run top to bottom.",
     "code": "move()\nturn_left()\npick()"
+  },
+  "hints": {
+    "turn_corner": [
+      "Watch the replay: where does the robot stop, and which way is it facing then?",
+      "Count the cells along each side of the wall. Does each side need the same number of move() lines?",
+      "move()\nmove()\nmove()\nturn_left()\n__\n__\n__\n__\n__\n__\n__\npick()\n"
+    ]
   }
 }

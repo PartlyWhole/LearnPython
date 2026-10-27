@@ -2,7 +2,7 @@
   "format": 1,
   "id": "flip_row",
   "title": "Flip the row",
-  "brief": "Flip every cell of the 7-cell row east of the dock: pick up the gem where there is one, put one where there isn't. Your bag holds 7 gems. Other rows start with other patterns.",
+  "brief": "Flip each of the 7 cells to the right of the robot: pick up the gem where there is one, put one where there isn't. Your bag holds 7 gems. In other worlds the row starts with another pattern.",
   "starter_code": "",
   "world": {
     "width": 8,

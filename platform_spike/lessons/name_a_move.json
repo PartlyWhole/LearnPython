@@ -26,7 +26,7 @@
         "run": true
       },
       {
-        "say": "`def` gives the two left turns one name.",
+        "say": "`def` gives the two left turns one name. A def alone doesn't move the robot.",
         "code": "def turn_around():\n    turn_left()\n    turn_left()\n\nmove()\nmove()\npick()\nturn_left()\nturn_left()\nmove()\nmove()\n",
         "focus": "editor:1"
       },
@@ -101,11 +101,11 @@
     "fetch_gem": [
       "Compare your result with the Goal view: home again, facing east.",
       "Turning around is two left turns. Give it a name with `def turn_around():`.",
-      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    __\n    __\n\n\ndef go_to_gem():\n    move()\n    turn_right()\n    move()\n    turn_left()\n    move()\n    move()\n\n\ndef come_home():\n    turn_around()\n    __\n\n\ngo_to_gem()\npick()\ncome_home()\n"
+      "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef turn_around():\n    __\n    __\n\n\ndef go_to_gem():\n    move()\n    turn_right()\n    __\n    __\n    __\n    __\n\n\ndef come_home():\n    turn_around()\n    # walk back the way you came\n    __\n    __\n    __\n    __\n    __\n    __\n    # face east again\n    __\n\n\ngo_to_gem()\npick()\ncome_home()\n"
     ],
     "climb_stairs": [
-      "Compare your result with the Goal view: the gem is on top of the third step.",
-      "Every step is the same: up one cell, turn right, onto the step. `climb_step()` can call `turn_right()`.",
+      "Compare your result with the Goal view: the floor ends empty, so the gem on top of the third step must be picked up.",
+      "`climb_step()` only climbs one step. Which way must the robot face to go up, and which way to step onto the step?",
       "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef climb_step():\n    turn_left()\n    move()\n    __\n    __\n\n\nclimb_step()\n__\n__\npick()\n"
     ],
     "around_the_block": [

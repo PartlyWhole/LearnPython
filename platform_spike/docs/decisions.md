@@ -282,3 +282,33 @@ pieces of one real solution (`tools/check_quests.py` requires the reference to c
 **Costs:** Run means something different inside a part, so the page always says what it runs.
 The challenge's help (guide, hints, bonus, demo) is hidden inside a part.
 
+### D27. What students are told: plain words, no coordinates, rules that can't be dodged
+**Status:** accepted (Oct 2026, after a student-eye audit of every level, sub-quest and tutorial
+with about 400 simulated novice attempts)
+**Decision:**
+- **Errors in plain words that point at the cause.**
+  - Python's wording becomes a learner's: "Python doesn't know mvoe. Did you mean move()?",
+    "A for line ends with a colon (:)", "turn_right is used on line 1, but only defined on line 4…".
+  - Slips that Python allows silently are caught before the run: a command without brackets
+    (`move`, `while front_is_clear:`, `x = front_is_clear`), an `else` lined up with a loop, and
+    code after `return`.
+  - A run that does nothing says so, and names the functions nothing calls.
+  - The step limit names the loop that runs forever.
+- **No coordinates anywhere a student reads.**
+  - Cells are named by what a student can see ("the cell the robot started on", "the last cell
+    before the wall") or counted.
+  - An end position is a direction and a distance ("3 cells further west (←)").
+  - Direction words carry arrows, because there's no compass on screen.
+  - Uncollected piles "should be collected"; they aren't "too many".
+- **Rules that check what the level teaches.**
+  - `use_functions` and `loop_calls` replace `required: ["def"]` where a starter's def met it.
+  - Sub-quest `reach.gems_then` checks the whole floor at the moment a part is reached.
+  - Guide checks can say `before` / `after` a loop.
+- **Results that never say something false.** "Your program is also tried in other worlds"
+  appears only when one failed. When only a rule isn't met, it says "The robot did it! One more
+  thing this level asks for:".
+**Why:** Students read these messages more than anything else on screen. The audit found the
+commonest failure messages were coordinate lists (0-based, y downward, cut at 4 cells), raw
+Python errors, and silent no-ops. It also found that several "use def/for" levels could be passed
+without decomposing at all.
+

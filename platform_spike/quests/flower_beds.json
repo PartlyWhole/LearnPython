@@ -5,7 +5,7 @@
     {
       "id": "one_bed",
       "title": "One bed, ready for the next",
-      "ask": "Write `plant_bed()`: from the bed's west corner facing east, plant the bed, then end on the path where the next bed starts, facing east.",
+      "ask": "Write `plant_bed()`: starting on the bed's first cell facing east, plant the bed, then end on the path where the next bed starts, facing east.",
       "nudge": "Where it ends is where the next call starts. Which way does the robot face after the last flower?",
       "check": {
         "test": {

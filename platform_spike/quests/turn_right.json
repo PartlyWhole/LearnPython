@@ -48,7 +48,7 @@
     {
       "id": "reach_the_gem",
       "title": "Reach and pick the gem",
-      "ask": "Carry on from the marked cell to the gem and pick it up.",
+      "ask": "Carry on from the end of the passage to the gem and pick it up.",
       "nudge": "At the second corner, which way does the robot need to turn?",
       "check": {
         "program": {

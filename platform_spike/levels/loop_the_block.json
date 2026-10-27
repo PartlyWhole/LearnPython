@@ -2,7 +2,7 @@
   "format": 1,
   "id": "loop_the_block",
   "title": "Loop the block",
-  "brief": "A bigger block this time. Walk around it clockwise, picking the gem on each corner, and finish where you started, facing east. Bonus: 14 lines or fewer.",
+  "brief": "A bigger block this time. Walk around it clockwise, picking the gem on each corner, and finish where you started, facing east. Fill in go_around_corner() and call it from a for loop. Bonus: 14 lines or fewer.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around_corner():\n    pass\n",
   "world": {
     "width": 5,
@@ -66,9 +66,8 @@
     "facing": "E"
   },
   "constraints": {
-    "required": [
-      "for",
-      "def"
+    "loop_calls": [
+      "go_around_corner"
     ],
     "max_lines": 14,
     "hidden_commands": [

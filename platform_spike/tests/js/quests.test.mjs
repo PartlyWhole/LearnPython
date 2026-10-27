@@ -56,8 +56,8 @@ test("a part that stacks several gems on one cell pictures the stack", () => {
 
 test("goal words and the Run note say which world and which code each part uses", async () => {
   const { questGoalSummary, runNote } = await import("../../src/lessons/quests.js");
-  assert.equal(questGoalSummary(R), "Goal: the robot picks up a gem on the marked cell.");
-  assert.equal(questGoalSummary({ check: { program: { reach: { put_at: [1, 0], n: 3 } } } }), "Goal: the robot puts 3 gems on the marked cell.");
+  assert.equal(questGoalSummary(R), "Goal: the robot picks up a gem on the marked cell (it can carry on after).");
+  assert.equal(questGoalSummary({ check: { program: { reach: { put_at: [1, 0], n: 3 } } } }), "Goal: the robot puts 3 gems on the marked cell (it can carry on after).");
   assert.equal(questGoalSummary(T), null, "a test with a goal: the picture's own words");
   assert.equal(questGoalSummary({ check: { test: { call: "f", world: {}, returns: false } } }), "Goal: f() gives back False.");
   assert.deepEqual(runNote(T), { lead: "Run tests only ", code: "f()", rest: ", on its own, in this small world." });

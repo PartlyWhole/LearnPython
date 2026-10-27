@@ -2,7 +2,7 @@
   "format": 1,
   "id": "turn_right",
   "title": "Make your own right turn",
-  "brief": "The robot can only turn left. Three left turns face the same way as one right turn, so teach it turn_right() with def, then use it to reach the gem.",
+  "brief": "The robot can only turn left. Three left turns face the same way as one right turn, so teach it turn_right() with def, then use it to reach the gem and pick it up.",
   "starter_code": "def turn_right():\n    # three left turns go here\n    pass\n\nmove()\nmove()\n",
   "world": {
     "width": 4,
@@ -46,8 +46,8 @@
     "all_gems_collected": true
   },
   "constraints": {
-    "required": [
-      "def"
+    "use_functions": [
+      "turn_right"
     ]
   },
   "topics": [

@@ -5,16 +5,16 @@
     {
       "id": "top_step",
       "title": "The top step",
-      "ask": "Build the first row of the staircase: its single gem, in the top-left corner.",
-      "nudge": "The first time round the outer loop, how many gems should the inner loop put?",
-      "check": {"program": {"reach": {"put_at": [0, 0]}}}
+      "ask": "Build the top row: its single gem, in the top-left corner. Then go back to the left edge, one row down, and put that row's first gem.",
+      "nudge": "How many gems does the first pass put? How far is it back to the left edge after them?",
+      "check": {"program": {"reach": {"put_at": [0, 1], "gems_then": {"0,0": 1, "0,1": 1}}}}
     },
     {
       "id": "second_step",
-      "title": "Home, then the second step",
-      "ask": "Get back to the left side, one row down, and build the second row so it is one gem longer than the first.",
-      "nudge": "After a row, how far is it back to the left edge? Does that change from row to row?",
-      "check": {"program": {"reach": {"put_at": [1, 1]}}}
+      "title": "The second step",
+      "ask": "Finish the second row, one gem longer than the first. Then go back to the left edge, one row down, and put that row's first gem.",
+      "nudge": "Does the way back to the left edge get longer from row to row?",
+      "check": {"program": {"reach": {"put_at": [0, 2], "gems_then": {"0,0": 1, "0,1": 1, "1,1": 1, "0,2": 1}}}}
     },
     {
       "id": "every_step",

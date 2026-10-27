@@ -11,10 +11,10 @@
     },
     {
       "id": "even_corridor",
-      "title": "Two middles: pick the left",
-      "ask": "A six-cell corridor has two middle cells. Put the gem on the left one of the two.",
+      "title": "Two middles: the nearer one",
+      "ask": "An eight-cell corridor has two middle cells. Put the gem on the one nearer to you.",
       "nudge": "Does `scan()` count the cell you're standing on? Try both corridor lengths on paper.",
-      "check": {"program": {"world": {"width": 6, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"2,0": 1}}}}
+      "check": {"program": {"world": {"width": 8, "height": 1, "start": [0, 0, "E"], "bag": 1}, "goal": {"gems_exactly": {"3,0": 1}}}}
     },
     {
       "id": "one_cell",

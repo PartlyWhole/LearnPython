@@ -18,7 +18,7 @@
     },
     "steps": [
       {
-        "say": "Run it: `range(5)` is 5 moves.",
+        "say": "Run it: `range(5)` is 5 moves, but this corridor needs 7.",
         "code": "for i in range(5):\n    move()\n",
         "focus": "editor:1",
         "run": true
@@ -43,7 +43,7 @@
         "run": true
       },
       {
-        "say": "A 1-cell corridor. Run it.",
+        "say": "A 1-cell corridor: the wall is right there. Run it: the loop runs 0 times.",
         "world": {
           "width": 1,
           "height": 1,
@@ -110,9 +110,9 @@
   },
   "hints": {
     "piles": [
-      "Look at the result for the world with a pile on the start cell.",
-      "`if` picks one gem; `while gems_here():` clears a pile. Clear the start cell before the walk.",
-      "while __:\n    pick()\nwhile front_is_clear():\n    __\n    while __:\n        pick()\n"
+      "Look at the cell the robot starts on: does it still have gems at the end?",
+      "`if` picks one gem. What repeats until a cell is empty? And which cell does your loop never look at?",
+      "while __:\n    __\nwhile front_is_clear():\n    __\n    __\n"
     ],
     "follow_trail": [
       "Look where the robot must stop in the Goal view: just past the last gem, not at the wall.",

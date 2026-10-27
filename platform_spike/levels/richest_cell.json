@@ -2,7 +2,7 @@
   "format": 1,
   "id": "richest_cell",
   "title": "The richest cell",
-  "brief": "Look down the corridor with scan(), find the cell with the most gems, go there and collect only those. Leave every other gem where it is. The richest cell is always ahead of you and never tied.",
+  "brief": "Use scan() to find the cell ahead with the most gems (there's never a tie), go there and collect only those, leaving every other gem. No while loop: work out how far to go from the list.",
   "starter_code": "ahead = scan()\nprint(ahead)\n",
   "world": {
     "width": 8,

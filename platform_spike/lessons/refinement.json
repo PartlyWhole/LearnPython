@@ -66,7 +66,7 @@
         "code": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_column():\n    \"\"\"Start: bottom row, facing east. End: same cell, facing east.\"\"\"\n    turn_left()\n    while gems_here():\n        pick()\n        move()\n    turn_around()\n    move_to_wall()\n    turn_left()\n\n\ndef leave_shed():\n    move()\n\n\ndef harvest_all_columns():\n    harvest_column()\n    move()\n\n\ndef return_home():\n    pass\n\n\nleave_shed()\nharvest_all_columns()\nreturn_home()\n"
       },
       {
-        "say": "Run it: one column, ending where the docstring promised.",
+        "say": "Run it: one column, back on the floor as the docstring promised, then a step on.",
         "run": true
       },
       {
@@ -118,7 +118,7 @@
         "example": "def turn_around():\n    turn_left()\n    turn_left()\n\n\ndef move_to_wall():\n    while front_is_clear():\n        move()\n\n\ndef harvest_cave():\n    pass\n\n\ndef return_home():\n    pass\n\n\nharvest_cave()\nreturn_home()\n"
       },
       {
-        "say": "Run it: nothing breaks. Then give `harvest_cave()` a temporary body: a new `harvest_icicle()` stub, then `move()`.",
+        "say": "Run it: no error, nothing collected yet. Then give `harvest_cave()` a body: a new `harvest_icicle()` stub, then `move()`.",
         "done_when": [
           {
             "defines": "harvest_icicle"
@@ -135,6 +135,18 @@
         "done_when": [
           {
             "calls": "turn_left",
+            "inside": "def harvest_icicle"
+          },
+          {
+            "has": "while",
+            "inside": "def harvest_icicle"
+          },
+          {
+            "calls": "pick",
+            "inside": "def harvest_icicle"
+          },
+          {
+            "calls": "move_to_wall",
             "inside": "def harvest_icicle"
           }
         ],

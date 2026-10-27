@@ -2,7 +2,7 @@
   "format": 1,
   "id": "big_piles_only",
   "title": "Big piles only",
-  "brief": "Collect every pile of 3 gems or more. Leave piles of 1 or 2 exactly as they are. Pile sizes and corridor lengths change from world to world.",
+  "brief": "Collect every pile of 3 gems or more. Leave piles of 1 or 2 exactly as they are. Use a comparison such as > to decide. In other worlds the piles and the corridor's length change.",
   "starter_code": "while front_is_clear():\n    move()\n",
   "world": {
     "width": 8,

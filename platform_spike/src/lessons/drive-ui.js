@@ -96,7 +96,15 @@ export class DriveUI {
     if (main.error) {
       this.renderer.showError(last, main.error.kind);
       this.renderer.bump();
-      this.el.msg.textContent = main.error.message;
+      this.el.msg.textContent = `${main.error.message} Press Undo to step back.`;
+    } else if (!report.passed && ["put", "pick"].includes(main.trace.at(-1)?.action)) {
+      // A gem put down (or picked up) where the Goal doesn't want it: say so now, while Undo
+      // can still take it back (after the bag empties, nothing more can pass).
+      const e = main.trace.at(-1);
+      const want = this.level.goal.gems_exactly;
+      const key = `${e.x},${e.y}`;
+      const wrongPut = e.action === "put" && want && (last.gems[key] ?? 0) > (want[key] ?? 0);
+      if (wrongPut) this.el.msg.textContent = "That's not a cell the Goal picture wants a gem on. Press Undo to take it back.";
     }
     this.el.sr.textContent = describePress(last, main.error);
     if (report.passed) {

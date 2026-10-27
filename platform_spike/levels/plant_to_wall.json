@@ -2,7 +2,7 @@
   "format": 1,
   "id": "plant_to_wall",
   "title": "Plant the bed",
-  "brief": "Plant one gem on every cell of the garden bed, from where the robot stands up to the wall. Beds come in different lengths; some have only one cell.",
+  "brief": "Some cells of the garden bed have old gems on them, any number. Leave exactly one gem on every cell, from where the robot stands up to the wall. Use a while loop. In other worlds the bed is longer or shorter, even one cell.",
   "starter_code": "",
   "world": {
     "width": 3,
@@ -81,6 +81,12 @@
         "1,5": 1,
         "1,6": 1
       }
+    },
+    "gems": {
+      "1,6": 2,
+      "1,4": 1,
+      "1,3": 3,
+      "1,0": 2
     }
   },
   "hidden_worlds": [
@@ -98,6 +104,9 @@
         "gems_exactly": {
           "0,0": 1
         }
+      },
+      "gems": {
+        "0,0": 2
       }
     },
     {
@@ -115,6 +124,9 @@
           "0,0": 1,
           "1,0": 1
         }
+      },
+      "gems": {
+        "1,0": 2
       }
     },
     {
@@ -140,6 +152,10 @@
           "8,0": 1,
           "9,0": 1
         }
+      },
+      "gems": {
+        "0,0": 3,
+        "5,0": 1
       }
     },
     {
@@ -193,6 +209,9 @@
           "1,2": 1,
           "1,3": 1
         }
+      },
+      "gems": {
+        "1,2": 2
       }
     },
     {

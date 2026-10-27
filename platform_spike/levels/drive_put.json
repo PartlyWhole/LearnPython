@@ -2,7 +2,7 @@
   "format": 1,
   "id": "drive_put",
   "title": "Put it down",
-  "brief": "Carry your gem to the marked cell.",
+  "brief": "Put your gem down on the marked cell.",
   "starter_code": "",
   "world": {
     "width": 5,
@@ -17,7 +17,11 @@
   "goal": {
     "gems_exactly": {
       "3,0": 1
-    }
+    },
+    "end_at": [
+      3,
+      0
+    ]
   },
   "drive": {
     "buttons": [

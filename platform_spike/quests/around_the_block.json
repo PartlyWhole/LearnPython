@@ -5,7 +5,7 @@
     {
       "id": "one_corner",
       "title": "One corner, on its own",
-      "ask": "Write `go_around_corner()`: from the middle of a side, walk to the corner, pick its gem, and end one step along the next side, facing along it.",
+      "ask": "Write `go_around_corner()`: from one cell past a corner, walk to the next corner, pick its gem, turn, and take one step along the next side.",
       "nudge": "Where it ends is where the next call starts. Picture both calls before you write it.",
       "check": {
         "test": {
@@ -54,7 +54,7 @@
     {
       "id": "corners_chain",
       "title": "Two corners in a row",
-      "ask": "Call it twice. The second call should pick up where the first one stopped and clear the next corner too.",
+      "ask": "Call it twice. The second call should start where the first one stopped and clear the next corner too.",
       "nudge": "If the second corner goes wrong, look at where the first call leaves the robot.",
       "check": {
         "program": {

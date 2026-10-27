@@ -67,6 +67,21 @@
           }
         },
         "run": true
+      },
+      {
+        "say": "`front_is_clear()` asks about the cell ahead. `else:` runs when the `if` is False. Run it.",
+        "world": {
+          "width": 5,
+          "height": 3,
+          "start": [
+            0,
+            2,
+            "E"
+          ]
+        },
+        "code": "for i in range(16):\n    if front_is_clear():\n        move()\n    else:\n        turn_left()\n",
+        "focus": "editor:4",
+        "run": true
       }
     ]
   },
@@ -108,7 +123,7 @@
         "example": "for i in range(8):\n    move()\n    if gems_here():\n        pick()\n"
       },
       {
-        "say": "Run it. The hidden rows put gems elsewhere.",
+        "say": "Run it. Your program is also tried in other worlds, with gems in other places.",
         "done_when": [
           {
             "run": "passed"
@@ -124,23 +139,23 @@
   ],
   "twist": "detour",
   "recap": {
-    "say": "`if condition:` runs its block only when the condition is True; `else:` runs when it is False.",
-    "code": "if condition:\n    ...\nelse:\n    ..."
+    "say": "`if condition:` runs its block only when the condition is True; `else:` runs when it is False. `not` flips True and False.",
+    "code": "if not condition:\n    ...\nelse:\n    ..."
   },
   "hints": {
     "fill_gaps": [
       "Compare your result with the Goal view: each cell ends with exactly one gem.",
-      "`put()` on a full cell makes two. `if not gems_here():` puts only on an empty cell.",
+      "`put()` on a full cell makes two. You need the opposite question: is this cell empty? The word `not` turns True into False.",
       "for i in range(__):\n    move()\n    if __:\n        put()\n"
     ],
     "flip_row": [
-      "Look at the 'all full' world: every gem there should be picked up.",
-      "Two `if`s undo each other: after `pick()` the cell is empty, so the second `if` puts a gem back. Use `else:`.",
+      "Watch a world that failed, one cell at a time. What happens on a cell that had a gem? On one that didn't?",
+      "Two separate `if`s undo each other: the second one sees the cell the first one just changed. Use `else:` so only one of them runs.",
       "for i in range(7):\n    move()\n    if gems_here():\n        __\n    else:\n        __\n"
     ],
     "detour": [
       "Look at the 'blocked right away' world, and compare with the Goal view.",
-      "Each pass: `if front_is_clear():` move, `else:` go around. Going around crosses 2 cells, so 7 passes cross all 8.",
+      "Each pass: step, or go around. How many cells does one trip around cross? So how many passes does the walk need?",
       "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_around():\n    turn_left()\n    move()\n    turn_right()\n    __\n    turn_right()\n    move()\n    turn_left()\n\n\nfor i in range(__):\n    if front_is_clear():\n        move()\n    else:\n        __\n"
     ]
   }

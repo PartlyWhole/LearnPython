@@ -2,7 +2,7 @@
   "format": 1,
   "id": "stripes",
   "title": "Stripes",
-  "brief": "Paint three stripes: fill the top row, skip a row, fill the next, skip one, fill the next. Every stripe is 5 gems long, and you have exactly 15.",
+  "brief": "Paint three stripes: fill the top row, skip a row, fill the next, skip one, fill the next. Every stripe is 5 gems long, and you have exactly 15. Bonus: 20 lines or fewer.",
   "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n",
   "world": {
     "width": 6,
@@ -16,8 +16,7 @@
   },
   "constraints": {
     "required": [
-      "for",
-      "def"
+      "for"
     ],
     "max_lines": 20,
     "hidden_commands": [

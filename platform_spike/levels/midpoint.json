@@ -2,7 +2,7 @@
   "format": 1,
   "id": "midpoint",
   "title": "Find the middle",
-  "brief": "Put one gem on the middle cell of the corridor (for an even length, the left one of the two middle cells). scan() returns a list with one number per cell ahead of you, so its length tells you how far the wall is.",
+  "brief": "Put one gem on the middle cell of the corridor (for an even length, the one of the two middle cells nearer to you). scan() returns a list with one number per cell ahead of you, so its length tells you how far the wall is.",
   "starter_code": "ahead = scan()\nprint(ahead)\n",
   "world": {
     "width": 7,
@@ -49,6 +49,22 @@
       "goal": {
         "gems_exactly": {
           "0,0": 1
+        }
+      }
+    },
+    {
+      "width": 8,
+      "height": 1,
+      "start": [
+        0,
+        0,
+        "E"
+      ],
+      "bag": 1,
+      "name": "eight cells",
+      "goal": {
+        "gems_exactly": {
+          "3,0": 1
         }
       }
     },

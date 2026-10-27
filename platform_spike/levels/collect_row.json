@@ -2,7 +2,7 @@
   "format": 1,
   "id": "collect_row",
   "title": "Gems along the corridor",
-  "brief": "Walk east to the end of the corridor and pick up every gem on the way. Your program must also work in corridors of other lengths.",
+  "brief": "Walk to the end of the corridor and pick up every gem on the way. In other worlds the corridor is shorter or longer. Bonus: 6 lines or fewer.",
   "starter_code": "while front_is_clear():\n    move()\n",
   "world": {
     "width": 6,

@@ -5,23 +5,23 @@
     {
       "id": "two_cell_bed",
       "title": "A bed of two cells",
-      "ask": "Plant a short bed: the cell the robot stands on and the one in front of it each end with one gem.",
+      "ask": "A short bed with old gems in front. The cell the robot stands on and the one in front of it each end with exactly one gem.",
       "nudge": "Count the gems you need and the steps you take. Are they the same number?",
-      "check": {"program": {"world": {"width": 3, "height": 2, "start": [1, 1, "N"], "bag": "infinite", "blocked": [[0, 0], [2, 0], [0, 1], [2, 1]]}, "goal": {"gems_exactly": {"1,0": 1, "1,1": 1}}}}
+      "check": {"program": {"world": {"width": 3, "height": 2, "start": [1, 1, "N"], "bag": "infinite", "gems": {"1,0": 2}, "blocked": [[0, 0], [2, 0], [0, 1], [2, 1]]}, "goal": {"gems_exactly": {"1,0": 1, "1,1": 1}}}}
     },
     {
       "id": "one_cell_bed",
       "title": "A bed of one cell",
-      "ask": "The smallest bed: one cell, with the wall right in front. It still needs its gem.",
+      "ask": "The smallest bed: one cell, with the wall right in front, and a pile of old gems on it. It should end with exactly one gem.",
       "nudge": "Which lines still run when the robot can't take a single step?",
-      "check": {"program": {"world": {"width": 3, "height": 1, "start": [1, 0, "N"], "bag": "infinite", "blocked": [[0, 0], [2, 0]]}, "goal": {"gems_exactly": {"1,0": 1}}}}
+      "check": {"program": {"world": {"width": 3, "height": 1, "start": [1, 0, "N"], "bag": "infinite", "gems": {"1,0": 3}, "blocked": [[0, 0], [2, 0]]}, "goal": {"gems_exactly": {"1,0": 1}}}}
     },
     {
       "id": "bed_any_length",
       "title": "A bed of any length",
-      "ask": "Now a longer bed. Plant every cell up to the wall with the same program.",
+      "ask": "Now a longer bed with old gems here and there. Every cell up to the wall ends with exactly one gem, with the same program.",
       "nudge": "If your program only fits one bed, what does it rely on?",
-      "check": {"program": {"world": {"width": 3, "height": 4, "start": [1, 3, "N"], "bag": "infinite", "blocked": [[0, 0], [2, 0], [0, 1], [2, 1], [0, 2], [2, 2], [0, 3], [2, 3]]}, "goal": {"gems_exactly": {"1,0": 1, "1,1": 1, "1,2": 1, "1,3": 1}}}}
+      "check": {"program": {"world": {"width": 3, "height": 4, "start": [1, 3, "N"], "bag": "infinite", "gems": {"1,3": 1, "1,1": 2}, "blocked": [[0, 0], [2, 0], [0, 1], [2, 1], [0, 2], [2, 2], [0, 3], [2, 3]]}, "goal": {"gems_exactly": {"1,0": 1, "1,1": 1, "1,2": 1, "1,3": 1}}}}
     }
   ]
 }

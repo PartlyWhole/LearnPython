@@ -48,6 +48,22 @@
         "say": "A `for` inside a `for`. Run it: the same rows.",
         "code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef go_to_next_row():\n    turn_left()\n    turn_left()\n    for i in range(4):\n        move()\n    turn_right()\n    move()\n    turn_right()\n\n\nfor row in range(3):\n    for i in range(4):\n        put()\n        move()\n    go_to_next_row()\n",
         "run": true
+      },
+      {
+        "say": "`row` counts 0, 1, 2. The inner `range` can use it. Run it.",
+        "world": {
+          "width": 4,
+          "height": 1,
+          "start": [
+            0,
+            0,
+            "E"
+          ],
+          "bag": "infinite"
+        },
+        "code": "for row in range(3):\n    for i in range(row + 1):\n        put()\n    move()\n",
+        "focus": "editor:2",
+        "run": true
       }
     ]
   },
@@ -144,8 +160,8 @@
     ],
     "staircase_build": [
       "Compare your result with the Goal view: each row has one more gem than the row above.",
-      "The outer loop variable counts rows from 0. Row `row` needs `row + 1` gems, so use it in the inner `range`.",
-      "def turn_around():\n    turn_left()\n    turn_left()\n\n\nfor row in range(4):\n    for i in range(__):\n        put()\n        move()\n    # back to the left, one row down\n    __\n"
+      "One number changes on every pass of the outer loop. What is it on the first pass? How many gems does the top row need?",
+      "def turn_around():\n    turn_left()\n    turn_left()\n\n\nfor row in range(4):\n    for i in range(__):\n        put()\n        move()\n    # back to the left: as far as you came\n    turn_around()\n    for i in range(__):\n        move()\n    # one row down, facing right again\n    __\n"
     ]
   }
 }

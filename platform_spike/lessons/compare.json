@@ -22,7 +22,7 @@
     },
     "steps": [
       {
-        "say": "Leave exactly 2 gems. Run it.",
+        "say": "We want 2 gems left. This takes them all. Run it and see.",
         "code": "while gems_here():\n    pick()\n",
         "focus": "cell:0,0",
         "run": true
@@ -82,12 +82,18 @@
           {
             "calls": "gems_here",
             "outside": "while"
+          },
+          {
+            "not": {
+              "calls": "gems_here",
+              "after": "while"
+            }
           }
         ],
         "example": "while gems_here() > 1:\n    pick()\nwhile front_is_clear():\n    move()\n    while gems_here() > 1:\n        pick()\n"
       },
       {
-        "say": "Run it. If whole piles vanish, check the number after `>`.",
+        "say": "Run it. Whole piles gone? Check the number after `>`. First pile too big? Trim it before the walk.",
         "done_when": [
           {
             "run": "passed"

@@ -2,7 +2,7 @@
   "format": 1,
   "id": "square_of_squares",
   "title": "Square of squares",
-  "brief": "Fill four small squares, each 2 by 2, with one empty column between them. Teach the robot one square, then repeat it. You have exactly 16 gems.",
+  "brief": "Fill four small squares, each 2 by 2 cells, with one empty column between them. Write fill_square() for one square and call it from a for loop. You have exactly 16 gems. Bonus: 30 lines or fewer.",
   "starter_code": "def turn_around():\n    turn_left()\n    turn_left()\n",
   "world": {
     "width": 13,
@@ -16,12 +16,17 @@
   },
   "constraints": {
     "required": [
-      "for",
-      "def"
+      "for"
     ],
     "max_lines": 30,
     "hidden_commands": [
       "scan"
+    ],
+    "use_functions": [
+      "fill_square"
+    ],
+    "loop_calls": [
+      "fill_square"
     ]
   },
   "topics": [

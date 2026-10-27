@@ -2,7 +2,7 @@
   "format": 1,
   "id": "hurdles",
   "title": "Hurdles",
-  "brief": "Run along the track to the gem at the end, climbing over every hurdle. Hurdles can be one or two cells tall. Tip: write a helper that checks whether the cell to your right is clear.",
+  "brief": "Run along the track to the gem at the end, climbing over every hurdle. Hurdles come in different heights. Tip: write a helper that checks whether the cell to your right is clear.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    # turn right, look, turn back, and return what you saw\n    pass\n\n\ndef jump():\n    pass\n\n\nwhile gems_here() == 0:\n    if front_is_clear():\n        move()\n    else:\n        jump()\npick()\n",
   "world": {
     "width": 9,

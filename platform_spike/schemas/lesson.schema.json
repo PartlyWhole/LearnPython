@@ -238,7 +238,8 @@
             "while",
             "if",
             "else",
-            "def"
+            "def",
+            "return"
           ]
         },
         "range": {
@@ -288,6 +289,24 @@
         },
         "not": {
           "$ref": "#/$defs/check"
+        },
+        "before": {
+          "enum": [
+            "for",
+            "while",
+            "if",
+            "def"
+          ],
+          "description": "A top-level call above the first top-level loop of this kind"
+        },
+        "after": {
+          "enum": [
+            "for",
+            "while",
+            "if",
+            "def"
+          ],
+          "description": "A top-level call below the first top-level loop of this kind"
         }
       }
     }

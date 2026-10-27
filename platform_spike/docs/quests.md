@@ -97,7 +97,7 @@ tools/check_quests.py         python3 tools/check_quests.py <level id> | --all
 | Kind | What runs | Judged by | Use it for |
 |---|---|---|---|
 | `test` | `{call, args?, world, goal?, returns?}`: the learner's definitions only (every other top-level line blanked, so line numbers stay true), then `call(*args)` in `world` | `goal` (level goal keys) on the end state, and/or `returns` | a helper the solution needs: a turn, a corner, a column, a counting function |
-| `program` | `{world?, goal?, reach?}`: the whole program, on `world` (a smaller version of the problem) or the level's own | `goal` and/or `reach`: `visit` a cell, `pick_at` / `put_at` a cell (`n` times, default 1) | "a short corridor first", "get to the first corner", "the first pile" |
+| `program` | `{world?, goal?, reach?}`: the whole program, on `world` (a smaller version of the problem) or the level's own | `goal` and/or `reach`: `visit` a cell, `pick_at` / `put_at` a cell (`n` times, default 1); with `gems_then`, the whole floor at the moment of that put/pick must match (so a wrong program can't pass by landing one gem there). A reach reached before a later crash counts | "a short corridor first", "get to the first corner", "the first pile" |
 | `code` | nothing runs | `check_code` checks (as in lesson guides) | rarely: only when the part *is* a shape (a named plan). Prefer the others |
 
 A crash is always the only reason given (D14). A `test` on a function that doesn't exist says

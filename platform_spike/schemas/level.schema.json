@@ -85,6 +85,24 @@
             ]
           },
           "description": "Robot commands this level withholds (e.g. scan, so the robot 'can't count'). Calling one is a learner error of kind 'unavailable'."
+        },
+        "use_functions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "description": "Functions the solution must define with def and call (a starter's own def can't meet it)."
+        },
+        "loop_calls": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "description": "Functions the solution must call from inside a for loop (a decomposition level's plan)."
         }
       }
     },

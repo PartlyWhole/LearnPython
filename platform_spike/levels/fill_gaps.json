@@ -2,7 +2,7 @@
   "format": 1,
   "id": "fill_gaps",
   "title": "Fill the gaps",
-  "brief": "Below the robot's dock is a column of 6 cells. Make every cell hold exactly one gem: put one only where there isn't one already. Your bag never runs out. Other columns have their gaps in other places.",
+  "brief": "The robot starts at the top of the column. Make each of the 6 cells below it hold exactly one gem: put one only where there isn't one already. Your bag never runs out. In other worlds the gaps are in other places.",
   "starter_code": "",
   "world": {
     "width": 1,

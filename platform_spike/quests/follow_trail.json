@@ -15,6 +15,13 @@
       "ask": "Now a longer trail with room after it. Pick up every gem and stop on the first empty cell, well before the wall.",
       "nudge": "Which steps happen once for every gem on the trail?",
       "check": {"program": {"world": {"width": 8, "height": 1, "start": [1, 0, "E"], "gems": {"1,0": 1, "2,0": 1, "3,0": 1, "4,0": 1}}, "goal": {"all_gems_collected": true, "end_at": [5, 0]}}}
+    },
+    {
+      "id": "no_trail",
+      "title": "No trail at all",
+      "ask": "Sometimes the robot starts on an empty cell. There's nothing to pick up, so it should stay where it is.",
+      "nudge": "Does your program pick or move before it has looked?",
+      "check": {"program": {"world": {"width": 4, "height": 1, "start": [0, 0, "E"]}, "goal": {"end_at": [0, 0]}}}
     }
   ]
 }

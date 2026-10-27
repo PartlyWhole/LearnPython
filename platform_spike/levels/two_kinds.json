@@ -2,7 +2,7 @@
   "format": 1,
   "id": "two_kinds",
   "title": "Trees and hedges",
-  "brief": "Plant a tree, then a hedge, then a tree again: three of each, alternating along the path. A tree is two gems tall; a hedge is two gems wide. Finish at the gate, facing east.",
+  "brief": "Plant tree, hedge, tree, hedge, tree, hedge, with an empty cell after each: a tree is two gems tall, a hedge two wide. Finish at the gate (the east end), facing east. Write plant_tree() and plant_hedge() and call them from a for loop. Bonus: 25 lines or fewer.",
   "starter_code": "",
   "world": {
     "width": 16,
@@ -37,9 +37,9 @@
     "facing": "E"
   },
   "constraints": {
-    "required": [
-      "def",
-      "for"
+    "loop_calls": [
+      "plant_tree",
+      "plant_hedge"
     ],
     "max_lines": 25,
     "hidden_commands": [

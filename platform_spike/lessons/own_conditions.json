@@ -66,6 +66,14 @@
           {
             "calls": "front_is_clear",
             "inside": "def right_is_clear"
+          },
+          {
+            "calls": "turn_left",
+            "inside": "def right_is_clear"
+          },
+          {
+            "has": "return",
+            "inside": "def right_is_clear"
           }
         ],
         "example": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    turn_right()\n    clear = front_is_clear()\n    turn_left()\n    return clear\n\n\ndef jump():\n    pass\n\n\nwhile gems_here() == 0:\n    if front_is_clear():\n        move()\n    else:\n        jump()\npick()\n"
@@ -100,7 +108,7 @@
   ],
   "twist": "stairs_up_and_down",
   "recap": {
-    "say": "`def question():` with `return` a True/False value names a condition.",
+    "say": "A `def` that gives back True or False with `return` is your own question, ready for `if` and `while`.",
     "code": "def question():\n    ...\n    return answer\n\nif question():\n    ..."
   },
   "hints": {

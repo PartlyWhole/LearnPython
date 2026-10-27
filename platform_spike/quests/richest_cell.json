@@ -21,7 +21,7 @@
       "title": "Richest pile against the wall",
       "ask": "This time the biggest pile is on the last cell before the wall. Collect it and leave the small one.",
       "nudge": "Picture the robot's last step. Does it land on the pile or bump the wall?",
-      "check": {"program": {"world": {"width": 5, "height": 1, "start": [0, 0, "E"], "gems": {"2,0": 1, "4,0": 4}}, "goal": {"gems_exactly": {"2,0": 1}}}}
+      "check": {"program": {"world": {"width": 5, "height": 1, "start": [0, 0, "E"], "gems": {"2,0": 1, "4,0": 3}}, "goal": {"gems_exactly": {"2,0": 1}}}}
     }
   ]
 }

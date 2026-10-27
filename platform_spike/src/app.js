@@ -632,7 +632,7 @@ function showQuestGoal(q, pic, world) {
   const view = goalWorld(world, pic?.goal ?? {});
   goalRenderer.setGoal(view);
   if (!pic?.goal && pic?.mark) goalRenderer.markTarget(pic.mark);
-  const words = questGoalSummary(q);
+  const words = questGoalSummary(q, level);
   $("goal-summary").textContent = words === null ? view.summary
     : words.startsWith("Goal") ? words : `${view.summary} ${words}`;
 }
@@ -841,7 +841,10 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
     where.append(name);
     const why = document.createElement("span");
     why.className = "why";
-    why.textContent = w.passed ? "" : w.failures.join(" ");
+    // The same reason as the failed world above it: say so, rather than the sentence again.
+    const reason = w.failures.join(" ");
+    const prevFail = lastReport.worlds.slice(0, i).reverse().find((v) => !v.passed);
+    why.textContent = w.passed ? "" : prevFail && prevFail.failures.join(" ") === reason ? "Same as above." : reason;
     const status = document.createElement("span");
     status.className = "sr-only";
     status.textContent = w.passed ? "solved" : "not yet";
@@ -913,14 +916,21 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
   const list = document.createElement("ul");
   list.className = "world-list";
   list.append(...items);
-  if (!lastReport.passed && lastReport.worlds[0].passed) {
+  const worldsFailed = lastReport.worlds.some((w) => !w.passed);
+  if (!lastReport.passed && lastReport.worlds[0].passed && worldsFailed) {
     // Solved the world on screen, failed one it can't see: say why the others are there at all.
     const note = document.createElement("p");
     note.className = "worlds-note";
     note.textContent = "It works here. Your program is also tried in other worlds, and these need it too:";
     parts.push(note);
+  } else if (!lastReport.passed && !worldsFailed) {
+    // Every world works; only a rule of the level isn't met (a for loop, your own function...).
+    const note = document.createElement("p");
+    note.className = "worlds-note";
+    note.textContent = "The robot did it! One more thing this level asks for:";
+    parts.push(note);
   }
-  if (!lastReport.passed) parts.push(list); // on a pass the big check says it all
+  if (!lastReport.passed && worldsFailed) parts.push(list); // on a pass, or rules only, the list says nothing new
   for (const msg of lastReport.constraint_failures) {
     const p = document.createElement("p");
     p.className = "why constraint";

@@ -5,7 +5,7 @@
     {
       "id": "one_tower",
       "title": "One tower, on its own",
-      "ask": "Fill in `build_tower()`: standing on a site facing east, finish a tower three gems tall above it, and end on the site facing east.",
+      "ask": "Fill in `build_tower()`: standing on a site facing east, stack two gems straight above it so the tower is three tall, and end on the site facing east.",
       "nudge": "Where it ends is where the walk along the street carries on. Trace the robot's way up and back.",
       "check": {"test": {"call": "build_tower", "world": {"width": 3, "height": 3, "start": [1, 2, "E"], "bag": "infinite", "gems": {"1,2": 1}}, "goal": {"end_at": [1, 2], "facing": "E", "gems_exactly": {"1,0": 1, "1,1": 1, "1,2": 1}}}}
     },

@@ -2,7 +2,7 @@
   "format": 1,
   "id": "corner_drive",
   "title": "Only left turns",
-  "brief": "Reach the gem. The robot only turns left.",
+  "brief": "Pick up the gem. The robot only turns left.",
   "starter_code": "",
   "world": {
     "width": 4,

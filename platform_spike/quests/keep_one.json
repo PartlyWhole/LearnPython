@@ -5,9 +5,9 @@
     {
       "id": "trim_one_pile",
       "title": "Trim one pile down",
-      "ask": "Write `trim()`: on a cell with a big pile, it leaves exactly one gem behind, however many were there to begin with.",
+      "ask": "A corridor of one cell holding a big pile. Leave exactly one gem behind, however many were there to begin with.",
       "nudge": "Picture the pile shrinking. When should the robot stop taking?",
-      "check": {"test": {"call": "trim", "world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 4}}, "goal": {"gems_exactly": {"0,0": 1}}}}
+      "check": {"program": {"world": {"width": 1, "height": 1, "start": [0, 0, "E"], "gems": {"0,0": 4}}, "goal": {"gems_exactly": {"0,0": 1}}}}
     },
     {
       "id": "trim_along",

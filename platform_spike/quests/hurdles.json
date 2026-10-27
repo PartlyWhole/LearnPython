@@ -5,9 +5,9 @@
     {
       "id": "look_right",
       "title": "Look to the right",
-      "ask": "Fill in `right_is_clear()`. Facing up beside a hurdle, it should give back `False`, and leave the robot on its cell, facing the same way.",
+      "ask": "Fill in `right_is_clear()`. Facing up with a hurdle on its right, it should give back `False`, and leave the robot on its cell, facing the same way.",
       "nudge": "After it looks, which way is the robot facing? Which way should it face?",
-      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [0, 2, "N"], "blocked": [[1, 2]]}, "returns": false, "goal": {"end_at": [0, 2], "facing": "N"}}}
+      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 2, "N"], "blocked": [[2, 2]]}, "returns": false, "goal": {"end_at": [1, 2], "facing": "N"}}}
     },
     {
       "id": "low_hurdle",

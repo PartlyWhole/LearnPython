@@ -2,7 +2,7 @@
   "format": 1,
   "id": "build_towers",
   "title": "Build the towers",
-  "brief": "A gem on the ground marks a building site. At every site, stack two more gems straight above it to make a tower three gems tall, then carry on to the end of the street. A site can be right where you start, and streets differ. Write each function's job, start and end position in its docstring.",
+  "brief": "A gem on the ground marks a building site. At every site, stack two more gems straight above it to make a tower three gems tall. Use build_tower(), and keep its docstring true: it says where the robot starts and ends. A site can be right where you start, and streets differ.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef build_tower():\n    \"\"\"Start: on a site, facing east. End: same cell, facing east.\"\"\"\n    pass\n\n\nwhile front_is_clear():\n    move()\n",
   "world": {
     "width": 8,
@@ -99,8 +99,8 @@
     "no_error": true
   },
   "constraints": {
-    "required": [
-      "def"
+    "use_functions": [
+      "build_tower"
     ]
   },
   "topics": [

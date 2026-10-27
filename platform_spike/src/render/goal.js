@@ -3,7 +3,8 @@
 // tests/js/goal.test.mjs checks, for every level, that this picture agrees with where the
 // level's reference solution actually ends (fixtures from tools/make_goal_fixtures.py).
 
-const DIR_NAMES = { E: "east", N: "north", W: "west", S: "south" };
+// With an arrow: there's no compass on screen, and "east" is a word a learner may not map to →.
+const DIR_NAMES = { E: "east (→)", N: "north (↑)", W: "west (←)", S: "south (↓)" };
 
 /** The goal that applies to one world. Mirrors engine.goal_for: level goal, then world overrides. */
 export function goalFor(level, worldSpec) {
@@ -40,14 +41,21 @@ export function goalWorld(world, goal) {
   } else if (goal.gems_exactly) {
     const cells = Object.values(gems).filter((n) => n > 0);
     const total = cells.reduce((a, n) => a + n, 0);
-    parts.push(cells.length === total
-      ? `a gem on each of ${plural(cells.length, "marked cell")}`
-      : `${plural(total, "gem")} on ${plural(cells.length, "marked cell")}`);
+    const same = cells.every((n) => n === cells[0]);
+    if (cells.length === 1) parts.push(cells[0] === 1 ? "a gem on the marked cell" : `${plural(cells[0], "gem")} on the marked cell`);
+    else if (same && cells[0] === 1) parts.push(`a gem on each of ${plural(cells.length, "marked cell")}`);
+    else if (same) parts.push(`${plural(cells[0], "gem")} on each of ${plural(cells.length, "marked cell")}`);
+    else if (cells.length === 2) parts.push(`${plural(cells[0], "gem")} on one marked cell and ${cells[1]} on another`);
+    else parts.push(`${plural(total, "gem")} on ${plural(cells.length, "marked cell")}`);
   } else if (goal.all_gems_collected) {
     parts.push("no gems left on the floor");
   }
   if (bagAtLeast) parts.push(`at least ${plural(bagAtLeast, "gem")} in the bag`);
-  if (robot) parts.push(`the robot on the marked cell${robot.dir ? `, facing ${DIR_NAMES[robot.dir]}` : ""}`);
+  const home = robot && world.start && robot.x === world.start[0] && robot.y === world.start[1];
+  const keys = Object.keys(gems).filter((k) => gems[k] > 0);
+  const onGem = robot && !bagAtLeast && goal.gems_exactly && keys.length === 1 && keys[0] === `${robot.x},${robot.y}`;
+  if (onGem) parts[parts.length - 1] += `, with the robot on it${robot.dir ? `, facing ${DIR_NAMES[robot.dir]}` : ""}`;
+  else if (robot) parts.push(`${home ? "the robot back where it started" : "the robot on the marked cell"}${robot.dir ? `, facing ${DIR_NAMES[robot.dir]}` : ""}`);
   if (facing) parts.push(`the robot facing ${DIR_NAMES[facing]}`);
   const summary = parts.length ? `Goal: ${joinWords(parts)}.` : "Goal: finish without crashing.";
 

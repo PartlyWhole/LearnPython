@@ -31,11 +31,11 @@ class FunctionTests(unittest.TestCase):
     def test_a_wrong_function_says_what_happened_not_how_to_fix_it(self):
         q = state("def turn_right():\n    turn_left()\n", [TURN_TEST])[0]
         self.assertFalse(q["done"])
-        self.assertEqual(q["why"], "The robot ends facing north, not south.")
+        self.assertEqual(q["why"], "The robot ends facing north (↑), not south (↓).")
 
     def test_a_missing_function_is_named(self):
         q = state("move()\n", [TURN_TEST])[0]
-        self.assertEqual((q["done"], q["why"], q["missing"]), (False, "There's no turn_right() to test yet.", True))
+        self.assertEqual((q["done"], q["why"], q["missing"]), (False, "There's no turn_right() to test yet. This part tests a function with exactly that name.", True))
 
     def test_returns_and_arguments(self):
         quest = {"id": "c", "title": "x", "ask": "x", "check": {"test": {
@@ -43,7 +43,7 @@ class FunctionTests(unittest.TestCase):
         good = "def count_to_wall():\n    n = 0\n    while front_is_clear():\n        move()\n        n += 1\n    return n\n"
         self.assertTrue(state(good, [quest])[0]["done"])
         bad = state(good.replace("return n", "return n - 1"), [quest])[0]
-        self.assertEqual(bad["why"], "count_to_wall() gave back 2, not 3.")
+        self.assertEqual(bad["why"], "count_to_wall() gave back 2, but should give back 3.")
 
     def test_definitions_only_keeps_line_numbers(self):
         code = "X = 3\ndef f():\n    move()\nfor i in range(2):\n    f()\n"
@@ -103,11 +103,11 @@ class Messages(unittest.TestCase):
         self.assertEqual(why({"end_at": [2, 0]}), "The robot doesn't end on the marked cell.")
         self.assertEqual(why({"all_gems_collected": True}), "1 gem is still on the floor.")
         self.assertEqual(why({"gems_exactly": {"1,0": 1, "2,0": 1}}), "Some cells in the picture are still missing gems.")
-        self.assertEqual(why({"gems_exactly": {}}), "Some cells end up with more gems than the picture shows.")
+        self.assertEqual(why({"gems_exactly": {}}), "A gem the picture doesn't show is still on the floor: it should be picked up.")
         self.assertEqual(why({"gems_exactly": {"1,0": 1}}), "The gems don't match the picture: some cells have too few, others too many.")
         for text in [why({"end_at": [2, 0]}), why({"gems_exactly": {"1,0": 1}})]:
             self.assertNotRegex(text, r"\[\d|\(\d")
 
     def test_a_code_shape_says_what_is_missing(self):
         q = {"id": "q", "title": "x", "ask": "x", "check": {"code": [{"has": "for"}]}}
-        self.assertEqual(state("move()\n", [q])[0]["why"], "There's no for loop in the code yet.")
+        self.assertEqual(state("move()\n", [q])[0]["why"], "The code doesn't use a for loop yet.")

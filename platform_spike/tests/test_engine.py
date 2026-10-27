@@ -46,7 +46,7 @@ class Stopping(unittest.TestCase):
     def test_step_cap_stops_runaway_api_loop(self):
         r = run_program("while True:\n    turn_left()\n", dict(CORRIDOR, max_steps=500))
         self.assertEqual(len(r["trace"]), 500)
-        self.assertIn("more than 500 steps", r["error"]["message"])
+        self.assertIn("stopped after 500 robot actions", r["error"]["message"])
 
     def test_step_cap_changes_nothing_without_an_event(self):
         # The final state must equal the last recorded event, or replays disagree with the engine.
@@ -206,7 +206,7 @@ class Goals(unittest.TestCase):
     def test_required_and_banned_constructs(self):
         lv = self.level(goal={"facing": "S"}, constraints={"required": ["def"], "banned": ["for"]})
         three_lefts = "turn_left()\nturn_left()\nturn_left()\n"
-        self.assertEqual(check_level(three_lefts, lv)["constraint_failures"], ["This level asks you to use 'def'."])
+        self.assertEqual(check_level(three_lefts, lv)["constraint_failures"], ["This level asks you to use a function of your own (def)."])
         good = "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\nturn_right()\n"
         self.assertTrue(check_level(good, lv)["passed"])
 
@@ -214,7 +214,7 @@ class Goals(unittest.TestCase):
         lv = self.level(goal={"no_error": True}, constraints={"hidden_commands": ["scan"]})
         report = check_level("print(len(scan()))\n", lv)
         self.assertFalse(report["passed"])
-        self.assertIn("isn't available", report["worlds"][0]["failures"][0])
+        self.assertIn("is switched off in this level", report["worlds"][0]["failures"][0])
         r = run_program("scan()\n", CORRIDOR, hidden_commands=["scan"])
         self.assertEqual(r["error"]["kind"], "unavailable")
 
@@ -241,7 +241,7 @@ class Levels(unittest.TestCase):
         self.assertTrue(check_level(SOLUTION, LEVEL)["lines"]["met"])
         self.assertIsNone(check_level(SOLUTION, dict(LEVEL, constraints={}))["lines"])
         banned = check_level(SOLUTION, dict(LEVEL, constraints={"banned": ["while"]}))
-        self.assertEqual(banned["constraint_failures"], ["This level asks you not to use 'while'."])
+        self.assertEqual(banned["constraint_failures"], ["This level asks you not to use a while loop."])
 
     def test_a_crash_is_the_only_failure_reported(self):
         report = check_level("move()\nturn_left()\nmove()\n", LEVEL)
@@ -292,6 +292,36 @@ class ReplayDetail(unittest.TestCase):
         for w in report["worlds"][1:]:
             self.assertEqual(w["result"] is None, w["passed"], w["world"])
         self.assertTrue(any(w["result"] for w in report["worlds"][1:]))
+
+
+class LearnerMessages(unittest.TestCase):
+    """Errors are said plainly, pointing at the cause (engine._runtime_message and friends)."""
+    W = {"width": 5, "height": 1, "start": [0, 0, "E"], "gems": {"2,0": 1}}
+
+    def msg(self, code):
+        return run_program(code, self.W)["error"]
+
+    def test_misspelt_and_missing_commands(self):
+        self.assertEqual(self.msg("mvoe()\n")["message"], "Python doesn't know mvoe. Did you mean move()?")
+        self.assertIn("can only turn left", self.msg("turn_right()\n")["message"])
+        self.assertIn("only defined on line 2", self.msg("turn_right()\ndef turn_right():\n    turn_left()\n")["message"])
+
+    def test_brackets_left_off_are_caught_before_running(self):
+        e = self.msg("move\nmove\n")
+        self.assertEqual((e["type"], e["line"]), ("MissingBrackets", 1))
+        self.assertIn("write move()", e["message"])
+        e = self.msg("while front_is_clear:\n    move()\n")
+        self.assertIn("always true", e["message"])  # not "There's a wall in front of you"
+        self.assertIn("nothing to compare", self.msg("if gems_here > 0:\n    pick()\n")["message"])
+        self.assertIn("not its answer", self.msg("clear = front_is_clear\nmove()\n")["message"])  # the answer was meant
+        self.assertIn("never runs", self.msg("def f():\n    return True\n    turn_left()\nf()\n")["message"])
+
+    def test_python_wording_becomes_plain(self):
+        self.assertIn("leave them empty", self.msg("move(3)\n")["message"])
+        self.assertIn("colon", self.msg("for i in range(3)\n    move()\n")["message"])
+        self.assertIn("indented by 4 spaces", self.msg("for i in range(3):\nmove()\n")["message"])
+        self.assertIn("range()", self.msg("for i in 5:\n    move()\n")["message"])
+        self.assertIn("calling itself", self.msg("def f():\n    f()\nf()\n")["message"])
 
 
 if __name__ == "__main__":

@@ -38,11 +38,11 @@
    "output": ""
   },
   "runaway_api_loop": {
-   "digest": "cd5f28bc3e32f888",
+   "digest": "a12abf95784356ef",
    "events": 10000,
    "error": {
     "type": "WorldError",
-    "message": "Your program took more than 10000 steps. Is a loop running forever?",
+    "message": "The program was stopped after 10000 robot actions without finishing. A loop is probably going round forever. It's the loop that starts on line 1.",
     "line": 2,
     "kind": "step_limit"
    },
@@ -152,5 +152,5 @@
    "output": ""
   }
  },
- "turn_left_100k_seconds": 0.103
+ "turn_left_100k_seconds": 0.11
 }

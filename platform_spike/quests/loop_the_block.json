@@ -21,7 +21,7 @@
       "title": "Let a loop call it",
       "ask": "Instead of writing a call for every corner, let a `for` loop make the calls to `go_around_corner()`.",
       "nudge": "Every corner is the same job. What changes from one call to the next?",
-      "check": {"code": [{"has": "for"}]}
+      "check": {"code": [{"calls": "go_around_corner", "inside": "for"}, {"calls": "go_around_corner", "outside": "def"}]}
     },
     {
       "id": "home",

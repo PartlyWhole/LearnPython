@@ -2,7 +2,7 @@
   "format": 1,
   "id": "tile_floor",
   "title": "Tile the plaza",
-  "brief": "Lay a two-tone floor: a gem on your starting cell, then on every other cell, so that no two gems sit side by side and the pattern runs on from row to row. You can't see the floor in this level (gems_here() is switched off), so keep track of whether the next cell gets a gem in a variable. Plazas come in all shapes, including a single row and a single column.",
+  "brief": "Lay a chessboard floor: a gem on your starting cell, then on every other cell, so no two gems touch across or up and down. gems_here() is switched off, so keep track in a variable of whether the next cell gets a gem. Plazas come in all shapes, even one row or one column.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\nplace = True  # does the cell I'm standing on get a gem?\n",
   "world": {
     "width": 7,

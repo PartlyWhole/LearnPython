@@ -10,9 +10,11 @@ export function questPicture(quest, level) {
   if (test) return { world: test.world, goal: test.goal ?? null, mark: null, own: true };
   if (!program) return null;
   const reach = program.reach ?? {};
-  const mark = reach.visit ?? reach.pick_at ?? reach.put_at ?? null;
   const world = program.world ?? level.world;
-  let goal = program.goal ?? null;
+  const atStart = (c) => c && c[0] === world.start[0] && c[1] === world.start[1];
+  // Mark the cell the robot has to get to (the start needs no mark: the robot is on it).
+  const mark = [reach.visit, reach.pick_at, reach.put_at].find((c) => c && !atStart(c)) ?? reach.visit ?? reach.pick_at ?? reach.put_at ?? null;
+  let goal = program.goal ?? (reach.gems_then ? { gems_exactly: reach.gems_then } : null);
   // "Stack several here": the count is the point, so the picture shows the stack it asks for.
   if (!goal && reach.put_at && (reach.n ?? 1) > 1) {
     const key = `${reach.put_at[0]},${reach.put_at[1]}`;
@@ -54,7 +56,7 @@ const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 /** A sub-quest's goal in words, for its page's Goal view (a reach or code part has no end
  *  picture of its own, so the words carry it). Null: the goal picture's own summary will do. */
-export function questGoalSummary(quest) {
+export function questGoalSummary(quest, level = null) {
   const { test, program, code } = quest.check;
   const returns = test && "returns" in test ? ` ${test.call}() gives back ${pyRepr(test.returns)}.` : "";
   if (test && !test.goal) return `Goal:${returns}`;
@@ -62,10 +64,16 @@ export function questGoalSummary(quest) {
   if (code) return "Goal: the same robot, written the way the part asks.";
   const reach = program.reach ?? {};
   if (program.goal) return null;
-  if (reach.visit) return "Goal: the robot gets to the marked cell (it can carry on after).";
-  if (reach.pick_at) return `Goal: the robot picks up ${reach.n > 1 ? plural(reach.n, "gem") : "a gem"} on the marked cell.`;
-  if (reach.put_at) return `Goal: the robot puts ${reach.n > 1 ? plural(reach.n, "gem") : "a gem"} on the marked cell.`;
-  return null;
+  const start = (program.world ?? level?.world)?.start;
+  const where = (cell) => (start && cell[0] === start[0] && cell[1] === start[1] ? "on its starting cell" : "on the marked cell");
+  const gems = reach.n > 1 ? plural(reach.n, "gem") : "a gem";
+  const parts = [];
+  if (reach.pick_at) parts.push(`picks up ${gems} ${where(reach.pick_at)}`);
+  if (reach.put_at) parts.push(`puts ${gems} ${where(reach.put_at)}`);
+  if (reach.visit) parts.push("gets to the marked cell");
+  if (!parts.length) return null;
+  if (reach.gems_then) return `Goal: the floor looks like the picture when the robot ${parts.join(", then ")}.`;
+  return `Goal: the robot ${parts.join(", then ")} (it can carry on after).`;
 }
 
 function pyRepr(v) {

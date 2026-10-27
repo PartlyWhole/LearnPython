@@ -12,7 +12,7 @@
     {
       "id": "down_one",
       "title": "Down one step",
-      "ask": "Write `step_down()`: standing over the edge of a step, the robot ends on the step below, facing east.",
+      "ask": "Write `step_down()`: the robot has just stepped off a step's edge, with the next step right under it. It goes down onto that step and ends facing east.",
       "nudge": "Where is the robot when it needs this, and where does the next step begin?",
       "check": {"test": {"call": "step_down", "world": {"width": 3, "height": 3, "start": [1, 0, "E"], "blocked": [[0, 1], [0, 2], [1, 2], [2, 2]]}, "goal": {"end_at": [1, 1], "facing": "E"}}}
     },

@@ -2,7 +2,7 @@
   "format": 1,
   "id": "detour",
   "title": "Detour",
-  "brief": "Walk east along the bottom lane to its far end. One cell of the lane is blocked: climb into the top lane to pass it, then come back down. In other worlds the blocked cell is somewhere else.",
+  "brief": "Walk right along the bottom lane to its far end, and finish facing right (east). One cell of the lane is blocked: climb into the top lane to pass it, then come back down. In other worlds the blocked cells are somewhere else.",
   "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n",
   "world": {
     "width": 9,
@@ -16,6 +16,14 @@
       [
         4,
         1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        7,
+        0
       ]
     ]
   },
@@ -37,7 +45,7 @@
       ]
     },
     {
-      "name": "blocked at the end",
+      "name": "blocked just before the end",
       "width": 9,
       "height": 2,
       "start": [
@@ -81,6 +89,26 @@
         [
           6,
           1
+        ]
+      ]
+    },
+    {
+      "name": "top lane blocked too",
+      "width": 9,
+      "height": 2,
+      "start": [
+        0,
+        1,
+        "E"
+      ],
+      "blocked": [
+        [
+          5,
+          1
+        ],
+        [
+          2,
+          0
         ]
       ]
     }

@@ -2,8 +2,8 @@
   "format": 1,
   "id": "stairs_up_and_down",
   "title": "Up and over",
-  "brief": "Climb the staircase, cross the top and go down the other side to the far wall, picking up the gem on every step. Staircases differ in height, and some have a wide top.",
-  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n",
+  "brief": "Climb the staircase, cross the top and go down the other side to the far wall, picking up the gem on every step. Staircases differ in height, and some have a wide top. Finish right_is_clear() with return, and use it.",
+  "starter_code": "def turn_right():\n    turn_left()\n    turn_left()\n    turn_left()\n\n\ndef right_is_clear():\n    # turn right, look, turn back, and return what you saw\n    pass\n",
   "world": {
     "width": 8,
     "height": 5,
@@ -455,6 +455,9 @@
     ],
     "required": [
       "return"
+    ],
+    "use_functions": [
+      "right_is_clear"
     ]
   },
   "topics": [

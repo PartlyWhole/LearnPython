@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "level": "turn_corner",
+  "quests": [
+    {
+      "id": "up_the_side",
+      "title": "Up the side of the wall",
+      "ask": "Get the robot along the bottom and up the side of the wall to the marked cell, at the top corner.",
+      "nudge": "Count the cells along each side of the wall before you write a line.",
+      "check": {
+        "program": {
+          "reach": {
+            "visit": [
+              3,
+              0
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "to_the_gem",
+      "title": "Across the top to the gem",
+      "ask": "Carry on from the top corner along the top of the wall, then pick up the gem.",
+      "nudge": "At the top corner the robot faces up the screen. Which way must it face next?",
+      "check": {
+        "program": {
+          "reach": {
+            "pick_at": [
+              0,
+              0
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

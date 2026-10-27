@@ -7,19 +7,19 @@
       "title": "Look to the right",
       "ask": "Fill in `right_is_clear()`. With the wall right below, it should give back `False` and leave the robot where it was, facing the same way.",
       "nudge": "After it looks, which way is the robot facing? Which way should it face?",
-      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 2, "start": [1, 0, "E"], "blocked": [[0, 1], [1, 1], [2, 1]]}, "returns": false, "goal": {"end_at": [1, 0], "facing": "E"}}}
+      "check": {"test": {"call": "right_is_clear", "world": {"width": 3, "height": 3, "start": [1, 1, "E"], "blocked": [[0, 2], [1, 2], [2, 2]]}, "returns": false, "goal": {"end_at": [1, 1], "facing": "E"}}}
     },
     {
       "id": "into_a_dip",
       "title": "Follow the wall down",
-      "ask": "Write `step_along_wall()`, which takes one step with the wall on the right. Standing over a dip, the step should go down into it.",
+      "ask": "Write `step_along_wall()`, which takes one step with the wall on the right. Standing over a dip, the step should go down into it, ending facing down.",
       "nudge": "If the wall drops away under your right hand, which way do you go to keep touching it?",
-      "check": {"test": {"call": "step_along_wall", "world": {"width": 3, "height": 3, "start": [1, 1, "E"], "blocked": [[0, 2], [2, 2]]}, "goal": {"end_at": [1, 2], "facing": "S"}}}
+      "check": {"test": {"call": "step_along_wall", "world": {"width": 3, "height": 2, "start": [1, 0, "E"], "blocked": [[0, 1], [2, 1]]}, "goal": {"end_at": [1, 1], "facing": "S"}}}
     },
     {
       "id": "up_a_bump",
       "title": "Follow the wall up",
-      "ask": "With the wall rising right in front, one `step_along_wall()` should take the robot up along it.",
+      "ask": "With the wall rising right in front, one `step_along_wall()` should take the robot up along it, ending facing up.",
       "nudge": "What is different about this cell from the dip? What does the robot see on its right?",
       "check": {"test": {"call": "step_along_wall", "world": {"width": 3, "height": 3, "start": [0, 1, "E"], "blocked": [[0, 2], [1, 1], [1, 2], [2, 1], [2, 2]]}, "goal": {"end_at": [0, 0], "facing": "N"}}}
     },

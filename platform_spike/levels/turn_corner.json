@@ -1,0 +1,51 @@
+{
+  "format": 1,
+  "id": "turn_corner",
+  "title": "Two left turns",
+  "brief": "The gem is on the far side of the wall. Walk round the wall to the gem and pick it up. turn_left() turns the robot a quarter turn to its left.",
+  "starter_code": "",
+  "world": {
+    "width": 4,
+    "height": 4,
+    "start": [
+      0,
+      3,
+      "E"
+    ],
+    "gems": {
+      "0,0": 1
+    },
+    "blocked": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ]
+    ]
+  },
+  "goal": {
+    "all_gems_collected": true
+  },
+  "topics": [
+    "running_scripts.statements_run_in_order"
+  ]
+}
