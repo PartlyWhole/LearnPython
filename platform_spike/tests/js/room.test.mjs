@@ -3,11 +3,37 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { readDoc, readPeer, transportsFrom, colorFor, PEER_COLORS, LIMITS, FRESH_MS, RELAY } from "../../src/collab/room.js";
+import { readDoc, readPeer, transportsFrom, colorFor, cleanName, PEER_COLORS, LIMITS, FRESH_MS, RELAY } from "../../src/collab/room.js";
 
 test("a well-formed doc is read as is", () => {
-  const d = { v: 1, level: "first_steps", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", source: "move()" } };
-  assert.deepEqual(readDoc(d), { level: "first_steps", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", source: "move()" } });
+  const d = { learnpython: "room 1", v: 1, level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", source: "move()" } };
+  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", source: "move()" } });
+});
+
+test("a room from before the marker and the page field still opens, on the challenge", () => {
+  const d = readDoc({ v: 1, level: "first_steps", code: "", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", source: "" } });
+  assert.equal(d.quest, null);
+  assert.equal(d.run.quest, null);
+});
+
+test("another app's document, or a newer shape, is not a room", () => {
+  assert.equal(readDoc({ learnpython: "room 2", level: "a", code: "" }), null);
+  assert.equal(readDoc({ code: "", run: null }), null); // PLP's rooms have no level
+  assert.equal(readDoc({ librarium: "note 1", title: "x", text: "" }), null);
+});
+
+test("an odd page id is the challenge, not a page", () => {
+  assert.equal(readDoc({ level: "a", code: "", quest: "<b>" }).quest, null);
+  assert.equal(readDoc({ level: "a", code: "", quest: 7 }).quest, null);
+});
+
+test("a typed name is one trimmed line, capped; nothing typed is empty", () => {
+  assert.equal(cleanName("  Alan  "), "Alan");
+  assert.equal(cleanName("Ms\n  Lee\t"), "Ms Lee");
+  assert.equal(cleanName("N".repeat(99)).length, LIMITS.name);
+  assert.equal(cleanName(""), "");
+  assert.equal(cleanName(undefined), "");
+  assert.equal(cleanName(42), "");
 });
 
 test("a doc that isn't a room is refused", () => {

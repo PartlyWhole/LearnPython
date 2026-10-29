@@ -1,9 +1,11 @@
 // A shared room: one Automerge document that several browsers hold, plus who is here. A lean
 // port of Botgineer's src/collab/room.ts (docs/collab.md has the long version).
 //
-//   doc       {v, level, code, run}: the level the room is on, the editor's text (merged a
-//             character at a time) and the last run, replaced wholesale by each new one
-//   presence  who is here: a made-up name, a colour, a caret, the replay step they're on.
+//   doc       {learnpython: "room 1", v, level, quest, code, run}: the level (and sub-quest page)
+//             the room is on, the editor's text (merged a character at a time) and the last run,
+//             replaced wholesale by each new one. The marker tells our rooms from other apps'
+//             documents on the same relay (PLP, Librarium)
+//   presence  who is here: a name (typed, or made up), a colour, a caret, the replay step they're on.
 //             Ephemeral messages, never in the doc
 //
 // **Every peer runs every run itself.** A run in the doc is only {id, by, level, source}: each
@@ -31,6 +33,7 @@ const NAME_ANIMAL = ["Otter", "Panda", "Fox", "Heron", "Lynx", "Gecko", "Wombat"
 /** A peer heard from within this long is here (checked when read: background tabs throttle the
  *  library's own pruning timer to once a minute). */
 export const FRESH_MS = 20_000;
+const MARKER = "room 1";
 const CURSOR_MS = 40;
 
 const pickOne = (a) => a[Math.floor(Math.random() * a.length)];
@@ -50,17 +53,24 @@ export function transportsFrom(search, via) {
   return parse(new URLSearchParams(search).get("transports")) ?? parse(via) ?? new Set(TRANSPORTS);
 }
 
+/** A name someone typed for the room: trimmed, one line, capped; "" if there is none. */
+export function cleanName(raw) {
+  return typeof raw === "string" ? raw.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\s+/g, " ").trim().slice(0, LIMITS.name) : "";
+}
+
 const isPlace = (v) => v === null || (typeof v === "string" && v.length <= 200);
 const isId = (v, cap = LIMITS.level) => typeof v === "string" && v.length > 0 && v.length <= cap && /^[\w.:-]+$/.test(v);
 
 /** The room's document as this page may use it, or null if it isn't one. */
 export function readDoc(d) {
   if (!d || typeof d !== "object" || typeof d.code !== "string" || !isId(d.level)) return null;
+  if (d.learnpython !== undefined && d.learnpython !== MARKER) return null; // a newer shape, or not ours
+  const quest = (v) => (isId(v) ? v : null);
   const r = d.run;
   const run = r && typeof r === "object" && isId(r.id) && isId(r.by) && isId(r.level) &&
     typeof r.source === "string" && r.source.length <= LIMITS.code
-    ? { id: r.id, by: r.by, level: r.level, source: r.source } : null;
-  return { level: d.level, code: d.code.slice(0, LIMITS.code), run };
+    ? { id: r.id, by: r.by, level: r.level, quest: quest(r.quest), source: r.source } : null;
+  return { level: d.level, quest: quest(d.quest), code: d.code.slice(0, LIMITS.code), run };
 }
 
 /** One peer's presence as this page may show it, or null. */
@@ -83,29 +93,35 @@ export function readPeer(peerId, state, lastSeenAt, now) {
 let libPromise = null;
 const loadLib = () => (libPromise ??= import("../../vendor/collab.js"));
 
-function makeMe(id) {
-  return { id, name: `${pickOne(NAME_ADJ)} ${pickOne(NAME_ANIMAL)}`, color: colorFor(id) };
+function makeMe(id, name) {
+  return { id, name: cleanName(name) || `${pickOne(NAME_ADJ)} ${pickOne(NAME_ANIMAL)}`, color: colorFor(id) };
 }
 
+/** The transports for `via`; `relay` is the WebSocket to the relay, if there is one (its
+ *  "peer-candidate" and "peer-disconnected" say when the relay is reached and lost). */
 function network(lib, via) {
   const adapters = [];
+  let relay = null;
   // A local relay for tests, on a local dev server only.
   const local = ["localhost", "127.0.0.1"].includes(location.hostname) && globalThis.__learnPythonRelay;
-  if (via.has("ws")) adapters.push(new lib.WebSocketClientAdapter(local || RELAY));
+  if (via.has("ws")) adapters.push(relay = new lib.WebSocketClientAdapter(local || RELAY));
   if (via.has("tabs")) adapters.push(new lib.BroadcastChannelNetworkAdapter());
-  return adapters;
+  return { adapters, relay };
 }
 
 const newId = (prefix) => `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
 
 export class Room {
-  constructor(lib, repo, handle, me, via) {
+  constructor(lib, repo, handle, me, via, relay) {
     this.lib = lib;
     this.repo = repo;
     this.handle = handle;
     this.me = me;
     this.url = handle.url;
     this.via = via;
+    this.relay = relay;
+    // Reached the relay? Known once it answers; a dropped socket retries by itself.
+    this.connected = this.reached = Boolean(relay?.remotePeerId);
     this.presence = null;
     this.listeners = new Set();
     this.stepListeners = new Set();
@@ -119,26 +135,30 @@ export class Room {
     this.emit = () => { for (const fn of this.listeners) fn(); };
     this.onPresence = () => this.readSteps();
     handle.on("change", this.emit);
+    relay?.on("peer-candidate", () => { this.connected = this.reached = true; this.emit(); });
+    relay?.on("peer-disconnected", () => { this.connected = false; this.emit(); });
   }
 
   /** Shares `code` for `level` in a new room. */
-  static async create({ level, code }, via) {
+  static async create({ level, quest = null, code, name }, via) {
     const lib = await loadLib();
     const id = newId("lp");
-    const repo = new lib.Repo({ network: network(lib, via), peerId: id });
-    const handle = repo.create({ v: 1, level, code: code.slice(0, LIMITS.code), run: null });
+    const { adapters, relay } = network(lib, via);
+    const repo = new lib.Repo({ network: adapters, peerId: id });
+    const handle = repo.create({ learnpython: MARKER, v: 1, level, quest, code: code.slice(0, LIMITS.code), run: null });
     await handle.whenReady();
-    const room = new Room(lib, repo, handle, makeMe(id), via);
+    const room = new Room(lib, repo, handle, makeMe(id, name), via, relay);
     room.start();
     return room;
   }
 
   /** Joins the room at `url`, or null if it isn't a room or can't be reached in time. */
-  static async join(url, via, deadlineMs = 45_000) {
+  static async join(url, via, { name, deadlineMs = 45_000 } = {}) {
     const lib = await loadLib();
     if (!lib.isValidAutomergeUrl(url)) return null;
     const id = newId("lp");
-    const repo = new lib.Repo({ network: network(lib, via), peerId: id });
+    const { adapters, relay } = network(lib, via);
+    const repo = new lib.Repo({ network: adapters, peerId: id });
     try {
       // Take the handle in any state and wait: the relay may say "unavailable" before another
       // tab has answered, and that is not the last word.
@@ -148,13 +168,21 @@ export class Room {
         new Promise((done) => setTimeout(() => done(null), deadlineMs)),
       ]);
       if (!handle || !readDoc(handle.doc())) throw new Error("not a room");
-      const room = new Room(lib, repo, handle, makeMe(id), via);
+      const room = new Room(lib, repo, handle, makeMe(id, name), via, relay);
       room.start();
       return room;
     } catch {
       try { repo.shutdown(); } catch { /* best effort */ }
       return null;
     }
+  }
+
+  /** "connected"; "connecting" (not reached the relay yet); "offline" (lost it: retrying by
+   *  itself); or "tabs" (no relay: tests). */
+  status() {
+    if (!this.relay) return "tabs";
+    if (this.connected && globalThis.navigator?.onLine !== false) return "connected";
+    return this.reached ? "offline" : "connecting";
   }
 
   /** The link that joins this room, for a page at `base` (no query). */
@@ -221,9 +249,9 @@ export class Room {
 
   // ------------------------------------------------------------ writing
   /** Records a run of `source` on `level`; every peer (this one too) runs it. Returns its id. */
-  startRun(source, level) {
+  startRun(source, level, quest = null) {
     const id = newId(this.me.id);
-    this.handle.change((d) => { d.run = { id, by: this.me.id, level, source: source.slice(0, LIMITS.code) }; });
+    this.handle.change((d) => { d.run = { id, by: this.me.id, level, quest, source: source.slice(0, LIMITS.code) }; });
     return id;
   }
 
@@ -231,9 +259,16 @@ export class Room {
   setLevel(level, code) {
     this.handle.change((d) => {
       d.level = level;
+      d.quest = null;
       d.code = code.slice(0, LIMITS.code);
       d.run = null;
     });
+  }
+
+  /** Moves the room to a sub-quest page of its level (`quest` an id), or back to the challenge (null). */
+  setQuest(quest) {
+    if (readDoc(this.handle.doc())?.quest === quest) return;
+    this.handle.change((d) => { d.quest = quest; });
   }
 
   /** Tells the others which level this page is showing (a peer following a level change waits

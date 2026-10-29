@@ -195,6 +195,12 @@ The relay is unauthenticated, so the link is the only key; the Share dialog says
 - A level change reloads the page and rejoins.
 **Revisit when:** rooms need to count for progress (then a faked passing result matters), or the
 relay gets accounts. Details: `docs/collab.md`.
+**Amended (Oct 2026, for tutoring over video calls):** people type their names (presence only);
+the room shares sub-quest pages and their runs; "Reconnecting…" when the relay is lost; undo takes
+back only your own typing; Leave keeps the code as your draft; documents carry a `learnpython`
+marker (the relay is shared with PLP and Librarium). Not taken from Librarium: Tailscale (students
+aren't on the tutor's tailnet) and on-disk storage. Not taken from PLP: peer-to-peer over public
+Nostr relays (strangers' servers), and one peer running for all (we never draw a partner's result).
 
 ### D24. The line limit is a bonus; replays step like a debugger
 **Status:** accepted (Oct 2026; the project owner's direction)

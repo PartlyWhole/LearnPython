@@ -1,7 +1,7 @@
 // Everything the app uses from CodeMirror, re-exported so esbuild can bundle ONE copy into
 // vendor/codemirror.js (several copies of @codemirror/state break CodeMirror). Add exports
 // here, then run `npm run vendor`. See docs/decisions.md D15.
-export { EditorState, StateEffect, StateField, RangeSetBuilder, Compartment, Annotation, ChangeSet } from "@codemirror/state";
+export { EditorState, StateEffect, StateField, RangeSetBuilder, Compartment, Annotation, ChangeSet, Transaction } from "@codemirror/state";
 export {
   EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter,
   drawSelection, Decoration, WidgetType, gutter, GutterMarker, ViewPlugin,

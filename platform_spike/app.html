@@ -23,6 +23,7 @@
   <div class="top-right">
     <span id="runtime-status" class="status" role="status" data-state="loading" title="Starting Python…"><span class="status-dot" aria-hidden="true"></span><span class="status-text sr-only">Starting Python…</span></span>
     <span id="room-bar" class="room-bar" hidden>
+      <span id="room-status" class="room-status" role="status" hidden></span>
       <span id="room-peers" class="room-peers" role="img"></span>
       <button id="room-copy" class="icon-button" data-icon="copy" aria-label="Copy the room link" title="Copy link"></button>
       <button id="room-leave" class="icon-button" data-icon="leave" aria-label="Leave the room" title="Leave"></button>
@@ -55,12 +56,30 @@
   </div>
   <div class="share-body">
     <p>Anyone with the link can see and edit this code with you, live.</p>
+    <label class="name-field">Your name <input id="share-name" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Leave empty for a made-up one"></label>
     <ul class="share-facts">
+      <li>The others see this name. A first name is enough.</li>
       <li>The room is kept on the PartlyWhole server, unencrypted, until 90 days after its last use.</li>
-      <li>Your name in the room is made up. Don't type anything personal.</li>
     </ul>
     <button id="share-start" class="round-button share-start" data-icon="people"><span class="label">Create link</span></button>
   </div>
+</dialog>
+
+<dialog id="join-dialog" aria-labelledby="join-title" class="small-dialog">
+  <div class="dialog-head">
+    <h2 id="join-title">Join the room</h2>
+  </div>
+  <form method="dialog" class="share-body">
+    <p>You'll see and edit the code with the others here, live.</p>
+    <label class="name-field">Your name <input id="join-name" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Leave empty for a made-up one"></label>
+    <ul class="share-facts">
+      <li>The others see this name. A first name is enough.</li>
+    </ul>
+    <div class="join-buttons">
+      <button id="join-start" value="join" class="round-button share-start" data-icon="people"><span class="label">Join</span></button>
+      <button id="join-alone" value="alone" class="quiet">Work alone</button>
+    </div>
+  </form>
 </dialog>
 
 <dialog id="settings-dialog" aria-labelledby="settings-title" class="small-dialog">

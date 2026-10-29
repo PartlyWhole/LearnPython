@@ -23,7 +23,7 @@ import { EventLog } from "./progress/events.js";
 import { applyIcons, setIcon, icon } from "./ui/icons.js";
 import { setupLayout } from "./ui/layout.js";
 import { countLines } from "./ui/lines.js";
-import { Room, transportsFrom } from "./collab/room.js"; // light: Automerge loads only on Share or join
+import { Room, transportsFrom, cleanName } from "./collab/room.js"; // light: Automerge loads only on Share or join
 import { sharedEditor, setPeers } from "./collab/editor.js";
 
 const $ = (id) => document.getElementById(id);
@@ -364,7 +364,10 @@ function setNote(text, bad = false) {
 async function runCode(shared = null, { stepping = false } = {}) {
   if (demo.active) return demo.runRequested(); // in a demo, Run runs the demo's step
   if (!level || drive.active) return;
-  if (questIndex !== null) return shared ? undefined : runQuest({ stepping }); // a part runs its own check (rooms: local only)
+  if (questIndex !== null) { // a part runs its own check; a partner's run there too, if it's on this part
+    return !shared || shared.quest === quests.quest(questIndex).id ? runQuest({ stepping, shared }) : undefined;
+  }
+  if (shared?.quest) return; // a run on a part's page, which this page has moved off
   if (busy) { if (shared) pendingShared = shared; return; } // a partner's run waits for this one
   busy = true;
   syncButtons();
@@ -459,7 +462,7 @@ const demo = new DemoPlayer({
     $("watch-demo").hidden = !lesson;
     $("share").hidden = Boolean(room);
     quests.setAvailable(true);
-    editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "");
+    editor.setCode(progress.draft(level.id) ?? level.starter_code ?? "", { load: true });
     showLevelWorld();
     ui.results.replaceChildren();
     guide.attach(lesson, level);
@@ -540,6 +543,7 @@ function enterQuest(i, { push = true } = {}) {
   if (busy) controller.stop();
   if (push && questIndex !== i) history.pushState({ quest: q.id }, "", questUrl(i));
   questIndex = i;
+  room?.setQuest(q.id); // the whole room is on one page
   document.body.classList.add("in-quest");
   events.record("quest.entered", { level: level.id, quest: q.id });
   // Header: the part's name and problem, then which code and world Run uses, the earlier parts
@@ -590,6 +594,7 @@ function leaveQuest({ push = true } = {}) {
   if (busy) controller.stop();
   if (push) history.pushState({}, "", questUrl(null));
   questIndex = null;
+  room?.setQuest(null);
   questOutcome = null;
   document.body.classList.remove("in-quest");
   $("quest-notes").hidden = true;
@@ -644,9 +649,10 @@ function showQuestGoal(q, pic, world) {
 }
 
 /** Run, on a sub-quest's page: that part's check, replayed in its world. */
-async function runQuest({ stepping = false } = {}) {
+async function runQuest({ stepping = false, shared = null } = {}) {
   const i = questIndex;
   const q = quests.quest(i);
+  if (busy) { if (shared) pendingShared = shared; return; } // a partner's run waits for this one
   busy = true;
   syncButtons();
   await guide.idle();
@@ -658,11 +664,14 @@ async function runQuest({ stepping = false } = {}) {
   clearCoach();
   handStepped = false;
   setNote(controller.state === "ready" ? "" : "Waiting for Python to finish loading…");
-  const code = editor.getCode();
+  const code = editor.getCode(); // a partner's run is of this code too: the room's code
+  shownRun = shared ? shared.id : room ? room.startRun(code, level.id, q.id) : null;
+  if (shownRun) seenRun = shownRun;
   const states = await quests.check();
   busy = false;
   syncButtons();
   setNote("");
+  if (pendingShared) { const next = pendingShared; pendingShared = null; return runCode(next); }
   if (questIndex !== i) return; // left the part while it ran
   updateQuestBefore(i);
   const state = states?.[i];
@@ -1047,10 +1056,10 @@ $("reset").onclick = () => {
 // is merged live, each Run is run by every peer in its own sandbox, scrubbing a replay moves
 // everyone's, and Continue or a level from the list moves the whole room. Leave goes back to
 // working alone (a reload, so the page is solo again, without the sandbox).
-const roomUi = { bar: $("room-bar"), peers: $("room-peers"), copy: $("room-copy"), leave: $("room-leave") };
+const roomUi = { bar: $("room-bar"), peers: $("room-peers"), status: $("room-status"), copy: $("room-copy"), leave: $("room-leave") };
 
 function shareStep() {
-  if (room && shownRun && replayWorld === "main" && player.frames.length) room.shareStep(shownRun, player.index);
+  if (room && shownRun && ["main", "quest"].includes(replayWorld) && player.frames.length) room.shareStep(shownRun, player.index);
 }
 
 /** From here on, runs go to the sandbox: a partner's code is about to arrive. */
@@ -1061,9 +1070,31 @@ function useSandbox() {
   controller.start().catch(() => {});
 }
 
+/** The name this browser last used in a room. */
+const roomName = () => cleanName(progress.setting("roomName"));
+
+/** Asks who's joining: their name, or null to work alone. */
+function askToJoin() {
+  const dialog = $("join-dialog");
+  $("join-name").value = roomName();
+  return new Promise((done) => {
+    dialog.addEventListener("close", () => {
+      if (dialog.returnValue !== "join") return done(null);
+      const name = cleanName($("join-name").value);
+      progress.setSetting("roomName", name);
+      done(name);
+    }, { once: true });
+    dialog.returnValue = "";
+    dialog.showModal();
+    $("join-name").focus();
+  });
+}
+
 async function joinRoom() {
+  const name = await askToJoin();
+  if (name === null) return null;
   setNote("Joining the room…");
-  const joined = await Room.join(ROOM_URL, transportsFrom(START_SEARCH, PARAMS.get("via")));
+  const joined = await Room.join(ROOM_URL, transportsFrom(START_SEARCH, PARAMS.get("via")), { name });
   setNote(joined ? "" : "That room could not be reached, so you're working alone.", !joined);
   return joined;
 }
@@ -1076,7 +1107,7 @@ function enterRoom() {
   $("watch-demo").hidden = true;
   room.subscribe(onRoomChange);
   room.onStep((runId, index) => {
-    if (runId !== shownRun || replayWorld !== "main" || !player.frames.length) return;
+    if (runId !== shownRun || !["main", "quest"].includes(replayWorld) || !player.frames.length) return;
     player.pause();
     player.seek(index);
   });
@@ -1104,6 +1135,12 @@ function onRoomChange() {
     return;
   }
   followSince = null;
+  // The room is on one page: the challenge, or one of its parts.
+  const here = questIndex === null ? null : quests.quest(questIndex)?.id ?? null;
+  if (d.quest !== here && !level.drive) {
+    const i = quests.quests.findIndex((q) => q.id === d.quest);
+    if (i >= 0) enterQuest(i); else if (d.quest === null) leaveQuest();
+  }
   if (d.run && d.run.id !== seenRun) {
     seenRun = d.run.id;
     if (d.run.level === level.id && d.run.by !== room.me.id && !drive.active) runCode(d.run);
@@ -1119,8 +1156,22 @@ function onRoomChange() {
     return el;
   };
   roomUi.peers.replaceChildren(dot(room.me, true), ...peers.map((p) => dot(p, false)));
+  showRoomStatus(room.status());
   roomUi.peers.setAttribute("aria-label", `In this room: you (${room.me.name})${peers.map((p) => `, ${p.name}`).join("")}`);
   if (room.otherBuilds().length) setNote("Someone here has an older or newer version of LearnPython. Reload to stay in step.", true);
+}
+
+/** Says so when the relay can't be reached (after a moment: a blip isn't news). Typing carries on
+ *  and catches up by itself when it's back. */
+let roomTrouble = null; // since when the room hasn't been connected
+function showRoomStatus(status) {
+  const ok = status === "connected" || status === "tabs";
+  roomTrouble = ok ? null : roomTrouble ?? Date.now();
+  const show = !ok && Date.now() - roomTrouble > (status === "connecting" ? 5000 : 2000);
+  roomUi.status.hidden = !show;
+  roomUi.status.textContent = show ? (status === "connecting" ? "Connecting…" : "Reconnecting…") : "";
+  roomUi.status.title = show ? "The others can't see your changes until it's back. Keep going: they catch up by themselves." : "";
+  if (!ok) setTimeout(() => room && showRoomStatus(room.status()), 2100);
 }
 
 /** Moves the whole room to another level, then this page follows. */
@@ -1131,15 +1182,22 @@ function moveRoom(id) {
   setTimeout(() => { location.href = room.link(location.pathname, id); }, 400); // let it reach the others
 }
 
-$("share").onclick = () => $("share-dialog").showModal();
+$("share").onclick = () => {
+  $("share-name").value = roomName();
+  $("share-dialog").showModal();
+};
 $("close-share").onclick = () => $("share-dialog").close();
+$("share-name").addEventListener("keydown", (e) => { if (e.key === "Enter") $("share-start").click(); });
 $("share-dialog").addEventListener("click", (e) => { if (e.target === $("share-dialog")) $("share-dialog").close(); });
 $("share-start").onclick = async () => {
   const button = $("share-start");
   button.disabled = true;
   try {
     useSandbox();
-    room = await Room.create({ level: level.id, code: editor.getCode() }, transportsFrom(START_SEARCH, null));
+    const name = cleanName($("share-name").value);
+    progress.setSetting("roomName", name);
+    const quest = questIndex === null ? null : quests.quest(questIndex).id;
+    room = await Room.create({ level: level.id, quest, code: editor.getCode(), name }, transportsFrom(START_SEARCH, null));
     history.replaceState(null, "", room.link(location.pathname, level.id));
     enterRoom();
     $("share-dialog").close();
@@ -1164,6 +1222,7 @@ roomUi.copy.onclick = copyLink;
 roomUi.leave.onclick = async () => {
   const r = room;
   room = null;
+  progress.saveDraft(level.id, editor.getCode()); // what you made together is yours to keep working on
   await r?.leave();
   location.href = `?level=${encodeURIComponent(level.id)}`;
 };
@@ -1212,7 +1271,7 @@ async function init() {
   $("level-brief").textContent = level.brief ?? "";
   document.title = `${level.title} · LearnPython`;
   showCommands(level.constraints?.hidden_commands ?? []);
-  editor.setCode(room ? room.doc().code : progress.draft(level.id) ?? level.starter_code ?? "");
+  editor.setCode(room ? room.doc().code : progress.draft(level.id) ?? level.starter_code ?? "", { load: true });
   updateLineCount();
   updateLevelsButton();
   if (room) enterRoom();
@@ -1230,7 +1289,7 @@ async function init() {
   lesson = lessonForLevel(lessons, level.id);
   $("watch-demo").hidden = !lesson || Boolean(room);
   // The demo plays once before a lesson's guided try (skippable), and on request with ?demo=1.
-  const startQuest = quests.quests.findIndex((q) => q.id === PARAMS.get("quest"));
+  const startQuest = quests.quests.findIndex((q) => q.id === (room ? room.doc().quest : PARAMS.get("quest")));
   if (startQuest >= 0) { // a link straight into a sub-quest: no demo first
     guide.attach(lesson, level);
     hints.attach(lessonForPractice(lessons, level.id), level);

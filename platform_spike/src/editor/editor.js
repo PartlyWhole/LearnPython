@@ -11,6 +11,7 @@ import {
   highlightActiveLineGutter, drawSelection, Decoration, WidgetType, defaultKeymap, history,
   historyKeymap, indentWithTab, indentOnInput, bracketMatching, syntaxHighlighting, HighlightStyle,
   indentUnit, gutter, GutterMarker, autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap, acceptCompletion, python, tags,
+  Transaction,
 } from "../../vendor/codemirror.js";
 import { API_DOCS } from "./api-docs.js";
 
@@ -214,7 +215,12 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
   return {
     view,
     getCode: () => view.state.doc.toString(),
-    setCode: (code) => view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: code } }),
+    /** `load`: the page loading code (a draft, a room's), which Ctrl/Cmd+Z mustn't take back: in a
+     *  room, undoing it would empty everyone's editor. */
+    setCode: (code, { load = false } = {}) => view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: code },
+      ...(load && { annotations: Transaction.addToHistory.of(false) }),
+    }),
     showLine(line, { calls = [], pass = null, callPasses = [] } = {}) { mark({ line, kind: "current", calls, pass, callPasses }); reveal(line); },
     showError(line, message, { calls = [], callPasses = [] } = {}) { mark({ line, kind: "error", message, calls, callPasses }); reveal(line); },
     clearMarks: () => mark({ line: null }),
