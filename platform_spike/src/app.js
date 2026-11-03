@@ -1184,6 +1184,7 @@ function onRoomChange() {
     const i = quests.quests.findIndex((q) => q.id === d.quest);
     if (i >= 0) enterQuest(i); else if (d.quest === null) leaveQuest();
   }
+  if (drive.active && level.drive) drive.follow(d.drive);
   if (d.run && d.run.id !== seenRun) {
     seenRun = d.run.id;
     if (d.run.level === level.id && d.run.by !== room.me.id && !drive.active) runCode(d.run);
@@ -1217,6 +1218,12 @@ function showRoomStatus(status) {
   if (!ok) setTimeout(() => room && showRoomStatus(room.status()), 2100);
 }
 
+/** On a drive level, the room drives one robot: anyone's press moves everyone's. */
+function followDrive() {
+  drive.share = (command) => room?.drive(command);
+  drive.follow(room.doc().drive);
+}
+
 /** Moves the whole room to another level, then this page follows. */
 function moveRoom(id) {
   const target = levelsById[id];
@@ -1242,9 +1249,11 @@ $("share-start").onclick = async () => {
     const name = cleanName($("share-name").value);
     progress.setSetting("roomName", name);
     const quest = questIndex === null ? null : quests.quest(questIndex).id;
-    room = await Room.create({ level: level.id, quest, code: editor.getCode(), name }, transportsFrom(START_SEARCH, null));
+    const presses = drive.active ? drive.program.lines.map((l) => l.replace("()", "")) : []; // a drive level: the robot as it is
+    room = await Room.create({ level: level.id, quest, code: editor.getCode(), drive: presses, name }, transportsFrom(START_SEARCH, null));
     history.replaceState(null, "", room.link(location.pathname, level.id));
     enterRoom();
+    if (drive.active) followDrive();
     $("share-dialog").close();
     copyLink();
   } catch (err) {
@@ -1329,10 +1338,11 @@ async function init() {
   if (level.drive) { // played with buttons: no editor, demo or guide
     document.body.classList.add("drive-mode");
     drive.start(level);
-    if (room) setNote("In a room, each of you drives your own robot here. Continue moves you on together.");
+    if (room) followDrive();
+    $("share").hidden = Boolean(room);
     return;
   }
-  $("share").hidden = Boolean(room); // driving with buttons has no code to share
+  $("share").hidden = Boolean(room);
   lesson = lessonForLevel(lessons, level.id);
   $("watch-demo").hidden = !lesson || Boolean(room);
   // The demo plays once before a lesson's guided try (skippable), and on request with ?demo=1.

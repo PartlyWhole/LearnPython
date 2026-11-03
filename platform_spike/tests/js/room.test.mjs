@@ -7,7 +7,14 @@ import { readDoc, readPeer, transportsFrom, colorFor, cleanName, PEER_COLORS, LI
 
 test("a well-formed doc is read as is", () => {
   const d = { learnpython: "room 1", v: 1, level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", source: "move()" } };
-  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", stepping: false, source: "move()" } });
+  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", drive: [], run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", stepping: false, source: "move()" } });
+});
+
+test("drive presses: command names only, capped; no list is none", () => {
+  assert.deepEqual(readDoc({ level: "a", code: "", drive: ["move", "turn_left", "<img>", 5, "x".repeat(30)] }).drive, ["move", "turn_left"]);
+  assert.deepEqual(readDoc({ level: "a", code: "" }).drive, []);
+  assert.deepEqual(readDoc({ level: "a", code: "", drive: "move" }).drive, []);
+  assert.equal(readDoc({ level: "a", code: "", drive: Array(LIMITS.presses + 9).fill("move") }).drive.length, LIMITS.presses);
 });
 
 test("a run says if it goes one step at a time; anything but true is no", () => {

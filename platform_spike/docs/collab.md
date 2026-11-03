@@ -27,8 +27,16 @@ Replay speed stays each person's own. A lean port of Botgineer's rooms (`~/Botgi
 One Automerge document per room; its URL is the room's name and its key.
 
 ```
-{ learnpython: "room 1", v: 1, level, quest, code, run: { id, by, level, quest, source } | null }
+{ learnpython: "room 1", v: 1, level, quest, code, drive: [command…],
+  run: { id, by, level, quest, stepping, source } | null }
 ```
+
+**Drive levels** (the first lessons, driven with buttons) are shared too: `drive` is the list of
+buttons pressed so far, so the room drives one robot. A press, Undo or Reset changes the list;
+every page rebuilds its robot from it (`DriveUI.follow`), running its own copy as always. One new
+press animates; Undo, Reset or presses from two people at once snap to the result. A press made
+while the robot is still moving is ignored, as when driving alone. A room created on a drive level
+starts with the presses already made.
 
 `learnpython` marks our rooms: the relay is shared with PLP and Librarium, whose documents have
 their own markers (`readDoc` refuses another shape). Rooms from before the marker still open.
@@ -64,8 +72,7 @@ once the mover is back in the room on the new level (or after 8 s), so somebody 
 document; with tabs-only transport, everyone reloading at once lost the room.
 
 **Not shared:** demos (off in a room), the step-by-step guide's state, hints, replay speed, Stop
-(each page runs its own copy), drive-mode levels (Share is hidden there; a room that moves onto
-one says each person drives their own robot). Drafts: the room's code is saved as your draft for
+(each page runs its own copy). Drafts: the room's code is saved as your draft for
 its level, as you type and on Leave.
 
 ## Safety: the relay is a private server, and a partner's code runs on your page

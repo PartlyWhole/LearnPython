@@ -1,9 +1,10 @@
 // A shared room: one Automerge document that several browsers hold, plus who is here. A lean
 // port of Botgineer's src/collab/room.ts (docs/collab.md has the long version).
 //
-//   doc       {learnpython: "room 1", v, level, quest, code, run}: the level (and sub-quest page)
-//             the room is on, the editor's text (merged a character at a time) and the last run,
-//             replaced wholesale by each new one. The marker tells our rooms from other apps'
+//   doc       {learnpython: "room 1", v, level, quest, code, drive, run}: the level (and sub-quest
+//             page) the room is on, the editor's text (merged a character at a time), on a drive
+//             level the buttons pressed so far (a list, so two people's presses both count), and
+//             the last run, replaced wholesale by each new one. The marker tells our rooms from other apps'
 //             documents on the same relay (PLP, Librarium)
 //   presence  who is here: a name (typed, or made up), a colour, a caret, and where their replay
 //             is (which run, which world of it, which step, playing or not).
@@ -26,7 +27,7 @@ import { BUILD } from "./build.js";
 
 export const RELAY = "wss://sync.partlywhole.org";
 export const TRANSPORTS = Object.freeze(["ws", "tabs"]);
-export const LIMITS = Object.freeze({ code: 20_000, name: 40, level: 80 });
+export const LIMITS = Object.freeze({ code: 20_000, name: 40, level: 80, presses: 500 });
 export const PEER_COLORS = Object.freeze(["#2a9d8f", "#9b5de5", "#e09f3e", "#43aa8b", "#3a86ff", "#e76f51", "#c9184a", "#6a994e"]);
 const NAME_ADJ = ["Plucky", "Zesty", "Nimble", "Cheery", "Snazzy", "Bouncy", "Dapper", "Breezy", "Sunny", "Funky"];
 const NAME_ANIMAL = ["Otter", "Panda", "Fox", "Heron", "Lynx", "Gecko", "Wombat", "Axolotl", "Puffin", "Quokka"];
@@ -71,7 +72,10 @@ export function readDoc(d) {
   const run = r && typeof r === "object" && isId(r.id) && isId(r.by) && isId(r.level) &&
     typeof r.source === "string" && r.source.length <= LIMITS.code
     ? { id: r.id, by: r.by, level: r.level, quest: quest(r.quest), stepping: r.stepping === true, source: r.source } : null;
-  return { level: d.level, quest: quest(d.quest), code: d.code.slice(0, LIMITS.code), run };
+  // Button presses: command names only (the page keeps only its level's buttons).
+  const drive = Array.isArray(d.drive)
+    ? [...d.drive].slice(0, LIMITS.presses).filter((c) => typeof c === "string" && /^[a-z_]{1,20}$/.test(c)) : [];
+  return { level: d.level, quest: quest(d.quest), code: d.code.slice(0, LIMITS.code), drive, run };
 }
 
 /** One peer's presence as this page may show it, or null. */
@@ -141,12 +145,12 @@ export class Room {
   }
 
   /** Shares `code` for `level` in a new room. */
-  static async create({ level, quest = null, code, name }, via) {
+  static async create({ level, quest = null, code, drive = [], name }, via) {
     const lib = await loadLib();
     const id = newId("lp");
     const { adapters, relay } = network(lib, via);
     const repo = new lib.Repo({ network: adapters, peerId: id });
-    const handle = repo.create({ learnpython: MARKER, v: 1, level, quest, code: code.slice(0, LIMITS.code), run: null });
+    const handle = repo.create({ learnpython: MARKER, v: 1, level, quest, code: code.slice(0, LIMITS.code), drive: drive.slice(0, LIMITS.presses), run: null });
     await handle.whenReady();
     const room = new Room(lib, repo, handle, makeMe(id, name), via, relay);
     room.start();
@@ -263,7 +267,17 @@ export class Room {
       d.level = level;
       d.quest = null;
       d.code = code.slice(0, LIMITS.code);
+      d.drive = [];
       d.run = null;
+    });
+  }
+
+  /** On a drive level: a button pressed (`command`), Undo (`"undo"`) or Reset (`"reset"`). */
+  drive(command) {
+    this.handle.change((d) => {
+      if (!Array.isArray(d.drive) || command === "reset") d.drive = [];
+      if (command === "undo") { if (d.drive.length) d.drive.splice(d.drive.length - 1, 1); }
+      else if (command !== "reset" && d.drive.length < LIMITS.presses) d.drive.push(command);
     });
   }
 

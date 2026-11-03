@@ -1,6 +1,8 @@
 // Drive mode on the page (docs/lessons.md section 3): big command buttons and a "Your moves" log
 // where the editor would be. Each press re-runs the whole button program through the engine
 // (check_level), so there is one set of game rules (D2); the replay shows only the newest step.
+// In a shared room, `share(command)` tells the room about each press, Undo and Reset, and
+// `follow(commands)` drives this page to the room's presses (anyone's).
 import { DriveProgram, describePress, DRIVE_KEYS } from "./drive.js";
 import { buildFrames } from "../render/frames.js";
 import { icon } from "../ui/icons.js";
@@ -17,6 +19,8 @@ export class DriveUI {
     Object.assign(this, deps);
     this.program = new DriveProgram();
     this.active = false;
+    this.share = null;      // in a room: (command | "undo" | "reset") => void
+    this.following = null;  // the room's presses, waiting for the press on screen to settle
     this.el.undo.onclick = () => this.undo();
     this.el.reset.onclick = () => this.reset();
     this.el.panel.addEventListener("keydown", (e) => {
@@ -40,22 +44,56 @@ export class DriveUI {
       b.onclick = () => this.press(command);
       return b;
     }));
-    this.reset();
+    this.clear();
   }
 
   async press(command) {
     if (!this.active || this.busy || this.crashed || this.passed) return;
+    this.busy = true; // first: the room may answer at once, and that waits for this press
+    this.share?.(command);
+    await this._pressed(command);
+  }
+
+  async _pressed(command) {
     this.busy = true;
     this.program.press(command);
     this._renderLog();
     const out = await this._check();
-    this.setTimer(() => { this.busy = false; }, SETTLE_MS);
+    this.setTimer(() => { this.busy = false; this._catchUp(); }, SETTLE_MS);
     if (out) this._show(out, { animate: true });
+  }
+
+  /** The room's presses so far (command names): make this page's robot match them. One new press
+   *  at the end animates like a press here; anything else (Undo, Reset, two people at once) snaps. */
+  async follow(commands) {
+    if (!this.active) return;
+    this.following = commands.filter((c) => this.level.drive.buttons.includes(c));
+    if (!this.busy) await this._catchUp();
+  }
+
+  async _catchUp() {
+    const want = this.following;
+    if (!want || this.busy) return;
+    this.following = null;
+    const have = this.program.lines;
+    const wantLines = want.map((c) => `${c}()`);
+    if (wantLines.join("\n") === have.join("\n")) return;
+    if (wantLines.length === have.length + 1 && have.every((l, i) => l === wantLines[i])) return this._pressed(want.at(-1));
+    this.program.lines = wantLines;
+    this._renderLog();
+    this.passed = false;
+    if (!wantLines.length) return this._fresh();
+    this.busy = true;
+    const out = await this._check();
+    this.busy = false;
+    if (out) this._show(out, { animate: false });
+    this._catchUp();
   }
 
   async undo() {
     if (!this.active || this.busy || !this.program.length) return;
     this.busy = true;
+    this.share?.("undo");
     this.program.undo();
     this._renderLog();
     this.passed = false;
@@ -63,9 +101,20 @@ export class DriveUI {
     this.busy = false;
     if (out) this._show(out, { animate: false });
     else this._fresh();
+    this._catchUp();
   }
 
   reset() {
+    if (this.busy) return;
+    this.busy = true;
+    this.share?.("reset");
+    this.busy = false;
+    this.clear();
+    this._catchUp();
+  }
+
+  /** No presses: the world as it starts (here only, not the room's). */
+  clear() {
     this.program.reset();
     this._renderLog();
     this.passed = false;
