@@ -65,6 +65,7 @@ const FOLLOW_MS = 8000;
 
 // ---------------------------------------------------------------- editor
 let draftTimer = null;
+let roomCodeHere = null; // in a room: its code on this page's level, the last time it changed
 const editor = createEditor($("editor"), {
   onRun: () => runCode(),
   onLineClick: (line) => jumpToLine(line),
@@ -76,8 +77,12 @@ const editor = createEditor($("editor"), {
     // A replay on screen is now of older code: redraw its step without line marks (after this
     // editor update; CodeMirror refuses a dispatch from inside one).
     if (player?.frames.length > 1) setTimeout(() => player.frames.length > 1 && showFrame(player.frames[player.index], player.index, player.frames.length));
-    if (room) return; // a room's code is everyone's, not this browser's draft
-    draftTimer = setTimeout(() => level && !demo.active && progress?.saveDraft(level.id, editor.getCode()), 500);
+    // In a room, its code is kept as your draft too (it's yours to keep), but only while the room
+    // is still on this level: moving on brings the next level's code before the page follows.
+    if (room && room.doc()?.level !== level.id) return;
+    const code = editor.getCode();
+    if (room) roomCodeHere = code;
+    draftTimer = setTimeout(() => level && !demo.active && progress?.saveDraft(level.id, code), 500);
   },
 });
 /** The level's commands live in the "?" popover (and in completions), not as a line of text. */
@@ -209,7 +214,7 @@ document.addEventListener("keydown", (e) => {
   if (!act) return;
   e.preventDefault();
   act();
-  if (e.key !== " ") stepped();
+  if (e.key !== " ") stepped(); else shareStep();
 });
 
 function showFrame(frame, index, total) {
@@ -262,7 +267,7 @@ function showFrame(frame, index, total) {
   }
 }
 
-ui.play.onclick = () => player.toggle();
+ui.play.onclick = () => { player.toggle(); shareStep(); };
 ui.back.onclick = () => { player.step(-1); stepped(); };
 ui.fwd.onclick = () => { player.step(1); stepped(); };
 ui.scrub.oninput = () => { player.pause(); player.seek(Number(ui.scrub.value)); stepped(); };
@@ -386,7 +391,8 @@ async function runCode(shared = null, { stepping = false } = {}) {
   const code = shared ? shared.source : editor.getCode();
   clearCoach();
   celebrated = nudged = handStepped = false;
-  shownRun = shared ? shared.id : room ? room.startRun(code, level.id) : null;
+  stepping ||= Boolean(shared?.stepping); // a partner's "one step at a time": wait at the start too
+  shownRun = shared ? shared.id : room ? room.startRun(code, level.id, { stepping }) : null;
   if (shownRun) seenRun = shownRun;
   const out = await controller.run({ type: "check", code, level, seed: 0 });
   busy = false;
@@ -407,6 +413,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
     if (player.frames.length < 2) showOutcome(); // nothing happened: straight to the outcome
     else if (!stepping) player.play();
     else { ui.fwd.classList.add("coach"); ui.fwd.focus(); } // one step at a time: → or the button
+    applyReplay(); // a partner already moved this run's replay
   } else if (out.status === "timeout") {
     resultsPanel.hidden = true;
     setNote(`Your program ran for more than ${TIMEOUT_MS / 1000} seconds without finishing, so it was stopped. ` +
@@ -665,7 +672,8 @@ async function runQuest({ stepping = false, shared = null } = {}) {
   handStepped = false;
   setNote(controller.state === "ready" ? "" : "Waiting for Python to finish loading…");
   const code = editor.getCode(); // a partner's run is of this code too: the room's code
-  shownRun = shared ? shared.id : room ? room.startRun(code, level.id, q.id) : null;
+  stepping ||= Boolean(shared?.stepping);
+  shownRun = shared ? shared.id : room ? room.startRun(code, level.id, { quest: q.id, stepping }) : null;
   if (shownRun) seenRun = shownRun;
   const states = await quests.check();
   busy = false;
@@ -697,6 +705,7 @@ async function runQuest({ stepping = false, shared = null } = {}) {
   if (player.frames.length < 2) showQuestOutcome();
   else if (!stepping) player.play();
   else { ui.fwd.classList.add("coach"); ui.fwd.focus(); }
+  applyReplay();
 }
 
 /** A sub-quest run's result, once its replay reaches the end: a check and the way on, or what
@@ -773,12 +782,12 @@ ui.stop.onclick = () => controller.stop();
 
 // ---------------------------------------------------------------- results
 /** Replay world i of the last run (0: this world; then the hidden worlds that returned a run). */
-function watchWorld(i) {
+function watchWorld(i, { play = true } = {}) {
   const w = lastReport?.worlds[i];
   const spec = i === 0 ? level.world : level.hidden_worlds?.[i - 1];
   if (!w?.result || !spec) return;
   loadReplay(spec, w.result, w.world, { passed: w.passed });
-  player.play();
+  if (play) player.play();
 }
 
 /** Over the world after a run: a dot per world, green solved, red not, the one on screen ringed.
@@ -799,7 +808,7 @@ function renderWorldDots() {
     b.setAttribute("aria-label", w.result ? `${label}. Watch it` : label);
     b.title = label;
     b.disabled = !w.result;
-    b.onclick = () => watchWorld(i);
+    b.onclick = () => { watchWorld(i); shareStep(); };
     return b;
   }));
 }
@@ -885,7 +894,7 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
       watch.innerHTML = i === 0 ? icon("replay") : `${icon("play")}<span class="label">Watch</span>`;
       watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay hidden world ${w.world}`);
       watch.title = watch.getAttribute("aria-label");
-      watch.onclick = () => watchWorld(i);
+      watch.onclick = () => { watchWorld(i); shareStep(); };
       li.dataset.world = w.world;
       li.append(watch);
     }
@@ -1058,8 +1067,30 @@ $("reset").onclick = () => {
 // working alone (a reload, so the page is solo again, without the sandbox).
 const roomUi = { bar: $("room-bar"), peers: $("room-peers"), status: $("room-status"), copy: $("room-copy"), leave: $("room-leave") };
 
+/** Tells the room where this replay is (which world, step, playing): after the learner moved it. */
 function shareStep() {
-  if (room && shownRun && ["main", "quest"].includes(replayWorld) && player.frames.length) room.shareStep(shownRun, player.index);
+  if (room && shownRun && player.frames.length && !demo.active) {
+    room.shareReplay(shownRun, { world: replayWorld, index: player.index, playing: player.playing });
+  }
+}
+
+/** A partner moved their replay of a run we both ran: show the same world and step, playing or
+ *  not. Kept until this page's own run of it is on screen (theirs may finish first). */
+let pendingReplay = null;
+function applyReplay() {
+  const r = pendingReplay;
+  if (!r || r.runId !== shownRun || busy || !player.frames.length) return;
+  pendingReplay = null;
+  handStepped = true; // someone is steering: no automatic switch to a failed world
+  clearCoach();
+  if (r.world !== replayWorld) {
+    const k = lastReport?.worlds.findIndex((w) => w.world === r.world) ?? -1;
+    if (replayWorld === "quest" || k < 0) return; // not a world this page has
+    watchWorld(k, { play: false });
+  }
+  player.pause();
+  player.seek(Math.min(r.index, player.frames.length - 1));
+  if (r.playing) player.play();
 }
 
 /** From here on, runs go to the sandbox: a partner's code is about to arrive. */
@@ -1090,8 +1121,22 @@ function askToJoin() {
   });
 }
 
+/** This tab is already in the room it's opening (it moved levels with the room, or reloaded):
+ *  rejoin without asking. A link opened anew asks. */
+const ROOM_TAB_KEY = "learnpython.room";
+function rememberRoom(url, name) {
+  try { globalThis.sessionStorage?.setItem(ROOM_TAB_KEY, JSON.stringify(url ? { url, name } : {})); } catch { /* best effort */ }
+}
+/** The name this tab has in the room at `url`, or null if it isn't in it. */
+function nameInRoom(url) {
+  try {
+    const was = JSON.parse(globalThis.sessionStorage?.getItem(ROOM_TAB_KEY) ?? "{}");
+    return was?.url === url ? cleanName(was.name) : null;
+  } catch { return null; }
+}
+
 async function joinRoom() {
-  const name = await askToJoin();
+  const name = nameInRoom(ROOM_URL) ?? await askToJoin();
   if (name === null) return null;
   setNote("Joining the room…");
   const joined = await Room.join(ROOM_URL, transportsFrom(START_SEARCH, PARAMS.get("via")), { name });
@@ -1100,17 +1145,14 @@ async function joinRoom() {
 }
 
 function enterRoom() {
+  rememberRoom(room.url, room.me.name);
   editor.setShared(sharedEditor(room));
   room.shareLevel(level.id);
   roomUi.bar.hidden = false;
   $("share").hidden = true;
   $("watch-demo").hidden = true;
   room.subscribe(onRoomChange);
-  room.onStep((runId, index) => {
-    if (runId !== shownRun || !["main", "quest"].includes(replayWorld) || !player.frames.length) return;
-    player.pause();
-    player.seek(index);
-  });
+  room.onStep((replay) => { pendingReplay = replay; applyReplay(); });
   addEventListener("pagehide", () => room?.goodbye());
   // Someone ran the code that is in the editor now: show it to the joiner too.
   const d = room.doc();
@@ -1124,6 +1166,7 @@ function onRoomChange() {
   const d = room.doc();
   if (!d) return;
   if (d.level !== level.id && levelsById[d.level]) { // a partner moved the room on: follow
+    if (roomCodeHere !== null) { clearTimeout(draftTimer); progress.saveDraft(level.id, roomCodeHere); roomCodeHere = null; }
     // once they're back on the new level, so one of us always holds the room (or after 8 s).
     followSince ??= Date.now();
     if (room.peers().some((p) => p.level === d.level) || Date.now() - followSince > FOLLOW_MS) {
@@ -1178,7 +1221,9 @@ function showRoomStatus(status) {
 function moveRoom(id) {
   const target = levelsById[id];
   if (!room || !target) return;
-  room.setLevel(id, target.starter_code ?? "");
+  clearTimeout(draftTimer);
+  progress.saveDraft(level.id, editor.getCode()); // what you made here together stays yours
+  room.setLevel(id, progress.draft(id) ?? target.starter_code ?? ""); // coming back: where you left it
   setTimeout(() => { location.href = room.link(location.pathname, id); }, 400); // let it reach the others
 }
 
@@ -1223,6 +1268,7 @@ roomUi.leave.onclick = async () => {
   const r = room;
   room = null;
   progress.saveDraft(level.id, editor.getCode()); // what you made together is yours to keep working on
+  rememberRoom(null, null);
   await r?.leave();
   location.href = `?level=${encodeURIComponent(level.id)}`;
 };
@@ -1283,6 +1329,7 @@ async function init() {
   if (level.drive) { // played with buttons: no editor, demo or guide
     document.body.classList.add("drive-mode");
     drive.start(level);
+    if (room) setNote("In a room, each of you drives your own robot here. Continue moves you on together.");
     return;
   }
   $("share").hidden = Boolean(room); // driving with buttons has no code to share
@@ -1295,6 +1342,7 @@ async function init() {
     hints.attach(lessonForPractice(lessons, level.id), level);
     history.replaceState({}, "", questUrl(startQuest));
     enterQuest(startQuest, { push: false });
+    if (room) onRoomChange(); // a run on this part that's in the room: show it
     return;
   }
   if (lesson && !room && (PARAMS.get("demo") === "1" || (!progress.lesson(lesson.id) && !progress.isSolved(level.id)))) {

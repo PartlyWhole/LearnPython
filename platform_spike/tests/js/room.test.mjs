@@ -7,7 +7,13 @@ import { readDoc, readPeer, transportsFrom, colorFor, cleanName, PEER_COLORS, LI
 
 test("a well-formed doc is read as is", () => {
   const d = { learnpython: "room 1", v: 1, level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", source: "move()" } };
-  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", source: "move()" } });
+  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", stepping: false, source: "move()" } });
+});
+
+test("a run says if it goes one step at a time; anything but true is no", () => {
+  const run = (stepping) => readDoc({ level: "a", code: "", run: { id: "lp-a-b", by: "lp-a", level: "a", source: "", stepping } }).run.stepping;
+  assert.equal(run(true), true);
+  for (const v of [undefined, "yes", 1, {}]) assert.equal(run(v), false);
 });
 
 test("a room from before the marker and the page field still opens, on the challenge", () => {

@@ -5,7 +5,8 @@
 //             the room is on, the editor's text (merged a character at a time) and the last run,
 //             replaced wholesale by each new one. The marker tells our rooms from other apps'
 //             documents on the same relay (PLP, Librarium)
-//   presence  who is here: a name (typed, or made up), a colour, a caret, the replay step they're on.
+//   presence  who is here: a name (typed, or made up), a colour, a caret, and where their replay
+//             is (which run, which world of it, which step, playing or not).
 //             Ephemeral messages, never in the doc
 //
 // **Every peer runs every run itself.** A run in the doc is only {id, by, level, source}: each
@@ -69,7 +70,7 @@ export function readDoc(d) {
   const r = d.run;
   const run = r && typeof r === "object" && isId(r.id) && isId(r.by) && isId(r.level) &&
     typeof r.source === "string" && r.source.length <= LIMITS.code
-    ? { id: r.id, by: r.by, level: r.level, quest: quest(r.quest), source: r.source } : null;
+    ? { id: r.id, by: r.by, level: r.level, quest: quest(r.quest), stepping: r.stepping === true, source: r.source } : null;
   return { level: d.level, quest: quest(d.quest), code: d.code.slice(0, LIMITS.code), run };
 }
 
@@ -248,10 +249,11 @@ export class Room {
   }
 
   // ------------------------------------------------------------ writing
-  /** Records a run of `source` on `level`; every peer (this one too) runs it. Returns its id. */
-  startRun(source, level, quest = null) {
+  /** Records a run of `source` on `level` (on a part's page: `quest`); every peer (this one too)
+   *  runs it, and with `stepping` everyone waits at its first step. Returns its id. */
+  startRun(source, level, { quest = null, stepping = false } = {}) {
     const id = newId(this.me.id);
-    this.handle.change((d) => { d.run = { id, by: this.me.id, level, quest, source: source.slice(0, LIMITS.code) }; });
+    this.handle.change((d) => { d.run = { id, by: this.me.id, level, quest, stepping, source: source.slice(0, LIMITS.code) }; });
     return id;
   }
 
@@ -277,9 +279,10 @@ export class Room {
     this.presence?.broadcast("at", { level });
   }
 
-  /** Tells the others which replay step of `runId` this peer moved to. */
-  shareStep(runId, index) {
-    this.presence?.broadcast("step", { runId, index, n: ++this.stepN });
+  /** Tells the others where this peer's replay of `runId` is: `world` ("main", "quest" or a hidden
+   *  world's name), `index` (the step) and whether it's `playing`. */
+  shareReplay(runId, { world, index, playing }) {
+    this.presence?.broadcast("step", { runId, world, index, playing, n: ++this.stepN });
   }
 
   /** Tells the others where this peer's caret is, at most every 40 ms. `where` is read when sent. */
@@ -300,7 +303,7 @@ export class Room {
   /** Called on any change to the document or to who is here. */
   subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); }
 
-  /** Called when another peer moves to a replay step. */
+  /** Called with {runId, world, index, playing} when another peer moves their replay. */
   onStep(fn) { this.stepListeners.add(fn); return () => this.stepListeners.delete(fn); }
 
   readSteps() {
@@ -319,7 +322,8 @@ export class Room {
       if (s && Number.isInteger(s.n) && isId(s.runId) && Number.isInteger(s.index) && s.index >= 0 &&
           (this.seenStep.get(p.peerId) ?? -1) < s.n) {
         this.seenStep.set(p.peerId, s.n);
-        for (const fn of this.stepListeners) fn(s.runId, s.index);
+        const replay = { runId: s.runId, world: typeof s.world === "string" && s.world.length <= LIMITS.level ? s.world : "main", index: s.index, playing: s.playing === true };
+        for (const fn of this.stepListeners) fn(replay);
       }
     }
     this.emit();
