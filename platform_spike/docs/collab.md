@@ -4,10 +4,13 @@ Two or more people can work on one level together, live. It's built for tutoring
 call: the tutor sends a link in the call's chat, the student opens it, and both are on the same
 page. The people icon in the header ("Work together") asks your name and creates a link. Whoever
 opens it is asked their name, then joins the room: the code is merged as both type, the others'
-carets show in their colours, Run runs for everyone, scrubbing a replay moves everyone's, opening a
-sub-quest part (or going back to the challenge) moves everyone there, and Continue (or a level from
-the list) moves the whole room on. Leave goes back to working alone, keeping the room's code as
-your draft. A lean port of Botgineer's rooms (`~/Botgineer/docs/COLLAB.md`). Decision D23.
+carets show in their colours, Run runs for everyone ("Run one step at a time" makes everyone wait
+at the first step), and the replay is shared: Play, Pause, a step, a jump to a line, or Watch on
+another world moves everyone's to the same world and step. Opening a sub-quest part (or going back
+to the challenge) moves everyone there, and Continue (or a level from the list) moves the whole
+room on: each person keeps the room's code on the level left as their draft, and coming back to a
+level brings back the mover's draft of it. Leave goes back to working alone, keeping the code.
+Replay speed stays each person's own. A lean port of Botgineer's rooms (`~/Botgineer/docs/COLLAB.md`). Decision D23.
 
 | Path | What |
 |---|---|
@@ -41,8 +44,10 @@ changed since.
 
 **Presence** (ephemeral, never in the doc): the name typed on Share or Join (kept in this
 browser's settings for next time; left empty, a made-up one like "Plucky Otter"), a colour from a
-fixed palette, the caret as an Automerge cursor (a place that survives typing), the replay step,
-and the level the page is showing.
+fixed palette, the caret as an Automerge cursor (a place that survives typing), the replay
+(`{runId, world, index, playing}`; one for a run this page hasn't finished yet waits until it has),
+and the level the page is showing. A tab remembers which room it is in, and under which name, in
+`sessionStorage`: a level move or a reload rejoins without asking; a link opened anew asks.
 
 **In the editor** (`src/collab/editor.js`): one calm caret per partner. Their name shows when they
 arrive, or move after a 2.5 s pause, then fades; never on every keystroke (PLP's
@@ -58,8 +63,10 @@ not. Moving on writes the new level and its starter code, then reloads into it. 
 once the mover is back in the room on the new level (or after 8 s), so somebody always holds the
 document; with tabs-only transport, everyone reloading at once lost the room.
 
-**Not shared:** demos (off in a room), the step-by-step guide's state, hints, drive-mode levels
-(Share is hidden there). Drafts: while in a room, its code isn't saved as your draft; on Leave it is.
+**Not shared:** demos (off in a room), the step-by-step guide's state, hints, replay speed, Stop
+(each page runs its own copy), drive-mode levels (Share is hidden there; a room that moves onto
+one says each person drives their own robot). Drafts: the room's code is saved as your draft for
+its level, as you type and on Leave.
 
 ## Safety: the relay is a private server, and a partner's code runs on your page
 
