@@ -71,7 +71,17 @@ not. Moving on writes the new level and its starter code, then reloads into it. 
 once the mover is back in the room on the new level (or after 8 s), so somebody always holds the
 document; with tabs-only transport, everyone reloading at once lost the room.
 
-**Not shared:** demos (off in a room), the step-by-step guide's state, hints, replay speed, Stop
+**Help is shared: the room is one learner** (`help` in the doc, `GuideUI.follow`, `HintUI.follow`).
+On a lesson's guided level the step-by-step guide shows for everyone, even in a browser that solved
+the level before (the tutor's); it starts open, and opening it, hiding it (or the Settings switch)
+and Show me are everyone's. Its step already agrees, being worked out from the shared code and
+runs. Show me is kept as the step it was opened on, so a new step closes it for all. On practice
+and twist levels there is one hint ladder: each room run counts once (by whoever ran it), the
+lightbulb shows for everyone, and the rung opened (or Not now) is everyone's; a partner opening one
+doesn't move your focus. In a room, the guide and hints don't change this browser's own saved
+state.
+
+**Not shared:** demos (off in a room), replay speed, Stop
 (each page runs its own copy). Drafts: the room's code is saved as your draft for
 its level, as you type and on Leave.
 

@@ -3,8 +3,9 @@
 //
 //   doc       {learnpython: "room 1", v, level, quest, code, drive, run}: the level (and sub-quest
 //             page) the room is on, the editor's text (merged a character at a time), on a drive
-//             level the buttons pressed so far (a list, so two people's presses both count), and
-//             the last run, replaced wholesale by each new one. The marker tells our rooms from other apps'
+//             level the buttons pressed so far (a list, so two people's presses both count), the
+//             help on screen (`help`: the step-by-step guide open or not, its Show me, and the hint
+//             ladder: the room is one learner), and the last run, replaced wholesale by each new one. The marker tells our rooms from other apps'
 //             documents on the same relay (PLP, Librarium)
 //   presence  who is here: a name (typed, or made up), a colour, a caret, and where their replay
 //             is (which run, which world of it, which step, playing or not).
@@ -75,7 +76,24 @@ export function readDoc(d) {
   // Button presses: command names only (the page keeps only its level's buttons).
   const drive = Array.isArray(d.drive)
     ? [...d.drive].slice(0, LIMITS.presses).filter((c) => typeof c === "string" && /^[a-z_]{1,20}$/.test(c)) : [];
-  return { level: d.level, quest: quest(d.quest), code: d.code.slice(0, LIMITS.code), drive, run };
+  return { level: d.level, quest: quest(d.quest), code: d.code.slice(0, LIMITS.code), drive, help: readHelp(d.help), run };
+}
+
+/** The room's help: {guide: "shown" | "hidden" | null (not decided yet), preview (the guide step
+ *  Show me is open on, or null),
+ *  hint: {failed, seen, failedAtSeen, dismissed, open (the rung on screen, or null)} | null}. */
+export function readHelp(h) {
+  const count = (v) => (Number.isInteger(v) && v >= 0 && v <= 10_000 ? v : 0);
+  const g = h && typeof h === "object" ? h : {};
+  const k = g.hint && typeof g.hint === "object" ? g.hint : null;
+  return {
+    guide: g.guide === "shown" || g.guide === "hidden" ? g.guide : null,
+    preview: Number.isInteger(g.preview) && g.preview >= 0 && g.preview < 50 ? g.preview : null,
+    hint: k && {
+      failed: count(k.failed), seen: count(k.seen), failedAtSeen: count(k.failedAtSeen),
+      dismissed: k.dismissed === true, open: Number.isInteger(k.open) && k.open >= 0 && k.open < 20 ? k.open : null,
+    },
+  };
 }
 
 /** One peer's presence as this page may show it, or null. */
@@ -150,7 +168,7 @@ export class Room {
     const id = newId("lp");
     const { adapters, relay } = network(lib, via);
     const repo = new lib.Repo({ network: adapters, peerId: id });
-    const handle = repo.create({ learnpython: MARKER, v: 1, level, quest, code: code.slice(0, LIMITS.code), drive: drive.slice(0, LIMITS.presses), run: null });
+    const handle = repo.create({ learnpython: MARKER, v: 1, level, quest, code: code.slice(0, LIMITS.code), drive: drive.slice(0, LIMITS.presses), help: {}, run: null });
     await handle.whenReady();
     const room = new Room(lib, repo, handle, makeMe(id, name), via, relay);
     room.start();
@@ -268,6 +286,7 @@ export class Room {
       d.quest = null;
       d.code = code.slice(0, LIMITS.code);
       d.drive = [];
+      d.help = {};
       d.run = null;
     });
   }
@@ -278,6 +297,16 @@ export class Room {
       if (!Array.isArray(d.drive) || command === "reset") d.drive = [];
       if (command === "undo") { if (d.drive.length) d.drive.splice(d.drive.length - 1, 1); }
       else if (command !== "reset" && d.drive.length < LIMITS.presses) d.drive.push(command);
+    });
+  }
+
+  /** Changes the room's help (see readHelp): `patch` has any of guide, preview, hint. */
+  setHelp(patch) {
+    this.handle.change((d) => {
+      if (!d.help || typeof d.help !== "object") d.help = {};
+      if ("guide" in patch) d.help.guide = patch.guide;
+      if ("preview" in patch) d.help.preview = patch.preview;
+      if ("hint" in patch) d.help.hint = { ...patch.hint };
     });
   }
 

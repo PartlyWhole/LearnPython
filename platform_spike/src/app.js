@@ -47,7 +47,7 @@ let progress = null;
 let order = null; // the play order (lessons/index.json expanded by order.js)
 const levelMeta = {}; // id -> {title, topics}
 let lastReport = null; // CheckReport from the last finished run
-let pendingHintRun = null; // pass/fail of the last run, handed to the hint ladder once its result shows
+let pendingHintRun = null; // {passed, mine} of the last run, handed to the hint ladder once its result shows
 let busy = false;
 let lessons = [];      // lessons/index.json order; each attaches to its guided level
 let lesson = null;     // this level's lesson, if it has one
@@ -404,7 +404,7 @@ async function runCode(shared = null, { stepping = false } = {}) {
     lastReport = out.payload;
     const main = lastReport.worlds[0].result;
     events.record("run", { level: level.id, passed: lastReport.passed, ...(shared && { shared: true }) });
-    pendingHintRun = lastReport.passed;
+    pendingHintRun = { passed: lastReport.passed, mine: !shared };
     guide.noteRun({ code, passed: lastReport.passed, error: Boolean(main.error), end: [main.final.x, main.final.y] });
     replayCode = code;
     if (!shared && quests.isOpen) quests.check(); // the strip, if open, ticks off what this code solves
@@ -847,7 +847,7 @@ let outcomeFor = null;
 function showOutcome(code = drive.active ? drive.program.code : replayCode ?? editor.getCode()) {
   if (!lastReport || outcomeFor === lastReport) return;
   outcomeFor = lastReport;
-  if (pendingHintRun !== null) { hints.ran(pendingHintRun); pendingHintRun = null; }
+  if (pendingHintRun !== null) { hints.ran(pendingHintRun.passed, { mine: pendingHintRun.mine }); pendingHintRun = null; }
   // A failed run that did something, watched rather than stepped: point at Step back, the way
   // to see what led here.
   // (If this world passed and a hidden one failed, it's that world's replay button instead, below.)
@@ -1146,6 +1146,14 @@ async function joinRoom() {
 
 function enterRoom() {
   rememberRoom(room.url, room.me.name);
+  // The room is one learner: the guide and hints are the room's, whoever solved the level before.
+  const help = { help: () => room.doc()?.help ?? {}, setHelp: (patch) => room?.setHelp(patch) };
+  guide.room = help;
+  hints.room = help;
+  if (level && !demo.active) {
+    guide.attach(lesson, level);
+    hints.attach(lessonForPractice(lessons, level.id), level);
+  }
   editor.setShared(sharedEditor(room));
   room.shareLevel(level.id);
   roomUi.bar.hidden = false;
@@ -1185,6 +1193,8 @@ function onRoomChange() {
     if (i >= 0) enterQuest(i); else if (d.quest === null) leaveQuest();
   }
   if (drive.active && level.drive) drive.follow(d.drive);
+  guide.follow(d.help);
+  hints.follow(d.help.hint);
   if (d.run && d.run.id !== seenRun) {
     seenRun = d.run.id;
     if (d.run.level === level.id && d.run.by !== room.me.id && !drive.active) runCode(d.run);

@@ -2,6 +2,8 @@
 // progress dots, one instruction and two icon buttons (Show me, Hide). It never blocks the editor
 // and never takes focus by itself. Which steps are done is the engine's answer (guide_state);
 // guide.js turns it into what to show.
+// In a shared room (`room`: {help(), setHelp(patch)}), the room is the learner: the guide shows on
+// its guided level whoever has solved it, and opening, hiding and Show me are the room's (follow).
 import { GuideTracker, Debouncer, lineDiff } from "./guide.js";
 import { setCaption } from "./demo-ui.js";
 import { renderDots } from "../ui/icons.js";
@@ -17,13 +19,15 @@ export class GuideUI {
   constructor(deps) {
     Object.assign(this, deps);
     this.lesson = null;
+    this.room = null;
     this.debounce = new Debouncer(DEBOUNCE_MS, deps);
     this.pending = Promise.resolve();
-    this.el.show.onclick = () => this.togglePreview();
+    // The room keeps which step Show me was opened on (a new step closes it, for everyone).
+    this.el.show.onclick = () => { this.togglePreview(); this._share({ preview: this.el.preview.hidden ? null : this.index ?? 0 }); };
     this.el.hide.onclick = () => this.hide();
     this.el.chip.onclick = () => this.show();
-    this.el.use.onclick = () => this.useExample();
-    this.el.closePreview.onclick = () => this.closePreview();
+    this.el.use.onclick = () => { this.useExample(); this._share({ preview: null }); };
+    this.el.closePreview.onclick = () => { this.closePreview(); this._share({ preview: null }); };
     this.el.offerOff.onclick = () => this._answerOffer("accepted");
     this.el.offerKeep.onclick = () => this._answerOffer("declined");
     this.el.panel.addEventListener("keydown", (e) => {
@@ -34,7 +38,7 @@ export class GuideUI {
   /** Called when a level opens. The guide only exists on a lesson's guided level, until it's solved. */
   attach(lesson, level) {
     this.detach();
-    if (!lesson || lesson.guided.level !== level.id || this.progress.isSolved(level.id)) return;
+    if (!lesson || lesson.guided.level !== level.id || (!this.room && this.progress.isSolved(level.id))) return;
     this.lesson = lesson;
     this.level = level;
     this.steps = lesson.guided.steps;
@@ -43,9 +47,22 @@ export class GuideUI {
     this.usedShowMe = false;
     this.lastRun = null;
     this.index = null; // nothing announced yet: the first answer announces step 1
-    const wanted = this.progress.setting("stepByStep") && !this.progress.guideHidden(level.id);
-    if (wanted) this.show({ remember: false }); else this._collapse();
+    const roomSays = this.room?.help().guide;
+    const wanted = roomSays ? roomSays === "shown" : this.room ? true : this.progress.setting("stepByStep") && !this.progress.guideHidden(level.id);
+    if (wanted) this.show({ remember: false, share: false }); else this._collapse();
   }
+
+  /** The room's help changed (a partner opened, hid or used Show me): match it. */
+  follow(help) {
+    if (!this.lesson) return;
+    const guide = help.guide ?? "shown"; // a room's guide starts open
+    if (guide === "shown" && this.el.panel.hidden) this.show({ remember: false, share: false });
+    if (guide === "hidden" && !this.el.panel.hidden) this._collapse();
+    const open = guide === "shown" && help.preview !== null && help.preview === (this.index ?? 0);
+    if (open === this.el.preview.hidden) { if (open) this.togglePreview(); else this.closePreview(); }
+  }
+
+  _share(patch) { if (this.lesson) this.room?.setHelp(patch); }
 
   detach() {
     this.debounce.cancel();
@@ -87,9 +104,10 @@ export class GuideUI {
   /** Resolves when no guide check is in flight, so Run never meets a busy worker. */
   idle() { return this.pending; }
 
-  show({ remember = true } = {}) {
+  show({ remember = true, share = true } = {}) {
     if (!this.lesson) return;
-    if (remember) this.progress.setGuideHidden(this.level.id, false);
+    if (share) this._share({ guide: "shown" });
+    if (remember && !this.room) this.progress.setGuideHidden(this.level.id, false);
     this.el.chip.hidden = true;
     this.el.panel.hidden = false;
     if (!this.shownThisTry) this.onEvent?.("lesson.beat_started", { lesson: this.lesson.id, beat: "guided" });
@@ -100,13 +118,15 @@ export class GuideUI {
   hide() {
     if (!this.lesson) return;
     this.onEvent?.("guide.hidden", { lesson: this.lesson.id, step: (this.index ?? 0) + 1 });
-    this.progress.setGuideHidden(this.level.id, true);
+    if (this.room) this._share({ guide: "hidden", preview: null });
+    else this.progress.setGuideHidden(this.level.id, true);
     this._collapse();
   }
 
   /** The setting changed: apply it now (turning it off collapses the guide to its chip). */
   settingChanged(on) {
     if (!this.lesson) return;
+    if (this.room) { if (on) this.show(); else this.hide(); return; } // in a room, it's everyone's
     if (on && !this.progress.guideHidden(this.level.id)) this.show({ remember: false }); else this._collapse();
   }
 
