@@ -8,7 +8,8 @@
 //             ladder: the room is one learner), and the last run, replaced wholesale by each new one. The marker tells our rooms from other apps'
 //             documents on the same relay (PLP, Librarium)
 //   presence  who is here: a name (typed, or made up), a colour, a caret, and where their replay
-//             is (which run, which world of it, which step, playing or not).
+//             is (which run, which world of it, which step, playing or not), or, before a run,
+//             which of the level's worlds they're looking at.
 //             Ephemeral messages, never in the doc
 //
 // **Every peer runs every run itself.** A run in the doc is only {id, by, level, source}: each
@@ -150,6 +151,9 @@ export class Room {
     this.stepListeners = new Set();
     this.seenStep = new Map();
     this.stepN = 0;
+    this.viewN = 0;
+    this.seenView = new Map();
+    this.viewListeners = new Set();
     this.cursorN = 0;
     this.cursorTimer = null;
     this.pendingCursor = null;
@@ -328,6 +332,11 @@ export class Room {
     this.presence?.broadcast("step", { runId, world, index, playing, n: ++this.stepN });
   }
 
+  /** Tells the others which of the level's worlds this peer is looking at (no run on screen). */
+  shareView(world) {
+    this.presence?.broadcast("view", { world, n: ++this.viewN });
+  }
+
   /** Tells the others where this peer's caret is, at most every 40 ms. `where` is read when sent. */
   shareCursor(where) {
     this.pendingCursor = where;
@@ -345,6 +354,9 @@ export class Room {
   // ------------------------------------------------------------ listening
   /** Called on any change to the document or to who is here. */
   subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); }
+
+  /** Called with a world's name when another peer looks at one of the level's worlds. */
+  onView(fn) { this.viewListeners.add(fn); return () => this.viewListeners.delete(fn); }
 
   /** Called with {runId, world, index, playing} when another peer moves their replay. */
   onStep(fn) { this.stepListeners.add(fn); return () => this.stepListeners.delete(fn); }
@@ -367,6 +379,12 @@ export class Room {
         this.seenStep.set(p.peerId, s.n);
         const replay = { runId: s.runId, world: typeof s.world === "string" && s.world.length <= LIMITS.level ? s.world : "main", index: s.index, playing: s.playing === true };
         for (const fn of this.stepListeners) fn(replay);
+      }
+      const v = p.value?.view;
+      if (v && Number.isInteger(v.n) && typeof v.world === "string" && v.world.length <= LIMITS.level &&
+          (this.seenView.get(p.peerId) ?? -1) < v.n) {
+        this.seenView.set(p.peerId, v.n);
+        for (const fn of this.viewListeners) fn(v.world);
       }
     }
     this.emit();
@@ -391,6 +409,7 @@ export class Room {
     this.handle.off("change", this.emit);
     this.listeners.clear();
     this.stepListeners.clear();
+    this.viewListeners.clear();
     try { this.repo.shutdown(); } catch { /* best effort */ }
   }
 }

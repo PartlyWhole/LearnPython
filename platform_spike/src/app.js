@@ -112,7 +112,7 @@ document.addEventListener("click", (e) => { if (!help.pop.hidden && !help.pop.co
 const renderer = new GridRenderer($("world"));
 const goalRenderer = new GridRenderer($("goal"));
 
-/** The Goal view: what the main world should look like at the end (hidden worlds stay hidden). */
+/** The Goal view: what the world on screen should look like at the end. */
 function showGoal(world = level.world, goal = goalFor(level, world)) {
   const view = goalWorld(world, goal);
   goalRenderer.setGoal(view);
@@ -161,21 +161,27 @@ function loadReplay(world, result, name = "main", { goal = goalFor(level, world)
   renderer.setWorld(world);
   renderer.markTarget(goal.end_at ?? null);
   showGoal(world, goal);
-  // Not the level's own world: a tag says whose (a hidden world, or a sub-quest's).
+  showWorldTag(name, { kind, passed, sr: kind === "quest" ? "Trying sub-quest: " : "Replaying the other world " });
+  replayOutput = result.output ?? "";
+  player.load(buildFrames(world, result.trace, result.error));
+  markCurrentWorld();
+}
+
+/** Not the level's own world: a tag says whose (another of the level's worlds, or a sub-quest's).
+ *  `passed`: true green, false red-tinted, null (not run yet) plain. */
+function showWorldTag(name, { kind = "world", passed = null, sr: srText = "" } = {}) {
   const tag = $("world-tag");
   tag.hidden = name === "main";
-  tag.innerHTML = icon(kind === "quest" ? "puzzle" : "eye_off");
+  tag.innerHTML = icon(kind === "quest" ? "puzzle" : "eye");
   const sr = document.createElement("span");
   sr.className = "sr-only";
-  sr.textContent = kind === "quest" ? "Trying sub-quest: " : "Replaying hidden world ";
+  sr.textContent = srText;
   const words = document.createElement("span");
   words.textContent = name;
   tag.append(sr, words);
   tag.classList.toggle("quest", kind === "quest");
-  tag.classList.toggle("passed", passed); // green for a world that passed, red-tinted for one that didn't
-  replayOutput = result.output ?? "";
-  player.load(buildFrames(world, result.trace, result.error));
-  markCurrentWorld();
+  tag.classList.toggle("passed", passed === true);
+  tag.classList.toggle("failed", passed === false);
 }
 
 function jumpToLine(line) {
@@ -781,7 +787,7 @@ function showLevelWorld() {
 ui.stop.onclick = () => controller.stop();
 
 // ---------------------------------------------------------------- results
-/** Replay world i of the last run (0: this world; then the hidden worlds that returned a run). */
+/** Replay world i of the last run (0: this world; then the level's other worlds). */
 function watchWorld(i, { play = true } = {}) {
   const w = lastReport?.worlds[i];
   const spec = i === 0 ? level.world : level.hidden_worlds?.[i - 1];
@@ -804,7 +810,7 @@ function renderWorldDots() {
     b.className = `world-dot ${w.passed ? "pass" : "fail"}`;
     b.dataset.world = w.world;
     b.innerHTML = icon(i === 0 ? "eye" : w.passed ? "check" : "close");
-    const label = `${i === 0 ? "This world" : `Hidden world ${w.world}`}: ${w.passed ? "solved" : "not yet"}`;
+    const label = `${i === 0 ? "This world" : `Other world: ${w.world}`}: ${w.passed ? "solved" : "not yet"}`;
     b.setAttribute("aria-label", w.result ? `${label}. Watch it` : label);
     b.title = label;
     b.disabled = !w.result;
@@ -813,24 +819,54 @@ function renderWorldDots() {
   }));
 }
 
-/** Before a run: grey dots, one per world the program will be tried in, so the hidden worlds
- *  are no surprise ("also tried in 3 other worlds"). */
+/** The level's worlds: [{name, spec}], this world ("main") first. Every one is a test the
+ *  program must pass, and every one can be looked at before running (D9, amended). */
+function levelWorlds() {
+  return [{ name: "main", spec: level.world },
+    ...(level.hidden_worlds ?? []).map((spec, i) => ({ name: spec.name ?? `hidden ${i + 1}`, spec }))];
+}
+
+/** Before a run: a grey dot per world the program will be tried in. Click one to see that world
+ *  as it starts, and its goal. */
 function previewWorldDots() {
   const box = $("world-dots");
-  const others = level?.hidden_worlds?.length ?? 0;
-  box.hidden = !others || drive.active || questIndex !== null;
+  const worlds = levelWorlds();
+  box.hidden = worlds.length < 2 || drive.active || questIndex !== null;
   if (box.hidden) return;
   box.classList.add("preview");
-  const text = `Your program is also tried in ${others} other world${others === 1 ? "" : "s"}, not shown`;
-  box.title = text;
-  box.setAttribute("aria-label", text);
-  box.replaceChildren(...Array.from({ length: others + 1 }, (_, i) => {
-    const dot = document.createElement("span");
-    dot.className = `world-dot${i === 0 ? " here" : ""}`;
-    dot.innerHTML = icon(i === 0 ? "eye" : "eye_off");
-    dot.setAttribute("aria-hidden", "true");
-    return dot;
+  box.removeAttribute("title");
+  box.setAttribute("aria-label", `Your program is tried in ${worlds.length} worlds. Look at each`);
+  box.replaceChildren(...worlds.map((w, i) => {
+    const b = document.createElement("button");
+    b.className = "world-dot";
+    b.dataset.world = w.name;
+    b.innerHTML = icon(i === 0 ? "eye" : "dot");
+    const label = i === 0 ? "This world" : `Other world: ${w.name}`;
+    b.setAttribute("aria-label", `${label}. Look at it`);
+    b.title = label;
+    b.onclick = () => { previewWorld(w.name); room?.shareView(w.name); };
+    return b;
   }));
+  markCurrentWorld();
+}
+
+/** Show one of the level's worlds as it starts, with its goal (before a run, or after the code
+ *  changed). */
+function previewWorld(name) {
+  const w = levelWorlds().find((x) => x.name === name);
+  if (!w || demo?.active || drive.active || questIndex !== null) return;
+  player.pause();
+  replayWorld = w.name;
+  replayOutput = null;
+  shownWorld = w.spec;
+  const goal = goalFor(level, w.spec);
+  renderer.setWorld(w.spec);
+  renderer.markTarget(goal.end_at ?? null);
+  showGoal(w.spec, goal);
+  showWorldTag(w.name, { sr: "Looking at the other world " });
+  player.load(buildFrames(w.spec, []));
+  ui.outputWrap.hidden = true;
+  markCurrentWorld();
 }
 
 /** Ring the dot and mark the results row of the world on screen. */
@@ -872,7 +908,7 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
     const name = document.createElement("span");
     name.className = w.world === "main" ? "sr-only" : "name";
     name.textContent = w.world === "main" ? "This world" : w.world;
-    where.title = w.world === "main" ? "This world" : `Hidden world: ${w.world}`;
+    where.title = w.world === "main" ? "This world" : `Other world: ${w.world}`;
     where.append(name);
     const why = document.createElement("span");
     why.className = "why";
@@ -892,7 +928,7 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
       // Hidden worlds get a labelled Watch, passed or not: otherwise one is only a name.
       watch.className = `icon-button watch-world${i === 0 ? "" : " labelled"}`;
       watch.innerHTML = i === 0 ? icon("replay") : `${icon("play")}<span class="label">Watch</span>`;
-      watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay hidden world ${w.world}`);
+      watch.setAttribute("aria-label", i === 0 ? "Replay this world" : `Replay the other world ${w.world}`);
       watch.title = watch.getAttribute("aria-label");
       watch.onclick = () => { watchWorld(i); shareStep(); };
       li.dataset.world = w.world;
@@ -1161,6 +1197,7 @@ function enterRoom() {
   $("watch-demo").hidden = true;
   room.subscribe(onRoomChange);
   room.onStep((replay) => { pendingReplay = replay; applyReplay(); });
+  room.onView((world) => { if (!lastReport) previewWorld(world); }); // after a run, the replay is shared instead
   addEventListener("pagehide", () => room?.goodbye());
   // Someone ran the code that is in the editor now: show it to the joiner too.
   const d = room.doc();

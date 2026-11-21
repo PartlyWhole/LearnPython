@@ -54,6 +54,7 @@ changed since.
 browser's settings for next time; left empty, a made-up one like "Plucky Otter"), a colour from a
 fixed palette, the caret as an Automerge cursor (a place that survives typing), the replay
 (`{runId, world, index, playing}`; one for a run this page hasn't finished yet waits until it has),
+which of the level's worlds they clicked to look at before a run (`view`: everyone's page shows it),
 and the level the page is showing. A tab remembers which room it is in, and under which name, in
 `sessionStorage`: a level move or a reload rejoins without asking; a link opened anew asks.
 

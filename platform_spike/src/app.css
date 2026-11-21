@@ -460,7 +460,8 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 @keyframes star-fade { 0%, 100% { opacity: 0; } 15%, 75% { opacity: 1; } }
 
 /* Replaying a hidden world: a tag over the world says which; each failed world's row can replay it. */
-.world-tag { margin: 0; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 3px 10px 3px 8px; border-radius: 999px; font-size: 13px; color: var(--ink); background: var(--band-error); }
+.world-tag { margin: 0; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 3px 10px 3px 8px; border-radius: 999px; font-size: 13px; color: var(--ink); background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
+.world-tag.failed { background: var(--band-error); box-shadow: none; }
 .world-tag[hidden] { display: none; }
 .world-tag .icon { width: 15px; height: 15px; }
 .world-list .watch-world { grid-column: 4; padding: 3px; }
@@ -531,9 +532,9 @@ body.in-quest #watch-demo, body.in-quest #world-tag { display: none !important; 
 .world-dot.fail { background: var(--danger); }
 .world-dot:disabled { cursor: default; opacity: 0.85; }
 .world-dot[aria-current] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
-.world-dots.preview .world-dot { background: var(--bg); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); cursor: help; }
-.world-dots.preview .world-dot.here { color: var(--ink); }
+.world-dots.preview .world-dot { background: var(--bg); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); }
+.world-dots.preview .world-dot[aria-current] { color: var(--ink); box-shadow: inset 0 0 0 1px var(--line), 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
 .quest-note-row { display: flex; align-items: center; gap: 4px; }
 .quest-nudge-button { padding: 2px; }
 .quest-nudge-button[hidden] { display: none; }
-.world-tag.passed { background: var(--band); }
+.world-tag.passed { background: var(--band); box-shadow: none; }

@@ -64,6 +64,11 @@ lives in `docs/ASSUMPTIONS_AUDIT.md` (A-numbers) and the tests.
 **Decision:** Levels are JSON (`schemas/level.schema.json`) with a visible world, hidden variant worlds, a goal and optional teaching constraints. A level passes only if every world passes.
 **Why:** Hidden worlds stop hard-coded move sequences. `test_hard_coded_answer_fails_a_hidden_world` demonstrates this. Stanford's CS106A Karel assignments test against several worlds of different sizes (A15). Whether hiding them helps learning, versus listing them, is untested.
 **Evidence:** A15; `Levels` tests.
+**Amended (Nov 2026, the project owner's request):** every world is visible before running. Over
+the world, a dot per world; clicking one shows that world as it starts, with its own Goal view,
+tagged with its name ("Other world: one cell"). Each is a test case the program must pass, so
+hard-coded moves still fail: they now fail in plain sight. In a shared room, looking at a world is
+everyone's (D23). The UI says "other world", not "hidden world".
 
 ### D10. Write our own engine; do not reuse Code in Place's `karel` package
 **Status:** accepted
