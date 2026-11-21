@@ -22,7 +22,7 @@ way. Decisions are cited below as D1 to D11.
 | `src/lessons/` | `order.js` (play order), `demo.js` / `guide.js` / `drive.js` / `hints.js` (demo, guide, drive-mode and hint-ladder logic, pure), `demo-ui.js` / `guide-ui.js` / `drive-ui.js` / `hint-ui.js` (their parts of the page) |
 | `quests/`, `src/lessons/quests*.js`, `tools/check_quests.py` | Sub-quests (D25, `docs/quests.md`): per code level, 2–5 smaller problems with their own worlds and automatic checks (`engine.quest_state`), opened from the puzzle icon. `python3 tools/check_quests.py <id>` checks one (no answer leaks; the reference completes every part) |
 | `src/ui/icons.js` | The icon set, `applyIcons()` for `<button data-icon>`, progress dots |
-| `tests/solutions/` | Per level: a reference `<id>.py` (within any line limit), at least one `<id>.wrong_*.py` (must fail) and, for long-but-working attempts, `<id>.long_*.py` (must pass, without the line bonus). Kept under tests/ so the app never serves them |
+| `tests/solutions/` | Per level: a reference `<id>.py` (within any line limit), at least one `<id>.wrong_*.py` (must fail) and, for long-but-working attempts, `<id>.long_*.py` (must pass, without the line bonus). Only the reference is published (students can peek at it, D28), so write it as a model answer |
 | `tools/level_goals.py` | Fills per-world goals (`gems_exactly`, `end_at`, `facing`) from the reference solution |
 | `src/progress/` | `progress.js`: solved levels (and how: none / hint / guided), drafts, unlocking, lesson, guide and hint state, settings. `events.js`: the local playtest log. Both in wrapped browser storage |
 | `cases.py` | Programs whose traces are frozen in `tests/golden_traces.json` |
