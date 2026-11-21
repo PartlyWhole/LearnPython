@@ -4,8 +4,9 @@
 
 Copies app.html (also as index.html, so the site root opens the game), src/, vendor/, levels/,
 lessons/ and engine.py, plus an empty .nojekyll (GitHub Pages must not run Jekyll over the files).
-Deliberately left out: tests/ (reference and wrong solutions, fixtures), tools/, docs/, the audit
-harness (index.html, worker.js), node_modules/. .github/workflows/pages.yml runs this on every push.
+Each level's reference solution is published as solutions/<id>.py, for the app's "peek at a
+solution". Deliberately left out: the rest of tests/ (wrong and long solutions, fixtures), tools/,
+docs/, the audit harness (index.html, worker.js), node_modules/. .github/workflows/pages.yml runs this on every push.
 """
 import os
 import shutil
@@ -41,10 +42,18 @@ def build(out):
     for name in DIRS:
         shutil.copytree(ROOT / name, out / name, ignore=shutil.ignore_patterns("__pycache__", ".DS_Store"))
     (out / ".nojekyll").write_text("")
+    # One reference solution per level, for "peek at a solution" (never the wrong_* or long_* ones).
+    (out / "solutions").mkdir()
+    for level in sorted((ROOT / "levels").glob("*.json")):
+        ref = ROOT / "tests" / "solutions" / f"{level.stem}.py"
+        if ref.exists():
+            shutil.copy2(ref, out / "solutions" / ref.name)
     # Stamp the build, so peers in a shared room on different versions are told to reload.
     stamp = (out / "src" / "collab" / "build.js")
     stamp.write_text(stamp.read_text().replace('export const BUILD = "dev";', f'export const BUILD = "{build_id()}";'))
-    leaked = [p for p in out.rglob("*") if "solutions" in p.parts or p.suffix == ".py" and p.name != "engine.py"]
+    level_ids = {p.stem for p in (ROOT / "levels").glob("*.json")}
+    published = lambda p: p.parent == out / "solutions" and p.suffix == ".py" and p.stem in level_ids
+    leaked = [p for p in out.rglob("*") if p.is_file() and p.suffix == ".py" and p.name != "engine.py" and not published(p)]
     if leaked:
         sys.exit(f"would publish files that must stay private: {leaked[:5]}")
     count = sum(1 for p in out.rglob("*") if p.is_file())

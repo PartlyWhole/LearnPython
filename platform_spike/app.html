@@ -65,6 +65,26 @@
   </div>
 </dialog>
 
+<dialog id="peek-dialog" aria-labelledby="peek-title" class="small-dialog peek-dialog">
+  <div class="dialog-head">
+    <h2 id="peek-title">A solution</h2>
+    <button id="close-peek" class="icon-button" data-icon="close" aria-label="Close"></button>
+  </div>
+  <div class="share-body">
+    <div id="peek-ask">
+      <p>Stuck? You can look at one way to solve this level. Your code stays as it is.</p>
+      <div class="join-buttons">
+        <button id="peek-show" class="round-button share-start" data-icon="key"><span class="label">Show it</span></button>
+        <button id="peek-keep" class="quiet">Keep trying</button>
+      </div>
+    </div>
+    <div id="peek-answer" hidden>
+      <pre id="peek-code" class="peek-code"></pre>
+      <p class="share-facts">Other ways can be right too. Try typing it yourself rather than copying.</p>
+    </div>
+  </div>
+</dialog>
+
 <dialog id="join-dialog" aria-labelledby="join-title" class="small-dialog">
   <div class="dialog-head">
     <h2 id="join-title">Join the room</h2>
@@ -164,6 +184,7 @@
       <span id="run-note" class="note"></span>
       <button id="guide-chip" class="icon-button chip" data-icon="steps" aria-label="Show steps" title="Show steps" hidden></button>
       <button id="quests-open" class="icon-button quests-button" data-icon="puzzle" aria-label="Sub-quests: break the challenge into parts" title="Break it into sub-quests" aria-expanded="false" aria-controls="quests" hidden></button>
+      <button id="peek" class="icon-button" data-icon="key" aria-label="Peek at a solution" title="Peek at a solution"></button>
       <button id="open-help" class="icon-button" data-icon="help" aria-label="Commands and keys" title="Commands and keys" aria-expanded="false" aria-controls="help-pop"></button>
     </div>
     <div id="help-pop" class="help-pop" role="dialog" aria-label="Commands and keys" hidden>

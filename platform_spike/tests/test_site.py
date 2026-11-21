@@ -1,5 +1,6 @@
 """The public site (tools/build_site.py, deployed by .github/workflows/pages.yml) has everything the
-app loads and nothing private: no solutions, tests, tools or docs."""
+app loads and nothing private: no tests, tools or docs, and of the solutions only each level's
+reference (for "peek at a solution"), never the wrong or long ones."""
 import re
 import sys
 import tempfile
@@ -28,8 +29,11 @@ class PublicSite(unittest.TestCase):
             for lesson_id in order["lessons"]:
                 self.assertIn(f"lessons/{lesson_id}.json", files)
             private = [f for f in files if re.match(r"(tests|tools|docs|node_modules)/", f) or
-                       (f.endswith(".py") and f != "engine.py")]
+                       (f.endswith(".py") and f != "engine.py" and not re.fullmatch(r"solutions/[a-z0-9_]+\.py", f))]
             self.assertEqual(private, [])
+            for level_id in order["levels"]:
+                self.assertIn(f"solutions/{level_id}.py", files)
+            self.assertFalse([f for f in files if "wrong_" in f or "long_" in f])
             # Stamped with the build, so peers in a room on different versions can tell.
             stamp = (out / "src/collab/build.js").read_text()
             self.assertNotIn('BUILD = "dev"', stamp)

@@ -323,3 +323,23 @@ commonest failure messages were coordinate lists (0-based, y downward, cut at 4 
 Python errors, and silent no-ops. It also found that several "use def/for" levels could be passed
 without decomposing at all.
 
+### D28. Students can peek at a solution; replays don't scroll the code while playing
+**Status:** accepted (Nov 2026; the project owner's requests)
+**Decision:**
+- **Peek at a solution.** A key button by the code opens one way to solve the level: its reference
+  solution (`tests/solutions/<id>.py`, published by `tools/build_site.py` as `solutions/<id>.py`).
+  One question first ("Stuck? … Show it / Keep trying"); then the code, read-only, with "Other ways
+  can be right too. Try typing it yourself rather than copying." It isn't put in the editor.
+  Peeking is remembered per level, and a level solved after a peek is recorded `with: "solution"`.
+  In a shared room the solution on screen is everyone's (`help.solution`, D23).
+- **The reference solutions are now read by students**, so they must read as model answers: plain
+  helper names, comments that explain the plan, within any line bonus. Only the reference is
+  published, never `wrong_*` or `long_*`.
+- **While a replay plays, the editor doesn't scroll to follow the running line** (on long code it
+  jittered, and moved the page). The line is still marked; a step by hand, a jump to a line, or the
+  error a run stopped on brings its line into view.
+**Why:** a student stuck for a long time learns more from reading a good answer than from giving up;
+the one question keeps it from being the first thing tried.
+**Revisit when:** playtests show students peeking before trying (then offer it only after a few
+runs, as hints are).
+

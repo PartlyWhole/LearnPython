@@ -188,3 +188,15 @@ test("sub-quests solved once are remembered per level", () => {
   assert.deepEqual(new Progress(INDEX, storage).questsDone("a"), ["one"]);
   assert.deepEqual(p.questsDone("zzz"), []);
 });
+
+test("peeking at a solution is remembered per level, and only for levels in the play order", () => {
+  const storage = memoryStorage();
+  const p = new Progress(INDEX, storage);
+  const [first] = p.order;
+  assert.equal(p.peeked(first), false);
+  p.markPeeked(first);
+  p.markPeeked("no_such_level");
+  assert.equal(p.peeked(first), true);
+  assert.equal(p.peeked("no_such_level"), false);
+  assert.equal(new Progress(INDEX, storage).peeked(first), true);
+});

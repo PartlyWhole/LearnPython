@@ -221,7 +221,8 @@ export function createEditor(parent, { doc = "", onRun = () => {}, onChange = ()
       changes: { from: 0, to: view.state.doc.length, insert: code },
       ...(load && { annotations: Transaction.addToHistory.of(false) }),
     }),
-    showLine(line, { calls = [], pass = null, callPasses = [] } = {}) { mark({ line, kind: "current", calls, pass, callPasses }); reveal(line); },
+    /** `follow`: scroll the line into view (off while a replay plays: on long code it jittered). */
+    showLine(line, { calls = [], pass = null, callPasses = [], follow = true } = {}) { mark({ line, kind: "current", calls, pass, callPasses }); if (follow) reveal(line); },
     showError(line, message, { calls = [], callPasses = [] } = {}) { mark({ line, kind: "error", message, calls, callPasses }); reveal(line); },
     clearMarks: () => mark({ line: null }),
     setReadOnly: (ro) => view.dispatch({ effects: editable.reconfigure(EditorView.editable.of(!ro)) }),

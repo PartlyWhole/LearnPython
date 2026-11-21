@@ -81,7 +81,7 @@ export function readDoc(d) {
 }
 
 /** The room's help: {guide: "shown" | "hidden" | null (not decided yet), preview (the guide step
- *  Show me is open on, or null),
+ *  Show me is open on, or null), solution (the level's solution is on screen),
  *  hint: {failed, seen, failedAtSeen, dismissed, open (the rung on screen, or null)} | null}. */
 export function readHelp(h) {
   const count = (v) => (Number.isInteger(v) && v >= 0 && v <= 10_000 ? v : 0);
@@ -90,6 +90,7 @@ export function readHelp(h) {
   return {
     guide: g.guide === "shown" || g.guide === "hidden" ? g.guide : null,
     preview: Number.isInteger(g.preview) && g.preview >= 0 && g.preview < 50 ? g.preview : null,
+    solution: g.solution === true,
     hint: k && {
       failed: count(k.failed), seen: count(k.seen), failedAtSeen: count(k.failedAtSeen),
       dismissed: k.dismissed === true, open: Number.isInteger(k.open) && k.open >= 0 && k.open < 20 ? k.open : null,
@@ -310,6 +311,7 @@ export class Room {
       if (!d.help || typeof d.help !== "object") d.help = {};
       if ("guide" in patch) d.help.guide = patch.guide;
       if ("preview" in patch) d.help.preview = patch.preview;
+      if ("solution" in patch) d.help.solution = patch.solution;
       if ("hint" in patch) d.help.hint = { ...patch.hint };
     });
   }

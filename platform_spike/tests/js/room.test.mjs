@@ -7,7 +7,7 @@ import { readDoc, readHelp, readPeer, transportsFrom, colorFor, cleanName, PEER_
 
 test("a well-formed doc is read as is", () => {
   const d = { learnpython: "room 1", v: 1, level: "first_steps", quest: "one_step", code: "move()\n", run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", source: "move()" } };
-  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", drive: [], help: { guide: null, preview: null, hint: null }, run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", stepping: false, source: "move()" } });
+  assert.deepEqual(readDoc(d), { level: "first_steps", quest: "one_step", code: "move()\n", drive: [], help: { guide: null, preview: null, solution: false, hint: null }, run: { id: "lp-a-b", by: "lp-a", level: "first_steps", quest: "one_step", stepping: false, source: "move()" } });
 });
 
 test("drive presses: command names only, capped; no list is none", () => {
@@ -18,11 +18,11 @@ test("drive presses: command names only, capped; no list is none", () => {
 });
 
 test("the room's help: the guide shown or hidden, Show me's step, the hint ladder; junk is none", () => {
-  assert.deepEqual(readHelp(undefined), { guide: null, preview: null, hint: null });
-  assert.deepEqual(readHelp({ guide: "shown", preview: 2, hint: { failed: 3, seen: 1, failedAtSeen: 2, dismissed: true, open: 0 } }),
-    { guide: "shown", preview: 2, hint: { failed: 3, seen: 1, failedAtSeen: 2, dismissed: true, open: 0 } });
-  assert.deepEqual(readHelp({ guide: "<b>", preview: "x", hint: { failed: -1, seen: 1.5, open: 99, dismissed: "yes" } }),
-    { guide: null, preview: null, hint: { failed: 0, seen: 0, failedAtSeen: 0, dismissed: false, open: null } });
+  assert.deepEqual(readHelp(undefined), { guide: null, preview: null, solution: false, hint: null });
+  assert.deepEqual(readHelp({ guide: "shown", preview: 2, solution: true, hint: { failed: 3, seen: 1, failedAtSeen: 2, dismissed: true, open: 0 } }),
+    { guide: "shown", preview: 2, solution: true, hint: { failed: 3, seen: 1, failedAtSeen: 2, dismissed: true, open: 0 } });
+  assert.deepEqual(readHelp({ guide: "<b>", preview: "x", solution: "yes", hint: { failed: -1, seen: 1.5, open: 99, dismissed: "yes" } }),
+    { guide: null, preview: null, solution: false, hint: { failed: 0, seen: 0, failedAtSeen: 0, dismissed: false, open: null } });
 });
 
 test("a run says if it goes one step at a time; anything but true is no", () => {

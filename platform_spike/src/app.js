@@ -253,7 +253,9 @@ function showFrame(frame, index, total) {
     else editor.clearMarks();
   } else if (line && fits) {
     const calls = frame.event.calls ?? [];
-    editor.showLine(line, { calls, pass: { n: runs.nth[index], of: runs.total(line) }, callPasses: calls.map((c) => runs.callPass(index, c)) });
+    // Playing, the editor stays put (following each line jittered on long code); a step by hand,
+    // or the error a run stopped on, brings its line into view.
+    editor.showLine(line, { calls, pass: { n: runs.nth[index], of: runs.total(line) }, callPasses: calls.map((c) => runs.callPass(index, c)), follow: !player.playing });
   } else {
     editor.clearMarks();
   }
@@ -773,6 +775,66 @@ $("setting-step").onchange = (e) => {
 };
 $("watch-demo").onclick = () => lesson && demo.start(lesson);
 
+// ---------------------------------------------------------------- peek at a solution
+// One way to solve the level (its reference, tests/solutions/<id>.py, published as
+// solutions/<id>.py), behind one "are you sure". Shown, not put in the editor: typing it teaches
+// more than pasting. In a room, the solution on screen is everyone's.
+const peek = { button: $("peek"), dialog: $("peek-dialog"), ask: $("peek-ask"), answer: $("peek-answer"), code: $("peek-code") };
+let peekFollowing = false; // closing because the room said so: don't tell the room back
+const solutions = new Map();
+
+async function solutionFor(id) {
+  if (solutions.has(id)) return solutions.get(id);
+  const local = ["localhost", "127.0.0.1"].includes(location.hostname);
+  for (const path of [`solutions/${id}.py`, ...(local ? [`tests/solutions/${id}.py`] : [])]) {
+    try {
+      const res = await fetch(path, { cache: "no-store" });
+      if (res.ok) { const text = await res.text(); solutions.set(id, text); return text; }
+    } catch { /* try the next */ }
+  }
+  return null;
+}
+
+function openPeek() {
+  if (!level || demo.active) return;
+  peek.ask.hidden = false;
+  peek.answer.hidden = true;
+  if (!peek.dialog.open) peek.dialog.showModal();
+  $("peek-show").focus();
+}
+
+async function showSolution({ share = true } = {}) {
+  if (!level) return;
+  const id = level.id;
+  const code = await solutionFor(id);
+  if (level.id !== id) return;
+  peek.code.textContent = code ?? "This level's solution couldn't be loaded.";
+  peek.ask.hidden = true;
+  peek.answer.hidden = false;
+  if (!peek.dialog.open) peek.dialog.showModal();
+  if (code !== null) {
+    if (!progress.peeked(id) && !progress.isSolved(id)) events.record("solution.peeked", { level: id });
+    if (!progress.isSolved(id)) progress.markPeeked(id);
+  }
+  if (share) room?.setHelp({ solution: true });
+}
+
+/** The room's help changed: show or close the solution with everyone. */
+function followPeek(help) {
+  const showing = peek.dialog.open && !peek.answer.hidden;
+  if (help.solution && !showing) showSolution({ share: false });
+  if (!help.solution && showing) { peekFollowing = true; peek.dialog.close(); peekFollowing = false; }
+}
+
+peek.button.onclick = openPeek;
+$("peek-show").onclick = () => showSolution();
+$("peek-keep").onclick = () => peek.dialog.close();
+$("close-peek").onclick = () => peek.dialog.close();
+peek.dialog.addEventListener("click", (e) => { if (e.target === peek.dialog) peek.dialog.close(); });
+peek.dialog.addEventListener("close", () => {
+  if (!peek.answer.hidden && !peekFollowing && room?.doc()?.help.solution) room.setHelp({ solution: false });
+});
+
 function showLevelWorld() {
   replayWorld = "main";
   replayOutput = null;
@@ -966,7 +1028,7 @@ function showOutcome(code = drive.active ? drive.program.code : replayCode ?? ed
   }
   let nextLink = null;
   if (lastReport.passed && progress) {
-    const help = guide.help() !== "none" ? guide.help() : hints.used() ? "hint" : "none";
+    const help = progress.peeked(level.id) ? "solution" : guide.help() !== "none" ? guide.help() : hints.used() ? "hint" : "none";
     if (!progress.isSolved(level.id)) events.record("level.solved", { level: level.id, with: help });
     progress.markSolved(level.id, code, undefined, help, bonus);
     guide.solved();
@@ -1232,6 +1294,7 @@ function onRoomChange() {
   if (drive.active && level.drive) drive.follow(d.drive);
   guide.follow(d.help);
   hints.follow(d.help.hint);
+  followPeek(d.help);
   if (d.run && d.run.id !== seenRun) {
     seenRun = d.run.id;
     if (d.run.level === level.id && d.run.by !== room.me.id && !drive.active) runCode(d.run);

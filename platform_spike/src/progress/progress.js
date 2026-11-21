@@ -15,6 +15,7 @@ const EMPTY = () => ({
   guide: { hidden: {} },
   quests: {}, // level id -> sub-quest ids solved at least once (a later edit can break one again)
   hints: {},
+  peeked: {}, // level id -> true: the learner looked at the solution
   nudges: { aheadOfGuide: 0, aheadOffer: "unasked" },
 });
 
@@ -109,7 +110,8 @@ export class Progress {
     return this.order.slice(i + 1).find((x) => this.isUnlocked(x)) ?? null;
   }
 
-  /** help: "none" | "guided" (the step-by-step guide was on screen) | "guided+shown" (Show me used). */
+  /** help: "none" | "hint" | "guided" (the step-by-step guide was on screen) | "guided+shown" (Show
+   *  me used) | "solution" (the learner peeked at the solution first). */
   /** bonus: solved within the level's line limit. Once earned, a bonus stays. */
   markSolved(id, code, when = Date.now(), help = "none", bonus = false) {
     if (!this.order.includes(id)) return;
@@ -146,6 +148,15 @@ export class Progress {
 
   setGuideHidden(levelId, hidden) {
     if (hidden) this.data.guide.hidden[levelId] = true; else delete this.data.guide.hidden[levelId];
+    this._save();
+  }
+
+  /** Did the learner peek at this level's solution? */
+  peeked(levelId) { return Boolean(this.data.peeked?.[levelId]); }
+
+  markPeeked(levelId) {
+    if (!this.order.includes(levelId)) return;
+    this.data.peeked = { ...this.data.peeked, [levelId]: true };
     this._save();
   }
 

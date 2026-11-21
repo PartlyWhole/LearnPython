@@ -79,7 +79,7 @@ and Show me are everyone's. Its step already agrees, being worked out from the s
 runs. Show me is kept as the step it was opened on, so a new step closes it for all. On practice
 and twist levels there is one hint ladder: each room run counts once (by whoever ran it), the
 lightbulb shows for everyone, and the rung opened (or Not now) is everyone's; a partner opening one
-doesn't move your focus. In a room, the guide and hints don't change this browser's own saved
+doesn't move your focus. A peek at the solution (D28) opens and closes on everyone's page. In a room, the guide and hints don't change this browser's own saved
 state.
 
 **Not shared:** demos (off in a room), replay speed, Stop

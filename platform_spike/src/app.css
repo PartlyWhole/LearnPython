@@ -398,6 +398,8 @@ kbd { font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width
 .name-field { display: grid; gap: 4px; margin: 0 0 10px; font-size: 13px; color: var(--muted); }
 .name-field input { font: 15px var(--sans); padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
 .join-buttons { display: flex; flex-direction: row-reverse; /* Join first, so Enter joins */ justify-content: space-between; align-items: center; gap: 8px; }
+.peek-dialog { width: min(520px, calc(100vw - 32px)); }
+.peek-code { margin: 0 0 10px; padding: 10px 12px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); font: 13px/1.5 var(--mono); white-space: pre; overflow: auto; max-height: 55vh; tab-size: 4; }
 .room-status { font-size: 12px; color: var(--muted); margin-right: 6px; white-space: nowrap; }
 .room-status[hidden] { display: none; }
 .cm-peer-caret { position: relative; border-left: 2px solid var(--peer); margin-left: -1px; margin-right: -1px; }
